@@ -350,12 +350,24 @@ class UserRepository extends BaseRepository
     {
         $user = self::MODEL;
         $user = new $user;
-        $user->name = $input['name'];
-        $user->email = $input['email'];
-        $user->password = bcrypt($input['password']);
-        $user->status = isset($input['status']) ? 1 : 0;
+        $user->name              = $input['name'];
+        $user->email             = $input['email'];
+        $user->address           = $input['address'];
+        $user->single            = $input['single'];
+        $user->gender            = $input['gender'];
+        $user->children          = $input['children'];
+        $user->age               = $input['age'];
+        $user->public_profile    = $input['public_profile'];
+        $user->mobile            = $input['mobile'];
+        $user->nationality       = $input['nationality'];
+        $user->profile_picture   = isset($input['profile_picture']) ? $input['profile_picture']:"";
+        $user->notifications     = $input['notifications'];
+        $user->messages          = $input['messages'];
+        $user->username          = $input['username'];
+        $user->password          = bcrypt($input['password']);
+        $user->status            = isset($input['status']) ? 1 : 0;
         $user->confirmation_code = md5(uniqid(mt_rand(), true));
-        $user->confirmed = isset($input['confirmed']) ? 1 : 0;
+        $user->confirmed         = isset($input['confirmed']) ? 1 : 0;
 
         return $user;
     }

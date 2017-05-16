@@ -60,7 +60,7 @@ return [
                 'no_permissions'      => 'No Permissions',
                 'no_roles'            => 'No Roles to set.',
                 'permissions'         => 'Permissions',
-
+                'age'                 => 'Age',
                 'table' => [
                     'confirmed'      => 'Confirmed',
                     'created'        => 'Created',
