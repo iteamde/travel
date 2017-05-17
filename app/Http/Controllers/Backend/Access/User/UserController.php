@@ -88,7 +88,8 @@ class UserController extends Controller
                 'notifications'  => $request->input('notifications'),
                 'messages' => $request->input('messages'),
                 'username' => $request->input('username'),
-                'profile_picture' => $imageName
+                'profile_picture' => $imageName,
+                'sms' => $request->input('sms')
             ],
             'roles' => $request->only('assignees_roles')
         ]);

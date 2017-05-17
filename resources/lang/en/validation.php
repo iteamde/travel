@@ -162,6 +162,7 @@ return [
                     'username'                => 'Username',
                     'travel_type'             => 'Travel Type',
                     'profile_picture'         => 'Profile Picture',
+                    'sms'                     => 'SMS Notification',
                 ],
             ],
         ],

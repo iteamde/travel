@@ -194,6 +194,16 @@ use App\Models\Access\User\User;
                 </div><!--form control-->
                 <!-- Messages: End -->
 
+                <!-- SMS: Start -->
+                <div class="form-group">
+                    {{ Form::label('sms', trans('validation.attributes.backend.access.users.sms'), ['class' => 'col-lg-2 control-label']) }}
+
+                    <div class="col-lg-10">
+                        {{ Form::checkbox('sms', '1', true) }}
+                    </div><!--col-lg-10-->
+                </div><!--form control-->
+                <!-- SMS: End -->
+
                 <div class="form-group">    
                     {{ Form::label('status', trans('validation.attributes.backend.access.users.active'), ['class' => 'col-lg-2 control-label']) }}
 

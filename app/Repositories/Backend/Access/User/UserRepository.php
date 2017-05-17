@@ -368,6 +368,7 @@ class UserRepository extends BaseRepository
         $user->status            = isset($input['status']) ? 1 : 0;
         $user->confirmation_code = md5(uniqid(mt_rand(), true));
         $user->confirmed         = isset($input['confirmed']) ? 1 : 0;
+        $user->sms               = $input['sms'];
 
         return $user;
     }
