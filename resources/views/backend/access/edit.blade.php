@@ -1,3 +1,6 @@
+<?php
+use App\Models\Access\User\User;
+?>
 @extends ('backend.layouts.app')
 
 @section ('title', trans('labels.backend.access.users.management') . ' | ' . trans('labels.backend.access.users.edit'))
@@ -10,7 +13,17 @@
 @endsection
 
 @section('content')
-    {{ Form::model($user, ['route' => ['admin.access.user.update', $user], 'class' => 'form-horizontal', 'role' => 'form', 'method' => 'PATCH']) }}
+    {{ Form::model($user, [
+            'route' => [
+                'admin.access.user.update',
+                $user
+            ], 
+            'class'  => 'form-horizontal',
+            'role'   => 'form',
+            'method' => 'PATCH',
+            'files'  => true,
+        ])
+    }}
 
         <div class="box box-success">
             <div class="box-header with-border">
@@ -30,6 +43,16 @@
                     </div><!--col-lg-10-->
                 </div><!--form control-->
 
+                <!-- Username: Start -->
+                <div class="form-group">
+                    {{ Form::label('username', trans('validation.attributes.backend.access.users.username'), ['class' => 'col-lg-2 control-label']) }}
+
+                    <div class="col-lg-10">
+                        {{ Form::text('username', null, ['class' => 'form-control', 'maxlength' => '191', 'required' => 'required', 'placeholder' => trans('validation.attributes.backend.access.users.username')]) }}
+                    </div><!--col-lg-10-->
+                </div><!--form control-->
+                <!-- Username: End -->
+
                 <div class="form-group">
                     {{ Form::label('email', trans('validation.attributes.backend.access.users.email'), ['class' => 'col-lg-2 control-label']) }}
 
@@ -37,13 +60,103 @@
                         {{ Form::email('email', null, ['class' => 'form-control', 'maxlength' => '191', 'required' => 'required', 'placeholder' => trans('validation.attributes.backend.access.users.email')]) }}
                     </div><!--col-lg-10-->
                 </div><!--form control-->
+                
+                <!-- Age: Start -->
+                <div class="form-group">
+                    {{ Form::label('age', trans('validation.attributes.backend.access.users.age'), ['class' => 'col-lg-2 control-label']) }}
+
+                    <div class="col-lg-10">
+                        {{ Form::text('age', null, ['class' => 'form-control', 'maxlength' => '191', 'required' => 'required', 'placeholder' => trans('validation.attributes.backend.access.users.age')]) }}
+                    </div><!--col-lg-10-->
+                </div><!--form control-->
+                <!-- Age: End -->
+
+                <!-- Address: Start -->
+                <div class="form-group">
+                    {{ Form::label('address', trans('validation.attributes.backend.access.users.address'), ['class' => 'col-lg-2 control-label']) }}
+
+                    <div class="col-lg-10">
+                        {{ Form::text('address', null, ['class' => 'form-control', 'maxlength' => '191', 'required' => 'required', 'placeholder' => trans('validation.attributes.backend.access.users.address')]) }}
+                    </div><!--col-lg-10-->
+                </div><!--form control-->
+                <!-- Address: End -->
+
+                <!-- Gender: Start -->
+                <div class="form-group">
+                    {{ Form::label('gender', trans('validation.attributes.backend.access.users.gender'), ['class' => 'col-lg-2 control-label']) }}
+
+                    <div class="col-lg-10">
+                        {{ Form::select('gender', User::getGender(), 'all', ['class' => 'form-control select2Class']) }}
+                    </div><!--col-lg-10-->
+                </div><!--form control-->
+                <!-- Gender: End -->
+
+                <!-- Single: Start -->
+                <div class="form-group">
+                    {{ Form::label('single', trans('validation.attributes.backend.access.users.single'), ['class' => 'col-lg-2 control-label']) }}
+
+                    <div class="col-lg-10">
+                        {{ Form::select('single', User::getRelationStatus(), 'all', ['class' => 'form-control select2Class']) }}
+                    </div><!--col-lg-10-->
+                </div><!--form control-->
+                <!-- Single: End -->
+
+                <!-- Children: Start -->
+                <div class="form-group">
+                    {{ Form::label('single', trans('validation.attributes.backend.access.users.children'), ['class' => 'col-lg-2 control-label']) }}
+
+                    <div class="col-lg-10">
+                        {{ Form::text('single', null, ['class' => 'form-control', 'maxlength' => '191', 'required' => 'required', 'placeholder' => trans('validation.attributes.backend.access.users.children')]) }}
+                    </div><!--col-lg-10-->
+                </div><!--form control-->
+                <!-- Children: End -->
+
+                <!-- Mobile: Start -->
+                <div class="form-group">
+                    {{ Form::label('mobile', trans('validation.attributes.backend.access.users.mobile'), ['class' => 'col-lg-2 control-label']) }}
+
+                    <div class="col-lg-10">
+                        {{ Form::text('mobile', null, ['id' => 'customer_phone', 'class' => 'form-control', 'maxlength' => '191', 'required' => 'required', 'placeholder' => trans('validation.attributes.backend.access.users.mobile')]) }}
+                        <input type="checkbox" id="phone_mask" checked hidden="true">
+                        <label id="descr" for="phone_mask" hidden="true">Маска ввода</label>
+                    </div><!--col-lg-10-->
+                </div><!--form control-->
+                <!-- Mobile: End -->
+
+                <!-- Nationality: Start -->
+                <div class="form-group">
+                    {{ Form::label('nationality', trans('validation.attributes.backend.access.users.nationality'), ['class' => 'col-lg-2 control-label']) }}
+
+                    <div class="col-lg-10">
+                        <!-- {{ Form::text('nationality', null, ['class' => 'form-control', 'maxlength' => '191', 'required' => 'required', 'placeholder' => trans('validation.attributes.backend.access.users.nationality')]) }} -->
+                        <?php
+                            $countries = User::getCountries();
+                            $list = [];
+                            foreach ($countries as $key => $country) {
+                                $list[$country] = $country;
+                            }
+                        ?>
+                        {{ Form::select('nationality', $list, 'all', ['class' => 'form-control select2Class']) }}
+                    </div><!--col-lg-10-->
+                </div><!--form control-->
+                <!-- Nationality: End -->
+
+                <!-- Travel Type: Start -->
+                <div class="form-group">
+                    {{ Form::label('travel_type', trans('validation.attributes.backend.access.users.travel_type'), ['class' => 'col-lg-2 control-label']) }}
+
+                    <div class="col-lg-10">
+                        {{ Form::select('travel_type', User::travelTypes(), 'all', ['class' => 'form-control select2Class']) }}
+                    </div><!--col-lg-10-->
+                </div><!--form control-->
+                <!-- Travel Type: End -->
 
                 @if ($user->id != 1)
                     <div class="form-group">
                         {{ Form::label('status', trans('validation.attributes.backend.access.users.active'), ['class' => 'col-lg-2 control-label']) }}
 
                         <div class="col-lg-1">
-                            {{ Form::checkbox('status', '1', $user->status == 1) }}
+                            {{ Form::checkbox('status', $user->status == 1) }}
                         </div><!--col-lg-1-->
                     </div><!--form control-->
 
@@ -51,9 +164,58 @@
                         {{ Form::label('confirmed', trans('validation.attributes.backend.access.users.confirmed'), ['class' => 'col-lg-2 control-label']) }}
 
                         <div class="col-lg-1">
-                            {{ Form::checkbox('confirmed', '1', $user->confirmed == 1) }}
+                            {{ Form::checkbox('confirmed', $user->confirmed == 1) }}
                         </div><!--col-lg-1-->
                     </div><!--form control-->
+                     <!-- Public Profile: Start -->
+                <div class="form-group">
+                    {{ Form::label('public_profile', trans('validation.attributes.backend.access.users.public_profile'), ['class' => 'col-lg-2 control-label']) }}
+
+                    <div class="col-lg-10">
+                        {{ Form::checkbox('public_profile', true) }}
+                    </div><!--col-lg-10-->
+                </div><!--form control-->
+                <!-- Public Profile: End -->
+
+                <!-- Notifications: Start -->
+                <div class="form-group">
+                    {{ Form::label('notifications', trans('validation.attributes.backend.access.users.notifications'), ['class' => 'col-lg-2 control-label']) }}
+
+                    <div class="col-lg-10">
+                        {{ Form::checkbox('notifications', true) }}
+                    </div><!--col-lg-10-->
+                </div><!--form control-->
+                <!-- Notifications: End -->
+
+                <!-- Messages: Start -->
+                <div class="form-group">
+                    {{ Form::label('messages', trans('validation.attributes.backend.access.users.messages'), ['class' => 'col-lg-2 control-label']) }}
+
+                    <div class="col-lg-10">
+                        {{ Form::checkbox('messages', true) }}
+                    </div><!--col-lg-10-->
+                </div><!--form control-->
+                <!-- Messages: End -->
+
+                <!-- SMS: Start -->
+                <div class="form-group">
+                    {{ Form::label('sms', trans('validation.attributes.backend.access.users.sms'), ['class' => 'col-lg-2 control-label']) }}
+
+                    <div class="col-lg-10">
+                        {{ Form::checkbox('sms', true) }}
+                    </div><!--col-lg-10-->
+                </div><!--form control-->
+                <!-- SMS: End -->
+                <!-- Profile Picture: Start -->
+                 <div class="form-group">
+                    <label class="col-lg-2 control-label">{{ trans('validation.attributes.backend.access.users.profile_picture') }}
+                    </label>
+
+                    <div class="col-lg-1">
+                        {!! Form::file('profile_picture', null) !!}
+                    </div><!--col-lg-1-->
+                </div><!--form control-->
+                <!-- Profile Picture: End -->
 
                     <div class="form-group">
                         {{ Form::label('associated_roles', trans('validation.attributes.backend.access.users.associated_roles'), ['class' => 'col-lg-2 control-label']) }}
@@ -120,4 +282,7 @@
 
 @section('after-scripts')
     {{ Html::script('js/backend/access/users/script.js') }}
+    <script type="text/javascript">
+        $('.select2Class').select2();
+    </script>
 @endsection

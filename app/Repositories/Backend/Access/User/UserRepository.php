@@ -156,11 +156,29 @@ class UserRepository extends BaseRepository
 
         $this->checkUserByEmail($data, $user);
 
-        $user->name = $data['name'];
-        $user->email = $data['email'];
-        $user->status = isset($data['status']) ? 1 : 0;
-        $user->confirmed = isset($data['confirmed']) ? 1 : 0;
-
+        // $user->name = $data['name'];
+        // $user->email = $data['email'];
+        // $user->status = isset($data['status']) ? 1 : 0;
+        // $user->confirmed = isset($data['confirmed']) ? 1 : 0;
+        $user->name              = $data['name'];
+        $user->email             = $data['email'];
+        $user->address           = $data['address'];
+        $user->single            = $data['single'];
+        $user->gender            = $data['gender'];
+        $user->children          = $data['children'];
+        $user->age               = $data['age'];
+        $user->public_profile    = $data['public_profile'];
+        $user->mobile            = $data['mobile'];
+        $user->nationality       = $data['nationality'];
+        $user->profile_picture   = $data['profile_picture'];
+        $user->notifications     = $data['notifications'];
+        $user->messages          = $data['messages'];
+        $user->username          = $data['username'];
+        $user->password          = bcrypt($data['password']);
+        $user->status            = isset($data['status']) ? 1 : 0;
+        $user->confirmed         = isset($data['confirmed']) ? 1 : 0;
+        $user->sms               = $data['sms'];
+        
         DB::transaction(function () use ($user, $data, $roles) {
             if ($user->save()) {
                 $this->checkUserRolesCount($roles);

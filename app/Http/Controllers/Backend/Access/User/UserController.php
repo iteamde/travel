@@ -132,7 +132,40 @@ class UserController extends Controller
      */
     public function update(User $user, UpdateUserRequest $request)
     {
-        $this->users->update($user, ['data' => $request->only('name', 'email', 'status', 'confirmed'), 'roles' => $request->only('assignees_roles')]);
+        if(!empty($request->file('profile_picture'))) {
+            $imageName = time() . '_' . rand(10,10000000) . '.' . $request->file('profile_picture')->getClientOriginalExtension();
+            $request->file('profile_picture')->move(
+                base_path() . '/public/img/users/', $imageName
+            );
+        } else {
+            $imageName = $user->imageName;
+        }
+
+        $this->users->update($user, [
+            'data' => [
+                'name'      => $request->input('name'),
+                'email'     => $request->input('email'),
+                'password'  => $request->input('password'),
+                'status'    => $request->input('status'),
+                'confirmed' => $request->input('confirmed'),
+                'confirmation_email' => $request->input('confirmation_email'),
+                'address'     => $request->input('address'),
+                'single'      => $request->input('single'),
+                'gender'      => $request->input('gender'),
+                'children'    => $request->input('children'),
+                'age'         => $request->input('age'),
+                'mobile'      => $request->input('mobile'),
+                'nationality' => $request->input('nationality'),
+                'public_profile' => $request->input('public_profile'),
+                'notifications'  => $request->input('notifications'),
+                'messages' => $request->input('messages'),
+                'username' => $request->input('username'),
+                'profile_picture' => $imageName,
+                'sms' => $request->input('sms')
+            ],
+            'roles' => $request->only('assignees_roles')
+            //$this->users->update($user, ['data' => $request->only('name', 'email', 'status', 'confirmed'), 'roles' => $request->only('assignees_roles')
+        ]);
 
         return redirect()->route('admin.access.user.index')->withFlashSuccess(trans('alerts.backend.users.updated'));
     }
