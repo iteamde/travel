@@ -14,6 +14,7 @@ use App\Models\Access\User\User;
 
 @section('content')
     {{ Form::model($user, [
+            'id' => 'User_form',
             'route' => [
                 'admin.access.user.update',
                 $user
@@ -117,8 +118,7 @@ use App\Models\Access\User\User;
 
                     <div class="col-lg-10">
                         {{ Form::text('mobile', null, ['id' => 'customer_phone', 'class' => 'form-control', 'maxlength' => '191', 'required' => 'required', 'placeholder' => trans('validation.attributes.backend.access.users.mobile')]) }}
-                        <input type="checkbox" id="phone_mask" checked hidden="true">
-                        <label id="descr" for="phone_mask" hidden="true">Маска ввода</label>
+                        <input type="hiddent" id="server_phone" name = "server_phone" hidden="true">
                     </div><!--col-lg-10-->
                 </div><!--form control-->
                 <!-- Mobile: End -->
@@ -264,7 +264,7 @@ use App\Models\Access\User\User;
                 </div><!--pull-left-->
 
                 <div class="pull-right">
-                    {{ Form::submit(trans('buttons.general.crud.update'), ['class' => 'btn btn-success btn-xs']) }}
+                    {{ Form::submit(trans('buttons.general.crud.update'), ['class' => 'btn btn-success btn-xs submit_button']) }}
                 </div><!--pull-right-->
 
                 <div class="clearfix"></div>
@@ -284,5 +284,26 @@ use App\Models\Access\User\User;
     {{ Html::script('js/backend/access/users/script.js') }}
     <script type="text/javascript">
         $('.select2Class').select2();
+       //initialize intltel plugin
+        $("#customer_phone").intlTelInput({
+            autoHideDialCode: false,
+            formatOnDisplay: true,
+            separateDialCode: true,
+            utilsScript: "{{ asset('js/backend/plugin/intl-tel-input/js/utils.js') }}"
+        });
+
+        // get number
+        $('.submit_button').click(function(e) {
+            e.preventDefault();
+            var countryData = $('#customer_phone').intlTelInput('getSelectedCountryData');
+            var tel = '+'+countryData['dialCode']+' '+$('#customer_phone').val();
+            $('#server_phone').val(tel);
+
+            // *************** validate phone and fax before submit
+
+            if($('#customer_phone').intlTelInput('isValidNumber')) {
+                $('#User_form').submit();
+            }
+        });
     </script>
 @endsection

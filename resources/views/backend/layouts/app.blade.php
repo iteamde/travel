@@ -23,6 +23,7 @@
         @else
             {{ Html::style(mix('css/backend.css')) }}
             <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+            <link href="{{ asset('js/backend/plugin/intl-tel-input/css/intlTelInput.css') }}" rel="stylesheet" />
         @endif
 
         @yield('after-styles')
@@ -72,7 +73,7 @@
         @yield('before-scripts')
         {{ Html::script(mix('js/backend.js')) }}
         <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
-        <script src="{{ asset('js/backend/plugin/inputmask-multi/js/jquery.inputmask-multi.min.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('js/backend/plugin/intl-tel-input/js/intlTelInput.js') }}" type="text/javascript"></script>
         @yield('after-scripts')
     </body>
 </html>

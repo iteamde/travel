@@ -63,11 +63,14 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
-        $imageName = time() . '_' . rand(10,10000000) . '.' . $request->file('profile_picture')->getClientOriginalExtension();
-        $request->file('profile_picture')->move(
-            base_path() . '/public/img/users/', $imageName
-        );
-
+        if(!empty($request->file('profile_picture'))) {
+            $imageName = time() . '_' . rand(10,10000000) . '.' . $request->file('profile_picture')->getClientOriginalExtension();
+            $request->file('profile_picture')->move(
+                base_path() . '/public/img/users/', $imageName
+            );
+        } else {
+            $imageName = "";
+        }
 
         $this->users->create([
             'data' => [
@@ -82,7 +85,7 @@ class UserController extends Controller
                 'gender'      => $request->input('gender'),
                 'children'    => $request->input('children'),
                 'age'         => $request->input('age'),
-                'mobile'      => $request->input('mobile'),
+                'mobile'      => $request->input('server_phone'),
                 'nationality' => $request->input('nationality'),
                 'public_profile' => $request->input('public_profile'),
                 'notifications'  => $request->input('notifications'),
@@ -154,7 +157,7 @@ class UserController extends Controller
                 'gender'      => $request->input('gender'),
                 'children'    => $request->input('children'),
                 'age'         => $request->input('age'),
-                'mobile'      => $request->input('mobile'),
+                'mobile'      => $request->input('server_phone'),
                 'nationality' => $request->input('nationality'),
                 'public_profile' => $request->input('public_profile'),
                 'notifications'  => $request->input('notifications'),
