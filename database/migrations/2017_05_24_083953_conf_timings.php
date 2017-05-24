@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class ALTERUSERTABLE extends Migration
+class ConfTimings extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,14 @@ class ALTERUSERTABLE extends Migration
      */
     public function up()
     {
-        Schema::table('users', function(Blueprint $table){
-            $sql = 'ALTER TABLE `users`   
-              CHANGE `username` `username` VARCHAR(256) CHARSET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL  AFTER `name`,
-              ADD COLUMN `sms` TINYINT(1) NULL AFTER `messages`;';
+        Schema::table('conf_timings', function(Blueprint $table) {
+            $sql = 'DROP TABLE IF EXISTS `conf_timings`;';
+            DB::connection()->getPdo()->exec($sql);
+            
+            $sql = 'CREATE TABLE `conf_timings` (
+              `id` int(11) NOT NULL AUTO_INCREMENT,
+              PRIMARY KEY (`id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;';
             DB::connection()->getPdo()->exec($sql);
         });
     }
