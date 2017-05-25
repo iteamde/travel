@@ -30,5 +30,11 @@ return [
             'updated'             => 'The user was successfully updated.',
             'updated_password'    => "The user's password was successfully updated.",
         ],
+
+        'language' => [
+            'created' => 'New language created',
+            'deleted' => 'Language deleted successfully',
+            'updated' => 'Langauge Updated successfully',
+        ],
     ],
 ];

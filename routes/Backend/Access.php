@@ -71,5 +71,53 @@ Route::group([
             //For DataTables
             Route::post('role/get', 'RoleTableController')->name('role.get');
         });
+
+
+        /*
+         * Language Manager
+         **/
+
+        Route::group(['namespace' => 'Languages'], function () {
+            /*
+             * For DataTables
+             */
+            Route::post('languages/get', 'LanguagesTableController')->name('languages.get');
+
+            /*
+             * User CRUD
+             */
+            Route::resource('languages', 'LanguagesController');
+
+            Route::get('languages/deactivated', 'LanguagesController@getDeactivated')->name('languages.deactivated');
+            /*
+             * Deleted Langauge
+             */
+            Route::group(['prefix' => 'languages/{deletedLanguages}'], function () {
+                Route::delete('delete', 'LanguagesController@delete')->name('languages.delete');
+            });
+
+            /*
+             * Specific Language
+             */
+            Route::group(['prefix' => 'languages/{language}'], function () {
+                Route::get('mark/{status}', 'LanguagesController@mark')->name('languages.mark')->where(['status' => '[1,2]']);
+            });
+        });
+
+        /*
+         * Country Manager
+         **/
+
+        Route::group(['namespace' => 'Country'], function () {
+            /*
+             * For DataTables
+             */
+            Route::post('country/get', 'CountryTableController')->name('country.get');
+
+            /*
+             * User CRUD
+             */
+            Route::resource('country', 'CountryController');
+        });
     });
 });

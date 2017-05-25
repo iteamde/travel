@@ -31,13 +31,11 @@ class RouteNeedsRole
              */
             $access = access()->hasRole($role);
         }
-
         if (! $access) {
             return redirect()
                 ->route('frontend.index')
                 ->withFlashDanger(trans('auth.general_error'));
         }
-
         return $next($request);
     }
 }

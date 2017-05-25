@@ -36,6 +36,13 @@ return [
                 'view'            => 'View User',
             ],
         ],
+        'langauge' => [
+            'title' => 'Language Management',
+        ],
+    
+        'countries' => [
+            'title' => 'Countries Management',            
+        ],
 
         'log-viewer' => [
             'main'      => 'Log Viewer',

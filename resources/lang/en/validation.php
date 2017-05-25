@@ -164,6 +164,11 @@ return [
                     'profile_picture'         => 'Profile Picture',
                     'sms'                     => 'SMS Notification',
                 ],
+                'languages' => [
+                    'title' => 'Language Name',
+                    'code'  => 'Language Code',
+                    'active' => 'Active',
+                ],
             ],
         ],
 

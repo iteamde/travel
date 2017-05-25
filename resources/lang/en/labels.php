@@ -46,7 +46,9 @@ return [
                     'total'           => 'role total|roles total',
                 ],
             ],
-
+            'language' => [
+                'management' => 'Language Management'
+            ],
             'users' => [
                 'active'              => 'Active Users',
                 'all_permissions'     => 'All Permissions',
