@@ -1,5 +1,6 @@
 <?php  
-
+use App\Models\Access\language\Languages;
+$languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE)->get();
 ?>
 @extends ('backend.layouts.app')
 
@@ -18,12 +19,12 @@
 
 @section('content')
     {{ Form::open([
-            'id'    => 'country_form',
-            'route' => 'admin.access.country.store',
-            'class' => 'form-horizontal',
-            'role' => 'form',
+            'id'     => 'country_form',
+            'route'  => 'admin.access.country.store',
+            'class'  => 'form-horizontal',
+            'role'   => 'form',
             'method' => 'post',
-            'files' => true
+            'files'  => true
         ]) 
     }}
         <div class="box box-success">
@@ -37,39 +38,136 @@
             </div><!-- /.box-header -->
 
             <div class="box-body">
-                <div class="form-group">
-                    {{ Form::label('name', trans('validation.attributes.backend.access.users.name'), ['class' => 'col-lg-2 control-label']) }}
+                @if(!empty($languages))
+                    <ul class="nav nav-tabs">
+                    @foreach($languages as $language)
+                        <li class="{{ ($languages[0]->id == $language->id)? 'active':'' }}">
+                            <a data-toggle="tab" href="#{{$language->code}}">{{ $language->title }}</a>
+                        </li>
+                    @endforeach
+                    </ul>
+                @endif
+                @if(!empty($languages))
+                    <div class="tab-content">
+                    @foreach($languages as $language)
+                        <div id="{{ $language->code }}" class="tab-pane fade in {{ ($languages[0]->id == $language->id)? 'active':'' }}">
+                            <br />
+                            <!-- Start Title -->
+                            <div class="form-group">
+                                {{ Form::label('title_'.$language->id, 'Title', ['class' => 'col-lg-2 control-label']) }}
 
-                    <div class="col-lg-10">
-                        {{ Form::text('name', null, ['class' => 'form-control', 'maxlength' => '191', 'required' => 'required', 'autofocus' => 'autofocus', 'placeholder' => trans('validation.attributes.backend.access.users.name')]) }}
-                    </div><!--col-lg-10-->
-                </div><!--form control-->
-                <!-- Languages Tabs: Start -->
-                <ul class="nav nav-tabs">
-                    <li class="active"><a data-toggle="tab" href="#home">Home</a></li>
-                    <li><a data-toggle="tab" href="#menu1">Menu 1</a></li>
-                    <li><a data-toggle="tab" href="#menu2">Menu 2</a></li>
-                    <li><a data-toggle="tab" href="#menu3">Menu 3</a></li>
-                </ul>
+                                <div class="col-lg-10">
+                                    {{ Form::text('title_'.$language->id, null, ['class' => 'form-control', 'maxlength' => '191', 'required' => 'required', 'autofocus' => 'autofocus', 'placeholder' => 'Title']) }}
+                                </div><!--col-lg-10-->
+                            </div><!--form control-->
+                            <!-- End: Title -->
 
-                <div class="tab-content">
-                    <div id="home" class="tab-pane fade in active">
-                        <h3>HOME</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                            <!-- Start: Description -->
+                            <div class="form-group">
+                                {{ Form::label('description_'.$language->id, 'Description', ['class' => 'col-lg-2 control-label']) }}
+
+                                <div class="col-lg-10">
+                                    {{ Form::text('description_'.$language->id, null, ['class' => 'form-control', 'maxlength' => '191', 'required' => 'required', 'placeholder' => 'Description']) }}
+                                </div><!--col-lg-10-->
+                            </div><!--form control-->
+                            <!-- End: Description -->
+
+                            <!-- Start: Nationality -->
+                            <div class="form-group">
+                                {{ Form::label('nationality_'.$language->id, 'Nationality', ['class' => 'col-lg-2 control-label']) }}
+
+                                <div class="col-lg-10">
+                                    {{ Form::text('nationality_'.$language->id, null, ['class' => 'form-control', 'maxlength' => '191', 'required' => 'required', 'placeholder' => 'Nationality']) }}
+                                </div><!--col-lg-10-->
+                            </div><!--form control-->
+                            <!-- End: Nationality -->
+
+                            <!-- Start: population -->
+                            <div class="form-group">
+                                {{ Form::label('population_'.$language->id, 'Population', ['class' => 'col-lg-2 control-label']) }}
+
+                                <div class="col-lg-10">
+                                    {{ Form::text('population_'.$language->id, null, ['class' => 'form-control', 'maxlength' => '191', 'required' => 'required', 'placeholder' => 'Population']) }}
+                                </div><!--col-lg-10-->
+                            </div><!--form control-->
+                            <!-- End: Population -->
+
+                            <!-- Start: best_place -->
+                            <div class="form-group">
+                                {{ Form::label('best_place_'.$language->id, 'Best place', ['class' => 'col-lg-2 control-label']) }}
+
+                                <div class="col-lg-10">
+                                    {{ Form::text('best_place_'.$language->id, null, ['class' => 'form-control', 'maxlength' => '191', 'required' => 'required', 'placeholder' => 'Best Place']) }}
+                                </div><!--col-lg-10-->
+                            </div><!--form control-->
+                            <!-- End: best_place -->
+
+                            <!-- Start: best_time -->
+                            <div class="form-group">
+                                {{ Form::label('best_time_'.$language->id, 'Best time', ['class' => 'col-lg-2 control-label']) }}
+
+                                <div class="col-lg-10">
+                                    {{ Form::text('best_time_'.$language->id, null, ['class' => 'form-control', 'maxlength' => '191', 'required' => 'required', 'placeholder' => 'Best time']) }}
+                                </div><!--col-lg-10-->
+                            </div><!--form control-->
+                            <!-- End: best_time -->
+
+                            <!-- Start: cost_of_living -->
+                            <div class="form-group">
+                                {{ Form::label('cost_of_living_'.$language->id, 'Cost of living', ['class' => 'col-lg-2 control-label']) }}
+
+                                <div class="col-lg-10">
+                                    {{ Form::text('cost_of_living_'.$language->id, null, ['class' => 'form-control', 'maxlength' => '191', 'required' => 'required', 'placeholder' => 'Cost of living']) }}
+                                </div><!--col-lg-10-->
+                            </div><!--form control-->
+                            <!-- End: cost_of_living -->
+
+                            <!-- Start: geo_stats -->
+                            <div class="form-group">
+                                {{ Form::label('geo_stats_'.$language->id, 'Geo stats', ['class' => 'col-lg-2 control-label']) }}
+
+                                <div class="col-lg-10">
+                                    {{ Form::text('geo_stats_'.$language->id, null, ['class' => 'form-control', 'maxlength' => '191', 'required' => 'required', 'placeholder' => 'Geo stats']) }}
+                                </div><!--col-lg-10-->
+                            </div><!--form control-->
+                            <!-- End: geo_stats -->
+
+                            <!-- Start: demographics -->
+                            <div class="form-group">
+                                {{ Form::label('demographics_'.$language->id, 'Demographics', ['class' => 'col-lg-2 control-label']) }}
+
+                                <div class="col-lg-10">
+                                    {{ Form::text('demographics_'.$language->id, null, ['class' => 'form-control', 'maxlength' => '191', 'required' => 'required', 'placeholder' => 'Demographics']) }}
+                                </div><!--col-lg-10-->
+                            </div><!--form control-->
+                            <!-- End: demographics -->
+
+                            <!-- Start: economy -->
+                            <div class="form-group">
+                                {{ Form::label('economy_'.$language->id, 'Economy', ['class' => 'col-lg-2 control-label']) }}
+
+                                <div class="col-lg-10">
+                                    {{ Form::text('economy_'.$language->id, null, ['class' => 'form-control', 'maxlength' => '191', 'required' => 'required', 'placeholder' => 'Economy']) }}
+                                </div><!--col-lg-10-->
+                            </div><!--form control-->
+                            <!-- End: economy -->
+
+                            <!-- Start: suitable_for -->
+                            <div class="form-group">
+                                {{ Form::label('suitable_for_'.$language->id, 'Suitable for', ['class' => 'col-lg-2 control-label']) }}
+
+                                <div class="col-lg-10">
+                                    {{ Form::text('suitable_for_'.$language->id, null, ['class' => 'form-control', 'maxlength' => '191', 'required' => 'required', 'placeholder' => 'Suitable for']) }}
+                                </div><!--col-lg-10-->
+                            </div><!--form control-->
+                            <!-- End: suitable_for -->
+
+                            <!-- Languages Tabs: Start -->
+                        </div>
+                    @endforeach
                     </div>
-                    <div id="menu1" class="tab-pane fade">
-                        <h3>Menu 1</h3>
-                        <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                    </div>
-                    <div id="menu2" class="tab-pane fade">
-                        <h3>Menu 2</h3>
-                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
-                    </div>
-                    <div id="menu3" class="tab-pane fade">
-                        <h3>Menu 3</h3>
-                        <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
-                     </div>
-                </div>
+                @endif
+                    
                 <!-- Languages Tabs: End -->
             </div>
         </div>

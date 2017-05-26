@@ -89,6 +89,7 @@ Route::group([
             Route::resource('languages', 'LanguagesController');
 
             Route::get('languages/deactivated', 'LanguagesController@getDeactivated')->name('languages.deactivated');
+           
             /*
              * Deleted Langauge
              */
@@ -101,6 +102,36 @@ Route::group([
              */
             Route::group(['prefix' => 'languages/{language}'], function () {
                 Route::get('mark/{status}', 'LanguagesController@mark')->name('languages.mark')->where(['status' => '[1,2]']);
+            });
+        });
+
+        /*
+         * Regions Manager
+         **/
+
+        Route::group(['namespace' => 'Regions'], function () {
+            /*
+             * For DataTables
+             */
+            Route::post('regions/get', 'RegionsTableController')->name('regions.get');
+
+            /*
+             * User CRUD
+             */
+            Route::resource('regions', 'RegionsController');
+
+             /*
+             * Deleted Region
+             */
+            Route::group(['prefix' => 'regions/{deletedRegions}'], function () {
+                Route::delete('delete', 'RegionsController@delete')->name('regions.delete');
+            });
+
+            /*
+             * Specific Region
+             */
+            Route::group(['prefix' => 'regions/{region}'], function () {
+                Route::get('mark/{status}', 'RegionsController@mark')->name('regions.mark')->where(['status' => '[1,2]']);
             });
         });
 

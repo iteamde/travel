@@ -3,7 +3,7 @@
 namespace App\Models\Access\Country;
 
 use Illuminate\Database\Eloquent\Model;
-
+use App\Models\Access\Country\Traits\Relationship\CountriesRelationship;
 class Countries extends Model
 {
     /**
@@ -12,6 +12,8 @@ class Countries extends Model
      * @var string
      */
     protected $table;
+    
+    use CountriesRelationship;
 
     /**
      * The attributes that are mass assignable.

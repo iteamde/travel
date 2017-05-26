@@ -1,19 +1,15 @@
 @extends ('backend.layouts.app')
 
-@section ('title', 'Language Manager')
+@section ('title', 'Region Manager')
 
 @section('after-styles')
     {{ Html::style("https://cdn.datatables.net/v/bs/dt-1.10.15/datatables.min.css") }}
 @endsection
 
 @section('page-header')
-   <!--  <h1>
-        {{ trans('labels.backend.access.users.management') }}
-        <small>{{ trans('labels.backend.access.users.active') }}</small>
-    </h1> -->
     <h1>
-    	Language Manager
-    	<small>All Languages</small>
+    	Region Manager
+    	<small>All Regions</small>
     </h1>
 @endsection
 
@@ -21,31 +17,23 @@
     <div class="box box-success">
         <div class="box-header with-border">
             <!-- <h3 class="box-title">{{ trans('labels.backend.access.users.active') }}</h3> -->
-            <h3 class="box-title">Languages</h3>
+            <h3 class="box-title">Regions</h3>
 
             <div class="box-tools pull-right">
-                @include('backend.access.includes.partials.language-header-buttons')
+                @include('backend.access.includes.partials.regions-header-buttons')
             </div><!--box-tools pull-right-->
         </div><!-- /.box-header -->
 
         <div class="box-body">
             <div class="table-responsive">
-                <table id="languages-table" class="table table-condensed table-hover">
+                <table id="regions-table" class="table table-condensed table-hover">
                     <thead>
                     <tr>
                         <!-- <th>{{ trans('labels.backend.access.users.table.id') }}</th> -->
                         <th>id</th>
-                        <th>title</th>
-                        <th>code</th>
+                        <th>Title</th>
                         <th>Active</th>
                         <th>{{ trans('labels.general.actions') }}</th>
-                        <!-- <th>{{ trans('labels.backend.access.users.table.name') }}</th>
-                        <th>{{ trans('labels.backend.access.users.table.email') }}</th>
-                        <th>{{ trans('labels.backend.access.users.table.confirmed') }}</th>
-                        <th>{{ trans('labels.backend.access.users.table.roles') }}</th>
-                        <th>{{ trans('labels.backend.access.users.table.created') }}</th>
-                        <th>{{ trans('labels.backend.access.users.table.last_updated') }}</th>
-                        <th>{{ trans('labels.general.actions') }}</th> -->
                     </tr>
                     </thead>
                 </table>
@@ -59,20 +47,19 @@
 
     <script>
         $(function () {
-            $('#languages-table').DataTable({
+            $('#regions-table').DataTable({
                 processing: true,
                 serverSide: true,
                 ajax: {
-                    url: '{{ route("admin.access.languages.get") }}',
+                    url: '{{ route("admin.access.regions.get") }}',
                     type: 'post',
                     data: {status: 1}
                 },
                 columns: [
-	                {data: 'id', name: '{{config('access.language_table')}}.id'},
-	                {data: 'title', name: '{{config('access.language_table')}}.title'},
-                    {data: 'code', name: '{{config('access.language_table')}}.code'},
+	                {data: 'id', name: '{{config('access.regions_table')}}.id'},
+                    {data: 'transsingle.title', name: '{{config('access.regions_trans_table')}}.title'},
                     {
-                        name: '{{config('access.language_table')}}.active',
+                        name: '{{config('access.regions_table')}}.active',
                         data: 'active',
                         sortable: false,
                         searchable: false,
