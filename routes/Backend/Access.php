@@ -138,7 +138,6 @@ Route::group([
         /*
          * Country Manager
          **/
-
         Route::group(['namespace' => 'Country'], function () {
             /*
              * For DataTables

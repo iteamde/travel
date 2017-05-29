@@ -166,6 +166,16 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
                         </div>
                     @endforeach
                     </div>
+                    
+                    <!-- Start: code -->
+                    <div class="form-group">
+                        {{ Form::label('code', 'Code', ['class' => 'col-lg-2 control-label']) }}
+
+                        <div class="col-lg-10">
+                            {{ Form::text('code', null, ['class' => 'form-control', 'maxlength' => '191', 'required' => 'required', 'placeholder' => 'Suitable for']) }}
+                        </div><!--col-lg-10-->
+                    </div><!--form control-->
+                    <!-- End: code -->
                 @endif
                     
                 <!-- Languages Tabs: End -->
