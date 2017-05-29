@@ -5,7 +5,7 @@ namespace App\Models\SafetyDegree;
 use Illuminate\Database\Eloquent\Model;
 // use App\Models\Access\Language\Traits\Attribute\LanguageAttribute;
 use App\Models\SafetyDegree\Relationship\SafetyDegreeRelationship;
-// use App\Models\Access\Regions\Traits\Attribute\RegionAttribute;
+use App\Models\SafetyDegree\Traits\Attribute\SafetyDegreeAttribute;
 
 class SafetyDegree extends Model
 {
@@ -13,7 +13,8 @@ class SafetyDegree extends Model
     // use RegionAttribute,
     //     RegionsRelationship;
 
-    use SafetyDegreeRelationship;
+    use SafetyDegreeRelationship,
+        SafetyDegreeAttribute;
 
     public $timestamps = false;
 

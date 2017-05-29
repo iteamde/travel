@@ -9,7 +9,7 @@ use App\Http\Requests\Backend\SafetyDegrees\ManageSafetyDegreesRequest;
 use App\Models\SafetyDegree\SafetyDegree;
 
 /**
- * Class UserTableController.
+ * Class SafetyDegreesTableController.
  */
 class SafetyDegreesTableController extends Controller
 {

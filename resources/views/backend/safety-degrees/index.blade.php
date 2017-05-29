@@ -41,8 +41,8 @@
                         <th>{{ trans('labels.backend.access.users.table.confirmed') }}</th>
                         <th>{{ trans('labels.backend.access.users.table.roles') }}</th>
                         <th>{{ trans('labels.backend.access.users.table.created') }}</th>
-                        <th>{{ trans('labels.backend.access.users.table.last_updated') }}</th>
-                        <th>{{ trans('labels.general.actions') }}</th> -->
+                        <th>{{ trans('labels.backend.access.users.table.last_updated') }}</th> -->
+                        <th>{{ trans('labels.general.actions') }}</th>
                     </tr>
                     </thead>
                 </table>
