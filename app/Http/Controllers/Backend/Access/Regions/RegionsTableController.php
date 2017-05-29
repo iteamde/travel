@@ -20,7 +20,7 @@ class RegionsTableController extends Controller
 
     /**
      * @param RegionsRepository $regions
-     */
+    **/
     public function __construct(RegionsRepository $regions)
     {
         $this->regions = $regions;
@@ -32,7 +32,7 @@ class RegionsTableController extends Controller
      * @return mixed
      */
     public function __invoke(ManageRegionsRequest $request)
-    {
+    {   
         return Datatables::of($this->regions->getForDataTable())
             ->addColumn('action', function ($regions) {
                 return $regions->action_buttons;

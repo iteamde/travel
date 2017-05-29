@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Access\SafetyDegree\Traits\Attribute;
+namespace App\Models\SafetyDegree\Traits\Attribute;
 
 /**
  * Class SafetyDegreeAttribute.

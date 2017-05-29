@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Access\SafetyDegree;
+namespace App\Models\SafetyDegree;
 
 use Illuminate\Database\Eloquent\Model;
 // use App\Models\Access\Language\Traits\Attribute\LanguageAttribute;
@@ -20,7 +20,7 @@ class SafetyDegreeTrans extends Model
      *
      * @var string
      */
-    protected $table = 'conf_safety_degree_trans';
+    protected $table = 'conf_safety_degrees_trans';
 
     /**
      * The attributes that are mass assignable.

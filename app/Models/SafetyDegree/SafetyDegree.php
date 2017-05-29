@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Models\Access\SafetyDegree;
+namespace App\Models\SafetyDegree;
 
 use Illuminate\Database\Eloquent\Model;
 // use App\Models\Access\Language\Traits\Attribute\LanguageAttribute;
-// use App\Models\Access\Regions\Traits\Relationship\RegionsRelationship;
+use App\Models\SafetyDegree\Relationship\SafetyDegreeRelationship;
 // use App\Models\Access\Regions\Traits\Attribute\RegionAttribute;
 
 class SafetyDegree extends Model
@@ -13,6 +13,8 @@ class SafetyDegree extends Model
     // use RegionAttribute,
     //     RegionsRelationship;
 
+    use SafetyDegreeRelationship;
+
     public $timestamps = false;
 
     /**
@@ -20,7 +22,7 @@ class SafetyDegree extends Model
      *
      * @var string
      */
-    protected $table = 'conf_safety_degree';
+    protected $table = 'conf_safety_degrees';
 
     /**
      * The attributes that are mass assignable.
