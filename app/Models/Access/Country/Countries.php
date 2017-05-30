@@ -4,6 +4,8 @@ namespace App\Models\Access\Country;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Access\Country\Traits\Relationship\CountriesRelationship;
+use App\Models\Access\Country\Traits\Attribute\CountryAttribute;
+
 class Countries extends Model
 {
     /**
@@ -13,7 +15,8 @@ class Countries extends Model
      */
     protected $table;
     
-    use CountriesRelationship;
+    use CountriesRelationship,
+        CountryAttribute;
 
     public $timestamps = false;
 

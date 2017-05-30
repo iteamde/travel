@@ -148,6 +148,14 @@ Route::group([
              * User CRUD
              */
             Route::resource('country', 'CountryController');
+
+              /*
+             * Deleted Safety Degrees
+             */
+            Route::group(['prefix' => 'regions/{deletedRegions}'], function () {
+                Route::delete('delete', 'CountryController@delete')->name('country.delete');     
+            });
+
         });
     });
 });

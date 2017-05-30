@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers\Backend\Access\Country;
 
-use App\Country;
+use App\Models\Access\Country\Countries;
+use App\Models\Access\Country\CountriesTranslations;
 use App\Http\Controllers\Controller;
 use App\Models\Access\language\Languages;
 use App\Http\Requests\Backend\Access\Country\ManageCountryRequest;
@@ -88,5 +89,26 @@ class CountryController extends Controller
         $this->countries->create($data, $extra);
 
         return redirect()->route('admin.access.country.index')->withFlashSuccess('Country Created!');
+    }
+
+    /**
+     * @param Country $id
+     * @param ManageCountryRequest $request
+     *
+     * @return mixed
+     */
+    public function delete($id, ManageCountryRequest $request)
+    {
+        $item = Countries::findOrFail($id);
+        /* Delete Children Tables Data of this country */
+        $child = CountriesTranslations::where(['countries_id' => $id])->get();
+        if(!empty($child)){
+            foreach ($child as $key => $value) {
+                $value->delete();
+            }
+        }
+        $item->delete();
+
+        return redirect()->route('admin.access.country.index')->withFlashSuccess('Country Deleted Successfully');
     }
 }

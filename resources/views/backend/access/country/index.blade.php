@@ -47,6 +47,7 @@
                         <th>{{ trans('labels.backend.access.users.table.created') }}</th>
                         <th>{{ trans('labels.backend.access.users.table.last_updated') }}</th>
                         <th>{{ trans('labels.general.actions') }}</th> -->
+                        <th>{{ trans('labels.general.actions') }}</th>
                     </tr>
                     </thead>
                 </table>
@@ -73,7 +74,8 @@
 	                {data: 'code', name: '{{config('access.country_table')}}.code'},
 	                {data: 'lat', name: '{{config('access.country_table')}}.lat'},
 	                {data: 'lng', name: '{{config('access.country_table')}}.lng'},
-	                {data: 'active', name: '{{config('access.country_table')}}.active'}
+	                {data: 'active', name: '{{config('access.country_table')}}.active'},
+                    {data: 'action', name: 'action', searchable: false, sortable: false}
                 ],
                 order: [[0, "asc"]],
                 searchDelay: 500

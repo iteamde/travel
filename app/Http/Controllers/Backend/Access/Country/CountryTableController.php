@@ -34,17 +34,9 @@ class CountryTableController extends Controller
     {
         return Datatables::of($this->countries->getForDataTable())
             ->escapeColumns(['code'])
-            // ->editColumn('confirmed', function ($user) {
-            //     return $user->confirmed_label;
-            // })
-            // ->addColumn('roles', function ($user) {
-            //     return $user->roles->count() ?
-            //         implode('<br/>', $user->roles->pluck('name')->toArray()) :
-            //         trans('labels.general.none');
-            // })
-            // ->addColumn('actions', function ($user) {
-            //     return $user->action_buttons;
-            // })
+            ->addColumn('action', function ($country) {
+                return $country->action_buttons;
+            })
             ->withTrashed()
             ->make(true);
     }
