@@ -18,13 +18,13 @@ trait SafetyDegreeRelationship
     public function trans()
     {
         // return $this->belongsToMany(config('access.regions'), config('access.regions_trans'), 'id', 'regions_id');
-        return $this->hasMany(config('access.safety_degree_lang'), 'safety_degrees_id');
+        return $this->hasMany(config('access.safety_degree_trans'), 'safety_degrees_id');
     }
 
     public function transsingle()
     {
         // return $this->belongsToMany(config('access.regions'), config('access.regions_trans'), 'id', 'regions_id');
-        return $this->hasOne(config('access.safety_degree_lang'), 'safety_degrees_id');
+        return $this->hasOne(config('access.safety_degree_trans'), 'safety_degrees_id');
     }
     /**
      * @return mixed

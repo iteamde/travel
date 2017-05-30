@@ -34,7 +34,7 @@ trait SafetyDegreeAttribute
      */
     public function getEditButtonAttribute()
     {
-        return '<a href="'.route('admin.access.regions.edit', $this).'" class="btn btn-xs btn-primary"><i class="fa fa-pencil" data-toggle="tooltip" data-placement="top" title="'.trans('buttons.general.crud.edit').'"></i></a> ';
+        return '<a href="'.route('admin.safety-degrees.safety.edit', $this).'" class="btn btn-xs btn-primary"><i class="fa fa-pencil" data-toggle="tooltip" data-placement="top" title="'.trans('buttons.general.crud.edit').'"></i></a> ';
     }
 
     /**
@@ -68,7 +68,7 @@ trait SafetyDegreeAttribute
      */
     public function getShowButtonAttribute()
     {
-        return '<a href="'.route('admin.access.regions.show', $this).'" class="btn btn-xs btn-info"><i class="fa fa-search" data-toggle="tooltip" data-placement="top" title="'.trans('buttons.general.crud.view').'"></i></a> ';
+        return '<a href="'.route('admin.safety-degrees.safety.show', $this).'" class="btn btn-xs btn-info"><i class="fa fa-search" data-toggle="tooltip" data-placement="top" title="'.trans('buttons.general.crud.view').'"></i></a> ';
     }
 
     /**
@@ -76,7 +76,7 @@ trait SafetyDegreeAttribute
      */
     public function getDeleteButtonAttribute()
     {
-        return '<a href="'.route('admin.access.regions.delete', $this).'"
+        return '<a href="'.route('admin.safety-degrees.delete', $this).'"
              data-method="delete"
              data-trans-button-cancel="'.trans('buttons.general.cancel').'"
              data-trans-button-confirm="'.trans('buttons.general.crud.delete').'"

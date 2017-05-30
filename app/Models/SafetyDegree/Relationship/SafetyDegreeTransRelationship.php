@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Access\Regions\Traits\Relationship;
+namespace App\Models\SafetyDegree\Relationship;
 
 use App\Models\System\Session;
 use App\Models\Access\User\SocialLogin;
@@ -10,15 +10,6 @@ use App\Models\Access\language\Languages;
  */
 trait SafetyDegreeTransRelationship
 {
-    /**
-     * Many-to-Many relations with Role.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function roles()
-    {
-        return $this->belongsToMany(config('access.role'), config('access.role_user_table'), 'user_id', 'role_id');
-    }
 
     /**
      * @return mixed

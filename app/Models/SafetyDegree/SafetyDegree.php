@@ -13,8 +13,8 @@ class SafetyDegree extends Model
     // use RegionAttribute,
     //     RegionsRelationship;
 
-    use SafetyDegreeRelationship,
-        SafetyDegreeAttribute;
+    use SafetyDegreeAttribute,
+        SafetyDegreeRelationship;
 
     public $timestamps = false;
 

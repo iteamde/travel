@@ -120,7 +120,7 @@
 
                 <ul class="treeview-menu {{ active_class(Active::checkUriPattern('admin/*'), 'menu-open') }}" style="display: none; {{ active_class(Active::checkUriPattern('admin/*'), 'display: block;') }}">
                     <li class="{{ active_class(Active::checkUriPattern('admin/access/langauge*')) }}">
-                        <a href="{{ route('admin.safety-degrees.index') }}">
+                        <a href="{{ route('admin.safety-degrees.safety.index') }}">
                             <i class="fa fa-circle-o"></i>
                             <!-- <span>{{ trans('labels.backend.access.langauge.management') }}</span> -->
                             <span>Safety Degrees</span>

@@ -15,8 +15,13 @@ Route::group([
     Route::post('/get', 'SafetyDegreesTableController')->name('get');
 
     /*
-     * User CRUD
+     * Safety Degrees CRUD
      */
-    Route::resource('/', 'SafetyDegreesController');
+    Route::resource('safety', 'SafetyDegreesController');
 
-});
+    /*
+     * Deleted Safety Degrees
+     */
+    Route::delete('{deletedRegions}/delete', 'SafetyDegreesController@delete')->name('delete');     
+
+}); 

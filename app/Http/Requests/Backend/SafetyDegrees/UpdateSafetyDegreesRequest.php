@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Backend\SafetyDegrees;
 
 use App\Http\Requests\Request;
+use App\Models\Access\language\Languages;
 
 /**
  * Class UpdateUserRequest.
@@ -26,10 +27,12 @@ class UpdateSafetyDegreesRequest extends Request
      */
     public function rules()
     {
-        return [
-            'title' => 'required|max:255',
-            'code'  => 'required|max:255',
-            'active'=> 'required'
-        ];
+        $inputs = [];
+        $languages = \DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE)->get();
+        foreach ($languages as $key => $language) {
+            $inputs['title_'.$language->id] = 'required|max:255';
+        }
+        
+        return $inputs;
     }
 }

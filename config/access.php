@@ -4,6 +4,7 @@ use App\Models\Access\Role\Role;
 use App\Models\Access\Permission\Permission;
 use App\Models\Access\Regions\Regions;
 use App\Models\Access\Regions\RegionsTranslation;
+use App\Models\SafetyDegree\SafetyDegreeTrans;
 
 return [
     /*
@@ -82,6 +83,12 @@ return [
      * role_user table used by Access to save assigned roles to the database.
      */
     'safety_degree_lang' => 'conf_safety_degrees_trans',
+
+    /*
+     * safety_degree_trans model used by Access to create correct relations.
+     * Update the permission if it is in a different namespace.
+     */
+    'safety_degree_trans' => SafetyDegreeTrans::class,    
 
     /*
      * Configurations for the user

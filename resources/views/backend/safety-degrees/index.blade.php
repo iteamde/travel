@@ -35,6 +35,7 @@
                     <tr>
                         <!-- <th>{{ trans('labels.backend.access.users.table.id') }}</th> -->
                         <th>id</th>
+                        <th>title</th>
                         <!-- <th>{{ trans('labels.general.actions') }}</th> -->
                         <!-- <th>{{ trans('labels.backend.access.users.table.name') }}</th>
                         <th>{{ trans('labels.backend.access.users.table.email') }}</th>
@@ -65,7 +66,8 @@
                     data: {status: 1}
                 },
                 columns: [
-	                {data: 'id', name: '{{config('access.safety_degree')}}.id'},
+                    {data: 'id', name: '{{config('access.safety_degree')}}.id'},
+                    {data: 'transsingle.title', name: '{{config('access.safety_degree_lang')}}.title'},
                     {data: 'action', name: 'action', searchable: false, sortable: false}
                 ],
                 order: [[0, "asc"]],

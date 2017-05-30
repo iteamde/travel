@@ -6,12 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 // use App\Models\Access\Language\Traits\Attribute\LanguageAttribute;
 // use App\Models\Access\Regions\Traits\Relationship\RegionsRelationship;
 // use App\Models\Access\Regions\Traits\Attribute\RegionAttribute;
+use App\Models\SafetyDegree\Relationship\SafetyDegreeTransRelationship;
 
 class SafetyDegreeTrans extends Model
 {
 
     // use RegionAttribute,
-    //     RegionsRelationship;
+        // RegionsRelationship;
+    use SafetyDegreeTransRelationship;
 
     public $timestamps = false;
 

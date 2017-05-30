@@ -85,22 +85,32 @@ class SafetyDegreesRepository extends BaseRepository
      * @return bool
      * @throws GeneralException
      */
-    public function update(Model $language, array $input)
+    public function update($model_id , $model, array $input)
     {
-        $input = $input['data'];
-
-        $this->checkUserByCode($input);
+        $this->removeTranslations($model_id);
         
-        $language->title  = $input['title'];
-        $language->code   = $input['code'];
-        $language->active = $input['active'];
+        DB::transaction(function () use ($model_id , $model, $input) {
+            $check = 1;
+            // if ($model->save()) {
+            foreach ($input as $key => $value) {
 
-        DB::transaction(function () use ($language, $input) {
-            if ($language->save()) {
-                return true;
+                $trans = new SafetyDegreeTrans;
+                $trans->safety_degrees_id   = $model_id;
+                $trans->languages_id = $key;
+                $trans->title        = $value['title_'.$key];
+                $trans->description  = $value['description_'.$key]; 
+                
+                if(!$trans->save()) {
+                    $check = 0;
+                }
             }
 
-            throw new GeneralException(trans('exceptions.backend.access.language.update_error'));
+            if($check) {
+                return true;
+            }
+            // }
+
+            throw new GeneralException('Unexpected Error Occured!');
         });
     }
 
@@ -116,5 +126,13 @@ class SafetyDegreesRepository extends BaseRepository
         // if ($this->query()->where('code', '=', $input['code'])->first()) {
         //     throw new GeneralException(trans('exceptions.backend.access.language.code_error'));
         // }
+    }
+
+    private function removeTranslations($model_id)
+    {
+        $model = SafetyDegreeTrans::where("safety_degrees_id", $model_id)->get();
+        foreach ($model as $key => $trans) {
+            $trans->delete();
+        }
     }
 }
