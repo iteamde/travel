@@ -10,9 +10,9 @@
 @endsection
 
 @section('after-styles')
-    <style>
-        .description {
-            word-wrap: break-word;
+    <style type="text/css">
+        td.description {
+            word-break: break-all;
         }
     </style>
 @endsection
@@ -30,7 +30,7 @@
         <div class="box-body">
 
             <div role="tabpanel">
-
+                
                 <table class="table table-striped table-hover">
                     @foreach($degreetrans as $key => $degrees)
                         <tr>
@@ -39,13 +39,14 @@
                         </tr>
                         <tr>
                             <th>Description <small>({{ $degrees->translanguage->title }})</small></th>
-                            <td><?=$degrees->description?></td>
+                            <td class="description"><p><?=$degrees->description?></p></td>
                         </tr>
                     @endforeach
                     <tr>
                         
                     </tr>
                 </table>
+                
 
             </div><!--tab panel-->
 
