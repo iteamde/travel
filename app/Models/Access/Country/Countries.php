@@ -15,6 +15,8 @@ class Countries extends Model
     
     use CountriesRelationship;
 
+    public $timestamps = false;
+
     /**
      * The attributes that are mass assignable.
      *

@@ -12,7 +12,9 @@ class CountriesTranslations extends Model
      *
      * @var string
      */
-    protected $table;
+    protected $table = 'countries_trans';
+
+    public $timestamps = false;
 
     use CountriesTransRelationship;
 

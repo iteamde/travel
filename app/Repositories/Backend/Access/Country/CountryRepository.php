@@ -3,6 +3,7 @@
 namespace App\Repositories\Backend\Access\Country;
 
 use App\Models\Access\Country\Countries;
+use App\Models\Access\Country\CountriesTranslations;
 use Illuminate\Support\Facades\DB;
 use App\Exceptions\GeneralException;
 use App\Repositories\BaseRepository;
@@ -95,34 +96,47 @@ class CountryRepository extends BaseRepository
     /**
      * @param array $input
      */
-    public function create($input)
+    public function create($input , $extra)
     {
-        $data = $input['data'];
-        $roles = $input['roles'];
+        $model = new Countries;
+        $model->regions_id  = $extra['region_id'];
+        $model->active      = $extra['active'];
+        $model->code        = $extra['code'];
+        $model->lat         = $extra['lat'];
+        $model->lng         = $extra['lng'];
+        $model->safety_degree_id = $extra['safety_degree_id'];
 
-        $user = $this->createUserStub($data);
+        DB::transaction(function () use ($model, $input, $extra) {
+            $check = 1;
+            
+            if ($model->save()) {
+                foreach ($input as $key => $value) {
+                    $trans = new CountriesTranslations;
+                    $trans->countries_id = $model->id;
+                    $trans->languages_id = $key;
+                    $trans->title        = $value['title_'.$key];
+                    $trans->description  = $value['description_'.$key];
+                    $trans->nationality  = $value['nationality_'.$key];
+                    $trans->population   = $value['population_'.$key];
+                    $trans->best_place   = $value['best_place_'.$key];
+                    $trans->best_time    = $value['best_time_'.$key];
+                    $trans->cost_of_living = $value['cost_of_living_'.$key];
+                    $trans->geo_stats    = $value['geo_stats_'.$key];
+                    $trans->demographics = $value['demographics_'.$key];
+                    $trans->economy      = $value['economy_'.$key];
+                    $trans->suitable_for      = $value['suitable_for_'.$key];
 
-        DB::transaction(function () use ($user, $data, $roles) {
-            if ($user->save()) {
-                //User Created, Validate Roles
-                if (! count($roles['assignees_roles'])) {
-                    throw new GeneralException(trans('exceptions.backend.access.users.role_needed_create'));
+                    if(!$trans->save()) {
+                        $check = 0;
+                    }
                 }
 
-                //Attach new roles
-                $user->attachRoles($roles['assignees_roles']);
-
-                //Send confirmation email if requested
-                if (isset($data['confirmation_email']) && $user->confirmed == 0) {
-                    $user->notify(new UserNeedsConfirmation($user->confirmation_code));
+                if($check){
+                    return true;
                 }
-
-                event(new UserCreated($user));
-
-                return true;
             }
 
-            throw new GeneralException(trans('exceptions.backend.access.users.create_error'));
+            throw new GeneralException('Unexpected Error Occured!');
         });
     }
 
