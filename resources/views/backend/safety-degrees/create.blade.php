@@ -63,7 +63,7 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
                                 {{ Form::label('description_'.$language->id, 'Description', ['class' => 'col-lg-2 control-label']) }}
 
                                 <div class="col-lg-10">
-                                    {{ Form::text('description_'.$language->id, null, ['class' => 'form-control', 'maxlength' => '191', 'required' => 'required', 'placeholder' => 'Description']) }}
+                                    {{ Form::textarea('description_'.$language->id, null, ['class' => 'form-control description_input', 'required' => 'required', 'placeholder' => 'Description']) }}
                                 </div><!--col-lg-10-->
                             </div><!--form control-->
                             <!-- End: Description -->
@@ -95,9 +95,17 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
     {{ Form::close() }}
 @endsection
 
+@section('after-styles')
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.3/summernote.css" rel="stylesheet">
+@endsection
+
 @section('after-scripts')
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.3/summernote.js"></script>
     {{ Html::script('js/backend/access/users/script.js') }}
     <script type="text/javascript">
         $('.select2Class').select2();
+        $('.description_input').summernote({
+             height: 200
+        });
     </script>
 @endsection

@@ -9,6 +9,14 @@
     </h1>
 @endsection
 
+@section('after-styles')
+    <style>
+        .description {
+            word-wrap: break-word;
+        }
+    </style>
+@endsection
+
 @section('content')
     <div class="box box-success">
         <div class="box-header with-border">
@@ -31,7 +39,7 @@
                         </tr>
                         <tr>
                             <th>Description <small>({{ $degrees->translanguage->title }})</small></th>
-                            <td>{{ $degrees->description }}</td>
+                            <td><?=$degrees->description?></td>
                         </tr>
                     @endforeach
                     <tr>

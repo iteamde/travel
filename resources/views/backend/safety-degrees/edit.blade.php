@@ -65,7 +65,7 @@ use App\Models\Access\language\Languages;
                                 {{ Form::label('description_'.$language->id, 'Description', ['class' => 'col-lg-2 control-label']) }}
 
                                 <div class="col-lg-10">
-                                    {{ Form::text('description_'.$language->id, $data['description_'.$language->id], ['class' => 'form-control', 'maxlength' => '191', 'required' => 'required', 'placeholder' => 'Description']) }}
+                                    {{ Form::textarea('description_'.$language->id, $data['description_'.$language->id], ['class' => 'form-control description_input', 'required' => 'required', 'placeholder' => 'Description']) }}
                                 </div>
                             </div><!--form control-->
                             <!-- End: Description -->
@@ -94,6 +94,14 @@ use App\Models\Access\language\Languages;
     {{ Form::close() }}
 @endsection
 
+@section('after-styles')
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.3/summernote.css" rel="stylesheet">
+@endsection
 @section('after-scripts')
-
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.3/summernote.js"></script>
+    <script type="text/javascript">
+        $('.description_input').summernote({
+             height: 200
+        });
+    </script>
 @endsection
