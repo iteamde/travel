@@ -15,7 +15,7 @@
             <h3 class="box-title">View Safety Degree</h3>
 
             <div class="box-tools pull-right">
-                @include('backend.access.includes.partials.regions-header-buttons-view')
+                @include('backend.access.includes.partials.safety-degrees-buttons-view')
             </div><!--box-tools pull-right-->
         </div><!-- /.box-header -->
 

@@ -20,7 +20,7 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
 @section('content')
     {{ Form::open([
             'id'     => 'country_form',
-            'route'  => 'admin.safety-degrees.store',
+            'route'  => 'admin.safety-degrees.safety.store',
             'class'  => 'form-horizontal',
             'role'   => 'form',
             'method' => 'post',
@@ -31,10 +31,6 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
             <div class="box-header with-border">
                 <!-- <h3 class="box-title">{{ trans('labels.backend.access.users.create') }}</h3> -->
                 <h3 class="box-title">Create Safety Degrees</h3>
-
-                <div class="box-tools pull-right">
-                    @include('backend.access.includes.partials.user-header-buttons')
-                </div><!--box-tools pull-right-->
             </div><!-- /.box-header -->
 
             <div class="box-body">
@@ -85,7 +81,7 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
         <div class="box box-info">
             <div class="box-body">
                 <div class="pull-left">
-                    {{ link_to_route('admin.safety-degrees.index', trans('buttons.general.cancel'), [], ['class' => 'btn btn-danger btn-xs']) }}
+                    {{ link_to_route('admin.safety-degrees.safety.index', trans('buttons.general.cancel'), [], ['class' => 'btn btn-danger btn-xs']) }}
                 </div><!--pull-left-->
 
                 <div class="pull-right">

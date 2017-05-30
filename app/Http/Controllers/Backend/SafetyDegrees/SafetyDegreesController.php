@@ -114,7 +114,7 @@ class SafetyDegreesController extends Controller
 
         $this->degrees->create($data);
 
-        return redirect()->route('admin.safety-degrees.index')->withFlashSuccess(trans('alerts.backend.language.created'));
+        return redirect()->route('admin.safety-degrees.safety.index')->withFlashSuccess('Safety Degree Created Successfully');
     }
 
     /**
@@ -128,7 +128,7 @@ class SafetyDegreesController extends Controller
         $item = SafetyDegree::findOrFail($id);
         $item->delete();
 
-        return redirect()->route('admin.safety-degrees.index')->withFlashSuccess(trans('alerts.backend.language.deleted'));
+        return redirect()->route('admin.safety-degrees.safety.index')->withFlashSuccess('Safety Degree Deleted Successfully');
     }
 
     /**
