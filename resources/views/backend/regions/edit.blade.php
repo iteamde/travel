@@ -4,7 +4,7 @@ use App\Models\Access\language\Languages;
 ?>
 @extends ('backend.layouts.app')
 
-@section ('title', 'Regions Manager' . ' | ' . 'Create Region')
+@section ('title', 'Regions Manager' . ' | ' . 'Edit Region')
 
 @section('page-header')
     <h1>
@@ -15,19 +15,19 @@ use App\Models\Access\language\Languages;
 @endsection
 
 @section('content')
-    {{ Form::open([
-            'id'     => 'region_form',
-            'route'  => 'admin.access.regions.store',
+    {{ Form::model($regions, [
+            'id'     => 'regions_update_form',
+            'route'  => ['admin.location.regions.update', $regions],
             'class'  => 'form-horizontal',
             'role'   => 'form',
-            'method' => 'post'
+            'method' => 'PATCH',
         ]) 
     }}
 
         <div class="box box-success">
             <div class="box-header with-border">
                 <!-- <h3 class="box-title">{{ trans('labels.backend.access.users.create') }}</h3> -->
-                <h3 class="box-title">Create Region</h3>
+                <h3 class="box-title">Update Region</h3>
 
                 <div class="box-tools pull-right">
                 
@@ -54,7 +54,7 @@ use App\Models\Access\language\Languages;
                                 {{ Form::label('title_'.$language->id, 'Title', ['class' => 'col-lg-2 control-label']) }}
 
                                 <div class="col-lg-10">
-                                    {{ Form::text('title_'.$language->id, null, ['class' => 'form-control', 'maxlength' => '255', 'required' => 'required', 'autofocus' => 'autofocus', 'placeholder' => 'Title']) }}
+                                    {{ Form::text('title_'.$language->id, $data['title_'.$language->id], ['class' => 'form-control', 'maxlength' => '255', 'required' => 'required', 'autofocus' => 'autofocus', 'placeholder' => 'Title']) }}
                                 </div><!--col-lg-10-->
                             </div><!--form control-->
                             <!-- End: Title -->
@@ -66,7 +66,7 @@ use App\Models\Access\language\Languages;
                         {{ Form::label('title', trans('validation.attributes.backend.access.languages.active'), ['class' => 'col-lg-2 control-label']) }}
 
                         <div class="col-lg-10">
-                            {{ Form::checkbox('active', '1', true) }}
+                            {{ Form::checkbox('active', true) }}
                         </div><!--col-lg-10-->
                     </div><!--form control-->
                     <!-- Active: End -->
@@ -77,11 +77,11 @@ use App\Models\Access\language\Languages;
         <div class="box box-info">
             <div class="box-body">
                 <div class="pull-left">
-                    {{ link_to_route('admin.access.regions.index', trans('buttons.general.cancel'), [], ['class' => 'btn btn-danger btn-xs']) }}
+                    {{ link_to_route('admin.location.regions.index', trans('buttons.general.cancel'), [], ['class' => 'btn btn-danger btn-xs']) }}
                 </div><!--pull-left-->
 
                 <div class="pull-right">
-                    {{ Form::submit(trans('buttons.general.crud.create'), ['class' => 'btn btn-success btn-xs submit_button']) }}
+                    {{ Form::submit(trans('buttons.general.crud.update'), ['class' => 'btn btn-success btn-xs submit_button']) }}
                 </div><!--pull-right-->
 
                 <div class="clearfix"></div>

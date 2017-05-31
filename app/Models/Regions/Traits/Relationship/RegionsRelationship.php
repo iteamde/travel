@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Access\Regions\Traits\Relationship;
+namespace App\Models\Regions\Traits\Relationship;
 
 use App\Models\System\Session;
 use App\Models\Access\User\SocialLogin;
@@ -18,13 +18,13 @@ trait RegionsRelationship
     public function trans()
     {
         // return $this->belongsToMany(config('access.regions'), config('access.regions_trans'), 'id', 'regions_id');
-        return $this->hasMany(config('access.regions_trans'), 'regions_id');
+        return $this->hasMany(config('locations.regions_trans'), 'regions_id');
     }
 
     public function transsingle()
     {
         // return $this->belongsToMany(config('access.regions'), config('access.regions_trans'), 'id', 'regions_id');
-        return $this->hasOne(config('access.regions_trans'), 'regions_id');
+        return $this->hasOne(config('locations.regions_trans'), 'regions_id');
     }
     /**
      * @return mixed

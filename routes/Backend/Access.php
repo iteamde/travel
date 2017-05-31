@@ -104,37 +104,6 @@ Route::group([
                 Route::get('mark/{status}', 'LanguagesController@mark')->name('languages.mark')->where(['status' => '[1,2]']);
             });
         });
-
-        /*
-         * Regions Manager
-         **/
-
-        Route::group(['namespace' => 'Regions'], function () {
-            /*
-             * For DataTables
-             */
-            Route::post('regions/get', 'RegionsTableController')->name('regions.get');
-
-            /*
-             * User CRUD
-             */
-            Route::resource('regions', 'RegionsController');
-
-             /*
-             * Deleted Region
-             */
-            Route::group(['prefix' => 'regions/{deletedRegions}'], function () {
-                Route::delete('delete', 'RegionsController@delete')->name('regions.delete');
-            });
-
-            /*
-             * Specific Region
-             */
-            Route::group(['prefix' => 'regions/{region}'], function () {
-                Route::get('mark/{status}', 'RegionsController@mark')->name('regions.mark')->where(['status' => '[1,2]']);
-            });
-        });
-
         
     });
 });

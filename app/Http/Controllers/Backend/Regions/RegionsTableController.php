@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Backend\Access\Regions;
+namespace App\Http\Controllers\Backend\Regions;
 
 use App\Http\Controllers\Controller;
 use Yajra\Datatables\Facades\Datatables;
-use App\Repositories\Backend\Access\Regions\RegionsRepository;
-use App\Http\Requests\Backend\Access\Regions\ManageRegionsRequest;
-use App\Models\Access\Regions\Regions;
+use App\Repositories\Backend\Regions\RegionsRepository;
+use App\Http\Requests\Backend\Regions\ManageRegionsRequest;
+use App\Models\Regions\Regions;
 
 /**
  * Class RegionsTableController.

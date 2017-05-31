@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Repositories\Backend\Access\Regions;
+namespace App\Repositories\Backend\Regions;
 
-use App\Models\Access\Regions\Regions;
+use App\Models\Regions\Regions;
 use Illuminate\Support\Facades\DB;
 use App\Exceptions\GeneralException;
 use App\Repositories\BaseRepository;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Access\Regions\RegionsTranslation;
+use App\Models\Regions\RegionsTranslation;
 /**
  * Class RegionsRepository.
  */
@@ -33,8 +33,8 @@ class RegionsRepository extends BaseRepository
         $dataTableQuery = $this->query()
             ->with('transsingle')
             ->select([
-                config('access.regions_table').'.id',
-                config('access.regions_table').'.active',
+                config('locations.regions_table').'.id',
+                config('locations.regions_table').'.active',
             ]);
 
         // active() is a scope on the UserScope trait

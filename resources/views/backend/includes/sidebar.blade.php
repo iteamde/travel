@@ -93,7 +93,7 @@
 
                 <ul class="treeview-menu {{ active_class(Active::checkUriPattern('admin/access/*'), 'menu-open') }}" style="display: none; {{ active_class(Active::checkUriPattern('admin/access/*'), 'display: block;') }}">
                     <li class="{{ active_class(Active::checkUriPattern('admin/access/regions*')) }}">
-                        <a href="{{ route('admin.access.regions.index') }}">
+                        <a href="{{ route('admin.location.regions.index') }}">
                             <i class="fa fa-circle-o"></i>
                             <!-- <span>{{ trans('labels.backend.access.users.management') }}</span> -->
                             <span>Regions</span>

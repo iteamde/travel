@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Models\Access\Regions;
+namespace App\Models\Regions;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Access\Regions\Traits\Relationship\RegionsTranslationRelationship;
+use App\Models\Regions\Traits\Relationship\RegionsTranslationRelationship;
 class RegionsTranslation extends Model
 {
     public $timestamps = false;

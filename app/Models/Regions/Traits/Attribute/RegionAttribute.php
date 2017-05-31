@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Access\Regions\Traits\Attribute;
+namespace App\Models\Regions\Traits\Attribute;
 
 /**
  * Class RegionAttribute.
@@ -34,7 +34,7 @@ trait RegionAttribute
      */
     public function getEditButtonAttribute()
     {
-        return '<a href="'.route('admin.access.regions.edit', $this).'" class="btn btn-xs btn-primary"><i class="fa fa-pencil" data-toggle="tooltip" data-placement="top" title="'.trans('buttons.general.crud.edit').'"></i></a> ';
+        return '<a href="'.route('admin.location.regions.edit', $this).'" class="btn btn-xs btn-primary"><i class="fa fa-pencil" data-toggle="tooltip" data-placement="top" title="'.trans('buttons.general.crud.edit').'"></i></a> ';
     }
 
     /**
@@ -44,14 +44,14 @@ trait RegionAttribute
     {
         switch ($this->active) {
             case 2:
-                return '<a href="'.route('admin.access.regions.mark', [
+                return '<a href="'.route('admin.location.regions.mark', [
                     $this,
                     1,
                 ]).'" class="btn btn-xs btn-success"><i class="fa fa-play" data-toggle="tooltip" data-placement="top" title="'.trans('buttons.backend.access.users.activate').'"></i></a> ';
             // No break
 
             case 1:
-                return '<a href="'.route('admin.access.regions.mark', [
+                return '<a href="'.route('admin.location.regions.mark', [
                     $this,
                     2,
                 ]).'" class="btn btn-xs btn-warning"><i class="fa fa-pause" data-toggle="tooltip" data-placement="top" title="'.trans('buttons.backend.access.users.deactivate').'"></i></a> ';
@@ -68,7 +68,7 @@ trait RegionAttribute
      */
     public function getShowButtonAttribute()
     {
-        return '<a href="'.route('admin.access.regions.show', $this).'" class="btn btn-xs btn-info"><i class="fa fa-search" data-toggle="tooltip" data-placement="top" title="'.trans('buttons.general.crud.view').'"></i></a> ';
+        return '<a href="'.route('admin.location.regions.show', $this).'" class="btn btn-xs btn-info"><i class="fa fa-search" data-toggle="tooltip" data-placement="top" title="'.trans('buttons.general.crud.view').'"></i></a> ';
     }
 
     /**
@@ -76,7 +76,7 @@ trait RegionAttribute
      */
     public function getDeleteButtonAttribute()
     {
-        return '<a href="'.route('admin.access.regions.delete', $this).'"
+        return '<a href="'.route('admin.location.regions.delete', $this).'"
              data-method="delete"
              data-trans-button-cancel="'.trans('buttons.general.cancel').'"
              data-trans-button-confirm="'.trans('buttons.general.crud.delete').'"

@@ -2,8 +2,8 @@
 
 use App\Models\Access\Role\Role;
 use App\Models\Access\Permission\Permission;
-use App\Models\Access\Regions\Regions;
-use App\Models\Access\Regions\RegionsTranslation;
+use App\Models\Regions\Regions;
+use App\Models\Regions\RegionsTranslation;
 use App\Models\SafetyDegree\SafetyDegreeTrans;
 
 return [
@@ -39,6 +39,5 @@ return [
      * RegionsTranslation table used by Access to save roles to the database.
      */
     'regions_trans_table' => 'conf_regions_trans',
-      
-
+    
 ];

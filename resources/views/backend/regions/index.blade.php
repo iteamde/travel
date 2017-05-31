@@ -51,15 +51,15 @@
                 processing: true,
                 serverSide: true,
                 ajax: {
-                    url: '{{ route("admin.access.regions.get") }}',
+                    url: '{{ route("admin.location.regions.get") }}',
                     type: 'post',
                     data: {status: 1}
                 },
                 columns: [
-	                {data: 'id', name: '{{config('access.regions_table')}}.id'},
-                    {data: 'transsingle.title', name: '{{config('access.regions_trans_table')}}.title'},
+	                {data: 'id', name: '{{config('locations.regions_table')}}.id'},
+                    {data: 'transsingle.title', name: '{{config('locations.regions_trans_table')}}.title'},
                     {
-                        name: '{{config('access.regions_table')}}.active',
+                        name: '{{config('locations.regions_table')}}.active',
                         data: 'active',
                         sortable: false,
                         searchable: false,

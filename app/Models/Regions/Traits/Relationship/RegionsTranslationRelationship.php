@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Access\Regions\Traits\Relationship;
+namespace App\Models\Regions\Traits\Relationship;
 
 use App\Models\System\Session;
 use App\Models\Access\User\SocialLogin;

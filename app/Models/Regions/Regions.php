@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Models\Access\Regions;
+namespace App\Models\Regions;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Access\Language\Traits\Attribute\LanguageAttribute;
-use App\Models\Access\Regions\Traits\Relationship\RegionsRelationship;
-use App\Models\Access\Regions\Traits\Attribute\RegionAttribute;
+use App\Models\Regions\Traits\Relationship\RegionsRelationship;
+use App\Models\Regions\Traits\Attribute\RegionAttribute;
 
 class Regions extends Model
 {

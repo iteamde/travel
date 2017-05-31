@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Backend\Access\Regions;
+namespace App\Http\Requests\Backend\Regions;
 
 use App\Http\Requests\Request;
 

@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Http\Controllers\Backend\Access\Regions;
+namespace App\Http\Controllers\Backend\Regions;
 
-use App\Models\Access\Regions\Regions;
+use App\Models\Regions\Regions;
 use App\Models\Access\language\Languages;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Backend\Access\Regions\ManageRegionsRequest;
-use App\Http\Requests\Backend\Access\Regions\StoreRegionsRequest;
-use App\Repositories\Backend\Access\Regions\RegionsRepository;
-use App\Models\Access\Regions\RegionsTranslation;
-use App\Http\Requests\Backend\Access\Regions\UpdateRegionsRequest;
+use App\Http\Requests\Backend\Regions\ManageRegionsRequest;
+use App\Http\Requests\Backend\Regions\StoreRegionsRequest;
+use App\Repositories\Backend\Regions\RegionsRepository;
+use App\Models\Regions\RegionsTranslation;
+use App\Http\Requests\Backend\Regions\UpdateRegionsRequest;
 
 class RegionsController extends Controller
 {
@@ -29,7 +29,7 @@ class RegionsController extends Controller
      */
     public function index(ManageRegionsRequest $request)
     {
-        return view('backend.access.regions.index');
+        return view('backend.regions.index');
     }
 
     /**
@@ -39,7 +39,7 @@ class RegionsController extends Controller
      */
     public function create(ManageRegionsRequest $request)
     {
-        return view('backend.access.regions.create')
+        return view('backend.regions.create')
             ->withLanguages($this->languages);
     }
 
@@ -63,7 +63,7 @@ class RegionsController extends Controller
             $data['title_'.$language->id] = $model[0]->title;
         }
 
-        return view('backend.access.regions.edit')
+        return view('backend.regions.edit')
             ->withLanguages($this->languages)
             ->withRegions($region)
             ->withData($data);
@@ -85,7 +85,7 @@ class RegionsController extends Controller
 
         $this->regions->update($region, $data, $request->input('active'));
 
-        return redirect()->route('admin.access.regions.index')
+        return redirect()->route('admin.location.regions.index')
             ->withFlashSuccess('Region updated Successfully!');
     }
 
@@ -104,7 +104,7 @@ class RegionsController extends Controller
 
         $this->regions->create($data, $request->input('active'));
 
-        return redirect()->route('admin.access.regions.index')->withFlashSuccess('Region Created!');
+        return redirect()->route('admin.location.regions.index')->withFlashSuccess('Region Created!');
     }
 
     /**
@@ -123,7 +123,7 @@ class RegionsController extends Controller
             }
             $item->delete();
 
-            return redirect()->route('admin.access.regions.index')
+            return redirect()->route('admin.location.regions.index')
                 ->withFlashSuccess("Region Successfully Removed!");
         }
 
@@ -141,7 +141,7 @@ class RegionsController extends Controller
     {
         $region->active = $status;
         $region->save();
-        return redirect()->route('admin.access.regions.index')
+        return redirect()->route('admin.location.regions.index')
             ->withFlashSuccess('Region Status Updated!');
     }
 
@@ -153,7 +153,7 @@ class RegionsController extends Controller
      */
     public function show(Regions $region, ManageRegionsRequest $request)
     {
-        return view('backend.access.regions.show')
+        return view('backend.regions.show')
             ->withRegions($region);
     }
 }
