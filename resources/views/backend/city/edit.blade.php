@@ -174,7 +174,7 @@ use App\Models\Access\language\Languages;
                         {{ Form::label('code', 'Code', ['class' => 'col-lg-2 control-label']) }}
 
                         <div class="col-lg-10">
-                            {{ Form::text('code', $data['code'], ['class' => 'form-control', 'maxlength' => '3', 'required' => 'required', 'placeholder' => 'Suitable for']) }}
+                            {{ Form::input('number' ,'code', $data['code'], ['class' => 'form-control', 'maxlength' => '3', 'required' => 'required', 'placeholder' => 'Suitable for']) }}
                         </div><!--col-lg-10-->
                     </div><!--form control-->
                     <!-- End: code -->
