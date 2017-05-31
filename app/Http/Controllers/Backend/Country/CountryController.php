@@ -29,7 +29,7 @@ class CountryController extends Controller
      */
     public function index(ManageCountryRequest $request)
     {
-        return view('backend.access.country.index');
+        return view('backend.country.index');
     }
 
     /**
@@ -59,7 +59,7 @@ class CountryController extends Controller
             }
         }
        
-        return view('backend.access.country.create',[
+        return view('backend.country.create',[
             'regions' => $regions_arr,
             'degrees' => $degrees_arr,
         ]);
@@ -190,7 +190,7 @@ class CountryController extends Controller
             }
         }
 
-        return view('backend.access.country.edit')
+        return view('backend.country.edit')
             ->withLanguages($this->languages)
             ->withCountry($country)
             ->withCountryid($id)
@@ -273,7 +273,7 @@ class CountryController extends Controller
         $safety_degree = $country->degree;
         $safety_degree = $safety_degree->transsingle;
        
-        return view('backend.access.country.show')
+        return view('backend.country.show')
             ->withCountry($country)
             ->withCountrytrans($countryTrans)
             ->withRegion($region)
