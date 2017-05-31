@@ -140,54 +140,59 @@ class CountryRepository extends BaseRepository
         });
     }
 
+    
     /**
-     * @param Model $user
      * @param array $input
-     *
-     * @return bool
-     * @throws GeneralException
      */
-    public function update(Model $user, array $input)
+    public function update($id , $model , $input , $extra)
     {
-        $data = $input['data'];
-        $roles = $input['roles'];
+        $model = Countries::findOrFail(['id' => $id]);
+        $model = $model[0];
+        $model->regions_id  = $extra['region_id'];
+        $model->active      = $extra['active'];
+        $model->code        = $extra['code'];
+        $model->lat         = $extra['lat'];
+        $model->lng         = $extra['lng'];
+        $model->safety_degree_id = $extra['safety_degree_id'];
 
-        $this->checkUserByEmail($data, $user);
+        $prev = CountriesTranslations::where(['countries_id' => $id])->get();
+        if(!empty($prev)){
+            foreach ($prev as $key => $value) {
+                $value->delete();
+            }
+        }
 
-        // $user->name = $data['name'];
-        // $user->email = $data['email'];
-        // $user->status = isset($data['status']) ? 1 : 0;
-        // $user->confirmed = isset($data['confirmed']) ? 1 : 0;
-        $user->name              = $data['name'];
-        $user->email             = $data['email'];
-        $user->address           = $data['address'];
-        $user->single            = $data['single'];
-        $user->gender            = $data['gender'];
-        $user->children          = $data['children'];
-        $user->age               = $data['age'];
-        $user->public_profile    = $data['public_profile'];
-        $user->mobile            = $data['mobile'];
-        $user->nationality       = $data['nationality'];
-        $user->profile_picture   = $data['profile_picture'];
-        $user->notifications     = $data['notifications'];
-        $user->messages          = $data['messages'];
-        $user->username          = $data['username'];
-        $user->password          = bcrypt($data['password']);
-        $user->status            = isset($data['status']) ? 1 : 0;
-        $user->confirmed         = isset($data['confirmed']) ? 1 : 0;
-        $user->sms               = $data['sms'];
-        
-        DB::transaction(function () use ($user, $data, $roles) {
-            if ($user->save()) {
-                $this->checkUserRolesCount($roles);
-                $this->flushRoles($roles, $user);
+        DB::transaction(function () use ($model, $input, $extra) {
+            $check = 1;
+            
+            if ($model->save()) {
+                foreach ($input as $key => $value) {
+                    $trans = new CountriesTranslations;
+                    $trans->countries_id = $model->id;
+                    $trans->languages_id = $key;
+                    $trans->title        = $value['title_'.$key];
+                    $trans->description  = $value['description_'.$key];
+                    $trans->nationality  = $value['nationality_'.$key];
+                    $trans->population   = $value['population_'.$key];
+                    $trans->best_place   = $value['best_place_'.$key];
+                    $trans->best_time    = $value['best_time_'.$key];
+                    $trans->cost_of_living = $value['cost_of_living_'.$key];
+                    $trans->geo_stats    = $value['geo_stats_'.$key];
+                    $trans->demographics = $value['demographics_'.$key];
+                    $trans->economy      = $value['economy_'.$key];
+                    $trans->suitable_for      = $value['suitable_for_'.$key];
 
-                event(new UserUpdated($user));
+                    if(!$trans->save()) {
+                        $check = 0;
+                    }
+                }
 
-                return true;
+                if($check){
+                    return true;
+                }
             }
 
-            throw new GeneralException(trans('exceptions.backend.access.users.update_error'));
+            throw new GeneralException('Unexpected Error Occured!');
         });
     }
 }
