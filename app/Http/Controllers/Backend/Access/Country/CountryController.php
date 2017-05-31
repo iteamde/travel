@@ -10,6 +10,7 @@ use App\Http\Requests\Backend\Access\Country\ManageCountryRequest;
 use App\Http\Requests\Backend\Access\Country\StoreCountryRequest;
 use App\Repositories\Backend\Access\Country\CountryRepository;
 use App\Models\Access\Regions\Regions;
+use App\Models\SafetyDegree\SafetyDegree;
 
 class CountryController extends Controller
 {
@@ -38,6 +39,7 @@ class CountryController extends Controller
      */
     public function create(ManageCountryRequest $request)
     {   
+        /* Get All Regions */
         $regions = Regions::where(['active' => 1])->get();
         $regions_arr = [];
         
@@ -46,9 +48,20 @@ class CountryController extends Controller
                 $regions_arr[$value->id] = $value->transsingle->title;
             }
         }
-                
+
+        /* Get All safety Degrees */
+        $degrees = SafetyDegree::get();
+        $degrees_arr = [];
+        
+        foreach ($degrees as $key => $value) {
+            if(isset($value->transsingle) && !empty($value->transsingle)){  
+                $degrees_arr[$value->id] = $value->transsingle->title;
+            }
+        }
+       
         return view('backend.access.country.create',[
-            'regions' => $regions_arr
+            'regions' => $regions_arr,
+            'degrees' => $degrees_arr,
         ]);
     }
 
@@ -77,13 +90,21 @@ class CountryController extends Controller
 
         $location = explode(',',$request->input('lat_lng') ); 
         
+        /* Check if active field is enabled or disabled */
+        $active = null;
+        if(empty($request->input('active')) || $request->input('active') == 0){
+            $active = 2;
+        }else{
+            $active = 1;
+        }
+
         $extra = [
-            'active' => $request->input('active'),
+            'active' => $active,
             'region_id' =>  $request->input('region_id'),
             'code' => $request->input('code'),
             'lat' => $location[0],
             'lng' => $location[1],
-            'safety_degree_id' => 2
+            'safety_degree_id' => $request->input('safety_degree_id')
         ];
 
         $this->countries->create($data, $extra);
@@ -148,10 +169,7 @@ class CountryController extends Controller
         $data['code'] = $country['code'];
         $data['active'] = $country['active'];
         $data['regions_id'] = $country['regions_id'];
-
-        // echo '<pre>';
-        // print_r($data);
-        // exit;
+        $data['safety_degree_id'] = $country['safety_degree_id'];
 
         $regions = Regions::where(['active' => 1])->get();
         $regions_arr = [];
@@ -162,12 +180,23 @@ class CountryController extends Controller
             }
         }
 
+         /* Get All safety Degrees */
+        $degrees = SafetyDegree::get();
+        $degrees_arr = [];
+        
+        foreach ($degrees as $key => $value) {
+            if(isset($value->transsingle) && !empty($value->transsingle)){  
+                $degrees_arr[$value->id] = $value->transsingle->title;
+            }
+        }
+
         return view('backend.access.country.edit')
             ->withLanguages($this->languages)
             ->withCountry($country)
             ->withCountryid($id)
             ->withData($data)
-            ->withRegions($regions_arr);
+            ->withRegions($regions_arr)
+            ->withDegrees($degrees_arr);
     }
 
     /**
@@ -200,13 +229,21 @@ class CountryController extends Controller
 
         $location = explode(',',$request->input('lat_lng') ); 
         
+        /* Check if active field is enabled or disabled */
+        $active = null;
+        if(empty($request->input('active')) || $request->input('active') == 0){
+            $active = 2;
+        }else{
+            $active = 1;
+        }
+        
         $extra = [
-            'active' => $request->input('active'),
+            'active' => $active,
             'region_id' =>  $request->input('region_id'),
             'code' => $request->input('code'),
             'lat' => $location[0],
             'lng' => $location[1],
-            'safety_degree_id' => 2
+            'safety_degree_id' => $request->input('safety_degree_id')
         ];
 
         
@@ -214,5 +251,47 @@ class CountryController extends Controller
 
         return redirect()->route('admin.access.country.index')
             ->withFlashSuccess('Country updated Successfully!');
+    }
+
+    /**
+     * @param Country        $id
+     * @param ManageCountryRequest $request
+     *
+     * @return mixed
+     */
+    public function show($id, ManageCountryRequest $request)
+    {   
+        $country = Countries::findOrFail(['id' => $id]);
+        $countryTrans = CountriesTranslations::where(['countries_id' => $id])->get();
+        $country = $country[0];
+
+        /* Get Regions Information */
+        $region = $country->region;
+        $region = $region->transsingle;
+        
+        /* Get Safety Degrees Information */
+        $safety_degree = $country->degree;
+        $safety_degree = $safety_degree->transsingle;
+       
+        return view('backend.access.country.show')
+            ->withCountry($country)
+            ->withCountrytrans($countryTrans)
+            ->withRegion($region)
+            ->withDegree($safety_degree);
+    }
+
+    /**
+     * @param Countries $countries
+     * @param $status
+     * @param ManageCountryRequest $request
+     *
+     * @return mixed
+     */
+    public function mark(Countries $country, $status, ManageCountryRequest $request)
+    {
+        $country->active = $status;
+        $country->save();
+        return redirect()->route('admin.access.country.index')
+            ->withFlashSuccess('Country Status Updated!');
     }
 }

@@ -4,6 +4,7 @@ namespace App\Models\Access\Country\Traits\Relationship;
 
 use App\Models\System\Session;
 use App\Models\Access\User\SocialLogin;
+use App\Models\Access\language\Languages;
 
 /**
  * Class UserRelationship.
@@ -18,6 +19,14 @@ trait CountriesTransRelationship
     public function roles()
     {
         return $this->belongsToMany(config('access.role'), config('access.role_user_table'), 'user_id', 'role_id');
+    }
+
+    /**
+     * @return mixed
+     */
+    public function translanguage()
+    {
+        return $this->belongsTo(Languages::class, 'languages_id');
     }
 
     /**

@@ -31,7 +31,7 @@ class StoreCountryRequest extends Request
         foreach ($languages as $key => $language) {
             $inputs['title_'.$language->id] = 'required|max:255';
         }
-        $inputs['active'] = 'required';
+        // $inputs['active'] = 'required';
         return $inputs;
     }
 }

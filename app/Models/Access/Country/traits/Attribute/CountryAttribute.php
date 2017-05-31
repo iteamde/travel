@@ -44,14 +44,14 @@ trait CountryAttribute
     {
         switch ($this->active) {
             case 2:
-                return '<a href="'.route('admin.access.regions.mark', [
+                return '<a href="'.route('admin.access.country.mark', [
                     $this,
                     1,
                 ]).'" class="btn btn-xs btn-success"><i class="fa fa-play" data-toggle="tooltip" data-placement="top" title="'.trans('buttons.backend.access.users.activate').'"></i></a> ';
             // No break
 
             case 1:
-                return '<a href="'.route('admin.access.regions.mark', [
+                return '<a href="'.route('admin.access.country.mark', [
                     $this,
                     2,
                 ]).'" class="btn btn-xs btn-warning"><i class="fa fa-pause" data-toggle="tooltip" data-placement="top" title="'.trans('buttons.backend.access.users.deactivate').'"></i></a> ';
@@ -68,7 +68,7 @@ trait CountryAttribute
      */
     public function getShowButtonAttribute()
     {
-        return '<a href="'.route('admin.access.regions.show', $this).'" class="btn btn-xs btn-info"><i class="fa fa-search" data-toggle="tooltip" data-placement="top" title="'.trans('buttons.general.crud.view').'"></i></a> ';
+        return '<a href="'.route('admin.access.country.show', $this).'" class="btn btn-xs btn-info"><i class="fa fa-search" data-toggle="tooltip" data-placement="top" title="'.trans('buttons.general.crud.view').'"></i></a> ';
     }
 
     /**

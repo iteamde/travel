@@ -1,7 +1,6 @@
 @extends ('backend.layouts.app')
 
-<!-- @section ('title', trans('labels.backend.access.users.management')) -->
-@section ('title', 'Country Manager')
+@section('title', 'Country Manager')
 
 @section('after-styles')
     {{ Html::style("https://cdn.datatables.net/v/bs/dt-1.10.15/datatables.min.css") }}
@@ -74,7 +73,19 @@
 	                {data: 'code', name: '{{config('access.country_table')}}.code'},
 	                {data: 'lat', name: '{{config('access.country_table')}}.lat'},
 	                {data: 'lng', name: '{{config('access.country_table')}}.lng'},
-	                {data: 'active', name: '{{config('access.country_table')}}.active'},
+	                {
+                        name: '{{config('access.countries')}}.active',
+                        data: 'active',
+                        sortable: false,
+                        searchable: false,
+                        render: function(data) {
+                            if (data == 1) {
+                                return '<label class="label label-success">Active</label>';
+                            } else {
+                                return '<label class="label label-danger">Deactive</label>';
+                            }
+                        }
+                    },
                     {data: 'action', name: 'action', searchable: false, sortable: false}
                 ],
                 order: [[0, "asc"]],
