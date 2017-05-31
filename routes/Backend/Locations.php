@@ -67,5 +67,34 @@ Route::group([
         });
     });
 
+    /*
+     * City Manager
+     **/
+    Route::group(['namespace' => 'City'], function () {
+        /*
+         * For DataTables
+         */
+        Route::post('city/get', 'CityTableController')->name('city.get');
+
+        /*
+         * Country CRUD
+         */
+        Route::resource('city', 'CityController');
+
+          /*
+         * Deleted Specific City
+         */
+        Route::group(['prefix' => 'city/{deletedCity}'], function () {
+            Route::delete('delete', 'CityController@delete')->name('city.delete');     
+        });
+
+        /*
+         * Enable/Disable Specific City
+         */
+        Route::group(['prefix' => 'city/{city}'], function () {
+            Route::get('mark/{status}', 'CityController@mark')->name('city.mark')->where(['status' => '[1,2]']);
+        });
+
+    });
 
 }); 

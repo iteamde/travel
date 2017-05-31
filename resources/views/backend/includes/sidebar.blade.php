@@ -107,6 +107,14 @@
                             <span>Countries</span>
                         </a>
                     </li>
+
+                    <li class="{{ active_class(Active::checkUriPattern('admin/access/country*')) }}">
+                        <a href="{{ route('admin.location.city.index') }}">
+                            <i class="fa fa-circle-o"></i>
+                            <!-- <span>{{ trans('labels.backend.access.users.management') }}</span> -->
+                            <span>Cities</span>
+                        </a>
+                    </li>
                 </ul>
             </li>
 

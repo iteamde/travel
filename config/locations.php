@@ -5,6 +5,7 @@ use App\Models\Access\Permission\Permission;
 use App\Models\Regions\Regions;
 use App\Models\Regions\RegionsTranslation;
 use App\Models\SafetyDegree\SafetyDegreeTrans;
+use App\Models\Country\CountriesTranslations;
 
 return [
     
@@ -14,9 +15,29 @@ return [
     'language_table' => 'conf_languages',
 
     /*
-     * Countries table used to save roles to the database.
+     * Countries table used to save countries to the database.
      */
     'country_table' => 'countries',
+
+    /*
+     * Countries table used to save countries to the database.
+     */
+    'country_trans_table' => 'countries_trans',
+
+    /*
+     * Countries table used to save countries to the database.
+     */
+    'country_trans' =>  CountriesTranslations::class,
+
+    /*
+     * Cities table used to save cities to the database.
+     */
+    'city_table' => 'cities',
+
+    /*
+     * Cities table used to save cities to the database.
+     */
+    'city_trans_table' => 'cities_trans',
 
     /*
      * regions model used by Access to create correct relations.

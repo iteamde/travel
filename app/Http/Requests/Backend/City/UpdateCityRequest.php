@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Backend\Country;
+namespace App\Http\Requests\Backend\City;
 
 use App\Http\Requests\Request;
 use App\Models\Access\language\Languages;
@@ -8,7 +8,7 @@ use App\Models\Access\language\Languages;
 /**
  * Class UpdateRegionsRequest.
  */
-class UpdateCountryRequest extends Request
+class UpdateCityRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.

@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Models\Country\Traits\Relationship;
+namespace App\Models\City\Traits\Relationship;
 
 use App\Models\System\Session;
 use App\Models\Access\User\SocialLogin;
-use App\Models\Regions\Regions;
+use App\Models\Country\Countries;
 use App\Models\SafetyDegree\SafetyDegree;
 
 /**
- * Class UserRelationship.
+ * Class CityRelationship.
  */
-trait CountriesRelationship
+trait CityRelationship
 {
     /**
      * Many-to-Many relations with Role.
@@ -31,28 +31,11 @@ trait CountriesRelationship
     }
 
     /**
-     * Many-to-Many relations with CountriesTrans.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function trans()
-    {
-        // return $this->belongsToMany(config('access.regions'), config('access.regions_trans'), 'id', 'regions_id');
-        return $this->hasMany(config('locations.country_trans'), 'countries_id');
-    }
-
-    public function transsingle()
-    {
-        // return $this->belongsToMany(config('access.regions'), config('access.regions_trans'), 'id', 'regions_id');
-        return $this->hasOne(config('locations.country_trans'), 'countries_id');
-    }
-
-    /**
      * @return mixed
      */
-    public function region()
+    public function country()
     {
-        return $this->hasOne(Regions::class , 'id' , 'regions_id');
+        return $this->hasOne(Countries::class , 'id' , 'countries_id');
     }
 
     /**
