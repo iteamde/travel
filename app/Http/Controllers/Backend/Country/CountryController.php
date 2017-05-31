@@ -9,7 +9,7 @@ use App\Models\Access\language\Languages;
 use App\Http\Requests\Backend\Country\ManageCountryRequest;
 use App\Http\Requests\Backend\Country\StoreCountryRequest;
 use App\Repositories\Backend\Country\CountryRepository;
-use App\Models\Access\Regions\Regions;
+use App\Models\Regions\Regions;
 use App\Models\SafetyDegree\SafetyDegree;
 
 class CountryController extends Controller

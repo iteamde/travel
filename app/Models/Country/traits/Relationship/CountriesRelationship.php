@@ -4,7 +4,7 @@ namespace App\Models\Country\Traits\Relationship;
 
 use App\Models\System\Session;
 use App\Models\Access\User\SocialLogin;
-use App\Models\Access\Regions\Regions;
+use App\Models\Regions\Regions;
 use App\Models\SafetyDegree\SafetyDegree;
 
 /**
