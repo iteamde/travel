@@ -47,7 +47,7 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
 @section('content')
     {{ Form::open([
             'id'     => 'country_form',
-            'route'  => 'admin.access.country.store',
+            'route'  => 'admin.location.country.store',
             'class'  => 'form-horizontal',
             'role'   => 'form',
             'method' => 'post',
@@ -196,7 +196,7 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
                         {{ Form::label('code', 'Code', ['class' => 'col-lg-2 control-label']) }}
 
                         <div class="col-lg-10">
-                            {{ Form::text('code', null, ['class' => 'form-control', 'maxlength' => '191', 'required' => 'required', 'placeholder' => 'Code']) }}
+                            {{ Form::text('code', null, ['class' => 'form-control', 'maxlength' => '3', 'required' => 'required', 'placeholder' => 'Code']) }}
                         </div><!--col-lg-10-->
                     </div><!--form control-->
                     <!-- End: code -->
@@ -250,7 +250,7 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
         <div class="box box-info">
             <div class="box-body">
                 <div class="pull-left">
-                    {{ link_to_route('admin.access.country.index', trans('buttons.general.cancel'), [], ['class' => 'btn btn-danger btn-xs']) }}
+                    {{ link_to_route('admin.location.country.index', trans('buttons.general.cancel'), [], ['class' => 'btn btn-danger btn-xs']) }}
                 </div><!--pull-left-->
 
                 <div class="pull-right">

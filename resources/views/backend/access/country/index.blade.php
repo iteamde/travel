@@ -64,17 +64,17 @@
                 processing: true,
                 serverSide: true,
                 ajax: {
-                    url: '{{ route("admin.access.country.get") }}',
+                    url: '{{ route("admin.location.country.get") }}',
                     type: 'post',
                     data: {status: 1, trashed: false}
                 },
                 columns: [
-	                {data: 'id', name: '{{config('access.country_table')}}.id'},
-	                {data: 'code', name: '{{config('access.country_table')}}.code'},
-	                {data: 'lat', name: '{{config('access.country_table')}}.lat'},
-	                {data: 'lng', name: '{{config('access.country_table')}}.lng'},
+	                {data: 'id', name: '{{config('locations.country_table')}}.id'},
+	                {data: 'code', name: '{{config('locations.country_table')}}.code'},
+	                {data: 'lat', name: '{{config('locations.country_table')}}.lat'},
+	                {data: 'lng', name: '{{config('locations.country_table')}}.lng'},
 	                {
-                        name: '{{config('access.countries')}}.active',
+                        name: '{{config('locations.countries')}}.active',
                         data: 'active',
                         sortable: false,
                         searchable: false,

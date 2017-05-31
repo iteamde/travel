@@ -28,11 +28,6 @@ return [
     'language_table' => 'conf_languages',
 
     /*
-     * Countries table used by Access to save roles to the database.
-     */
-    'country_table' => 'countries',
-
-    /*
      * regions model used by Access to create correct relations.
      * Update the permission if it is in a different namespace.
      */

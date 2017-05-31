@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Backend\Access\Country;
+namespace App\Http\Controllers\Backend\Country;
 
 use App\Http\Controllers\Controller;
 use Yajra\Datatables\Facades\Datatables;
@@ -49,11 +49,11 @@ class CountryTableController extends Controller
         return $this->query()
             // ->with('users', 'permissions')
             ->select([
-                config('access.country_table').'.id',
-                config('access.country_table').'.code',
-                config('access.country_table').'.lat',
-                config('access.country_table').'.lng',
-                config('access.country_table').'.active'
+                config('locations.country_table').'.id',
+                config('locations.country_table').'.code',
+                config('locations.country_table').'.lat',
+                config('locations.country_table').'.lng',
+                config('locations.country_table').'.active'
             ]);
     }
 }

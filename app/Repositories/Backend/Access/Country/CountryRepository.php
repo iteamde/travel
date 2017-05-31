@@ -82,11 +82,11 @@ class CountryRepository extends BaseRepository
         $dataTableQuery = $this->query()
             // ->with('roles')
             ->select([
-                config('access.country_table').'.id',
-                config('access.country_table').'.code',
-                config('access.country_table').'.lat',
-                config('access.country_table').'.lng',
-                config('access.country_table').'.active'
+                config('locations.country_table').'.id',
+                config('locations.country_table').'.code',
+                config('locations.country_table').'.lat',
+                config('locations.country_table').'.lng',
+                config('locations.country_table').'.active'
             ]);
 
         // active() is a scope on the UserScope trait

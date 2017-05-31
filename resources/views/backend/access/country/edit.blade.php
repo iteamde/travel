@@ -45,7 +45,7 @@ use App\Models\Access\language\Languages;
 @section('content')
     {{ Form::model($country, [
             'id'     => 'country_update_form',
-            'route'  => ['admin.access.country.update', $countryid],
+            'route'  => ['admin.location.country.update', $countryid],
             'class'  => 'form-horizontal',
             'role'   => 'form',
             'method' => 'PATCH',
@@ -194,7 +194,7 @@ use App\Models\Access\language\Languages;
                         {{ Form::label('code', 'Code', ['class' => 'col-lg-2 control-label']) }}
 
                         <div class="col-lg-10">
-                            {{ Form::text('code', $data['code'], ['class' => 'form-control', 'maxlength' => '191', 'required' => 'required', 'placeholder' => 'Suitable for']) }}
+                            {{ Form::text('code', $data['code'], ['class' => 'form-control', 'maxlength' => '3', 'required' => 'required', 'placeholder' => 'Suitable for']) }}
                         </div><!--col-lg-10-->
                     </div><!--form control-->
                     <!-- End: code -->
@@ -253,7 +253,7 @@ use App\Models\Access\language\Languages;
         <div class="box box-info">
             <div class="box-body">
                 <div class="pull-left">
-                    {{ link_to_route('admin.access.country.index', trans('buttons.general.cancel'), [], ['class' => 'btn btn-danger btn-xs']) }}
+                    {{ link_to_route('admin.location.country.index', trans('buttons.general.cancel'), [], ['class' => 'btn btn-danger btn-xs']) }}
                 </div><!--pull-left-->
 
                 <div class="pull-right">

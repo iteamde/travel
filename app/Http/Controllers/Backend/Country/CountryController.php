@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Backend\Access\Country;
+namespace App\Http\Controllers\Backend\Country;
 
 use App\Models\Access\Country\Countries;
 use App\Models\Access\Country\CountriesTranslations;
@@ -109,7 +109,7 @@ class CountryController extends Controller
 
         $this->countries->create($data, $extra);
 
-        return redirect()->route('admin.access.country.index')->withFlashSuccess('Country Created!');
+        return redirect()->route('admin.location.country.index')->withFlashSuccess('Country Created!');
     }
 
     /**
@@ -130,7 +130,7 @@ class CountryController extends Controller
         }
         $item->delete();
 
-        return redirect()->route('admin.access.country.index')->withFlashSuccess('Country Deleted Successfully');
+        return redirect()->route('admin.location.country.index')->withFlashSuccess('Country Deleted Successfully');
     }
 
     /**
@@ -249,7 +249,7 @@ class CountryController extends Controller
         
         $this->countries->update($id , $country, $data , $extra);
 
-        return redirect()->route('admin.access.country.index')
+        return redirect()->route('admin.location.country.index')
             ->withFlashSuccess('Country updated Successfully!');
     }
 
@@ -291,7 +291,7 @@ class CountryController extends Controller
     {
         $country->active = $status;
         $country->save();
-        return redirect()->route('admin.access.country.index')
+        return redirect()->route('admin.location.country.index')
             ->withFlashSuccess('Country Status Updated!');
     }
 }
