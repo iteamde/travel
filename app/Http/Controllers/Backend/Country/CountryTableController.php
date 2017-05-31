@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Backend\Country;
 
 use App\Http\Controllers\Controller;
 use Yajra\Datatables\Facades\Datatables;
-use App\Repositories\Backend\Access\Country\CountryRepository;
-use App\Http\Requests\Backend\Access\User\ManageCountryRequest;
+use App\Repositories\Backend\Country\CountryRepository;
+use App\Http\Requests\Backend\User\ManageCountryRequest;
 
 /**
  * Class UserTableController.

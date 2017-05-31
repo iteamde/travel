@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Access\Country\Traits\Attribute;
+namespace App\Models\Country\Traits\Attribute;
 
 /**
  * Class CountryAttribute.

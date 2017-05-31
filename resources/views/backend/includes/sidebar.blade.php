@@ -87,7 +87,7 @@
                 <a href="#">
                     <i class="fa fa-users"></i>
                     <!-- <span>{{ trans('menus.backend.access.title') }}</span> -->
-                    <span>Country Manager</span>
+                    <span>Locations Manager</span>
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
 

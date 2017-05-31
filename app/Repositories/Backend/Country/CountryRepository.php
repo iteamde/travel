@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Repositories\Backend\Access\Country;
+namespace App\Repositories\Backend\Country;
 
-use App\Models\Access\Country\Countries;
-use App\Models\Access\Country\CountriesTranslations;
+use App\Models\Country\Countries;
+use App\Models\Country\CountriesTranslations;
 use Illuminate\Support\Facades\DB;
 use App\Exceptions\GeneralException;
 use App\Repositories\BaseRepository;

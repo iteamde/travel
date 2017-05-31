@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Models\Access\Country;
+namespace App\Models\Country;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Access\Country\Traits\Relationship\CountriesTransRelationship;
+use App\Models\Country\Traits\Relationship\CountriesTransRelationship;
 
 class CountriesTranslations extends Model
 {

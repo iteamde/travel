@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Models\Access\Country;
+namespace App\Models\Country;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Access\Country\Traits\Relationship\CountriesRelationship;
-use App\Models\Access\Country\Traits\Attribute\CountryAttribute;
+use App\Models\Country\Traits\Relationship\CountriesRelationship;
+use App\Models\Country\Traits\Attribute\CountryAttribute;
 
 class Countries extends Model
 {

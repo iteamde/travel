@@ -1,15 +1,16 @@
 <?php
 
-namespace App\Models\Access\Country\Traits\Relationship;
+namespace App\Models\Country\Traits\Relationship;
 
 use App\Models\System\Session;
 use App\Models\Access\User\SocialLogin;
-use App\Models\Access\language\Languages;
+use App\Models\Access\Regions\Regions;
+use App\Models\SafetyDegree\SafetyDegree;
 
 /**
  * Class UserRelationship.
  */
-trait CountriesTransRelationship
+trait CountriesRelationship
 {
     /**
      * Many-to-Many relations with Role.
@@ -24,17 +25,25 @@ trait CountriesTransRelationship
     /**
      * @return mixed
      */
-    public function translanguage()
+    public function providers()
     {
-        return $this->belongsTo(Languages::class, 'languages_id');
+        return $this->hasMany(SocialLogin::class);
     }
 
     /**
      * @return mixed
      */
-    public function providers()
+    public function region()
     {
-        return $this->hasMany(SocialLogin::class);
+        return $this->hasOne(Regions::class , 'id' , 'regions_id');
+    }
+
+    /**
+     * @return mixed
+     */
+    public function degree()
+    {
+        return $this->hasOne(SafetyDegree::class , 'id' , 'safety_degree_id');
     }
 
     /**

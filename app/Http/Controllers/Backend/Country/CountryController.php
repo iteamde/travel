@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Backend\Country;
 
-use App\Models\Access\Country\Countries;
-use App\Models\Access\Country\CountriesTranslations;
+use App\Models\Country\Countries;
+use App\Models\Country\CountriesTranslations;
 use App\Http\Controllers\Controller;
 use App\Models\Access\language\Languages;
-use App\Http\Requests\Backend\Access\Country\ManageCountryRequest;
-use App\Http\Requests\Backend\Access\Country\StoreCountryRequest;
-use App\Repositories\Backend\Access\Country\CountryRepository;
+use App\Http\Requests\Backend\Country\ManageCountryRequest;
+use App\Http\Requests\Backend\Country\StoreCountryRequest;
+use App\Repositories\Backend\Country\CountryRepository;
 use App\Models\Access\Regions\Regions;
 use App\Models\SafetyDegree\SafetyDegree;
 
