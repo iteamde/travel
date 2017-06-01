@@ -138,7 +138,7 @@ class ActivityTypesController extends Controller
     }
 
     /**
-     * @param Country        $id
+     * @param Activity Types        $id
      * @param ManageActivityTypesRequest $request
      *
      * @return mixed
@@ -155,7 +155,7 @@ class ActivityTypesController extends Controller
     }
 
     /**
-     * @param activitytypes $countries
+     * @param Activity Types $countries
      * @param $status
      * @param ManageActivityTypesRequest $request
      *

@@ -156,6 +156,26 @@
                     </li>
                 </ul>
             </li>
+
+            <!-- Interests Manager -->
+            <li class="{{ active_class(Active::checkUriPattern('admin/access/*')) }} treeview">
+                <a href="#">
+                    <i class="fa fa-users"></i>
+                     <!-- <span>{{ trans('menus.backend.language.title') }}</span> -->
+                     <span>Interests Manager</span>
+                    <i class="fa fa-angle-left pull-right"></i>
+                </a>
+
+                <ul class="treeview-menu {{ active_class(Active::checkUriPattern('admin/*'), 'menu-open') }}" style="display: none; {{ active_class(Active::checkUriPattern('admin/*'), 'display: block;') }}">
+                    <li class="{{ active_class(Active::checkUriPattern('admin/access/langauge*')) }}">
+                        <a href="{{ route('admin.interest.interest.index') }}">
+                            <i class="fa fa-circle-o"></i>
+                            <!-- <span>{{ trans('labels.backend.access.langauge.management') }}</span> -->
+                            <span>Interests</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
             @endauth
 
             <li class="{{ active_class(Active::checkUriPattern('admin/log-viewer*')) }} treeview">
