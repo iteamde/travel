@@ -4,11 +4,10 @@ namespace App\Http\Requests\Backend\ActivityTypes;
 
 use App\Http\Requests\Request;
 use App\Models\Access\language\Languages;
-
 /**
- * Class UpdateRegionsRequest.
+ * Class StoreActivityTypesRequest.
  */
-class UpdateCountryRequest extends Request
+class StoreActivityTypesRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -32,7 +31,7 @@ class UpdateCountryRequest extends Request
         foreach ($languages as $key => $language) {
             $inputs['title_'.$language->id] = 'required|max:255';
         }
-        $inputs['active'] = 'required';
+        // $inputs['active'] = 'required';
         return $inputs;
     }
 }

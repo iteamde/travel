@@ -6,9 +6,9 @@ use App\Http\Requests\Request;
 use App\Models\Access\language\Languages;
 
 /**
- * Class UpdateRegionsRequest.
+ * Class UpdateActivityTypesRequest.
  */
-class UpdateCountryRequest extends Request
+class UpdateActivityTypesRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Backend\Country;
+namespace App\Http\Requests\Backend\ActivityTypes;
 
 use App\Http\Requests\Request;
 
