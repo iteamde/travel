@@ -126,6 +126,13 @@ class SafetyDegreesController extends Controller
     public function delete($id, ManageSafetyDegreesRequest $request)
     {
         $item = SafetyDegree::findOrFail($id);
+        /* Delete Children Tables Data of this country */
+        $child = SafetyDegreeTrans::where(['safety_degrees_id' => $id])->get();
+        if(!empty($child)){
+            foreach ($child as $key => $value) {
+                $value->delete();
+            }
+        }
         $item->delete();
 
         return redirect()->route('admin.safety-degrees.safety.index')->withFlashSuccess('Safety Degree Deleted Successfully');
