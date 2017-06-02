@@ -37,4 +37,34 @@ Route::group([
 
     });
 
+    /*
+     * Activity Manager
+     **/
+    Route::group(['namespace' => 'Activity'], function () {
+        /*
+         * For DataTables
+         */
+        Route::post('activity/get', 'ActivityTableController')->name('activity.get');
+
+        /*
+         * Activity CRUD
+         */
+        Route::resource('activity', 'ActivityController');
+
+          /*
+         * Deleted Specific Activity
+         */
+        Route::group(['prefix' => 'activity/{deletedActivity}'], function () {
+            Route::delete('delete', 'ActivityController@delete')->name('activity.delete');     
+        });
+
+        /*
+         * Enable/Disable Specific Activity
+         */
+        Route::group(['prefix' => 'activity/{activity}'], function () {
+            Route::get('mark/{status}', 'ActivityController@mark')->name('activity.mark')->where(['status' => '[1,2]']);
+        });
+
+    });
+
 }); 

@@ -6,6 +6,7 @@ use App\Models\Regions\Regions;
 use App\Models\Regions\RegionsTranslation;
 use App\Models\SafetyDegree\SafetyDegreeTrans;
 use App\Models\ActivityTypes\ActivityTypesTranslations;
+use App\Models\Activity\ActivityTranslations;
 
 return [
     
@@ -28,5 +29,20 @@ return [
      * Activities types table used to save Activities types to the database.
      */
     'activities_types_trans' =>  ActivityTypesTranslations::class,
+
+    /*
+     * Activities table used to save Activities to the database.
+     */
+    'activities_table' => 'activities',
+
+    /*
+     * Activities types table used to save Activities types to the database.
+     */
+    'activities_trans_table' => 'activities_trans',
+
+    /*
+     * Activities types table used to save Activities types to the database.
+     */
+    'activities_trans_model' =>  ActivityTranslations::class,
 
 ];

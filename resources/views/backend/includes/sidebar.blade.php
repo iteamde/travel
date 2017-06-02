@@ -138,7 +138,7 @@
             </li>
 
             <!-- Activities Manager -->
-            <li class="{{ active_class(Active::checkUriPattern('admin/access/*')) }} treeview">
+            <li class="{{ active_class(Active::checkUriPattern('admin/activities*')) }} treeview">
                 <a href="#">
                     <i class="fa fa-users"></i>
                      <!-- <span>{{ trans('menus.backend.language.title') }}</span> -->
@@ -146,12 +146,20 @@
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
 
-                <ul class="treeview-menu {{ active_class(Active::checkUriPattern('admin/*'), 'menu-open') }}" style="display: none; {{ active_class(Active::checkUriPattern('admin/*'), 'display: block;') }}">
-                    <li class="{{ active_class(Active::checkUriPattern('admin/access/langauge*')) }}">
+                <ul class="treeview-menu {{ active_class(Active::checkUriPattern('admin/activities*'), 'menu-open') }}" style="display: none; {{ active_class(Active::checkUriPattern('admin/activities*'), 'display: block;') }}">
+                    <li class="{{ active_class(Active::checkUriPattern('admin/activities/activitytypes*')) }}">
                         <a href="{{ route('admin.activities.activitytypes.index') }}">
                             <i class="fa fa-circle-o"></i>
                             <!-- <span>{{ trans('labels.backend.access.langauge.management') }}</span> -->
                             <span>Activity Types</span>
+                        </a>
+                    </li>
+
+                     <li class="{{ active_class(Active::checkUriPattern('admin/activities/activity*')) }}">
+                        <a href="{{ route('admin.activities.activity.index') }}">
+                            <i class="fa fa-circle-o"></i>
+                            <!-- <span>{{ trans('labels.backend.access.users.management') }}</span> -->
+                            <span>Activities</span>
                         </a>
                     </li>
                 </ul>

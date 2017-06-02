@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Models\City\Traits\Relationship;
+namespace App\Models\Place\Traits\Relationship;
 
 use App\Models\System\Session;
 use App\Models\Access\User\SocialLogin;
-use App\Models\Country\Countries;
+use App\Models\Regions\Regions;
 use App\Models\SafetyDegree\SafetyDegree;
 
 /**
- * Class CityRelationship.
+ * Class PlaceRelationship.
  */
-trait CityRelationship
+trait PlaceRelationship
 {
     /**
      * Many-to-Many relations with Role.
@@ -31,28 +31,28 @@ trait CityRelationship
     }
 
     /**
-     * @return mixed
-     */
-    public function country()
-    {
-        return $this->hasOne(Countries::class , 'id' , 'countries_id');
-    }
-
-    /**
-     * Many-to-Many relations with CitiesTrans.
+     * Many-to-Many relations with CountriesTrans.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function trans()
     {
         // return $this->belongsToMany(config('access.regions'), config('access.regions_trans'), 'id', 'regions_id');
-        return $this->hasMany(config('locations.cities_trans'), 'cities_id');
+        return $this->hasMany(config('locations.country_trans'), 'countries_id');
     }
 
     public function transsingle()
     {
         // return $this->belongsToMany(config('access.regions'), config('access.regions_trans'), 'id', 'regions_id');
-        return $this->hasOne(config('locations.cities_trans'), 'cities_id');
+        return $this->hasOne(config('locations.country_trans'), 'countries_id');
+    }
+
+    /**
+     * @return mixed
+     */
+    public function region()
+    {
+        return $this->hasOne(Regions::class , 'id' , 'regions_id');
     }
 
     /**

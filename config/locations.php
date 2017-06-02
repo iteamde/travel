@@ -6,6 +6,7 @@ use App\Models\Regions\Regions;
 use App\Models\Regions\RegionsTranslation;
 use App\Models\SafetyDegree\SafetyDegreeTrans;
 use App\Models\Country\CountriesTranslations;
+use App\Models\City\CitiesTranslations;
 
 return [
     
@@ -39,6 +40,10 @@ return [
      */
     'city_trans_table' => 'cities_trans',
 
+    /*
+     * Cities table used to save cities to the database.
+     */
+    'cities_trans' =>  CitiesTranslations::class,
     /*
      * regions model used by Access to create correct relations.
      * Update the permission if it is in a different namespace.
