@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Models\Place\Traits\Attribute;
+namespace App\Models\PlaceTypes\Traits\Attribute;
 
 /**
- * Class PlaceAttribute.
+ * Class PlaceTypesAttribute.
  */
-trait PlaceAttribute
+trait PlaceTypesAttribute
 {
 
     /**
@@ -34,7 +34,7 @@ trait PlaceAttribute
      */
     public function getEditButtonAttribute()
     {
-        return '<a href="'.route('admin.location.place.edit', $this).'" class="btn btn-xs btn-primary"><i class="fa fa-pencil" data-toggle="tooltip" data-placement="top" title="'.trans('buttons.general.crud.edit').'"></i></a> ';
+        return '<a href="'.route('admin.location.placetypes.edit', $this).'" class="btn btn-xs btn-primary"><i class="fa fa-pencil" data-toggle="tooltip" data-placement="top" title="'.trans('buttons.general.crud.edit').'"></i></a> ';
     }
 
     /**
@@ -44,14 +44,14 @@ trait PlaceAttribute
     {
         switch ($this->active) {
             case 2:
-                return '<a href="'.route('admin.location.place.mark', [
+                return '<a href="'.route('admin.location.placetypes.mark', [
                     $this,
                     1,
                 ]).'" class="btn btn-xs btn-success"><i class="fa fa-play" data-toggle="tooltip" data-placement="top" title="'.trans('buttons.backend.access.users.activate').'"></i></a> ';
             // No break
 
             case 1:
-                return '<a href="'.route('admin.location.place.mark', [
+                return '<a href="'.route('admin.location.placetypes.mark', [
                     $this,
                     2,
                 ]).'" class="btn btn-xs btn-warning"><i class="fa fa-pause" data-toggle="tooltip" data-placement="top" title="'.trans('buttons.backend.access.users.deactivate').'"></i></a> ';
@@ -68,7 +68,7 @@ trait PlaceAttribute
      */
     public function getShowButtonAttribute()
     {
-        return '<a href="'.route('admin.location.place.show', $this).'" class="btn btn-xs btn-info"><i class="fa fa-search" data-toggle="tooltip" data-placement="top" title="'.trans('buttons.general.crud.view').'"></i></a> ';
+        return '<a href="'.route('admin.location.placetypes.show', $this).'" class="btn btn-xs btn-info"><i class="fa fa-search" data-toggle="tooltip" data-placement="top" title="'.trans('buttons.general.crud.view').'"></i></a> ';
     }
 
     /**
@@ -76,7 +76,7 @@ trait PlaceAttribute
      */
     public function getDeleteButtonAttribute()
     {
-        return '<a href="'.route('admin.location.place.delete', $this).'"
+        return '<a href="'.route('admin.location.placetypes.delete', $this).'"
              data-method="delete"
              data-trans-button-cancel="'.trans('buttons.general.cancel').'"
              data-trans-button-confirm="'.trans('buttons.general.crud.delete').'"

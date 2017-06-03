@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Requests\Backend\Country;
+namespace App\Http\Requests\Backend\PlaceTypes;
 
 use App\Http\Requests\Request;
 
 /**
- * Class UpdateRoleRequest.
+ * Class ManagePlaceTypesRequest.
  */
-class ManageCountryRequest extends Request
+class ManagePlaceTypesRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.

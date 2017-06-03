@@ -97,4 +97,57 @@ Route::group([
 
     });
 
+    /*
+     * Place Type Manager
+     **/
+    Route::group(['namespace' => 'PlaceTypes'], function () {
+        /*
+         * For DataTables
+         */
+        Route::post('placetypes/get', 'PlaceTypesTableController')->name('placetypes.get');
+
+        /*
+         * PlaceTypes CRUD
+         */
+        Route::resource('placetypes', 'PlaceTypesController');
+
+          /*
+         * Deleted Specific PlaceTypes
+         */
+        Route::group(['prefix' => 'placetypes/{deletedPlacetypes}'], function () {
+            Route::delete('delete', 'PlaceTypesController@delete')->name('placetypes.delete');     
+        });
+
+    });
+
+    /*
+     * Place Manager
+     **/
+    Route::group(['namespace' => 'Place'], function () {
+        /*
+         * For DataTables
+         */
+        Route::post('place/get', 'PlaceTableController')->name('place.get');
+
+        /*
+         * Place CRUD
+         */
+        Route::resource('place', 'PlaceController');
+
+          /*
+         * Deleted Specific Place
+         */
+        Route::group(['prefix' => 'place/{deletedPlace}'], function () {
+            Route::delete('delete', 'PlaceController@delete')->name('place.delete');     
+        });
+
+        /*
+         * Enable/Disable Specific Place
+         */
+        Route::group(['prefix' => 'place/{place}'], function () {
+            Route::get('mark/{status}', 'PlaceController@mark')->name('place.mark')->where(['status' => '[1,2]']);
+        });
+
+    });
+
 }); 

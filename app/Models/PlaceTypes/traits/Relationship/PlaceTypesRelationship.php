@@ -1,19 +1,16 @@
 <?php
 
-namespace App\Models\Place\Traits\Relationship;
+namespace App\Models\PlaceTypes\Traits\Relationship;
 
 use App\Models\System\Session;
 use App\Models\Access\User\SocialLogin;
 use App\Models\Regions\Regions;
 use App\Models\SafetyDegree\SafetyDegree;
-use App\Models\Country\Countries;
-use App\Models\City\Cities;
-use App\Models\PlaceTypes\PlaceTypes;
 
 /**
- * Class PlaceRelationship.
+ * Class PlaceTypesRelationship.
  */
-trait PlaceRelationship
+trait PlaceTypesRelationship
 {
     /**
      * Many-to-Many relations with Role.
@@ -41,37 +38,21 @@ trait PlaceRelationship
     public function trans()
     {
         // return $this->belongsToMany(config('access.regions'), config('access.regions_trans'), 'id', 'regions_id');
-        return $this->hasMany(config('locations.place_trans'), 'places_id');
+        return $this->hasMany(config('locations.place_types_trans'), 'place_types_ids');
     }
 
     public function transsingle()
     {
         // return $this->belongsToMany(config('access.regions'), config('access.regions_trans'), 'id', 'regions_id');
-        return $this->hasOne(config('locations.place_trans'), 'places_id');
+        return $this->hasOne(config('locations.place_types_trans'), 'place_types_ids');
     }
 
     /**
      * @return mixed
      */
-    public function country()
+    public function region()
     {
-        return $this->hasOne(Countries::class , 'id' , 'countries_id');
-    }
-
-    /**
-     * @return mixed
-     */
-    public function city()
-    {
-        return $this->hasOne(Cities::class , 'id' , 'cities_id');
-    }
-
-    /**
-     * @return mixed
-     */
-    public function type()
-    {
-        return $this->hasOne(PlaceTypes::class , 'id' , 'place_type_ids');
+        return $this->hasOne(Regions::class , 'id' , 'regions_id');
     }
 
     /**
@@ -79,7 +60,7 @@ trait PlaceRelationship
      */
     public function degree()
     {
-        return $this->hasOne(SafetyDegree::class , 'id' , 'safety_degrees_id');
+        return $this->hasOne(SafetyDegree::class , 'id' , 'safety_degree_id');
     }
 
     /**

@@ -7,6 +7,9 @@ use App\Models\Regions\RegionsTranslation;
 use App\Models\SafetyDegree\SafetyDegreeTrans;
 use App\Models\Country\CountriesTranslations;
 use App\Models\City\CitiesTranslations;
+use App\Models\PlaceTypes\PlaceTypes;
+use App\Models\PlaceTypes\PlaceTypesTranslations;
+use App\Models\Place\PlaceTranslations;
 
 return [
     
@@ -65,5 +68,43 @@ return [
      * RegionsTranslation table used by Access to save roles to the database.
      */
     'regions_trans_table' => 'conf_regions_trans',
+
+    /*
+     * Placetypes model used by Admin to create correct relations.
+     * Update the permission if it is in a different namespace.
+     */
+    'place_types' => Placetypes::class,
+
+    /*
+     * Placetypes table used by Admin to save placetypes to the database.
+     */
+    'place_types_table' => 'conf_place_types',
+
+    /*
+     * placetypes_trans model used by Admin to create correct relations.
+     * Update the permission if it is in a different namespace.
+     */
+    'place_types_trans' => PlaceTypesTranslations::class,
+
+    /*
+     * PlacetypesTranslation table used by Admin to save placetypes to the database.
+     */
+    'place_types_trans_table' => 'conf_place_types_trans',
+
+     /*
+     * Place table used by Admin to save place to the database.
+     */
+    'place_table' => 'places',
+
+    /*
+     * place_trans model used by Admin to create correct relations.
+     * Update the permission if it is in a different namespace.
+     */
+    'place_trans' => PlaceTranslations::class,
+
+    /*
+     * PlaceTranslation table used by Admin to save placetypes to the database.
+     */
+    'place_trans_table' => 'places_trans',
     
 ];

@@ -115,6 +115,22 @@
                             <span>Cities</span>
                         </a>
                     </li>
+
+                    <li class="{{ active_class(Active::checkUriPattern('admin/access/country*')) }}">
+                        <a href="{{ route('admin.location.placetypes.index') }}">
+                            <i class="fa fa-circle-o"></i>
+                            <!-- <span>{{ trans('labels.backend.access.users.management') }}</span> -->
+                            <span>Place Types</span>
+                        </a>
+                    </li>
+
+                    <li class="{{ active_class(Active::checkUriPattern('admin/access/country*')) }}">
+                        <a href="{{ route('admin.location.place.index') }}">
+                            <i class="fa fa-circle-o"></i>
+                            <!-- <span>{{ trans('labels.backend.access.users.management') }}</span> -->
+                            <span>Places</span>
+                        </a>
+                    </li>
                 </ul>
             </li>
 
