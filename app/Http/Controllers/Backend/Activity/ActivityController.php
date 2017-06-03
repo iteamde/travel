@@ -14,6 +14,7 @@ use App\Models\SafetyDegree\SafetyDegree;
 use App\Models\ActivityTypes\ActivityTypes;
 use App\Models\Country\Countries;
 use App\Models\City\Cities;
+use App\Models\Place\Place;
 
 class ActivityController extends Controller
 {
@@ -72,6 +73,16 @@ class ActivityController extends Controller
             }
         }               
 
+        /* Get All Places */
+        $places = Place::where(['active' => 1])->get();
+        $places_arr = [];
+        
+        foreach ($places as $key => $value) {
+            if(isset($value->transsingle) && !empty($value->transsingle)){  
+                $places_arr[$value->id] = $value->transsingle->title;
+            }
+        } 
+
         /* Get All safety Degrees */
         $degrees = SafetyDegree::get();
         $degrees_arr = [];
@@ -87,6 +98,7 @@ class ActivityController extends Controller
             'countries' => $countries_arr,
             'cities' => $cities_arr,
             'degrees' => $degrees_arr,
+            'places' => $places_arr,
         ]);
     }
 
@@ -126,6 +138,7 @@ class ActivityController extends Controller
             'countries_id' =>  $request->input('countries_id'),
             'safety_degree_id' => $request->input('safety_degree_id'),
             'cities_id' => $request->input('cities_id'),
+            'places_id' => $request->input('places_id'),
             'lat' => $location[0],
             'lng' => $location[1],
         ];
@@ -191,6 +204,7 @@ class ActivityController extends Controller
         $data['cities_id'] = $activity['cities_id'];
         $data['safety_degree_id'] = $activity['safety_degree_id'];
         $data['types_id'] = $activity['types_id'];
+        $data['places_id'] = $activity['places_id'];
 
         /* Get All Activity Types */
         $activity_types = ActivityTypes::all();
@@ -220,7 +234,17 @@ class ActivityController extends Controller
             if(isset($value->transsingle) && !empty($value->transsingle)){  
                 $cities_arr[$value->id] = $value->transsingle->title;
             }
-        }               
+        }           
+
+        /* Get All Places */
+        $places = Place::where(['active' => 1])->get();
+        $places_arr = [];
+        
+        foreach ($places as $key => $value) {
+            if(isset($value->transsingle) && !empty($value->transsingle)){  
+                $places_arr[$value->id] = $value->transsingle->title;
+            }
+        }     
 
         /* Get All safety Degrees */
         $degrees = SafetyDegree::get();
@@ -238,6 +262,7 @@ class ActivityController extends Controller
             'activity_types' => $activity_types_arr,
             'countries' => $countries_arr,
             'cities' => $cities_arr,
+            'places' => $places_arr,
             'degrees' => $degrees_arr,
             'data' => $data
         ]);
@@ -284,6 +309,7 @@ class ActivityController extends Controller
             'countries_id' =>  $request->input('countries_id'),
             'safety_degree_id' => $request->input('safety_degree_id'),
             'cities_id' => $request->input('cities_id'),
+            'places_id' => $request->input('places_id'),
             'lat' => $location[0],
             'lng' => $location[1],
         ];
@@ -313,6 +339,10 @@ class ActivityController extends Controller
         /* Get City Information */
         $city = $activity->city;
         $city = $city->transsingle;
+
+        /* Get Place Information */
+        $place = $activity->place;
+        $place = $place->transsingle;
        
         /* Get Activity Type Information */
         $activity_type = $activity->type;
@@ -327,13 +357,14 @@ class ActivityController extends Controller
             'activitytrans' => $activityTrans,
             'country' => $country,
             'city' => $city,
+            'place' => $place,
             'activity_type' => $activity_type,
             'safety_degree' => $safety_degree
         ]);
     }
 
     /**
-     * @param Countries $countries
+     * @param Activity $activity
      * @param $status
      * @param ManageActivityRequest $request
      *

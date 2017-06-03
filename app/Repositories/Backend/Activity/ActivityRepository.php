@@ -106,6 +106,7 @@ class ActivityRepository extends BaseRepository
         $model->lat         = $extra['lat'];
         $model->lng         = $extra['lng'];
         $model->safety_degrees_id = $extra['safety_degree_id'];
+        $model->places_id   = $extra['places_id'];
 
         DB::transaction(function () use ($model, $input, $extra) {
             $check = 1;
@@ -153,6 +154,7 @@ class ActivityRepository extends BaseRepository
         $model->lat         = $extra['lat'];
         $model->lng         = $extra['lng'];
         $model->safety_degrees_id = $extra['safety_degree_id'];
+        $model->places_id   = $extra['places_id'];
 
         $prev = ActivityTranslations::where(['activities_id' => $id])->get();
         if(!empty($prev)){

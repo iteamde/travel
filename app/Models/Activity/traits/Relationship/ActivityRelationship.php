@@ -8,6 +8,7 @@ use App\Models\Country\Countries;
 use App\Models\SafetyDegree\SafetyDegree;
 use App\Models\City\Cities;
 use App\Models\ActivityTypes\ActivityTypes;
+use App\Models\Place\Place;
 
 /**
  * Class ActivityRelationship.
@@ -63,6 +64,14 @@ trait ActivityRelationship
     public function city()
     {
         return $this->hasOne(Cities::class , 'id' , 'cities_id');
+    }
+
+    /**
+     * @return mixed
+     */
+    public function place()
+    {
+        return $this->hasOne(Place::class , 'id' , 'places_id');
     }
 
     /**

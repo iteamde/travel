@@ -90,6 +90,10 @@
                             <td> {{ $city->title }} </td>
                         </tr>
                         <tr>
+                            <th>Place</th>
+                            <td> {{ $place->title }} </td>
+                        </tr>
+                        <tr>
                             <th>Activity Type</th>
                             <td> {{ $activity_type->title }} </td>
                         </tr>

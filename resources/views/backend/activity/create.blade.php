@@ -197,6 +197,15 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
                         </div><!--col-lg-10-->
                     </div><!--form control-->
                     <!-- Cities : End -->
+                    <!-- Places: Start -->
+                    <div class="form-group">
+                        {{ Form::label('title', 'Place', ['class' => 'col-lg-2 control-label']) }}
+
+                        <div class="col-lg-10">
+                            {{ Form::select('places_id', $places , null,['class' => 'select2Class form-control']) }}
+                        </div><!--col-lg-10-->
+                    </div><!--form control-->
+                    <!-- Places : End -->
                     <!-- Safety Degree: Start -->
                     <div class="form-group">
                         {{ Form::label('title', 'Safety Degree', ['class' => 'col-lg-2 control-label']) }}
