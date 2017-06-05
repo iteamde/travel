@@ -97,6 +97,10 @@ return [
                 'view' => 'View User',
             ],
         ],
+        'levels' => [
+            'levels' => 'مستويات',
+            'levels_manager' => 'مدير المستويات',
+        ],
     ],
 
     'frontend' => [

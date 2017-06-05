@@ -99,6 +99,10 @@ return [
                 'view' => 'View User',
             ],
         ],
+        'levels' => [
+            'levels' => 'Levels',
+            'levels_manager' => 'Levels Manager',
+        ],
     ],
 
     'frontend' => [

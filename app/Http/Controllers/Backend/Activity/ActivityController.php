@@ -110,7 +110,7 @@ class ActivityController extends Controller
     public function store(StoreActivityRequest $request)
     {   
         $data = [];
-        
+
         foreach ($this->languages as $key => $language) {
             $data[$language->id]['title_'.$language->id] = $request->input('title_'.$language->id);
             $data[$language->id]['description_'.$language->id] = $request->input('description_'.$language->id);
@@ -131,7 +131,7 @@ class ActivityController extends Controller
         }else{
             $active = 1;
         }
-
+        
         $extra = [
             'active' => $active,
             'types_id' => $request->input('types_id'),

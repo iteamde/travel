@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Requests\Backend\Activity;
+namespace App\Http\Requests\Backend\Levels;
 
 use App\Http\Requests\Request;
 use App\Models\Access\language\Languages;
 /**
- * Class StoreActivityRequest.
+ * Class StoreLevelsRequest.
  */
-class StoreActivityRequest extends Request
+class StoreLevelsRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -32,7 +32,6 @@ class StoreActivityRequest extends Request
             $inputs['title_'.$language->id] = 'required|max:255';
         }
         // $inputs['active'] = 'required';
-        $input['lat_lng'] = 'required';
         return $inputs;
     }
 }

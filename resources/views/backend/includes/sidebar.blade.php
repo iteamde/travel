@@ -134,7 +134,7 @@
                 </ul>
             </li>
 
-            <li class="{{ active_class(Active::checkUriPattern('admin/access/*')) }} treeview">
+            <li class="{{ active_class(Active::checkUriPattern('admin/access/safety-degrees/*') , 'active') }} treeview">
                 <a href="#">
                     <i class="fa fa-users"></i>
                      <!-- <span>{{ trans('menus.backend.language.title') }}</span> -->
@@ -142,8 +142,8 @@
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
 
-                <ul class="treeview-menu {{ active_class(Active::checkUriPattern('admin/*'), 'menu-open') }}" style="display: none; {{ active_class(Active::checkUriPattern('admin/*'), 'display: block;') }}">
-                    <li class="{{ active_class(Active::checkUriPattern('admin/access/langauge*')) }}">
+                <ul class="treeview-menu {{ active_class(Active::checkUriPattern('admin/access/safety-degrees/safety*'), 'menu-open') }}" style="display: none; {{ active_class(Active::checkUriPattern('admin/safety-degrees/safety*'), 'display: block;') }}">
+                    <li class="{{ active_class(Active::checkUriPattern('admin/safety-degrees/safety*')) }}">
                         <a href="{{ route('admin.safety-degrees.safety.index') }}">
                             <i class="fa fa-circle-o"></i>
                             <!-- <span>{{ trans('labels.backend.access.langauge.management') }}</span> -->
@@ -182,7 +182,7 @@
             </li>
 
             <!-- Interests Manager -->
-            <li class="{{ active_class(Active::checkUriPattern('admin/access/*')) }} treeview">
+            <li class="{{ active_class(Active::checkUriPattern('admin/interest/interest*')) }} treeview">
                 <a href="#">
                     <i class="fa fa-users"></i>
                      <!-- <span>{{ trans('menus.backend.language.title') }}</span> -->
@@ -190,8 +190,8 @@
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
 
-                <ul class="treeview-menu {{ active_class(Active::checkUriPattern('admin/*'), 'menu-open') }}" style="display: none; {{ active_class(Active::checkUriPattern('admin/*'), 'display: block;') }}">
-                    <li class="{{ active_class(Active::checkUriPattern('admin/access/langauge*')) }}">
+                <ul class="treeview-menu {{ active_class(Active::checkUriPattern('admin/interest/interest*'), 'menu-open') }}" style="display: none; {{ active_class(Active::checkUriPattern('admin/interest/interest*'), 'display: block;') }}">
+                    <li class="{{ active_class(Active::checkUriPattern('admin/interest/interest*')) }}">
                         <a href="{{ route('admin.interest.interest.index') }}">
                             <i class="fa fa-circle-o"></i>
                             <!-- <span>{{ trans('labels.backend.access.langauge.management') }}</span> -->
@@ -202,7 +202,7 @@
             </li>
 
             <!-- Religions Manager -->
-            <li class="{{ active_class(Active::checkUriPattern('admin/access/*')) }} treeview">
+            <li class="{{ active_class(Active::checkUriPattern('admin/religion/religion*')) }} treeview">
                 <a href="#">
                     <i class="fa fa-users"></i>
                      <!-- <span>{{ trans('menus.backend.language.title') }}</span> -->
@@ -210,12 +210,32 @@
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
 
-                <ul class="treeview-menu {{ active_class(Active::checkUriPattern('admin/*'), 'menu-open') }}" style="display: none; {{ active_class(Active::checkUriPattern('admin/*'), 'display: block;') }}">
-                    <li class="{{ active_class(Active::checkUriPattern('admin/access/langauge*')) }}">
+                <ul class="treeview-menu {{ active_class(Active::checkUriPattern('admin/religion/religion*'), 'menu-open') }}" style="display: none; {{ active_class(Active::checkUriPattern('admin/religion/religion*'), 'display: block;') }}">
+                    <li class="{{ active_class(Active::checkUriPattern('admin/religion/religion*')) }}">
                         <a href="{{ route('admin.religion.religion.index') }}">
                             <i class="fa fa-circle-o"></i>
                             <!-- <span>{{ trans('labels.backend.access.langauge.management') }}</span> -->
                             <span>Religions</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <!-- Levels Manager -->
+            <li class="{{ active_class(Active::checkUriPattern('admin/levels/levels*')) }} treeview">
+                <a href="#">
+                    <i class="fa fa-users"></i>
+                     <!-- <span>{{ trans('menus.backend.language.title') }}</span> -->
+                     <span>{{ trans('labels.backend.levels.levels') }}</span>
+                    <i class="fa fa-angle-left pull-right"></i>
+                </a>
+
+                <ul class="treeview-menu {{ active_class(Active::checkUriPattern('admin/levels/levels*'), 'menu-open') }}" style="display: none; {{ active_class(Active::checkUriPattern('admin/levels/levels*'), 'display: block;') }}">
+                    <li class="{{ active_class(Active::checkUriPattern('admin/levels/levels*')) }}">
+                        <a href="{{ route('admin.levels.levels.index') }}">
+                            <i class="fa fa-circle-o"></i>
+                            <!-- <span>{{ trans('labels.backend.access.langauge.management') }}</span> -->
+                            <span>{{ trans('labels.backend.levels.levels_manager') }}</span>
                         </a>
                     </li>
                 </ul>
