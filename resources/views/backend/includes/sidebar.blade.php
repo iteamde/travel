@@ -260,6 +260,26 @@
                     </li>
                 </ul>
             </li>
+
+            <!-- Languages Spoken Manager -->
+            <li class="{{ active_class(Active::checkUriPattern('admin/levels/levels*')) }} treeview">
+                <a href="#">
+                    <i class="fa fa-users"></i>
+                     <!-- <span>{{ trans('menus.backend.language.title') }}</span> -->
+                     <span>Languages Spoken Manager</span>
+                    <i class="fa fa-angle-left pull-right"></i>
+                </a>
+
+                <ul class="treeview-menu {{ active_class(Active::checkUriPattern('admin/levels/levels*'), 'menu-open') }}" style="display: none; {{ active_class(Active::checkUriPattern('admin/levels/levels*'), 'display: block;') }}">
+                    <li class="{{ active_class(Active::checkUriPattern('admin/levels/levels*')) }}">
+                        <a href="{{ route('admin.languagesspoken.languagesspoken.index') }}">
+                            <i class="fa fa-circle-o"></i>
+                            <!-- <span>{{ trans('labels.backend.access.langauge.management') }}</span> -->
+                            <span>Languages Spoken</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
             @endauth
 
             <li class="{{ active_class(Active::checkUriPattern('admin/log-viewer*')) }} treeview">
