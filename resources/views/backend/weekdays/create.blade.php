@@ -1,17 +1,19 @@
-<?php
+<?php  
 use App\Models\Access\language\Languages;
-// $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE)->get();
+$languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE)->get();
 ?>
-
 @extends ('backend.layouts.app')
 
-@section ('title', 'Timings Manager' . ' | ' . 'Edit Timings')
+@section ('title', 'Weekdays Manager' . ' | ' . 'Create Weekdays')
 
 @section('page-header')
+    <!-- <h1>
+        {{ trans('labels.backend.access.users.management') }}
+        <small>{{ trans('labels.backend.access.users.create') }}</small>
+    </h1> -->
     <h1>
-        <!-- {{ trans('labels.backend.access.users.management') }} -->
-        Timings Management
-        <small>Edit Timings</small>
+        Weekdays Manager
+        <small>Create Weekdays</small>
     </h1>
 @endsection
 
@@ -43,19 +45,19 @@ use App\Models\Access\language\Languages;
 @endsection
 
 @section('content')
-    {{ Form::model($timings, [
-            'id'     => 'timings_update_form',
-            'route'  => ['admin.timings.timings.update', $timingsid],
+    {{ Form::open([
+            'id'     => 'weekdays_form',
+            'route'  => 'admin.weekdays.weekdays.store',
             'class'  => 'form-horizontal',
             'role'   => 'form',
-            'method' => 'PATCH',
+            'method' => 'post',
+            'files'  => true
         ]) 
     }}
-
         <div class="box box-success">
             <div class="box-header with-border">
                 <!-- <h3 class="box-title">{{ trans('labels.backend.access.users.create') }}</h3> -->
-                <h3 class="box-title">Edit Timing</h3>
+                <h3 class="box-title">Create Weekdays</h3>
 
             </div><!-- /.box-header -->
 
@@ -79,20 +81,19 @@ use App\Models\Access\language\Languages;
                                 {{ Form::label('title_'.$language->id, 'Title', ['class' => 'col-lg-2 control-label']) }}
 
                                 <div class="col-lg-10">
-                                    {{ Form::text('title_'.$language->id, $data['title_'.$language->id] , ['class' => 'form-control', 'maxlength' => '191', 'required' => 'required', 'autofocus' => 'autofocus', 'placeholder' => 'Title']) }}
+                                    {{ Form::text('title_'.$language->id, null, ['class' => 'form-control', 'maxlength' => '191', 'required' => 'required', 'autofocus' => 'autofocus', 'placeholder' => 'Title']) }}
                                 </div><!--col-lg-10-->
                             </div><!--form control-->
                             <!-- End: Title -->
-                            <!-- Start Title -->
+                            <!-- Start Description -->
                             <div class="form-group">
                                 {{ Form::label('description_'.$language->id, 'Description', ['class' => 'col-lg-2 control-label']) }}
 
                                 <div class="col-lg-10">
-                                    {{ Form::textarea('description_'.$language->id, $data['description_'.$language->id] , ['class' => 'form-control description', 'required' => 'required', 'autofocus' => 'autofocus', 'placeholder' => 'Description']) }}
+                                    {{ Form::textarea('description_'.$language->id, null, ['class' => 'form-control description' , 'required' => 'required', 'autofocus' => 'autofocus', 'placeholder' => 'Description']) }}
                                 </div><!--col-lg-10-->
                             </div><!--form control-->
-                            <!-- End: Title -->
-                            <!-- Languages Tabs: Start -->
+                            <!-- End: Description -->
                         </div>
                     @endforeach
                     </div>
@@ -100,37 +101,33 @@ use App\Models\Access\language\Languages;
                 <!-- Languages Tabs: End -->
             </div>
         </div>
-
         <div class="box box-info">
             <div class="box-body">
                 <div class="pull-left">
-                    {{ link_to_route('admin.timings.timings.index', trans('buttons.general.cancel'), [], ['class' => 'btn btn-danger btn-xs']) }}
+                    {{ link_to_route('admin.weekdays.weekdays.index', trans('buttons.general.cancel'), [], ['class' => 'btn btn-danger btn-xs']) }}
                 </div><!--pull-left-->
 
                 <div class="pull-right">
-                    {{ Form::submit(trans('buttons.general.crud.update'), ['class' => 'btn btn-success btn-xs submit_button']) }}
+                    {{ Form::submit(trans('buttons.general.crud.create'), ['class' => 'btn btn-success btn-xs submit_button']) }}
                 </div><!--pull-right-->
 
                 <div class="clearfix"></div>
             </div><!-- /.box-body -->
         </div><!--box-->
-
     {{ Form::close() }}
 @endsection
 
-@section('after-styles')
-    <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.3/summernote.css" rel="stylesheet">
-@endsection
 @section('after-scripts')
+    {{ Html::script('js/backend/access/users/script.js') }}
     <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.3/summernote.js"></script>
     <script type="text/javascript">
+        $('.select2Class').select2({
+            placeHolder: 'Select Religion'
+        });
+
         $('.description').summernote({
              height: 200
         });
-    </script>
-    <script type="text/javascript">
-        $('.select2Class').select2({
-            placeHolder: 'Select Region'
-        });
+
     </script>
 @endsection

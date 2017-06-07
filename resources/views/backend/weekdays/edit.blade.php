@@ -5,13 +5,13 @@ use App\Models\Access\language\Languages;
 
 @extends ('backend.layouts.app')
 
-@section ('title', 'Timings Manager' . ' | ' . 'Edit Timings')
+@section ('title', 'Weekdays Manager' . ' | ' . 'Edit Weekdays')
 
 @section('page-header')
     <h1>
         <!-- {{ trans('labels.backend.access.users.management') }} -->
-        Timings Management
-        <small>Edit Timings</small>
+        Weekdays Management
+        <small>Edit Weekdays</small>
     </h1>
 @endsection
 
@@ -43,9 +43,9 @@ use App\Models\Access\language\Languages;
 @endsection
 
 @section('content')
-    {{ Form::model($timings, [
-            'id'     => 'timings_update_form',
-            'route'  => ['admin.timings.timings.update', $timingsid],
+    {{ Form::model($weekdays, [
+            'id'     => 'weekdays_update_form',
+            'route'  => ['admin.weekdays.weekdays.update', $weekdaysid],
             'class'  => 'form-horizontal',
             'role'   => 'form',
             'method' => 'PATCH',
@@ -55,7 +55,7 @@ use App\Models\Access\language\Languages;
         <div class="box box-success">
             <div class="box-header with-border">
                 <!-- <h3 class="box-title">{{ trans('labels.backend.access.users.create') }}</h3> -->
-                <h3 class="box-title">Edit Timing</h3>
+                <h3 class="box-title">Edit Weekdays</h3>
 
             </div><!-- /.box-header -->
 
@@ -104,7 +104,7 @@ use App\Models\Access\language\Languages;
         <div class="box box-info">
             <div class="box-body">
                 <div class="pull-left">
-                    {{ link_to_route('admin.timings.timings.index', trans('buttons.general.cancel'), [], ['class' => 'btn btn-danger btn-xs']) }}
+                    {{ link_to_route('admin.weekdays.weekdays.index', trans('buttons.general.cancel'), [], ['class' => 'btn btn-danger btn-xs']) }}
                 </div><!--pull-left-->
 
                 <div class="pull-right">
