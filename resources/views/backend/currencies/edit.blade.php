@@ -5,13 +5,13 @@ use App\Models\Access\language\Languages;
 
 @extends ('backend.layouts.app')
 
-@section ('title', 'Religions Manager' . ' | ' . 'Edit Religion')
+@section ('title', 'Currencies Manager' . ' | ' . 'Edit Currencies')
 
 @section('page-header')
     <h1>
         <!-- {{ trans('labels.backend.access.users.management') }} -->
-        Religions Management
-        <small>Edit Religion</small>
+        Currencies Management
+        <small>Edit Currencies</small>
     </h1>
 @endsection
 
@@ -43,9 +43,9 @@ use App\Models\Access\language\Languages;
 @endsection
 
 @section('content')
-    {{ Form::model($religion, [
-            'id'     => 'religion_update_form',
-            'route'  => ['admin.religion.religion.update', $religionid],
+    {{ Form::model($currencies, [
+            'id'     => 'currencies_update_form',
+            'route'  => ['admin.currencies.currencies.update', $currenciesid],
             'class'  => 'form-horizontal',
             'role'   => 'form',
             'method' => 'PATCH',
@@ -55,7 +55,7 @@ use App\Models\Access\language\Languages;
         <div class="box box-success">
             <div class="box-header with-border">
                 <!-- <h3 class="box-title">{{ trans('labels.backend.access.users.create') }}</h3> -->
-                <h3 class="box-title">Edit Religion</h3>
+                <h3 class="box-title">Edit Currencies</h3>
 
             </div><!-- /.box-header -->
 
@@ -95,7 +95,7 @@ use App\Models\Access\language\Languages;
                         @if($data['active'] == 1)
                             {{ Form::checkbox('active', '1', true) }}
                         @else
-                            {{ Form::checkbox('active', '2', true) }}
+                            {{ Form::checkbox('active', '2', false) }}
                         @endif
                         </div><!--col-lg-10-->
                     </div><!--form control-->
@@ -108,7 +108,7 @@ use App\Models\Access\language\Languages;
         <div class="box box-info">
             <div class="box-body">
                 <div class="pull-left">
-                    {{ link_to_route('admin.religion.religion.index', trans('buttons.general.cancel'), [], ['class' => 'btn btn-danger btn-xs']) }}
+                    {{ link_to_route('admin.currencies.currencies.index', trans('buttons.general.cancel'), [], ['class' => 'btn btn-danger btn-xs']) }}
                 </div><!--pull-left-->
 
                 <div class="pull-right">

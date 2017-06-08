@@ -172,7 +172,7 @@ class ReligionController extends Controller
     }
 
     /**
-     * @param Activity Types $countries
+     * @param Activity Types $religion
      * @param $status
      * @param ManageReligionRequest $request
      *

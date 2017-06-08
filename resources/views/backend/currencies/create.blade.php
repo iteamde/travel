@@ -1,17 +1,19 @@
-<?php
+<?php  
 use App\Models\Access\language\Languages;
-// $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE)->get();
+$languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE)->get();
 ?>
-
 @extends ('backend.layouts.app')
 
-@section ('title', 'Religions Manager' . ' | ' . 'Edit Religion')
+@section ('title', 'Currencies Manager' . ' | ' . 'Create Currencies')
 
 @section('page-header')
+    <!-- <h1>
+        {{ trans('labels.backend.access.users.management') }}
+        <small>{{ trans('labels.backend.access.users.create') }}</small>
+    </h1> -->
     <h1>
-        <!-- {{ trans('labels.backend.access.users.management') }} -->
-        Religions Management
-        <small>Edit Religion</small>
+        Currencies Manager
+        <small>Create Currencies</small>
     </h1>
 @endsection
 
@@ -43,19 +45,19 @@ use App\Models\Access\language\Languages;
 @endsection
 
 @section('content')
-    {{ Form::model($religion, [
-            'id'     => 'religion_update_form',
-            'route'  => ['admin.religion.religion.update', $religionid],
+    {{ Form::open([
+            'id'     => 'currencies_form',
+            'route'  => 'admin.currencies.currencies.store',
             'class'  => 'form-horizontal',
             'role'   => 'form',
-            'method' => 'PATCH',
+            'method' => 'post',
+            'files'  => true
         ]) 
     }}
-
         <div class="box box-success">
             <div class="box-header with-border">
                 <!-- <h3 class="box-title">{{ trans('labels.backend.access.users.create') }}</h3> -->
-                <h3 class="box-title">Edit Religion</h3>
+                <h3 class="box-title">Create Currencies</h3>
 
             </div><!-- /.box-header -->
 
@@ -79,11 +81,10 @@ use App\Models\Access\language\Languages;
                                 {{ Form::label('title_'.$language->id, 'Title', ['class' => 'col-lg-2 control-label']) }}
 
                                 <div class="col-lg-10">
-                                    {{ Form::text('title_'.$language->id, $data['title_'.$language->id] , ['class' => 'form-control', 'maxlength' => '191', 'required' => 'required', 'autofocus' => 'autofocus', 'placeholder' => 'Title']) }}
+                                    {{ Form::text('title_'.$language->id, null, ['class' => 'form-control', 'maxlength' => '191', 'required' => 'required', 'autofocus' => 'autofocus', 'placeholder' => 'Title']) }}
                                 </div><!--col-lg-10-->
                             </div><!--form control-->
                             <!-- End: Title -->
-                            <!-- Languages Tabs: Start -->
                         </div>
                     @endforeach
                     </div>
@@ -92,11 +93,7 @@ use App\Models\Access\language\Languages;
                         {{ Form::label('title', trans('validation.attributes.backend.access.languages.active'), ['class' => 'col-lg-2 control-label']) }}
 
                         <div class="col-lg-10">
-                        @if($data['active'] == 1)
                             {{ Form::checkbox('active', '1', true) }}
-                        @else
-                            {{ Form::checkbox('active', '2', true) }}
-                        @endif
                         </div><!--col-lg-10-->
                     </div><!--form control-->
                     <!-- Active: End -->
@@ -104,37 +101,33 @@ use App\Models\Access\language\Languages;
                 <!-- Languages Tabs: End -->
             </div>
         </div>
-
         <div class="box box-info">
             <div class="box-body">
                 <div class="pull-left">
-                    {{ link_to_route('admin.religion.religion.index', trans('buttons.general.cancel'), [], ['class' => 'btn btn-danger btn-xs']) }}
+                    {{ link_to_route('admin.currencies.currencies.index', trans('buttons.general.cancel'), [], ['class' => 'btn btn-danger btn-xs']) }}
                 </div><!--pull-left-->
 
                 <div class="pull-right">
-                    {{ Form::submit(trans('buttons.general.crud.update'), ['class' => 'btn btn-success btn-xs submit_button']) }}
+                    {{ Form::submit(trans('buttons.general.crud.create'), ['class' => 'btn btn-success btn-xs submit_button']) }}
                 </div><!--pull-right-->
 
                 <div class="clearfix"></div>
             </div><!-- /.box-body -->
         </div><!--box-->
-
     {{ Form::close() }}
 @endsection
 
-@section('after-styles')
-    <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.3/summernote.css" rel="stylesheet">
-@endsection
 @section('after-scripts')
+    {{ Html::script('js/backend/access/users/script.js') }}
     <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.3/summernote.js"></script>
     <script type="text/javascript">
+        $('.select2Class').select2({
+            placeHolder: 'Select Religion'
+        });
+
         $('.description').summernote({
              height: 200
         });
-    </script>
-    <script type="text/javascript">
-        $('.select2Class').select2({
-            placeHolder: 'Select Region'
-        });
+
     </script>
 @endsection
