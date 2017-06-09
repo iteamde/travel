@@ -17,6 +17,7 @@ class SetupAccessTables extends Migration
     public function up()
     {
         Schema::table(config('access.users_table'), function ($table) {
+            $table->engine = 'InnoDB';
             $table->tinyInteger('status')->after('password')->default(1)->unsigned();
             $table->string('confirmation_code')->after('status')->nullable();
             $table->boolean('confirmed')->after('confirmation_code')->default(config('access.users.confirm_email') ? false : true);
@@ -24,6 +25,7 @@ class SetupAccessTables extends Migration
         });
 
         Schema::create(config('access.roles_table'), function ($table) {
+            $table->engine = 'InnoDB';
             $table->increments('id')->unsigned();
             $table->string('name');
             $table->boolean('all')->default(false);
@@ -37,6 +39,7 @@ class SetupAccessTables extends Migration
         });
 
         Schema::create(config('access.role_user_table'), function ($table) {
+            $table->engine = 'InnoDB';
             $table->increments('id')->unsigned();
             $table->integer('user_id')->unsigned();
             $table->integer('role_id')->unsigned();
@@ -56,6 +59,7 @@ class SetupAccessTables extends Migration
         });
 
         Schema::create(config('access.permissions_table'), function ($table) {
+            $table->engine = 'InnoDB';
             $table->increments('id')->unsigned();
             $table->string('name');
             $table->string('display_name');
@@ -69,6 +73,7 @@ class SetupAccessTables extends Migration
         });
 
         Schema::create(config('access.permission_role_table'), function ($table) {
+            $table->engine = 'InnoDB';
             $table->increments('id')->unsigned();
             $table->integer('permission_id')->unsigned();
             $table->integer('role_id')->unsigned();

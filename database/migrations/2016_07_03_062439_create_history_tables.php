@@ -17,12 +17,14 @@ class CreateHistoryTables extends Migration
     public function up()
     {
         Schema::create('history_types', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->increments('id')->unsigned();
             $table->string('name');
             $table->timestamps();
         });
 
         Schema::create('history', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->increments('id')->unsigned();
             $table->integer('type_id')->unsigned();
             $table->integer('user_id')->unsigned();
