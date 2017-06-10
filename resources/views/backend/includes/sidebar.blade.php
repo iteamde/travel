@@ -171,11 +171,19 @@
                         </a>
                     </li>
 
-                     <li class="{{ active_class(Active::checkUriPattern('admin/activities/activity*')) }}">
+                    <li class="{{ active_class(Active::checkUriPattern('admin/activities/activity*')) }}">
                         <a href="{{ route('admin.activities.activity.index') }}">
                             <i class="fa fa-circle-o"></i>
                             <!-- <span>{{ trans('labels.backend.access.users.management') }}</span> -->
                             <span>Activities</span>
+                        </a>
+                    </li>
+
+                    <li class="{{ active_class(Active::checkUriPattern('admin/activities/activity*')) }}">
+                        <a href="{{ route('admin.activitymedia.activitymedia.index') }}">
+                            <i class="fa fa-circle-o"></i>
+                            <!-- <span>{{ trans('labels.backend.access.users.management') }}</span> -->
+                            <span>Activity Media</span>
                         </a>
                     </li>
                 </ul>
