@@ -56,6 +56,17 @@ trait CityRelationship
     }
 
     /**
+     * Many-to-Many relations with CitiesAirports.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function airports()
+    {
+        // return $this->belongsToMany(config('access.regions'), config('access.regions_trans'), 'id', 'regions_id');
+        return $this->hasMany(config('locations.cities_airports_trans'), 'cities_id');
+    }
+
+    /**
      * @return mixed
      */
     public function degree()

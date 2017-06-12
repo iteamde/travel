@@ -11,6 +11,8 @@ use App\Http\Requests\Backend\City\StoreCityRequest;
 use App\Repositories\Backend\City\CityRepository;
 use App\Models\Country\Countries;
 use App\Models\SafetyDegree\SafetyDegree;
+use App\Models\Place\Place;
+use App\Models\City\CitiesAirports;
 
 class CityController extends Controller
 {
@@ -58,10 +60,21 @@ class CityController extends Controller
                 $degrees_arr[$value->id] = $value->transsingle->title;
             }
         }
+
+        /* Get All Places */
+        $places = Place::get();
+        $places_arr = [];
+        
+        foreach ($places as $key => $value) {
+            if(isset($value->transsingle) && !empty($value->transsingle)){  
+                $places_arr[$value->id] = $value->transsingle->title;
+            }
+        }
        
         return view('backend.city.create',[
             'countries' => $countries_arr,
-            'degrees' => $degrees_arr,
+            'degrees'   => $degrees_arr,
+            'places'    => $places_arr,
         ]);
     }
 
@@ -111,6 +124,7 @@ class CityController extends Controller
             'code' => $request->input('code'),
             'lat' => $location[0],
             'lng' => $location[1],
+            'places' => $request->input('places_id'),
             'safety_degree_id' => $request->input('safety_degree_id')
         ];
 
@@ -120,16 +134,16 @@ class CityController extends Controller
     }
 
     /**
-     * @param Country $id
+     * @param Cities $id
      * @param ManageCountryRequest $request
      *
      * @return mixed
      */
     public function delete($id, ManageCityRequest $request)
     {
-        $item = Countries::findOrFail($id);
+        $item = Cities::findOrFail($id);
         /* Delete Children Tables Data of this country */
-        $child = CountriesTranslations::where(['countries_id' => $id])->get();
+        $child = CitiesTranslations::where(['cities_id' => $id])->get();
         if(!empty($child)){
             foreach ($child as $key => $value) {
                 $value->delete();
@@ -137,12 +151,12 @@ class CityController extends Controller
         }
         $item->delete();
 
-        return redirect()->route('admin.location.country.index')->withFlashSuccess('Country Deleted Successfully');
+        return redirect()->route('admin.location.city.index')->withFlashSuccess('City Deleted Successfully');
     }
 
     /**
-     * @param Countries $id
-     * @param ManageCountryRequest $request
+     * @param Cities $id
+     * @param ManageCityRequest $request
      *
      * @return mixed
      */
@@ -185,7 +199,7 @@ class CityController extends Controller
             }
         }
 
-         /* Get All safety Degrees */
+        /* Get All safety Degrees */
         $degrees = SafetyDegree::get();
         $degrees_arr = [];
         
@@ -195,13 +209,37 @@ class CityController extends Controller
             }
         }
 
+        /* Get All Airports */
+        $selected_airports = $cities->airports;
+        $selected_airports_arr = [];
+        
+        foreach ($selected_airports as $key => $value) {
+            if(isset($value->place->transsingle) && !empty($value->place->transsingle)){  
+                // $selected_airports_arr[$value->place->id] = $value->place->transsingle->title;
+                array_push($selected_airports_arr,$value->place->id);
+            }
+        }
+
+        $data['selected_airports'] = $selected_airports_arr;
+
+        /* Get All Places */
+        $places = Place::get();
+        $places_arr = [];
+        
+        foreach ($places as $key => $value) {
+            if(isset($value->transsingle) && !empty($value->transsingle)){  
+                $places_arr[$value->id] = $value->transsingle->title;
+            }
+        }
+        
         return view('backend.city.edit')
             ->withLanguages($this->languages)
             ->withCity($cities)
             ->withCityid($id)
             ->withData($data)
             ->withCountries($countries_arr)
-            ->withDegrees($degrees_arr);
+            ->withDegrees($degrees_arr)
+            ->withPlaces($places_arr);
     }
 
     /**
@@ -255,6 +293,7 @@ class CityController extends Controller
             'code' => $request->input('code'),
             'lat' => $location[0],
             'lng' => $location[1],
+            'places' => $request->input('places_id'),
             'safety_degree_id' => $request->input('safety_degree_id')
         ];
 
@@ -266,7 +305,7 @@ class CityController extends Controller
     }
 
     /**
-     * @param Country        $id
+     * @param City        $id
      * @param ManageCountryRequest $request
      *
      * @return mixed
@@ -285,15 +324,34 @@ class CityController extends Controller
         $safety_degree = $city->degree;
         $safety_degree = $safety_degree->transsingle;
        
+        /*Get Airport Locations*/
+        $airports = $city->airports;
+        $airports_arr = [];
+
+        if(!empty($airports)){
+            foreach ($airports as $key => $value) {
+                
+                $place = $value->place;
+                if(!empty($place)){
+
+                    $place = $place->transsingle;
+                    if(!empty($place)){
+                        array_push($airports_arr,$place->title);
+                    }
+                }
+            }
+        }
+
         return view('backend.city.show')
             ->withCity($city)
             ->withCitytrans($cityTrans)
             ->withCountry($country)
-            ->withDegree($safety_degree);
+            ->withDegree($safety_degree)
+            ->withAirports($airports_arr);
     }
 
     /**
-     * @param Countries $countries
+     * @param City $countries
      * @param $status
      * @param ManageCountryRequest $request
      *

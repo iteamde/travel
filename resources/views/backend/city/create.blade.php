@@ -198,7 +198,7 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
                         </div><!--col-lg-10-->
                     </div><!--form control-->
                     <!-- Is Capital: End -->
-                    <!-- Region: Start -->
+                    <!-- Country: Start -->
                     <div class="form-group">
                         {{ Form::label('title', 'Country', ['class' => 'col-lg-2 control-label']) }}
 
@@ -206,7 +206,7 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
                             {{ Form::select('countries_id', $countries , null,['class' => 'select2Class form-control']) }}
                         </div><!--col-lg-10-->
                     </div><!--form control-->
-                    <!-- Region: End -->
+                    <!-- Country: End -->
                     <!-- Safety Degree: Start -->
                     <div class="form-group">
                         {{ Form::label('title', 'Safety Degree', ['class' => 'col-lg-2 control-label']) }}
@@ -219,7 +219,7 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
                     <div class="form-group">
                     {{ Form::label('title', 'Select Location', ['class' => 'col-lg-2 control-label']) }}
                         <div class="col-lg-10">
-                            <input id="pac-input" class="form-control" type="text" placeholder="Search Box">
+                            <input id="pac-input" class="form-control" type="text" placeholder="Search Box" required>
                             <div id="map"></div>
                         </div>
                     </div>
@@ -232,6 +232,15 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
                             {{ Form::text('lat_lng_show', null, ['class' => 'form-control disabled', 'id' => 'lat-lng-input_show', 'required' => 'required', 'placeholder' => 'Lat,Lng' , 'disabled' => 'disabled']) }}
                         </div>
                     </div>
+                    <!-- Airports: Start -->
+                    <div class="form-group">
+                        {{ Form::label('title', 'Airport Locations', ['class' => 'col-lg-2 control-label']) }}
+
+                        <div class="col-lg-10">
+                            {{ Form::select('places_id[]', $places , null,['class' => 'select2Class form-control' , 'multiple' => 'multiple' ]) }}
+                        </div><!--col-lg-10-->
+                    </div><!--form control-->
+                    <!-- Airports: End -->
                 @endif
                 <!-- Languages Tabs: End -->
             </div>

@@ -109,19 +109,31 @@
                             @endif
                         </td>
                     </tr>
+                    <!-- Airports -->
                     <tr>
-                         <th> <h3 style="color:#0A8F27">Location</h3></th><td></td>   
+                         <th> <h3 style="color:#0A8F27">Airports Locations</h3></th><td></td>   
+                    </tr>
+                    @if(empty($airports))
+                      <tr>
+                          <th> <p>No Airports Locations Added.</p> </th>
+                      </tr>
+                    @endif
+                    @foreach($airports as $key => $airport)
+                      <tr>
+                          <th> <p><?=$airport?></p> </th>
+                      </tr>
+                    @endforeach
+                    <tr>
+                         <th> <h3 style="color:#0A8F27">City Location</h3></th><td></td>   
                     </tr>
                     <tr>
                         <th>Latitude , Longitude</th>
                         <td> <p><?=$city->lat?> , <?=$city->lng?></p> </td>
                     </tr>
-                    
                 </table>
                 <!-- Map will be created in the "map" div -->
                 <div id="map"></div>
                 <!-- Map div end -->
-
             </div><!--tab panel-->
 
         </div><!-- /.box-body -->

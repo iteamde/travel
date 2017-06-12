@@ -239,6 +239,15 @@ use App\Models\Access\language\Languages;
                             {{ Form::text('lat_lng_show', $data['lat_lng'], ['class' => 'form-control disabled', 'id' => 'lat-lng-input_show', 'required' => 'required', 'placeholder' => 'Lat,Lng' , 'disabled' => 'disabled']) }}
                         </div>
                     </div>
+                    <!-- Airports: Start -->
+                    <div class="form-group">
+                        {{ Form::label('title', 'Airport Locations', ['class' => 'col-lg-2 control-label']) }}
+
+                        <div class="col-lg-10">
+                            {{ Form::select('places_id[]', $places , $data['selected_airports'],['class' => 'select2Class form-control' , 'multiple' => 'multiple' ]) }}
+                        </div><!--col-lg-10-->
+                    </div><!--form control-->
+                    <!-- Airports: End -->
                 @endif
                 <!-- Languages Tabs: End -->
             </div>

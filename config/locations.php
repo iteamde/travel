@@ -7,6 +7,7 @@ use App\Models\Regions\RegionsTranslation;
 use App\Models\SafetyDegree\SafetyDegreeTrans;
 use App\Models\Country\CountriesTranslations;
 use App\Models\City\CitiesTranslations;
+use App\Models\City\CitiesAirports;
 use App\Models\PlaceTypes\PlaceTypes;
 use App\Models\PlaceTypes\PlaceTypesTranslations;
 use App\Models\Place\PlaceTranslations;
@@ -47,6 +48,12 @@ return [
      * Cities table used to save cities to the database.
      */
     'cities_trans' =>  CitiesTranslations::class,
+
+    /*
+     * CitiesAirports table used to save CitiesAirports to the database.
+     */
+    'cities_airports_trans' =>  CitiesAirports::class,
+
     /*
      * regions model used by Access to create correct relations.
      * Update the permission if it is in a different namespace.

@@ -4,6 +4,7 @@ namespace App\Repositories\Backend\City;
 
 use App\Models\City\Cities;
 use App\Models\City\CitiesTranslations;
+use App\Models\City\CitiesAirports;
 use Illuminate\Support\Facades\DB;
 use App\Exceptions\GeneralException;
 use App\Repositories\BaseRepository;
@@ -81,6 +82,7 @@ class CityRepository extends BaseRepository
          */
         $dataTableQuery = $this->query()
             // ->with('roles')
+            ->with('transsingle')
             ->select([
                 config('locations.city_table').'.id',
                 config('locations.city_table').'.code',
@@ -111,6 +113,16 @@ class CityRepository extends BaseRepository
             $check = 1;
             
             if ($model->save()) {
+
+                if(!empty($extra['places'])){
+                    foreach ($extra['places'] as $key => $value) {
+                        $airport = new CitiesAirports;
+                        $airport->cities_id = $model->id;
+                        $airport->places_id = $value;
+                        $airport->save();
+                    }
+                }
+
                 foreach ($input as $key => $value) {
                     $trans = new CitiesTranslations;
                     $trans->cities_id = $model->id;
@@ -162,23 +174,40 @@ class CityRepository extends BaseRepository
             }
         }
 
+        $prev_airports = CitiesAirports::where(['cities_id' => $id])->get();
+        if(!empty($prev_airports)){
+            foreach ($prev_airports as $key => $value) {
+                $value->delete();
+            }
+        }
+
         DB::transaction(function () use ($model, $input, $extra) {
             $check = 1;
             
             if ($model->save()) {
+
+                if(!empty($extra['places'])){
+                    foreach ($extra['places'] as $key => $value) {
+                        $airport            = new CitiesAirports;
+                        $airport->cities_id = $model->id;
+                        $airport->places_id = $value;
+                        $airport->save();
+                    }
+                }
+
                 foreach ($input as $key => $value) {
-                    $trans = new CitiesTranslations;
-                    $trans->cities_id = $model->id;
-                    $trans->languages_id = $key;
-                    $trans->title        = $value['title_'.$key];
-                    $trans->description  = $value['description_'.$key];
-                    $trans->best_place   = $value['best_place_'.$key];
-                    $trans->best_time    = $value['best_time_'.$key];
-                    $trans->cost_of_living = $value['cost_of_living_'.$key];
-                    $trans->geo_stats    = $value['geo_stats_'.$key];
-                    $trans->demographics = $value['demographics_'.$key];
-                    $trans->economy      = $value['economy_'.$key];
-                    $trans->suitable_for      = $value['suitable_for_'.$key];
+                    $trans                  = new CitiesTranslations;
+                    $trans->cities_id       = $model->id;
+                    $trans->languages_id    = $key;
+                    $trans->title           = $value['title_'.$key];
+                    $trans->description     = $value['description_'.$key];
+                    $trans->best_place      = $value['best_place_'.$key];
+                    $trans->best_time       = $value['best_time_'.$key];
+                    $trans->cost_of_living  = $value['cost_of_living_'.$key];
+                    $trans->geo_stats       = $value['geo_stats_'.$key];
+                    $trans->demographics    = $value['demographics_'.$key];
+                    $trans->economy         = $value['economy_'.$key];
+                    $trans->suitable_for    = $value['suitable_for_'.$key];
 
                     if(!$trans->save()) {
                         $check = 0;

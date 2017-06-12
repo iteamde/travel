@@ -35,6 +35,7 @@
                     <tr>
                         <!-- <th>{{ trans('labels.backend.access.users.table.id') }}</th> -->
                         <th>id</th>
+                        <th>Title</th>
                         <th>Code</th>
                         <th>lat</th>
                         <th>lng</th>
@@ -70,6 +71,7 @@
                 },
                 columns: [
 	                {data: 'id', name: '{{config('locations.city_table')}}.id'},
+                    {data: 'transsingle.title', name: '{{config('locations.city_trans_table')}}.title'},
 	                {data: 'code', name: '{{config('locations.city_table')}}.code'},
 	                {data: 'lat', name: '{{config('locations.city_table')}}.lat'},
 	                {data: 'lng', name: '{{config('locations.city_table')}}.lng'},
