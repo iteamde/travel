@@ -248,6 +248,16 @@ use App\Models\Access\language\Languages;
                         </div><!--col-lg-10-->
                     </div><!--form control-->
                     <!-- Airports: End -->
+
+                    <!-- Currencies: Start -->
+                    <div class="form-group">
+                        {{ Form::label('title', 'Currencies', ['class' => 'col-lg-2 control-label']) }}
+
+                        <div class="col-lg-10">
+                            {{ Form::select('currencies_id[]', $currencies , $data['selected_currencies'],['class' => 'select2Class form-control' , 'multiple' => 'multiple' ]) }}
+                        </div><!--col-lg-10-->
+                    </div><!--form control-->
+                    <!-- Currencies: End -->
                 @endif
                 <!-- Languages Tabs: End -->
             </div>

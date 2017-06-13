@@ -26,4 +26,20 @@ class Cities extends Model
      * @var array
      */
     protected $fillable = ['countries_id', 'code', 'is_capital' , 'lat', 'lng', 'safety_degree_id', 'active'];
+
+    public function deleteAirports(){
+        self::deleteModels($this->airports);
+    }
+
+    public function deleteCurrencies(){
+        self::deleteModels($this->currencies);
+    }
+
+    public function deleteModels($models){
+        if(!empty($models)){
+            foreach ($models as $key => $value) {
+                $value->delete();
+            }
+        }
+    }
 }

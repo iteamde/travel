@@ -5,6 +5,7 @@ namespace App\Repositories\Backend\City;
 use App\Models\City\Cities;
 use App\Models\City\CitiesTranslations;
 use App\Models\City\CitiesAirports;
+use App\Models\City\CitiesCurrencies;
 use Illuminate\Support\Facades\DB;
 use App\Exceptions\GeneralException;
 use App\Repositories\BaseRepository;
@@ -114,11 +115,22 @@ class CityRepository extends BaseRepository
             
             if ($model->save()) {
 
+                /* Entry in CitiesAirports table */
                 if(!empty($extra['places'])){
                     foreach ($extra['places'] as $key => $value) {
                         $airport = new CitiesAirports;
                         $airport->cities_id = $model->id;
                         $airport->places_id = $value;
+                        $airport->save();
+                    }
+                }
+
+                /* Entry in CitiesCurrencies table */
+                if(!empty($extra['currencies'])){
+                    foreach ($extra['currencies'] as $key => $value) {
+                        $airport = new CitiesCurrencies;
+                        $airport->cities_id = $model->id;
+                        $airport->currencies_id = $value;
                         $airport->save();
                     }
                 }
@@ -181,16 +193,34 @@ class CityRepository extends BaseRepository
             }
         }
 
+        $prev_currencies = CitiesCurrencies::where(['cities_id' => $id])->get();
+        if(!empty($prev_currencies)){
+            foreach ($prev_currencies as $key => $value) {
+                $value->delete();
+            }
+        }
+
         DB::transaction(function () use ($model, $input, $extra) {
             $check = 1;
             
             if ($model->save()) {
 
+                /* Save CitiesAirports */
                 if(!empty($extra['places'])){
                     foreach ($extra['places'] as $key => $value) {
                         $airport            = new CitiesAirports;
                         $airport->cities_id = $model->id;
                         $airport->places_id = $value;
+                        $airport->save();
+                    }
+                }
+
+                /* Save CitiesCurrencies */
+                if(!empty($extra['currencies'])){
+                    foreach ($extra['currencies'] as $key => $value) {
+                        $airport            = new CitiesCurrencies;
+                        $airport->cities_id = $model->id;
+                        $airport->currencies_id = $value;
                         $airport->save();
                     }
                 }

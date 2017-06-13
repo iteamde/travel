@@ -13,6 +13,7 @@ use App\Models\Country\Countries;
 use App\Models\SafetyDegree\SafetyDegree;
 use App\Models\Place\Place;
 use App\Models\City\CitiesAirports;
+use App\Models\Currencies\Currencies;
 
 class CityController extends Controller
 {
@@ -70,11 +71,22 @@ class CityController extends Controller
                 $places_arr[$value->id] = $value->transsingle->title;
             }
         }
-       
+
+        /* Get All Currencies */
+        $currencies = Currencies::get();
+        $currencies_arr = [];
+        
+        foreach ($currencies as $key => $value) {
+            if(isset($value->transsingle) && !empty($value->transsingle)){  
+                $currencies_arr[$value->id] = $value->transsingle->title;
+            }
+        }
+        
         return view('backend.city.create',[
             'countries' => $countries_arr,
             'degrees'   => $degrees_arr,
             'places'    => $places_arr,
+            'currencies'=> $currencies_arr,
         ]);
     }
 
@@ -125,6 +137,7 @@ class CityController extends Controller
             'lat' => $location[0],
             'lng' => $location[1],
             'places' => $request->input('places_id'),
+            'currencies' => $request->input('currencies_id'),
             'safety_degree_id' => $request->input('safety_degree_id')
         ];
 
@@ -149,6 +162,8 @@ class CityController extends Controller
                 $value->delete();
             }
         }
+        $item->deleteAirports();
+        $item->deleteCurrencies();
         $item->delete();
 
         return redirect()->route('admin.location.city.index')->withFlashSuccess('City Deleted Successfully');
@@ -231,7 +246,31 @@ class CityController extends Controller
                 $places_arr[$value->id] = $value->transsingle->title;
             }
         }
+
+
+        /* Get Selected Currencies */
+        $selected_currencies = $cities->currencies;
+        $selected_currencies_arr = [];
         
+        foreach ($selected_currencies as $key => $value) {
+            if(isset($value->currency->transsingle) && !empty($value->currency->transsingle)){  
+                // $selected_airports_arr[$value->place->id] = $value->place->transsingle->title;
+                array_push($selected_currencies_arr,$value->currency->id);
+            }
+        }
+
+        $data['selected_currencies'] = $selected_currencies_arr;
+        
+        /* Get All Currencies */
+        $currencies = Currencies::get();
+        $currencies_arr = [];
+        
+        foreach ($currencies as $key => $value) {
+            if(isset($value->transsingle) && !empty($value->transsingle)){  
+                $currencies_arr[$value->id] = $value->transsingle->title;
+            }
+        }
+
         return view('backend.city.edit')
             ->withLanguages($this->languages)
             ->withCity($cities)
@@ -239,7 +278,8 @@ class CityController extends Controller
             ->withData($data)
             ->withCountries($countries_arr)
             ->withDegrees($degrees_arr)
-            ->withPlaces($places_arr);
+            ->withPlaces($places_arr)
+            ->withCurrencies($currencies_arr);
     }
 
     /**
@@ -294,6 +334,7 @@ class CityController extends Controller
             'lat' => $location[0],
             'lng' => $location[1],
             'places' => $request->input('places_id'),
+            'currencies' => $request->input('currencies_id'),
             'safety_degree_id' => $request->input('safety_degree_id')
         ];
 
@@ -342,16 +383,35 @@ class CityController extends Controller
             }
         }
 
+        /*Get Currencies*/
+        $currencies = $city->currencies;
+        $currencies_arr = [];
+
+        if(!empty($currencies)){
+            foreach ($currencies as $key => $value) {
+                
+                $currency = $value->currency;
+                if(!empty($currency)){
+
+                    $currency = $currency->transsingle;
+                    if(!empty($currency)){
+                        array_push($currencies_arr,$currency->title);
+                    }
+                }
+            }
+        }
+
         return view('backend.city.show')
             ->withCity($city)
             ->withCitytrans($cityTrans)
             ->withCountry($country)
             ->withDegree($safety_degree)
-            ->withAirports($airports_arr);
+            ->withAirports($airports_arr)
+            ->withCurrencies($currencies_arr);
     }
 
     /**
-     * @param City $countries
+     * @param Cities $city
      * @param $status
      * @param ManageCountryRequest $request
      *

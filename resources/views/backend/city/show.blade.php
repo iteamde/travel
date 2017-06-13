@@ -109,6 +109,23 @@
                             @endif
                         </td>
                     </tr>
+
+                    <!-- Start: Currencies -->
+                    <tr>
+                         <th> <h3 style="color:#0A8F27">Currencies</h3></th><td></td>   
+                    </tr>
+                    @if(empty($currencies))
+                      <tr>
+                          <th> <p>No Currencies Added.</p> </th>
+                      </tr>
+                    @endif
+                    @foreach($currencies as $key => $currency)
+                      <tr>
+                          <th> <p><?=$currency?></p> </th>
+                      </tr>
+                    @endforeach
+                    <!-- End: Currencies -->
+
                     <!-- Airports -->
                     <tr>
                          <th> <h3 style="color:#0A8F27">Airports Locations</h3></th><td></td>   
