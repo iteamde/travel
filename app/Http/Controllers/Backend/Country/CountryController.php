@@ -121,13 +121,7 @@ class CountryController extends Controller
     public function delete($id, ManageCountryRequest $request)
     {
         $item = Countries::findOrFail($id);
-        /* Delete Children Tables Data of this country */
-        $child = CountriesTranslations::where(['countries_id' => $id])->get();
-        if(!empty($child)){
-            foreach ($child as $key => $value) {
-                $value->delete();
-            }
-        }
+        $item->deleteTrans();
         $item->delete();
 
         return redirect()->route('admin.location.country.index')->withFlashSuccess('Country Deleted Successfully');

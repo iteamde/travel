@@ -26,7 +26,7 @@ class CityController extends Controller
     }
 
      /**
-     * @param ManageCountryrRequest $request
+     * @param ManageCityRequest $request
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
@@ -36,7 +36,7 @@ class CityController extends Controller
     }
 
     /**
-     * @param ManageCountryRequest $request
+     * @param ManageCityRequest $request
      *
      * @return mixed
      */
@@ -73,7 +73,7 @@ class CityController extends Controller
         }
 
         /* Get All Currencies */
-        $currencies = Currencies::get();
+        $currencies = Currencies::where(['active' => 1])->get();
         $currencies_arr = [];
         
         foreach ($currencies as $key => $value) {
@@ -91,7 +91,7 @@ class CityController extends Controller
     }
 
     /**
-     * @param StoreCountryRequest $request
+     * @param StoreCityRequest $request
      *
      * @return mixed
      */
@@ -148,20 +148,14 @@ class CityController extends Controller
 
     /**
      * @param Cities $id
-     * @param ManageCountryRequest $request
+     * @param ManageCityRequest $request
      *
      * @return mixed
      */
     public function delete($id, ManageCityRequest $request)
     {
         $item = Cities::findOrFail($id);
-        /* Delete Children Tables Data of this country */
-        $child = CitiesTranslations::where(['cities_id' => $id])->get();
-        if(!empty($child)){
-            foreach ($child as $key => $value) {
-                $value->delete();
-            }
-        }
+        $item->deleteTrans();
         $item->deleteAirports();
         $item->deleteCurrencies();
         $item->delete();
@@ -247,7 +241,6 @@ class CityController extends Controller
             }
         }
 
-
         /* Get Selected Currencies */
         $selected_currencies = $cities->currencies;
         $selected_currencies_arr = [];
@@ -262,7 +255,7 @@ class CityController extends Controller
         $data['selected_currencies'] = $selected_currencies_arr;
         
         /* Get All Currencies */
-        $currencies = Currencies::get();
+        $currencies = Currencies::where(['active' => 1])->get();
         $currencies_arr = [];
         
         foreach ($currencies as $key => $value) {
@@ -283,8 +276,8 @@ class CityController extends Controller
     }
 
     /**
-     * @param Countries            $id
-     * @param ManageCountryRequest $request
+     * @param Cities           $id
+     * @param ManageCityRequest $request
      *
      * @return mixed
      */
@@ -347,7 +340,7 @@ class CityController extends Controller
 
     /**
      * @param City        $id
-     * @param ManageCountryRequest $request
+     * @param ManageCityRequest $request
      *
      * @return mixed
      */
@@ -413,7 +406,7 @@ class CityController extends Controller
     /**
      * @param Cities $city
      * @param $status
-     * @param ManageCountryRequest $request
+     * @param ManageCityRequest $request
      *
      * @return mixed
      */

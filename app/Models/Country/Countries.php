@@ -26,4 +26,16 @@ class Countries extends Model
      * @var array
      */
     protected $fillable = ['region_id', 'code', 'lat', 'lng', 'safety_degree', 'active'];
+
+    public function deleteTrans(){
+        self::deleteModels($this->trans);
+    }
+
+    public function deleteModels($models){
+        if(!empty($models)){
+            foreach ($models as $key => $value) {
+                $value->delete();
+            }
+        }
+    }
 }

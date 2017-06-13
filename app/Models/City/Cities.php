@@ -35,6 +35,10 @@ class Cities extends Model
         self::deleteModels($this->currencies);
     }
 
+    public function deleteTrans(){
+        self::deleteModels($this->trans);
+    }
+
     public function deleteModels($models){
         if(!empty($models)){
             foreach ($models as $key => $value) {
