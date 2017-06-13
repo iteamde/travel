@@ -78,6 +78,17 @@ trait CityRelationship
     }
 
     /**
+     * Many-to-Many relations with CitiesNumbers.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function emergency_numbers()
+    {
+        // return $this->belongsToMany(config('access.regions'), config('access.regions_trans'), 'id', 'regions_id');
+        return $this->hasMany(config('locations.cities_emergency_numbers_trans'), 'cities_id');
+    }
+
+    /**
      * @return mixed
      */
     public function degree()

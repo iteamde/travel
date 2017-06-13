@@ -39,6 +39,10 @@ class Cities extends Model
         self::deleteModels($this->trans);
     }
 
+    public function deleteEmergency_numbers(){
+        self::deleteModels($this->emergency_numbers);
+    }
+
     public function deleteModels($models){
         if(!empty($models)){
             foreach ($models as $key => $value) {

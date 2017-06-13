@@ -9,6 +9,7 @@ use App\Models\Country\CountriesTranslations;
 use App\Models\City\CitiesTranslations;
 use App\Models\City\CitiesAirports;
 use App\Models\City\CitiesCurrencies;
+use App\Models\City\CitiesEmergencyNumbers;
 use App\Models\PlaceTypes\PlaceTypes;
 use App\Models\PlaceTypes\PlaceTypesTranslations;
 use App\Models\Place\PlaceTranslations;
@@ -59,6 +60,11 @@ return [
      * CitiesCurrencies table used to save CitiesCurrencies to the database.
      */
     'cities_currencies_trans' =>  CitiesCurrencies::class,
+
+    /*
+     * CitiesEmergencyNumbers table used to save CitiesEmergencyNumbers to the database.
+     */
+    'cities_emergency_numbers_trans' =>  CitiesEmergencyNumbers::class,
 
     /*
      * regions model used by Access to create correct relations.

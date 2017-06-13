@@ -6,6 +6,7 @@ use App\Models\City\Cities;
 use App\Models\City\CitiesTranslations;
 use App\Models\City\CitiesAirports;
 use App\Models\City\CitiesCurrencies;
+use App\Models\City\CitiesEmergencyNumbers;
 use Illuminate\Support\Facades\DB;
 use App\Exceptions\GeneralException;
 use App\Repositories\BaseRepository;
@@ -115,13 +116,23 @@ class CityRepository extends BaseRepository
             
             if ($model->save()) {
 
+                /* Entry in EmergencyNumbers table */
+                if(!empty($extra['emergency_numbers'])){
+                    foreach ($extra['emergency_numbers'] as $key => $value) {
+                        $emergencyNum = new CitiesEmergencyNumbers;
+                        $emergencyNum->cities_id = $model->id;
+                        $emergencyNum->emergency_numbers_id = $value;
+                        $emergencyNum->save();
+                    }
+                }
+
                 /* Entry in CitiesAirports table */
                 if(!empty($extra['places'])){
                     foreach ($extra['places'] as $key => $value) {
-                        $airport = new CitiesAirports;
-                        $airport->cities_id = $model->id;
-                        $airport->places_id = $value;
-                        $airport->save();
+                        $place = new CitiesAirports;
+                        $place->cities_id = $model->id;
+                        $place->places_id = $value;
+                        $place->save();
                     }
                 }
 
@@ -200,10 +211,27 @@ class CityRepository extends BaseRepository
             }
         }
 
+        $prev_numbers = CitiesEmergencyNumbers::where(['cities_id' => $id])->get();
+        if(!empty($prev_numbers)){
+            foreach ($prev_numbers as $key => $value) {
+                $value->delete();
+            }
+        }
+
         DB::transaction(function () use ($model, $input, $extra) {
             $check = 1;
             
             if ($model->save()) {
+
+                 /* Save EmergencyNumbers */
+                if(!empty($extra['emergency_numbers'])){
+                    foreach ($extra['emergency_numbers'] as $key => $value) {
+                        $airport            = new CitiesEmergencyNumbers;
+                        $airport->cities_id = $model->id;
+                        $airport->emergency_numbers_id = $value;
+                        $airport->save();
+                    }
+                }
 
                 /* Save CitiesAirports */
                 if(!empty($extra['places'])){

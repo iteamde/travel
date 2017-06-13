@@ -14,6 +14,7 @@ use App\Models\SafetyDegree\SafetyDegree;
 use App\Models\Place\Place;
 use App\Models\City\CitiesAirports;
 use App\Models\Currencies\Currencies;
+use App\Models\EmergencyNumbers\EmergencyNumbers;
 
 class CityController extends Controller
 {
@@ -81,12 +82,24 @@ class CityController extends Controller
                 $currencies_arr[$value->id] = $value->transsingle->title;
             }
         }
+
+        /* Get All Emergency Numbers */
+        $emergency_numbers = EmergencyNumbers::get();
+        $emergency_numbers_arr = [];
+        
+        foreach ($emergency_numbers as $key => $value) {
+            if(isset($value->transsingle) && !empty($value->transsingle)){  
+                $emergency_numbers_arr[$value->id] = $value->transsingle->title;
+            }
+        }
+
         
         return view('backend.city.create',[
             'countries' => $countries_arr,
             'degrees'   => $degrees_arr,
             'places'    => $places_arr,
             'currencies'=> $currencies_arr,
+            'emergency_numbers' => $emergency_numbers_arr,
         ]);
     }
 
@@ -138,6 +151,7 @@ class CityController extends Controller
             'lng' => $location[1],
             'places' => $request->input('places_id'),
             'currencies' => $request->input('currencies_id'),
+            'emergency_numbers' => $request->input('emergency_numbers_id'),
             'safety_degree_id' => $request->input('safety_degree_id')
         ];
 
@@ -158,6 +172,7 @@ class CityController extends Controller
         $item->deleteTrans();
         $item->deleteAirports();
         $item->deleteCurrencies();
+        $item->deleteEmergency_numbers();
         $item->delete();
 
         return redirect()->route('admin.location.city.index')->withFlashSuccess('City Deleted Successfully');
@@ -264,6 +279,29 @@ class CityController extends Controller
             }
         }
 
+        /* Get Selected Emergency Numbers */
+        $selected_numbers = $cities->emergency_numbers;
+        $selected_numbers_arr = [];
+        
+        foreach ($selected_numbers as $key => $value) {
+            if(isset($value->emergency_number->transsingle) && !empty($value->emergency_number->transsingle)){  
+                // $selected_airports_arr[$value->place->id] = $value->place->transsingle->title;
+                array_push($selected_numbers_arr,$value->emergency_number->id);
+            }
+        }
+
+        $data['emergency_numbers'] = $selected_numbers_arr;
+        
+         /* Get All Emergency Numbers */
+        $emergency_numbers = EmergencyNumbers::get();
+        $emergency_numbers_arr = [];
+        
+        foreach ($emergency_numbers as $key => $value) {
+            if(isset($value->transsingle) && !empty($value->transsingle)){  
+                $emergency_numbers_arr[$value->id] = $value->transsingle->title;
+            }
+        }
+
         return view('backend.city.edit')
             ->withLanguages($this->languages)
             ->withCity($cities)
@@ -272,7 +310,8 @@ class CityController extends Controller
             ->withCountries($countries_arr)
             ->withDegrees($degrees_arr)
             ->withPlaces($places_arr)
-            ->withCurrencies($currencies_arr);
+            ->withCurrencies($currencies_arr)
+            ->withEmergency_numbers($emergency_numbers_arr);
     }
 
     /**
@@ -328,6 +367,7 @@ class CityController extends Controller
             'lng' => $location[1],
             'places' => $request->input('places_id'),
             'currencies' => $request->input('currencies_id'),
+            'emergency_numbers' => $request->input('emergency_numbers_id'),
             'safety_degree_id' => $request->input('safety_degree_id')
         ];
 
@@ -394,13 +434,33 @@ class CityController extends Controller
             }
         }
 
+        /*Get EmergencyNumbers*/
+        $emergency_numbers = $city->emergency_numbers;
+        $emergency_numbers_arr = [];
+
+        if(!empty($emergency_numbers)){
+            foreach ($emergency_numbers as $key => $value) {
+                
+                $number = $value->emergency_number;
+               
+                if(!empty($number)){
+
+                    $number = $number->transsingle;
+                    if(!empty($number)){
+                        array_push($emergency_numbers_arr,$number->title);
+                    }
+                }
+            }
+        }
+        
         return view('backend.city.show')
             ->withCity($city)
             ->withCitytrans($cityTrans)
             ->withCountry($country)
             ->withDegree($safety_degree)
             ->withAirports($airports_arr)
-            ->withCurrencies($currencies_arr);
+            ->withCurrencies($currencies_arr)
+            ->withEmergencynumbers($emergency_numbers_arr);
     }
 
     /**

@@ -126,6 +126,22 @@
                     @endforeach
                     <!-- End: Currencies -->
 
+                    <!-- Start: Emergency Numbers -->
+                    <tr>
+                         <th> <h3 style="color:#0A8F27">Emergency Numbers</h3></th><td></td>   
+                    </tr>
+                    @if(empty($emergencynumbers))
+                      <tr>
+                          <th> <p>No Emergency Numbers Added.</p> </th>
+                      </tr>
+                    @endif
+                    @foreach($emergencynumbers as $key => $number)
+                      <tr>
+                          <th> <p><?=$number?></p> </th>
+                      </tr>
+                    @endforeach
+                    <!-- End: Emergency Numbers -->
+
                     <!-- Airports -->
                     <tr>
                          <th> <h3 style="color:#0A8F27">Airports Locations</h3></th><td></td>   
