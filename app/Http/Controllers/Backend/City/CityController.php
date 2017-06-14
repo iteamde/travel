@@ -185,6 +185,7 @@ class CityController extends Controller
         $item->deleteAirports();
         $item->deleteCurrencies();
         $item->deleteEmergency_numbers();
+        $item->deleteHolidays();
         $item->delete();
 
         return redirect()->route('admin.location.city.index')->withFlashSuccess('City Deleted Successfully');
