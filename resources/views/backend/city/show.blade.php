@@ -126,6 +126,22 @@
                     @endforeach
                     <!-- End: Currencies -->
 
+                    <!-- Start: Holidays -->
+                    <tr>
+                         <th> <h3 style="color:#0A8F27">Holidays</h3></th><td></td>   
+                    </tr>
+                    @if(empty($holidays))
+                      <tr>
+                          <th> <p>No Holidays Added.</p> </th>
+                      </tr>
+                    @endif
+                    @foreach($holidays as $key => $holiday)
+                      <tr>
+                          <th> <p><?=$holiday?></p> </th>
+                      </tr>
+                    @endforeach
+                    <!-- End: Holidays -->
+
                     <!-- Start: Emergency Numbers -->
                     <tr>
                          <th> <h3 style="color:#0A8F27">Emergency Numbers</h3></th><td></td>   

@@ -7,6 +7,7 @@ use App\Models\City\CitiesTranslations;
 use App\Models\City\CitiesAirports;
 use App\Models\City\CitiesCurrencies;
 use App\Models\City\CitiesEmergencyNumbers;
+use App\Models\City\CitiesHolidays;
 use Illuminate\Support\Facades\DB;
 use App\Exceptions\GeneralException;
 use App\Repositories\BaseRepository;
@@ -126,6 +127,17 @@ class CityRepository extends BaseRepository
                     }
                 }
 
+                /* Entry in CitiesHolidays table */
+                if(!empty($extra['holidays'])){
+                    foreach ($extra['holidays'] as $key => $value) {
+                        $citiesHolidays = new CitiesHolidays;
+                        $citiesHolidays->cities_id = $model->id;
+                        $citiesHolidays->holidays_id = $value;
+                        $citiesHolidays->save();
+                    }
+                }
+
+
                 /* Entry in CitiesAirports table */
                 if(!empty($extra['places'])){
                     foreach ($extra['places'] as $key => $value) {
@@ -218,6 +230,13 @@ class CityRepository extends BaseRepository
             }
         }
 
+        $prev_holidays = CitiesHolidays::where(['cities_id' => $id])->get();
+        if(!empty($prev_holidays)){
+            foreach ($prev_holidays as $key => $value) {
+                $value->delete();
+            }
+        }
+
         DB::transaction(function () use ($model, $input, $extra) {
             $check = 1;
             
@@ -230,6 +249,16 @@ class CityRepository extends BaseRepository
                         $airport->cities_id = $model->id;
                         $airport->emergency_numbers_id = $value;
                         $airport->save();
+                    }
+                }
+
+                /* Entry in CitiesHolidays table */
+                if(!empty($extra['holidays'])){
+                    foreach ($extra['holidays'] as $key => $value) {
+                        $citiesHolidays = new CitiesHolidays;
+                        $citiesHolidays->cities_id = $model->id;
+                        $citiesHolidays->holidays_id = $value;
+                        $citiesHolidays->save();
                     }
                 }
 

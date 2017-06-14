@@ -89,6 +89,17 @@ trait CityRelationship
     }
 
     /**
+     * Many-to-Many relations with CitiesNumbers.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function holidays()
+    {
+        // return $this->belongsToMany(config('access.regions'), config('access.regions_trans'), 'id', 'regions_id');
+        return $this->hasMany(config('locations.cities_holidays_trans'), 'cities_id');
+    }
+
+    /**
      * @return mixed
      */
     public function degree()

@@ -33,6 +33,7 @@
                 
                 <table class="table table-striped table-hover">
                     @foreach($lifestyletrans as $key => $lifestyle_translation)
+                        <tr> <th> <h3 style="color:#0A8F27">{{ $lifestyle_translation->translanguage->title }}</h3> </th><td></td> </tr>
                         <tr>
                             <th>Title <small>({{ $lifestyle_translation->translanguage->title }})</small></th>
                             <td>{{ $lifestyle_translation->title }}</td>

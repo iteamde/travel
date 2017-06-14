@@ -41,10 +41,6 @@
                             <th>Title <small>({{ $currencies_translation->translanguage->title }})</small></th>
                             <td>{{ $currencies_translation->title }}</td>
                         </tr>
-                        <tr>
-                            <th>Description <small>({{ $currencies_translation->translanguage->title }})</small></th>
-                            <td><?php echo $currencies_translation->description; ?></td>
-                        </tr>
                     @endforeach
                     <tr> 
                         <th> <h3 style="color:#0A8F27"> Common Fields </h3> </th> 

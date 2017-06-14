@@ -214,6 +214,7 @@ use App\Models\Access\language\Languages;
                         </div><!--col-lg-10-->
                     </div><!--form control-->
                     <!-- Country: End -->
+
                     <!-- Safety Degrees: Start -->
                     <div class="form-group">
                         {{ Form::label('title', 'Safety Degree', ['class' => 'col-lg-2 control-label']) }}
@@ -222,6 +223,7 @@ use App\Models\Access\language\Languages;
                             {{ Form::select('safety_degree_id', $degrees , $data['safety_degree_id'],['class' => 'select2Class form-control']) }}
                         </div><!--col-lg-10-->
                     </div><!--form control-->
+
                     <!-- Safety Degrees: End -->
                     <div class="form-group">
                     {{ Form::label('title', 'Select Location', ['class' => 'col-lg-2 control-label']) }}
@@ -258,6 +260,16 @@ use App\Models\Access\language\Languages;
                         </div><!--col-lg-10-->
                     </div><!--form control-->
                     <!-- Currencies: End -->
+
+                    <!-- Holidays: Start -->
+                    <div class="form-group">
+                        {{ Form::label('title', 'Holidays', ['class' => 'col-lg-2 control-label']) }}
+
+                        <div class="col-lg-10">
+                            {{ Form::select('holidays_id[]', $holidays , $data['selected_holidays'] ,['class' => 'select2Class form-control' , 'multiple' => 'multiple' ]) }}
+                        </div><!--col-lg-10-->
+                    </div><!--form control-->
+                    <!-- Holidays: End -->
 
                     <!-- EmergencyNumbers: Start -->
                     <div class="form-group">

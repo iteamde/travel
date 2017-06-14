@@ -15,6 +15,7 @@ use App\Models\Place\Place;
 use App\Models\City\CitiesAirports;
 use App\Models\Currencies\Currencies;
 use App\Models\EmergencyNumbers\EmergencyNumbers;
+use App\Models\Holidays\Holidays;
 
 class CityController extends Controller
 {
@@ -93,6 +94,15 @@ class CityController extends Controller
             }
         }
 
+        /* Find All Holidays In The System */
+        $holidays = Holidays::get();
+        $holidays_arr = [];
+        
+        foreach ($holidays as $key => $value) {
+            if(isset($value->transsingle) && !empty($value->transsingle)){  
+                $holidays_arr[$value->id] = $value->transsingle->title;
+            }
+        }
         
         return view('backend.city.create',[
             'countries' => $countries_arr,
@@ -100,6 +110,7 @@ class CityController extends Controller
             'places'    => $places_arr,
             'currencies'=> $currencies_arr,
             'emergency_numbers' => $emergency_numbers_arr,
+            'holidays'  => $holidays_arr,
         ]);
     }
 
@@ -152,6 +163,7 @@ class CityController extends Controller
             'places' => $request->input('places_id'),
             'currencies' => $request->input('currencies_id'),
             'emergency_numbers' => $request->input('emergency_numbers_id'),
+            'holidays'  => $request->input('holidays_id'),
             'safety_degree_id' => $request->input('safety_degree_id')
         ];
 
@@ -186,6 +198,7 @@ class CityController extends Controller
      */
     public function edit($id, ManageCityRequest $request)
     {   
+
         $data = [];
         $cities = Cities::findOrFail(['id' => $id]);
         $cities = $cities[0];
@@ -319,6 +332,29 @@ class CityController extends Controller
             }
         }
 
+        /* Get Selected holidays */
+        $selected_holidays = $cities->holidays;
+        $selected_holidays_arr = [];
+        
+        foreach ($selected_holidays as $key => $value) {
+            if(isset($value->holiday->transsingle) && !empty($value->holiday->transsingle)){  
+                // $selected_airports_arr[$value->place->id] = $value->place->transsingle->title;
+                array_push($selected_holidays_arr,$value->holiday->id);
+            }
+        }
+
+        $data['selected_holidays'] = $selected_holidays_arr;
+
+        /* Find All Holidays In The System */
+        $holidays = Holidays::get();
+        $holidays_arr = [];
+        
+        foreach ($holidays as $key => $value) {
+            if(isset($value->transsingle) && !empty($value->transsingle)){  
+                $holidays_arr[$value->id] = $value->transsingle->title;
+            }
+        }
+
         return view('backend.city.edit')
             ->withLanguages($this->languages)
             ->withCity($cities)
@@ -328,6 +364,7 @@ class CityController extends Controller
             ->withDegrees($degrees_arr)
             ->withPlaces($places_arr)
             ->withCurrencies($currencies_arr)
+            ->withHolidays($holidays_arr)
             ->withEmergency_numbers($emergency_numbers_arr);
     }
 
@@ -384,6 +421,7 @@ class CityController extends Controller
             'lng' => $location[1],
             'places' => $request->input('places_id'),
             'currencies' => $request->input('currencies_id'),
+            'holidays'  => $request->input('holidays_id'),
             'emergency_numbers' => $request->input('emergency_numbers_id'),
             'safety_degree_id' => $request->input('safety_degree_id')
         ];
@@ -469,6 +507,25 @@ class CityController extends Controller
                 }
             }
         }
+
+        /* Get Holidays */
+        $holidays = $city->holidays;
+        $holidays_arr = [];
+
+        if(!empty($holidays)){
+            foreach ($holidays as $key => $value) {
+                
+                $holiday = $value->holiday;
+               
+                if(!empty($holiday)){
+
+                    $holiday = $holiday->transsingle;
+                    if(!empty($holiday)){
+                        array_push($holidays_arr,$holiday->title);
+                    }
+                }
+            }
+        }
         
         return view('backend.city.show')
             ->withCity($city)
@@ -477,6 +534,7 @@ class CityController extends Controller
             ->withDegree($safety_degree)
             ->withAirports($airports_arr)
             ->withCurrencies($currencies_arr)
+            ->withHolidays($holidays_arr)
             ->withEmergencynumbers($emergency_numbers_arr);
     }
 
