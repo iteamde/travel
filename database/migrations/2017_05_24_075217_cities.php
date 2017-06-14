@@ -28,7 +28,7 @@ class Cities extends Migration
               `active` int(11) NOT NULL,
               PRIMARY KEY (`id`),
               KEY `countries_id` (`countries_id`),
-              CONSTRAINT `cities_ibfk_1` FOREIGN KEY (`countries_id`) REFERENCES `countries` (`id`)
+              CONSTRAINT `cities_ibfk_1` FOREIGN KEY (`countries_id`) REFERENCES `countries` (`id`) ON DELETE CASCADE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;';
             DB::connection()->getPdo()->exec($sql);
         });

@@ -24,8 +24,8 @@ class CitiesEmergencyNumbers extends Migration
               PRIMARY KEY (`id`),
               KEY `cities_id` (`cities_id`),
               KEY `emergency_numbers_id` (`emergency_numbers_id`),
-              CONSTRAINT `cities_emergency_numbers_ibfk_1` FOREIGN KEY (`cities_id`) REFERENCES `cities` (`id`),
-              CONSTRAINT `cities_emergency_numbers_ibfk_2` FOREIGN KEY (`emergency_numbers_id`) REFERENCES `conf_emergency_numbers` (`id`)
+              CONSTRAINT `cities_emergency_numbers_ibfk_1` FOREIGN KEY (`cities_id`) REFERENCES `cities` (`id`) ON DELETE CASCADE,
+              CONSTRAINT `cities_emergency_numbers_ibfk_2` FOREIGN KEY (`emergency_numbers_id`) REFERENCES `conf_emergency_numbers` (`id`) ON DELETE CASCADE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;';
             DB::connection()->getPdo()->exec($sql);
         });

@@ -33,8 +33,8 @@ class HotelsTrans extends Migration
               PRIMARY KEY (`id`),
               KEY `hotels_id` (`hotels_id`),
               KEY `languages_id` (`languages_id`),
-              CONSTRAINT `hotels_trans_ibfk_1` FOREIGN KEY (`hotels_id`) REFERENCES `hotels` (`id`),
-              CONSTRAINT `hotels_trans_ibfk_2` FOREIGN KEY (`languages_id`) REFERENCES `conf_languages` (`id`)
+              CONSTRAINT `hotels_trans_ibfk_1` FOREIGN KEY (`hotels_id`) REFERENCES `hotels` (`id`) ON DELETE CASCADE,
+              CONSTRAINT `hotels_trans_ibfk_2` FOREIGN KEY (`languages_id`) REFERENCES `conf_languages` (`id`) ON DELETE CASCADE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;';
             DB::connection()->getPdo()->exec($sql);
         });

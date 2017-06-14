@@ -24,8 +24,8 @@ class CountriesWeekdays extends Migration
               PRIMARY KEY (`id`),
               KEY `countries_id` (`countries_id`),
               KEY `weekdays_id` (`weekdays_id`),
-              CONSTRAINT `countries_weekdays_ibfk_1` FOREIGN KEY (`countries_id`) REFERENCES `countries` (`id`),
-              CONSTRAINT `countries_weekdays_ibfk_2` FOREIGN KEY (`weekdays_id`) REFERENCES `conf_weekdays` (`id`)
+              CONSTRAINT `countries_weekdays_ibfk_1` FOREIGN KEY (`countries_id`) REFERENCES `countries` (`id`) ON DELETE CASCADE,
+              CONSTRAINT `countries_weekdays_ibfk_2` FOREIGN KEY (`weekdays_id`) REFERENCES `conf_weekdays` (`id`) ON DELETE CASCADE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;';
             DB::connection()->getPdo()->exec($sql);
         });

@@ -11,6 +11,7 @@ use App\Models\City\CitiesAirports;
 use App\Models\City\CitiesCurrencies;
 use App\Models\City\CitiesEmergencyNumbers;
 use App\Models\City\CitiesHolidays;
+use App\Models\City\CitiesLanguagesSpoken;
 use App\Models\PlaceTypes\PlaceTypes;
 use App\Models\PlaceTypes\PlaceTypesTranslations;
 use App\Models\Place\PlaceTranslations;
@@ -71,6 +72,11 @@ return [
      * CitiesHolidays table used to save CitiesHolidays to the database.
      */
     'cities_holidays_trans' =>  CitiesHolidays::class,
+
+    /*
+     * CitiesLanguagesSpoken table used to save CitiesLanguagesSpoken to the database.
+     */
+    'cities_languages_spoken_trans' =>  CitiesLanguagesSpoken::class,
 
     /*
      * regions model used by Access to create correct relations.

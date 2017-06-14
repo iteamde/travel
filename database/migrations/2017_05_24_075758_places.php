@@ -31,10 +31,10 @@ class Places extends Migration
               KEY `cities_id` (`cities_id`),
               KEY `place_type_ids` (`place_type_ids`),
               KEY `safety_degrees_id` (`safety_degrees_id`),
-              CONSTRAINT `places_ibfk_1` FOREIGN KEY (`countries_id`) REFERENCES `countries` (`id`),
-              CONSTRAINT `places_ibfk_2` FOREIGN KEY (`cities_id`) REFERENCES `cities` (`id`),
-              CONSTRAINT `places_ibfk_5` FOREIGN KEY (`place_type_ids`) REFERENCES `conf_place_types` (`id`),
-              CONSTRAINT `places_ibfk_6` FOREIGN KEY (`safety_degrees_id`) REFERENCES `conf_safety_degrees` (`id`)
+              CONSTRAINT `places_ibfk_1` FOREIGN KEY (`countries_id`) REFERENCES `countries` (`id`) ON DELETE CASCADE,
+              CONSTRAINT `places_ibfk_2` FOREIGN KEY (`cities_id`) REFERENCES `cities` (`id`) ON DELETE CASCADE,
+              CONSTRAINT `places_ibfk_5` FOREIGN KEY (`place_type_ids`) REFERENCES `conf_place_types` (`id`) ON DELETE CASCADE,
+              CONSTRAINT `places_ibfk_6` FOREIGN KEY (`safety_degrees_id`) REFERENCES `conf_safety_degrees` (`id`) ON DELETE CASCADE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;';
             DB::connection()->getPdo()->exec($sql);
         });

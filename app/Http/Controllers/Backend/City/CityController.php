@@ -16,6 +16,7 @@ use App\Models\City\CitiesAirports;
 use App\Models\Currencies\Currencies;
 use App\Models\EmergencyNumbers\EmergencyNumbers;
 use App\Models\Holidays\Holidays;
+use App\Models\LanguagesSpoken\LanguagesSpoken;
 
 class CityController extends Controller
 {
@@ -103,13 +104,25 @@ class CityController extends Controller
                 $holidays_arr[$value->id] = $value->transsingle->title;
             }
         }
+
+        /* Find All LanguagesSpoken In The System */
+        $languages_spoken = LanguagesSpoken::get();
+        $languages_spoken_arr = [];
         
+        foreach ($languages_spoken as $key => $value) {
+            if(isset($value->transsingle) && !empty($value->transsingle)){  
+                $languages_spoken_arr[$value->id] = $value->transsingle->title;
+            }
+        }
+
         return view('backend.city.create',[
             'countries' => $countries_arr,
             'degrees'   => $degrees_arr,
             'places'    => $places_arr,
             'currencies'=> $currencies_arr,
+            'languages_spoken' => $languages_spoken,
             'emergency_numbers' => $emergency_numbers_arr,
+            'languages_spoken'  => $languages_spoken_arr,
             'holidays'  => $holidays_arr,
         ]);
     }
@@ -164,6 +177,7 @@ class CityController extends Controller
             'currencies' => $request->input('currencies_id'),
             'emergency_numbers' => $request->input('emergency_numbers_id'),
             'holidays'  => $request->input('holidays_id'),
+            'languages_spoken' => $request->input('languages_spoken_id'),
             'safety_degree_id' => $request->input('safety_degree_id')
         ];
 
@@ -186,6 +200,7 @@ class CityController extends Controller
         $item->deleteCurrencies();
         $item->deleteEmergency_numbers();
         $item->deleteHolidays();
+        $item->deleteLanguagesSpoken();
         $item->delete();
 
         return redirect()->route('admin.location.city.index')->withFlashSuccess('City Deleted Successfully');
@@ -356,6 +371,30 @@ class CityController extends Controller
             }
         }
 
+        /* Get Selected Languages Spoken */
+        $selected_languages_spoken = $cities->languages_spoken;
+        $selected_languages_spoken_arr = [];
+
+        foreach ($selected_languages_spoken as $key => $value) {
+            // if(isset($value->languages_spoken->transsingle) && !empty($value->languages_spoken->transsingle)){  
+                // $selected_airports_arr[$value->place->id] = $value->place->transsingle->title;
+                array_push($selected_languages_spoken_arr,$value->languages_spoken->id);
+            // }
+        }
+
+        $data['selected_languages_spoken'] = $selected_languages_spoken_arr;
+       
+
+        /* Find All LanguagesSpoken In The System */
+        $languages_spoken = LanguagesSpoken::get();
+        $languages_spoken_arr = [];
+        
+        foreach ($languages_spoken as $key => $value) {
+            if(isset($value->transsingle) && !empty($value->transsingle)){  
+                $languages_spoken_arr[$value->id] = $value->transsingle->title;
+            }
+        }
+
         return view('backend.city.edit')
             ->withLanguages($this->languages)
             ->withCity($cities)
@@ -365,6 +404,7 @@ class CityController extends Controller
             ->withDegrees($degrees_arr)
             ->withPlaces($places_arr)
             ->withCurrencies($currencies_arr)
+            ->withLanguages_spoken($languages_spoken_arr)
             ->withHolidays($holidays_arr)
             ->withEmergency_numbers($emergency_numbers_arr);
     }
@@ -424,6 +464,7 @@ class CityController extends Controller
             'currencies' => $request->input('currencies_id'),
             'holidays'  => $request->input('holidays_id'),
             'emergency_numbers' => $request->input('emergency_numbers_id'),
+            'languages_spoken' => $request->input('languages_spoken_id'),
             'safety_degree_id' => $request->input('safety_degree_id')
         ];
 
@@ -527,6 +568,25 @@ class CityController extends Controller
                 }
             }
         }
+
+        /* Get Languages Spoken */
+        $languages_spoken = $city->languages_spoken;
+        $languages_spoken_arr = [];
+
+        if(!empty($languages_spoken)){
+            foreach ($languages_spoken as $key => $value) {
+                
+                $language_spoken = $value->languages_spoken;
+               
+                if(!empty($language_spoken)){
+
+                    $language_spoken = $language_spoken->transsingle;
+                    if(!empty($language_spoken)){
+                        array_push($languages_spoken_arr,$language_spoken->title);
+                    }
+                }
+            }
+        }
         
         return view('backend.city.show')
             ->withCity($city)
@@ -536,6 +596,7 @@ class CityController extends Controller
             ->withAirports($airports_arr)
             ->withCurrencies($currencies_arr)
             ->withHolidays($holidays_arr)
+            ->withLanguages_spoken($languages_spoken_arr)
             ->withEmergencynumbers($emergency_numbers_arr);
     }
 

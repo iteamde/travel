@@ -33,8 +33,8 @@ class RestaurantsTrans extends Migration
               PRIMARY KEY (`id`),
               KEY `restaurants_id` (`restaurants_id`),
               KEY `languages_id` (`languages_id`),
-              CONSTRAINT `restaurants_trans_ibfk_1` FOREIGN KEY (`restaurants_id`) REFERENCES `restaurants` (`id`),
-              CONSTRAINT `restaurants_trans_ibfk_2` FOREIGN KEY (`languages_id`) REFERENCES `conf_languages` (`id`)
+              CONSTRAINT `restaurants_trans_ibfk_1` FOREIGN KEY (`restaurants_id`) REFERENCES `restaurants` (`id`) ON DELETE CASCADE,
+              CONSTRAINT `restaurants_trans_ibfk_2` FOREIGN KEY (`languages_id`) REFERENCES `conf_languages` (`id`) ON DELETE CASCADE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;';
             DB::connection()->getPdo()->exec($sql);
         });

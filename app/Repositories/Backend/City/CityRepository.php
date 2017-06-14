@@ -8,6 +8,7 @@ use App\Models\City\CitiesAirports;
 use App\Models\City\CitiesCurrencies;
 use App\Models\City\CitiesEmergencyNumbers;
 use App\Models\City\CitiesHolidays;
+use App\Models\City\CitiesLanguagesSpoken;
 use Illuminate\Support\Facades\DB;
 use App\Exceptions\GeneralException;
 use App\Repositories\BaseRepository;
@@ -116,6 +117,16 @@ class CityRepository extends BaseRepository
             $check = 1;
             
             if ($model->save()) {
+
+                /* Entry in LanguagesSpoken table */
+                if(!empty($extra['languages_spoken'])){
+                    foreach ($extra['languages_spoken'] as $key => $value) {
+                        $languagesSpoken = new CitiesLanguagesSpoken;
+                        $languagesSpoken->cities_id = $model->id;
+                        $languagesSpoken->languages_spoken_id = $value;
+                        $languagesSpoken->save();
+                    }
+                }
 
                 /* Entry in EmergencyNumbers table */
                 if(!empty($extra['emergency_numbers'])){
@@ -237,17 +248,34 @@ class CityRepository extends BaseRepository
             }
         }
 
+        $prev_languages_spoken = CitiesLanguagesSpoken::where(['cities_id' => $id])->get();
+        if(!empty($prev_languages_spoken)){
+            foreach ($prev_languages_spoken as $key => $value) {
+                $value->delete();
+            }
+        }
+
         DB::transaction(function () use ($model, $input, $extra) {
             $check = 1;
             
             if ($model->save()) {
 
-                 /* Save EmergencyNumbers */
+                /* Save EmergencyNumbers */
                 if(!empty($extra['emergency_numbers'])){
                     foreach ($extra['emergency_numbers'] as $key => $value) {
                         $airport            = new CitiesEmergencyNumbers;
                         $airport->cities_id = $model->id;
                         $airport->emergency_numbers_id = $value;
+                        $airport->save();
+                    }
+                }
+
+                /* Save CitiesLanguagesSpoken */
+                if(!empty($extra['languages_spoken'])){
+                    foreach ($extra['languages_spoken'] as $key => $value) {
+                        $airport            = new CitiesLanguagesSpoken;
+                        $airport->cities_id = $model->id;
+                        $airport->languages_spoken_id = $value;
                         $airport->save();
                     }
                 }

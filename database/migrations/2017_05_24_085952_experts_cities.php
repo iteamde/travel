@@ -24,8 +24,8 @@ class ExpertsCities extends Migration
               PRIMARY KEY (`id`),
               KEY `users_id` (`users_id`),
               KEY `cities_id` (`cities_id`),
-              CONSTRAINT `experts_cities_ibfk_1` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`),
-              CONSTRAINT `experts_cities_ibfk_2` FOREIGN KEY (`cities_id`) REFERENCES `cities` (`id`)
+              CONSTRAINT `experts_cities_ibfk_1` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
+              CONSTRAINT `experts_cities_ibfk_2` FOREIGN KEY (`cities_id`) REFERENCES `cities` (`id`) ON DELETE CASCADE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;';
             DB::connection()->getPdo()->exec($sql);
         });

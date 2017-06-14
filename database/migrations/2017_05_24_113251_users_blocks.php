@@ -24,8 +24,8 @@ class UsersBlocks extends Migration
               PRIMARY KEY (`id`),
               KEY `users_id` (`users_id`),
               KEY `blocks_id` (`blocks_id`),
-              CONSTRAINT `users_blocks_ibfk_1` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`),
-              CONSTRAINT `users_blocks_ibfk_2` FOREIGN KEY (`blocks_id`) REFERENCES `users` (`id`)
+              CONSTRAINT `users_blocks_ibfk_1` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
+              CONSTRAINT `users_blocks_ibfk_2` FOREIGN KEY (`blocks_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;';
             DB::connection()->getPdo()->exec($sql);
         });

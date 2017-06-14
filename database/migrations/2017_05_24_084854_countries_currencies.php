@@ -24,8 +24,8 @@ class CountriesCurrencies extends Migration
               PRIMARY KEY (`id`),
               KEY `countries_id` (`countries_id`),
               KEY `currencies_id` (`currencies_id`),
-              CONSTRAINT `countries_currencies_ibfk_1` FOREIGN KEY (`countries_id`) REFERENCES `countries` (`id`),
-              CONSTRAINT `countries_currencies_ibfk_2` FOREIGN KEY (`currencies_id`) REFERENCES `conf_currencies` (`id`)
+              CONSTRAINT `countries_currencies_ibfk_1` FOREIGN KEY (`countries_id`) REFERENCES `countries` (`id`) ON DELETE CASCADE,
+              CONSTRAINT `countries_currencies_ibfk_2` FOREIGN KEY (`currencies_id`) REFERENCES `conf_currencies` (`id`) ON DELETE CASCADE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;';
             DB::connection()->getPdo()->exec($sql);
         });

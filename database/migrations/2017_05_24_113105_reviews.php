@@ -39,14 +39,14 @@ class Reviews extends Migration
               KEY `places_id` (`places_id`),
               KEY `users_id` (`users_id`),
               KEY `by_users_id` (`by_users_id`),
-              CONSTRAINT `reviews_ibfk_1` FOREIGN KEY (`cities_id`) REFERENCES `cities` (`id`),
-              CONSTRAINT `reviews_ibfk_2` FOREIGN KEY (`countries_id`) REFERENCES `countries` (`id`),
-              CONSTRAINT `reviews_ibfk_3` FOREIGN KEY (`embassies_id`) REFERENCES `embassies` (`id`),
-              CONSTRAINT `reviews_ibfk_4` FOREIGN KEY (`medias_id`) REFERENCES `medias` (`id`),
-              CONSTRAINT `reviews_ibfk_5` FOREIGN KEY (`pages_id`) REFERENCES `pages` (`id`),
-              CONSTRAINT `reviews_ibfk_6` FOREIGN KEY (`places_id`) REFERENCES `places` (`id`),
-              CONSTRAINT `reviews_ibfk_7` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`),
-              CONSTRAINT `reviews_ibfk_8` FOREIGN KEY (`by_users_id`) REFERENCES `users` (`id`)
+              CONSTRAINT `reviews_ibfk_1` FOREIGN KEY (`cities_id`) REFERENCES `cities` (`id`) ON DELETE CASCADE,
+              CONSTRAINT `reviews_ibfk_2` FOREIGN KEY (`countries_id`) REFERENCES `countries` (`id`) ON DELETE CASCADE,
+              CONSTRAINT `reviews_ibfk_3` FOREIGN KEY (`embassies_id`) REFERENCES `embassies` (`id`) ON DELETE CASCADE,
+              CONSTRAINT `reviews_ibfk_4` FOREIGN KEY (`medias_id`) REFERENCES `medias` (`id`) ON DELETE CASCADE,
+              CONSTRAINT `reviews_ibfk_5` FOREIGN KEY (`pages_id`) REFERENCES `pages` (`id`) ON DELETE CASCADE,
+              CONSTRAINT `reviews_ibfk_6` FOREIGN KEY (`places_id`) REFERENCES `places` (`id`) ON DELETE CASCADE,
+              CONSTRAINT `reviews_ibfk_7` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
+              CONSTRAINT `reviews_ibfk_8` FOREIGN KEY (`by_users_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;';
             DB::connection()->getPdo()->exec($sql);
         });

@@ -24,8 +24,8 @@ class CountriesAirports extends Migration
               PRIMARY KEY (`id`),
               KEY `countries_id` (`countries_id`),
               KEY `places_id` (`places_id`),
-              CONSTRAINT `countries_airports_ibfk_1` FOREIGN KEY (`countries_id`) REFERENCES `countries` (`id`),
-              CONSTRAINT `countries_airports_ibfk_2` FOREIGN KEY (`places_id`) REFERENCES `places` (`id`)
+              CONSTRAINT `countries_airports_ibfk_1` FOREIGN KEY (`countries_id`) REFERENCES `countries` (`id`) ON DELETE CASCADE,
+              CONSTRAINT `countries_airports_ibfk_2` FOREIGN KEY (`places_id`) REFERENCES `places` (`id`) ON DELETE CASCADE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;';
             DB::connection()->getPdo()->exec($sql);
         });

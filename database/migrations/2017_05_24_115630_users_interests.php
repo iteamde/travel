@@ -24,8 +24,8 @@ class UsersInterests extends Migration
               PRIMARY KEY (`id`),
               KEY `users_id` (`users_id`),
               KEY `interests_id` (`interests_id`),
-              CONSTRAINT `users_interests_ibfk_1` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`),
-              CONSTRAINT `users_interests_ibfk_2` FOREIGN KEY (`interests_id`) REFERENCES `conf_interests` (`id`)
+              CONSTRAINT `users_interests_ibfk_1` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
+              CONSTRAINT `users_interests_ibfk_2` FOREIGN KEY (`interests_id`) REFERENCES `conf_interests` (`id`) ON DELETE CASCADE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;';
             DB::connection()->getPdo()->exec($sql);
         });

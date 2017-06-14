@@ -24,8 +24,8 @@ class CountriesTimings extends Migration
               PRIMARY KEY (`id`),
               KEY `countries_id` (`countries_id`),
               KEY `timings_id` (`timings_id`),
-              CONSTRAINT `countries_timings_ibfk_1` FOREIGN KEY (`countries_id`) REFERENCES `countries` (`id`),
-              CONSTRAINT `countries_timings_ibfk_2` FOREIGN KEY (`timings_id`) REFERENCES `conf_timings` (`id`)
+              CONSTRAINT `countries_timings_ibfk_1` FOREIGN KEY (`countries_id`) REFERENCES `countries` (`id`) ON DELETE CASCADE,
+              CONSTRAINT `countries_timings_ibfk_2` FOREIGN KEY (`timings_id`) REFERENCES `conf_timings` (`id`) ON DELETE CASCADE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;';
             DB::connection()->getPdo()->exec($sql);
         });

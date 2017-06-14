@@ -24,8 +24,8 @@ class RegionsMedias extends Migration
               PRIMARY KEY (`id`),
               KEY `regions_id` (`regions_id`),
               KEY `medias_id` (`medias_id`),
-              CONSTRAINT `regions_medias_ibfk_1` FOREIGN KEY (`regions_id`) REFERENCES `conf_regions` (`id`),
-              CONSTRAINT `regions_medias_ibfk_2` FOREIGN KEY (`medias_id`) REFERENCES `medias` (`id`)
+              CONSTRAINT `regions_medias_ibfk_1` FOREIGN KEY (`regions_id`) REFERENCES `conf_regions` (`id`) ON DELETE CASCADE,
+              CONSTRAINT `regions_medias_ibfk_2` FOREIGN KEY (`medias_id`) REFERENCES `medias` (`id`) ON DELETE CASCADE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;';
             DB::connection()->getPdo()->exec($sql);
         });

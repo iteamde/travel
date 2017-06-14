@@ -24,8 +24,8 @@ class PagesMedias extends Migration
               PRIMARY KEY (`id`),
               KEY `pages_ids` (`pages_ids`),
               KEY `medias_ids` (`medias_ids`),
-              CONSTRAINT `pages_medias_ibfk_1` FOREIGN KEY (`pages_ids`) REFERENCES `pages` (`id`),
-              CONSTRAINT `pages_medias_ibfk_2` FOREIGN KEY (`medias_ids`) REFERENCES `medias` (`id`)
+              CONSTRAINT `pages_medias_ibfk_1` FOREIGN KEY (`pages_ids`) REFERENCES `pages` (`id`) ON DELETE CASCADE,
+              CONSTRAINT `pages_medias_ibfk_2` FOREIGN KEY (`medias_ids`) REFERENCES `medias` (`id`) ON DELETE CASCADE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;';
             DB::connection()->getPdo()->exec($sql);
         });

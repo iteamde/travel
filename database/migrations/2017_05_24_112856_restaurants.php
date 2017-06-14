@@ -29,9 +29,9 @@ class Restaurants extends Migration
               KEY `countries_id` (`countries_id`),
               KEY `cities_id` (`cities_id`),
               KEY `places_id` (`places_id`),
-              CONSTRAINT `restaurants_ibfk_1` FOREIGN KEY (`countries_id`) REFERENCES `countries` (`id`),
-              CONSTRAINT `restaurants_ibfk_2` FOREIGN KEY (`cities_id`) REFERENCES `cities` (`id`),
-              CONSTRAINT `restaurants_ibfk_3` FOREIGN KEY (`places_id`) REFERENCES `places` (`id`)
+              CONSTRAINT `restaurants_ibfk_1` FOREIGN KEY (`countries_id`) REFERENCES `countries` (`id`) ON DELETE CASCADE,
+              CONSTRAINT `restaurants_ibfk_2` FOREIGN KEY (`cities_id`) REFERENCES `cities` (`id`) ON DELETE CASCADE,
+              CONSTRAINT `restaurants_ibfk_3` FOREIGN KEY (`places_id`) REFERENCES `places` (`id`) ON DELETE CASCADE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;';
             DB::connection()->getPdo()->exec($sql);
         });

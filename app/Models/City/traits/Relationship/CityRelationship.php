@@ -100,6 +100,17 @@ trait CityRelationship
     }
 
     /**
+     * Many-to-Many relations with CitiesNumbers.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function languages_spoken()
+    {
+        // return $this->belongsToMany(config('access.regions'), config('access.regions_trans'), 'id', 'regions_id');
+        return $this->hasMany(config('locations.cities_languages_spoken_trans'), 'cities_id');
+    }
+
+    /**
      * @return mixed
      */
     public function degree()

@@ -26,8 +26,8 @@ class ConfHolidaysTrans extends Migration
               PRIMARY KEY (`id`),
               KEY `holidays_id` (`holidays_id`),
               KEY `languages_id` (`languages_id`),
-              CONSTRAINT `conf_holidays_trans_ibfk_1` FOREIGN KEY (`holidays_id`) REFERENCES `conf_holidays` (`id`),
-              CONSTRAINT `conf_holidays_trans_ibfk_2` FOREIGN KEY (`languages_id`) REFERENCES `conf_languages` (`id`)
+              CONSTRAINT `conf_holidays_trans_ibfk_1` FOREIGN KEY (`holidays_id`) REFERENCES `conf_holidays` (`id`) ON DELETE CASCADE,
+              CONSTRAINT `conf_holidays_trans_ibfk_2` FOREIGN KEY (`languages_id`) REFERENCES `conf_languages` (`id`) ON DELETE CASCADE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;';
             DB::connection()->getPdo()->exec($sql);
         });

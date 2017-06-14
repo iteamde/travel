@@ -24,8 +24,8 @@ class ActivitiesMedia extends Migration
                 PRIMARY KEY (`id`),
                 KEY `activities_id` (`activities_id`),
                 KEY `medias_id` (`medias_id`),
-                CONSTRAINT `activities_media_ibfk_1` FOREIGN KEY (`activities_id`) REFERENCES `activities` (`id`),
-                CONSTRAINT `activities_media_ibfk_2` FOREIGN KEY (`medias_id`) REFERENCES `medias` (`id`)
+                CONSTRAINT `activities_media_ibfk_1` FOREIGN KEY (`activities_id`) REFERENCES `activities` (`id`) ON DELETE CASCADE,
+                CONSTRAINT `activities_media_ibfk_2` FOREIGN KEY (`medias_id`) REFERENCES `medias` (`id`) ON DELETE CASCADE
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;';
             DB::connection()->getPdo()->exec($sql);
         });

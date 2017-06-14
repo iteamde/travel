@@ -26,8 +26,8 @@ class PagesTrans extends Migration
               PRIMARY KEY (`id`),
               KEY `pages_id` (`pages_id`),
               KEY `languages_id` (`languages_id`),
-              CONSTRAINT `pages_trans_ibfk_1` FOREIGN KEY (`pages_id`) REFERENCES `pages` (`id`),
-              CONSTRAINT `pages_trans_ibfk_2` FOREIGN KEY (`languages_id`) REFERENCES `conf_languages` (`id`)
+              CONSTRAINT `pages_trans_ibfk_1` FOREIGN KEY (`pages_id`) REFERENCES `pages` (`id`) ON DELETE CASCADE,
+              CONSTRAINT `pages_trans_ibfk_2` FOREIGN KEY (`languages_id`) REFERENCES `conf_languages` (`id`) ON DELETE CASCADE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;';
             DB::connection()->getPdo()->exec($sql);
         });

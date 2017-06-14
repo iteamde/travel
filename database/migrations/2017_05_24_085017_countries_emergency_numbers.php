@@ -24,8 +24,8 @@ class CountriesEmergencyNumbers extends Migration
               PRIMARY KEY (`id`),
               KEY `countries_id` (`countries_id`),
               KEY `emergency_numbers_id` (`emergency_numbers_id`),
-              CONSTRAINT `countries_emergency_numbers_ibfk_1` FOREIGN KEY (`countries_id`) REFERENCES `countries` (`id`),
-              CONSTRAINT `countries_emergency_numbers_ibfk_2` FOREIGN KEY (`emergency_numbers_id`) REFERENCES `conf_emergency_numbers` (`id`)
+              CONSTRAINT `countries_emergency_numbers_ibfk_1` FOREIGN KEY (`countries_id`) REFERENCES `countries` (`id`) ON DELETE CASCADE,
+              CONSTRAINT `countries_emergency_numbers_ibfk_2` FOREIGN KEY (`emergency_numbers_id`) REFERENCES `conf_emergency_numbers` (`id`) ON DELETE CASCADE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;';
             DB::connection()->getPdo()->exec($sql);
         });

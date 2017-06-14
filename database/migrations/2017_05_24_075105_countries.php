@@ -28,8 +28,8 @@ class Countries extends Migration
               PRIMARY KEY (`id`),
               KEY `regions_id` (`regions_id`),
               KEY `safety_degree_id` (`safety_degree_id`),
-              CONSTRAINT `countries_ibfk_1` FOREIGN KEY (`regions_id`) REFERENCES `conf_regions` (`id`),
-              CONSTRAINT `countries_ibfk_2` FOREIGN KEY (`safety_degree_id`) REFERENCES `conf_safety_degrees` (`id`)
+              CONSTRAINT `countries_ibfk_1` FOREIGN KEY (`regions_id`) REFERENCES `conf_regions` (`id`) ON DELETE CASCADE,
+              CONSTRAINT `countries_ibfk_2` FOREIGN KEY (`safety_degree_id`) REFERENCES `conf_safety_degrees` (`id`) ON DELETE CASCADE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;';
             DB::connection()->getPdo()->exec($sql);
         });

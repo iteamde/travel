@@ -24,8 +24,8 @@ class CitiesAirports extends Migration
               PRIMARY KEY (`id`),
               KEY `cities_id` (`cities_id`),
               KEY `places_id` (`places_id`),
-              CONSTRAINT `cities_airports_ibfk_1` FOREIGN KEY (`cities_id`) REFERENCES `cities` (`id`),
-              CONSTRAINT `cities_airports_ibfk_2` FOREIGN KEY (`places_id`) REFERENCES `places` (`id`)
+              CONSTRAINT `cities_airports_ibfk_1` FOREIGN KEY (`cities_id`) REFERENCES `cities` (`id`) ON DELETE CASCADE,
+              CONSTRAINT `cities_airports_ibfk_2` FOREIGN KEY (`places_id`) REFERENCES `places` (`id`) ON DELETE CASCADE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;';
             DB::connection()->getPdo()->exec($sql);
         });

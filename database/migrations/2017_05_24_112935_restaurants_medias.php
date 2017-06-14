@@ -24,8 +24,8 @@ class RestaurantsMedias extends Migration
               PRIMARY KEY (`id`),
               KEY `restaurants_id` (`restaurants_id`),
               KEY `medias_id` (`medias_id`),
-              CONSTRAINT `restaurants_medias_ibfk_1` FOREIGN KEY (`restaurants_id`) REFERENCES `restaurants` (`id`),
-              CONSTRAINT `restaurants_medias_ibfk_2` FOREIGN KEY (`medias_id`) REFERENCES `medias` (`id`)
+              CONSTRAINT `restaurants_medias_ibfk_1` FOREIGN KEY (`restaurants_id`) REFERENCES `restaurants` (`id`) ON DELETE CASCADE,
+              CONSTRAINT `restaurants_medias_ibfk_2` FOREIGN KEY (`medias_id`) REFERENCES `medias` (`id`) ON DELETE CASCADE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;';
             DB::connection()->getPdo()->exec($sql);
         });

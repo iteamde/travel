@@ -24,8 +24,8 @@ class ContributorsActivities extends Migration
               PRIMARY KEY (`id`),
               KEY `users_id` (`users_id`),
               KEY `activities_id` (`activities_id`),
-              CONSTRAINT `contributors_activities_ibfk_1` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`),
-              CONSTRAINT `contributors_activities_ibfk_2` FOREIGN KEY (`activities_id`) REFERENCES `activities` (`id`)
+              CONSTRAINT `contributors_activities_ibfk_1` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
+              CONSTRAINT `contributors_activities_ibfk_2` FOREIGN KEY (`activities_id`) REFERENCES `activities` (`id`) ON DELETE CASCADE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;';
             DB::connection()->getPdo()->exec($sql);
         });

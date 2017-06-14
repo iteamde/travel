@@ -24,7 +24,7 @@ class UsersFavourites extends Migration
               `fav_id` int(11) NOT NULL,
               PRIMARY KEY (`id`),
               KEY `users_id` (`users_id`),
-              CONSTRAINT `users_favourites_ibfk_1` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`)
+              CONSTRAINT `users_favourites_ibfk_1` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;';
             DB::connection()->getPdo()->exec($sql);
         });

@@ -24,8 +24,8 @@ class HotelsMedias extends Migration
               PRIMARY KEY (`id`),
               KEY `hotels_id` (`hotels_id`),
               KEY `medias_id` (`medias_id`),
-              CONSTRAINT `hotels_medias_ibfk_1` FOREIGN KEY (`hotels_id`) REFERENCES `hotels` (`id`),
-              CONSTRAINT `hotels_medias_ibfk_2` FOREIGN KEY (`medias_id`) REFERENCES `medias` (`id`)
+              CONSTRAINT `hotels_medias_ibfk_1` FOREIGN KEY (`hotels_id`) REFERENCES `hotels` (`id`) ON DELETE CASCADE,
+              CONSTRAINT `hotels_medias_ibfk_2` FOREIGN KEY (`medias_id`) REFERENCES `medias` (`id`) ON DELETE CASCADE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;';
             DB::connection()->getPdo()->exec($sql);
         });

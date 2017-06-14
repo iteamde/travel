@@ -32,10 +32,10 @@ class Activities extends Migration
                   KEY `countries_id` (`countries_id`),
                   KEY `cities_id` (`cities_id`),
                   KEY `places_id` (`places_id`),
-                  CONSTRAINT `activities_ibfk_1` FOREIGN KEY (`types_id`) REFERENCES `conf_activities_types` (`id`),
-                  CONSTRAINT `activities_ibfk_2` FOREIGN KEY (`countries_id`) REFERENCES `countries` (`id`),
-                  CONSTRAINT `activities_ibfk_3` FOREIGN KEY (`cities_id`) REFERENCES `cities` (`id`),
-                  CONSTRAINT `activities_ibfk_4` FOREIGN KEY (`places_id`) REFERENCES `places` (`id`)
+                  CONSTRAINT `activities_ibfk_1` FOREIGN KEY (`types_id`) REFERENCES `conf_activities_types` (`id`) ON DELETE CASCADE,
+                  CONSTRAINT `activities_ibfk_2` FOREIGN KEY (`countries_id`) REFERENCES `countries` (`id`) ON DELETE CASCADE,
+                  CONSTRAINT `activities_ibfk_3` FOREIGN KEY (`cities_id`) REFERENCES `cities` (`id`) ON DELETE CASCADE,
+                  CONSTRAINT `activities_ibfk_4` FOREIGN KEY (`places_id`) REFERENCES `places` (`id`) ON DELETE CASCADE
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;';
             DB::connection()->getPdo()->exec($sql);
         });

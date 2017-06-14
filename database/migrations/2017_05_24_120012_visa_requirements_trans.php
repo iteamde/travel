@@ -26,8 +26,8 @@ class VisaRequirementsTrans extends Migration
               PRIMARY KEY (`id`),
               KEY `visa_requirements_ids` (`visa_requirements_ids`),
               KEY `languages_ids` (`languages_ids`),
-              CONSTRAINT `visa_requirements_trans_ibfk_1` FOREIGN KEY (`visa_requirements_ids`) REFERENCES `visa_requirements` (`id`),
-              CONSTRAINT `visa_requirements_trans_ibfk_2` FOREIGN KEY (`languages_ids`) REFERENCES `conf_languages` (`id`)
+              CONSTRAINT `visa_requirements_trans_ibfk_1` FOREIGN KEY (`visa_requirements_ids`) REFERENCES `visa_requirements` (`id`) ON DELETE CASCADE,
+              CONSTRAINT `visa_requirements_trans_ibfk_2` FOREIGN KEY (`languages_ids`) REFERENCES `conf_languages` (`id`) ON DELETE CASCADE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;';
             DB::connection()->getPdo()->exec($sql);
         });

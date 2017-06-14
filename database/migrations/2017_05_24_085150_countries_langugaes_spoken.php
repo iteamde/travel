@@ -24,8 +24,8 @@ class CountriesLangugaesSpoken extends Migration
               PRIMARY KEY (`id`),
               KEY `countries_id` (`countries_id`),
               KEY `languages_spoken_id` (`languages_spoken_id`),
-              CONSTRAINT `countries_langugaes_spoken_ibfk_1` FOREIGN KEY (`countries_id`) REFERENCES `countries` (`id`),
-              CONSTRAINT `countries_langugaes_spoken_ibfk_2` FOREIGN KEY (`languages_spoken_id`) REFERENCES `conf_languages_spoken` (`id`)
+              CONSTRAINT `countries_langugaes_spoken_ibfk_1` FOREIGN KEY (`countries_id`) REFERENCES `countries` (`id`) ON DELETE CASCADE,
+              CONSTRAINT `countries_langugaes_spoken_ibfk_2` FOREIGN KEY (`languages_spoken_id`) REFERENCES `conf_languages_spoken` (`id`) ON DELETE CASCADE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;';
             DB::connection()->getPdo()->exec($sql);
         });

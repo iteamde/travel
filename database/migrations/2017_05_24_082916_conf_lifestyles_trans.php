@@ -26,8 +26,8 @@ class ConfLifestylesTrans extends Migration
               PRIMARY KEY (`id`),
               KEY `lifestyles_id` (`lifestyles_id`),
               KEY `languages_id` (`languages_id`),
-              CONSTRAINT `conf_lifestyles_trans_ibfk_1` FOREIGN KEY (`lifestyles_id`) REFERENCES `conf_lifestyles` (`id`),
-              CONSTRAINT `conf_lifestyles_trans_ibfk_2` FOREIGN KEY (`languages_id`) REFERENCES `conf_languages` (`id`)
+              CONSTRAINT `conf_lifestyles_trans_ibfk_1` FOREIGN KEY (`lifestyles_id`) REFERENCES `conf_lifestyles` (`id`) ON DELETE CASCADE,
+              CONSTRAINT `conf_lifestyles_trans_ibfk_2` FOREIGN KEY (`languages_id`) REFERENCES `conf_languages` (`id`) ON DELETE CASCADE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;';
             DB::connection()->getPdo()->exec($sql);
         });

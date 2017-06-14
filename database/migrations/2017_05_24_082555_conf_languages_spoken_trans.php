@@ -26,8 +26,8 @@ class ConfLanguagesSpokenTrans extends Migration
               PRIMARY KEY (`id`),
               KEY `languages_spoken_id` (`languages_spoken_id`),
               KEY `languages_id` (`languages_id`),
-              CONSTRAINT `conf_languages_spoken_trans_ibfk_1` FOREIGN KEY (`languages_spoken_id`) REFERENCES `conf_languages_spoken` (`id`),
-              CONSTRAINT `conf_languages_spoken_trans_ibfk_2` FOREIGN KEY (`languages_id`) REFERENCES `conf_languages` (`id`)
+              CONSTRAINT `conf_languages_spoken_trans_ibfk_1` FOREIGN KEY (`languages_spoken_id`) REFERENCES `conf_languages_spoken` (`id`) ON DELETE CASCADE,
+              CONSTRAINT `conf_languages_spoken_trans_ibfk_2` FOREIGN KEY (`languages_id`) REFERENCES `conf_languages` (`id`) ON DELETE CASCADE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;';
             DB::connection()->getPdo()->exec($sql);
         });

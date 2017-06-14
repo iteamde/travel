@@ -39,8 +39,8 @@ class PlacesTrans extends Migration
               PRIMARY KEY (`id`),
               KEY `places_id` (`places_id`),
               KEY `languages_id` (`languages_id`),
-              CONSTRAINT `places_trans_ibfk_1` FOREIGN KEY (`places_id`) REFERENCES `places` (`id`),
-              CONSTRAINT `places_trans_ibfk_2` FOREIGN KEY (`languages_id`) REFERENCES `conf_languages` (`id`)
+              CONSTRAINT `places_trans_ibfk_1` FOREIGN KEY (`places_id`) REFERENCES `places` (`id`) ON DELETE CASCADE,
+              CONSTRAINT `places_trans_ibfk_2` FOREIGN KEY (`languages_id`) REFERENCES `conf_languages` (`id`) ON DELETE CASCADE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;';
             DB::connection()->getPdo()->exec($sql);
         });

@@ -24,8 +24,8 @@ class ExpertsCountries extends Migration
               PRIMARY KEY (`id`),
               KEY `users_id` (`users_id`),
               KEY `countries_id` (`countries_id`),
-              CONSTRAINT `experts_countries_ibfk_1` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`),
-              CONSTRAINT `experts_countries_ibfk_2` FOREIGN KEY (`countries_id`) REFERENCES `countries` (`id`)
+              CONSTRAINT `experts_countries_ibfk_1` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
+              CONSTRAINT `experts_countries_ibfk_2` FOREIGN KEY (`countries_id`) REFERENCES `countries` (`id`) ON DELETE CASCADE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;';
             DB::connection()->getPdo()->exec($sql);
         });

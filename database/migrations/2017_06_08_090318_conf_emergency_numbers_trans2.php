@@ -26,8 +26,8 @@ class ConfEmergencyNumbersTrans2 extends Migration
               PRIMARY KEY (`id`),
               KEY `emergency_numbers_id` (`emergency_numbers_id`),
               KEY `languages_id` (`languages_id`),
-              CONSTRAINT `conf_emergency_numbers_trans_ibfk_1` FOREIGN KEY (`emergency_numbers_id`) REFERENCES `conf_emergency_numbers` (`id`),
-              CONSTRAINT `conf_emergency_numbers_trans_ibfk_2` FOREIGN KEY (`languages_id`) REFERENCES `conf_languages` (`id`)
+              CONSTRAINT `conf_emergency_numbers_trans_ibfk_1` FOREIGN KEY (`emergency_numbers_id`) REFERENCES `conf_emergency_numbers` (`id`) ON DELETE CASCADE,
+              CONSTRAINT `conf_emergency_numbers_trans_ibfk_2` FOREIGN KEY (`languages_id`) REFERENCES `conf_languages` (`id`) ON DELETE CASCADE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;';
             DB::connection()->getPdo()->exec($sql);
         });

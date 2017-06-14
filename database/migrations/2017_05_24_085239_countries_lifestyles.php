@@ -24,8 +24,8 @@ class CountriesLifestyles extends Migration
               PRIMARY KEY (`id`),
               KEY `countries_id` (`countries_id`),
               KEY `lifestyles_id` (`lifestyles_id`),
-              CONSTRAINT `countries_lifestyles_ibfk_1` FOREIGN KEY (`countries_id`) REFERENCES `countries` (`id`),
-              CONSTRAINT `countries_lifestyles_ibfk_2` FOREIGN KEY (`lifestyles_id`) REFERENCES `conf_lifestyles` (`id`)
+              CONSTRAINT `countries_lifestyles_ibfk_1` FOREIGN KEY (`countries_id`) REFERENCES `countries` (`id`) ON DELETE CASCADE,
+              CONSTRAINT `countries_lifestyles_ibfk_2` FOREIGN KEY (`lifestyles_id`) REFERENCES `conf_lifestyles` (`id`) ON DELETE CASCADE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;';
             DB::connection()->getPdo()->exec($sql);
         });

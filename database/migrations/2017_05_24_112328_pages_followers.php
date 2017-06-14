@@ -24,8 +24,8 @@ class PagesFollowers extends Migration
               PRIMARY KEY (`id`),
               KEY `pages_id` (`pages_id`),
               KEY `users_id` (`users_id`),
-              CONSTRAINT `pages_followers_ibfk_1` FOREIGN KEY (`pages_id`) REFERENCES `pages` (`id`),
-              CONSTRAINT `pages_followers_ibfk_2` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`)
+              CONSTRAINT `pages_followers_ibfk_1` FOREIGN KEY (`pages_id`) REFERENCES `pages` (`id`) ON DELETE CASCADE,
+              CONSTRAINT `pages_followers_ibfk_2` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;';
             DB::connection()->getPdo()->exec($sql);
         });

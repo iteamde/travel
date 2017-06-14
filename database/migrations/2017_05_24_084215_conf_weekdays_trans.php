@@ -26,8 +26,8 @@ class ConfWeekdaysTrans extends Migration
               PRIMARY KEY (`id`),
               KEY `weekdays_id` (`weekdays_id`),
               KEY `languages_id` (`languages_id`),
-              CONSTRAINT `conf_weekdays_trans_ibfk_1` FOREIGN KEY (`weekdays_id`) REFERENCES `conf_weekdays` (`id`),
-              CONSTRAINT `conf_weekdays_trans_ibfk_2` FOREIGN KEY (`languages_id`) REFERENCES `conf_languages` (`id`)
+              CONSTRAINT `conf_weekdays_trans_ibfk_1` FOREIGN KEY (`weekdays_id`) REFERENCES `conf_weekdays` (`id`) ON DELETE CASCADE,
+              CONSTRAINT `conf_weekdays_trans_ibfk_2` FOREIGN KEY (`languages_id`) REFERENCES `conf_languages` (`id`) ON DELETE CASCADE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;';
             DB::connection()->getPdo()->exec($sql);
         });

@@ -25,8 +25,8 @@ class ConfPlaceTypesTrans extends Migration
               PRIMARY KEY (`id`),
               KEY `place_types_ids` (`place_types_ids`),
               KEY `languages_ids` (`languages_ids`),
-              CONSTRAINT `conf_place_types_trans_ibfk_1` FOREIGN KEY (`place_types_ids`) REFERENCES `conf_place_types` (`id`),
-              CONSTRAINT `conf_place_types_trans_ibfk_2` FOREIGN KEY (`languages_ids`) REFERENCES `conf_languages` (`id`)
+              CONSTRAINT `conf_place_types_trans_ibfk_1` FOREIGN KEY (`place_types_ids`) REFERENCES `conf_place_types` (`id`) ON DELETE CASCADE,
+              CONSTRAINT `conf_place_types_trans_ibfk_2` FOREIGN KEY (`languages_ids`) REFERENCES `conf_languages` (`id`) ON DELETE CASCADE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;';
             DB::connection()->getPdo()->exec($sql);
         });

@@ -24,8 +24,8 @@ class ExpertsPlaces extends Migration
               PRIMARY KEY (`id`),
               KEY `places_id` (`places_id`),
               KEY `users_id` (`users_id`),
-              CONSTRAINT `experts_places_ibfk_1` FOREIGN KEY (`places_id`) REFERENCES `places` (`id`),
-              CONSTRAINT `experts_places_ibfk_2` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`)
+              CONSTRAINT `experts_places_ibfk_1` FOREIGN KEY (`places_id`) REFERENCES `places` (`id`) ON DELETE CASCADE,
+              CONSTRAINT `experts_places_ibfk_2` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;';
             DB::connection()->getPdo()->exec($sql);
         });

@@ -24,8 +24,8 @@ class UsersMedias extends Migration
               PRIMARY KEY (`id`),
               KEY `users_id` (`users_id`),
               KEY `medias_id` (`medias_id`),
-              CONSTRAINT `users_medias_ibfk_1` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`),
-              CONSTRAINT `users_medias_ibfk_2` FOREIGN KEY (`medias_id`) REFERENCES `medias` (`id`)
+              CONSTRAINT `users_medias_ibfk_1` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
+              CONSTRAINT `users_medias_ibfk_2` FOREIGN KEY (`medias_id`) REFERENCES `medias` (`id`) ON DELETE CASCADE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;';
             DB::connection()->getPdo()->exec($sql);
         });

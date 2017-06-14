@@ -24,8 +24,8 @@ class CountriesCapitals extends Migration
               PRIMARY KEY (`id`),
               KEY `countries_id` (`countries_id`),
               KEY `cities_id` (`cities_id`),
-              CONSTRAINT `countries_capitals_ibfk_1` FOREIGN KEY (`countries_id`) REFERENCES `countries` (`id`),
-              CONSTRAINT `countries_capitals_ibfk_2` FOREIGN KEY (`cities_id`) REFERENCES `cities` (`id`)
+              CONSTRAINT `countries_capitals_ibfk_1` FOREIGN KEY (`countries_id`) REFERENCES `countries` (`id`) ON DELETE CASCADE,
+              CONSTRAINT `countries_capitals_ibfk_2` FOREIGN KEY (`cities_id`) REFERENCES `cities` (`id`) ON DELETE CASCADE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;';
             DB::connection()->getPdo()->exec($sql);
         });

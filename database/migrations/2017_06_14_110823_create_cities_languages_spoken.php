@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class ContributorsCities extends Migration
+class CreateCitiesLanguagesSpoken extends Migration
 {
     /**
      * Run the migrations.
@@ -13,19 +13,20 @@ class ContributorsCities extends Migration
      */
     public function up()
     {
-        Schema::table('contributors_cities', function(Blueprint $table) {
-            $sql = 'DROP TABLE IF EXISTS `contributors_cities`;';
+        //
+        Schema::table('cities_languages_spoken', function(Blueprint $table) {
+            $sql = 'DROP TABLE IF EXISTS `cities_languages_spoken`;';
             DB::connection()->getPdo()->exec($sql);
             
-            $sql = 'CREATE TABLE `contributors_cities` (
+            $sql = 'CREATE TABLE `cities_languages_spoken` (
               `id` int(11) NOT NULL AUTO_INCREMENT,
-              `users_id` int(10) unsigned NOT NULL,
               `cities_id` int(11) NOT NULL,
+              `languages_spoken_id` int(11) NOT NULL,
               PRIMARY KEY (`id`),
-              KEY `users_id` (`users_id`),
               KEY `cities_id` (`cities_id`),
-              CONSTRAINT `contributors_cities_ibfk_1` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
-              CONSTRAINT `contributors_cities_ibfk_2` FOREIGN KEY (`cities_id`) REFERENCES `cities` (`id`) ON DELETE CASCADE
+              KEY `languages_spoken_id` (`languages_spoken_id`),
+              CONSTRAINT `cities_languages_spoken_ibfk_1` FOREIGN KEY (`cities_id`) REFERENCES `cities` (`id`) ON DELETE CASCADE,
+              CONSTRAINT `cities_languages_spoken_ibfk_2` FOREIGN KEY (`languages_spoken_id`) REFERENCES `conf_languages_spoken` (`id`) ON DELETE CASCADE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;';
             DB::connection()->getPdo()->exec($sql);
         });
