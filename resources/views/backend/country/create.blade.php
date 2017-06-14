@@ -230,7 +230,7 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
                     <div class="form-group">
                     {{ Form::label('title', 'Select Location', ['class' => 'col-lg-2 control-label']) }}
                         <div class="col-lg-10">
-                            <input id="pac-input" class="form-control" type="text" placeholder="Search Box">
+                            <input id="pac-input" class="form-control" type="text" placeholder="Search Box" required>
                             <div id="map"></div>
                         </div>
                     </div>

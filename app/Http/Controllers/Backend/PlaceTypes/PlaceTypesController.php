@@ -100,8 +100,14 @@ class PlaceTypesController extends Controller
                 'place_types_ids'   => $id
             ])->get();
 
-            $data['title_'.$language->id] = $model[0]->title;
-            $data['description_'.$language->id] = $model[0]->description;
+            /* If Translation For Current Language Is Empty, Put Null in All The Fields */
+            if(!empty($model[0])){
+                $data['title_'.$language->id]       = $model[0]->title;
+                $data['description_'.$language->id] = $model[0]->description;
+            }else{
+                $data['title_'.$language->id]       = null;
+                $data['description_'.$language->id] = null;
+            }
         }
 
         return view('backend.place-types.edit')

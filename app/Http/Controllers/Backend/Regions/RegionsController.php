@@ -55,12 +55,18 @@ class RegionsController extends Controller
         $data = [];
 
         foreach ($this->languages as $key => $language) {
+            /* Find Translation Model For Current Language */
             $model = RegionsTranslation::where([
                 'languages_id' => $language->id,
                 'regions_id'   => $region->id
             ])->get();
-
-            $data['title_'.$language->id] = $model[0]->title;
+            
+            /* If Translation For Current Language Not Found, Put Null In All Fields */
+            if(!empty($model[0])){
+                $data['title_'.$language->id] = $model[0]->title;
+            }else{
+                $data['title_'.$language->id] = null;
+            }
         }
 
         return view('backend.regions.edit')

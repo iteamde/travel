@@ -110,7 +110,11 @@ class ReligionController extends Controller
                 'religions_id'   => $id
             ])->get();
 
-            $data['title_'.$language->id] = $model[0]->title;
+            if(!empty($model[0])){
+                $data['title_'.$language->id] = $model[0]->title;
+            }else{
+                $data['title_'.$language->id] = null;
+            }
         }
 
         $data['active'] = $religion->active;

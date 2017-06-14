@@ -104,8 +104,13 @@ class ActivityMediaController extends Controller
                 'medias_id'   => $id
             ])->get();
 
-            $data['title_'.$language->id] = $model[0]->title;
-            $data['description_'.$language->id] = $model[0]->description;   
+            if(!empty($model[0])){
+                $data['title_'.$language->id]       = $model[0]->title;
+                $data['description_'.$language->id] = $model[0]->description;   
+            }else{
+                $data['title_'.$language->id]       = null;
+                $data['description_'.$language->id] = null;
+            }
         }
 
         $data['url'] = $activitymedia->url;

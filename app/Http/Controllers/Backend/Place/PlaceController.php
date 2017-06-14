@@ -184,22 +184,43 @@ class PlaceController extends Controller
                 'places_id'   => $id
             ])->get();
 
-            $data['title_'.$language->id] = $model[0]->title;
-            $data['description_'.$language->id] = $model[0]->description;
-            $data['address_'.$language->id] = $model[0]->address;
-            $data['phone_'.$language->id] = $model[0]->phone;
-            $data['highlights_'.$language->id] = $model[0]->highlights;
-            $data['working_days_'.$language->id] = $model[0]->working_days;
-            $data['working_times_'.$language->id] = $model[0]->working_times;
-            $data['how_to_go_'.$language->id] = $model[0]->how_to_go;
-            $data['when_to_go_'.$language->id] = $model[0]->when_to_go;
-            $data['num_activities_'.$language->id] = $model[0]->num_activities;
-            $data['popularity_'.$language->id] = $model[0]->popularity;
+            if(!empty($model[0])){
+
+                $data['title_'.$language->id]           = $model[0]->title;
+                $data['description_'.$language->id]     = $model[0]->description;
+                $data['address_'.$language->id]         = $model[0]->address;
+                $data['phone_'.$language->id]           = $model[0]->phone;
+                $data['highlights_'.$language->id]      = $model[0]->highlights;
+                $data['working_days_'.$language->id]    = $model[0]->working_days;
+                $data['working_times_'.$language->id]   = $model[0]->working_times;
+                $data['how_to_go_'.$language->id]       = $model[0]->how_to_go;
+                $data['when_to_go_'.$language->id]      = $model[0]->when_to_go;
+                $data['num_activities_'.$language->id]  = $model[0]->num_activities;
+                $data['popularity_'.$language->id]      = $model[0]->popularity;
+                $data['conditions_'.$language->id]      = $model[0]->conditions;
+                $data['price_level_'.$language->id]     = $model[0]->price_level;
+                $data['num_checkins_'.$language->id]    = $model[0]->num_checkins;
+                $data['history_'.$language->id]         = $model[0]->history;
             
-            $data['conditions_'.$language->id] = $model[0]->conditions;
-            $data['price_level_'.$language->id] = $model[0]->price_level;
-            $data['num_checkins_'.$language->id] = $model[0]->num_checkins;
-            $data['history_'.$language->id] = $model[0]->history;
+            }else{
+
+                $data['title_'.$language->id]           = null;
+                $data['description_'.$language->id]     = null;
+                $data['address_'.$language->id]         = null;
+                $data['phone_'.$language->id]           = null;
+                $data['highlights_'.$language->id]      = null;
+                $data['working_days_'.$language->id]    = null;
+                $data['working_times_'.$language->id]   = null;
+                $data['how_to_go_'.$language->id]       = null;
+                $data['when_to_go_'.$language->id]      = null;
+                $data['num_activities_'.$language->id]  = null;
+                $data['popularity_'.$language->id]      = null;
+                $data['conditions_'.$language->id]      = null;
+                $data['price_level_'.$language->id]     = null;
+                $data['num_checkins_'.$language->id]    = null;
+                $data['history_'.$language->id]         = null;
+            
+            }
         }
 
         $data['lat_lng'] = $place['lat'] . ',' . $place['lng'];

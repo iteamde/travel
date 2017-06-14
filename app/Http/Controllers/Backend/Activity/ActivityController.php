@@ -188,14 +188,29 @@ class ActivityController extends Controller
                 'activities_id'   => $id
             ])->get();
 
-            $data['title_'.$language->id] = $model[0]->title;
-            $data['description_'.$language->id] = $model[0]->description;
-            $data['working_days_'.$language->id] = $model[0]->working_days;
-            $data['working_times_'.$language->id] = $model[0]->working_times;
-            $data['how_to_go_'.$language->id] = $model[0]->how_to_go;
-            $data['when_to_go_'.$language->id] = $model[0]->when_to_go;
-            $data['popularity_'.$language->id] = $model[0]->popularity;
-            $data['conditions_'.$language->id] = $model[0]->conditions;
+            if(!empty($model[0])){
+                
+                $data['title_'.$language->id]           = $model[0]->title;
+                $data['description_'.$language->id]     = $model[0]->description;
+                $data['working_days_'.$language->id]    = $model[0]->working_days;
+                $data['working_times_'.$language->id]   = $model[0]->working_times;
+                $data['how_to_go_'.$language->id]       = $model[0]->how_to_go;
+                $data['when_to_go_'.$language->id]      = $model[0]->when_to_go;
+                $data['popularity_'.$language->id]      = $model[0]->popularity;
+                $data['conditions_'.$language->id]      = $model[0]->conditions;
+            
+            }else{
+
+                $data['title_'.$language->id]           = null;
+                $data['description_'.$language->id]     = null;
+                $data['working_days_'.$language->id]    = null;
+                $data['working_times_'.$language->id]   = null;
+                $data['how_to_go_'.$language->id]       = null;
+                $data['when_to_go_'.$language->id]      = null;
+                $data['popularity_'.$language->id]      = null;
+                $data['conditions_'.$language->id]      = null;
+            
+            }
         }
 
         $data['lat_lng'] = $activity['lat'] . ',' . $activity['lng'];

@@ -146,17 +146,33 @@ class CountryController extends Controller
                 'countries_id'   => $id
             ])->get();
 
-            $data['title_'.$language->id] = $model[0]->title;
-            $data['description_'.$language->id] = $model[0]->description;
-            $data['nationality_'.$language->id] = $model[0]->nationality;
-            $data['population_'.$language->id] = $model[0]->population;
-            $data['best_place_'.$language->id] = $model[0]->best_place;
-            $data['best_time_'.$language->id] = $model[0]->best_time;
-            $data['cost_of_living_'.$language->id] = $model[0]->cost_of_living;
-            $data['geo_stats_'.$language->id] = $model[0]->geo_stats;
-            $data['demographics_'.$language->id] = $model[0]->demographics;
-            $data['economy_'.$language->id] = $model[0]->economy;
-            $data['suitable_for_'.$language->id] = $model[0]->suitable_for;
+            /* If Translation For Current Language Is Empty, Put Null in All The Fields */
+            if(!empty($model[0])){
+
+                $data['title_'.$language->id]           = $model[0]->title;
+                $data['description_'.$language->id]     = $model[0]->description;
+                $data['nationality_'.$language->id]     = $model[0]->nationality;
+                $data['population_'.$language->id]      = $model[0]->population;
+                $data['best_place_'.$language->id]      = $model[0]->best_place;
+                $data['best_time_'.$language->id]       = $model[0]->best_time;
+                $data['cost_of_living_'.$language->id]  = $model[0]->cost_of_living;
+                $data['geo_stats_'.$language->id]       = $model[0]->geo_stats;
+                $data['demographics_'.$language->id]    = $model[0]->demographics;
+                $data['economy_'.$language->id]         = $model[0]->economy;
+                $data['suitable_for_'.$language->id]    = $model[0]->suitable_for;
+            }else{
+                $data['title_'.$language->id]           = null;
+                $data['description_'.$language->id]     = null;
+                $data['nationality_'.$language->id]     = null;
+                $data['population_'.$language->id]      = null;
+                $data['best_place_'.$language->id]      = null;
+                $data['best_time_'.$language->id]       = null;
+                $data['cost_of_living_'.$language->id]  = null;
+                $data['geo_stats_'.$language->id]       = null;
+                $data['demographics_'.$language->id]    = null;
+                $data['economy_'.$language->id]         = null;
+                $data['suitable_for_'.$language->id]    = null;
+            }
         }
 
         $data['lat_lng'] = $country['lat'] . ',' . $country['lng'];

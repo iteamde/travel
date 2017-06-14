@@ -191,22 +191,38 @@ class CityController extends Controller
         $cities = $cities[0];
 
         foreach ($this->languages as $key => $language) {
+            /* Find The Translation Model For Current Language For This City */
             $model = CitiesTranslations::where([
                 'languages_id' => $language->id,
                 'cities_id'   => $id
             ])->get();
-
-            $data['title_'.$language->id] = $model[0]->title;
-            $data['description_'.$language->id] = $model[0]->description;
-            $data['best_place_'.$language->id] = $model[0]->best_place;
-            $data['best_time_'.$language->id] = $model[0]->best_time;
-            $data['cost_of_living_'.$language->id] = $model[0]->cost_of_living;
-            $data['geo_stats_'.$language->id] = $model[0]->geo_stats;
-            $data['demographics_'.$language->id] = $model[0]->demographics;
-            $data['economy_'.$language->id] = $model[0]->economy;
-            $data['suitable_for_'.$language->id] = $model[0]->suitable_for;
+            /* If Model For Current Language Is Not Found For This City, Skip Its Data */
+            if(!empty($model[0])) {
+                /* Put All The Translation Data In $data Array To Be Used In Edit Form */
+                $data['title_'.$language->id]           = $model[0]->title;
+                $data['description_'.$language->id]     = $model[0]->description;
+                $data['best_place_'.$language->id]      = $model[0]->best_place;
+                $data['best_time_'.$language->id]       = $model[0]->best_time;
+                $data['cost_of_living_'.$language->id]  = $model[0]->cost_of_living;
+                $data['geo_stats_'.$language->id]       = $model[0]->geo_stats;
+                $data['demographics_'.$language->id]    = $model[0]->demographics;
+                $data['economy_'.$language->id]         = $model[0]->economy;
+                $data['suitable_for_'.$language->id]    = $model[0]->suitable_for;
+            }else{
+                /* Put Null In  $data Array If Translation Not Found To Be Used In Edit Form */
+                $data['title_'.$language->id]           = null;
+                $data['description_'.$language->id]     = null;
+                $data['best_place_'.$language->id]      = null;
+                $data['best_time_'.$language->id]       = null;
+                $data['cost_of_living_'.$language->id]  = null;
+                $data['geo_stats_'.$language->id]       = null;
+                $data['demographics_'.$language->id]    = null;
+                $data['economy_'.$language->id]         = null;
+                $data['suitable_for_'.$language->id]    = null;
+            }
         }
 
+        /* Put All Common Fields In $data Array To Be Used In Edit Form */
         $data['lat_lng'] = $cities['lat'] . ',' . $cities['lng'];
         $data['code'] = $cities['code'];
         $data['active'] = $cities['active'];
@@ -214,6 +230,7 @@ class CityController extends Controller
         $data['countries_id'] = $cities['countries_id'];
         $data['safety_degree_id'] = $cities['safety_degree_id'];
 
+        /* Find All Active Countries */
         $countries = Countries::where(['active' => 1])->get();
         $countries_arr = [];
         
@@ -233,7 +250,7 @@ class CityController extends Controller
             }
         }
 
-        /* Get All Airports */
+        /* Get All Selected Airport Locations */
         $selected_airports = $cities->airports;
         $selected_airports_arr = [];
         

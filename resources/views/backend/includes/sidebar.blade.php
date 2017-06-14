@@ -234,7 +234,7 @@
                 <a href="#">
                     <i class="fa fa-users"></i>
                      <!-- <span>{{ trans('menus.backend.language.title') }}</span> -->
-                     <span>{{ trans('labels.backend.levels.levels') }}</span>
+                     <span>{{ trans('labels.backend.levels.levels_manager') }}</span>
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
 
@@ -243,7 +243,7 @@
                         <a href="{{ route('admin.levels.levels.index') }}">
                             <i class="fa fa-circle-o"></i>
                             <!-- <span>{{ trans('labels.backend.access.langauge.management') }}</span> -->
-                            <span>{{ trans('labels.backend.levels.levels_manager') }}</span>
+                            <span>{{ trans('labels.backend.levels.levels') }}</span>
                         </a>
                     </li>
                 </ul>
