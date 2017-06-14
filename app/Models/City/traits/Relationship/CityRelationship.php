@@ -100,6 +100,17 @@ trait CityRelationship
     }
 
     /**
+     * Many-to-Many relations with CitiesLifestyles.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function lifestyles()
+    {
+        // return $this->belongsToMany(config('access.regions'), config('access.regions_trans'), 'id', 'regions_id');
+        return $this->hasMany(config('locations.cities_lifestyles_trans'), 'cities_id');
+    }
+
+    /**
      * Many-to-Many relations with CitiesNumbers.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
@@ -108,6 +119,17 @@ trait CityRelationship
     {
         // return $this->belongsToMany(config('access.regions'), config('access.regions_trans'), 'id', 'regions_id');
         return $this->hasMany(config('locations.cities_languages_spoken_trans'), 'cities_id');
+    }
+
+    /**
+     * Many-to-Many relations with CitiesMedias.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function medias()
+    {
+        // return $this->belongsToMany(config('access.regions'), config('access.regions_trans'), 'id', 'regions_id');
+        return $this->hasMany(config('locations.cities_medias_trans'), 'cities_id');
     }
 
     /**

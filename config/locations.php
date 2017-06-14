@@ -12,6 +12,8 @@ use App\Models\City\CitiesCurrencies;
 use App\Models\City\CitiesEmergencyNumbers;
 use App\Models\City\CitiesHolidays;
 use App\Models\City\CitiesLanguagesSpoken;
+use App\Models\City\CitiesLifestyles;
+use App\Models\City\CitiesMedias;
 use App\Models\PlaceTypes\PlaceTypes;
 use App\Models\PlaceTypes\PlaceTypesTranslations;
 use App\Models\Place\PlaceTranslations;
@@ -72,6 +74,16 @@ return [
      * CitiesHolidays table used to save CitiesHolidays to the database.
      */
     'cities_holidays_trans' =>  CitiesHolidays::class,
+
+    /*
+     * CitiesMedias table used to save CitiesMedias to the database.
+     */
+    'cities_medias_trans' =>  CitiesMedias::class,
+
+    /*
+     * CitiesLifestyles table used to save CitiesLifestyles to the database.
+     */
+    'cities_lifestyles_trans' =>  CitiesLifestyles::class,
 
     /*
      * CitiesLanguagesSpoken table used to save CitiesLanguagesSpoken to the database.

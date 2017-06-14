@@ -51,6 +51,14 @@ class Cities extends Model
         self::deleteModels($this->languages_spoken);
     }
 
+    public function deleteLifestyles(){
+        self::deleteModels($this->lifestyles);
+    }
+
+    public function deleteMedias(){
+        self::deleteModels($this->medias);
+    }
+
     public function deleteModels($models){
         if(!empty($models)){
             foreach ($models as $key => $value) {

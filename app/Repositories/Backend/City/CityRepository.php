@@ -9,6 +9,8 @@ use App\Models\City\CitiesCurrencies;
 use App\Models\City\CitiesEmergencyNumbers;
 use App\Models\City\CitiesHolidays;
 use App\Models\City\CitiesLanguagesSpoken;
+use App\Models\City\CitiesLifestyles;
+use App\Models\City\CitiesMedias;
 use Illuminate\Support\Facades\DB;
 use App\Exceptions\GeneralException;
 use App\Repositories\BaseRepository;
@@ -118,6 +120,16 @@ class CityRepository extends BaseRepository
             
             if ($model->save()) {
 
+                /* Entry in CityMedias table */
+                if(!empty($extra['medias'])){
+                    foreach ($extra['medias'] as $key => $value) {
+                        $medias = new CitiesMedias;
+                        $medias->cities_id = $model->id;
+                        $medias->medias_id = $value;
+                        $medias->save();
+                    }
+                }
+
                 /* Entry in LanguagesSpoken table */
                 if(!empty($extra['languages_spoken'])){
                     foreach ($extra['languages_spoken'] as $key => $value) {
@@ -125,6 +137,16 @@ class CityRepository extends BaseRepository
                         $languagesSpoken->cities_id = $model->id;
                         $languagesSpoken->languages_spoken_id = $value;
                         $languagesSpoken->save();
+                    }
+                }
+
+                /* Entry in CitiesLifestyles table */
+                if(!empty($extra['lifestyles'])){
+                    foreach ($extra['lifestyles'] as $key => $value) {
+                        $lifestyles = new CitiesLifestyles;
+                        $lifestyles->cities_id = $model->id;
+                        $lifestyles->lifestyles_id = $value;
+                        $lifestyles->save();
                     }
                 }
 
@@ -255,10 +277,34 @@ class CityRepository extends BaseRepository
             }
         }
 
+        $prev_lifestyles = CitiesLifestyles::where(['cities_id' => $id])->get();
+        if(!empty($prev_lifestyles)){
+            foreach ($prev_lifestyles as $key => $value) {
+                $value->delete();
+            }
+        }
+
+        $prev_medias = CitiesMedias::where(['cities_id' => $id])->get();
+        if(!empty($prev_medias)){
+            foreach ($prev_medias as $key => $value) {
+                $value->delete();
+            }
+        }
+
         DB::transaction(function () use ($model, $input, $extra) {
             $check = 1;
             
             if ($model->save()) {
+
+                /* Entry in CityMedias table */
+                if(!empty($extra['medias'])){
+                    foreach ($extra['medias'] as $key => $value) {
+                        $medias = new CitiesMedias;
+                        $medias->cities_id = $model->id;
+                        $medias->medias_id = $value;
+                        $medias->save();
+                    }
+                }
 
                 /* Save EmergencyNumbers */
                 if(!empty($extra['emergency_numbers'])){
@@ -267,6 +313,16 @@ class CityRepository extends BaseRepository
                         $airport->cities_id = $model->id;
                         $airport->emergency_numbers_id = $value;
                         $airport->save();
+                    }
+                }
+
+                /* Entry in CitiesLifestyles table */
+                if(!empty($extra['lifestyles'])){
+                    foreach ($extra['lifestyles'] as $key => $value) {
+                        $lifestyles = new CitiesLifestyles;
+                        $lifestyles->cities_id = $model->id;
+                        $lifestyles->lifestyles_id = $value;
+                        $lifestyles->save();
                     }
                 }
 

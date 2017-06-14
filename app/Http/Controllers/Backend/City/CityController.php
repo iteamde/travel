@@ -17,6 +17,8 @@ use App\Models\Currencies\Currencies;
 use App\Models\EmergencyNumbers\EmergencyNumbers;
 use App\Models\Holidays\Holidays;
 use App\Models\LanguagesSpoken\LanguagesSpoken;
+use App\Models\Lifestyle\Lifestyle;
+use App\Models\ActivityMedia\Media;
 
 class CityController extends Controller
 {
@@ -115,6 +117,36 @@ class CityController extends Controller
             }
         }
 
+        /* Find All LanguagesSpoken In The System */
+        $languages_spoken = LanguagesSpoken::get();
+        $languages_spoken_arr = [];
+        
+        foreach ($languages_spoken as $key => $value) {
+            if(isset($value->transsingle) && !empty($value->transsingle)){  
+                $languages_spoken_arr[$value->id] = $value->transsingle->title;
+            }
+        }
+
+        /* Find All Lifestyles In The System */
+        $lifestyles = Lifestyle::get();
+        $lifestyles_arr = [];
+        
+        foreach ($lifestyles as $key => $value) {
+            if(isset($value->transsingle) && !empty($value->transsingle)){  
+                $lifestyles_arr[$value->id] = $value->transsingle->title;
+            }
+        }
+
+        /* Find All Medias In The System */
+        $medias = Media::get();
+        $medias_arr = [];
+        
+        foreach ($medias as $key => $value) {
+            if(isset($value->transsingle) && !empty($value->transsingle)){  
+                $medias_arr[$value->id] = $value->transsingle->title;
+            }
+        }
+
         return view('backend.city.create',[
             'countries' => $countries_arr,
             'degrees'   => $degrees_arr,
@@ -124,6 +156,8 @@ class CityController extends Controller
             'emergency_numbers' => $emergency_numbers_arr,
             'languages_spoken'  => $languages_spoken_arr,
             'holidays'  => $holidays_arr,
+            'lifestyles' => $lifestyles_arr,
+            'medias' => $medias_arr,
         ]);
     }
 
@@ -178,6 +212,8 @@ class CityController extends Controller
             'emergency_numbers' => $request->input('emergency_numbers_id'),
             'holidays'  => $request->input('holidays_id'),
             'languages_spoken' => $request->input('languages_spoken_id'),
+            'lifestyles'  => $request->input('lifestyles_id'),
+            'medias'  => $request->input('medias_id'),
             'safety_degree_id' => $request->input('safety_degree_id')
         ];
 
@@ -201,6 +237,8 @@ class CityController extends Controller
         $item->deleteEmergency_numbers();
         $item->deleteHolidays();
         $item->deleteLanguagesSpoken();
+        $item->deleteLifestyles();
+        $item->deleteMedias();
         $item->delete();
 
         return redirect()->route('admin.location.city.index')->withFlashSuccess('City Deleted Successfully');
@@ -395,6 +433,52 @@ class CityController extends Controller
             }
         }
 
+        /* Get Selected Lifestyles */
+        $selected_lifestyles = $cities->lifestyles;
+        $selected_lifestyles_arr = [];
+
+        foreach ($selected_lifestyles as $key => $value) {
+            // if(isset($value->languages_spoken->transsingle) && !empty($value->languages_spoken->transsingle)){  
+                // $selected_airports_arr[$value->place->id] = $value->place->transsingle->title;
+                array_push($selected_lifestyles_arr,$value->lifestyle->id);
+            // }
+        }
+
+        $data['selected_lifestyles'] = $selected_lifestyles_arr;
+
+        /* Find All CitiesLifestyles In The System */
+        $lifestyles = Lifestyle::get();
+        $lifestyles_arr = [];
+        
+        foreach ($lifestyles as $key => $value) {
+            if(isset($value->transsingle) && !empty($value->transsingle)){  
+                $lifestyles_arr[$value->id] = $value->transsingle->title;
+            }
+        }
+
+        /* Get Selected Medias */
+        $selected_medias = $cities->medias;
+        $selected_medias_arr = [];
+
+        foreach ($selected_medias as $key => $value) {
+            // if(isset($value->languages_spoken->transsingle) && !empty($value->languages_spoken->transsingle)){  
+                // $selected_airports_arr[$value->place->id] = $value->place->transsingle->title;
+                array_push($selected_medias_arr,$value->medias->id);
+            // }
+        }        
+
+        $data['selected_medias'] = $selected_medias_arr;
+
+        /* Find All Medias In The System */
+        $medias = Media::get();
+        $medias_arr = [];
+        
+        foreach ($medias as $key => $value) {
+            if(isset($value->transsingle) && !empty($value->transsingle)){  
+                $medias_arr[$value->id] = $value->transsingle->title;
+            }
+        }
+
         return view('backend.city.edit')
             ->withLanguages($this->languages)
             ->withCity($cities)
@@ -406,7 +490,9 @@ class CityController extends Controller
             ->withCurrencies($currencies_arr)
             ->withLanguages_spoken($languages_spoken_arr)
             ->withHolidays($holidays_arr)
-            ->withEmergency_numbers($emergency_numbers_arr);
+            ->withEmergency_numbers($emergency_numbers_arr)
+            ->withLifestyles($lifestyles_arr)
+            ->withMedias($medias_arr);
     }
 
     /**
@@ -463,8 +549,10 @@ class CityController extends Controller
             'places' => $request->input('places_id'),
             'currencies' => $request->input('currencies_id'),
             'holidays'  => $request->input('holidays_id'),
+            'lifestyles'  => $request->input('lifestyles_id'),
             'emergency_numbers' => $request->input('emergency_numbers_id'),
             'languages_spoken' => $request->input('languages_spoken_id'),
+            'medias' => $request->input('medias_id'),
             'safety_degree_id' => $request->input('safety_degree_id')
         ];
 
@@ -587,6 +675,45 @@ class CityController extends Controller
                 }
             }
         }
+
+        /* Get Languages Spoken */
+        $lifestyles = $city->lifestyles;
+        $lifestyles_arr = [];
+
+        if(!empty($lifestyles)){
+            foreach ($lifestyles as $key => $value) {
+                
+                $lifestyle = $value->lifestyle;
+               
+                if(!empty($lifestyle)){
+
+                    $lifestyle = $lifestyle->transsingle;
+                    if(!empty($lifestyle)){
+                        array_push($lifestyles_arr,$lifestyle->title);
+                    }
+                }
+            }
+        }
+
+        /* Get All Added Medias */
+        $medias = $city->medias;
+        $medias_arr = [];
+
+        if(!empty($medias)){
+            foreach ($medias as $key => $value) {
+                
+                $media = $value->medias;
+               
+                if(!empty($media)){
+   
+                    $media = $media->transsingle;
+                    
+                    if(!empty($media)){
+                        array_push($medias_arr,$media->title);
+                    }
+                }
+            }
+        }
         
         return view('backend.city.show')
             ->withCity($city)
@@ -596,7 +723,9 @@ class CityController extends Controller
             ->withAirports($airports_arr)
             ->withCurrencies($currencies_arr)
             ->withHolidays($holidays_arr)
+            ->withLifestyles($lifestyles_arr)
             ->withLanguages_spoken($languages_spoken_arr)
+            ->withMedias($medias_arr)
             ->withEmergencynumbers($emergency_numbers_arr);
     }
 

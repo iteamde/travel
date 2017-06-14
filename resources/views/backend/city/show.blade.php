@@ -158,6 +158,38 @@
                     @endforeach
                     <!-- End: Holidays -->
 
+                    <!-- Start: Medias -->
+                    <tr>
+                         <th> <h3 style="color:#0A8F27">Medias</h3></th><td></td>   
+                    </tr>
+                    @if(empty($medias))
+                      <tr>
+                          <th> <p>No Medias Added.</p> </th>
+                      </tr>
+                    @endif
+                    @foreach($medias as $key => $media)
+                      <tr>
+                          <th> <p><?=$media?></p> </th>
+                      </tr>
+                    @endforeach
+                    <!-- End: Medias -->
+
+                    <!-- Start: Life Styles -->
+                    <tr>
+                         <th> <h3 style="color:#0A8F27">Life Styles</h3></th><td></td>   
+                    </tr>
+                    @if(empty($lifestyles))
+                      <tr>
+                          <th> <p>No Life Styles Added.</p> </th>
+                      </tr>
+                    @endif
+                    @foreach($lifestyles as $key => $lifestyle)
+                      <tr>
+                          <th> <p><?=$lifestyle?></p> </th>
+                      </tr>
+                    @endforeach
+                    <!-- End: Life Styles -->
+
                     <!-- Start: Emergency Numbers -->
                     <tr>
                          <th> <h3 style="color:#0A8F27">Emergency Numbers</h3></th><td></td>   

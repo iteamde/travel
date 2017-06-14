@@ -262,6 +262,17 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
                     </div><!--form control-->
                     <!-- SpokenLanguages: End -->
 
+                    <!-- Lifestyles: Start -->
+                    <div class="form-group">
+                        {{ Form::label('title', 'Life Styles', ['class' => 'col-lg-2 control-label']) }}
+
+                        <div class="col-lg-10">
+                            {{ Form::select('lifestyles_id[]', $lifestyles , null,['class' => 'select2Class form-control' , 'multiple' => 'multiple' ]) }}
+                        </div><!--col-lg-10-->
+                    </div><!--form control-->
+                    <!-- Lifestyles: End -->
+
+
                     <!-- Holidays: Start -->
                     <div class="form-group">
                         {{ Form::label('title', 'Holidays', ['class' => 'col-lg-2 control-label']) }}
@@ -271,6 +282,16 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
                         </div><!--col-lg-10-->
                     </div><!--form control-->
                     <!-- Holidays: End -->
+
+                    <!-- Medias: Start -->
+                    <div class="form-group">
+                        {{ Form::label('title', 'Medias', ['class' => 'col-lg-2 control-label']) }}
+
+                        <div class="col-lg-10">
+                            {{ Form::select('medias_id[]', $medias , null,['class' => 'select2Class form-control' , 'multiple' => 'multiple' ]) }}
+                        </div><!--col-lg-10-->
+                    </div><!--form control-->
+                    <!-- Medias: End -->
 
                     <!-- EmergencyNumbers: Start -->
                     <div class="form-group">
