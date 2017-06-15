@@ -8,6 +8,8 @@ use App\Models\Currencies\Traits\Attribute\CurrenciesAttribute;
 
 class Currencies extends Model
 {
+    const ACTIVE    = 1;
+    const DEACTIVE  = 2;
     /**
      * The database table used by the model.
      *

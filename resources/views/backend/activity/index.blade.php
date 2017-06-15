@@ -70,7 +70,7 @@
                 },
                 columns: [
 	                {data: 'id', name: '{{config('activities.activities_table')}}.id'},
-                    {data: 'transsingle.title', name: '{{config('activities.activities_trans_table')}}.title'},
+                    {data: 'transsingle.title', name: 'transsingle.title'},
                     {data: 'lat', name: '{{config('activities.activities_table')}}.lat'},
                     {data: 'lng', name: '{{config('activities.activities_table')}}.lng'},
                     {

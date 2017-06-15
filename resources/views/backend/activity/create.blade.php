@@ -4,7 +4,7 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
 ?>
 @extends ('backend.layouts.app')
 
-@section ('title', 'Activities Manager' . ' | ' . 'Create Activity')
+@section ('title', trans('labels.backend.activities.activities_manager') . ' | ' . trans('labels.backend.activities.create_activity'))
 
 @section('page-header')
     <!-- <h1>
@@ -12,8 +12,8 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
         <small>{{ trans('labels.backend.access.users.create') }}</small>
     </h1> -->
     <h1>
-        Activity Manager
-        <small>Create Activity</small>
+        {{ trans('labels.backend.activities.activities_manager') }}
+        <small>{{ trans('labels.backend.activities.create_activity') }}</small>
     </h1>
 @endsection
 
@@ -57,7 +57,7 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
         <div class="box box-success">
             <div class="box-header with-border">
                 <!-- <h3 class="box-title">{{ trans('labels.backend.access.users.create') }}</h3> -->
-                <h3 class="box-title">Create Activity</h3>
+                <h3 class="box-title">{{ trans('labels.backend.activities.create_activity') }}</h3>
 
             </div><!-- /.box-header -->
 
@@ -218,7 +218,7 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
                     <div class="form-group">
                     {{ Form::label('title', 'Select Location', ['class' => 'col-lg-2 control-label']) }}
                         <div class="col-lg-10">
-                            <input id="pac-input" class="form-control" type="text" placeholder="Search Box">
+                            <input id="pac-input" class="form-control" type="text" placeholder="Search Box" required>
                             <div id="map"></div>
                         </div>
                     </div>

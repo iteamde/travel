@@ -14,6 +14,7 @@ use App\Models\City\CitiesHolidays;
 use App\Models\City\CitiesLanguagesSpoken;
 use App\Models\City\CitiesLifestyles;
 use App\Models\City\CitiesMedias;
+use App\Models\City\CitiesReligions;
 use App\Models\PlaceTypes\PlaceTypes;
 use App\Models\PlaceTypes\PlaceTypesTranslations;
 use App\Models\Place\PlaceTranslations;
@@ -84,6 +85,11 @@ return [
      * CitiesLifestyles table used to save CitiesLifestyles to the database.
      */
     'cities_lifestyles_trans' =>  CitiesLifestyles::class,
+
+    /*
+     * CitiesReligions table used to save CitiesReligions to the database.
+     */
+    'cities_religions_trans' =>  CitiesReligions::class,
 
     /*
      * CitiesLanguagesSpoken table used to save CitiesLanguagesSpoken to the database.

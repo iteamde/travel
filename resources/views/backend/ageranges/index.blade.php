@@ -68,7 +68,7 @@
                 },
                 columns: [
 	                {data: 'id', name: '{{config('ageranges.ageranges_table')}}.id'},
-                    {data: 'transsingle.title', name: '{{config('ageranges.ageranges_trans_table')}}.title'},
+                    {data: 'transsingle.title', name: 'transsingle.title'},
                     {
                         name: '{{config('ageranges.ageranges_table')}}.active',
                         data: 'active',

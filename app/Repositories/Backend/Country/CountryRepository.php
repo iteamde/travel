@@ -81,6 +81,7 @@ class CountryRepository extends BaseRepository
          */
         $dataTableQuery = $this->query()
             // ->with('roles')
+            ->with('transsingle')
             ->select([
                 config('locations.country_table').'.id',
                 config('locations.country_table').'.code',

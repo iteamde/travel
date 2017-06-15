@@ -57,7 +57,7 @@
                 },
                 columns: [
 	                {data: 'id', name: '{{config('locations.regions_table')}}.id'},
-                    {data: 'transsingle.title', name: '{{config('locations.regions_trans_table')}}.title'},
+                    {data: 'transsingle.title', name: 'transsingle.title'},
                     {
                         name: '{{config('locations.regions_table')}}.active',
                         data: 'active',

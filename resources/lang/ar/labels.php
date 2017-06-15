@@ -97,9 +97,84 @@ return [
                 'view' => 'View User',
             ],
         ],
+        'languages' => [
+            'languages_manager' => 'مدير لانغوج',
+            'languages_management'=> 'إدارة اللغة'
+        ],
         'levels' => [
             'levels' => 'مستويات',
             'levels_manager' => 'مدير المستويات',
+        ],
+        'locations' => [
+            'locations_manager' => 'مدير المواقع',
+            'regions' => 'المناطق',
+            'countries' => 'بلدان',
+            'cities' => 'مدن',
+            'place_types' => 'أنواع الأماكن',
+            'places' => 'أماكن'
+        ],
+        'safety_degrees' => [
+            'safety_degrees_manager' => 'مدير درجات السلامة',
+            'safety_degrees' => 'درجات السلامة',
+        ],
+        'activities' => [
+            'activities_manager' => 'مدير الأنشطة',
+            'activity_types' => 'أنواع الأنشطة',
+            'activities' => 'أنشطة',
+            'activity_media' => 'النشاط الإعلام',
+            'create_activity' => 'إنشاء نشاط'
+        ],
+        'interests' => [
+            'interests_manager' => 'الاهتمامات ماناجر',
+            'interests' => 'الإهتمامات'
+        ],
+        'religions' => [
+            'religions_manager' => 'مدير الأديان',
+            'religions' => 'الأديان'
+        ],
+        'lifestyles' => [
+            'lifestyles_manager' => 'مدير أنماط الحياة',
+            'lifestyles' => 'أنماط الحياة'
+        ],
+        'languages_spoken' => [
+            'languages_spoken_manager' => 'اللغات التي يتحدث بها مدير',
+            'languages_spoken' => 'اللغات التي تتكلمها'
+        ],
+        'timings' => [
+            'timings_manager' => 'مدير توقيت',
+            'timings' => 'توقيت'
+        ],
+        'weekdays' => [
+            'weekdays_manager' => 'مدير أيام الأسبوع',
+            'weekdays' => 'أيام الأسبوع'
+        ],
+        'holidays' => [
+            'holidays_manager' => 'مدير العطلات',
+            'holidays' => 'العطل'
+        ],
+        'hobbies' => [
+            'hobbies_manager' => 'مدير الهوايات',
+            'hobbies' => 'الهوايات'
+        ],
+        'emergency_numbers' => [
+            'emergency_numbers_manager' => 'مدير أرقام الطوارئ',
+            'emergency_numbers' => 'أرقام الطوارئ'
+        ],
+        'currencies' => [
+            'currencies_manager' => 'مدير العملات',
+            'currencies' => 'العملات'
+        ],
+        'cultures' => [
+            'cultures_manager' => 'مدير الثقافات',
+            'cultures' => 'الثقافات'
+        ],
+        'accommodations' => [
+            'accommodations_manager' => 'مدير الإقامة',
+            'accommodations' => 'أماكن الإقامة'
+        ],
+        'age_ranges' => [
+            'age_ranges_manager' => 'مدير نطاقات العمر',
+            'age_ranges' => 'نطاقات العمر'
         ],
     ],
 

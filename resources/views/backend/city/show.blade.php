@@ -5,7 +5,7 @@
 @section('page-header')
     <h1>
         Cities Management
-        <small>View Country</small>
+        <small>View City</small>
     </h1>
 @endsection
 
@@ -173,6 +173,22 @@
                       </tr>
                     @endforeach
                     <!-- End: Medias -->
+
+                    <!-- Start: Religions -->
+                    <tr>
+                         <th> <h3 style="color:#0A8F27">Religions</h3></th><td></td>   
+                    </tr>
+                    @if(empty($religions))
+                      <tr>
+                          <th> <p>No Religions Added.</p> </th>
+                      </tr>
+                    @endif
+                    @foreach($religions as $key => $religion)
+                      <tr>
+                          <th> <p><?=$religion?></p> </th>
+                      </tr>
+                    @endforeach
+                    <!-- End: Religions -->
 
                     <!-- Start: Life Styles -->
                     <tr>

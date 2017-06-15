@@ -99,9 +99,83 @@ return [
                 'view' => 'View User',
             ],
         ],
+        'languages' => [
+            'languages_manager' => 'Languages Manager',
+            'languages_management'=> 'Languages Management'
+        ],
         'levels' => [
-            'levels' => 'Levels',
+            'levels' => 'Leves',
             'levels_manager' => 'Levels Manager',
+        ],
+        'locations' => [
+            'locations_manager' => 'Locations Manager',
+            'regions' => 'Regions',
+            'countries' => 'Countries',
+            'cities' => 'Cities',
+            'place_types' => 'Place Types',
+            'places' => 'Places'
+        ],
+        'safety_degrees' => [
+            'safety_degrees_manager' => 'Safety Degrees manager',
+            'safety_degrees' => 'Safety Degrees',
+        ],
+        'activities' => [
+            'activities_manager' => 'Activities Manager',
+            'activity_types' => 'Activity Types',
+            'activities' => 'Activities',
+            'activity_media' => 'Activity Media',
+        ],
+        'interests' => [
+            'interests_manager' => 'Interests Manager',
+            'interests' => 'Interests'
+        ],
+        'religions' => [
+            'religions_manager' => 'Religions Manager',
+            'religions' => 'Religions'
+        ],
+        'lifestyles' => [
+            'lifestyles_manager' => 'Life Styles Manager',
+            'lifestyles' => 'Life Styles'
+        ],
+        'languages_spoken' => [
+            'languages_spoken_manager' => 'Languages Spoken Manager',
+            'languages_spoken' => 'Languages Spoken'
+        ],
+        'timings' => [
+            'timings_manager' => 'Timings Manager',
+            'timings' => 'Timings'
+        ],
+        'weekdays' => [
+            'weekdays_manager' => 'Weekdays Manager',
+            'weekdays' => 'Weekdays'
+        ],
+        'holidays' => [
+            'holidays_manager' => 'Holidays Manager',
+            'holidays' => 'Holidays'
+        ],
+        'hobbies' => [
+            'hobbies_manager' => 'Hobbies Manager',
+            'hobbies' => 'Hobbies'
+        ],
+        'emergency_numbers' => [
+            'emergency_numbers_manager' => 'Emergency Numbers Manager',
+            'emergency_numbers' => 'Emergency Numbers'
+        ],
+        'currencies' => [
+            'currencies_manager' => 'Currencies Manager',
+            'currencies' => 'Currencies'
+        ],
+        'cultures' => [
+            'cultures_manager' => 'Cultures Manager',
+            'cultures' => 'Cultures'
+        ],
+        'accommodations' => [
+            'accommodations_manager' => 'Accommodations Manager',
+            'accommodations' => 'Accommodations'
+        ],
+        'age_ranges' => [
+            'age_ranges_manager' => 'Age Ranges Manager',
+            'age_ranges' => 'Age Ranges'
         ],
     ],
 

@@ -57,7 +57,7 @@
                 },
                 columns: [
 	                {data: 'id', name: '{{config('language_spoken.languages_spoken_table')}}.id'},
-                    {data: 'transsingle.title', name: '{{config('language_spoken.languages_spoken_trans_table')}}.title'},
+                    {data: 'transsingle.title', name: 'transsingle.title'},
                     {
                         name: '{{config('language_spoken.languages_spoken_table')}}.active',
                         data: 'active',

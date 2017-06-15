@@ -133,6 +133,17 @@ trait CityRelationship
     }
 
     /**
+     * Many-to-Many relations with CitiesReligions.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function religions()
+    {
+        // return $this->belongsToMany(config('access.regions'), config('access.regions_trans'), 'id', 'regions_id');
+        return $this->hasMany(config('locations.cities_religions_trans'), 'cities_id');
+    }
+
+    /**
      * @return mixed
      */
     public function degree()

@@ -11,6 +11,7 @@ use App\Models\City\CitiesHolidays;
 use App\Models\City\CitiesLanguagesSpoken;
 use App\Models\City\CitiesLifestyles;
 use App\Models\City\CitiesMedias;
+use App\Models\City\CitiesReligions;
 use Illuminate\Support\Facades\DB;
 use App\Exceptions\GeneralException;
 use App\Repositories\BaseRepository;
@@ -137,6 +138,16 @@ class CityRepository extends BaseRepository
                         $languagesSpoken->cities_id = $model->id;
                         $languagesSpoken->languages_spoken_id = $value;
                         $languagesSpoken->save();
+                    }
+                }
+
+                /* Entry in Religions table */
+                if(!empty($extra['religions'])){
+                    foreach ($extra['religions'] as $key => $value) {
+                        $religions = new CitiesReligions;
+                        $religions->cities_id = $model->id;
+                        $religions->religions_id = $value;
+                        $religions->save();
                     }
                 }
 
@@ -291,6 +302,13 @@ class CityRepository extends BaseRepository
             }
         }
 
+        $prev_religions = CitiesReligions::where(['cities_id' => $id])->get();
+        if(!empty($prev_religions)){
+            foreach ($prev_religions as $key => $value) {
+                $value->delete();
+            }
+        }
+
         DB::transaction(function () use ($model, $input, $extra) {
             $check = 1;
             
@@ -303,6 +321,16 @@ class CityRepository extends BaseRepository
                         $medias->cities_id = $model->id;
                         $medias->medias_id = $value;
                         $medias->save();
+                    }
+                }
+
+                /* Entry in CityReligions table */
+                if(!empty($extra['religions'])){
+                    foreach ($extra['religions'] as $key => $value) {
+                        $religions = new CitiesReligions;
+                        $religions->cities_id = $model->id;
+                        $religions->religions_id = $value;
+                        $religions->save();
                     }
                 }
 

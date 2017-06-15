@@ -67,7 +67,7 @@
                 },
                 columns: [
 	                {data: 'id', name: '{{config('hobbies.hobbies_table')}}.id'},
-                    {data: 'transsingle.title', name: '{{config('hobbies.hobbies_trans_table')}}.title'},
+                    {data: 'transsingle.title', name: 'transsingle.title'},
                     {data: 'action', name: 'action', searchable: false, sortable: false}
                 ],
                 order: [[0, "asc"]],

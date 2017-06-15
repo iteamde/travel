@@ -8,6 +8,8 @@ use App\Models\Religion\Traits\Attribute\ReligionAttribute;
 
 class Religion extends Model
 {
+    CONST ACTIVE   = 1;
+    CONST DEACTIVE = 2;
     /**
      * The database table used by the model.
      *

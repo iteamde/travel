@@ -8,6 +8,8 @@ use App\Models\Country\Traits\Attribute\CountryAttribute;
 
 class Countries extends Model
 {
+    CONST ACTIVE    = 1;
+    CONST DEACTIVE  = 2;
     /**
      * The database table used by the model.
      *

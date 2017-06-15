@@ -70,7 +70,7 @@
                 },
                 columns: [
 	                {data: 'id', name: '{{config('locations.place_table')}}.id'},
-	                {data: 'transsingle.title', name: '{{config('locations.place_trans_table')}}.title'},
+	                {data: 'transsingle.title', name: 'transsingle.title'},
 	                {data: 'lat', name: '{{config('locations.place_table')}}.lat'},
 	                {data: 'lng', name: '{{config('locations.place_table')}}.lng'},
 	                {

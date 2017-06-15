@@ -68,7 +68,7 @@
                 },
                 columns: [
 	                {data: 'id', name: '{{config('religion.religion_table')}}.id'},
-                    {data: 'transsingle.title', name: '{{config('religion.religion_trans_table')}}.title'},
+                    {data: 'transsingle.title', name: 'transsingle.title'},
                     {
                         name: '{{config('religion.religion_table')}}.active',
                         data: 'active',

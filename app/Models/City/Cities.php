@@ -8,6 +8,11 @@ use App\Models\City\Traits\Attribute\CityAttribute;
 
 class Cities extends Model
 {
+    CONST ACTIVE    = 1;
+    CONST DEACTIVE  = 2;
+
+    CONST IS_CAPITAL     = 1;
+    CONST IS_NOT_CAPITAL = 2;
     /**
      * The database table used by the model.
      *
@@ -57,6 +62,10 @@ class Cities extends Model
 
     public function deleteMedias(){
         self::deleteModels($this->medias);
+    }
+
+    public function deleteReligions(){
+        self::deleteModels($this->religions);
     }
 
     public function deleteModels($models){

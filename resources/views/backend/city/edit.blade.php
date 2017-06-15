@@ -261,6 +261,16 @@ use App\Models\Access\language\Languages;
                     </div><!--form control-->
                     <!-- Currencies: End -->
 
+                    <!-- Religions: Start -->
+                    <div class="form-group">
+                        {{ Form::label('title', 'Religions', ['class' => 'col-lg-2 control-label']) }}
+
+                        <div class="col-lg-10">
+                            {{ Form::select('religions_id[]', $religions , $data['selected_religions'],['class' => 'select2Class form-control' , 'multiple' => 'multiple' ]) }}
+                        </div><!--col-lg-10-->
+                    </div><!--form control-->
+                    <!-- Religions: End -->
+
                     <!-- Lifestyles: Start -->
                     <div class="form-group">
                         {{ Form::label('title', 'Life Styles', ['class' => 'col-lg-2 control-label']) }}

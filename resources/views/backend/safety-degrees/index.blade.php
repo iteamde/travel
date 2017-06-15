@@ -67,7 +67,7 @@
                 },
                 columns: [
                     {data: 'id', name: '{{config('access.safety_degree')}}.id'},
-                    {data: 'transsingle.title', name: '{{config('access.safety_degree_lang')}}.title'},
+                    {data: 'transsingle.title', name: 'transsingle.title'},
                     {data: 'action', name: 'action', searchable: false, sortable: false}
                 ],
                 order: [[0, "asc"]],

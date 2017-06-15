@@ -67,7 +67,7 @@
                 },
                 columns: [
 	                {data: 'id', name: '{{config('accommodations.accommodations_table')}}.id'},
-                    {data: 'transsingle.title', name: '{{config('accommodations.accommodations_trans_table')}}.title'},
+                    {data: 'transsingle.title', name: 'transsingle.title'},
                     {data: 'action', name: 'action', searchable: false, sortable: false}
                 ],
                 order: [[0, "asc"]],
