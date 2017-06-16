@@ -45,6 +45,10 @@ class Countries extends Model
         self::deleteModels($this->capitals);
     }
 
+    public function deleteEmergencyNumbers(){
+        self::deleteModels($this->emergency_numbers);
+    }
+
     public function deleteModels($models){
         if(!empty($models)){
             foreach ($models as $key => $value) {

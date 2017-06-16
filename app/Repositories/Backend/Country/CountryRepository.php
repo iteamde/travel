@@ -7,6 +7,7 @@ use App\Models\Country\CountriesTranslations;
 use App\Models\Country\CountriesAirports;
 use App\Models\Country\CountriesCurrencies;
 use App\Models\Country\CountriesCapitals;
+use App\Models\Country\CountriesEmergencyNumbers;
 use Illuminate\Support\Facades\DB;
 use App\Exceptions\GeneralException;
 use App\Repositories\BaseRepository;
@@ -133,6 +134,15 @@ class CountryRepository extends BaseRepository
                     }
                 }
 
+                if(!empty($extra['emergency_numbers'])){
+                    foreach ($extra['emergency_numbers'] as $key => $value) {
+                        $CountriesEmergencyNumbers = new CountriesEmergencyNumbers;
+                        $CountriesEmergencyNumbers->countries_id = $model->id;
+                        $CountriesEmergencyNumbers->emergency_numbers_id = $value;
+                        $CountriesEmergencyNumbers->save();
+                    }
+                }
+
                 if(!empty($extra['currencies'])){
                     foreach ($extra['currencies'] as $key => $value) {
                         $CountriesCurrencies = new CountriesCurrencies;
@@ -215,6 +225,13 @@ class CountryRepository extends BaseRepository
             }
         }
 
+        $prev_numbers = CountriesEmergencyNumbers::where(['countries_id' => $id])->get();
+        if(!empty($prev_numbers)){
+            foreach ($prev_numbers as $key => $value) {
+                $value->delete();
+            }
+        }
+
         DB::transaction(function () use ($model, $input, $extra) {
             $check = 1;
             
@@ -235,6 +252,15 @@ class CountryRepository extends BaseRepository
                         $CountriesCapitals->countries_id = $model->id;
                         $CountriesCapitals->cities_id = $value;
                         $CountriesCapitals->save();
+                    }
+                }
+
+                if(!empty($extra['emergency_numbers'])){
+                    foreach ($extra['emergency_numbers'] as $key => $value) {
+                        $CountriesEmergencyNumbers = new CountriesEmergencyNumbers;
+                        $CountriesEmergencyNumbers->countries_id = $model->id;
+                        $CountriesEmergencyNumbers->emergency_numbers_id = $value;
+                        $CountriesEmergencyNumbers->save();
                     }
                 }
 

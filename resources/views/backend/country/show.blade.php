@@ -156,6 +156,22 @@
                     @endforeach
                     <!-- End: Capitals -->
 
+                    <!-- Start: EmergencyNumbers -->
+                    <tr>
+                         <th> <h3 style="color:#0A8F27">Emergency Numbers</h3></th><td></td>   
+                    </tr>
+                    @if(empty($emergency_numbers))
+                      <tr>
+                          <th> <p>No Emergency Numbers Added.</p> </th><td></td>
+                      </tr>
+                    @endif
+                    @foreach($emergency_numbers as $key => $number)
+                      <tr>
+                          <th> <p><?=$number?></p> </th><td></td>
+                      </tr>
+                    @endforeach
+                    <!-- End: EmergencyNumbers -->
+
                     <tr>
                          <th> <h3 style="color:#0A8F27">Location</h3></th><td></td>   
                     </tr>

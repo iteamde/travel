@@ -9,6 +9,7 @@ use App\Models\Country\CountriesTranslations;
 use App\Models\Country\CountriesAirports;
 use App\Models\Country\CountriesCurrencies;
 use App\Models\Country\CountriesCapitals;
+use App\Models\Country\CountriesEmergencyNumbers;
 use App\Models\City\CitiesTranslations;
 use App\Models\City\CitiesAirports;
 use App\Models\City\CitiesCurrencies;
@@ -58,6 +59,11 @@ return [
      * CountriesCapitals table used to save CountriesCapitals to the database.
      */
     'country_capitals_trans' =>  CountriesCapitals::class,
+
+    /*
+     * CountriesEmergencyNumbers table used to save CountriesEmergencyNumbers to the database.
+     */
+    'country_emergency_numbers_trans' =>  CountriesEmergencyNumbers::class,
 
     /*
      * Cities table used to save cities to the database.

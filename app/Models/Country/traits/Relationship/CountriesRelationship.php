@@ -103,4 +103,15 @@ trait CountriesRelationship
         // return $this->belongsToMany(config('access.regions'), config('access.regions_trans'), 'id', 'regions_id');
         return $this->hasMany(config('locations.country_capitals_trans'), 'countries_id');
     }
+
+    /**
+     * Many-to-Many relations with CountriesEmergencyNumbers.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function emergency_numbers()
+    {
+        // return $this->belongsToMany(config('access.regions'), config('access.regions_trans'), 'id', 'regions_id');
+        return $this->hasMany(config('locations.country_emergency_numbers_trans'), 'countries_id');
+    }
 }
