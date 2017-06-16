@@ -4,6 +4,9 @@ namespace App\Repositories\Backend\Country;
 
 use App\Models\Country\Countries;
 use App\Models\Country\CountriesTranslations;
+use App\Models\Country\CountriesAirports;
+use App\Models\Country\CountriesCurrencies;
+use App\Models\Country\CountriesCapitals;
 use Illuminate\Support\Facades\DB;
 use App\Exceptions\GeneralException;
 use App\Repositories\BaseRepository;
@@ -111,6 +114,34 @@ class CountryRepository extends BaseRepository
             $check = 1;
             
             if ($model->save()) {
+
+                if(!empty($extra['places'])){
+                    foreach ($extra['places'] as $key => $value) {
+                        $CountriesAirports = new CountriesAirports;
+                        $CountriesAirports->countries_id = $model->id;
+                        $CountriesAirports->places_id = $value;
+                        $CountriesAirports->save();
+                    }
+                }
+
+                if(!empty($extra['cities'])){
+                    foreach ($extra['cities'] as $key => $value) {
+                        $CountriesCapitals = new CountriesCapitals;
+                        $CountriesCapitals->countries_id = $model->id;
+                        $CountriesCapitals->cities_id = $value;
+                        $CountriesCapitals->save();
+                    }
+                }
+
+                if(!empty($extra['currencies'])){
+                    foreach ($extra['currencies'] as $key => $value) {
+                        $CountriesCurrencies = new CountriesCurrencies;
+                        $CountriesCurrencies->countries_id = $model->id;
+                        $CountriesCurrencies->currencies_id = $value;
+                        $CountriesCurrencies->save();
+                    }
+                }
+
                 foreach ($input as $key => $value) {
                     $trans = new CountriesTranslations;
                     $trans->countries_id = $model->id;
@@ -163,10 +194,59 @@ class CountryRepository extends BaseRepository
             }
         }
 
+        $prev_airports = CountriesAirports::where(['countries_id' => $id])->get();
+        if(!empty($prev_airports)){
+            foreach ($prev_airports as $key => $value) {
+                $value->delete();
+            }
+        }
+
+        $prev_currencies = CountriesCurrencies::where(['countries_id' => $id])->get();
+        if(!empty($prev_currencies)){
+            foreach ($prev_currencies as $key => $value) {
+                $value->delete();
+            }
+        }
+
+        $prev_capitals = CountriesCapitals::where(['countries_id' => $id])->get();
+        if(!empty($prev_capitals)){
+            foreach ($prev_capitals as $key => $value) {
+                $value->delete();
+            }
+        }
+
         DB::transaction(function () use ($model, $input, $extra) {
             $check = 1;
             
             if ($model->save()) {
+
+                if(!empty($extra['places'])){
+                    foreach ($extra['places'] as $key => $value) {
+                        $CountriesAirports = new CountriesAirports;
+                        $CountriesAirports->countries_id = $model->id;
+                        $CountriesAirports->places_id = $value;
+                        $CountriesAirports->save();
+                    }
+                }
+
+                if(!empty($extra['cities'])){
+                    foreach ($extra['cities'] as $key => $value) {
+                        $CountriesCapitals = new CountriesCapitals;
+                        $CountriesCapitals->countries_id = $model->id;
+                        $CountriesCapitals->cities_id = $value;
+                        $CountriesCapitals->save();
+                    }
+                }
+
+                if(!empty($extra['currencies'])){
+                    foreach ($extra['currencies'] as $key => $value) {
+                        $CountriesCurrencies = new CountriesCurrencies;
+                        $CountriesCurrencies->countries_id = $model->id;
+                        $CountriesCurrencies->currencies_id = $value;
+                        $CountriesCurrencies->save();
+                    }
+                }
+
                 foreach ($input as $key => $value) {
                     $trans = new CountriesTranslations;
                     $trans->countries_id = $model->id;

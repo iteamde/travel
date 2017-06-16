@@ -6,6 +6,9 @@ use App\Models\Regions\Regions;
 use App\Models\Regions\RegionsTranslation;
 use App\Models\SafetyDegree\SafetyDegreeTrans;
 use App\Models\Country\CountriesTranslations;
+use App\Models\Country\CountriesAirports;
+use App\Models\Country\CountriesCurrencies;
+use App\Models\Country\CountriesCapitals;
 use App\Models\City\CitiesTranslations;
 use App\Models\City\CitiesAirports;
 use App\Models\City\CitiesCurrencies;
@@ -40,6 +43,21 @@ return [
      * Countries table used to save countries to the database.
      */
     'country_trans' =>  CountriesTranslations::class,
+
+    /*
+     * CountriesAirports table used to save CountriesAirports to the database.
+     */
+    'country_airports_trans' =>  CountriesAirports::class,
+
+    /*
+     * CountriesAirports table used to save CountriesAirports to the database.
+     */
+    'country_currencies_trans' =>  CountriesCurrencies::class,
+
+    /*
+     * CountriesCapitals table used to save CountriesCapitals to the database.
+     */
+    'country_capitals_trans' =>  CountriesCapitals::class,
 
     /*
      * Cities table used to save cities to the database.

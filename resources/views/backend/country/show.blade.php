@@ -108,6 +108,54 @@
                         </td>
                     </tr>
 
+                    <!-- Start: Airports -->
+                    <tr>
+                         <th> <h3 style="color:#0A8F27">Airports</h3></th><td></td>   
+                    </tr>
+                    @if(empty($airports))
+                      <tr>
+                          <th> <p>No Airports Added.</p> </th><td></td>
+                      </tr>
+                    @endif
+                    @foreach($airports as $key => $airport)
+                      <tr>
+                          <th> <p><?=$airport?></p> </th><td></td>
+                      </tr>
+                    @endforeach
+                    <!-- End: Airports -->
+
+                    <!-- Start: Currencies -->
+                    <tr>
+                         <th> <h3 style="color:#0A8F27">Currencies</h3></th><td></td>   
+                    </tr>
+                    @if(empty($currencies))
+                      <tr>
+                          <th> <p>No Currencies Added.</p> </th><td></td>
+                      </tr>
+                    @endif
+                    @foreach($currencies as $key => $currency)
+                      <tr>
+                          <th> <p><?=$currency?></p> </th><td></td>
+                      </tr>
+                    @endforeach
+                    <!-- End: Currencies -->
+
+                    <!-- Start: Capitals -->
+                    <tr>
+                         <th> <h3 style="color:#0A8F27">Capital Cities</h3></th><td></td>   
+                    </tr>
+                    @if(empty($capitals))
+                      <tr>
+                          <th> <p>No Capitals Added.</p> </th><td></td>
+                      </tr>
+                    @endif
+                    @foreach($capitals as $key => $capital)
+                      <tr>
+                          <th> <p><?=$capital?></p> </th><td></td>
+                      </tr>
+                    @endforeach
+                    <!-- End: Capitals -->
+
                     <tr>
                          <th> <h3 style="color:#0A8F27">Location</h3></th><td></td>   
                     </tr>

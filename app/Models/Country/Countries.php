@@ -33,6 +33,18 @@ class Countries extends Model
         self::deleteModels($this->trans);
     }
 
+    public function deleteAirports(){
+        self::deleteModels($this->airports);
+    }
+
+    public function deleteCurrencies(){
+        self::deleteModels($this->currencies);
+    }
+
+    public function deleteCapitals(){
+        self::deleteModels($this->capitals);
+    }
+
     public function deleteModels($models){
         if(!empty($models)){
             foreach ($models as $key => $value) {

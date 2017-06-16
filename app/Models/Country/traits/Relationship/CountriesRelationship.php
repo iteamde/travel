@@ -70,4 +70,37 @@ trait CountriesRelationship
     {
         return $this->hasMany(Session::class);
     }
+
+    /**
+     * Many-to-Many relations with CountriesAirports.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function airports()
+    {
+        // return $this->belongsToMany(config('access.regions'), config('access.regions_trans'), 'id', 'regions_id');
+        return $this->hasMany(config('locations.country_airports_trans'), 'countries_id');
+    }
+
+    /**
+     * Many-to-Many relations with CountriesCurrencies.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function currencies()
+    {
+        // return $this->belongsToMany(config('access.regions'), config('access.regions_trans'), 'id', 'regions_id');
+        return $this->hasMany(config('locations.country_currencies_trans'), 'countries_id');
+    }
+
+    /**
+     * Many-to-Many relations with CountriesCapitals.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function capitals()
+    {
+        // return $this->belongsToMany(config('access.regions'), config('access.regions_trans'), 'id', 'regions_id');
+        return $this->hasMany(config('locations.country_capitals_trans'), 'countries_id');
+    }
 }

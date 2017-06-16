@@ -11,6 +11,9 @@ use App\Http\Requests\Backend\Country\StoreCountryRequest;
 use App\Repositories\Backend\Country\CountryRepository;
 use App\Models\Regions\Regions;
 use App\Models\SafetyDegree\SafetyDegree;
+use App\Models\Place\Place;
+use App\Models\Currencies\Currencies;
+use App\Models\City\Cities;
 
 class CountryController extends Controller
 {
@@ -58,10 +61,44 @@ class CountryController extends Controller
                 $degrees_arr[$value->id] = $value->transsingle->title;
             }
         }
+        
+        /* Get All Places For Airports*/
+        $places = Place::where(['active' => 1])->get();
+        $places_arr = [];
+        
+        foreach ($places as $key => $value) {
+            if(isset($value->transsingle) && !empty($value->transsingle)){
+                $places_arr[$value->id] = $value->transsingle->title;
+            }
+        }
        
+        /* Get All Currencies */
+        $currencies = Currencies::where(['active' => 1])->get();
+        $currencies_arr = [];
+        
+        foreach ($currencies as $key => $value) {
+            if(isset($value->transsingle) && !empty($value->transsingle)){
+                $currencies_arr[$value->id] = $value->transsingle->title;
+            }
+        }
+
+        /* Get All Cities */
+        $cities = Cities::where(['active' => 1])->get();
+        $cities_arr = [];
+        
+        foreach ($cities as $key => $value) {
+            if(isset($value->transsingle) && !empty($value->transsingle)){
+                $cities_arr[$value->id] = $value->transsingle->title;
+            }
+        }
+
+
         return view('backend.country.create',[
             'regions' => $regions_arr,
             'degrees' => $degrees_arr,
+            'places'  => $places_arr,
+            'currencies' => $currencies_arr,
+            'cities' => $cities_arr,
         ]);
     }
 
@@ -104,6 +141,9 @@ class CountryController extends Controller
             'code' => $request->input('code'),
             'lat' => $location[0],
             'lng' => $location[1],
+            'places' => $request->input('places_id'),
+            'currencies' => $request->input('currencies_id'),
+            'cities' => $request->input('cities_id'),
             'safety_degree_id' => $request->input('safety_degree_id')
         ];
 
@@ -122,6 +162,9 @@ class CountryController extends Controller
     {
         $item = Countries::findOrFail($id);
         $item->deleteTrans();
+        $item->deleteAirports();
+        $item->deleteCurrencies();
+        $item->deleteCapitals(); 
         $item->delete();
 
         return redirect()->route('admin.location.country.index')->withFlashSuccess('Country Deleted Successfully');
@@ -200,13 +243,93 @@ class CountryController extends Controller
             }
         }
 
+        $selected_places = $country->airports;
+        $selected_places_arr = [];
+
+        if(!empty($selected_places)){
+            foreach ($selected_places as $key => $value) {
+                $place = $value->place;
+
+                if(!empty($place)){
+                    array_push($selected_places_arr,$place->id);
+                }
+            }
+        }
+
+        $data['selected_places'] = $selected_places_arr;
+
+        /* Get Active Places */
+        $places = Place::where(['active' => 1])->get();
+        $places_arr = [];
+        
+        foreach ($places as $key => $value) {
+            if(isset($value->transsingle) && !empty($value->transsingle)){  
+                $places_arr[$value->id] = $value->transsingle->title;
+            }
+        }
+
+        $selected_currencies = $country->currencies;
+        $selected_currencies_arr = [];
+
+        if(!empty($selected_currencies)){
+            foreach ($selected_currencies as $key => $value) {
+                $currency = $value->currency;
+
+                if(!empty($currency)){
+                    array_push($selected_currencies_arr,$currency->id);
+                }
+            }
+        }
+
+        $data['selected_currencies'] = $selected_currencies_arr;
+
+        /* Get All Currencies */
+        $currencies = Currencies::where(['active' => 1])->get();
+        $currencies_arr = [];
+        
+        foreach ($currencies as $key => $value) {
+            if(isset($value->transsingle) && !empty($value->transsingle)){
+                $currencies_arr[$value->id] = $value->transsingle->title;
+            }
+        }
+
+        /* Get Selected Cities */
+
+        $selected_capitals = $country->capitals;
+        $selected_capitals_arr = [];
+
+        if(!empty($selected_capitals)){
+            foreach ($selected_capitals as $key => $value) {
+                $capital = $value->city;
+
+                if(!empty($capital)){
+                    array_push($selected_capitals_arr,$capital->id);
+                }
+            }
+        }
+
+        $data['selected_cities'] = $selected_capitals_arr;
+
+        /* Get All Cities */
+        $cities = Cities::where(['active' => 1])->get();
+        $cities_arr = [];
+        
+        foreach ($cities as $key => $value) {
+            if(isset($value->transsingle) && !empty($value->transsingle)){
+                $cities_arr[$value->id] = $value->transsingle->title;
+            }
+        }
+
         return view('backend.country.edit')
             ->withLanguages($this->languages)
             ->withCountry($country)
             ->withCountryid($id)
             ->withData($data)
             ->withRegions($regions_arr)
-            ->withDegrees($degrees_arr);
+            ->withDegrees($degrees_arr)
+            ->withPlaces($places_arr)
+            ->withCurrencies($currencies_arr)
+            ->withCities($cities_arr);
     }
 
     /**
@@ -253,6 +376,9 @@ class CountryController extends Controller
             'code' => $request->input('code'),
             'lat' => $location[0],
             'lng' => $location[1],
+            'places' => $request->input('places_id'),
+            'currencies' => $request->input('currencies_id'),
+            'cities' => $request->input('cities_id'),
             'safety_degree_id' => $request->input('safety_degree_id')
         ];
 
@@ -283,11 +409,65 @@ class CountryController extends Controller
         $safety_degree = $country->degree;
         $safety_degree = $safety_degree->transsingle;
        
+        $airports = $country->airports;
+        $airports_arr = [];
+
+        if(!empty($airports)){
+            foreach ($airports as $key => $value) {
+                $place = $value->place;
+
+                if(!empty($place)){
+                    $place = $place->transsingle;
+
+                    if(!empty($place)){
+                        array_push($airports_arr,$place->title);
+                    }
+                }
+            }
+        }
+
+        $currencies = $country->currencies;
+        $currencies_arr = [];
+
+        if(!empty($currencies)){
+            foreach ($currencies as $key => $value) {
+                $currency = $value->currency;
+
+                if(!empty($currency)){
+                    $currency = $currency->transsingle;
+
+                    if(!empty($currency)){
+                        array_push($currencies_arr,$currency->title);
+                    }
+                }
+            }
+        }
+
+        $capitals = $country->capitals;
+        $capitals_arr = [];
+
+        if(!empty($capitals)){
+            foreach ($capitals as $key => $value) {
+                $capital = $value->city;
+
+                if(!empty($capital)){
+                    $capital = $capital->transsingle;
+
+                    if(!empty($capital)){
+                        array_push($capitals_arr,$capital->title);
+                    }
+                }
+            }
+        }
+
         return view('backend.country.show')
             ->withCountry($country)
             ->withCountrytrans($countryTrans)
             ->withRegion($region)
-            ->withDegree($safety_degree);
+            ->withDegree($safety_degree)
+            ->withAirports($airports_arr)
+            ->withCurrencies($currencies_arr)
+            ->withCapitals($capitals_arr);
     }
 
     /**

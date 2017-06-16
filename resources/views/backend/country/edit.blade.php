@@ -245,6 +245,37 @@ use App\Models\Access\language\Languages;
                             {{ Form::text('lat_lng_show', $data['lat_lng'], ['class' => 'form-control disabled', 'id' => 'lat-lng-input_show', 'required' => 'required', 'placeholder' => 'Lat,Lng' , 'disabled' => 'disabled']) }}
                         </div>
                     </div>
+
+                    <!-- Airports: Start -->
+                    <div class="form-group">
+                        {{ Form::label('title', 'Airports', ['class' => 'col-lg-2 control-label']) }}
+
+                        <div class="col-lg-10">
+                            {{ Form::select('places_id[]', $places , $data['selected_places'],['class' => 'select2Class form-control' , 'multiple' => 'multiple']) }}
+                        </div><!--col-lg-10-->
+                    </div><!--form control-->
+                    <!-- Airports: End -->
+
+                    <!-- Currencies: Start -->
+                    <div class="form-group">
+                        {{ Form::label('title', 'Currencies', ['class' => 'col-lg-2 control-label']) }}
+
+                        <div class="col-lg-10">
+                            {{ Form::select('currencies_id[]', $currencies , $data['selected_currencies'] ,['class' => 'select2Class form-control' , 'multiple' => 'multiple']) }}
+                        </div><!--col-lg-10-->
+                    </div><!--form control-->
+                    <!-- Currencies: End -->
+
+                    <!-- Capitals: Start -->
+                    <div class="form-group">
+                        {{ Form::label('title', 'Capitals', ['class' => 'col-lg-2 control-label']) }}
+
+                        <div class="col-lg-10">
+                            {{ Form::select('cities_id[]', $cities , $data['selected_cities'],['class' => 'select2Class form-control' , 'multiple' => 'multiple']) }}
+                        </div><!--col-lg-10-->
+                    </div><!--form control-->
+                    <!-- Capitals: End -->
+                    
                 @endif
                 <!-- Languages Tabs: End -->
             </div>
