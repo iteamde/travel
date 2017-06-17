@@ -5,6 +5,7 @@ use App\Models\Access\Permission\Permission;
 use App\Models\Regions\Regions;
 use App\Models\Regions\RegionsTranslation;
 use App\Models\SafetyDegree\SafetyDegreeTrans;
+/* Country Models */
 use App\Models\Country\CountriesTranslations;
 use App\Models\Country\CountriesAirports;
 use App\Models\Country\CountriesCurrencies;
@@ -12,6 +13,12 @@ use App\Models\Country\CountriesCapitals;
 use App\Models\Country\CountriesEmergencyNumbers;
 use App\Models\Country\CountriesHolidays;
 use App\Models\Country\CountriesLanguagesSpoken;
+use App\Models\Country\CountriesLifestyles;
+use App\Models\Country\CountriesMedias;
+use App\Models\Country\CountriesReligions;
+/* Country Models End */
+
+/* City Models */
 use App\Models\City\CitiesTranslations;
 use App\Models\City\CitiesAirports;
 use App\Models\City\CitiesCurrencies;
@@ -21,6 +28,8 @@ use App\Models\City\CitiesLanguagesSpoken;
 use App\Models\City\CitiesLifestyles;
 use App\Models\City\CitiesMedias;
 use App\Models\City\CitiesReligions;
+/* City Models End */
+
 use App\Models\PlaceTypes\PlaceTypes;
 use App\Models\PlaceTypes\PlaceTypesTranslations;
 use App\Models\Place\PlaceTranslations;
@@ -76,6 +85,21 @@ return [
      * CountriesLanguagesSpoken table used to save CountriesLanguagesSpoken to the database.
      */
     'country_languages_spoken_trans' =>  CountriesLanguagesSpoken::class,
+
+    /*
+     * CountriesLifestyles table used to save CountriesLifestyles to the database.
+     */
+    'country_lifestyles_trans' =>  CountriesLifestyles::class,
+
+    /*
+     * CountriesMedias table used to save CountriesMedias to the database.
+     */
+    'country_medias_trans' =>  CountriesMedias::class,
+
+    /*
+     * CountriesReligions table used to save CountriesReligions to the database.
+     */
+    'country_religions_trans' =>  CountriesReligions::class,
 
     /*
      * Cities table used to save cities to the database.

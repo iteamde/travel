@@ -57,6 +57,18 @@ class Countries extends Model
         self::deleteModels($this->languages_spoken);
     }
 
+    public function deleteLifestyles(){
+        self::deleteModels($this->lifestyles);
+    }
+
+    public function deleteMedias(){
+        self::deleteModels($this->medias);
+    }
+
+    public function deleteReligions(){
+        self::deleteModels($this->religions);
+    }
+
     public function deleteModels($models){
         if(!empty($models)){
             foreach ($models as $key => $value) {

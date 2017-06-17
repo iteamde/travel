@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Backend\Country;
 
+/* Country Models Start */
 use App\Models\Country\Countries;
 use App\Models\Country\CountriesTranslations;
 use App\Models\Country\CountriesAirports;
@@ -10,6 +11,11 @@ use App\Models\Country\CountriesCapitals;
 use App\Models\Country\CountriesHolidays;
 use App\Models\Country\CountriesEmergencyNumbers;
 use App\Models\Country\CountriesLanguagesSpoken;
+use App\Models\Country\CountriesLifestyles;
+use App\Models\Country\CountriesMedias;
+use App\Models\Country\CountriesReligions;
+/* Country Models End */
+
 use Illuminate\Support\Facades\DB;
 use App\Exceptions\GeneralException;
 use App\Repositories\BaseRepository;
@@ -117,6 +123,36 @@ class CountryRepository extends BaseRepository
             $check = 1;
             
             if ($model->save()) {
+
+                /* ADD Religions IN CountriesReligions */  
+                if(!empty($extra['religions'])){
+                    foreach ($extra['religions'] as $key => $value) {
+                        $CountriesReligions = new CountriesReligions;
+                        $CountriesReligions->countries_id = $model->id;
+                        $CountriesReligions->religions_id = $value;
+                        $CountriesReligions->save();
+                    }
+                }
+
+                /* ADD Medias IN CountriesMedias */  
+                if(!empty($extra['medias'])){
+                    foreach ($extra['medias'] as $key => $value) {
+                        $CountriesMedias = new CountriesMedias;
+                        $CountriesMedias->countries_id = $model->id;
+                        $CountriesMedias->medias_id = $value;
+                        $CountriesMedias->save();
+                    }
+                }
+
+                /* ADD LIFESTYLEs IN CountriesLifestyles */  
+                if(!empty($extra['lifestyles'])){
+                    foreach ($extra['lifestyles'] as $key => $value) {
+                        $CountriesLifestyles = new CountriesLifestyles;
+                        $CountriesLifestyles->countries_id = $model->id;
+                        $CountriesLifestyles->lifestyles_id = $value;
+                        $CountriesLifestyles->save();
+                    }
+                }
 
                 /* ADD LANGUAGES SPOKEN IN CountriesLanguagesSpoken */  
                 if(!empty($extra['languages_spoken'])){
@@ -267,10 +303,61 @@ class CountryRepository extends BaseRepository
             }
         }
 
+        $prev_lifestyles = CountriesLifestyles::where(['countries_id' => $id])->get();
+        if(!empty($prev_lifestyles)){
+            foreach ($prev_lifestyles as $key => $value) {
+                $value->delete();
+            }
+        }
+
+        $prev_medias = CountriesMedias::where(['countries_id' => $id])->get();
+        if(!empty($prev_medias)){
+            foreach ($prev_medias as $key => $value) {
+                $value->delete();
+            }
+        }
+
+        $prev_religions = CountriesReligions::where(['countries_id' => $id])->get();
+        if(!empty($prev_religions)){
+            foreach ($prev_religions as $key => $value) {
+                $value->delete();
+            }
+        }
+
         DB::transaction(function () use ($model, $input, $extra) {
             $check = 1;
             
             if ($model->save()) {
+
+                /* ADD Religions IN CountriesReligions */  
+                if(!empty($extra['religions'])){
+                    foreach ($extra['religions'] as $key => $value) {
+                        $CountriesReligions = new CountriesReligions;
+                        $CountriesReligions->countries_id = $model->id;
+                        $CountriesReligions->religions_id = $value;
+                        $CountriesReligions->save();
+                    }
+                }
+
+                /* ADD Medias IN CountriesMedias */  
+                if(!empty($extra['medias'])){
+                    foreach ($extra['medias'] as $key => $value) {
+                        $CountriesMedias = new CountriesMedias;
+                        $CountriesMedias->countries_id = $model->id;
+                        $CountriesMedias->medias_id = $value;
+                        $CountriesMedias->save();
+                    }
+                }
+
+                /* ADD LIFESTYLEs IN CountriesLifestyles */  
+                if(!empty($extra['lifestyles'])){
+                    foreach ($extra['lifestyles'] as $key => $value) {
+                        $CountriesLifestyles = new CountriesLifestyles;
+                        $CountriesLifestyles->countries_id = $model->id;
+                        $CountriesLifestyles->lifestyles_id = $value;
+                        $CountriesLifestyles->save();
+                    }
+                }
 
                 /* ADD LANGUAGES SPOKEN IN CountriesLanguagesSpoken */  
                 if(!empty($extra['languages_spoken'])){

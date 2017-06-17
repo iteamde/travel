@@ -202,7 +202,55 @@
                           <th> <p><?=$language_spoken?></p> </th><td></td>
                       </tr>
                     @endforeach
-                    <!-- End: Holidays -->
+                    <!-- End: Languages Spoken -->
+
+                    <!-- Start: Life Styles -->
+                    <tr>
+                         <th> <h3 style="color:#0A8F27">Life Styles</h3></th><td></td>   
+                    </tr>
+                    @if(empty($lifestyles))
+                      <tr>
+                          <th> <p>No Life Styles Added.</p> </th><td></td>
+                      </tr>
+                    @endif
+                    @foreach($lifestyles as $key => $lifestyle)
+                      <tr>
+                          <th> <p><?=$lifestyle?></p> </th><td></td>
+                      </tr>
+                    @endforeach
+                    <!-- End: Life Styles -->
+
+                    <!-- Start: Religions -->
+                    <tr>
+                         <th> <h3 style="color:#0A8F27">Religions</h3></th><td></td>   
+                    </tr>
+                    @if(empty($religions))
+                      <tr>
+                          <th> <p>No Religions Added.</p> </th><td></td>
+                      </tr>
+                    @endif
+                    @foreach($religions as $key => $religion)
+                      <tr>
+                          <th> <p><?=$religion?></p> </th><td></td>
+                      </tr>
+                    @endforeach
+                    <!-- End: Religions -->
+
+                    <!-- Start: Medias -->
+                    <tr>
+                         <th> <h3 style="color:#0A8F27">Medias</h3></th><td></td>   
+                    </tr>
+                    @if(empty($medias))
+                      <tr>
+                          <th> <p>No Medias Added.</p> </th><td></td>
+                      </tr>
+                    @endif
+                    @foreach($medias as $key => $media)
+                      <tr>
+                          <th> <p><?=$media?></p> </th><td></td>
+                      </tr>
+                    @endforeach
+                    <!-- End: Medias -->
 
                     <tr>
                          <th> <h3 style="color:#0A8F27">Location</h3></th><td></td>   

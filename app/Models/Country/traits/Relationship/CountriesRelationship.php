@@ -136,4 +136,37 @@ trait CountriesRelationship
         // return $this->belongsToMany(config('access.regions'), config('access.regions_trans'), 'id', 'regions_id');
         return $this->hasMany(config('locations.country_languages_spoken_trans'), 'countries_id');
     }
+
+    /**
+     * Many-to-Many relations with CountriesLifestyles.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function lifestyles()
+    {
+        // return $this->belongsToMany(config('access.regions'), config('access.regions_trans'), 'id', 'regions_id');
+        return $this->hasMany(config('locations.country_lifestyles_trans'), 'countries_id');
+    }
+
+    /**
+     * Many-to-Many relations with CountriesMedias.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function medias()
+    {
+        // return $this->belongsToMany(config('access.regions'), config('access.regions_trans'), 'id', 'regions_id');
+        return $this->hasMany(config('locations.country_medias_trans'), 'countries_id');
+    }
+
+    /**
+     * Many-to-Many relations with CountriesReligions.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function religions()
+    {
+        // return $this->belongsToMany(config('access.regions'), config('access.regions_trans'), 'id', 'regions_id');
+        return $this->hasMany(config('locations.country_religions_trans'), 'countries_id');
+    }
 }

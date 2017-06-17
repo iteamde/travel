@@ -17,6 +17,9 @@ use App\Models\City\Cities;
 use App\Models\EmergencyNumbers\EmergencyNumbers;
 use App\Models\Holidays\Holidays;
 use App\Models\LanguagesSpoken\LanguagesSpoken;
+use App\Models\Lifestyle\Lifestyle;
+use App\Models\ActivityMedia\Media;
+use App\Models\Religion\Religion;
 
 class CountryController extends Controller
 {
@@ -125,6 +128,35 @@ class CountryController extends Controller
             }
         }
 
+        /* Get All Lifestyles */
+        $lifestyles = Lifestyle::get();
+        $lifestyles_arr = [];
+        
+        foreach ($lifestyles as $key => $value) {
+            if(isset($value->transsingle) && !empty($value->transsingle)){
+                $lifestyles_arr[$value->id] = $value->transsingle->title;
+            }
+        }
+
+        /* Get All Medias */
+        $medias = Media::get();
+        $medias_arr = [];
+        
+        foreach ($medias as $key => $value) {
+            if(isset($value->transsingle) && !empty($value->transsingle)){
+                $medias_arr[$value->id] = $value->transsingle->title;
+            }
+        }
+
+        /* Get All Religions */
+        $religions = Religion::where([ 'active' => 1 ])->get();
+        $religions_arr = [];
+        
+        foreach ($religions as $key => $value) {
+            if(isset($value->transsingle) && !empty($value->transsingle)){
+                $religions_arr[$value->id] = $value->transsingle->title;
+            }
+        }
 
         return view('backend.country.create',[
             'regions' => $regions_arr,
@@ -134,7 +166,10 @@ class CountryController extends Controller
             'cities' => $cities_arr,
             'emergency_numbers' => $emergency_numbers_arr,
             'holidays' => $holidays_arr,
-            'languages_spoken' => $languages_spoken_arr
+            'languages_spoken' => $languages_spoken_arr,
+            'lifestyles' => $lifestyles_arr,
+            'medias' => $medias_arr,
+            'religions' => $religions_arr
         ]);
     }
 
@@ -183,6 +218,9 @@ class CountryController extends Controller
             'emergency_numbers' => $request->input('emergency_numbers_id'),
             'holidays' => $request->input('holidays_id'),
             'languages_spoken' => $request->input('languages_spoken_id'),
+            'lifestyles' => $request->input('lifestyles_id'),
+            'medias' => $request->input('medias_id'),
+            'religions' => $request->input('religions_id'),
             'safety_degree_id' => $request->input('safety_degree_id')
         ];
 
@@ -207,6 +245,9 @@ class CountryController extends Controller
         $item->deleteEmergencyNumbers();
         $item->deleteHolidays();
         $item->deleteLanguagesSpoken(); 
+        $item->deleteLifestyles();
+        $item->deleteReligions(); 
+        $item->deleteMedias();
         $item->delete();
 
         return redirect()->route('admin.location.country.index')->withFlashSuccess('Country Deleted Successfully');
@@ -439,6 +480,85 @@ class CountryController extends Controller
             }
         }
 
+        /* Get Selected Lifestyles */
+        $selected_lifestyles = $country->lifestyles;
+        $selected_lifestyles_arr = [];
+
+        if(!empty($selected_lifestyles)){
+            foreach ($selected_lifestyles as $key => $value) {
+                $lifestyle = $value->lifestyle;
+
+                if(!empty($lifestyle)){
+                    array_push($selected_lifestyles_arr,$lifestyle->id);
+                }
+            }
+        }
+
+        $data['selected_lifestyles'] = $selected_lifestyles_arr;
+
+        /* Get All Lifestyles */
+        $lifestyles = Lifestyle::get();
+        $lifestyles_arr = [];
+        
+        foreach ($lifestyles as $key => $value) {
+            if(isset($value->transsingle) && !empty($value->transsingle)){
+                $lifestyles_arr[$value->id] = $value->transsingle->title;
+            }
+        }
+
+        /* Get Selected Medias */
+        $selected_medias = $country->medias;
+        $selected_medias_arr = [];
+
+        if(!empty($selected_medias)){
+            foreach ($selected_medias as $key => $value) {
+                $media = $value->media;
+
+                if(!empty($media)){
+                    array_push($selected_medias_arr,$media->id);
+                }
+            }
+        }
+
+        $data['selected_medias'] = $selected_medias_arr;
+
+        /* Get All Medias */
+        $medias = Media::get();
+        $medias_arr = [];
+        
+        foreach ($medias as $key => $value) {
+            if(isset($value->transsingle) && !empty($value->transsingle)){
+                $medias_arr[$value->id] = $value->transsingle->title;
+            }
+        }
+
+        /* Get Selected Religions */
+        $selected_religions = $country->religions;
+        $selected_religions_arr = [];
+
+        if(!empty($selected_religions)){
+            foreach ($selected_religions as $key => $value) {
+                $religion = $value->religion;
+
+                if(!empty($religion)){
+                    array_push($selected_religions_arr,$religion->id);
+                }
+            }
+        }
+
+        $data['selected_religions'] = $selected_religions_arr;
+
+        /* Get All Religions */
+        $religions = Religion::where([ 'active' => 1 ])->get();
+        $religions_arr = [];
+        
+        foreach ($religions as $key => $value) {
+            if(isset($value->transsingle) && !empty($value->transsingle)){
+                $religions_arr[$value->id] = $value->transsingle->title;
+            }
+        }
+
+
         return view('backend.country.edit')
             ->withLanguages($this->languages)
             ->withCountry($country)
@@ -451,7 +571,11 @@ class CountryController extends Controller
             ->withCities($cities_arr)
             ->withEmergency_numbers($emergency_numbers_arr)
             ->withHolidays($holidays_arr)
-            ->withLanguages_spoken($languages_spoken_arr);
+            ->withLanguages_spoken($languages_spoken_arr)
+            ->withLifestyles($lifestyles_arr)
+            ->withMedias($medias_arr)
+            ->withReligions($religions_arr);
+            
     }
 
     /**
@@ -504,6 +628,9 @@ class CountryController extends Controller
             'holidays' => $request->input('holidays_id'),
             'emergency_numbers' => $request->input('emergency_numbers_id'),
             'languages_spoken' => $request->input('languages_spoken_id'),
+            'lifestyles' => $request->input('lifestyles_id'),
+            'medias'    => $request->input('medias_id'),
+            'religions' => $request->input('religions_id'),
             'safety_degree_id' => $request->input('safety_degree_id')
         ];
 
@@ -637,6 +764,60 @@ class CountryController extends Controller
             }
         }
 
+        /* Get Selected CountriesLifestyles */
+        $lifestyles = $country->lifestyles;
+        $lifestyles_arr = [];
+
+        if(!empty($lifestyles)){
+            foreach ($lifestyles as $key => $value) {
+                $lifestyle = $value->lifestyle;
+
+                if(!empty($lifestyle)){
+                    $lifestyle = $lifestyle->transsingle;
+
+                    if(!empty($lifestyle)){
+                        array_push($lifestyles_arr,$lifestyle->title);
+                    }
+                }
+            }
+        }
+
+        /* Get Selected medias */
+        $medias = $country->medias;
+        $medias_arr = [];
+
+        if(!empty($medias)){
+            foreach ($medias as $key => $value) {
+                $media = $value->media;
+
+                if(!empty($media)){
+                    $media = $media->transsingle;
+
+                    if(!empty($media)){
+                        array_push($medias_arr,$media->title);
+                    }
+                }
+            }
+        }
+
+        /* Get Selected Religions */
+        $religions = $country->religions;
+        $religions_arr = [];
+
+        if(!empty($religions)){
+            foreach ($religions as $key => $value) {
+                $religion = $value->religion;
+
+                if(!empty($religion)){
+                    $religion = $religion->transsingle;
+
+                    if(!empty($religion)){
+                        array_push($religions_arr,$religion->title);
+                    }
+                }
+            }
+        }
+
 
         return view('backend.country.show')
             ->withCountry($country)
@@ -648,7 +829,10 @@ class CountryController extends Controller
             ->withCapitals($capitals_arr)
             ->withEmergency_numbers($emergency_numbers_arr)
             ->withHolidays($holidays_arr)
-            ->withLanguages_spoken($languages_spoken_arr);
+            ->withLanguages_spoken($languages_spoken_arr)
+            ->withLifestyles($lifestyles_arr)
+            ->withMedias($medias_arr)
+            ->withReligions($religions_arr);
     }
 
     /**
