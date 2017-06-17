@@ -16,6 +16,7 @@ use App\Models\Currencies\Currencies;
 use App\Models\City\Cities;
 use App\Models\EmergencyNumbers\EmergencyNumbers;
 use App\Models\Holidays\Holidays;
+use App\Models\LanguagesSpoken\LanguagesSpoken;
 
 class CountryController extends Controller
 {
@@ -114,6 +115,16 @@ class CountryController extends Controller
             }
         }
 
+        /* Get All LanguagesSpoken */
+        $languages_spoken = LanguagesSpoken::where(['active' => 1])->get();
+        $languages_spoken_arr = [];
+        
+        foreach ($languages_spoken as $key => $value) {
+            if(isset($value->transsingle) && !empty($value->transsingle)){
+                $languages_spoken_arr[$value->id] = $value->transsingle->title;
+            }
+        }
+
 
         return view('backend.country.create',[
             'regions' => $regions_arr,
@@ -123,6 +134,7 @@ class CountryController extends Controller
             'cities' => $cities_arr,
             'emergency_numbers' => $emergency_numbers_arr,
             'holidays' => $holidays_arr,
+            'languages_spoken' => $languages_spoken_arr
         ]);
     }
 
@@ -170,6 +182,7 @@ class CountryController extends Controller
             'cities' => $request->input('cities_id'),
             'emergency_numbers' => $request->input('emergency_numbers_id'),
             'holidays' => $request->input('holidays_id'),
+            'languages_spoken' => $request->input('languages_spoken_id'),
             'safety_degree_id' => $request->input('safety_degree_id')
         ];
 
@@ -192,7 +205,8 @@ class CountryController extends Controller
         $item->deleteCurrencies();
         $item->deleteCapitals();
         $item->deleteEmergencyNumbers();
-        $item->deleteHolidays(); 
+        $item->deleteHolidays();
+        $item->deleteLanguagesSpoken(); 
         $item->delete();
 
         return redirect()->route('admin.location.country.index')->withFlashSuccess('Country Deleted Successfully');
@@ -399,7 +413,31 @@ class CountryController extends Controller
             }
         }
 
+        /* Get Selected Languages Spoken */
+        $selected_languages_spoken = $country->languages_spoken;
+        $selected_languages_spoken_arr = [];
 
+        if(!empty($selected_languages_spoken)){
+            foreach ($selected_languages_spoken as $key => $value) {
+                $language_spoken = $value->language_spoken;
+
+                if(!empty($language_spoken)){
+                    array_push($selected_languages_spoken_arr,$language_spoken->id);
+                }
+            }
+        }
+
+        $data['selected_languages_spoken'] = $selected_languages_spoken_arr;
+
+        /* Get All LanguagesSpoken */
+        $languages_spoken = LanguagesSpoken::where(['active' => 1])->get();
+        $languages_spoken_arr = [];
+
+        foreach ($languages_spoken as $key => $value) {
+            if(isset($value->transsingle) && !empty($value->transsingle)){
+                $languages_spoken_arr[$value->id] = $value->transsingle->title;
+            }
+        }
 
         return view('backend.country.edit')
             ->withLanguages($this->languages)
@@ -412,7 +450,8 @@ class CountryController extends Controller
             ->withCurrencies($currencies_arr)
             ->withCities($cities_arr)
             ->withEmergency_numbers($emergency_numbers_arr)
-            ->withHolidays($holidays_arr);
+            ->withHolidays($holidays_arr)
+            ->withLanguages_spoken($languages_spoken_arr);
     }
 
     /**
@@ -464,6 +503,7 @@ class CountryController extends Controller
             'cities' => $request->input('cities_id'),
             'holidays' => $request->input('holidays_id'),
             'emergency_numbers' => $request->input('emergency_numbers_id'),
+            'languages_spoken' => $request->input('languages_spoken_id'),
             'safety_degree_id' => $request->input('safety_degree_id')
         ];
 
@@ -579,6 +619,24 @@ class CountryController extends Controller
             }
         }
 
+        /* Get Selected LanguageSpoken */
+        $languages_spoken = $country->languages_spoken;
+        $languages_spoken_arr = [];
+
+        if(!empty($languages_spoken)){
+            foreach ($languages_spoken as $key => $value) {
+                $language_spoken = $value->language_spoken;
+
+                if(!empty($language_spoken)){
+                    $language_spoken = $language_spoken->transsingle;
+
+                    if(!empty($language_spoken)){
+                        array_push($languages_spoken_arr,$language_spoken->title);
+                    }
+                }
+            }
+        }
+
 
         return view('backend.country.show')
             ->withCountry($country)
@@ -589,7 +647,8 @@ class CountryController extends Controller
             ->withCurrencies($currencies_arr)
             ->withCapitals($capitals_arr)
             ->withEmergency_numbers($emergency_numbers_arr)
-            ->withHolidays($holidays_arr);
+            ->withHolidays($holidays_arr)
+            ->withLanguages_spoken($languages_spoken_arr);
     }
 
     /**

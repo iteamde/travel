@@ -9,6 +9,7 @@ use App\Models\Country\CountriesCurrencies;
 use App\Models\Country\CountriesCapitals;
 use App\Models\Country\CountriesHolidays;
 use App\Models\Country\CountriesEmergencyNumbers;
+use App\Models\Country\CountriesLanguagesSpoken;
 use Illuminate\Support\Facades\DB;
 use App\Exceptions\GeneralException;
 use App\Repositories\BaseRepository;
@@ -116,6 +117,16 @@ class CountryRepository extends BaseRepository
             $check = 1;
             
             if ($model->save()) {
+
+                /* ADD LANGUAGES SPOKEN IN CountriesLanguagesSpoken */  
+                if(!empty($extra['languages_spoken'])){
+                    foreach ($extra['languages_spoken'] as $key => $value) {
+                        $CountriesLanguagesSpoken = new CountriesLanguagesSpoken;
+                        $CountriesLanguagesSpoken->countries_id = $model->id;
+                        $CountriesLanguagesSpoken->languages_spoken_id = $value;
+                        $CountriesLanguagesSpoken->save();
+                    }
+                }
 
                 if(!empty($extra['holidays'])){
                     foreach ($extra['holidays'] as $key => $value) {
@@ -249,10 +260,27 @@ class CountryRepository extends BaseRepository
             }
         }
 
+        $prev_languages_spoken = CountriesLanguagesSpoken::where(['countries_id' => $id])->get();
+        if(!empty($prev_languages_spoken)){
+            foreach ($prev_languages_spoken as $key => $value) {
+                $value->delete();
+            }
+        }
+
         DB::transaction(function () use ($model, $input, $extra) {
             $check = 1;
             
             if ($model->save()) {
+
+                /* ADD LANGUAGES SPOKEN IN CountriesLanguagesSpoken */  
+                if(!empty($extra['languages_spoken'])){
+                    foreach ($extra['languages_spoken'] as $key => $value) {
+                        $CountriesLanguagesSpoken = new CountriesLanguagesSpoken;
+                        $CountriesLanguagesSpoken->countries_id = $model->id;
+                        $CountriesLanguagesSpoken->languages_spoken_id = $value;
+                        $CountriesLanguagesSpoken->save();
+                    }
+                }
 
                 if(!empty($extra['holidays'])){
                     foreach ($extra['holidays'] as $key => $value) {

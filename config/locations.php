@@ -11,6 +11,7 @@ use App\Models\Country\CountriesCurrencies;
 use App\Models\Country\CountriesCapitals;
 use App\Models\Country\CountriesEmergencyNumbers;
 use App\Models\Country\CountriesHolidays;
+use App\Models\Country\CountriesLanguagesSpoken;
 use App\Models\City\CitiesTranslations;
 use App\Models\City\CitiesAirports;
 use App\Models\City\CitiesCurrencies;
@@ -70,6 +71,11 @@ return [
      * CountriesHolidays table used to save CountriesHolidays to the database.
      */
     'country_holidays_trans' =>  CountriesHolidays::class,
+
+    /*
+     * CountriesLanguagesSpoken table used to save CountriesLanguagesSpoken to the database.
+     */
+    'country_languages_spoken_trans' =>  CountriesLanguagesSpoken::class,
 
     /*
      * Cities table used to save cities to the database.

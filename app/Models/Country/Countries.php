@@ -53,6 +53,10 @@ class Countries extends Model
         self::deleteModels($this->holidays);
     }
 
+    public function deleteLanguagesSpoken(){
+        self::deleteModels($this->languages_spoken);
+    }
+
     public function deleteModels($models){
         if(!empty($models)){
             foreach ($models as $key => $value) {

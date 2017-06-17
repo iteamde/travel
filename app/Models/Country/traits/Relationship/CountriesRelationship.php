@@ -125,4 +125,15 @@ trait CountriesRelationship
         // return $this->belongsToMany(config('access.regions'), config('access.regions_trans'), 'id', 'regions_id');
         return $this->hasMany(config('locations.country_holidays_trans'), 'countries_id');
     }
+
+    /**
+     * Many-to-Many relations with CountriesLanguagesSpoken.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function languages_spoken()
+    {
+        // return $this->belongsToMany(config('access.regions'), config('access.regions_trans'), 'id', 'regions_id');
+        return $this->hasMany(config('locations.country_languages_spoken_trans'), 'countries_id');
+    }
 }
