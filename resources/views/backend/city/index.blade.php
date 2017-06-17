@@ -12,8 +12,8 @@
         <small>{{ trans('labels.backend.access.users.active') }}</small>
     </h1> -->
     <h1>
-    	Cities Manager
-    	<small>Active Cities</small>
+    	{{ trans('labels.backend.cities.cities_manager') }}
+    	<small>{{ trans('labels.backend.cities.active_cities') }}</small>
     </h1>
 @endsection
 

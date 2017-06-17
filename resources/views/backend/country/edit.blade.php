@@ -285,6 +285,16 @@ use App\Models\Access\language\Languages;
                         </div><!--col-lg-10-->
                     </div><!--form control-->
                     <!-- EmergencyNumbers: End -->
+
+                    <!-- Holidays: Start -->
+                    <div class="form-group">
+                        {{ Form::label('title', 'Holidays', ['class' => 'col-lg-2 control-label']) }}
+
+                        <div class="col-lg-10">
+                            {{ Form::select('holidays_id[]', $holidays , $data['selected_holidays'] ,['class' => 'select2Class form-control' , 'multiple' => 'multiple']) }}
+                        </div><!--col-lg-10-->
+                    </div><!--form control-->
+                    <!-- Holidays: End -->
                     
                 @endif
                 <!-- Languages Tabs: End -->

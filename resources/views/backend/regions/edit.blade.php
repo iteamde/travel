@@ -66,7 +66,11 @@ use App\Models\Access\language\Languages;
                         {{ Form::label('title', trans('validation.attributes.backend.access.languages.active'), ['class' => 'col-lg-2 control-label']) }}
 
                         <div class="col-lg-10">
-                            {{ Form::checkbox('active', true) }}
+                            @if($data['active'] == 1)
+                            {{ Form::checkbox('active', 1 , true ) }}
+                            @else
+                            {{ Form::checkbox('active', 2 , false) }}
+                            @endif
                         </div><!--col-lg-10-->
                     </div><!--form control-->
                     <!-- Active: End -->

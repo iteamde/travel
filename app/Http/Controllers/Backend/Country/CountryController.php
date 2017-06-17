@@ -15,6 +15,7 @@ use App\Models\Place\Place;
 use App\Models\Currencies\Currencies;
 use App\Models\City\Cities;
 use App\Models\EmergencyNumbers\EmergencyNumbers;
+use App\Models\Holidays\Holidays;
 
 class CountryController extends Controller
 {
@@ -103,6 +104,16 @@ class CountryController extends Controller
             }
         }
 
+        /* Get All Holidays */
+        $holidays = Holidays::get();
+        $holidays_arr = [];
+        
+        foreach ($holidays as $key => $value) {
+            if(isset($value->transsingle) && !empty($value->transsingle)){
+                $holidays_arr[$value->id] = $value->transsingle->title;
+            }
+        }
+
 
         return view('backend.country.create',[
             'regions' => $regions_arr,
@@ -110,7 +121,8 @@ class CountryController extends Controller
             'places'  => $places_arr,
             'currencies' => $currencies_arr,
             'cities' => $cities_arr,
-            'emergency_numbers' => $emergency_numbers_arr
+            'emergency_numbers' => $emergency_numbers_arr,
+            'holidays' => $holidays_arr,
         ]);
     }
 
@@ -157,6 +169,7 @@ class CountryController extends Controller
             'currencies' => $request->input('currencies_id'),
             'cities' => $request->input('cities_id'),
             'emergency_numbers' => $request->input('emergency_numbers_id'),
+            'holidays' => $request->input('holidays_id'),
             'safety_degree_id' => $request->input('safety_degree_id')
         ];
 
@@ -178,7 +191,8 @@ class CountryController extends Controller
         $item->deleteAirports();
         $item->deleteCurrencies();
         $item->deleteCapitals();
-        $item->deleteEmergencyNumbers(); 
+        $item->deleteEmergencyNumbers();
+        $item->deleteHolidays(); 
         $item->delete();
 
         return redirect()->route('admin.location.country.index')->withFlashSuccess('Country Deleted Successfully');
@@ -308,7 +322,6 @@ class CountryController extends Controller
         }
 
         /* Get Selected Cities */
-
         $selected_capitals = $country->capitals;
         $selected_capitals_arr = [];
 
@@ -336,7 +349,6 @@ class CountryController extends Controller
 
 
         /* Get Selected Numbers */
-
         $selected_numbers = $country->emergency_numbers;
         $selected_numbers_arr = [];
 
@@ -362,6 +374,33 @@ class CountryController extends Controller
             }
         }
 
+        $selected_holidays = $country->holidays;
+        $selected_holidays_arr = [];
+
+        if(!empty($selected_holidays)){
+            foreach ($selected_holidays as $key => $value) {
+                $holiday = $value->holiday;
+
+                if(!empty($holiday)){
+                    array_push($selected_holidays_arr,$holiday->id);
+                }
+            }
+        }
+
+        $data['selected_holidays'] = $selected_holidays_arr;
+        
+        /* Get All Holidays */
+        $holidays = Holidays::get();
+        $holidays_arr = [];
+        
+        foreach ($holidays as $key => $value) {
+            if(isset($value->transsingle) && !empty($value->transsingle)){
+                $holidays_arr[$value->id] = $value->transsingle->title;
+            }
+        }
+
+
+
         return view('backend.country.edit')
             ->withLanguages($this->languages)
             ->withCountry($country)
@@ -372,7 +411,8 @@ class CountryController extends Controller
             ->withPlaces($places_arr)
             ->withCurrencies($currencies_arr)
             ->withCities($cities_arr)
-            ->withEmergency_numbers($emergency_numbers_arr);
+            ->withEmergency_numbers($emergency_numbers_arr)
+            ->withHolidays($holidays_arr);
     }
 
     /**
@@ -422,6 +462,7 @@ class CountryController extends Controller
             'places' => $request->input('places_id'),
             'currencies' => $request->input('currencies_id'),
             'cities' => $request->input('cities_id'),
+            'holidays' => $request->input('holidays_id'),
             'emergency_numbers' => $request->input('emergency_numbers_id'),
             'safety_degree_id' => $request->input('safety_degree_id')
         ];
@@ -521,6 +562,23 @@ class CountryController extends Controller
             }
         }
 
+        $holidays = $country->holidays;
+        $holidays_arr = [];
+
+        if(!empty($holidays)){
+            foreach ($holidays as $key => $value) {
+                $holiday = $value->holiday;
+
+                if(!empty($holiday)){
+                    $holiday = $holiday->transsingle;
+
+                    if(!empty($holiday)){
+                        array_push($holidays_arr,$holiday->title);
+                    }
+                }
+            }
+        }
+
 
         return view('backend.country.show')
             ->withCountry($country)
@@ -530,7 +588,8 @@ class CountryController extends Controller
             ->withAirports($airports_arr)
             ->withCurrencies($currencies_arr)
             ->withCapitals($capitals_arr)
-            ->withEmergency_numbers($emergency_numbers_arr);
+            ->withEmergency_numbers($emergency_numbers_arr)
+            ->withHolidays($holidays_arr);
     }
 
     /**

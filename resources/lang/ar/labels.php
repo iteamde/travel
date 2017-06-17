@@ -176,6 +176,10 @@ return [
             'age_ranges_manager' => 'مدير نطاقات العمر',
             'age_ranges' => 'نطاقات العمر'
         ],
+        'cities' => [
+            'cities_manager' => 'مدير المدن',
+            'active_cities' => 'المدن النشطة',
+        ],
     ],
 
     'frontend' => [

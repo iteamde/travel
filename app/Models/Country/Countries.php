@@ -49,6 +49,10 @@ class Countries extends Model
         self::deleteModels($this->emergency_numbers);
     }
 
+    public function deleteHolidays(){
+        self::deleteModels($this->holidays);
+    }
+
     public function deleteModels($models){
         if(!empty($models)){
             foreach ($models as $key => $value) {

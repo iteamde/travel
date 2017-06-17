@@ -69,6 +69,8 @@ class RegionsController extends Controller
             }
         }
 
+        $data['active'] = $region->active;
+
         return view('backend.regions.edit')
             ->withLanguages($this->languages)
             ->withRegions($region)
@@ -89,7 +91,14 @@ class RegionsController extends Controller
             $data['title_'.$language->id] = $request->input('title_'.$language->id);
         }
 
-        $this->regions->update($region, $data, $request->input('active'));
+        $active = 2;
+        if(!empty($request->input('active'))){
+            $active = 1;
+        }else{
+            $active = 2;
+        }
+
+        $this->regions->update($region, $data, $active );
 
         return redirect()->route('admin.location.regions.index')
             ->withFlashSuccess('Region updated Successfully!');
@@ -108,7 +117,14 @@ class RegionsController extends Controller
             $data['title_'.$language->id] = $request->input('title_'.$language->id);
         }
 
-        $this->regions->create($data, $request->input('active'));
+        $active = 2;
+        if(!empty($request->input('active'))){
+            $active = 1;
+        }else{
+            $active = 2;
+        }
+
+        $this->regions->create($data, $active );
 
         return redirect()->route('admin.location.regions.index')->withFlashSuccess('Region Created!');
     }

@@ -186,6 +186,6 @@ return [
     |
     */
     'timeout_status' => env('SESSION_TIMEOUT_STATUS', true),
-    'timeout'        => env('SESSION_TIMEOUT', 1600),
+    'timeout'        => 1800, // LogOut User After 1800 Seconds ( 30 minutes )
 
 ];

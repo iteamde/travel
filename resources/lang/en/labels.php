@@ -177,6 +177,10 @@ return [
             'age_ranges_manager' => 'Age Ranges Manager',
             'age_ranges' => 'Age Ranges'
         ],
+        'cities' => [
+            'cities_manager' => 'Cities Manager',
+            'active_cities' => 'Active Cities',
+        ],
     ],
 
     'frontend' => [

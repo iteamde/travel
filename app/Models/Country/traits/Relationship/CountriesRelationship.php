@@ -114,4 +114,15 @@ trait CountriesRelationship
         // return $this->belongsToMany(config('access.regions'), config('access.regions_trans'), 'id', 'regions_id');
         return $this->hasMany(config('locations.country_emergency_numbers_trans'), 'countries_id');
     }
+
+    /**
+     * Many-to-Many relations with CountriesHolidays.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function holidays()
+    {
+        // return $this->belongsToMany(config('access.regions'), config('access.regions_trans'), 'id', 'regions_id');
+        return $this->hasMany(config('locations.country_holidays_trans'), 'countries_id');
+    }
 }

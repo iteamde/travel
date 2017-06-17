@@ -7,6 +7,7 @@ use App\Models\Country\CountriesTranslations;
 use App\Models\Country\CountriesAirports;
 use App\Models\Country\CountriesCurrencies;
 use App\Models\Country\CountriesCapitals;
+use App\Models\Country\CountriesHolidays;
 use App\Models\Country\CountriesEmergencyNumbers;
 use Illuminate\Support\Facades\DB;
 use App\Exceptions\GeneralException;
@@ -115,6 +116,15 @@ class CountryRepository extends BaseRepository
             $check = 1;
             
             if ($model->save()) {
+
+                if(!empty($extra['holidays'])){
+                    foreach ($extra['holidays'] as $key => $value) {
+                        $CountriesHolidays = new CountriesHolidays;
+                        $CountriesHolidays->countries_id = $model->id;
+                        $CountriesHolidays->holidays_id = $value;
+                        $CountriesHolidays->save();
+                    }
+                }
 
                 if(!empty($extra['places'])){
                     foreach ($extra['places'] as $key => $value) {
@@ -232,10 +242,26 @@ class CountryRepository extends BaseRepository
             }
         }
 
+        $prev_holidays = CountriesHolidays::where(['countries_id' => $id])->get();
+        if(!empty($prev_holidays)){
+            foreach ($prev_holidays as $key => $value) {
+                $value->delete();
+            }
+        }
+
         DB::transaction(function () use ($model, $input, $extra) {
             $check = 1;
             
             if ($model->save()) {
+
+                if(!empty($extra['holidays'])){
+                    foreach ($extra['holidays'] as $key => $value) {
+                        $CountriesHolidays = new CountriesHolidays;
+                        $CountriesHolidays->countries_id = $model->id;
+                        $CountriesHolidays->holidays_id = $value;
+                        $CountriesHolidays->save();
+                    }
+                }
 
                 if(!empty($extra['places'])){
                     foreach ($extra['places'] as $key => $value) {
