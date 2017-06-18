@@ -14,6 +14,7 @@ use App\Models\SafetyDegree\SafetyDegree;
 use App\Models\Country\Countries;
 use App\Models\City\Cities;
 use App\Models\PlaceTypes\PlaceTypes;
+use App\Models\ActivityMedia\Media;
 
 class PlaceController extends Controller
 {
@@ -72,7 +73,7 @@ class PlaceController extends Controller
             }
         }
 
-        /* Get All safety Degrees */
+        /* Get All Safety Degrees */
         $degrees = SafetyDegree::get();
         $degrees_arr = [];
         
@@ -81,12 +82,23 @@ class PlaceController extends Controller
                 $degrees_arr[$value->id] = $value->transsingle->title;
             }
         }
-       
+        
+        /* Get All Medias */
+        $medias = Media::get();
+        $medias_arr = [];
+        
+        foreach ($medias as $key => $value) {
+            if(isset($value->transsingle) && !empty($value->transsingle)){  
+                $medias_arr[$value->id] = $value->transsingle->title;
+            }
+        }
+
         return view('backend.place.create',[
             'countries' => $countries_arr,
             'cities' => $cities_arr,
             'place_types' => $places_types_arr,
             'degrees' => $degrees_arr,
+            'medias' => $medias_arr,
         ]);
     }
 
@@ -134,10 +146,9 @@ class PlaceController extends Controller
             'place_types_ids' => $request->input('place_types_ids'),
             'lat' => $location[0],
             'lng' => $location[1],
+            'medias' => $request->input('medias_id'),
             'safety_degrees_id' => $request->input('safety_degrees_id')
         ];
-
-
 
         $this->places->create($data, $extra);
 
@@ -160,6 +171,7 @@ class PlaceController extends Controller
                 $value->delete();
             }
         }
+        $item->deleteMedias();
         $item->delete();
 
         return redirect()->route('admin.location.place.index')->withFlashSuccess('Place Deleted Successfully');
@@ -271,6 +283,29 @@ class PlaceController extends Controller
             }
         }
 
+        /* Get All Selected Medias */
+        $selected_medias = $place->medias;
+        $selected_medias_arr = [];
+
+        foreach ($selected_medias as $key => $value) {
+            $value = $value->media;
+            // if(isset($value->transsingle) && !empty($value->transsingle)){  
+                array_push($selected_medias_arr,$value->id);
+            // }
+        }
+
+        $data['selected_medias'] = $selected_medias_arr;
+    
+        /* Get All Medias */
+        $medias = Media::get();
+        $medias_arr = [];
+        
+        foreach ($medias as $key => $value) {
+            if(isset($value->transsingle) && !empty($value->transsingle)){  
+                $medias_arr[$value->id] = $value->transsingle->title;
+            }
+        }        
+
         return view('backend.place.edit')
             ->withLanguages($this->languages)
             ->withPlace($place)
@@ -279,7 +314,8 @@ class PlaceController extends Controller
             ->withCountries($countries_arr)
             ->withDegrees($degrees_arr)
             ->withCities($cities_arr)
-            ->withPlace_types($places_types_arr);
+            ->withPlace_types($places_types_arr)
+            ->withMedias($medias_arr);
     }
 
     /**
@@ -329,6 +365,7 @@ class PlaceController extends Controller
             'countries_id' =>  $request->input('countries_id'),
             'cities_id' =>  $request->input('cities_id'),
             'place_types_ids' => $request->input('place_types_ids'),
+            'medias' => $request->input('medias_id'),
             'lat' => $location[0],
             'lng' => $location[1],
             'safety_degrees_id' => $request->input('safety_degrees_id')
@@ -369,13 +406,26 @@ class PlaceController extends Controller
         $safety_degree = $place->degree;
         $safety_degree = $safety_degree->transsingle;
         
+
+        /* Get All Selected Medias */
+        $selected_medias = $place->medias;
+        $selected_medias_arr = [];
+
+        foreach ($selected_medias as $key => $value) {
+            $value = $value->media;
+            if(isset($value->transsingle) && !empty($value->transsingle)){  
+                array_push($selected_medias_arr,$value->transsingle->title);
+            }
+        }
+
         return view('backend.place.show')
             ->withPlace($place)
             ->withPlacetrans($placeTrans)
             ->withCountry($country)
             ->withCity($city)
             ->withType($type)
-            ->withDegree($safety_degree);
+            ->withDegree($safety_degree)
+            ->withMedias($selected_medias_arr);
     }
 
     /**

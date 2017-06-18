@@ -10,6 +10,7 @@ use App\Http\Requests\Backend\Regions\StoreRegionsRequest;
 use App\Repositories\Backend\Regions\RegionsRepository;
 use App\Models\Regions\RegionsTranslation;
 use App\Http\Requests\Backend\Regions\UpdateRegionsRequest;
+use App\Models\ActivityMedia\Media;
 
 class RegionsController extends Controller
 {
@@ -38,9 +39,22 @@ class RegionsController extends Controller
      * @return mixed
      */
     public function create(ManageRegionsRequest $request)
-    {
+    {   
+        /* Get All Medias In System For Dropdown */
+        $medias = Media::get();
+        $medias_arr = [];
+
+        if(!empty($medias)){
+            foreach ($medias as $key => $value) {
+                if( isset($value->transsingle) && !empty($value->transsingle) ){
+                    $medias_arr[$value->id] = $value->transsingle->title;
+                }
+            }
+        }
+
         return view('backend.regions.create')
-            ->withLanguages($this->languages);
+            ->withLanguages($this->languages)
+            ->withMedias($medias_arr);
     }
 
 
@@ -71,10 +85,35 @@ class RegionsController extends Controller
 
         $data['active'] = $region->active;
 
+        /* Get All Selected Medias Of $region */
+        $selected_medias = $region->medias;
+        $selected_medias_arr = [];
+
+        if(!empty($selected_medias)){
+            foreach ($selected_medias as $key => $value) {
+                array_push($selected_medias_arr,$value->medias_id);
+            }
+        }
+        
+        $data['selected_medias'] = $selected_medias_arr;
+
+        /* Get All Medias In System */
+        $medias = Media::get();
+        $medias_arr = [];
+
+        if(!empty($medias)){
+            foreach ($medias as $key => $value) {
+                if( isset($value->transsingle) && !empty($value->transsingle) ){
+                    $medias_arr[$value->id] = $value->transsingle->title;
+                }
+            }
+        }
+
         return view('backend.regions.edit')
             ->withLanguages($this->languages)
             ->withRegions($region)
-            ->withData($data);
+            ->withData($data)
+            ->withMedias($medias_arr);
     }
 
     /**
@@ -98,7 +137,11 @@ class RegionsController extends Controller
             $active = 2;
         }
 
-        $this->regions->update($region, $data, $active );
+        /* Pass All Relations Through $extra Array */
+        $extra = [
+            'medias' => $request->input('medias_id')
+        ];
+        $this->regions->update($region, $data, $active ,$extra);
 
         return redirect()->route('admin.location.regions.index')
             ->withFlashSuccess('Region updated Successfully!');
@@ -124,7 +167,12 @@ class RegionsController extends Controller
             $active = 2;
         }
 
-        $this->regions->create($data, $active );
+        /* Pass All Relations Through $extra Array */
+        $extra = [
+            'medias' => $request->input('medias_id')
+        ];
+
+        $this->regions->create($data, $active ,$extra);
 
         return redirect()->route('admin.location.regions.index')->withFlashSuccess('Region Created!');
     }
@@ -175,7 +223,23 @@ class RegionsController extends Controller
      */
     public function show(Regions $region, ManageRegionsRequest $request)
     {
+        /* Get Selected Medias Of $region */
+        $selected_medias = $region->medias;
+        $selected_medias_arr = [];
+
+        if(!empty($selected_medias)){
+            foreach ($selected_medias as $key => $value) {
+                if(!empty($value->media)){
+                    $value = $value->media;
+                    if(!empty($value->transsingle)){
+                        array_push($selected_medias_arr , $value->transsingle->title );
+                    }
+                }
+            }
+        }
+
         return view('backend.regions.show')
-            ->withRegions($region);
+            ->withRegions($region)
+            ->withMedias($selected_medias_arr);
     }
 }

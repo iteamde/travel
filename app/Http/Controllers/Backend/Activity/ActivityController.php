@@ -132,6 +132,7 @@ class ActivityController extends Controller
             $active = 1;
         }
         
+        /* Pass all relation and common fields in $extra Array*/
         $extra = [
             'active' => $active,
             'types_id' => $request->input('types_id'),
@@ -318,6 +319,7 @@ class ActivityController extends Controller
             $active = 1;
         }
 
+        /* Pass all relation and common fields in $extra Array*/
         $extra = [
             'active' => $active,
             'types_id' => $request->input('types_id'),

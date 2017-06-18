@@ -40,6 +40,23 @@
                             @endif
                         </td>
                     </tr>
+
+                    <!-- Start: Medias -->
+                    <tr>
+                         <th> <h3 style="color:#0A8F27">Medias</h3></th><td></td>   
+                    </tr>
+                    @if(empty($medias))
+                      <tr>
+                          <th> <p>No Medias Added.</p> </th><td></td>
+                      </tr>
+                    @endif
+                    @foreach($medias as $key => $media)
+                      <tr>
+                          <th> <p><?=$media?></p> </th><td></td>
+                      </tr>
+                    @endforeach
+                    <!-- End: Medias -->
+                    
                 </table>
 
             </div><!--tab panel-->

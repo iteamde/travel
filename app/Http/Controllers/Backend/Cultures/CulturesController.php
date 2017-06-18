@@ -37,7 +37,6 @@ class CulturesController extends Controller
      */
     public function create(ManageCulturesRequest $request)
     {   
-       
         return view('backend.cultures.create',[
         ]);
     }

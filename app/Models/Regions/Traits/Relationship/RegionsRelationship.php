@@ -41,4 +41,10 @@ trait RegionsRelationship
     {
         return $this->hasMany(Session::class);
     }
+
+    public function medias()
+    {
+        // return $this->belongsToMany(config('access.regions'), config('access.regions_trans'), 'id', 'regions_id');
+        return $this->hasMany(config('locations.regions_medias'), 'regions_id');
+    }
 }

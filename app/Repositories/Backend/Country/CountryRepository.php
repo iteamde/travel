@@ -164,6 +164,7 @@ class CountryRepository extends BaseRepository
                     }
                 }
 
+                /* Add Holidays In CountriesHolidays */
                 if(!empty($extra['holidays'])){
                     foreach ($extra['holidays'] as $key => $value) {
                         $CountriesHolidays = new CountriesHolidays;
@@ -173,6 +174,7 @@ class CountryRepository extends BaseRepository
                     }
                 }
 
+                /* Add Places In CountriesAirports */
                 if(!empty($extra['places'])){
                     foreach ($extra['places'] as $key => $value) {
                         $CountriesAirports = new CountriesAirports;
@@ -182,6 +184,7 @@ class CountryRepository extends BaseRepository
                     }
                 }
 
+                /* Add Cities in CountriesCapitals */
                 if(!empty($extra['cities'])){
                     foreach ($extra['cities'] as $key => $value) {
                         $CountriesCapitals = new CountriesCapitals;
@@ -191,6 +194,7 @@ class CountryRepository extends BaseRepository
                     }
                 }
 
+                /* Add Numbers in CountriesEmergencyNumbers */
                 if(!empty($extra['emergency_numbers'])){
                     foreach ($extra['emergency_numbers'] as $key => $value) {
                         $CountriesEmergencyNumbers = new CountriesEmergencyNumbers;
@@ -200,6 +204,7 @@ class CountryRepository extends BaseRepository
                     }
                 }
 
+                /* Add Currencies in Countries Currencies */
                 if(!empty($extra['currencies'])){
                     foreach ($extra['currencies'] as $key => $value) {
                         $CountriesCurrencies = new CountriesCurrencies;
@@ -209,6 +214,7 @@ class CountryRepository extends BaseRepository
                     }
                 }
 
+                /* Store Different Translation of $this Country */
                 foreach ($input as $key => $value) {
                     $trans = new CountriesTranslations;
                     $trans->countries_id = $model->id;
@@ -254,6 +260,7 @@ class CountryRepository extends BaseRepository
         $model->lng         = $extra['lng'];
         $model->safety_degree_id = $extra['safety_degree_id'];
 
+        /* Delete Previous CountriesTranslations */
         $prev = CountriesTranslations::where(['countries_id' => $id])->get();
         if(!empty($prev)){
             foreach ($prev as $key => $value) {
@@ -261,6 +268,7 @@ class CountryRepository extends BaseRepository
             }
         }
 
+        /* Delete Previous CountriesAirports */
         $prev_airports = CountriesAirports::where(['countries_id' => $id])->get();
         if(!empty($prev_airports)){
             foreach ($prev_airports as $key => $value) {
@@ -268,6 +276,7 @@ class CountryRepository extends BaseRepository
             }
         }
 
+        /* Delete Previous CountriesCurrencies */
         $prev_currencies = CountriesCurrencies::where(['countries_id' => $id])->get();
         if(!empty($prev_currencies)){
             foreach ($prev_currencies as $key => $value) {
@@ -275,6 +284,7 @@ class CountryRepository extends BaseRepository
             }
         }
 
+        /* Delete Previous CountriesCapitals */
         $prev_capitals = CountriesCapitals::where(['countries_id' => $id])->get();
         if(!empty($prev_capitals)){
             foreach ($prev_capitals as $key => $value) {
@@ -282,6 +292,7 @@ class CountryRepository extends BaseRepository
             }
         }
 
+        /* Delete Previous CountriesEmergencyNumbers */
         $prev_numbers = CountriesEmergencyNumbers::where(['countries_id' => $id])->get();
         if(!empty($prev_numbers)){
             foreach ($prev_numbers as $key => $value) {
@@ -289,6 +300,7 @@ class CountryRepository extends BaseRepository
             }
         }
 
+        /* Delete Previous CountriesHolidays */
         $prev_holidays = CountriesHolidays::where(['countries_id' => $id])->get();
         if(!empty($prev_holidays)){
             foreach ($prev_holidays as $key => $value) {
@@ -296,6 +308,7 @@ class CountryRepository extends BaseRepository
             }
         }
 
+        /* Delete Previous CountriesLanguagesSpoken */
         $prev_languages_spoken = CountriesLanguagesSpoken::where(['countries_id' => $id])->get();
         if(!empty($prev_languages_spoken)){
             foreach ($prev_languages_spoken as $key => $value) {
@@ -303,6 +316,7 @@ class CountryRepository extends BaseRepository
             }
         }
 
+        /* Delete Previous CountriesLifestyles */
         $prev_lifestyles = CountriesLifestyles::where(['countries_id' => $id])->get();
         if(!empty($prev_lifestyles)){
             foreach ($prev_lifestyles as $key => $value) {
@@ -310,6 +324,7 @@ class CountryRepository extends BaseRepository
             }
         }
 
+        /* Delete Previous CountriesMedias */
         $prev_medias = CountriesMedias::where(['countries_id' => $id])->get();
         if(!empty($prev_medias)){
             foreach ($prev_medias as $key => $value) {
@@ -317,6 +332,7 @@ class CountryRepository extends BaseRepository
             }
         }
 
+        /* Delete Previous CountriesReligions */
         $prev_religions = CountriesReligions::where(['countries_id' => $id])->get();
         if(!empty($prev_religions)){
             foreach ($prev_religions as $key => $value) {
@@ -349,7 +365,7 @@ class CountryRepository extends BaseRepository
                     }
                 }
 
-                /* ADD LIFESTYLEs IN CountriesLifestyles */  
+                /* ADD Lifestyles IN CountriesLifestyles */  
                 if(!empty($extra['lifestyles'])){
                     foreach ($extra['lifestyles'] as $key => $value) {
                         $CountriesLifestyles = new CountriesLifestyles;
@@ -369,6 +385,7 @@ class CountryRepository extends BaseRepository
                     }
                 }
 
+                /* Add Holidays in CountriesHolidays */
                 if(!empty($extra['holidays'])){
                     foreach ($extra['holidays'] as $key => $value) {
                         $CountriesHolidays = new CountriesHolidays;
@@ -378,6 +395,7 @@ class CountryRepository extends BaseRepository
                     }
                 }
 
+                /* Add Places In CountriesAirports */
                 if(!empty($extra['places'])){
                     foreach ($extra['places'] as $key => $value) {
                         $CountriesAirports = new CountriesAirports;
@@ -387,6 +405,7 @@ class CountryRepository extends BaseRepository
                     }
                 }
 
+                /* Add Cities in CountriesCapitals */
                 if(!empty($extra['cities'])){
                     foreach ($extra['cities'] as $key => $value) {
                         $CountriesCapitals = new CountriesCapitals;
@@ -396,6 +415,7 @@ class CountryRepository extends BaseRepository
                     }
                 }
 
+                /* Add Numbers in CountriesEmergencyNumbers */
                 if(!empty($extra['emergency_numbers'])){
                     foreach ($extra['emergency_numbers'] as $key => $value) {
                         $CountriesEmergencyNumbers = new CountriesEmergencyNumbers;
@@ -405,6 +425,7 @@ class CountryRepository extends BaseRepository
                     }
                 }
 
+                /* Add Currencies in CountriesCurrencies */
                 if(!empty($extra['currencies'])){
                     foreach ($extra['currencies'] as $key => $value) {
                         $CountriesCurrencies = new CountriesCurrencies;
@@ -414,6 +435,7 @@ class CountryRepository extends BaseRepository
                     }
                 }
 
+                /* Store New Translations For $this Country */
                 foreach ($input as $key => $value) {
                     $trans = new CountriesTranslations;
                     $trans->countries_id = $model->id;

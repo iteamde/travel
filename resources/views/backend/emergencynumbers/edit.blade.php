@@ -39,6 +39,13 @@ use App\Models\Access\language\Languages;
         font-family: Roboto;
       }
     </style>
+    <!-- Language Error Style: Start -->
+    <style>
+        .required_msg{
+            padding-left: 20px;
+        }
+    </style>
+    <!-- Language Error Style: End -->
     <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.3/summernote.css" rel="stylesheet">
 @endsection
 
@@ -59,6 +66,15 @@ use App\Models\Access\language\Languages;
 
             </div><!-- /.box-header -->
 
+            <!-- Language Error : Start -->
+            <div class="row error-box">
+                <div class="col-md-10">
+                    <div class="required_msg">
+                    </div>
+                </div>
+            </div>
+            <!-- Language Error : End -->
+            
             <div class="box-body">
                 @if(!empty($languages))
                     <ul class="nav nav-tabs">
@@ -79,7 +95,7 @@ use App\Models\Access\language\Languages;
                                 {{ Form::label('title_'.$language->id, 'Title', ['class' => 'col-lg-2 control-label']) }}
 
                                 <div class="col-lg-10">
-                                    {{ Form::text('title_'.$language->id, $data['title_'.$language->id] , ['class' => 'form-control', 'maxlength' => '191', 'required' => 'required', 'autofocus' => 'autofocus', 'placeholder' => 'Title']) }}
+                                    {{ Form::text('title_'.$language->id, $data['title_'.$language->id] , ['class' => 'form-control required', 'maxlength' => '191', 'required' => 'required', 'autofocus' => 'autofocus', 'placeholder' => 'Title']) }}
                                 </div><!--col-lg-10-->
                             </div><!--form control-->
                             <!-- End: Title -->
@@ -88,10 +104,10 @@ use App\Models\Access\language\Languages;
                                 {{ Form::label('description_'.$language->id, 'Description', ['class' => 'col-lg-2 control-label']) }}
 
                                 <div class="col-lg-10">
-                                    {{ Form::textarea('description_'.$language->id, $data['description_'.$language->id] , ['class' => 'form-control description', 'required' => 'required', 'autofocus' => 'autofocus', 'placeholder' => 'Description']) }}
+                                    {{ Form::textarea('description_'.$language->id, $data['description_'.$language->id] , ['class' => 'form-control description required', 'required' => 'required', 'autofocus' => 'autofocus', 'placeholder' => 'Description']) }}
                                 </div><!--col-lg-10-->
                             </div><!--form control-->
-                            <!-- End: Title -->
+                            <!-- End: Description -->
                             <!-- Languages Tabs: Start -->
                         </div>
                     @endforeach
@@ -133,4 +149,27 @@ use App\Models\Access\language\Languages;
             placeHolder: 'Select Region'
         });
     </script>
+    <!-- Error Alert Script : Start -->
+    <script>
+        $(document).on('click' , '.submit_button' , function(){
+        
+            var msg = '<div id="language-alert" class="alert alert-danger alert-dismissable fade in"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Error!</strong> Please Fill Information In All Languages Tabs.</div>';
+
+            $('.required').each(function(index,data){
+                var flag = false;
+                if($(this).val() == ''){
+                    
+                    flag = true;
+                }
+
+                if(flag){
+                    $('.required_msg').html(msg);
+                    $("#language-alert").fadeTo(5000, 500).slideUp(500, function(){
+                        $("#language-alert").slideUp(500);
+                    });   
+                }
+            });
+        });
+    </script>
+    <!-- Error Alert Script : End -->
 @endsection

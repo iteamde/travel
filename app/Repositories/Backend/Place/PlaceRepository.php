@@ -9,6 +9,7 @@ use App\Exceptions\GeneralException;
 use App\Repositories\BaseRepository;
 use Illuminate\Database\Eloquent\Model;
 use App\Repositories\Backend\Access\Role\RoleRepository;
+use App\Models\Place\PlaceMedias;
 
 /**
  * Class PlaceRepository.
@@ -111,6 +112,16 @@ class PlaceRepository extends BaseRepository
             $check = 1;
             
             if ($model->save()) {
+                
+                if(!empty($extra['medias'])){
+                    foreach ($extra['medias'] as $key => $value) {
+                       $PlaceMedias = new PlaceMedias;
+                       $PlaceMedias->places_id = $model->id;
+                       $PlaceMedias->medias_id = $value;
+                       $PlaceMedias->save(); 
+                    }
+                }
+
                 foreach ($input as $key => $value) {
                     $trans                  = new PlaceTranslations;
                     $trans->places_id       = $model->id;
@@ -169,10 +180,27 @@ class PlaceRepository extends BaseRepository
             }
         }
 
+        $prev_medias = PlaceMedias::where(['places_id' => $id])->get();
+        if(!empty($prev_medias)){
+            foreach ($prev_medias as $key => $value) {
+                $value->delete();
+            }
+        }
+
         DB::transaction(function () use ($model, $input, $extra) {
             $check = 1;
             
             if ($model->save()) {
+
+                if(!empty($extra['medias'])){
+                    foreach ($extra['medias'] as $key => $value) {
+                       $PlaceMedias = new PlaceMedias;
+                       $PlaceMedias->places_id = $model->id;
+                       $PlaceMedias->medias_id = $value;
+                       $PlaceMedias->save(); 
+                    }
+                }
+
                 foreach ($input as $key => $value) {
                     $trans = new PlaceTranslations;
                     $trans->places_id       = $model->id;

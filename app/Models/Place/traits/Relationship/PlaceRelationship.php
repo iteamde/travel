@@ -9,6 +9,7 @@ use App\Models\SafetyDegree\SafetyDegree;
 use App\Models\Country\Countries;
 use App\Models\City\Cities;
 use App\Models\PlaceTypes\PlaceTypes;
+use App\Models\Place\PlaceMedias;
 
 /**
  * Class PlaceRelationship.
@@ -88,5 +89,13 @@ trait PlaceRelationship
     public function sessions()
     {
         return $this->hasMany(Session::class);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function medias()
+    {
+        return $this->hasMany(PlaceMedias::class , 'places_id' , 'id');
     }
 }

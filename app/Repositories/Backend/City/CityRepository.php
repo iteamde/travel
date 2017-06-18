@@ -181,7 +181,6 @@ class CityRepository extends BaseRepository
                     }
                 }
 
-
                 /* Entry in CitiesAirports table */
                 if(!empty($extra['places'])){
                     foreach ($extra['places'] as $key => $value) {
@@ -246,6 +245,7 @@ class CityRepository extends BaseRepository
         $model->lng         = $extra['lng'];
         $model->safety_degree_id = $extra['safety_degree_id'];
 
+        /* Delete Previous CitiesTranslations */
         $prev = CitiesTranslations::where(['cities_id' => $id])->get();
         if(!empty($prev)){
             foreach ($prev as $key => $value) {
@@ -253,6 +253,7 @@ class CityRepository extends BaseRepository
             }
         }
 
+        /* Delete Previous CitiesAirports */
         $prev_airports = CitiesAirports::where(['cities_id' => $id])->get();
         if(!empty($prev_airports)){
             foreach ($prev_airports as $key => $value) {
@@ -260,6 +261,7 @@ class CityRepository extends BaseRepository
             }
         }
 
+        /* Delete Previous CitiesCurrencies */
         $prev_currencies = CitiesCurrencies::where(['cities_id' => $id])->get();
         if(!empty($prev_currencies)){
             foreach ($prev_currencies as $key => $value) {
@@ -267,6 +269,7 @@ class CityRepository extends BaseRepository
             }
         }
 
+        /* Delete Previous CitiesNumbers */
         $prev_numbers = CitiesEmergencyNumbers::where(['cities_id' => $id])->get();
         if(!empty($prev_numbers)){
             foreach ($prev_numbers as $key => $value) {
@@ -274,6 +277,7 @@ class CityRepository extends BaseRepository
             }
         }
 
+        /* Delete Previous CitiesHolidays */
         $prev_holidays = CitiesHolidays::where(['cities_id' => $id])->get();
         if(!empty($prev_holidays)){
             foreach ($prev_holidays as $key => $value) {
@@ -281,6 +285,7 @@ class CityRepository extends BaseRepository
             }
         }
 
+        /* Delete Previous CitiesLanguagesSpoken */
         $prev_languages_spoken = CitiesLanguagesSpoken::where(['cities_id' => $id])->get();
         if(!empty($prev_languages_spoken)){
             foreach ($prev_languages_spoken as $key => $value) {
@@ -288,6 +293,7 @@ class CityRepository extends BaseRepository
             }
         }
 
+        /* Delete Previous CitiesLifestyles */
         $prev_lifestyles = CitiesLifestyles::where(['cities_id' => $id])->get();
         if(!empty($prev_lifestyles)){
             foreach ($prev_lifestyles as $key => $value) {
@@ -295,6 +301,7 @@ class CityRepository extends BaseRepository
             }
         }
 
+        /* Delete Previous CitiesMedias */
         $prev_medias = CitiesMedias::where(['cities_id' => $id])->get();
         if(!empty($prev_medias)){
             foreach ($prev_medias as $key => $value) {
@@ -302,6 +309,7 @@ class CityRepository extends BaseRepository
             }
         }
 
+        /* Delete Previous CitiesReligions */
         $prev_religions = CitiesReligions::where(['cities_id' => $id])->get();
         if(!empty($prev_religions)){
             foreach ($prev_religions as $key => $value) {
@@ -394,6 +402,7 @@ class CityRepository extends BaseRepository
                     }
                 }
 
+                /* Store New CitiesTranslations */
                 foreach ($input as $key => $value) {
                     $trans                  = new CitiesTranslations;
                     $trans->cities_id       = $model->id;

@@ -14,6 +14,44 @@ use App\Models\Access\language\Languages;
     </h1>
 @endsection
 
+
+@section('after-styles')
+    <style>
+        #map {
+            height: 300px;
+        }
+        #pac-input {
+        background-color: #fff;
+        font-family: Roboto;
+        font-size: 15px;
+        font-weight: 300;
+        margin-left: 12px;
+        padding: 0 11px 0 13px;
+        text-overflow: ellipsis;
+        width: 300px;
+      }
+
+      #pac-input:focus {
+        border-color: #4d90fe;
+      }
+
+      .pac-container {
+        font-family: Roboto;
+      }
+    </style>
+
+    <!-- Language Error Style: Start -->
+    <style>
+        .required_msg{
+            padding-left: 20px;
+        }
+    </style>
+    <!-- Language Error Style: End -->
+
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.3/summernote.css" rel="stylesheet">
+@endsection
+
+
 @section('content')
     {{ Form::model($regions, [
             'id'     => 'regions_update_form',
@@ -34,6 +72,15 @@ use App\Models\Access\language\Languages;
                 </div><!--box-tools pull-right-->
             </div><!-- /.box-header -->
 
+            <!-- Language Error : Start -->
+            <div class="row error-box">
+                <div class="col-md-10">
+                    <div class="required_msg">
+                    </div>
+                </div>
+            </div>
+            <!-- Language Error : End -->
+            
             <div class="box-body">
                 @if(!empty($languages))
                     <ul class="nav nav-tabs">
@@ -54,7 +101,7 @@ use App\Models\Access\language\Languages;
                                 {{ Form::label('title_'.$language->id, 'Title', ['class' => 'col-lg-2 control-label']) }}
 
                                 <div class="col-lg-10">
-                                    {{ Form::text('title_'.$language->id, $data['title_'.$language->id], ['class' => 'form-control', 'maxlength' => '255', 'required' => 'required', 'autofocus' => 'autofocus', 'placeholder' => 'Title']) }}
+                                    {{ Form::text('title_'.$language->id, $data['title_'.$language->id], ['class' => 'form-control required', 'maxlength' => '255', 'required' => 'required', 'autofocus' => 'autofocus', 'placeholder' => 'Title']) }}
                                 </div><!--col-lg-10-->
                             </div><!--form control-->
                             <!-- End: Title -->
@@ -74,6 +121,17 @@ use App\Models\Access\language\Languages;
                         </div><!--col-lg-10-->
                     </div><!--form control-->
                     <!-- Active: End -->
+                    
+                    <!-- Medias: Start -->
+                    <div class="form-group">
+                        {{ Form::label('title', 'Medias', ['class' => 'col-lg-2 control-label']) }}
+
+                        <div class="col-lg-10">
+                            {{ Form::select('medias_id[]', $medias , $data['selected_medias'] ,['class' => 'select2Class form-control' , 'multiple' => 'multiple']) }}
+                        </div><!--col-lg-10-->
+                    </div><!--form control-->
+                    <!-- Medias: End -->
+
                 @endif
             </div>
         </div><!--box-->
@@ -96,5 +154,38 @@ use App\Models\Access\language\Languages;
 @endsection
 
 @section('after-scripts')
+    
+    <script type="text/javascript">
+        $('.select2Class').select2({
+            placeHolder: 'Select Region'
+        });
 
+        $('.description').summernote({
+             height: 200
+        });
+
+    </script>
+    <!-- Error Alert Script : Start -->
+    <script>
+        $(document).on('click' , '.submit_button' , function(){
+        
+            var msg = '<div id="language-alert" class="alert alert-danger alert-dismissable fade in"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Error!</strong> Please Fill Information In All Languages Tabs.</div>';
+
+            $('.required').each(function(index,data){
+                var flag = false;
+                if($(this).val() == ''){
+                    
+                    flag = true;
+                }
+
+                if(flag){
+                    $('.required_msg').html(msg);
+                    $("#language-alert").fadeTo(5000, 500).slideUp(500, function(){
+                        $("#language-alert").slideUp(500);
+                    });   
+                }
+            });
+        });
+    </script>
+    <!-- Error Alert Script : End -->    
 @endsection

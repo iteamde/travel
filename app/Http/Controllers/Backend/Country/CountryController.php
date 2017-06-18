@@ -206,6 +206,7 @@ class CountryController extends Controller
             $active = 1;
         }
 
+        /* Send All Relations Through $extra array */
         $extra = [
             'active' => $active,
             'region_id' =>  $request->input('region_id'),
@@ -326,6 +327,7 @@ class CountryController extends Controller
             }
         }
 
+        /* Get All Selected Places For Country Airports */
         $selected_places = $country->airports;
         $selected_places_arr = [];
 
@@ -351,6 +353,7 @@ class CountryController extends Controller
             }
         }
 
+        /* Get All Selected Currencies */
         $selected_currencies = $country->currencies;
         $selected_currencies_arr = [];
 
@@ -366,7 +369,7 @@ class CountryController extends Controller
 
         $data['selected_currencies'] = $selected_currencies_arr;
 
-        /* Get All Currencies */
+        /* Get All Currencies For Dropdown */
         $currencies = Currencies::where(['active' => 1])->get();
         $currencies_arr = [];
         
@@ -392,7 +395,7 @@ class CountryController extends Controller
 
         $data['selected_cities'] = $selected_capitals_arr;
 
-        /* Get All Cities */
+        /* Get All Cities For Dropdown*/
         $cities = Cities::where(['active' => 1])->get();
         $cities_arr = [];
         
@@ -419,7 +422,7 @@ class CountryController extends Controller
 
         $data['selected_numbers'] = $selected_numbers_arr;
 
-        /* Get All EmergencyNumbers */
+        /* Get All EmergencyNumbers For Dropdown */
         $emergency_numbers = EmergencyNumbers::get();
         $emergency_numbers_arr = [];
         
@@ -429,6 +432,7 @@ class CountryController extends Controller
             }
         }
 
+        /* Get All Selected Holidays */
         $selected_holidays = $country->holidays;
         $selected_holidays_arr = [];
 
@@ -444,7 +448,7 @@ class CountryController extends Controller
 
         $data['selected_holidays'] = $selected_holidays_arr;
         
-        /* Get All Holidays */
+        /* Get All Holidays For Dropdown*/
         $holidays = Holidays::get();
         $holidays_arr = [];
         
@@ -470,7 +474,7 @@ class CountryController extends Controller
 
         $data['selected_languages_spoken'] = $selected_languages_spoken_arr;
 
-        /* Get All LanguagesSpoken */
+        /* Get All LanguagesSpoken For Dropdown */
         $languages_spoken = LanguagesSpoken::where(['active' => 1])->get();
         $languages_spoken_arr = [];
 
@@ -496,7 +500,7 @@ class CountryController extends Controller
 
         $data['selected_lifestyles'] = $selected_lifestyles_arr;
 
-        /* Get All Lifestyles */
+        /* Get All Lifestyles For Dropdown*/
         $lifestyles = Lifestyle::get();
         $lifestyles_arr = [];
         
@@ -522,7 +526,7 @@ class CountryController extends Controller
 
         $data['selected_medias'] = $selected_medias_arr;
 
-        /* Get All Medias */
+        /* Get All Medias For Dropdown*/
         $medias = Media::get();
         $medias_arr = [];
         
@@ -548,7 +552,7 @@ class CountryController extends Controller
 
         $data['selected_religions'] = $selected_religions_arr;
 
-        /* Get All Religions */
+        /* Get All Religions For Dropdown*/
         $religions = Religion::where([ 'active' => 1 ])->get();
         $religions_arr = [];
         
@@ -557,7 +561,6 @@ class CountryController extends Controller
                 $religions_arr[$value->id] = $value->transsingle->title;
             }
         }
-
 
         return view('backend.country.edit')
             ->withLanguages($this->languages)
@@ -575,7 +578,6 @@ class CountryController extends Controller
             ->withLifestyles($lifestyles_arr)
             ->withMedias($medias_arr)
             ->withReligions($religions_arr);
-            
     }
 
     /**
@@ -590,7 +592,7 @@ class CountryController extends Controller
         
         $data = [];
 
-       $data = [];
+        $data = [];
         
         foreach ($this->languages as $key => $language) {
             $data[$language->id]['title_'.$language->id] = $request->input('title_'.$language->id);
@@ -661,6 +663,7 @@ class CountryController extends Controller
         $safety_degree = $country->degree;
         $safety_degree = $safety_degree->transsingle;
        
+       /* Get All Selected Places For Airports */
         $airports = $country->airports;
         $airports_arr = [];
 
@@ -678,6 +681,7 @@ class CountryController extends Controller
             }
         }
 
+        /* Get All Selected Currencies */
         $currencies = $country->currencies;
         $currencies_arr = [];
 
@@ -695,6 +699,7 @@ class CountryController extends Controller
             }
         }
 
+        /* Get All Selected Cities As Capitals */
         $capitals = $country->capitals;
         $capitals_arr = [];
 
@@ -712,6 +717,7 @@ class CountryController extends Controller
             }
         }
 
+        /* Get All Emergency Numbers */
         $emergency_numbers = $country->emergency_numbers;
         $emergency_numbers_arr = [];
 
@@ -729,6 +735,7 @@ class CountryController extends Controller
             }
         }
 
+        /* Get All Selected Holidays */
         $holidays = $country->holidays;
         $holidays_arr = [];
 
@@ -782,7 +789,7 @@ class CountryController extends Controller
             }
         }
 
-        /* Get Selected medias */
+        /* Get Selected Medias */
         $medias = $country->medias;
         $medias_arr = [];
 
@@ -817,7 +824,6 @@ class CountryController extends Controller
                 }
             }
         }
-
 
         return view('backend.country.show')
             ->withCountry($country)

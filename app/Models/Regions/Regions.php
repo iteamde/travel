@@ -30,4 +30,17 @@ class Regions extends Model
      * @var array
      */
     protected $fillable = ['active'];
+
+    public function deleteMedias(){
+        $this->deleteModels($this->medias);
+    }
+
+    public function deleteModels($models){
+
+        if(!empty($models)){
+            foreach ($models as $key => $value) {
+                $value->delete();
+            }
+        }
+    }
 }

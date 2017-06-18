@@ -2,9 +2,15 @@
 
 use App\Models\Access\Role\Role;
 use App\Models\Access\Permission\Permission;
+
+/* Regions Models Start */
 use App\Models\Regions\Regions;
 use App\Models\Regions\RegionsTranslation;
+use App\Models\Regions\RegionsMedias;
+/* Regions Models End */
+
 use App\Models\SafetyDegree\SafetyDegreeTrans;
+
 /* Country Models */
 use App\Models\Country\CountriesTranslations;
 use App\Models\Country\CountriesAirports;
@@ -30,9 +36,12 @@ use App\Models\City\CitiesMedias;
 use App\Models\City\CitiesReligions;
 /* City Models End */
 
+/* Place Models : Start */
 use App\Models\PlaceTypes\PlaceTypes;
 use App\Models\PlaceTypes\PlaceTypesTranslations;
 use App\Models\Place\PlaceTranslations;
+use App\Models\Place\PlaceMedias;
+/* Place Models : End */
 
 return [
     
@@ -179,6 +188,11 @@ return [
     'regions_trans_table' => 'conf_regions_trans',
 
     /*
+     * RegionsMedias table used by Access to save roles to the database.
+     */
+    'regions_medias' => RegionsMedias::class,
+
+    /*
      * Placetypes model used by Admin to create correct relations.
      * Update the permission if it is in a different namespace.
      */
@@ -216,4 +230,9 @@ return [
      */
     'place_trans_table' => 'places_trans',
     
+    /*
+     * place_medias model used by Admin to create correct relations.
+     * Update the permission if it is in a different namespace.
+     */
+    'place_medias' => PlaceMedias::class,
 ];

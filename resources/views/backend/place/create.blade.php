@@ -41,6 +41,15 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
         font-family: Roboto;
       }
     </style>
+
+    <!-- Language Error Style: Start -->
+    <style>
+        .required_msg{
+            padding-left: 20px;
+        }
+    </style>
+    <!-- Language Error Style: End -->
+
     <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.3/summernote.css" rel="stylesheet">
 @endsection
 
@@ -59,8 +68,16 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
                 <!-- <h3 class="box-title">{{ trans('labels.backend.access.users.create') }}</h3> -->
                 <h3 class="box-title">Create Place</h3>
 
-            </div><!-- /.box-header -->
-
+            </div>
+            <!-- /.box-header -->
+            <!-- Language Error : Start -->
+            <div class="row error-box">
+                <div class="col-md-10">
+                    <div class="required_msg">
+                    </div>
+                </div>
+            </div>
+            <!-- Language Error : End -->
             <div class="box-body">
                 @if(!empty($languages))
                     <ul class="nav nav-tabs">
@@ -81,7 +98,7 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
                                 {{ Form::label('title_'.$language->id, 'Title', ['class' => 'col-lg-2 control-label']) }}
 
                                 <div class="col-lg-10">
-                                    {{ Form::text('title_'.$language->id, null, ['class' => 'form-control', 'maxlength' => '191', 'required' => 'required', 'autofocus' => 'autofocus', 'placeholder' => 'Title']) }}
+                                    {{ Form::text('title_'.$language->id, null, ['class' => 'form-control required', 'maxlength' => '191', 'required' => 'required', 'autofocus' => 'autofocus', 'placeholder' => 'Title']) }}
                                 </div><!--col-lg-10-->
                             </div><!--form control-->
                             <!-- End: Title -->
@@ -91,7 +108,7 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
                                 {{ Form::label('description_'.$language->id, 'Description', ['class' => 'col-lg-2 control-label description_input']) }}
 
                                 <div class="col-lg-10">
-                                    {{ Form::textarea('description_'.$language->id, null, ['class' => 'form-control description_input description', 'required' => 'required', 'placeholder' => 'Description']) }}
+                                    {{ Form::textarea('description_'.$language->id, null, ['class' => 'form-control description_input description required', 'required' => 'required', 'placeholder' => 'Description']) }}
                                 </div><!--col-lg-10-->
                             </div><!--form control-->
                             <!-- End: Description -->
@@ -101,7 +118,7 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
                                 {{ Form::label('address_'.$language->id, 'Address', ['class' => 'col-lg-2 control-label']) }}
 
                                 <div class="col-lg-10">
-                                    {{ Form::textarea('address_'.$language->id, null, ['class' => 'form-control', 'required' => 'required', 'placeholder' => 'Address']) }}
+                                    {{ Form::textarea('address_'.$language->id, null, ['class' => 'form-control required', 'required' => 'required', 'placeholder' => 'Address']) }}
                                 </div><!--col-lg-10-->
                             </div><!--form control-->
                             <!-- End: Address -->
@@ -111,7 +128,7 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
                                 {{ Form::label('phone_'.$language->id, 'Phone', ['class' => 'col-lg-2 control-label']) }}
 
                                 <div class="col-lg-10">
-                                    {{ Form::text('phone_'.$language->id, null, ['class' => 'form-control', 'maxlength' => '191', 'required' => 'required', 'placeholder' => 'Phone']) }}
+                                    {{ Form::text('phone_'.$language->id, null, ['class' => 'form-control required', 'maxlength' => '191', 'required' => 'required', 'placeholder' => 'Phone']) }}
                                 </div><!--col-lg-10-->
                             </div><!--form control-->
                             <!-- End: Phone -->
@@ -121,7 +138,7 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
                                 {{ Form::label('highlights_'.$language->id, 'High Lights', ['class' => 'col-lg-2 control-label']) }}
 
                                 <div class="col-lg-10">
-                                    {{ Form::textarea('highlights_'.$language->id, null, ['class' => 'form-control', 'maxlength' => '191', 'required' => 'required', 'placeholder' => 'High Lights']) }}
+                                    {{ Form::textarea('highlights_'.$language->id, null, ['class' => 'form-control required', 'maxlength' => '191', 'required' => 'required', 'placeholder' => 'High Lights']) }}
                                 </div><!--col-lg-10-->
                             </div><!--form control-->
                             <!-- End: High Lights -->
@@ -131,7 +148,7 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
                                 {{ Form::label('working_days_'.$language->id, 'Best time', ['class' => 'col-lg-2 control-label']) }}
 
                                 <div class="col-lg-10">
-                                    {{ Form::textarea('working_days_'.$language->id, null, ['class' => 'form-control', 'maxlength' => '191', 'required' => 'required', 'placeholder' => 'Working Days']) }}
+                                    {{ Form::textarea('working_days_'.$language->id, null, ['class' => 'form-control required', 'maxlength' => '191', 'required' => 'required', 'placeholder' => 'Working Days']) }}
                                 </div><!--col-lg-10-->
                             </div><!--form control-->
                             <!-- End: Working Days -->
@@ -141,7 +158,7 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
                                 {{ Form::label('working_times_'.$language->id, 'Working Times', ['class' => 'col-lg-2 control-label']) }}
 
                                 <div class="col-lg-10">
-                                    {{ Form::textarea('working_times_'.$language->id, null, ['class' => 'form-control', 'maxlength' => '191', 'required' => 'required', 'placeholder' => 'Working Times']) }}
+                                    {{ Form::textarea('working_times_'.$language->id, null, ['class' => 'form-control required', 'maxlength' => '191', 'required' => 'required', 'placeholder' => 'Working Times']) }}
                                 </div><!--col-lg-10-->
                             </div><!--form control-->
                             <!-- End: Working Times -->
@@ -151,7 +168,7 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
                                 {{ Form::label('how_to_go_'.$language->id, 'How To Go', ['class' => 'col-lg-2 control-label']) }}
 
                                 <div class="col-lg-10">
-                                    {{ Form::textarea('how_to_go_'.$language->id, null, ['class' => 'form-control', 'maxlength' => '191', 'required' => 'required', 'placeholder' => 'How To Go']) }}
+                                    {{ Form::textarea('how_to_go_'.$language->id, null, ['class' => 'form-control required', 'maxlength' => '191', 'required' => 'required', 'placeholder' => 'How To Go']) }}
                                 </div><!--col-lg-10-->
                             </div><!--form control-->
                             <!-- End: How To Go -->
@@ -161,7 +178,7 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
                                 {{ Form::label('when_to_go_'.$language->id, 'When To Go', ['class' => 'col-lg-2 control-label']) }}
 
                                 <div class="col-lg-10">
-                                    {{ Form::textarea('when_to_go_'.$language->id, null, ['class' => 'form-control', 'maxlength' => '191', 'required' => 'required', 'placeholder' => 'When To Go']) }}
+                                    {{ Form::textarea('when_to_go_'.$language->id, null, ['class' => 'form-control required', 'maxlength' => '191', 'required' => 'required', 'placeholder' => 'When To Go']) }}
                                 </div><!--col-lg-10-->
                             </div><!--form control-->
                             <!-- End: When To Go -->
@@ -171,7 +188,7 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
                                 {{ Form::label('num_activities_'.$language->id, 'No. of Activities', ['class' => 'col-lg-2 control-label']) }}
 
                                 <div class="col-lg-10">
-                                    {{ Form::input('number','num_activities_'.$language->id, null , ['class' => 'form-control', 'required' => 'required', 'placeholder' => 'No. of Activities']) }}
+                                    {{ Form::input('number','num_activities_'.$language->id, null , ['class' => 'form-control required', 'required' => 'required', 'placeholder' => 'No. of Activities']) }}
                                 </div><!--col-lg-10-->
                             </div><!--form control-->
                             <!-- End: Num Activities -->
@@ -181,7 +198,7 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
                                 {{ Form::label('popularity_'.$language->id, 'Popularity', ['class' => 'col-lg-2 control-label']) }}
 
                                 <div class="col-lg-10">
-                                    {{ Form::text('popularity_'.$language->id, null, ['class' => 'form-control', 'maxlength' => '191', 'required' => 'required', 'placeholder' => 'Popularity']) }}
+                                    {{ Form::text('popularity_'.$language->id, null, ['class' => 'form-control required', 'maxlength' => '191', 'required' => 'required', 'placeholder' => 'Popularity']) }}
                                 </div><!--col-lg-10-->
                             </div><!--form control-->
                             <!-- End: Popularity -->
@@ -191,7 +208,7 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
                                 {{ Form::label('conditions_'.$language->id, 'Conditions', ['class' => 'col-lg-2 control-label']) }}
 
                                 <div class="col-lg-10">
-                                    {{ Form::textarea('conditions_'.$language->id, null, ['class' => 'form-control', 'maxlength' => '191', 'required' => 'required', 'placeholder' => 'Conditions']) }}
+                                    {{ Form::textarea('conditions_'.$language->id, null, ['class' => 'form-control required', 'maxlength' => '191', 'required' => 'required', 'placeholder' => 'Conditions']) }}
                                 </div><!--col-lg-10-->
                             </div><!--form control-->
                             <!-- End: Popularity -->
@@ -201,7 +218,7 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
                                 {{ Form::label('price_level_'.$language->id, 'Price Level', ['class' => 'col-lg-2 control-label']) }}
 
                                 <div class="col-lg-10">
-                                     {{ Form::input('number','price_level_'.$language->id, null , ['class' => 'form-control', 'required' => 'required', 'placeholder' => 'Price Level']) }}
+                                     {{ Form::input('number','price_level_'.$language->id, null , ['class' => 'form-control required', 'required' => 'required', 'placeholder' => 'Price Level']) }}
                                 </div><!--col-lg-10-->
                             </div><!--form control-->
                             <!-- End: Price Level -->
@@ -211,7 +228,7 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
                                 {{ Form::label('num_checkins'.$language->id, 'No. of Checkins', ['class' => 'col-lg-2 control-label']) }}
 
                                 <div class="col-lg-10">
-                                    {{ Form::input('number','num_checkins_'.$language->id, null , ['class' => 'form-control', 'required' => 'required', 'placeholder' => 'No. of Checkins']) }}
+                                    {{ Form::input('number','num_checkins_'.$language->id, null , ['class' => 'form-control required', 'required' => 'required', 'placeholder' => 'No. of Checkins']) }}
                                 </div><!--col-lg-10-->
                             </div><!--form control-->
                             <!-- End: No. of Checkins -->
@@ -222,7 +239,7 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
                                 {{ Form::label('history_'.$language->id, 'History', ['class' => 'col-lg-2 control-label']) }}
 
                                 <div class="col-lg-10">
-                                    {{ Form::textarea('history_'.$language->id, null, ['class' => 'form-control', 'maxlength' => '191', 'required' => 'required', 'placeholder' => 'History']) }}
+                                    {{ Form::textarea('history_'.$language->id, null, ['class' => 'form-control required', 'maxlength' => '191', 'required' => 'required', 'placeholder' => 'History']) }}
                                 </div><!--col-lg-10-->
                             </div><!--form control-->
                             <!-- End: History -->
@@ -281,6 +298,16 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
                         </div><!--col-lg-10-->
                     </div><!--form control-->
                     <!-- Safety Degree: End -->
+
+                    <!-- Medias: Start -->
+                    <div class="form-group">
+                        {{ Form::label('title', 'Medias', ['class' => 'col-lg-2 control-label']) }}
+
+                        <div class="col-lg-10">
+                            {{ Form::select('medias_id[]', $medias , null,['class' => 'select2Class form-control' , 'multiple' => 'multiple']) }}
+                        </div><!--col-lg-10-->
+                    </div><!--form control-->
+                    <!-- Medias: End -->
 
                     <div class="form-group">
                     {{ Form::label('title', 'Select Location', ['class' => 'col-lg-2 control-label']) }}
@@ -423,4 +450,28 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
 
     </script>
     <script type="text/javascript" src='//maps.googleapis.com/maps/api/js?key=AIzaSyAVazCatVc38xoeqY-F_9bAn6uo7NU2m9Y&libraries=places&callback=initAutocomplete'></script>
+
+    <!-- Error Alert Script : Start -->
+    <script>
+        $(document).on('click' , '.submit_button' , function(){
+        
+            var msg = '<div id="language-alert" class="alert alert-danger alert-dismissable fade in"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Error!</strong> Please Fill Information In All Languages Tabs.</div>';
+
+            $('.required').each(function(index,data){
+                var flag = false;
+                if($(this).val() == ''){
+                    
+                    flag = true;
+                }
+
+                if(flag){
+                    $('.required_msg').html(msg);
+                    $("#language-alert").fadeTo(5000, 500).slideUp(500, function(){
+                        $("#language-alert").slideUp(500);
+                    });   
+                }
+            });
+        });
+    </script>
+    <!-- Error Alert Script : End -->
 @endsection

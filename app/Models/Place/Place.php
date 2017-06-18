@@ -26,4 +26,16 @@ class Place extends Model
      * @var array
      */
     protected $fillable = ['region_id', 'code', 'lat', 'lng', 'safety_degree', 'active'];
+
+    public function deleteMedias(){
+        $this->deleteModals($this->medias);
+    }
+
+    public function deleteModals($models){
+        if(!empty($models)){
+            foreach ($models as $key => $value) {
+                $value->delete();
+            }
+        }
+    }
 }
