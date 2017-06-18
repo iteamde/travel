@@ -2,7 +2,7 @@
 
 @section('page-header')
     <h1>
-        {{ app_name() }}
+        Travooo
         <small>{{ trans('strings.backend.dashboard.title') }}</small>
     </h1>
 @endsection
@@ -16,7 +16,7 @@
             </div><!-- /.box tools -->
         </div><!-- /.box-header -->
         <div class="box-body">
-            {!! trans('strings.backend.welcome') !!}
+            
         </div><!-- /.box-body -->
     </div><!--box box-success-->
 
