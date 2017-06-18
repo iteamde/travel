@@ -3,12 +3,12 @@
     <a href="{{ route('frontend.index') }}" class="logo">
         <!-- mini logo for sidebar mini 50x50 pixels -->
         <span class="logo-mini">
-           {{ substr(app_name(), 0, 1) }}
+           Travooo Admin
         </span>
 
         <!-- logo for regular state and mobile devices -->
         <span class="logo-lg">
-            {{ app_name() }}
+            Travooo Admin
         </span>
     </a>
 
@@ -19,15 +19,6 @@
 
         <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
-
-                @if (config('locale.status') && count(config('locale.languages')) > 1)
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                            <i class="fa fa-language"></i> {{ trans('menus.language-picker.language') }} <span class="caret"></span>
-                        </a>
-                        @include('includes.partials.lang')
-                    </li>
-                @endif
 
                 <li class="dropdown messages-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
