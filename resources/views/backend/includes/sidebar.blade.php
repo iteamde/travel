@@ -83,6 +83,7 @@
                 </ul>
             </li>
 
+            <!-- Locations Manager Start -->
             <li class="{{ active_class(Active::checkUriPattern('admin/location/*')) }} treeview">
                 <a href="#">
                     <i class="fa fa-users"></i>
@@ -133,25 +134,50 @@
                     </li>
                 </ul>
             </li>
-
+            <!-- Locations Manager End -->
+            
+            <!-- Embassies Manager Start -->
             <li class="{{ active_class(Active::checkUriPattern('admin/access/safety-degrees/*') , 'active') }} treeview">
                 <a href="#">
                     <i class="fa fa-users"></i>
                      <!-- <span>{{ trans('menus.backend.language.title') }}</span> -->
-                     <span>{{ trans('labels.backend.safety_degrees.safety_degrees_manager') }}</span>
+                     <span>{{ trans('labels.backend.embassies.embassies_manager') }}</span>
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
 
                 <ul class="treeview-menu {{ active_class(Active::checkUriPattern('admin/access/safety-degrees/safety*'), 'menu-open') }}" style="display: none; {{ active_class(Active::checkUriPattern('admin/safety-degrees/safety*'), 'display: block;') }}">
                     <li class="{{ active_class(Active::checkUriPattern('admin/safety-degrees/safety*')) }}">
-                        <a href="{{ route('admin.safety-degrees.safety.index') }}">
+                        <a href="{{ route('admin.embassies.embassies.index') }}">
                             <i class="fa fa-circle-o"></i>
                             <!-- <span>{{ trans('labels.backend.access.langauge.management') }}</span> -->
-                            <span>{{ trans('labels.backend.safety_degrees.safety_degrees') }}</span>
+                            <span>{{ trans('labels.backend.embassies.embassies') }}</span>
                         </a>
                     </li>
                 </ul>
             </li>
+            <!-- Embassies Manager End -->
+
+            <!-- Hotels Manager Start -->
+            <li class="{{ active_class(Active::checkUriPattern('admin/access/safety-degrees/*') , 'active') }} treeview">
+                <a href="#">
+                    <i class="fa fa-users"></i>
+                     <!-- <span>{{ trans('menus.backend.language.title') }}</span> -->
+                     <span>{{ 'Hotels Manager' }}</span>
+                    <i class="fa fa-angle-left pull-right"></i>
+                </a>
+
+                <ul class="treeview-menu {{ active_class(Active::checkUriPattern('admin/access/safety-degrees/safety*'), 'menu-open') }}" style="display: none; {{ active_class(Active::checkUriPattern('admin/safety-degrees/safety*'), 'display: block;') }}">
+                    <li class="{{ active_class(Active::checkUriPattern('admin/safety-degrees/safety*')) }}">
+                        <a href="{{ route('admin.hotels.hotels.index') }}">
+                            <i class="fa fa-circle-o"></i>
+                            <!-- <span>{{ trans('labels.backend.access.langauge.management') }}</span> -->
+                            <span>{{ 'Hotels' }}</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <!-- Hotels Manager End -->
+
 
             <!-- Activities Manager -->
             <li class="{{ active_class(Active::checkUriPattern('admin/activities*')) | active_class(Active::checkUriPattern('admin/activitymedia/activitymedia*')) }} treeview">

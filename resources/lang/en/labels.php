@@ -181,6 +181,11 @@ return [
             'cities_manager' => 'Cities Manager',
             'active_cities' => 'Active Cities',
         ],
+        'embassies' => [
+            'embassies_manager' => 'Embassies Manager',
+            'active_embassies' => 'Active Embassies',
+            'embassies' => 'Embassies'
+        ],
     ],
 
     'frontend' => [

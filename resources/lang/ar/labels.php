@@ -180,6 +180,11 @@ return [
             'cities_manager' => 'مدير المدن',
             'active_cities' => 'المدن النشطة',
         ],
+        'embassies' => [
+            'embassies_manager' => 'مدير السفارات',
+            'active_embassies' => 'السفارات النشطة',
+            'embassies' => 'السفارات'
+        ],
     ],
 
     'frontend' => [

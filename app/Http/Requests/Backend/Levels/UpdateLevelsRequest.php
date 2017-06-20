@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Requests\Backend\Religion;
+namespace App\Http\Requests\Backend\Levels;
 
 use App\Http\Requests\Request;
 use App\Models\Access\language\Languages;
 
 /**
- * Class UpdateReligionRequest.
+ * Class UpdateLevelsRequest.
  */
-class UpdateReligionRequest extends Request
+class UpdateLevelsRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.

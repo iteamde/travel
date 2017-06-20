@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Requests\Backend\Country;
+namespace App\Http\Requests\Backend\Hotels;
 
 use App\Http\Requests\Request;
 use App\Models\Access\language\Languages;
 
 /**
- * Class UpdateCountryRequest.
+ * Class UpdateHotelsRequest.
  */
-class UpdateCountryRequest extends Request
+class UpdateHotelsRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.

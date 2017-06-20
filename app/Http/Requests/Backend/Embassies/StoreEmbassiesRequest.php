@@ -1,14 +1,13 @@
 <?php
 
-namespace App\Http\Requests\Backend\Country;
+namespace App\Http\Requests\Backend\Embassies;
 
 use App\Http\Requests\Request;
 use App\Models\Access\language\Languages;
-
 /**
- * Class UpdateCountryRequest.
+ * Class StoreEmbassiesRequest.
  */
-class UpdateCountryRequest extends Request
+class StoreEmbassiesRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -31,8 +30,9 @@ class UpdateCountryRequest extends Request
         $languages = \DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE)->get();
         foreach ($languages as $key => $language) {
             $inputs['title_'.$language->id] = 'required|max:255';
+            $inputs['description_'.$language->id] = 'required';
         }
-        $inputs['active'] = 'required';
+        // $inputs['active'] = 'required';
         return $inputs;
     }
 }

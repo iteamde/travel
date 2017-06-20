@@ -1,14 +1,13 @@
 <?php
 
-namespace App\Http\Requests\Backend\Country;
+namespace App\Http\Requests\Backend\Hotels;
 
 use App\Http\Requests\Request;
 use App\Models\Access\language\Languages;
-
 /**
- * Class UpdateCountryRequest.
+ * Class StoreHotelsRequest.
  */
-class UpdateCountryRequest extends Request
+class StoreHotelsRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -32,7 +31,7 @@ class UpdateCountryRequest extends Request
         foreach ($languages as $key => $language) {
             $inputs['title_'.$language->id] = 'required|max:255';
         }
-        $inputs['active'] = 'required';
+        // $inputs['active'] = 'required';
         return $inputs;
     }
 }
