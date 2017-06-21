@@ -180,7 +180,7 @@
 
 
             <!-- Activities Manager -->
-            <li class="{{ active_class(Active::checkUriPattern('admin/activities*')) | active_class(Active::checkUriPattern('admin/activitymedia/activitymedia*')) }} treeview">
+            <li class="{{ active_class(Active::checkUriPattern('admin/activities*')) | active_class(Active::checkUriPattern('admin/activitymedia/activitymedia-disabled*')) }} treeview">
                 <a href="#">
                     <i class="fa fa-users"></i>
                      <!-- <span>{{ trans('menus.backend.language.title') }}</span> -->
@@ -188,7 +188,7 @@
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
 
-                <ul class="treeview-menu {{ active_class(Active::checkUriPattern('admin/activities*'), 'menu-open') | active_class(Active::checkUriPattern('admin/activitymedia/activitymedia*'), 'menu-open') }}" style="display: none; {{ active_class(Active::checkUriPattern('admin/activities*') | Active::checkUriPattern('admin/activitymedia/activitymedia*'), 'display: block;') }}">
+                <ul class="treeview-menu {{ active_class(Active::checkUriPattern('admin/activities*'), 'menu-open') | active_class(Active::checkUriPattern('admin/activitymedia/activitymedia-disabled*'), 'menu-open') }}" style="display: none; {{ active_class(Active::checkUriPattern('admin/activities*') | Active::checkUriPattern('admin/activitymedia/activitymedia-disabled*'), 'display: block;') }}">
                     
                     <li class="{{ active_class(Active::checkUriPattern('admin/activities/activitytypes*')) }}">
                         <a href="{{ route('admin.activities.activitytypes.index') }}">
@@ -206,7 +206,7 @@
                         </a>
                     </li>
 
-                    <li class="{{ active_class(Active::checkUriPattern('admin/activitymedia/activitymedia*')) }}">
+                    <li class="{{ active_class(Active::checkUriPattern('admin/activitymedia/activitymedia-disabled*')) }}">
                         <a href="javascript:void(0);">
                             <i class="fa fa-circle-o"></i>
                             <!-- <span>{{ trans('labels.backend.access.users.management') }}</span> -->
@@ -237,7 +237,7 @@
             </li>
 
             <!-- Media Manager -->
-            <li class="{{ active_class(Active::checkUriPattern('admin/interest/interest*')) }} treeview">
+            <li class="{{ active_class(Active::checkUriPattern('admin/activitymedia/activitymedia*')) }} treeview">
                 <a href="#">
                     <i class="fa fa-users"></i>
                      <!-- <span>{{ trans('menus.backend.language.title') }}</span> -->
@@ -245,8 +245,8 @@
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
 
-                <ul class="treeview-menu {{ active_class(Active::checkUriPattern('admin/interest/interest*'), 'menu-open') }}" style="display: none; {{ active_class(Active::checkUriPattern('admin/interest/interest*'), 'display: block;') }}">
-                    <li class="{{ active_class(Active::checkUriPattern('admin/interest/interest*')) }}">
+                <ul class="treeview-menu {{ active_class(Active::checkUriPattern('admin/activitymedia/activitymedia*'), 'menu-open') }}" style="display: none; {{ active_class(Active::checkUriPattern('admin/activitymedia/activitymedia**'), 'display: block;') }}">
+                    <li class="{{ active_class(Active::checkUriPattern('admin/activitymedia/activitymedia*')) }}">
                         <a href="{{ route('admin.activitymedia.activitymedia.index') }}">
                             <i class="fa fa-circle-o"></i>
                             <!-- <span>{{ trans('labels.backend.access.langauge.management') }}</span> -->
