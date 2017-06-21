@@ -495,6 +495,34 @@
                     </li>
                 </ul>
             </li>
+
+            <!-- Pages Manager -->
+            <li class="{{ active_class(Active::checkUriPattern('admin/pages/pages*')) }} treeview">
+                <a href="#">
+                    <i class="fa fa-users"></i>
+                     <!-- <span>{{ trans('menus.backend.language.title') }}</span> -->
+                     <span>{{ 'Pages Manager' }}</span>
+                    <i class="fa fa-angle-left pull-right"></i>
+                </a>
+
+                <ul class="treeview-menu {{ active_class(Active::checkUriPattern('admin/pages/*'), 'menu-open') }}" style="display: none; {{ active_class(Active::checkUriPattern('admin/pages/*'), 'display: block;') }}">
+                    <li class="{{ active_class(Active::checkUriPattern('admin/pages/pages') | Active::checkUriPattern('admin/pages/pages/*')) }}">
+                        <a href="{{ route('admin.pages.pages.index') }}">
+                            <i class="fa fa-circle-o"></i>
+                            <!-- <span>{{ trans('labels.backend.access.langauge.management') }}</span> -->
+                            <span>{{ 'Pages' }}</span>
+                        </a>
+                    </li>
+
+                    <li class="{{ active_class(Active::checkUriPattern('admin/pages/pages_categories*')) }}">
+                        <a href="{{ route('admin.pages.pages_categories.index') }}">
+                            <i class="fa fa-circle-o"></i>
+                            <!-- <span>{{ trans('labels.backend.access.langauge.management') }}</span> -->
+                            <span>{{ 'Pages Categories' }}</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
             @endauth
 
             <li class="{{ active_class(Active::checkUriPattern('admin/log-viewer*')) }} treeview">
