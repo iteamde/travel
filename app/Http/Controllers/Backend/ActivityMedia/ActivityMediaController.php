@@ -61,7 +61,7 @@ class ActivityMediaController extends Controller
         ];
         $this->activitymedia->create($data,$extra);
         
-        return redirect()->route('admin.activitymedia.activitymedia.index')->withFlashSuccess('Activity Media Created!');
+        return redirect()->route('admin.activitymedia.activitymedia.index')->withFlashSuccess('Media Created!');
     }
 
     /**
@@ -82,7 +82,7 @@ class ActivityMediaController extends Controller
         }
         $item->delete();
 
-        return redirect()->route('admin.activitymedia.activitymedia.index')->withFlashSuccess('Activity Media Deleted Successfully');
+        return redirect()->route('admin.activitymedia.activitymedia.index')->withFlashSuccess('Media Deleted Successfully');
     }
 
     /**
@@ -146,7 +146,7 @@ class ActivityMediaController extends Controller
         $this->activitymedia->update($id , $activitymedia, $data , $extra);
         
         return redirect()->route('admin.activitymedia.activitymedia.index')
-            ->withFlashSuccess('Activity Media updated Successfully!');
+            ->withFlashSuccess('Media updated Successfully!');
     }
 
     /**

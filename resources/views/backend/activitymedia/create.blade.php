@@ -5,7 +5,7 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
 ?>
 @extends ('backend.layouts.app')
 
-@section ('title', 'Activity Media Manager' . ' | ' . 'Create Activity Media')
+@section ('title', 'Media Manager' . ' | ' . 'Create Media')
 
 @section('page-header')
     <!-- <h1>
@@ -13,8 +13,8 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
         <small>{{ trans('labels.backend.access.users.create') }}</small>
     </h1> -->
     <h1>
-        Activity Media Manager
-        <small>Create Activity Media</small>
+        Media Manager
+        <small>Create Media</small>
     </h1>
 @endsection
 
@@ -67,7 +67,7 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
         <div class="box box-success">
             <div class="box-header with-border">
                 <!-- <h3 class="box-title">{{ trans('labels.backend.access.users.create') }}</h3> -->
-                <h3 class="box-title">Create Activity Media</h3>
+                <h3 class="box-title">Create Media</h3>
 
             </div><!-- /.box-header -->
             <!-- Language Error : Start -->

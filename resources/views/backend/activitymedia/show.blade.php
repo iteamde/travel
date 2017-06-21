@@ -1,11 +1,11 @@
 @extends ('backend.layouts.app')
 
-@section ('title', 'Activity Media Management' . ' | ' . 'View Activity Media')
+@section ('title', 'Media Management' . ' | ' . 'View Media')
 
 @section('page-header')
     <h1>
-        Activity Media Management
-        <small>View Activity Media</small>
+        Media Management
+        <small>View Media</small>
     </h1>
 @endsection
 
@@ -23,7 +23,7 @@
 @section('content')
     <div class="box box-success">
         <div class="box-header with-border">
-            <h3 class="box-title">View Activity Media</h3>
+            <h3 class="box-title">View Media</h3>
 
             <div class="box-tools pull-right">
                 @include('backend.activitymedia.partials.header-buttons-view')

@@ -5,13 +5,13 @@ use App\Models\Access\language\Languages;
 
 @extends ('backend.layouts.app')
 
-@section ('title', 'Activity Media Manager' . ' | ' . 'Edit Activity Media')
+@section ('title', 'Activity Manager' . ' | ' . 'Edit Media')
 
 @section('page-header')
     <h1>
         <!-- {{ trans('labels.backend.access.users.management') }} -->
-        Activity Media Management
-        <small>Edit Activity Media</small>
+         Media Management
+        <small>Edit Media</small>
     </h1>
 @endsection
 
@@ -62,7 +62,7 @@ use App\Models\Access\language\Languages;
         <div class="box box-success">
             <div class="box-header with-border">
                 <!-- <h3 class="box-title">{{ trans('labels.backend.access.users.create') }}</h3> -->
-                <h3 class="box-title">Edit Activity Media</h3>
+                <h3 class="box-title">Edit Media</h3>
 
             </div><!-- /.box-header -->
 

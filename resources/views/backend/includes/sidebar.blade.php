@@ -207,7 +207,7 @@
                     </li>
 
                     <li class="{{ active_class(Active::checkUriPattern('admin/activitymedia/activitymedia*')) }}">
-                        <a href="{{ route('admin.activitymedia.activitymedia.index') }}">
+                        <a href="javascript:void(0);">
                             <i class="fa fa-circle-o"></i>
                             <!-- <span>{{ trans('labels.backend.access.users.management') }}</span> -->
                             <span>{{ trans('labels.backend.activities.activity_media') }}</span>
@@ -231,6 +231,26 @@
                             <i class="fa fa-circle-o"></i>
                             <!-- <span>{{ trans('labels.backend.access.langauge.management') }}</span> -->
                             <span>{{ trans('labels.backend.interests.interests') }}</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <!-- Media Manager -->
+            <li class="{{ active_class(Active::checkUriPattern('admin/interest/interest*')) }} treeview">
+                <a href="#">
+                    <i class="fa fa-users"></i>
+                     <!-- <span>{{ trans('menus.backend.language.title') }}</span> -->
+                     <span>{{ 'Media Manager' }}</span>
+                    <i class="fa fa-angle-left pull-right"></i>
+                </a>
+
+                <ul class="treeview-menu {{ active_class(Active::checkUriPattern('admin/interest/interest*'), 'menu-open') }}" style="display: none; {{ active_class(Active::checkUriPattern('admin/interest/interest*'), 'display: block;') }}">
+                    <li class="{{ active_class(Active::checkUriPattern('admin/interest/interest*')) }}">
+                        <a href="{{ route('admin.activitymedia.activitymedia.index') }}">
+                            <i class="fa fa-circle-o"></i>
+                            <!-- <span>{{ trans('labels.backend.access.langauge.management') }}</span> -->
+                            <span>{{ 'Medias' }}</span>
                         </a>
                     </li>
                 </ul>

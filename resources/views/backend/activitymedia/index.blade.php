@@ -1,6 +1,6 @@
 @extends ('backend.layouts.app')
 
-@section('title', 'Activity Media Manager')
+@section('title', 'Media Manager')
 
 @section('after-styles')
     {{ Html::style("https://cdn.datatables.net/v/bs/dt-1.10.15/datatables.min.css") }}
@@ -12,8 +12,8 @@
         <small>{{ trans('labels.backend.access.users.active') }}</small>
     </h1> -->
     <h1>
-    	Activity Media Manager
-    	<small>Active Activity Media</small>
+    	Media Manager
+    	<small>Active Media</small>
     </h1>
 @endsection
 
@@ -21,7 +21,7 @@
     <div class="box box-success">
         <div class="box-header with-border">
             <!-- <h3 class="box-title">{{ trans('labels.backend.access.users.active') }}</h3> -->
-            <h3 class="box-title">Activity Media</h3>
+            <h3 class="box-title">Media</h3>
 
             <div class="box-tools pull-right">
                 @include('backend.activitymedia.partials.header-buttons')
