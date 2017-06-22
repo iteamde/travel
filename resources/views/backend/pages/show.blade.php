@@ -80,6 +80,22 @@
                       </tr>
                     @endforeach
                     <!-- End: Medias -->
+
+                    <!-- Start: Admins -->
+                    <tr>
+                         <th> <h3 style="color:#0A8F27">Admins</h3></th><td></td>   
+                    </tr>
+                    @if(empty($admins))
+                      <tr>
+                          <th> <p>No Admins Added.</p> </th>
+                      </tr>
+                    @endif
+                    @foreach($admins as $key => $admin)
+                      <tr>
+                          <th> <p><?=$admin?></p> </th>
+                      </tr>
+                    @endforeach
+                    <!-- End: Admins -->
                     
                 </table>
             </div><!--tab panel-->

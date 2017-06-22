@@ -10,6 +10,8 @@ use App\Http\Requests\Backend\Pages\ManagePagesRequest;
 use App\Http\Requests\Backend\Pages\StorePagesRequest;
 use App\Repositories\Backend\Pages\PagesRepository;
 use App\Models\ActivityMedia\Media;
+use App\Models\User\User;
+use App\Models\Role\RoleUser;
 
 class PagesController extends Controller
 {
@@ -48,8 +50,19 @@ class PagesController extends Controller
             }
         }
 
+        /* Get All Admins For Dropdown */
+        $admins = RoleUser::where(['role_id' => 1])->get();
+        $admins_arr = [];
+
+        if(!empty($admins)){
+            foreach ($admins as $key => $value) {
+                $admins_arr[$value->user->id] = $value->user->name;
+            }
+        }
+
         return view('backend.pages.create',[
-            'medias' => $medias_arr
+            'medias' => $medias_arr,
+            'admins' => $admins_arr,
         ]);
     }
 
@@ -75,7 +88,8 @@ class PagesController extends Controller
         $extra = [
             'active' => $active,
             'url' => $request->input('url'),
-            'medias' => $request->input('medias_id')
+            'medias' => $request->input('medias_id'),
+            'admins' => $request->input('admins_id')
         ];
         
         $this->pages->create($data , $extra);
@@ -99,6 +113,7 @@ class PagesController extends Controller
                 $value->delete();
             }
         }
+        $item->deleteAdmins();
         $item->delete();
 
         return redirect()->route('admin.pages.pages.index')->withFlashSuccess('Page Deleted Successfully');
@@ -159,12 +174,35 @@ class PagesController extends Controller
             }
         }
 
+        /* Get Selected Admins For Dropdown */
+        $selected_admins = $pages->admins;
+        $selected_admins_arr = [];
+
+        if(!empty($selected_admins)){
+            foreach ($selected_admins as $key => $value) {
+                array_push($selected_admins_arr,$value->users_id);
+            }
+        }
+
+        $data['selected_admins'] = $selected_admins_arr;
+        
+        /* Get All Admins For Dropdown */
+        $admins = RoleUser::where(['role_id' => 1])->get();
+        $admins_arr = [];
+
+        if(!empty($admins)){
+            foreach ($admins as $key => $value) {
+                $admins_arr[$value->user->id] = $value->user->name;
+            }
+        }
+
         return view('backend.pages.edit')
             ->withLanguages($this->languages)
             ->withPages($pages)
             ->withPagesid($id)
             ->withData($data)
-            ->withMedias($medias_arr);
+            ->withMedias($medias_arr)
+            ->withAdmins($admins_arr);
     }
 
     /**
@@ -192,7 +230,8 @@ class PagesController extends Controller
         $extra = [
             'active' => $active,
             'url' => $request->input('url'),
-            'medias' => $request->input('medias_id')
+            'medias' => $request->input('medias_id'),
+            'admins' => $request->input('admins_id'),
         ];
 
         $this->pages->update($id , $pages, $data , $extra);
@@ -217,8 +256,7 @@ class PagesController extends Controller
         $selected_medias_arr = [];
 
         if(!empty($selected_medias)){
-            foreach ($selected_medias as $key => $value) {
-                
+            foreach ($selected_medias as $key => $value) {               
                 if(!empty($value->media)){
                     if(!empty($value->media->transsingle)){
                         array_push($selected_medias_arr,$value->media->transsingle->title);
@@ -227,10 +265,22 @@ class PagesController extends Controller
             }
         }
 
+        $selected_admins = $pages->admins;
+        $selected_admins_arr = [];
+
+        if(!empty($selected_admins)){
+            foreach ($selected_admins as $key => $value) {               
+                if(!empty($value->user)){
+                        array_push($selected_admins_arr,$value->user->name);
+                }
+            }
+        }
+        
         return view('backend.pages.show')
             ->withPages($pages)
             ->withPagestrans($pagesTrans)
-            ->withMedias($selected_medias_arr);
+            ->withMedias($selected_medias_arr)
+            ->withAdmins($selected_admins_arr);
     }
 
     /**

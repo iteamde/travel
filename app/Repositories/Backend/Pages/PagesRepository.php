@@ -5,6 +5,7 @@ namespace App\Repositories\Backend\Pages;
 use App\Models\Pages\Pages;
 use App\Models\Pages\PagesTranslations;
 use App\Models\Pages\PagesMedias;
+use App\Models\Pages\PagesAdmins;
 use Illuminate\Support\Facades\DB;
 use App\Exceptions\GeneralException;
 use App\Repositories\BaseRepository;
@@ -104,6 +105,16 @@ class PagesRepository extends BaseRepository
             $check = 1;
             
             if ($model->save()) {
+                
+                if(!empty($extra['admins'])){
+                    foreach ($extra['admins'] as $key => $value) {
+                        $PagesAdmins = new PagesAdmins;
+                        $PagesAdmins->pages_id = $model->id;
+                        $PagesAdmins->users_id = $value;
+                        $PagesAdmins->save();
+                    }
+                }
+
                 if(!empty($extra['medias'])){
                     foreach ($extra['medias'] as $key => $value) {
                         $PagesMedias = new PagesMedias;
@@ -160,11 +171,27 @@ class PagesRepository extends BaseRepository
             }
         }
 
+        $prevAdmins = PagesAdmins::where(['pages_id' => $id])->get();
+        if(!empty($prevAdmins)){
+            foreach ($prevAdmins as $key => $value) {
+                $value->delete();
+            }
+        }
+
         DB::transaction(function () use ($model, $input , $extra) {
             $check = 1;
             
             if ($model->save()) {
                 
+                if(!empty($extra['admins'])){
+                    foreach ($extra['admins'] as $key => $value) {
+                        $PagesAdmins = new PagesAdmins;
+                        $PagesAdmins->pages_id = $model->id;
+                        $PagesAdmins->users_id = $value;
+                        $PagesAdmins->save();
+                    }
+                }
+
                 if(!empty($extra['medias'])){
                     foreach ($extra['medias'] as $key => $value) {
                         $PagesMedias = new PagesMedias;

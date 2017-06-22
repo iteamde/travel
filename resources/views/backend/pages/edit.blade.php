@@ -147,6 +147,16 @@ use App\Models\Access\language\Languages;
                     </div><!--form control-->
                     <!-- Medias : End -->
 
+                    <!-- Admins : Start -->
+                    <div class="form-group">
+                        {{ Form::label('medias', 'Admins', ['class' => 'col-lg-2 control-label']) }}
+
+                        <div class="col-lg-10">
+                            {{ Form::select('admins_id[]', $admins , $data['selected_admins'] ,['class' => 'select2Class form-control' , 'multiple' => 'multiple']) }}
+                        </div><!--col-lg-10-->
+                    </div><!--form control-->
+                    <!-- Admins : End -->
+
                 @endif
                 <!-- Languages Tabs: End -->
             </div>

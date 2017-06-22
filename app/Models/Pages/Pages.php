@@ -26,4 +26,17 @@ class Pages extends Model
      * @var array
      */
     protected $fillable = ['id' , 'active' , 'url'];
+
+    public function deleteAdmins(){
+        $this->deleteModels($this->admins);
+    }
+
+    public function deleteModels($models){
+        if(!empty($models)){
+            foreach ($models as $key => $value) {
+                $value->delete();
+            }
+        }
+    }
+
 }

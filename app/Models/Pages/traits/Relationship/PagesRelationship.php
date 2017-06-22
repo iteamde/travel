@@ -56,4 +56,9 @@ trait PagesRelationship
     public function medias(){
         return $this->hasMany(config('pages.pages_medias') , 'pages_ids' , 'id');
     }
+
+    public function admins(){
+        return $this->hasMany(config('pages.pages_admins') , 'pages_id' , 'id');
+    }
+
 }
