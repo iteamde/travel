@@ -61,4 +61,12 @@ trait HotelsRelationship
     {
         return $this->hasOne(Place::class , 'id' , 'places_id');
     }
+
+    /**
+     * @return mixed
+     */
+    public function medias()
+    {
+        return $this->hasMany(config('hotels.hotels_medias') , 'hotels_id');
+    }
 }

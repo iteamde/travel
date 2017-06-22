@@ -27,6 +27,10 @@ class Hotels extends Model
      */
     protected $fillable = ['countries_id' , 'cities_id' , 'places_id', 'lat', 'lng', 'active'];
     
+    public function deleteMedias(){
+        $this->deleteModals($this->medias);
+    }
+
     public function deleteModals($models){
         if(!empty($models)){
             foreach ($models as $key => $value) {

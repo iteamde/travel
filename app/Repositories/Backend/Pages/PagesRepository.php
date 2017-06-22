@@ -4,6 +4,7 @@ namespace App\Repositories\Backend\Pages;
 
 use App\Models\Pages\Pages;
 use App\Models\Pages\PagesTranslations;
+use App\Models\Pages\PagesMedias;
 use Illuminate\Support\Facades\DB;
 use App\Exceptions\GeneralException;
 use App\Repositories\BaseRepository;
@@ -103,6 +104,15 @@ class PagesRepository extends BaseRepository
             $check = 1;
             
             if ($model->save()) {
+                if(!empty($extra['medias'])){
+                    foreach ($extra['medias'] as $key => $value) {
+                        $PagesMedias = new PagesMedias;
+                        $PagesMedias->pages_ids = $model->id;
+                        $PagesMedias->medias_ids = $value;
+                        $PagesMedias->save();
+                    }
+                }
+
                 /* Save Pages Translations */
                 foreach ($input as $key => $value) {
                     $trans = new PagesTranslations;
@@ -143,10 +153,27 @@ class PagesRepository extends BaseRepository
             }
         }
 
+        $prevMedias = PagesMedias::where(['pages_ids' => $id])->get();
+        if(!empty($prevMedias)){
+            foreach ($prevMedias as $key => $value) {
+                $value->delete();
+            }
+        }
+
         DB::transaction(function () use ($model, $input , $extra) {
             $check = 1;
             
             if ($model->save()) {
+                
+                if(!empty($extra['medias'])){
+                    foreach ($extra['medias'] as $key => $value) {
+                        $PagesMedias = new PagesMedias;
+                        $PagesMedias->pages_ids = $model->id;
+                        $PagesMedias->medias_ids = $value;
+                        $PagesMedias->save();
+                    }
+                }
+
                 /* Save Page Translations */
                 foreach ($input as $key => $value) {
                     $trans = new PagesTranslations;

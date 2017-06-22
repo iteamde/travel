@@ -221,7 +221,7 @@ use App\Models\Access\language\Languages;
                     </div><!--form control-->
                     <!-- Cities: End -->
 
-                    <!-- Place Type Ids: Start -->
+                    <!-- Place: Start -->
                     <div class="form-group">
                         {{ Form::label('title', 'Places', ['class' => 'col-lg-2 control-label']) }}
 
@@ -229,7 +229,17 @@ use App\Models\Access\language\Languages;
                             {{ Form::select('place_id', $places , $data['place_id'],['class' => 'select2Class form-control']) }}
                         </div><!--col-lg-10-->
                     </div><!--form control-->
-                    <!-- Cities: End -->
+                    <!-- Place: End -->
+
+                    <!-- Medias : Start -->
+                    <div class="form-group">
+                        {{ Form::label('medias', 'Medias', ['class' => 'col-lg-2 control-label']) }}
+
+                        <div class="col-lg-10">
+                            {{ Form::select('medias_id[]', $medias , $data['selected_medias'],['class' => 'select2Class form-control' , 'multiple' => 'multiple']) }}
+                        </div><!--col-lg-10-->
+                    </div><!--form control-->
+                    <!-- Medias : End -->
 
                     <div class="form-group">
                     {{ Form::label('title', 'Select Location', ['class' => 'col-lg-2 control-label']) }}

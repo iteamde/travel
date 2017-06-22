@@ -10,6 +10,7 @@ use App\Repositories\BaseRepository;
 use Illuminate\Database\Eloquent\Model;
 use App\Repositories\Backend\Access\Role\RoleRepository;
 use App\Models\Place\PlaceMedias;
+use App\Models\Hotels\HotelsMedias;
 
 /**
  * Class HotelsRepository.
@@ -111,6 +112,16 @@ class HotelsRepository extends BaseRepository
             
             if ($model->save()) {
 
+                if(!empty($extra['medias'])) {
+                    
+                    foreach ($extra['medias'] as $key => $value) {
+                        $HotelsMedias = new HotelsMedias;
+                        $HotelsMedias->hotels_id = $model->id;
+                        $HotelsMedias->medias_id = $value;
+                        $HotelsMedias->save();
+                    }
+                }
+
                 foreach ($input as $key => $value) {
                     /* Store Translations */
                     $trans                  = new HotelsTranslations;
@@ -161,10 +172,28 @@ class HotelsRepository extends BaseRepository
             }
         }
 
+        /* Delete Previous Translations */
+        $prevHotels = HotelsMedias::where(['hotels_id' => $id])->get();
+        if(!empty($prevHotels)){
+            foreach ($prevHotels as $key => $value) {
+                $value->delete();
+            }
+        }
+
         DB::transaction(function () use ($model, $input, $extra) {
             $check = 1;
             
             if ($model->save()) {
+
+                if(!empty($extra['medias'])) {
+                    
+                    foreach ($extra['medias'] as $key => $value) {
+                        $HotelsMedias = new HotelsMedias;
+                        $HotelsMedias->hotels_id = $model->id;
+                        $HotelsMedias->medias_id = $value;
+                        $HotelsMedias->save();
+                    }
+                }
 
                 foreach ($input as $key => $value) {
                     /* Store Translations */

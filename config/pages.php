@@ -3,6 +3,7 @@
 use App\Models\Access\Role\Role;
 use App\Models\Access\Permission\Permission;
 use App\Models\Pages\PagesTranslations;
+use App\Models\Pages\PagesMedias;
 
 return [
     
@@ -25,6 +26,11 @@ return [
      * PagesTranslations table used to save PagesTranslations to the database.
      */
     'pages_trans' =>  PagesTranslations::class,
+
+    /*
+     * PagesMedias table used to save PagesMedias to the database.
+     */
+    'pages_medias' =>  PagesMedias::class,
 
     /*
      * pages_categories table used to save pages to the database.

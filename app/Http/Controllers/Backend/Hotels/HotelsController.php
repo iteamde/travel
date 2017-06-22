@@ -21,6 +21,7 @@ use App\Models\SafetyDegree\SafetyDegree;
 use App\Models\Country\Countries;
 use App\Models\City\Cities;
 use App\Models\Place\Place;
+use App\Models\ActivityMedia\Media;
 
 class HotelsController extends Controller
 {
@@ -49,7 +50,7 @@ class HotelsController extends Controller
      */
     public function create(ManageHotelsRequest $request)
     {   
-        /* Get All Countries */
+        /* Get All Active Countries For Dropdown */
         $countries = Countries::where(['active' => 1])->get();
         $countries_arr = [];
         
@@ -60,7 +61,7 @@ class HotelsController extends Controller
             }
         }
 
-        /* Get All Cities */
+        /* Get All Active Cities For Dropdown */
         $cities = Cities::where(['active' => 1])->get();
         $cities_arr = [];
         
@@ -71,7 +72,7 @@ class HotelsController extends Controller
             }
         }
 
-         /* Get All Places */
+        /* Get All Places For Dropdown */
         $places = Place::all();
         $places_arr = [];
         
@@ -82,10 +83,22 @@ class HotelsController extends Controller
             }
         }
 
+        /* Get All Medias */
+        $medias = Media::all();
+        $medias_arr = [];
+        
+        foreach ($medias as $key => $value) {
+            /* If Translation Exists, Get Title */
+            if(isset($value->transsingle) && !empty($value->transsingle)){
+                $medias_arr[$value->id] = $value->transsingle->title;
+            }
+        }
+
         return view('backend.hotels.create',[
             'countries' => $countries_arr,
             'cities' => $cities_arr,
             'places' => $places_arr,
+            'medias' => $medias_arr
         ]);
     }
 
@@ -123,11 +136,12 @@ class HotelsController extends Controller
             $active = 1;
         }
 
-        $extra = [
+        $extra = [  
             'active' => $active,
             'country_id' =>  $request->input('country_id'),
             'city_id' =>  $request->input('city_id'),
             'place_id' => $request->input('place_id'),
+            'medias' => $request->input('medias_id'),
             'lat' => $location[0],
             'lng' => $location[1],
         ];
@@ -153,6 +167,7 @@ class HotelsController extends Controller
                 $value->delete();
             }
         }
+        $item->deleteMedias();
         $item->delete();
 
         return redirect()->route('admin.hotels.hotels.index')->withFlashSuccess('Hotels Deleted Successfully');
@@ -232,13 +247,35 @@ class HotelsController extends Controller
             }
         }
 
-         /* Get Places For Dropdown */
+        /* Get Places For Dropdown */
         $places = Place::all();
         $places_arr = [];
         
         foreach ($places as $key => $value) {
             if(isset($value->transsingle) && !empty($value->transsingle)){
                 $places_arr[$value->id] = $value->transsingle->title;
+            }
+        }
+
+        /* Get Selected Medias */
+        $selected_medias = $hotel->medias;
+        $selected_medias_arr = [];
+
+        if(!empty($selected_medias)){
+            foreach ($selected_medias as $key => $value) {
+                array_push($selected_medias_arr,$value->media->id);       
+            }
+        }
+
+        $data['selected_medias'] = $selected_medias_arr;
+        
+        /* Get Medias For Dropdown */
+        $medias = Media::all();
+        $medias_arr = [];
+        
+        foreach ($medias as $key => $value) {
+            if(isset($value->transsingle) && !empty($value->transsingle)){
+                $medias_arr[$value->id] = $value->transsingle->title;
             }
         }
  
@@ -249,7 +286,8 @@ class HotelsController extends Controller
             ->withData($data)
             ->withCountries($countries_arr)
             ->withCities($cities_arr)
-            ->withPlaces($places_arr);
+            ->withPlaces($places_arr)
+            ->withMedias($medias_arr);
     }
 
     /**
@@ -292,7 +330,8 @@ class HotelsController extends Controller
             'city_id' =>  $request->input('city_id'),
             'place_id' => $request->input('place_id'),
             'lat' => $location[0],
-            'lng' => $location[1]
+            'lng' => $location[1],
+            'medias' => $request->input('medias_id')
         ];
        
         $this->hotels->update($id , $hotel, $data , $extra);
@@ -325,12 +364,27 @@ class HotelsController extends Controller
         $place = $hotel->place;
         $place = $place->transsingle;
 
+        $medias = $hotel->medias;
+        $medias_arr = [];
+
+        if(!empty($medias)){
+            foreach ($medias as $key => $value) {
+                if(!empty($value->media)){
+                    $media = $value->media;
+                    if(!empty($media->transsingle)){
+                        array_push($medias_arr, $media->transsingle->title);
+                    }
+                }
+            }
+        }
+
         return view('backend.hotels.show')
             ->withHotel($hotel)
             ->withHoteltrans($hotelTrans)
             ->withCountry($country)
             ->withCity($city)
-            ->withPlace($place);
+            ->withPlace($place)
+            ->withMedias($medias_arr);
     }
 
     /** 

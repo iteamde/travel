@@ -133,6 +133,17 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
                         </div><!--col-lg-10-->
                     </div><!--form control-->
                     <!-- End: Url -->
+
+                    <!-- Medias : Start -->
+                    <div class="form-group">
+                        {{ Form::label('medias', 'Medias', ['class' => 'col-lg-2 control-label']) }}
+
+                        <div class="col-lg-10">
+                            {{ Form::select('medias_id[]', $medias , null,['class' => 'select2Class form-control' , 'multiple' => 'multiple']) }}
+                        </div><!--col-lg-10-->
+                    </div><!--form control-->
+                    <!-- Medias : End -->
+                    
                 @endif
                 <!-- Languages Tabs: End -->
             </div>

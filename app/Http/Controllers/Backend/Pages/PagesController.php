@@ -9,6 +9,7 @@ use App\Models\Access\language\Languages;
 use App\Http\Requests\Backend\Pages\ManagePagesRequest;
 use App\Http\Requests\Backend\Pages\StorePagesRequest;
 use App\Repositories\Backend\Pages\PagesRepository;
+use App\Models\ActivityMedia\Media;
 
 class PagesController extends Controller
 {
@@ -37,8 +38,18 @@ class PagesController extends Controller
      */
     public function create(ManagePagesRequest $request)
     {   
-       
+        /* Get All Medias For Dropdown */
+        $medias = Media::all();
+        $medias_arr = [];
+
+        if(!empty($medias)){
+            foreach ($medias as $key => $value) {
+                $medias_arr[$value->id] = $value->transsingle->title;
+            }
+        }
+
         return view('backend.pages.create',[
+            'medias' => $medias_arr
         ]);
     }
 
@@ -63,7 +74,8 @@ class PagesController extends Controller
 
         $extra = [
             'active' => $active,
-            'url' => $request->input('url')
+            'url' => $request->input('url'),
+            'medias' => $request->input('medias_id')
         ];
         
         $this->pages->create($data , $extra);
@@ -123,11 +135,36 @@ class PagesController extends Controller
         $data['active'] = $pages->active;
         $data['url']    = $pages->url;
 
+        $selected_medias = $pages->medias;
+        $selected_medias_arr = [];
+
+        if(!empty($selected_medias)){
+            foreach ($selected_medias as $key => $value) {
+                
+                if(!empty($value->media)){
+                    array_push($selected_medias_arr,$value->media->id);
+                }
+            }
+        }
+
+        $data['selected_medias'] = $selected_medias_arr;
+
+        /* Get All Medias For Dropdown */
+        $medias = Media::all();
+        $medias_arr = [];
+
+        if(!empty($medias)){
+            foreach ($medias as $key => $value) {
+                $medias_arr[$value->id] = $value->transsingle->title;
+            }
+        }
+
         return view('backend.pages.edit')
             ->withLanguages($this->languages)
             ->withPages($pages)
             ->withPagesid($id)
-            ->withData($data);
+            ->withData($data)
+            ->withMedias($medias_arr);
     }
 
     /**
@@ -154,7 +191,8 @@ class PagesController extends Controller
 
         $extra = [
             'active' => $active,
-            'url' => $request->input('url')
+            'url' => $request->input('url'),
+            'medias' => $request->input('medias_id')
         ];
 
         $this->pages->update($id , $pages, $data , $extra);
@@ -174,10 +212,25 @@ class PagesController extends Controller
         $pages = Pages::findOrFail(['id' => $id]);
         $pagesTrans = PagesTranslations::where(['pages_id' => $id])->get();
         $pages = $pages[0];
-       
+        
+        $selected_medias = $pages->medias;
+        $selected_medias_arr = [];
+
+        if(!empty($selected_medias)){
+            foreach ($selected_medias as $key => $value) {
+                
+                if(!empty($value->media)){
+                    if(!empty($value->media->transsingle)){
+                        array_push($selected_medias_arr,$value->media->transsingle->title);
+                    }
+                }
+            }
+        }
+
         return view('backend.pages.show')
             ->withPages($pages)
-            ->withPagestrans($pagesTrans);
+            ->withPagestrans($pagesTrans)
+            ->withMedias($selected_medias_arr);
     }
 
     /**

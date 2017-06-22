@@ -3,6 +3,7 @@
 use App\Models\Access\Role\Role;
 use App\Models\Access\Permission\Permission;
 use App\Models\Hotels\HotelsTranslations;
+use App\Models\Hotels\HotelsMedias;
 
 return [
     
@@ -25,5 +26,10 @@ return [
      * HotelsTranslations table used to save HotelsTranslations to the database.
      */
     'hotels_trans' =>  HotelsTranslations::class,
+
+    /*
+     * HotelsMedias table used to save HotelsMedias to the database.
+     */
+    'hotels_medias' =>  HotelsMedias::class,
     
 ];

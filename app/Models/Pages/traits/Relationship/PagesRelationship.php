@@ -52,4 +52,8 @@ trait PagesRelationship
     {
         return $this->hasMany(Session::class);
     }
+
+    public function medias(){
+        return $this->hasMany(config('pages.pages_medias') , 'pages_ids' , 'id');
+    }
 }
