@@ -31,6 +31,14 @@ class Pages extends Model
         $this->deleteModels($this->admins);
     }
 
+    public function deleteFollowers(){
+        $this->deleteModels($this->followers);
+    }
+
+    public function deleteMedias(){
+        $this->deleteModels($this->medias);
+    }
+
     public function deleteModels($models){
         if(!empty($models)){
             foreach ($models as $key => $value) {

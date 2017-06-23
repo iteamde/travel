@@ -60,9 +60,20 @@ class PagesController extends Controller
             }
         }
 
+        /* Get All Users */
+        $users = User::get();
+        $users_arr = [];
+
+        if(!empty($users)){
+            foreach ($users as $key => $value) {
+                $users_arr[$value->id] = $value->name ;
+            }
+        }
+
         return view('backend.pages.create',[
             'medias' => $medias_arr,
             'admins' => $admins_arr,
+            'followers'  => $users_arr,
         ]);
     }
 
@@ -85,11 +96,13 @@ class PagesController extends Controller
             $active = 1;
         }
 
+        /* Send All Relations Through $extra Array */
         $extra = [
             'active' => $active,
             'url' => $request->input('url'),
             'medias' => $request->input('medias_id'),
-            'admins' => $request->input('admins_id')
+            'admins' => $request->input('admins_id'),
+            'followers' => $request->input('followers_id'),
         ];
         
         $this->pages->create($data , $extra);
@@ -113,7 +126,10 @@ class PagesController extends Controller
                 $value->delete();
             }
         }
+        /* Delete All Relations */
         $item->deleteAdmins();
+        $item->deleteFollowers();
+        $item->deleteMedias();
         $item->delete();
 
         return redirect()->route('admin.pages.pages.index')->withFlashSuccess('Page Deleted Successfully');
@@ -128,7 +144,7 @@ class PagesController extends Controller
     public function edit($id, ManagePagesRequest $request)
     {   
         
-        $data = [];
+        $data  = [];
         $pages = Pages::findOrFail(['id' => $id]);
         $pages = $pages[0];
 
@@ -150,6 +166,7 @@ class PagesController extends Controller
         $data['active'] = $pages->active;
         $data['url']    = $pages->url;
 
+        /* Get Selected Medias */
         $selected_medias = $pages->medias;
         $selected_medias_arr = [];
 
@@ -196,13 +213,38 @@ class PagesController extends Controller
             }
         }
 
+        /* Get Selected Followers */
+        $selected_followers = $pages->followers;
+        $selected_followers_arr = [];
+
+        if(!empty($selected_followers)){
+            foreach ($selected_followers as $key => $value) {
+                if(!empty($value->user)){
+                    array_push($selected_followers_arr,$value->user->id);
+                }
+            }
+        }
+
+        $data['selected_followers'] = $selected_followers_arr;
+
+        /* Get All Users */
+        $users = User::get();
+        $users_arr = [];
+
+        if(!empty($users)){
+            foreach ($users as $key => $value) {
+                $users_arr[$value->id] = $value->name ;
+            }
+        }
+
         return view('backend.pages.edit')
             ->withLanguages($this->languages)
             ->withPages($pages)
             ->withPagesid($id)
             ->withData($data)
             ->withMedias($medias_arr)
-            ->withAdmins($admins_arr);
+            ->withAdmins($admins_arr)
+            ->withFollowers($users_arr);
     }
 
     /**
@@ -232,6 +274,7 @@ class PagesController extends Controller
             'url' => $request->input('url'),
             'medias' => $request->input('medias_id'),
             'admins' => $request->input('admins_id'),
+            'followers' => $request->input('followers_id'),
         ];
 
         $this->pages->update($id , $pages, $data , $extra);
@@ -255,6 +298,7 @@ class PagesController extends Controller
         $selected_medias = $pages->medias;
         $selected_medias_arr = [];
 
+        /* Get Selected Medias */
         if(!empty($selected_medias)){
             foreach ($selected_medias as $key => $value) {               
                 if(!empty($value->media)){
@@ -265,6 +309,7 @@ class PagesController extends Controller
             }
         }
 
+        /* Get Selected Admins */
         $selected_admins = $pages->admins;
         $selected_admins_arr = [];
 
@@ -275,12 +320,25 @@ class PagesController extends Controller
                 }
             }
         }
+
+        /* Det Selected Followers */
+        $selected_followers = $pages->followers;
+        $selected_followers_arr = [];
+
+        if(!empty($selected_followers)){
+            foreach ($selected_followers as $key => $value) {               
+                if(!empty($value->user)){
+                        array_push($selected_followers_arr,$value->user->name);
+                }
+            }
+        }
         
         return view('backend.pages.show')
             ->withPages($pages)
             ->withPagestrans($pagesTrans)
             ->withMedias($selected_medias_arr)
-            ->withAdmins($selected_admins_arr);
+            ->withAdmins($selected_admins_arr)
+            ->withFollowers($selected_followers_arr);
     }
 
     /**

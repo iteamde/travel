@@ -157,6 +157,16 @@ use App\Models\Access\language\Languages;
                     </div><!--form control-->
                     <!-- Admins : End -->
 
+                    <!-- Users : Start -->
+                    <div class="form-group">
+                        {{ Form::label('followers', 'Followers', ['class' => 'col-lg-2 control-label']) }}
+
+                        <div class="col-lg-10">
+                            {{ Form::select('followers_id[]', $followers , $data['selected_followers'],['class' => 'select2Class form-control' , 'multiple' => 'multiple']) }}
+                        </div><!--col-lg-10-->
+                    </div><!--form control-->
+                    <!-- Users : End -->
+
                 @endif
                 <!-- Languages Tabs: End -->
             </div>

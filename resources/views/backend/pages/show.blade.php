@@ -96,6 +96,22 @@
                       </tr>
                     @endforeach
                     <!-- End: Admins -->
+
+                    <!-- Start: Followers -->
+                    <tr>
+                         <th> <h3 style="color:#0A8F27">Followers</h3></th><td></td>   
+                    </tr>
+                    @if(empty($followers))
+                      <tr>
+                          <th> <p>No Followers Added.</p> </th>
+                      </tr>
+                    @endif
+                    @foreach($followers as $key => $follower)
+                      <tr>
+                          <th> <p><?=$follower?></p> </th>
+                      </tr>
+                    @endforeach
+                    <!-- End: Followers -->
                     
                 </table>
             </div><!--tab panel-->

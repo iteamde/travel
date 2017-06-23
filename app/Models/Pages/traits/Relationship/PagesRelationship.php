@@ -61,4 +61,8 @@ trait PagesRelationship
         return $this->hasMany(config('pages.pages_admins') , 'pages_id' , 'id');
     }
 
+    public function followers(){
+        return $this->hasMany(config('pages.pages_followers') , 'pages_id' , 'id');
+    }
+
 }

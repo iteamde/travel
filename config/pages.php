@@ -5,6 +5,7 @@ use App\Models\Access\Permission\Permission;
 use App\Models\Pages\PagesTranslations;
 use App\Models\Pages\PagesMedias;
 use App\Models\Pages\PagesAdmins;
+use App\Models\Pages\PagesFollowers;
 
 return [
     
@@ -37,6 +38,12 @@ return [
      * PagesAdmins table used to save PagesAdmins to the database.
      */
     'pages_admins' =>  PagesAdmins::class,
+
+    /*
+     * PagesFollowers table used to save PagesFollowers to the database.
+     */
+    'pages_followers' =>  PagesFollowers::class,
+
 
     /*
      * pages_categories table used to save pages to the database.

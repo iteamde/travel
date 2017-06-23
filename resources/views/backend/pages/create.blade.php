@@ -153,6 +153,16 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
                         </div><!--col-lg-10-->
                     </div><!--form control-->
                     <!-- Admins : End -->
+
+                    <!-- Users : Start -->
+                    <div class="form-group">
+                        {{ Form::label('followers', 'Followers', ['class' => 'col-lg-2 control-label']) }}
+
+                        <div class="col-lg-10">
+                            {{ Form::select('followers_id[]', $followers , null,['class' => 'select2Class form-control' , 'multiple' => 'multiple']) }}
+                        </div><!--col-lg-10-->
+                    </div><!--form control-->
+                    <!-- Users : End -->
                     
                 @endif
                 <!-- Languages Tabs: End -->
