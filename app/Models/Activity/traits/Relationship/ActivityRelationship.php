@@ -27,7 +27,7 @@ trait ActivityRelationship
 
     /**
      * @return mixed
-     */
+     **/
     public function providers()
     {
         return $this->hasMany(SocialLogin::class);
@@ -40,13 +40,14 @@ trait ActivityRelationship
      */
     public function trans()
     {
-        // return $this->belongsToMany(config('access.regions'), config('access.regions_trans'), 'id', 'regions_id');
         return $this->hasMany(config('activities.activities_trans_model'), 'activities_id');
     }
 
+    /**
+     * @return mixed
+     **/
     public function transsingle()
     {
-        // return $this->belongsToMany(config('access.regions'), config('access.regions_trans'), 'id', 'regions_id');
         return $this->hasOne(config('activities.activities_trans_model'), 'activities_id');
     }
 
@@ -89,8 +90,6 @@ trait ActivityRelationship
     {
         return $this->hasOne(ActivityTypes::class , 'id' , 'types_id');
     }
-
-    
 
     /**
      * @return mixed

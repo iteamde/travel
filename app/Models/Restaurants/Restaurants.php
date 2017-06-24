@@ -32,10 +32,23 @@ class Restaurants extends Model
      */
     protected $fillable = ['countries_id', 'cities_id' , 'places_id' , 'lat', 'lng', 'active'];
 
+    /**
+     * @return mixed
+     **/
     public function deleteTrans(){
         self::deleteModels($this->trans);
     }
 
+    /**
+     * @return mixed
+     **/
+    public function deleteMedias(){
+        self::deleteModels($this->medias);
+    }
+
+    /**
+     * @return mixed
+     **/
     public function deleteModels($models){
         if(!empty($models)){
             foreach ($models as $key => $value) {

@@ -17,12 +17,12 @@ return [
     'weekdays_table' => 'conf_weekdays',
 
     /*
-     * weekdays table used to save weekdays to the database.
+     * weekdays_trans table used to save weekdays translations to the database.
      */
     'weekdays_trans_table' => 'conf_weekdays_trans',
 
     /*
-     * WeekdaysTranslations table used to save WeekdaysTranslations to the database.
+     * WeekdaysTranslations Model used to save WeekdaysTranslations relation from database.
      */
     'weekdays_trans' =>  WeekdaysTranslations::class,
     

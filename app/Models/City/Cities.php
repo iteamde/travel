@@ -32,42 +32,72 @@ class Cities extends Model
      */
     protected $fillable = ['countries_id', 'code', 'is_capital' , 'lat', 'lng', 'safety_degree_id', 'active'];
 
+    /**
+     * @return mixed
+     **/
     public function deleteAirports(){
         self::deleteModels($this->airports);
     }
 
+    /**
+     * @return mixed
+     **/
     public function deleteCurrencies(){
         self::deleteModels($this->currencies);
     }
 
+    /**
+     * @return mixed
+     **/
     public function deleteTrans(){
         self::deleteModels($this->trans);
     }
 
+    /**
+     * @return mixed
+     **/
     public function deleteEmergency_numbers(){
         self::deleteModels($this->emergency_numbers);
     }
 
+    /**
+     * @return mixed
+     **/
     public function deleteHolidays(){
         self::deleteModels($this->holidays);
     }
 
+    /**
+     * @return mixed
+     **/
     public function deleteLanguagesSpoken(){
         self::deleteModels($this->languages_spoken);
     }
 
+    /**
+     * @return mixed
+     **/
     public function deleteLifestyles(){
         self::deleteModels($this->lifestyles);
     }
 
+    /**
+     * @return mixed
+     **/
     public function deleteMedias(){
         self::deleteModels($this->medias);
     }
 
+    /**
+     * @return mixed
+     **/
     public function deleteReligions(){
         self::deleteModels($this->religions);
-    }
+    }   
 
+    /**
+     * @return mixed
+     **/
     public function deleteModels($models){
         if(!empty($models)){
             foreach ($models as $key => $value) {

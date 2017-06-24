@@ -22,7 +22,7 @@ return [
     'emergencynumbers_trans_table' => 'conf_emergency_numbers_trans',
 
     /*
-     * EmergencyNumbersTranslations Model used to access EmergencyNumbersTranslations to the database.
+     * EmergencyNumbersTranslations Model used to access EmergencyNumbersTranslations relation from database.
      */
     'emergencynumbers_trans' =>  EmergencyNumbersTranslations::class,
     

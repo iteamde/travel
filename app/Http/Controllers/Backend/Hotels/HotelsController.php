@@ -136,6 +136,7 @@ class HotelsController extends Controller
             $active = 1;
         }
 
+        /* Send All Relation and Common Fields Through $extra Array */
         $extra = [  
             'active' => $active,
             'country_id' =>  $request->input('country_id'),
@@ -324,6 +325,7 @@ class HotelsController extends Controller
             $active = 1;
         }
 
+        /* Send All Relation and Extra Fields Through $extra Array */
         $extra = [
             'active' => $active,
             'country_id' =>  $request->input('country_id'),

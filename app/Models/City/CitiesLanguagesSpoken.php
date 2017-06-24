@@ -16,7 +16,6 @@ class CitiesLanguagesSpoken extends Model
     protected $table = 'cities_languages_spoken';
     
     use CityLanguagesSpokenRelationship;
-    //     CityAttribute;
 
     public $timestamps = false;
 

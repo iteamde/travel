@@ -206,7 +206,7 @@ class CountryController extends Controller
             $active = 1;
         }
 
-        /* Send All Relations Through $extra array */
+        /* Send All Relations and Common Fields Through $extra array */
         $extra = [
             'active' => $active,
             'region_id' =>  $request->input('region_id'),

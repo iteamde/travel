@@ -16,7 +16,6 @@ class CitiesEmergencyNumbers extends Model
     protected $table = 'cities_emergency_numbers';
     
     use CityEmergencyNumberRelationship;
-    //     CityAttribute;
 
     public $timestamps = false;
 

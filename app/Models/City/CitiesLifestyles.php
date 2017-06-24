@@ -16,7 +16,6 @@ class CitiesLifestyles extends Model
     protected $table = 'cities_lifestyles';
     
     use CityLifestylesRelationship;
-    //     CityAttribute;
 
     public $timestamps = false;
 

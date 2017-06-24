@@ -16,8 +16,7 @@ class CitiesCurrencies extends Model
     protected $table = 'cities_currencies';
     
     use CityCurrenciesRelationship;
-    //     CityAttribute;
-
+    
     public $timestamps = false;
 
     /**

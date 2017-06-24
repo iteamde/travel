@@ -77,7 +77,7 @@ class EmbassiesController extends Controller
             $active = 1;
         }
 
-        /* Send All Relations Through $extra array */
+        /* Send All Relations and Common fields Through $extra array */
         $extra = [
             'active' => $active,
             'country_id' =>  $request->input('country_id'),
@@ -183,6 +183,7 @@ class EmbassiesController extends Controller
             $active = 1;
         }
         
+        /* Send All Relation and Common Fields Through $extra Array */
         $extra = [
             'active' => $active,
             'country_id' =>  $request->input('country_id'),

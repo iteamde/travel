@@ -12,6 +12,7 @@ use App\Models\Access\language\Languages;
 use App\Repositories\Backend\Restaurants\RestaurantsRepository;
 use App\Http\Requests\Backend\Restaurants\StoreRestaurantsRequest;
 use App\Http\Requests\Backend\Restaurants\ManageRestaurantsRequest;
+use App\Models\ActivityMedia\Media;
 
 class RestaurantsController extends Controller
 {
@@ -37,7 +38,7 @@ class RestaurantsController extends Controller
     }
 
     /**
-     * @param ManageCityRequest $request
+     * @param ManageRestaurantsRequest $request
      *
      * @return mixed
      */
@@ -73,10 +74,21 @@ class RestaurantsController extends Controller
             }
         }
 
+        /* Get All Medias */
+        $medias = Media::get();
+        $medias_arr = [];
+        
+        foreach ($medias as $key => $value) {
+            if(isset($value->transsingle) && !empty($value->transsingle)){  
+                $medias_arr[$value->id] = $value->transsingle->title;
+            }
+        }
+
         return view('backend.restaurants.create',[
             'countries' => $countries_arr,
             'cities'    => $cities_arr,
             'places'    => $places_arr,
+            'medias'    => $medias_arr,
         ]);
     }
 
@@ -111,6 +123,7 @@ class RestaurantsController extends Controller
             $active = Cities::ACTIVE;
         }
 
+        /* Pass All Relations Through $extra Array */
         $extra = [
             'active'        => $active,
             'countries_id'  => $request->input('countries_id'),
@@ -119,6 +132,7 @@ class RestaurantsController extends Controller
             'lat'           => $location[0],
             'lng'           => $location[1],
             'places'        => $request->input('places_id'),
+            'medias'        => $request->input('medias_id'),
         ];
 
         $this->restaurants->create($data, $extra);
@@ -141,14 +155,17 @@ class RestaurantsController extends Controller
         $restaurants = $restaurants[0];
 
         foreach ($this->languages as $key => $language) {
+            
             /* Find The Translation Model For Current Language For This Restaurant */
             $model = RestaurantsTranslations::where([
                 'languages_id' => $language->id,
                 'restaurants_id'   => $id
             ])->get();
+            
             /* If Model For Current Language Is Not Found For This City, Skip Its Data */
             if(!empty($model[0])) {
-                /* Put All The Translation Data In $data Array To Be Used In Edit Form */
+                
+                /* Put All The Translation Data In $data Array, To Be Used In Edit Form */
                 $data['title_'.$language->id]           = $model[0]->title;
                 $data['description_'.$language->id]     = $model[0]->description;
                 $data['working_days_'.$language->id]      = $model[0]->working_days;
@@ -159,7 +176,8 @@ class RestaurantsController extends Controller
                 $data['popularity_'.$language->id]         = $model[0]->popularity;
                 $data['conditions_'.$language->id]    = $model[0]->popularity;
             }else{
-                /* Put Null In  $data Array If Translation Not Found To Be Used In Edit Form */
+                
+                /* Put Null In  $data Array If Translation Not Found, To Be Used In Edit Form */
                 $data['title_'.$language->id]           = null;
                 $data['description_'.$language->id]     = null;
                 $data['working_days_'.$language->id]      = null;
@@ -173,11 +191,11 @@ class RestaurantsController extends Controller
         }
 
         /* Put All Common Fields In $data Array To Be Used In Edit Form */
-        $data['lat_lng'] = $restaurants['lat'] . ',' . $restaurants['lng'];
-        $data['active'] = $restaurants['active'];
-        $data['countries_id'] = $restaurants['countries_id'];
-        $data['cities_id'] = $restaurants['cities_id'];
-        $data['places_id'] = $restaurants['places_id'];
+        $data['lat_lng']        = $restaurants['lat'] . ',' . $restaurants['lng'];
+        $data['active']         = $restaurants['active'];
+        $data['countries_id']   = $restaurants['countries_id'];
+        $data['cities_id']      = $restaurants['cities_id'];
+        $data['places_id']      = $restaurants['places_id'];
 
         /* Find All Active Countries */
         $countries = Countries::where(['active' => Countries::ACTIVE ])->get();
@@ -209,14 +227,37 @@ class RestaurantsController extends Controller
             }
         }
 
+        /* Get Selected Medias */
+        $selected_medias = $restaurants->medias;
+        $selected_medias_arr = [];
+
+        if(!empty($selected_medias)){
+            foreach ($selected_medias as $key => $value) {
+                array_push( $selected_medias_arr , $value->medias_id );
+            }
+        }
+
+        $data['selected_medias'] = $selected_medias_arr;
+
+        /* Get All Medias For Dropdown */
+        $medias = Media::get();
+        $medias_arr = [];
+        /* Get Title Id Pair For Each Model */
+        foreach ($medias as $key => $value) {
+            if(isset($value->transsingle) && !empty($value->transsingle)){  
+                $medias_arr[$value->id] = $value->transsingle->title;
+            }
+        }
+
         return view('backend.restaurants.edit')
             ->withLanguages($this->languages)
             ->withRestaurant($restaurants)
             ->withRestaurantid($id)
-            ->withData($data)
             ->withCountries($countries_arr)
             ->withCities($cities_arr)
-            ->withPlaces($places_arr);
+            ->withPlaces($places_arr)
+            ->withMedias($medias_arr)
+            ->withData($data);
     }
 
     /**
@@ -253,13 +294,15 @@ class RestaurantsController extends Controller
             $active = Cities::ACTIVE;
         }
         
+        /* Pass All Relations Through $extra Array */
         $extra = [
-            'active' => $active,
-            'countries_id' =>  $request->input('countries_id'),
-            'cities_id' => $request->input('cities_id'),
-            'places_id' => $request->input('places_id'),
-            'lat' => $location[0],
-            'lng' => $location[1],
+            'active'        => $active,
+            'countries_id'  => $request->input('countries_id'),
+            'cities_id'     => $request->input('cities_id'),
+            'places_id'     => $request->input('places_id'),
+            'medias'        => $request->input('medias_id'),
+            'lat'           => $location[0],
+            'lng'           => $location[1],
         ];
 
         
@@ -293,12 +336,27 @@ class RestaurantsController extends Controller
         $place = $restaurants->place;
         $place = $place->transsingle;;
 
+        /* Get All Selected Medias */
+        $medias     = $restaurants->medias;
+        $medias_arr = [];
+        
+        if(!empty($medias)){
+            foreach ($medias as $key => $value) {
+                if(!empty($value->media)){
+                    if(!empty($value->media->transsingle)){
+                        array_push($medias_arr, $value->media->transsingle->title);
+                    }
+                }
+            }
+        }
+
         return view('backend.restaurants.show')
             ->withRestaurant($restaurants)
             ->withRestaurant_trans($restaurantsTrans)
             ->withCountry($country)
             ->withCity($city)
-            ->withPlace($place);
+            ->withPlace($place)
+            ->withMedias($medias_arr);
     }
 
     /**
@@ -311,6 +369,7 @@ class RestaurantsController extends Controller
     {
         $item = Restaurants::findOrFail($id);
         $item->deleteTrans();
+        $item->deleteMedias();
         $item->delete();
 
         return redirect()->route('admin.restaurants.restaurants.index')->withFlashSuccess('Restaurants Deleted Successfully');

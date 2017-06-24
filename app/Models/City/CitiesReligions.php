@@ -16,7 +16,6 @@ class CitiesReligions extends Model
     protected $table = 'cities_religions';
     
     use CityReligionsRelationship;
-    //     CityAttribute;
 
     public $timestamps = false;
 

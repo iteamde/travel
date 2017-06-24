@@ -34,7 +34,7 @@ class CurrenciesRepository extends BaseRepository
     }
 
     /**
-     * @param        $permissions
+     * @param $permissions
      * @param string $by
      *
      * @return mixed
@@ -102,7 +102,9 @@ class CurrenciesRepository extends BaseRepository
             $check = 1;
             
             if ($model->save()) {
+                /* Save Currencies Translations */
                 foreach ($input as $key => $value) {
+                    
                     $trans = new CurrenciesTranslations;
                     $trans->currencies_id = $model->id;
                     $trans->languages_id = $key;
@@ -143,7 +145,9 @@ class CurrenciesRepository extends BaseRepository
             $check = 1;
             
             if ($model->save()) {
+
                 foreach ($input as $key => $value) {
+                    
                     $trans = new CurrenciesTranslations;
                     $trans->currencies_id = $model->id;
                     $trans->languages_id = $key;

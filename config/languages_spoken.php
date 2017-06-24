@@ -22,7 +22,7 @@ return [
     'languages_spoken_trans_table' => 'conf_languages_spoken_trans',
 
     /*
-     * LanguagesSpokenTranslations Model used to access LanguagesSpokenTranslation from database.
+     * LanguagesSpokenTranslations Model used to access LanguagesSpokenTranslation relation from database.
      */
     'languages_spoken_trans' =>  LanguagesSpokenTranslation::class,
     

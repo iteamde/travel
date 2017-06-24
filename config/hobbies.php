@@ -22,7 +22,7 @@ return [
     'hobbies_trans_table' => 'conf_hobbies_trans',
 
     /*
-     * HobbiesTranslations Model used to access HobbiesTranslations from database.
+     * HobbiesTranslations Model used to access HobbiesTranslations relation from database.
      */
     'hobbies_trans' =>  HobbiesTranslations::class,
     

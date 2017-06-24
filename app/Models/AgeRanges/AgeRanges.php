@@ -25,5 +25,5 @@ class AgeRanges extends Model
      *
      * @var array
      */
-    protected $fillable = ['id'];
+    protected $fillable = ['id', 'active', 'from', 'to'];
 }

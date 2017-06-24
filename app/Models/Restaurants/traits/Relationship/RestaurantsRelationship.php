@@ -62,15 +62,16 @@ trait RestaurantsRelationship
      */
     public function trans()
     {
-        // return $this->belongsToMany(config('access.regions'), config('access.regions_trans'), 'id', 'regions_id');
         return $this->hasMany(config('restaurants.restaurants_trans'), 'restaurants_id');
     }
 
     public function transsingle()
     {
-        // return $this->belongsToMany(config('access.regions'), config('access.regions_trans'), 'id', 'regions_id');
         return $this->hasOne(config('restaurants.restaurants_trans'), 'restaurants_id');
     }
 
+    public function medias(){
+        return $this->hasMany( config('restaurants.restaurants_medias' , 'restaurants_id') );
+    }
 
 }

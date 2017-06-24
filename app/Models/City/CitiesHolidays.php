@@ -16,7 +16,6 @@ class CitiesHolidays extends Model
     protected $table = 'cities_holidays';
     
     use CityHolidaysRelationship;
-    //     CityAttribute;
 
     public $timestamps = false;
 

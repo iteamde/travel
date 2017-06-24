@@ -51,7 +51,7 @@ class WeekdaysRepository extends BaseRepository
     }
 
     /**
-     * @param        $roles
+     * @param $roles
      * @param string $by
      *
      * @return mixed

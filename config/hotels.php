@@ -28,7 +28,7 @@ return [
     'hotels_trans' =>  HotelsTranslations::class,
 
     /*
-     * HotelsMedias Model used to access HotelsMedias from database.
+     * HotelsMedias Model used to access HotelsMedias relation from database.
      */
     'hotels_medias' =>  HotelsMedias::class,
     

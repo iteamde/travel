@@ -25,5 +25,5 @@ class ActivityTypes extends Model
      *
      * @var array
      */
-    protected $fillable = ['region_id', 'code', 'lat', 'lng', 'safety_degree', 'active'];
+    protected $fillable = [ 'activities_types_id', 'languages_id', 'title', 'description'];
 }

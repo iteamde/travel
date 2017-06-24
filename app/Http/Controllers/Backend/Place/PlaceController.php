@@ -139,6 +139,7 @@ class PlaceController extends Controller
             $active = 1;
         }
 
+        /* Send All Relation and Common Fields Through $extra Array */
         $extra = [
             'active' => $active,
             'countries_id' =>  $request->input('countries_id'),
@@ -360,6 +361,7 @@ class PlaceController extends Controller
             $active = 1;
         }
 
+        /* Send All Relation and Common fields through $extra Array */
         $extra = [
             'active' => $active,
             'countries_id' =>  $request->input('countries_id'),

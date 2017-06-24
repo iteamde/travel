@@ -17,12 +17,12 @@ return [
     'embassies_table' => 'embassies',
 
     /*
-     * Embassies table used to save Embassies to the database.
+     * Embassies translation table used to save Embassies translations to the database.
      */
     'embassies_trans_table' => 'embassies_trans',
 
     /*
-     * EmbassiesTranslations table used to save EmbassiesTranslations to the database.
+     * EmbassiesTranslations Model used to access EmbassiesTranslations relation from database.
      */
     'embassies_trans' =>  EmbassiesTranslations::class,
     

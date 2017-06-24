@@ -27,10 +27,16 @@ class Place extends Model
      */
     protected $fillable = ['region_id', 'code', 'lat', 'lng', 'safety_degree', 'active'];
 
+    /**
+     * @return mixed
+     **/
     public function deleteMedias(){
         $this->deleteModals($this->medias);
     }
 
+    /**
+     * @return mixed
+     **/
     public function deleteModals($models){
         if(!empty($models)){
             foreach ($models as $key => $value) {

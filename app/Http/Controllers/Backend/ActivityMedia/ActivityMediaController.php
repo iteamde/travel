@@ -56,6 +56,7 @@ class ActivityMediaController extends Controller
             $data[$language->id]['description_'.$language->id] = $request->input('description_'.$language->id);
         }
 
+        /* Pass All Relation and Common fields through $extra Array */
         $extra = [
             'url' => $request->input('url')
         ];

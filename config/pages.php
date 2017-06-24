@@ -20,33 +20,33 @@ return [
     'pages_table' => 'pages',
 
     /*
-     * Pages table used to save Pages to the database.
+     * Pages trans table used to save Pages translations to the database.
      */
     'pages_trans_table' => 'pages_trans',
 
     /*
-     * PagesTranslations table used to save PagesTranslations to the database.
+     * PagesTranslations Model used to access PagesTranslations relation from database.
      */
     'pages_trans' =>  PagesTranslations::class,
 
     /*
-     * PagesMedias table used to save PagesMedias to the database.
+     * PagesMedias Model used to access PagesMedias relation from database.
      */
     'pages_medias' =>  PagesMedias::class,
 
     /*
-     * PagesAdmins table used to save PagesAdmins to the database.
+     * PagesAdmins Model used to access PagesAdmins relation from database.
      */
     'pages_admins' =>  PagesAdmins::class,
 
     /*
-     * PagesFollowers table used to save PagesFollowers to the database.
+     * PagesFollowers Model used to access PagesFollowers relation from database.
      */
     'pages_followers' =>  PagesFollowers::class,
 
 
     /*
-     * pages_categories table used to save pages to the database.
+     * pages_categories table used to save pages categories to the database.
      */
     'pages_categories_table' => 'pages_categories',
     

@@ -71,42 +71,42 @@ return [
     'country_airports_trans' =>  CountriesAirports::class,
 
     /*
-     * CountriesCurrencies table used to save CountriesCurrencies relation from database.
+     * CountriesCurrencies Model used to access CountriesCurrencies relation from database.
      */
     'country_currencies_trans' =>  CountriesCurrencies::class,
 
     /*
-     * CountriesCapitals table used to save CountriesCapitals to the database.
+     * CountriesCapitals Model used to access CountriesCapitals relation from database.
      */
     'country_capitals_trans' =>  CountriesCapitals::class,
 
     /*
-     * CountriesEmergencyNumbers table used to save CountriesEmergencyNumbers to the database.
+     * CountriesEmergencyNumbers Model used to access CountriesEmergencyNumbers relation from database.
      */
     'country_emergency_numbers_trans' =>  CountriesEmergencyNumbers::class,
 
     /*
-     * CountriesHolidays table used to save CountriesHolidays to the database.
+     * CountriesHolidays Model used to access CountriesHolidays relation from database.
      */
     'country_holidays_trans' =>  CountriesHolidays::class,
 
     /*
-     * CountriesLanguagesSpoken table used to save CountriesLanguagesSpoken to the database.
+     * CountriesLanguagesSpoken Model used to access CountriesLanguagesSpoken relation from database.
      */
     'country_languages_spoken_trans' =>  CountriesLanguagesSpoken::class,
 
     /*
-     * CountriesLifestyles table used to save CountriesLifestyles to the database.
+     * CountriesLifestyles Model used to access CountriesLifestyles relation from database.
      */
     'country_lifestyles_trans' =>  CountriesLifestyles::class,
 
     /*
-     * CountriesMedias table used to save CountriesMedias to the database.
+     * CountriesMedias Model used to access CountriesMedias relation from database.
      */
     'country_medias_trans' =>  CountriesMedias::class,
 
     /*
-     * CountriesReligions table used to save CountriesReligions to the database.
+     * CountriesReligions Model used to save CountriesReligions relation from database.
      */
     'country_religions_trans' =>  CountriesReligions::class,
 
@@ -116,79 +116,79 @@ return [
     'city_table' => 'cities',
 
     /*
-     * Cities table used to save cities to the database.
+     * cities_translation table used to save cities translations to the database.
      */
     'city_trans_table' => 'cities_trans',
 
     /*
-     * Cities table used to save cities to the database.
+     * CitiesTranslations Model used to access CitiesTranslations relation from database.
      */
     'cities_trans' =>  CitiesTranslations::class,
 
     /*
-     * CitiesAirports table used to save CitiesAirports to the database.
+     * CitiesAirports Model used to access CitiesAirports relation from database.
      */
     'cities_airports_trans' =>  CitiesAirports::class,
 
      /*
-     * CitiesCurrencies table used to save CitiesCurrencies to the database.
+     * CitiesCurrencies Model used to access CitiesCurrencies relation from database.
      */
     'cities_currencies_trans' =>  CitiesCurrencies::class,
 
     /*
-     * CitiesEmergencyNumbers table used to save CitiesEmergencyNumbers to the database.
+     * CitiesEmergencyNumbers Model used to access CitiesEmergencyNumbers relation from database.
      */
     'cities_emergency_numbers_trans' =>  CitiesEmergencyNumbers::class,
 
     /*
-     * CitiesHolidays table used to save CitiesHolidays to the database.
+     * CitiesHolidays Model used to access CitiesHolidays relation from database.
      */
     'cities_holidays_trans' =>  CitiesHolidays::class,
 
     /*
-     * CitiesMedias table used to save CitiesMedias to the database.
+     * CitiesMedias Model used to access CitiesMedias relation from database.
      */
     'cities_medias_trans' =>  CitiesMedias::class,
 
     /*
-     * CitiesLifestyles table used to save CitiesLifestyles to the database.
+     * CitiesLifestyles Model used to access CitiesLifestyles relation from database.
      */
     'cities_lifestyles_trans' =>  CitiesLifestyles::class,
 
     /*
-     * CitiesReligions table used to save CitiesReligions to the database.
+     * CitiesReligions Model used to access CitiesReligions relation from database.
      */
     'cities_religions_trans' =>  CitiesReligions::class,
 
     /*
-     * CitiesLanguagesSpoken table used to save CitiesLanguagesSpoken to the database.
+     * CitiesLanguagesSpoken Model used to access CitiesLanguagesSpoken relation from database.
      */
     'cities_languages_spoken_trans' =>  CitiesLanguagesSpoken::class,
 
     /*
-     * regions model used by Access to create correct relations.
+     * Regions model used by Access to create correct relations.
      * Update the permission if it is in a different namespace.
      */
     'regions' => Regions::class,
 
     /*
-     * Regions table used by Access to save roles to the database.
+     * regions table used to save regions to the database.
      */
     'regions_table' => 'conf_regions',
 
     /*
-     * regions_trans model used by Access to create correct relations.
+     * RegionsTranslation model used to access RegionTranslation relations.
      * Update the permission if it is in a different namespace.
      */
     'regions_trans' => RegionsTranslation::class,
 
     /*
-     * RegionsTranslation table used by Access to save roles to the database.
+     * regions_translation table used save regions translations to the database.
      */
     'regions_trans_table' => 'conf_regions_trans',
 
     /*
-     * RegionsMedias table used by Access to save roles to the database.
+     * RegionsMedias Model used to save RegionsMedias relation to the database.
      */
     'regions_medias' => RegionsMedias::class,
 
@@ -210,7 +210,7 @@ return [
     'place_types_trans' => PlaceTypesTranslations::class,
 
     /*
-     * PlacetypesTranslation table used by Admin to save placetypes to the database.
+     * PlacetypesTranslation table used by Admin to save placetypes translation to the database.
      */
     'place_types_trans_table' => 'conf_place_types_trans',
 
@@ -226,7 +226,7 @@ return [
     'place_trans' => PlaceTranslations::class,
 
     /*
-     * PlaceTranslation table used by Admin to save placetypes to the database.
+     * PlaceTranslation table used by Admin to save place translations to the database.
      */
     'place_trans_table' => 'places_trans',
     

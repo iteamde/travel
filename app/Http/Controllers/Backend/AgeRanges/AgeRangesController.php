@@ -62,6 +62,7 @@ class AgeRangesController extends Controller
             $active = 2;
         }
 
+        /* Pass All Relation and Common fields through $extra Array */
         $extra = [
             'to' => $request->input('to'),
             'from' => $request->input('from'),

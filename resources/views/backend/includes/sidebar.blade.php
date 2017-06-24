@@ -137,7 +137,7 @@
             <!-- Locations Manager End -->
             
             <!-- Embassies Manager Start -->
-            <li class="{{ active_class(Active::checkUriPattern('admin/access/safety-degrees/*') , 'active') }} treeview">
+            <li class="{{ active_class(Active::checkUriPattern('admin/embassies/embassies*') , 'active') }} treeview">
                 <a href="#">
                     <i class="fa fa-users"></i>
                      <!-- <span>{{ trans('menus.backend.language.title') }}</span> -->
@@ -145,8 +145,8 @@
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
 
-                <ul class="treeview-menu {{ active_class(Active::checkUriPattern('admin/access/safety-degrees/safety*'), 'menu-open') }}" style="display: none; {{ active_class(Active::checkUriPattern('admin/safety-degrees/safety*'), 'display: block;') }}">
-                    <li class="{{ active_class(Active::checkUriPattern('admin/safety-degrees/safety*')) }}">
+                <ul class="treeview-menu {{ active_class(Active::checkUriPattern('admin/embassies/embassies*'), 'menu-open') }}" style="display: none; {{ active_class(Active::checkUriPattern('admin/embassies/embassies*'), 'display: block;') }}">
+                    <li class="{{ active_class(Active::checkUriPattern('admin/embassies/embassies*')) }}">
                         <a href="{{ route('admin.embassies.embassies.index') }}">
                             <i class="fa fa-circle-o"></i>
                             <!-- <span>{{ trans('labels.backend.access.langauge.management') }}</span> -->
@@ -158,7 +158,7 @@
             <!-- Embassies Manager End -->
 
             <!-- Hotels Manager Start -->
-            <li class="{{ active_class(Active::checkUriPattern('admin/access/safety-degrees/*') , 'active') }} treeview">
+            <li class="{{ active_class(Active::checkUriPattern('admin/hotels/hotels*') , 'active') }} treeview">
                 <a href="#">
                     <i class="fa fa-users"></i>
                      <!-- <span>{{ trans('menus.backend.language.title') }}</span> -->
@@ -166,8 +166,8 @@
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
 
-                <ul class="treeview-menu {{ active_class(Active::checkUriPattern('admin/access/safety-degrees/safety*'), 'menu-open') }}" style="display: none; {{ active_class(Active::checkUriPattern('admin/safety-degrees/safety*'), 'display: block;') }}">
-                    <li class="{{ active_class(Active::checkUriPattern('admin/safety-degrees/safety*')) }}">
+                <ul class="treeview-menu {{ active_class(Active::checkUriPattern('admin/hotels/hotels*'), 'menu-open') }}" style="display: none; {{ active_class(Active::checkUriPattern('admin/hotels/hotels*'), 'display: block;') }}">
+                    <li class="{{ active_class(Active::checkUriPattern('admin/hotels/hotels*')) }}">
                         <a href="{{ route('admin.hotels.hotels.index') }}">
                             <i class="fa fa-circle-o"></i>
                             <!-- <span>{{ trans('labels.backend.access.langauge.management') }}</span> -->
@@ -179,7 +179,7 @@
             <!-- Hotels Manager End -->
 
             <!-- Restaurants Manager Start -->
-            <li class="{{ active_class(Active::checkUriPattern('admin/access/safety-degrees/*') , 'active') }} treeview">
+            <li class="{{ active_class(Active::checkUriPattern('admin/restaurants/restaurants*') , 'active') }} treeview">
                 <a href="#">
                     <i class="fa fa-users"></i>
                      <!-- <span>{{ trans('menus.backend.language.title') }}</span> -->
@@ -187,8 +187,8 @@
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
 
-                <ul class="treeview-menu {{ active_class(Active::checkUriPattern('admin/access/safety-degrees/safety*'), 'menu-open') }}" style="display: none; {{ active_class(Active::checkUriPattern('admin/safety-degrees/safety*'), 'display: block;') }}">
-                    <li class="{{ active_class(Active::checkUriPattern('admin/safety-degrees/safety*')) }}">
+                <ul class="treeview-menu {{ active_class(Active::checkUriPattern('admin/restaurants/restaurants*'), 'menu-open') }}" style="display: none; {{ active_class(Active::checkUriPattern('admin/restaurants/restaurants*'), 'display: block;') }}">
+                    <li class="{{ active_class(Active::checkUriPattern('admin/restaurants/restaurants*')) }}">
                         <a href="{{ route('admin.restaurants.restaurants.index') }}">
                             <i class="fa fa-circle-o"></i>
                             <!-- <span>{{ trans('labels.backend.access.langauge.management') }}</span> -->
@@ -198,7 +198,6 @@
                 </ul>
             </li>
             <!-- Restaurants Manager End -->
-
 
             <!-- Activities Manager -->
             <li class="{{ active_class(Active::checkUriPattern('admin/activities*')) | active_class(Active::checkUriPattern('admin/activitymedia/activitymedia-disabled*')) }} treeview">

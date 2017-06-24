@@ -16,7 +16,6 @@ class CitiesAirports extends Model
     protected $table = 'cities_airports';
     
     use CityAirportRelationship;
-    //     CityAttribute;
 
     public $timestamps = false;
 

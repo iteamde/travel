@@ -96,7 +96,7 @@ class PagesController extends Controller
             $active = 1;
         }
 
-        /* Send All Relations Through $extra Array */
+        /* Send All Relations and Common Fields Through $extra Array */
         $extra = [
             'active' => $active,
             'url' => $request->input('url'),
@@ -269,6 +269,7 @@ class PagesController extends Controller
             $active = 1;
         }
 
+        /* Send All Relation and Common Fields Through $extra Array */
         $extra = [
             'active' => $active,
             'url' => $request->input('url'),

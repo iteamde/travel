@@ -27,18 +27,30 @@ class Pages extends Model
      */
     protected $fillable = ['id' , 'active' , 'url'];
 
+    /**
+     * @return mixed
+     **/
     public function deleteAdmins(){
         $this->deleteModels($this->admins);
     }
 
+    /**
+     * @return mixed
+     **/
     public function deleteFollowers(){
         $this->deleteModels($this->followers);
     }
 
+    /**
+     * @return mixed
+     **/
     public function deleteMedias(){
         $this->deleteModels($this->medias);
     }
 
+    /**
+     * @return mixed
+     **/
     public function deleteModels($models){
         if(!empty($models)){
             foreach ($models as $key => $value) {
@@ -46,5 +58,4 @@ class Pages extends Model
             }
         }
     }
-
 }

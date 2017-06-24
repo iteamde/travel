@@ -61,6 +61,7 @@ class ReligionController extends Controller
             $active = 2;
         }
         
+        /* Pass All Relation and Common Fields Through $extra Array */
         $extra = [
             'active' => $active
         ];
@@ -148,6 +149,7 @@ class ReligionController extends Controller
             $active = 2;
         }
         
+        /* Send All Relation and Common Fields Through $extra Array */     
         $extra = [
             'active' => $active
         ];

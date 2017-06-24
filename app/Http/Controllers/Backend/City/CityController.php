@@ -205,6 +205,7 @@ class CityController extends Controller
             $is_capital = Cities::IS_CAPITAL;
         }
 
+        /* Pass All Relation and Common Fields Through $extra Array */
         $extra = [
             'active' => $active,
             'is_capital' => $is_capital,

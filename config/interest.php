@@ -22,7 +22,7 @@ return [
     'interest_trans_table' => 'conf_interestss_trans',
 
     /*
-     * InterestTranslations Model used to access InterestTranslations from database.
+     * InterestTranslations Model used to access InterestTranslations relation from database.
      */
     'interest_trans' =>  InterestTranslations::class,
     

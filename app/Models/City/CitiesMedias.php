@@ -16,7 +16,6 @@ class CitiesMedias extends Model
     protected $table = 'cities_medias';
     
     use CityMediasRelationship;
-    //     CityAttribute;
 
     public $timestamps = false;
 

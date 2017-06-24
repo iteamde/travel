@@ -4,6 +4,7 @@ namespace App\Repositories\Backend\Restaurants;
 
 use App\Models\Restaurants\Restaurants;
 use App\Models\Restaurants\RestaurantsTranslations;
+use App\Models\Restaurants\RestaurantsMedias;
 use Illuminate\Support\Facades\DB;
 use App\Exceptions\GeneralException;
 use App\Repositories\BaseRepository;
@@ -111,6 +112,16 @@ class RestaurantsRepository extends BaseRepository
             
             if ($model->save()) {
 
+                if(!empty($extra['medias'])){
+                    
+                    foreach ($extra['medias'] as $key => $value) {
+                        $RestaurantsMedias = new RestaurantsMedias;
+                        $RestaurantsMedias->restaurants_id = $model->id;
+                        $RestaurantsMedias->medias_id = $value;
+                        $RestaurantsMedias->save();
+                    }
+                }
+
                 foreach ($input as $key => $value) {
 
                     $trans = new RestaurantsTranslations;
@@ -155,10 +166,18 @@ class RestaurantsRepository extends BaseRepository
         $model->cities_id = $extra['cities_id'];
         $model->places_id = $extra['places_id'];
 
-        /* Delete Previous CitiesTranslations */
+        /* Delete Previous RestaurantsTranslations */
         $prev = RestaurantsTranslations::where(['restaurants_id' => $id])->get();
         if(!empty($prev)){
             foreach ($prev as $key => $value) {
+                $value->delete();
+            }
+        }
+
+        /* Delete Previous RestaurantsMedias */
+        $prevMedias = RestaurantsMedias::where(['restaurants_id' => $id])->get();
+        if(!empty($prevMedias)){
+            foreach ($prevMedias as $key => $value) {
                 $value->delete();
             }
         }
@@ -167,6 +186,15 @@ class RestaurantsRepository extends BaseRepository
             $check = 1;
             
             if ($model->save()) {
+
+                if(!empty($extra['medias'])){
+                    foreach ($extra['medias'] as $key => $value) {
+                        $RestaurantsMedias = new RestaurantsMedias;
+                        $RestaurantsMedias->restaurants_id = $model->id;
+                        $RestaurantsMedias->medias_id = $value;
+                        $RestaurantsMedias->save();
+                    }
+                }
 
                 /* Store New RestaurantsTranslations */
                 foreach ($input as $key => $value) {

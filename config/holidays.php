@@ -22,7 +22,7 @@ return [
     'holidays_trans_table' => 'conf_holidays_trans',
 
     /*
-     * HolidaysTranslations Model used to access HolidaysTranslations from database.
+     * HolidaysTranslations Model used to access HolidaysTranslationsrelation from database.
      */
     'holidays_trans' =>  HolidaysTranslations::class,
     

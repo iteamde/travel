@@ -17,12 +17,12 @@ return [
     'religion_table' => 'conf_religions',
 
     /*
-     * religion table used to save religion to the database.
+     * religion_trans table used to save religion translations to the database.
      */
     'religion_trans_table' => 'conf_religions_trans',
 
     /*
-     * religionTranslations table used to save religionTranslations to the database.
+     * ReligionTranslations model used to save ReligionTranslations relation from database.
      */
     'religion_trans' =>  ReligionTranslations::class,
     

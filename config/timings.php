@@ -17,13 +17,12 @@ return [
     'timings_table' => 'conf_timings',
 
     /*
-     * timings table used to save timings to the database.
+     * timings translation table used to save timings translations to the database.
      */
     'timings_trans_table' => 'conf_timings_trans',
 
     /*
-     * TimingsTranslations table used to save TimingsTranslations to the database.
+     * TimingsTranslations Model used to access TimingsTranslations relation from database.
      */
     'timings_trans' =>  TimingsTranslations::class,
-    
 ];

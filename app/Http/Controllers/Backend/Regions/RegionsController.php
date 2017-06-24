@@ -137,7 +137,7 @@ class RegionsController extends Controller
             $active = 2;
         }
 
-        /* Pass All Relations Through $extra Array */
+        /* Pass All Relations and Extra Fields Through $extra Array */
         $extra = [
             'medias' => $request->input('medias_id')
         ];
@@ -167,7 +167,7 @@ class RegionsController extends Controller
             $active = 2;
         }
 
-        /* Pass All Relations Through $extra Array */
+        /* Pass All Relations and Extra Fields Through $extra Array */
         $extra = [
             'medias' => $request->input('medias_id')
         ];
