@@ -17,12 +17,12 @@ return [
     'accommodations_table' => 'conf_accommodations',
 
     /*
-     * accommodations table used to save accommodations to the database.
+     * accommodations_trans table used to save accommodations translations to the database.
      */
     'accommodations_trans_table' => 'conf_accommodations_trans',
 
     /*
-     * accommodationsTranslations table used to save accommodationsTranslations to the database.
+     * accommodationsTranslations Model used to access accommodationsTranslations relation from database.
      */
     'accommodations_trans' =>  AccommodationsTranslations::class,
     

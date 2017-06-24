@@ -18,17 +18,17 @@ return [
     'hotels_table' => 'hotels',
 
     /*
-     * Hotels table used to save Hotels to the database.
+     * Hotels_trans table used to save Hotels translations to the database.
      */
     'hotels_trans_table' => 'hotels_trans',
 
     /*
-     * HotelsTranslations table used to save HotelsTranslations to the database.
+     * HotelsTranslations Model used to access HotelsTranslations from database.
      */
     'hotels_trans' =>  HotelsTranslations::class,
 
     /*
-     * HotelsMedias table used to save HotelsMedias to the database.
+     * HotelsMedias Model used to access HotelsMedias from database.
      */
     'hotels_medias' =>  HotelsMedias::class,
     

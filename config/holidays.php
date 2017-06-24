@@ -17,12 +17,12 @@ return [
     'holidays_table' => 'conf_holidays',
 
     /*
-     * Holidays table used to save Holidays to the database.
+     * holidays_trans used to save Holidays translations to the database.
      */
     'holidays_trans_table' => 'conf_holidays_trans',
 
     /*
-     * HolidaysTranslations table used to save HolidaysTranslations to the database.
+     * HolidaysTranslations Model used to access HolidaysTranslations from database.
      */
     'holidays_trans' =>  HolidaysTranslations::class,
     

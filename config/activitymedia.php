@@ -17,12 +17,12 @@ return [
     'media_table' => 'medias',
 
     /*
-     * media trans table used to save media trans to the database.
+     * media trans table used to save media translations to the database.
      */
     'media_trans_table' => 'medias_trans',
 
     /*
-     * MediaTranslations table used to save MediaTranslations to the database.
+     * MediaTranslations Model used to access MediaTranslations relation from database.
      */
     'media_trans' =>  MediaTranslations::class,
     

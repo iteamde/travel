@@ -17,12 +17,12 @@ return [
     'emergencynumbers_table' => 'conf_emergency_numbers',
 
     /*
-     * emergencynumbers table used to save emergency_numbers to the database.
+     * emergencynumbers_trans table used to save emergency_numbers translations to the database.
      */
     'emergencynumbers_trans_table' => 'conf_emergency_numbers_trans',
 
     /*
-     * EmergencyNumbersTranslations table used to save EmergencyNumbersTranslations to the database.
+     * EmergencyNumbersTranslations Model used to access EmergencyNumbersTranslations to the database.
      */
     'emergencynumbers_trans' =>  EmergencyNumbersTranslations::class,
     

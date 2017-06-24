@@ -17,12 +17,12 @@ return [
     'cultures_table' => 'conf_cultures',
 
     /*
-     * cultures table used to save cultures to the database.
+     * cultures_trans_table used to save cultures translations to the database.
      */
     'cultures_trans_table' => 'conf_cultures_trans',
 
     /*
-     * CulturesTranslations table used to save CulturesTranslations to the database.
+     * CulturesTranslations Model used to access CulturesTranslations from database.
      */
     'cultures_trans' =>  CulturesTranslations::class,
     

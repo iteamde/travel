@@ -178,6 +178,27 @@
             </li>
             <!-- Hotels Manager End -->
 
+            <!-- Restaurants Manager Start -->
+            <li class="{{ active_class(Active::checkUriPattern('admin/access/safety-degrees/*') , 'active') }} treeview">
+                <a href="#">
+                    <i class="fa fa-users"></i>
+                     <!-- <span>{{ trans('menus.backend.language.title') }}</span> -->
+                     <span>{{ 'Restaurants Manager' }}</span>
+                    <i class="fa fa-angle-left pull-right"></i>
+                </a>
+
+                <ul class="treeview-menu {{ active_class(Active::checkUriPattern('admin/access/safety-degrees/safety*'), 'menu-open') }}" style="display: none; {{ active_class(Active::checkUriPattern('admin/safety-degrees/safety*'), 'display: block;') }}">
+                    <li class="{{ active_class(Active::checkUriPattern('admin/safety-degrees/safety*')) }}">
+                        <a href="{{ route('admin.restaurants.restaurants.index') }}">
+                            <i class="fa fa-circle-o"></i>
+                            <!-- <span>{{ trans('labels.backend.access.langauge.management') }}</span> -->
+                            <span>{{ 'Restaurants' }}</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <!-- Restaurants Manager End -->
+
 
             <!-- Activities Manager -->
             <li class="{{ active_class(Active::checkUriPattern('admin/activities*')) | active_class(Active::checkUriPattern('admin/activitymedia/activitymedia-disabled*')) }} treeview">

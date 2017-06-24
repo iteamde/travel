@@ -56,22 +56,22 @@ return [
     'country_table' => 'countries',
 
     /*
-     * Countries table used to save countries to the database.
+     * country_trans table used to save countries translations to the database.
      */
     'country_trans_table' => 'countries_trans',
 
     /*
-     * Countries table used to save countries to the database.
+     * CountriesTranslations Model used to access CountriesTranslations relation from database.
      */
     'country_trans' =>  CountriesTranslations::class,
 
     /*
-     * CountriesAirports table used to save CountriesAirports to the database.
+     * CountriesAirports Model used to access CountriesAirports relation from database.
      */
     'country_airports_trans' =>  CountriesAirports::class,
 
     /*
-     * CountriesAirports table used to save CountriesAirports to the database.
+     * CountriesCurrencies table used to save CountriesCurrencies relation from database.
      */
     'country_currencies_trans' =>  CountriesCurrencies::class,
 

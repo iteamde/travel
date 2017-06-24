@@ -12,17 +12,17 @@ return [
     'language_table' => 'conf_languages',
 
     /*
-     * Interest table used to save countries to the database.
+     * Interest table used to save interests to the database.
      */
     'interest_table' => 'conf_interests',
 
     /*
-     * Interest table used to save interest to the database.
+     * Interest_translations table used to save interest translations to the database.
      */
     'interest_trans_table' => 'conf_interestss_trans',
 
     /*
-     * InterestTranslations table used to save InterestTranslations to the database.
+     * InterestTranslations Model used to access InterestTranslations from database.
      */
     'interest_trans' =>  InterestTranslations::class,
     

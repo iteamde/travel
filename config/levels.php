@@ -17,12 +17,12 @@ return [
     'levels_table' => 'conf_levels',
 
     /*
-     * levels table used to save levels to the database.
+     * levels_translation table used to save levels translations to the database.
      */
     'levels_trans_table' => 'conf_levels_trans',
 
     /*
-     * levelsTranslations table used to save levelsTranslations to the database.
+     * LevelsTranslations Model used to access LevelsTranslations from database.
      */
     'levels_trans' =>  LevelsTranslations::class,
     

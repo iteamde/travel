@@ -17,12 +17,12 @@ return [
     'lifestyle_table' => 'conf_lifestyles',
 
     /*
-     * Lifestyle translation table used to save Lifestyle translation to the database.
+     * lifestyle_trans_table used to save lifestyle translation to the database.
      */
     'lifestyle_trans_table' => 'conf_lifestyles_trans',
 
     /*
-     * Lifestyle Translations table used to save Lifestyle Translations to the database.
+     * LifestyleTranslations Model used to access LifestyleTranslations relation from database.
      */
     'lifestyle_trans' =>  LifestyleTrans::class,
     

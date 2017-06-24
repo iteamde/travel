@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Repositories\Backend\ActivityTypes;
+namespace App\Repositories\Backend\Restaurants;
 
-use App\Models\ActivityTypes\ActivityTypes;
-use App\Models\ActivityTypes\ActivityTypesTranslations;
+use App\Models\Restaurants\Restaurants;
+use App\Models\Restaurants\RestaurantsTranslations;
 use Illuminate\Support\Facades\DB;
 use App\Exceptions\GeneralException;
 use App\Repositories\BaseRepository;
@@ -11,14 +11,14 @@ use Illuminate\Database\Eloquent\Model;
 use App\Repositories\Backend\Access\Role\RoleRepository;
 
 /**
- * Class ActivityTypesRepository.
+ * Class RestaurantsRepository.
  */
-class ActivityTypesRepository extends BaseRepository
+class RestaurantsRepository extends BaseRepository
 {
     /**
      * Associated Repository Model.
      */
-    const MODEL = ActivityTypes::class;
+    const MODEL = Restaurants::class;
 
     /**
      * @var RoleRepository
@@ -80,9 +80,13 @@ class ActivityTypesRepository extends BaseRepository
          * be able to differentiate what buttons to show for each row.
          */
         $dataTableQuery = $this->query()
+            // ->with('roles')
             ->with('transsingle')
             ->select([
-                config('activities.activities_types_table').'.id',
+                config('restaurants.restaurants_table').'.id',
+                config('restaurants.restaurants_table').'.lat',
+                config('restaurants.restaurants_table').'.lng',
+                config('restaurants.restaurants_table').'.active'
             ]);
 
         // active() is a scope on the UserScope trait
@@ -92,21 +96,36 @@ class ActivityTypesRepository extends BaseRepository
     /**
      * @param array $input
      */
-    public function create($input)
+    public function create($input , $extra)
     {
-        $model = new ActivityTypes;
+        $model = new Restaurants;
+        $model->countries_id = $extra['countries_id'];
+        $model->active       = $extra['active'];
+        $model->cities_id    = $extra['cities_id'];
+        $model->places_id    = $extra['places_id'];
+        $model->lat          = $extra['lat'];
+        $model->lng          = $extra['lng'];
         
-        DB::transaction(function () use ($model, $input) {
+        DB::transaction(function () use ($model, $input, $extra) {
             $check = 1;
             
             if ($model->save()) {
+
                 foreach ($input as $key => $value) {
-                    $trans = new ActivityTypesTranslations;
-                    $trans->activities_types_id = $model->id;
+
+                    $trans = new RestaurantsTranslations;
+                    $trans->restaurants_id = $model->id;
                     $trans->languages_id = $key;
                     $trans->title        = $value['title_'.$key];
                     $trans->description  = $value['description_'.$key];
-                    
+                    $trans->working_days = $value['working_days_'.$key];
+                    $trans->working_times= $value['working_times_'.$key];
+                    $trans->how_to_go    = $value['how_to_go_'.$key];
+                    $trans->when_to_go   = $value['when_to_go_'.$key];
+                    $trans->num_activities = $value['num_activities_'.$key];
+                    $trans->popularity   = $value['popularity_'.$key];
+                    $trans->conditions   = $value['conditions_'.$key];
+
                     if(!$trans->save()) {
                         $check = 0;
                     }
@@ -125,28 +144,44 @@ class ActivityTypesRepository extends BaseRepository
     /**
      * @param array $input
      */
-    public function update($id , $model , $input)
+    public function update($id , $model , $input , $extra)
     {
-        $model = ActivityTypes::findOrFail(['id' => $id]);
+        $model = Restaurants::findOrFail(['id' => $id]);
         $model = $model[0];
+        $model->countries_id  = $extra['countries_id'];
+        $model->active      = $extra['active'];
+        $model->lat         = $extra['lat'];
+        $model->lng         = $extra['lng'];
+        $model->cities_id = $extra['cities_id'];
+        $model->places_id = $extra['places_id'];
 
-        $prev = ActivityTypesTranslations::where(['activities_types_id' => $id])->get();
+        /* Delete Previous CitiesTranslations */
+        $prev = RestaurantsTranslations::where(['restaurants_id' => $id])->get();
         if(!empty($prev)){
             foreach ($prev as $key => $value) {
                 $value->delete();
             }
         }
 
-        DB::transaction(function () use ($model, $input) {
+        DB::transaction(function () use ($model, $input, $extra) {
             $check = 1;
             
             if ($model->save()) {
+
+                /* Store New RestaurantsTranslations */
                 foreach ($input as $key => $value) {
-                    $trans = new ActivityTypesTranslations;
-                    $trans->activities_types_id = $model->id;
-                    $trans->languages_id = $key;
-                    $trans->title        = $value['title_'.$key];
-                    $trans->description  = $value['description_'.$key];
+                    $trans                  = new RestaurantsTranslations;
+                    $trans->restaurants_id  = $model->id;
+                    $trans->languages_id    = $key;
+                    $trans->title           = $value['title_'.$key];
+                    $trans->description     = $value['description_'.$key];
+                    $trans->working_days    = $value['working_days_'.$key];
+                    $trans->working_times   = $value['working_times_'.$key];
+                    $trans->how_to_go       = $value['how_to_go_'.$key];
+                    $trans->when_to_go      = $value['when_to_go_'.$key];
+                    $trans->num_activities  = $value['num_activities_'.$key];
+                    $trans->popularity      = $value['popularity_'.$key];
+                    $trans->conditions      = $value['conditions_'.$key];
 
                     if(!$trans->save()) {
                         $check = 0;

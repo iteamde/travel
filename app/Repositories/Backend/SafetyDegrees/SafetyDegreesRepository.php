@@ -10,7 +10,7 @@ use App\Repositories\BaseRepository;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class LanguageRepository.
+ * Class SafetyDegreesRepository.
  */
 class SafetyDegreesRepository extends BaseRepository
 {

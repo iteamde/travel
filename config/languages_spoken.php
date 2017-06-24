@@ -17,12 +17,12 @@ return [
     'languages_spoken_table' => 'conf_languages_spoken',
 
     /*
-     * Languages Spoken table used to save Languages Spoken to the database.
+     * languages_spoken_trans table used to save languages_spoken translations to the database.
      */
     'languages_spoken_trans_table' => 'conf_languages_spoken_trans',
 
     /*
-     * Languages Spoken Translations table used to save Languages Spoken to the database.
+     * LanguagesSpokenTranslations Model used to access LanguagesSpokenTranslation from database.
      */
     'languages_spoken_trans' =>  LanguagesSpokenTranslation::class,
     

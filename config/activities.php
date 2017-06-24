@@ -21,12 +21,12 @@ return [
     'activities_types_table' => 'conf_activities_types',
 
     /*
-     * Activities types table used to save Activities types to the database.
+     * Activities_types_trans table used to save Activities_types translations to the database.
      */
     'activities_types_trans_table' => 'conf_activities_types_trans',
 
     /*
-     * Activities types table used to save Activities types to the database.
+     * ActivitiesTypesTranslation Model used to access ActivityTypeTranslation relation from database.
      */
     'activities_types_trans' =>  ActivityTypesTranslations::class,
 
@@ -36,12 +36,12 @@ return [
     'activities_table' => 'activities',
 
     /*
-     * Activities types table used to save Activities types to the database.
+     * Activities_trans table used to save Activities Translations to the database.
      */
     'activities_trans_table' => 'activities_trans',
 
     /*
-     * Activities types table used to save Activities types to the database.
+     * ActivityTranslations Model used to access ActivitiesTranslations from database.
      */
     'activities_trans_model' =>  ActivityTranslations::class,
 
