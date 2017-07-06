@@ -16,3 +16,19 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+/* ----------------------------------------------------------------------- */
+
+/*
+ * Api Routes
+ * Namespaces indicate folder structure
+ */
+Route::group(['namespace' => 'Api', 'as' => 'api.', 'middleware' => 'api'], function () {
+    /*
+     * These routes need view-api permission
+     * (good if you want to allow more than one group in the api,
+     * then limit the api features by different roles or permissions)
+     *
+     */
+    includeRouteFiles(__DIR__.'/Api/');
+});

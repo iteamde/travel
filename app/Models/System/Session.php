@@ -20,5 +20,9 @@ class Session extends Model
     /**
      * @var array
      */
-    protected $guarded = ['*'];
+    // protected $guarded = ['*'];
+
+    public $timestamps = false;
+
+    public $incrementing = false;
 }

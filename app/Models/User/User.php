@@ -42,6 +42,11 @@ class User extends Authenticatable
     // Gender Constants
     const GENDER_MALE   = 0;
     const GENDER_FEMALE = 1;
+    const GENDER_UNSPECIFIED = 2;
+
+    //Status Constants
+    const STATUS_ACTIVE   = 1;
+    const STATUS_INACTIVE = 0;
 
     use UserScope,
         UserAccess,
