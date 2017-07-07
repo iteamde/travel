@@ -42,11 +42,11 @@ class PlaceController extends Controller
      * @return mixed
      */
     public function create(ManagePlaceRequest $request)
-    {   
+    {
         /* Get All Countries */
         $countries = Countries::where(['active' => 1])->get();
         $countries_arr = [];
-        
+
         foreach ($countries as $key => $value) {
             if(isset($value->transsingle) && !empty($value->transsingle)){
                 $countries_arr[$value->id] = $value->transsingle->title;
@@ -56,7 +56,7 @@ class PlaceController extends Controller
         /* Get All Cities */
         $cities = Cities::where(['active' => 1])->get();
         $cities_arr = [];
-        
+
         foreach ($cities as $key => $value) {
             if(isset($value->transsingle) && !empty($value->transsingle)){
                 $cities_arr[$value->id] = $value->transsingle->title;
@@ -66,7 +66,7 @@ class PlaceController extends Controller
          /* Get All Place Types */
         $places_types = PlaceTypes::all();
         $places_types_arr = [];
-        
+
         foreach ($places_types as $key => $value) {
             if(isset($value->transsingle) && !empty($value->transsingle)){
                 $places_types_arr[$value->id] = $value->transsingle->title;
@@ -76,19 +76,19 @@ class PlaceController extends Controller
         /* Get All Safety Degrees */
         $degrees = SafetyDegree::get();
         $degrees_arr = [];
-        
+
         foreach ($degrees as $key => $value) {
-            if(isset($value->transsingle) && !empty($value->transsingle)){  
+            if(isset($value->transsingle) && !empty($value->transsingle)){
                 $degrees_arr[$value->id] = $value->transsingle->title;
             }
         }
-        
+
         /* Get All Medias */
         $medias = Media::get();
         $medias_arr = [];
-        
+
         foreach ($medias as $key => $value) {
-            if(isset($value->transsingle) && !empty($value->transsingle)){  
+            if(isset($value->transsingle) && !empty($value->transsingle)){
                 $medias_arr[$value->id] = $value->transsingle->title;
             }
         }
@@ -108,9 +108,9 @@ class PlaceController extends Controller
      * @return mixed
      */
     public function store(StorePlaceRequest $request)
-    {   
+    {
         $data = [];
-        
+
         foreach ($this->languages as $key => $language) {
             $data[$language->id]['title_'.$language->id] = $request->input('title_'.$language->id);
             $data[$language->id]['description_'.$language->id] = $request->input('description_'.$language->id);
@@ -126,11 +126,11 @@ class PlaceController extends Controller
             $data[$language->id]['conditions_'.$language->id] = $request->input('conditions_'.$language->id);
             $data[$language->id]['price_level_'.$language->id] = $request->input('price_level_'.$language->id);
             $data[$language->id]['num_checkins_'.$language->id] = $request->input('num_checkins_'.$language->id);
-            $data[$language->id]['history_'.$language->id] = $request->input('history_'.$language->id);  
+            $data[$language->id]['history_'.$language->id] = $request->input('history_'.$language->id);
         }
 
-        $location = explode(',',$request->input('lat_lng') ); 
-        
+        $location = explode(',',$request->input('lat_lng') );
+
         /* Check if active field is enabled or disabled */
         $active = null;
         if(empty($request->input('active')) || $request->input('active') == 0){
@@ -185,8 +185,8 @@ class PlaceController extends Controller
      * @return mixed
      */
     public function edit($id, ManagePlaceRequest $request)
-    {   
-        
+    {
+
         $data = [];
         $place = Place::findOrFail(['id' => $id]);
         $place = $place[0];
@@ -214,7 +214,7 @@ class PlaceController extends Controller
                 $data['price_level_'.$language->id]     = $model[0]->price_level;
                 $data['num_checkins_'.$language->id]    = $model[0]->num_checkins;
                 $data['history_'.$language->id]         = $model[0]->history;
-            
+
             }else{
 
                 $data['title_'.$language->id]           = null;
@@ -232,22 +232,22 @@ class PlaceController extends Controller
                 $data['price_level_'.$language->id]     = null;
                 $data['num_checkins_'.$language->id]    = null;
                 $data['history_'.$language->id]         = null;
-            
+
             }
         }
 
         $data['lat_lng'] = $place['lat'] . ',' . $place['lng'];
         $data['countries_id'] = $place['countries_id'];
-        $data['cities_id'] = $place['cities_id']; 
-        $data['place_types_ids'] = $place['place_type_ids'];    
+        $data['cities_id'] = $place['cities_id'];
+        $data['place_types_ids'] = $place['place_type_ids'];
         $data['active'] = $place['active'];
         $data['safety_degrees_id'] = $place['safety_degrees_id'];
 
-        
+
         /* Get All Countries */
         $countries = Countries::where(['active' => 1])->get();
         $countries_arr = [];
-        
+
         foreach ($countries as $key => $value) {
             if(isset($value->transsingle) && !empty($value->transsingle)){
                 $countries_arr[$value->id] = $value->transsingle->title;
@@ -257,7 +257,7 @@ class PlaceController extends Controller
         /* Get All Cities */
         $cities = Cities::where(['active' => 1])->get();
         $cities_arr = [];
-        
+
         foreach ($cities as $key => $value) {
             if(isset($value->transsingle) && !empty($value->transsingle)){
                 $cities_arr[$value->id] = $value->transsingle->title;
@@ -267,7 +267,7 @@ class PlaceController extends Controller
          /* Get All Place Types */
         $places_types = PlaceTypes::all();
         $places_types_arr = [];
-        
+
         foreach ($places_types as $key => $value) {
             if(isset($value->transsingle) && !empty($value->transsingle)){
                 $places_types_arr[$value->id] = $value->transsingle->title;
@@ -277,9 +277,9 @@ class PlaceController extends Controller
         /* Get All safety Degrees */
         $degrees = SafetyDegree::get();
         $degrees_arr = [];
-        
+
         foreach ($degrees as $key => $value) {
-            if(isset($value->transsingle) && !empty($value->transsingle)){  
+            if(isset($value->transsingle) && !empty($value->transsingle)){
                 $degrees_arr[$value->id] = $value->transsingle->title;
             }
         }
@@ -290,22 +290,22 @@ class PlaceController extends Controller
 
         foreach ($selected_medias as $key => $value) {
             $value = $value->media;
-            // if(isset($value->transsingle) && !empty($value->transsingle)){  
+            // if(isset($value->transsingle) && !empty($value->transsingle)){
                 array_push($selected_medias_arr,$value->id);
             // }
         }
 
         $data['selected_medias'] = $selected_medias_arr;
-    
+
         /* Get All Medias */
         $medias = Media::get();
         $medias_arr = [];
-        
+
         foreach ($medias as $key => $value) {
-            if(isset($value->transsingle) && !empty($value->transsingle)){  
+            if(isset($value->transsingle) && !empty($value->transsingle)){
                 $medias_arr[$value->id] = $value->transsingle->title;
             }
-        }        
+        }
 
         return view('backend.place.edit')
             ->withLanguages($this->languages)
@@ -326,13 +326,13 @@ class PlaceController extends Controller
      * @return mixed
      */
     public function update($id, ManagePlaceRequest $request)
-    {   
+    {
         $place = Place::findOrFail(['id' => $id]);
-        
+
         $data = [];
 
         $data = [];
-        
+
         foreach ($this->languages as $key => $language) {
             $data[$language->id]['title_'.$language->id] = $request->input('title_'.$language->id);
             $data[$language->id]['description_'.$language->id] = $request->input('description_'.$language->id);
@@ -348,11 +348,11 @@ class PlaceController extends Controller
             $data[$language->id]['conditions_'.$language->id] = $request->input('conditions_'.$language->id);
             $data[$language->id]['price_level_'.$language->id] = $request->input('price_level_'.$language->id);
             $data[$language->id]['num_checkins_'.$language->id] = $request->input('num_checkins_'.$language->id);
-            $data[$language->id]['history_'.$language->id] = $request->input('history_'.$language->id); 
+            $data[$language->id]['history_'.$language->id] = $request->input('history_'.$language->id);
         }
 
-        $location = explode(',',$request->input('lat_lng') ); 
-        
+        $location = explode(',',$request->input('lat_lng') );
+
         /* Check if active field is enabled or disabled */
         $active = null;
         if(empty($request->input('active')) || $request->input('active') == 0){
@@ -373,7 +373,7 @@ class PlaceController extends Controller
             'safety_degrees_id' => $request->input('safety_degrees_id')
         ];
 
-        
+
         $this->places->update($id , $place, $data , $extra);
 
         return redirect()->route('admin.location.place.index')
@@ -387,7 +387,7 @@ class PlaceController extends Controller
      * @return mixed
      */
     public function show($id, ManagePlaceRequest $request)
-    {   
+    {
         $place = Place::findOrFail(['id' => $id]);
         $placeTrans = PlaceTranslations::where(['places_id' => $id])->get();
         $place = $place[0];
@@ -395,19 +395,19 @@ class PlaceController extends Controller
         /* Get Country Information */
         $country = $place->country;
         $country = $country->transsingle;
-        
+
         /* Get Country Information */
         $city = $place->city;
         $city = $city->transsingle;
-        
+
         /* Get Country Information */
         $type = $place->type;
         $type = $type->transsingle;
-    
+
         /* Get Safety Degrees Information */
         $safety_degree = $place->degree;
         $safety_degree = $safety_degree->transsingle;
-        
+
 
         /* Get All Selected Medias */
         $selected_medias = $place->medias;
@@ -415,7 +415,7 @@ class PlaceController extends Controller
 
         foreach ($selected_medias as $key => $value) {
             $value = $value->media;
-            if(isset($value->transsingle) && !empty($value->transsingle)){  
+            if(isset($value->transsingle) && !empty($value->transsingle)){
                 array_push($selected_medias_arr,$value->transsingle->title);
             }
         }
@@ -444,4 +444,72 @@ class PlaceController extends Controller
         return redirect()->route('admin.location.place.index')
             ->withFlashSuccess('Place Status Updated!');
     }
+
+    /**
+     * @param ManagePlaceRequest $request
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function import(ManagePlaceRequest $request)
+    {
+        /* Get All Countries */
+        $data['countries'] = Countries::where(['active' => 1])->get();
+
+        /* Get All Cities */
+        $data['cities'] = Cities::where(['active' => 1])->get();
+
+        return view('backend.place.import', $data);
+    }
+
+    /**
+     * @param ManagePlaceRequest $request
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function search(ManagePlaceRequest $request)
+    {
+        $data['countries_id'] = $request->input('countries_id');
+        $data['cities_id'] = $request->input('cities_id');
+
+        $city = $request->input('address');
+        $query = $request->input('query');
+        $json = file_get_contents('http://travooodb.dev/places/go/'.$city.'/0/0/'.$query);
+        $result = json_decode($json);
+        $data['results'] = $result->results;
+        return view('backend.place.importresults', $data);
+    }
+
+    public function savesearch(ManagePlaceRequest $request)
+    {
+        $data['countries_id'] = $request->input('countries_id');
+        $data['cities_id'] = $request->input('cities_id');
+
+        $to_save = $request->input('save');
+        $places = $request->input('place');
+
+        foreach($to_save AS $k=>$v) {
+            $p = new Place();
+            $p->place_type_ids = 0;
+            $p->safety_degree_id = 0;
+            $p->provider_id = $places[$k]['provider_id'];
+            $p->countries_id = $data['countries_id'];
+            $p->cities_id = $data['cities_id'];
+            $p->lat = $places[$k]['lat'];
+            $p->lng = $places[$k]['lng'];
+            $p->active = 1;
+            $p->save();
+
+            $pt = new PlaceTranslations();
+            $pt->title = $places[$k]['name'];
+            $pt->save();
+        }
+        die();
+
+        $json = file_get_contents('http://travooodb.dev/places/go/'.$city.'/0/0/'.$query);
+        $result = json_decode($json);
+        $data['results'] = $result->results;
+        return view('backend.place.importresults', $data);
+    }
+
+
 }

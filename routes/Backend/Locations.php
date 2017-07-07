@@ -25,7 +25,7 @@ Route::group([
          * Deleted Specific Country
          */
         Route::group(['prefix' => 'country/{deletedCountry}'], function () {
-            Route::delete('delete', 'CountryController@delete')->name('country.delete');     
+            Route::delete('delete', 'CountryController@delete')->name('country.delete');
         });
 
         /*
@@ -85,7 +85,7 @@ Route::group([
          * Deleted Specific City
          */
         Route::group(['prefix' => 'city/{deletedCity}'], function () {
-            Route::delete('delete', 'CityController@delete')->name('city.delete');     
+            Route::delete('delete', 'CityController@delete')->name('city.delete');
         });
 
         /*
@@ -115,7 +115,7 @@ Route::group([
          * Deleted Specific PlaceTypes
          */
         Route::group(['prefix' => 'placetypes/{deletedPlacetypes}'], function () {
-            Route::delete('delete', 'PlaceTypesController@delete')->name('placetypes.delete');     
+            Route::delete('delete', 'PlaceTypesController@delete')->name('placetypes.delete');
         });
 
     });
@@ -128,6 +128,9 @@ Route::group([
          * For DataTables
          */
         Route::post('place/get', 'PlaceTableController')->name('place.get');
+        Route::get('place/import', 'PlaceController@import')->name('place.import');
+        Route::post('place/search', 'PlaceController@search')->name('place.search');
+        Route::post('place/savesearch', 'PlaceController@savesearch')->name('place.savesearch');
 
         /*
          * Place CRUD
@@ -138,7 +141,7 @@ Route::group([
          * Deleted Specific Place
          */
         Route::group(['prefix' => 'place/{deletedPlace}'], function () {
-            Route::delete('delete', 'PlaceController@delete')->name('place.delete');     
+            Route::delete('delete', 'PlaceController@delete')->name('place.delete');
         });
 
         /*
@@ -150,4 +153,4 @@ Route::group([
 
     });
 
-}); 
+});
