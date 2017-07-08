@@ -23,5 +23,15 @@ Route::group([
 
         Route::post('/create' , 'UserController@create');
         Route::post('/login' , 'UserController@login');
+        Route::post('/logout' , 'UserController@logout');
+        Route::post('/forgot' , 'UserController@forgot');
+        Route::get('/activate/{token}' , 'UserController@activate');
+        Route::get('/info/{user_id}/{session_token}' , 'UserController@information');
+        Route::get('/reset/{token}/{new_password}/{confirm_password}' , 'UserController@reset');
+        Route::put('/fullname/{user_id}/{session_token}/{fullname}', 'UserController@update_fullname');
+        Route::put('/mobile/{user_id}/{session_token}/{mobile}', 'UserController@update_mobile');
+        Route::put('/address/{user_id}/{session_token}/{address}', 'UserController@update_address');
+        Route::put('/age/{user_id}/{session_token}/{age}', 'UserController@update_age');
+        Route::put('/nationality/{user_id}/{session_token}/{nationality}', 'UserController@update_nationality');
 }); 
 ?>
