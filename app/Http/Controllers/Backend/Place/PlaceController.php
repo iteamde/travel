@@ -505,7 +505,7 @@ class PlaceController extends Controller
         foreach($to_save AS $k=>$v) {
             $p = new Place();
             $p->place_type_ids = 0;
-            $p->safety_degree_id = 0;
+            $p->safety_degrees_id = 0;
             $p->provider_id = $places[$k]['provider_id'];
             $p->countries_id = $data['countries_id'];
             $p->cities_id = $data['cities_id'];
