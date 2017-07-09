@@ -463,7 +463,7 @@ class PlaceController extends Controller
         $data['countries'] = $countries_arr;
 
         /* Get All Cities */
-        $data['cities'] = Cities::where(['active' => 1])->get();
+        $cities = Cities::where(['active' => 1])->get();
         foreach ($cities as $key => $value) {
             if(isset($value->transsingle) && !empty($value->transsingle)){
                 $cities_arr[$value->id] = $value->transsingle->title;
