@@ -452,11 +452,24 @@ class PlaceController extends Controller
      */
     public function import(ManagePlaceRequest $request)
     {
-        /* Get All Countries */
-        $data['countries'] = Countries::where(['active' => 1])->get();
+        $countries = Countries::where(['active' => 1])->get();
+        $countries_arr = [];
+
+        foreach ($countries as $key => $value) {
+            if(isset($value->transsingle) && !empty($value->transsingle)){
+                $countries_arr[$value->id] = $value->transsingle->title;
+            }
+        }
+        $data['countries'] = $countries_arr;
 
         /* Get All Cities */
         $data['cities'] = Cities::where(['active' => 1])->get();
+        foreach ($cities as $key => $value) {
+            if(isset($value->transsingle) && !empty($value->transsingle)){
+                $cities_arr[$value->id] = $value->transsingle->title;
+            }
+        }
+        $data['cities'] = $cities_arr;
 
         return view('backend.place.import', $data);
     }
