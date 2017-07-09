@@ -159,4 +159,25 @@ class UserController extends Controller
 
         return $response;
     }
+
+    public function friends( $user_id, $session_token){
+
+        $response = User::friends($user_id, $session_token);
+
+        return $response;
+    }
+
+    public function delete_friends( $user_id, $session_token , $friends_id ) {
+
+        $response = User::delete_friends($user_id, $session_token, $friends_id);
+
+        return $response;
+    }
+
+    public function update_profile_image( $user_id, $session_token , Request $request){
+
+        $response = User::upload_image($user_id, $session_token, $request);
+        
+        return $response;
+    }
 }

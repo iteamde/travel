@@ -33,5 +33,12 @@ Route::group([
         Route::put('/address/{user_id}/{session_token}/{address}', 'UserController@update_address');
         Route::put('/age/{user_id}/{session_token}/{age}', 'UserController@update_age');
         Route::put('/nationality/{user_id}/{session_token}/{nationality}', 'UserController@update_nationality');
+        Route::get('/friends/{user_id}/{session_token}' , 'UserController@friends');
+        Route::delete('/friends/{user_id}/{session_token}/{friends_id}' , 'UserController@delete_friends');
+        Route::post('/profilepicture/{user_id}/{session_token}' , 'UserController@update_profile_image');
 }); 
 ?>
+
+
+
+

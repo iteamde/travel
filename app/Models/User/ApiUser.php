@@ -6,6 +6,8 @@ namespace App\Models\User;
 /* Dependencies */
 use App\Models\System\Session;
 use App\Models\User\Activation;
+use App\Models\User\UsersFriends;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * Class ApiUser.
@@ -66,7 +68,7 @@ class ApiUser extends User
             ];
         }
 
-        if( ! preg_match( '/^[a-zA-Z0-9._]+$/' , $post['name']) ){
+        if( ! preg_match( '/^[a-zA-Z0-9 ]+$/' , $post['name']) ){
             return [
                 'data' => [
                     'error'     => 400,
@@ -776,6 +778,198 @@ class ApiUser extends User
         ];        
     }
 
+    /* Get All Friends List Of Provided User Id */
+    public static function friends($user_id, $session_token){
+
+        /* If User id Is Not An Integer, Return Error */
+        if(! is_numeric($user_id) ){
+            return Self::generateErrorMessage(false, 400, 'User Id Should Be An Integer.');
+        }
+
+        /* Find User For Provided User Id */
+        $user = Self::where(['id' => $user_id])->first();
+
+        /* If User Not Found For Provided User Id, Return Error */
+        if(empty($user)){
+            return Self::generateErrorMessage(false, 400, 'Wrong User Id Provided.');
+        }
+
+        /* Find Session For Provided Session Token */
+        $session = Session::where(['id' => $session_token ])->first();
+
+        /* If Session Not Found For Provided Session Token, Return Error */
+        if( empty($session) ){
+            return Self::generateErrorMessage(false, 400, 'Wrong Session Token Provided.');
+        }
+
+        /* Container For Friends Information */
+        $friends_arr = [];
+
+        /* If Friends List Of User Is Not Empty, Push Information In Array Format in "friends_arr" array */
+        if(!empty($user->user_friends)){
+            foreach ($user->user_friends as $key => $value) {
+                array_push($friends_arr, Self::getArrayFormat($value->friend));
+            }
+        }
+
+        /* Return Success Status, And User Information In Array Format */
+        return [
+            'status' => true,
+            'data' => [
+                'user_info'     => $user->getArrayResponse(),
+                'user_friends'  => $friends_arr, 
+            ]
+        ];
+    }
+
+    /* Delete Friends From UserFriends Relation Table */
+    public static function delete_friends($user_id, $session_token, $friends_id){
+
+        /* If User Id Is Not An Integer, Return Error */
+        if(! is_numeric($user_id) ){
+            return Self::generateErrorMessage(false, 400, 'User Id Should Be An Integer.');
+        }
+        
+        /* Find User For Provided User Id */
+        $user = Self::where(['id' => $user_id])->first();
+        
+        /* If User Not Found For Provided User Id, Return Error */
+        if(empty($user)){
+            return Self::generateErrorMessage(false, 400, 'Wrong User Id Provided.');
+        }
+
+        /* Find Session For Provided Session Token */
+        $session = Session::where(['id' => $session_token])->first();
+
+        /* If Session Not Found For Provided Session Token, Return Error */
+        if(empty($session)){
+            return Self::generateErrorMessage(false, 400, 'Wrong Session Token Provided.');
+        }
+
+        /* If Session's User Id Doesn't Matches With Provided User Id, Return Error */
+        if( $session->user_id != $user->id ){
+            return Self::generateErrorMessage(false, 400, 'Wrong User Id Provided');
+        }
+        
+        /* Find The Relation Of Provided User With Friend Provided */
+        $friend = UsersFriends::where(['users_id' => $user_id, 'friends_id' => $friends_id])->first();
+
+        /* If Friend Not Found For Provided Friends Id, Return Error */
+        if( empty($friend) ){
+            return Self::generateErrorMessage(false, 400, 'Wrong Friends Id Provided.');
+        }
+
+        /* Delete Friends Relation From UsersFriends Table */
+        $friend->delete();
+
+        return [
+            'status' => true,
+            'data' => [],
+        ];
+    }
+
+    public static function upload_image($user_id, $session_token, $request){
+
+        /* If User Id Is Not Integer, Return Error */
+        if(! is_numeric($user_id)){
+            return Self::generateErrorMessage(flase, 400, 'User Id Should Be An Integer.');
+        }
+
+        /* Find USer For Provided User Id */
+        $user = Self::where(['id' => $user_id])->first();
+
+        /* If User Not Found, Return Error */
+        if(empty($user)){
+            return Self::generateErrorMessage(false, 400, 'Wrong User Id Provided.');
+        }
+
+        /* Session Token Validation */
+        if( empty($session_token) || strlen($session_token) > 64 ){
+            return Self::generateErrorMessage(false, 400, 'Session Token Should Be An Alphenumeric String Of 64 Characters Only.');
+        }
+
+        /* Find Session For Provided Session Token */
+        $session = Session::where(['id' => $session_token])->first();
+
+        /* If Session Not Found, Return Error */
+        if(empty($session)){
+            return Self::generateErrorMessage(false, 400, 'Wrong Session Token Provided.');
+        }
+
+        /* If Session's User Doesn't Matches With Provided User, Return Error */
+        if( $session->user_id != $user->id ){   
+            return Self::generateErrorMessage(false, 400, 'Wrong User Id Provided.');
+        }
+
+        /* Check That Uploads Directory Exists, If Not Create It */
+        $path = storage_path() . DIRECTORY_SEPARATOR . 'uploads';
+        if( !is_dir( $path ) ){
+            mkdir($path, 0755);
+        }
+        
+        /* Check That Users Directory Exists, If Not Create It */
+        $path .= DIRECTORY_SEPARATOR . 'users' ;
+        if( !is_dir( $path ) ){
+            mkdir($path, 0755);
+        }
+        
+        /* Check That Provided Users Directory Exists, If Not Create It */
+        $path .= DIRECTORY_SEPARATOR . $user_id ;
+        if( !is_dir( $path ) ){
+            mkdir($path, 0755);
+        }
+
+        /* Check That Provided Users Profile Directory Exist, If Not Create It */        
+        $path .= DIRECTORY_SEPARATOR . 'profile' ;
+        if( !is_dir( $path ) ){
+            mkdir($path, 0755);
+        }
+        
+        $path .= DIRECTORY_SEPARATOR;
+        
+        /* If File Is Not Uploaded, Return Error */
+        if( !$request->hasFile('picture') ){
+            /* If Old Picture Exists For This User, Remove It. */
+            if(!empty($user->profile_picture)){
+                if(is_file($path . $user->profile_picture)){
+                    unlink($path . $user->profile_picture);
+                }
+            }
+
+            return [
+                'status' => true,
+                'data' => [
+                ],
+            ];
+        }
+        
+        /* If Old Picture Exists For This User, Remove It. */
+        if(!empty($user->profile_picture)){
+            if(is_file($path . $user->profile_picture)){
+                unlink($path . $user->profile_picture);
+            }
+        }
+
+        /* Upload File */
+        $new_file_name = time() . '_profile_image.' . $request->picture->extension();
+        $new_path = '/uploads/users/' . $user_id . '/profile';
+        $request->picture->storeAs( $new_path , $new_file_name);
+
+        /* Save Updated Image Name In User's Table */
+        $user->profile_picture = $new_file_name;
+        $user->save(); 
+        
+        /* New Url Of Uploaded Image */
+        $image_url = asset('/storage' . $new_path . '/' . $user->profile_picture);
+        
+        return [
+            'status' => true,
+            'data' => [
+                'image_url' => $image_url
+            ],
+        ];
+    }
+
     /* Return User Information In Array Format */
     public function getArrayResponse(){
 
@@ -791,44 +985,81 @@ class ApiUser extends User
             'nationality'   => $this->nationality
         ];
     }
+
+    /* Return User Information In Array Format */
+    public static function getArrayFormat($model){
+
+        return [
+            'id'            => $model->id,
+            'username'      => $model->username,
+            'name'          => $model->name,
+            'email'         => $model->email,
+            'status'        => $model->status,
+            'mobile_number' => $model->mobile,
+            'address'       => $model->address,
+            'age'           => $model->age,
+            'nationality'   => $model->nationality
+        ];
+    }
     
     /* Send Activation Email To User's Email Address */
     public function sendActivationMessage(){
+
+        header('Access-Control-Allow-Origin: *');
+        //if you need cookies or login etc
+        header('Access-Control-Allow-Credentials: true');
+        header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
+        header('Access-Control-Max-Age: 604800');
+          //if you need special headers
+        header('Access-Control-Allow-Headers: x-requested-with');
+
+        $activation_code = Activation::where(['user_id' => $this->id])->first();
+
+        $site_url = url('');
+        $activation_url = $site_url . '/api/users/activate/' . $activation_code->token ;
+
+        $to = $this->email;
         
-
-    //     header('Access-Control-Allow-Origin: *');
-    //     //if you need cookies or login etc
-    //     header('Access-Control-Allow-Credentials: true');
-    //     header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
-    //     header('Access-Control-Max-Age: 604800');
-    //       //if you need special headers
-    //     header('Access-Control-Allow-Headers: x-requested-with');
-
-    //     $to = 'farzam.moeen@granjur.net';
-    //     $subject = 'Hello World';
-    //     $message = 'Hello World';
-    //     $headers = 'From: travoo@abcd.com' . '\r\n' .
-    // 'CC: travoo-test@abcd.com';
-
-    //     $mail_status = mail($to,$subject,$message,$headers);
-
-        // the message
-        // $msg = "First line of text\nSecond line of text";
-
-        // use wordwrap() if lines are longer than 70 characters
-        // $msg = wordwrap($msg,70);
+        $subject = 'Travoo Account Activation';
+        $message = 'Click on the link given below to activate your travoo account.<br />
+        <a href="' . $activation_url . '">Activate My Travoo Account</a>';
+        $headers = 'From: travoo@abcd.com' . '\r\n' .
+    'CC: travoo-test@abcd.com';
 
         // send email
-        // $mail_status = mail("farzammoeen007@gmail.com","My subject",$msg);
+        $mail_status = mail($to, $subject, $message, $headers);
 
-        // echo '<pre>';
-        // print_r($mail_status);
-        // exit;
+        return true;
     }
 
     /* Send Mail To Reset Password With Reset Token */
     public function sendPasswordResetEmail(){
+        
+        header('Access-Control-Allow-Origin: *');
+        //if you need cookies or login etc
+        header('Access-Control-Allow-Credentials: true');
+        header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
+        header('Access-Control-Max-Age: 604800');
+          //if you need special headers
+        header('Access-Control-Allow-Headers: x-requested-with');
 
+        $password_reset_code = $this->password_reset_token;
+
+        $site_url = url('');
+        $new_password_url = 'javascript:void(0);' ;
+
+        $to = $this->email;
+        
+        $subject = 'Travoo Account Password Reset';
+        $message = 'Click on the link given below to reset your travoo account password.<br />
+        <a href="' . $new_password_url . '">Reset My Travoo Account Password</a>';
+        $headers = 'From: travoo@abcd.com' . '\r\n' .
+    'CC: travoo-test@abcd.com';
+
+        // send email
+        $mail_status = mail($to, $subject, $message, $headers);
+
+        return true;   
     }
 
     /* Generate Random String of "length" = 63 */
