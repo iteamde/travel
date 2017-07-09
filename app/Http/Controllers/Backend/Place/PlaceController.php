@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Backend\Place;
 use App\Models\Place\Place;
 use App\Models\Place\PlaceTranslations;
 use App\Http\Controllers\Controller;
-use App\Models\Access\language\Languages;
+use App\Models\Access\Language\Languages;
 use App\Http\Requests\Backend\Place\ManagePlaceRequest;
 use App\Http\Requests\Backend\Place\StorePlaceRequest;
 use App\Repositories\Backend\Place\PlaceRepository;
