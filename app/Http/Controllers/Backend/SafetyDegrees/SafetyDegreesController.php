@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Backend\SafetyDegrees;
 
-use App\Models\Access\language\Languages;
+use App\Models\Access\Language\Languages;
 use App\Models\SafetyDegree\SafetyDegree;
 use App\Models\SafetyDegree\SafetyDegreeTrans;
 use App\Http\Controllers\Controller;

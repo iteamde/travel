@@ -13,7 +13,7 @@ use App\Models\ActivityMedia\Media;
 use App\Http\Controllers\Controller;
 use App\Models\Currencies\Currencies;
 use App\Models\City\CitiesTranslations;
-use App\Models\Access\language\Languages;
+use App\Models\Access\Language\Languages;
 use App\Models\SafetyDegree\SafetyDegree;
 use App\Models\LanguagesSpoken\LanguagesSpoken;
 use App\Repositories\Backend\City\CityRepository;

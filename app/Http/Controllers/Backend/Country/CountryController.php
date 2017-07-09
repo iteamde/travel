@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Backend\Country;
 use App\Models\Country\Countries;
 use App\Models\Country\CountriesTranslations;
 use App\Http\Controllers\Controller;
-use App\Models\Access\language\Languages;
+use App\Models\Access\Language\Languages;
 use App\Http\Requests\Backend\Country\ManageCountryRequest;
 use App\Http\Requests\Backend\Country\StoreCountryRequest;
 use App\Repositories\Backend\Country\CountryRepository;

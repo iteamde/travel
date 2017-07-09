@@ -8,7 +8,7 @@ use App\Models\City\Cities;
 use App\Models\Place\Place;
 use App\Models\Country\Countries;
 use App\Http\Controllers\Controller;
-use App\Models\Access\language\Languages;
+use App\Models\Access\Language\Languages;
 use App\Repositories\Backend\Restaurants\RestaurantsRepository;
 use App\Http\Requests\Backend\Restaurants\StoreRestaurantsRequest;
 use App\Http\Requests\Backend\Restaurants\ManageRestaurantsRequest;

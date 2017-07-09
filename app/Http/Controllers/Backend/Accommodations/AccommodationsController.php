@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Backend\Accommodations;
 use App\Models\Accommodations\Accommodations;
 use App\Models\Accommodations\AccommodationsTranslations;
 use App\Http\Controllers\Controller;
-use App\Models\Access\language\Languages;
+use App\Models\Access\Language\Languages;
 use App\Http\Requests\Backend\Accommodations\ManageAccommodationsRequest;
 use App\Http\Requests\Backend\Accommodations\StoreAccommodationsRequest;
 use App\Repositories\Backend\Accommodations\AccommodationsRepository;

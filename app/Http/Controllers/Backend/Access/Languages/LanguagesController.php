@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Backend\Access\Languages;
 
-use App\Models\Access\language\Languages;
+use App\Models\Access\Language\Languages;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Backend\Access\Language\ManageLanguagesRequest;
 use App\Http\Requests\Backend\Access\Language\StoreLanguageRequest;

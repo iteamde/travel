@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Backend\Currencies;
 use App\Models\Currencies\Currencies;
 use App\Models\Currencies\CurrenciesTranslations;
 use App\Http\Controllers\Controller;
-use App\Models\Access\language\Languages;
+use App\Models\Access\Language\Languages;
 use App\Http\Requests\Backend\Currencies\ManageCurrenciesRequest;
 use App\Http\Requests\Backend\Currencies\StoreCurrenciesRequest;
 use App\Repositories\Backend\Currencies\CurrenciesRepository;

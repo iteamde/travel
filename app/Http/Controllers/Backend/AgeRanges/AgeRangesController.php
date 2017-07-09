@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Backend\AgeRanges;
 use App\Models\AgeRanges\AgeRanges;
 use App\Models\AgeRanges\AgeRangesTranslations;
 use App\Http\Controllers\Controller;
-use App\Models\Access\language\Languages;
+use App\Models\Access\Language\Languages;
 use App\Http\Requests\Backend\AgeRanges\ManageAgeRangesRequest;
 use App\Http\Requests\Backend\AgeRanges\StoreAgeRangesRequest;
 use App\Repositories\Backend\AgeRanges\AgeRangesRepository;

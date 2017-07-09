@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Backend\Place;
 use App\Models\Place\Place;
 use App\Models\Place\PlaceTranslations;
 use App\Http\Controllers\Controller;
-use App\Models\Access\language\Languages;
+use App\Models\Access\Language\Languages;
 use App\Http\Requests\Backend\Place\ManagePlaceRequest;
 use App\Http\Requests\Backend\Place\StorePlaceRequest;
 use App\Repositories\Backend\Place\PlaceRepository;
@@ -452,11 +452,24 @@ class PlaceController extends Controller
      */
     public function import(ManagePlaceRequest $request)
     {
-        /* Get All Countries */
-        $data['countries'] = Countries::where(['active' => 1])->get();
+        $countries = Countries::where(['active' => 1])->get();
+        $countries_arr = [];
+
+        foreach ($countries as $key => $value) {
+            if(isset($value->transsingle) && !empty($value->transsingle)){
+                $countries_arr[$value->id] = $value->transsingle->title;
+            }
+        }
+        $data['countries'] = $countries_arr;
 
         /* Get All Cities */
-        $data['cities'] = Cities::where(['active' => 1])->get();
+        $cities = Cities::where(['active' => 1])->get();
+        foreach ($cities as $key => $value) {
+            if(isset($value->transsingle) && !empty($value->transsingle)){
+                $cities_arr[$value->id] = $value->transsingle->title;
+            }
+        }
+        $data['cities'] = $cities_arr;
 
         return view('backend.place.import', $data);
     }
@@ -473,8 +486,10 @@ class PlaceController extends Controller
 
         $city = $request->input('address');
         $query = $request->input('query');
-        $json = file_get_contents('http://travooodb.dev/places/go/'.$city.'/0/0/'.$query);
+        $json = file_get_contents('http://db.travooo.com/places/go/'.$city.'/0/0/'.$query);
+        //dd('http://db.travooo.com/places/go/'.$city.'/0/0/'.$query);
         $result = json_decode($json);
+        //dd($json);
         $data['results'] = $result->results;
         return view('backend.place.importresults', $data);
     }
@@ -489,8 +504,8 @@ class PlaceController extends Controller
 
         foreach($to_save AS $k=>$v) {
             $p = new Place();
-            $p->place_type_ids = 0;
-            $p->safety_degree_id = 0;
+            $p->place_type_ids = 1;
+            $p->safety_degrees_id = 1;
             $p->provider_id = $places[$k]['provider_id'];
             $p->countries_id = $data['countries_id'];
             $p->cities_id = $data['cities_id'];
@@ -498,9 +513,14 @@ class PlaceController extends Controller
             $p->lng = $places[$k]['lng'];
             $p->active = 1;
             $p->save();
+            //dd($p->id);
 
             $pt = new PlaceTranslations();
+            $pt->languages_id = 1;
+            $pt->places_id = $p->id;
             $pt->title = $places[$k]['name'];
+            if (isset($places[$k]['international_phone_number'])) $pt->phone = $places[$k]['international_phone_number'];
+            $pt->description = $places[$k]['website'];
             $pt->save();
         }
         die();

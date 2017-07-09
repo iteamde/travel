@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Backend\Timings;
 use App\Models\Timings\Timings;
 use App\Models\Timings\TimingsTranslations;
 use App\Http\Controllers\Controller;
-use App\Models\Access\language\Languages;
+use App\Models\Access\Language\Languages;
 use App\Http\Requests\Backend\Timings\ManageTimingsRequest;
 use App\Http\Requests\Backend\Timings\StoreTimingsRequest;
 use App\Repositories\Backend\Timings\TimingsRepository;

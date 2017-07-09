@@ -6,7 +6,7 @@ namespace App\Http\Controllers\Backend\Hotels;
 use App\Models\Hotels\Hotels;
 use App\Models\Hotels\HotelsTranslations;
 use App\Http\Controllers\Controller;
-use App\Models\Access\language\Languages;
+use App\Models\Access\Language\Languages;
 
 /* Store and Update Requests*/
 use App\Http\Requests\Backend\Hotels\ManageHotelsRequest;
