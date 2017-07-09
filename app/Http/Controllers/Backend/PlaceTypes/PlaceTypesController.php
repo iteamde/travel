@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Backend\PlaceTypes;
 use App\Models\PlaceTypes\PlaceTypes;
 use App\Models\PlaceTypes\PlaceTypesTranslations;
 use App\Http\Controllers\Controller;
-use App\Models\Access\language\Languages;
+use App\Models\Access\Language\Languages;
 use App\Http\Requests\Backend\PlaceTypes\ManagePlaceTypesRequest;
 use App\Http\Requests\Backend\PlaceTypes\StorePlaceTypesRequest;
 use App\Repositories\Backend\PlaceTypes\PlaceTypesRepository;

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Backend\EmergencyNumbers;
 use App\Models\EmergencyNumbers\EmergencyNumbers;
 use App\Models\EmergencyNumbers\EmergencyNumbersTranslations;
 use App\Http\Controllers\Controller;
-use App\Models\Access\language\Languages;
+use App\Models\Access\Language\Languages;
 use App\Http\Requests\Backend\EmergencyNumbers\ManageEmergencyNumbersRequest;
 use App\Http\Requests\Backend\EmergencyNumbers\StoreEmergencyNumbersRequest;
 use App\Repositories\Backend\EmergencyNumbers\EmergencyNumbersRepository;

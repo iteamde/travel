@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Backend\Interest;
 use App\Models\Interest\Interest;
 use App\Models\Interest\InterestTranslations;
 use App\Http\Controllers\Controller;
-use App\Models\Access\language\Languages;
+use App\Models\Access\Language\Languages;
 use App\Http\Requests\Backend\Interest\ManageInterestRequest;
 use App\Http\Requests\Backend\Interest\StoreInterestRequest;
 use App\Repositories\Backend\Interest\InterestRepository;

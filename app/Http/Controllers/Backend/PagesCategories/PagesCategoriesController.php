@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Backend\PagesCategories;
 use App\Models\PagesCategories\PagesCategories;
 use App\Models\PagesCategories\PagesCategoriesTranslations;
 use App\Http\Controllers\Controller;
-use App\Models\Access\language\Languages;
+use App\Models\Access\Language\Languages;
 use App\Http\Requests\Backend\PagesCategories\ManagePagesCategoriesRequest;
 use App\Http\Requests\Backend\PagesCategories\StorePagesCategoriesRequest;
 use App\Repositories\Backend\PagesCategories\PagesCategoriesRepository;

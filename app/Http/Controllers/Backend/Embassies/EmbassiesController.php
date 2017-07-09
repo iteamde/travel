@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Backend\Embassies;
 use App\Models\Embassies\Embassies;
 use App\Models\Embassies\EmbassiesTranslations;
 use App\Http\Controllers\Controller;
-use App\Models\Access\language\Languages;
+use App\Models\Access\Language\Languages;
 use App\Http\Requests\Backend\Embassies\ManageEmbassiesRequest;
 use App\Http\Requests\Backend\Embassies\StoreEmbassiesRequest;
 use App\Repositories\Backend\Embassies\EmbassiesRepository;

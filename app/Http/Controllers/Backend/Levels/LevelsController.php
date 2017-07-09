@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Backend\Levels;
 use App\Models\Levels\Levels;
 use App\Models\Levels\LevelsTranslations;
 use App\Http\Controllers\Controller;
-use App\Models\Access\language\Languages;
+use App\Models\Access\Language\Languages;
 use App\Http\Requests\Backend\Levels\ManageLevelsRequest;
 use App\Http\Requests\Backend\Levels\StoreLevelsRequest;
 use App\Repositories\Backend\Levels\LevelsRepository;

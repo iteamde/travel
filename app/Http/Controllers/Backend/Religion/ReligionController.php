@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Backend\Religion;
 use App\Models\Religion\Religion;
 use App\Models\Religion\ReligionTranslations;
 use App\Http\Controllers\Controller;
-use App\Models\Access\language\Languages;
+use App\Models\Access\Language\Languages;
 use App\Http\Requests\Backend\Religion\ManageReligionRequest;
 use App\Http\Requests\Backend\Religion\StoreReligionRequest;
 use App\Repositories\Backend\Religion\ReligionRepository;

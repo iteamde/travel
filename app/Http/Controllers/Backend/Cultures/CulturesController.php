@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Backend\Cultures;
 use App\Models\Cultures\Cultures;
 use App\Models\Cultures\CulturesTranslations;
 use App\Http\Controllers\Controller;
-use App\Models\Access\language\Languages;
+use App\Models\Access\Language\Languages;
 use App\Http\Requests\Backend\Cultures\ManageCulturesRequest;
 use App\Http\Requests\Backend\Cultures\StoreCulturesRequest;
 use App\Repositories\Backend\Cultures\CulturesRepository;

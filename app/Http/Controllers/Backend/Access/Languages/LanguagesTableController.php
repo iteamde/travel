@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Yajra\Datatables\Facades\Datatables;
 use App\Repositories\Backend\Access\Languages\LanguagesRepository;
 use App\Http\Requests\Backend\Access\Language\ManageLanguagesRequest;
-use App\Models\Access\language\Languages;
+use App\Models\Access\Language\Languages;
 /**
  * Class UserTableController.
  */

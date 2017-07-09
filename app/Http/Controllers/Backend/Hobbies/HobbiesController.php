@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Backend\Hobbies;
 use App\Models\Hobbies\Hobbies;
 use App\Models\Hobbies\HobbiesTranslations;
 use App\Http\Controllers\Controller;
-use App\Models\Access\language\Languages;
+use App\Models\Access\Language\Languages;
 use App\Http\Requests\Backend\Hobbies\ManageHobbiesRequest;
 use App\Http\Requests\Backend\Hobbies\StoreHobbiesRequest;
 use App\Repositories\Backend\Hobbies\HobbiesRepository;

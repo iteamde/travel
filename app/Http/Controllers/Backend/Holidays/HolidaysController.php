@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Backend\Holidays;
 use App\Models\Holidays\Holidays;
 use App\Models\Holidays\HolidaysTranslations;
 use App\Http\Controllers\Controller;
-use App\Models\Access\language\Languages;
+use App\Models\Access\Language\Languages;
 use App\Http\Requests\Backend\Holidays\ManageHolidaysRequest;
 use App\Http\Requests\Backend\Holidays\StoreHolidaysRequest;
 use App\Repositories\Backend\Holidays\HolidaysRepository;

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Backend\ActivityMedia;
 use App\Models\ActivityMedia\Media;
 use App\Models\ActivityMedia\MediaTranslations;
 use App\Http\Controllers\Controller;
-use App\Models\Access\language\Languages;
+use App\Models\Access\Language\Languages;
 use App\Http\Requests\Backend\ActivityMedia\ManageActivityMediaRequest;
 use App\Http\Requests\Backend\ActivityMedia\StoreActivityMediaRequest;
 use App\Repositories\Backend\ActivityMedia\ActivityMediaRepository;

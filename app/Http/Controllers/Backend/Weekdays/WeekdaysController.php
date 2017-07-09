@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Backend\Weekdays;
 use App\Models\Weekdays\Weekdays;
 use App\Models\Weekdays\WeekdaysTranslations;
 use App\Http\Controllers\Controller;
-use App\Models\Access\language\Languages;
+use App\Models\Access\Language\Languages;
 use App\Http\Requests\Backend\Weekdays\ManageWeekdaysRequest;
 use App\Http\Requests\Backend\Weekdays\StoreWeekdaysRequest;
 use App\Repositories\Backend\Weekdays\WeekdaysRepository;

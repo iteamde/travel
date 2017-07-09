@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Backend\Lifestyle;
 
-use App\Models\Access\language\Languages;
+use App\Models\Access\Language\Languages;
 use App\Models\Lifestyle\Lifestyle;
 use App\Models\Lifestyle\LifestyleTrans;
 use App\Http\Controllers\Controller;

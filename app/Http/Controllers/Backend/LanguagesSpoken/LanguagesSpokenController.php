@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Backend\LanguagesSpoken;
 
 use App\Models\LanguagesSpoken\LanguagesSpoken;
-use App\Models\Access\language\Languages;
+use App\Models\Access\Language\Languages;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Backend\LanguagesSpoken\ManageLanguagesSpokenRequest;
 use App\Http\Requests\Backend\LanguagesSpoken\StoreLanguagesSpokenRequest;

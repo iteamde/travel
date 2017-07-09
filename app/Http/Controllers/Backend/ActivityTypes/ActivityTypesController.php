@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Backend\ActivityTypes;
 use App\Models\ActivityTypes\ActivityTypes;
 use App\Models\ActivityTypes\ActivityTypesTranslations;
 use App\Http\Controllers\Controller;
-use App\Models\Access\language\Languages;
+use App\Models\Access\Language\Languages;
 use App\Http\Requests\Backend\ActivityTypes\ManageActivityTypesRequest;
 use App\Http\Requests\Backend\ActivityTypes\StoreActivityTypesRequest;
 use App\Repositories\Backend\ActivityTypes\ActivityTypesRepository;
