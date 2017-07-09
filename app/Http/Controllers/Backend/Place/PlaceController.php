@@ -504,8 +504,8 @@ class PlaceController extends Controller
 
         foreach($to_save AS $k=>$v) {
             $p = new Place();
-            $p->place_type_ids = 0;
-            $p->safety_degrees_id = 0;
+            $p->place_type_ids = 1;
+            $p->safety_degrees_id = 1;
             $p->provider_id = $places[$k]['provider_id'];
             $p->countries_id = $data['countries_id'];
             $p->cities_id = $data['cities_id'];
@@ -513,9 +513,14 @@ class PlaceController extends Controller
             $p->lng = $places[$k]['lng'];
             $p->active = 1;
             $p->save();
+            //dd($p->id);
 
             $pt = new PlaceTranslations();
+            $pt->languages_id = 1;
+            $pt->places_id = $p->id;
             $pt->title = $places[$k]['name'];
+            if (isset($places[$k]['international_phone_number'])) $pt->phone = $places[$k]['international_phone_number'];
+            $pt->description = $places[$k]['website'];
             $pt->save();
         }
         die();
