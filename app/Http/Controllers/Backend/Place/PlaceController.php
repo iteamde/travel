@@ -486,7 +486,7 @@ class PlaceController extends Controller
 
         $city = $request->input('address');
         $query = $request->input('query');
-        $json = file_get_contents('http://travooodb.dev/places/go/'.$city.'/0/0/'.$query);
+        $json = file_get_contents('http://db.travooo.com/places/go/'.$city.'/0/0/'.$query);
         $result = json_decode($json);
         $data['results'] = $result->results;
         return view('backend.place.importresults', $data);
