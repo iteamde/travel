@@ -9,7 +9,7 @@ use App\Models\User\Traits\Scope\UserScope;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Models\Access\User\Traits\UserSendPasswordReset;
 use App\Models\Access\User\Traits\Attribute\UserAttribute;
-use App\Models\Access\User\Traits\Relationship\UserRelationship;
+use App\Models\User\Traits\Relationship\UserRelationship;
 
 /**
  * Class User.
