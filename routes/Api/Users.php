@@ -46,6 +46,9 @@ Route::group([
         Route::put('/password/{user_id}/{session_token}/{old_password}/{new_password}/{new_password_confirmation}' , 'UserController@change_password');
         /* Block List Api */
         Route::get('/blocklist/{user_id}/{session_token}' , 'UserController@block_list');
+        /* UnBlock Friend List Api */
+        Route::post('/unblock' , 'UserController@unblock_friend');
+        
     }); 
 ?>
 

@@ -226,7 +226,7 @@ class UserController extends Controller
     }
 
     public function unblock_friend(Request $request){
-        test;
+        
         $post = $request->input();
 
         $response = User::unblock_friend($post);
