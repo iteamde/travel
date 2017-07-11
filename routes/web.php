@@ -34,3 +34,17 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'admin', 'as' => 'admin.', '
      */
     includeRouteFiles(__DIR__.'/Backend/');
 });
+
+/*
+ * Api Routes
+ * Namespaces indicate folder structure
+ */
+// Route::group(['namespace' => 'Api', 'as' => 'api.', 'middleware' => 'api'], function () {
+    /*
+     * These routes need view-api permission
+     * (good if you want to allow more than one group in the api,
+     * then limit the api features by different roles or permissions)
+     *
+     */
+    // includeRouteFiles(__DIR__.'/Api/');
+// });
