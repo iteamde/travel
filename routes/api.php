@@ -23,7 +23,7 @@ use Illuminate\Http\Request;
  * Api Routes
  * Namespaces indicate folder structure
  */
-Route::group(['namespace' => 'Api', 'as' => 'api.'], function () {
+Route::group([ 'as' => 'api.'], function () {
     /*
      * These routes need view-api permission
      * (good if you want to allow more than one group in the api,
