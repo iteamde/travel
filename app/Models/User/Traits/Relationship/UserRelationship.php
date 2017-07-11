@@ -5,6 +5,7 @@ namespace App\Models\User\Traits\Relationship;
 use App\Models\System\Session;
 use App\Models\User\SocialLogin;
 use App\Models\User\UsersFriends;
+use App\Models\User\UsersBlocks;
 
 /**
  * Class UserRelationship.
@@ -43,5 +44,13 @@ trait UserRelationship
     public function user_friends(){
         
         return $this->hasMany(UsersFriends::class, 'users_id', 'id');
+    }
+
+    /**
+     * @return mixed
+     */
+    public function user_blocks(){
+        
+        return $this->hasMany(UsersBlocks::class, 'users_id', 'id');
     }
 }
