@@ -263,7 +263,7 @@ class UserController extends Controller
     *   Unhide Content Api
     */
     public function unhide_content(Request $request){
-
+        
         $post = $request->input();
 
         $response = User::unhide_content($post);
