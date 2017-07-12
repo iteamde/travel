@@ -1,4 +1,4 @@
-<?php  
+<?php
 use App\Models\Access\language\Languages;
 $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE)->get();
 ?>
@@ -61,7 +61,7 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
             'role'   => 'form',
             'method' => 'post',
             'files'  => true
-        ]) 
+        ])
     }}
         <div class="box box-success">
             <div class="box-header with-border">
@@ -248,7 +248,7 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
                         </div>
                     @endforeach
                     </div>
-                    
+
                     <!-- Active: Start -->
                     <div class="form-group">
                         {{ Form::label('title', trans('validation.attributes.backend.access.languages.active'), ['class' => 'col-lg-2 control-label']) }}
@@ -258,7 +258,7 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
                         </div><!--col-lg-10-->
                     </div><!--form control-->
                     <!-- Active: End -->
-                    
+
                     <!-- Countries: Start -->
                     <div class="form-group">
                         {{ Form::label('title', 'Country', ['class' => 'col-lg-2 control-label']) }}
@@ -268,7 +268,7 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
                         </div><!--col-lg-10-->
                     </div><!--form control-->
                     <!-- Countries: End -->
-                    
+
                     <!-- Cities: Start -->
                     <div class="form-group">
                         {{ Form::label('title', 'Cities', ['class' => 'col-lg-2 control-label']) }}
@@ -278,26 +278,6 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
                         </div><!--col-lg-10-->
                     </div><!--form control-->
                     <!-- Cities: End -->
-
-                    <!-- Place Type Ids: Start -->
-                    <div class="form-group">
-                        {{ Form::label('title', 'Place Type', ['class' => 'col-lg-2 control-label']) }}
-
-                        <div class="col-lg-10">
-                            {{ Form::select('place_types_ids', $place_types , null,['class' => 'select2Class form-control']) }}
-                        </div><!--col-lg-10-->
-                    </div><!--form control-->
-                    <!-- Cities: End -->
-
-                    <!-- Safety Degree: Start -->
-                    <div class="form-group">
-                        {{ Form::label('title', 'Safety Degree', ['class' => 'col-lg-2 control-label']) }}
-
-                        <div class="col-lg-10">
-                            {{ Form::select('safety_degrees_id', $degrees , null,['class' => 'select2Class form-control']) }}
-                        </div><!--col-lg-10-->
-                    </div><!--form control-->
-                    <!-- Safety Degree: End -->
 
                     <!-- Medias: Start -->
                     <div class="form-group">
@@ -319,7 +299,7 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
                     <div class="form-group">
                         {{ Form::label('title', 'Lat,Lng', ['class' => 'col-lg-2 control-label']) }}
                         <div class="col-lg-10">
-                            
+
                             {{ Form::hidden('lat_lng', null, ['class' => 'form-control disabled', 'id' => 'lat-lng-input', 'required' => 'required', 'placeholder' => 'Lat,Lng']) }}
 
                             {{ Form::text('lat_lng_show', null, ['class' => 'form-control disabled', 'id' => 'lat-lng-input_show', 'required' => 'required', 'placeholder' => 'Lat,Lng' , 'disabled' => 'disabled']) }}
@@ -426,9 +406,9 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
             }));
 
             var latitude = place.geometry.location.lat();
-            var longitude = place.geometry.location.lng();  
-            document.getElementById('lat-lng-input').setAttribute("value", latitude + "," + longitude ); 
-            document.getElementById('lat-lng-input_show').setAttribute("value", latitude + "," + longitude );         
+            var longitude = place.geometry.location.lng();
+            document.getElementById('lat-lng-input').setAttribute("value", latitude + "," + longitude );
+            document.getElementById('lat-lng-input_show').setAttribute("value", latitude + "," + longitude );
 
             google.maps.event.addListener(markers[0], 'dragend', function (evt) {
                 var lat =  evt.latLng.lat().toFixed(3);
@@ -454,13 +434,13 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
     <!-- Error Alert Script : Start -->
     <script>
         $(document).on('click' , '.submit_button' , function(){
-        
+
             var msg = '<div id="language-alert" class="alert alert-danger alert-dismissable fade in"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Error!</strong> Please Fill Information In All Languages Tabs.</div>';
 
             $('.required').each(function(index,data){
                 var flag = false;
                 if($(this).val() == ''){
-                    
+
                     flag = true;
                 }
 
@@ -468,7 +448,7 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
                     $('.required_msg').html(msg);
                     $("#language-alert").fadeTo(5000, 500).slideUp(500, function(){
                         $("#language-alert").slideUp(500);
-                    });   
+                    });
                 }
             });
         });
