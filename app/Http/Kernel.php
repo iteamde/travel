@@ -41,9 +41,9 @@ class Kernel extends HttpKernel
         ],
 
         'admin' => [
-            'auth',
+            // 'auth',
             'access.routeNeedsPermission:view-backend',
-            // 'timeout',
+            'timeout',
         ],
 
         'api' => [
