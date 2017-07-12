@@ -8,6 +8,7 @@ use App\Models\System\Session;
 use App\Models\User\Activation;
 use App\Models\User\UsersFriends;
 use App\Models\User\UsersBlocks;
+use App\Models\User\UsersHiddenContent;
 use Illuminate\Support\Facades\Storage;
 
 /**
@@ -1101,7 +1102,7 @@ class ApiUser extends User
         /* Find User With Provided User Id. */
         $user_id = $post['user_id'];
         $user = User::where(['id' =>  $post['user_id']])->first();
-
+        
         /* If User Not Found With Provided User Id, Return Error */
         if(empty($user)){
             return Self::generateErrorMessage(false, 400, 'Wrong User Id Provided.');
@@ -1162,6 +1163,180 @@ class ApiUser extends User
             'data' => [
                 'message' => 'Friend Unblocked Successfully.'
             ],
+        ];
+    }
+
+    /* Hidden Content Api */
+    public static function hidden_content($user_id, $session_token){
+
+        /* If User Id Is Not An Integer, Return Error */
+        if(! is_numeric($user_id)){
+            return Self::generateErrorMessage(false, 400, 'User Id Should Be An Integer.');
+        }
+
+        /* Find User For Provided User Id */
+        $user = Self::where(['id' => $user_id])->first();
+
+        /* If User Not Found, Return Error */
+        if( empty($user) ){
+            return Self::generateErrorMessage(false, 400, 'Wrong User Id Provided.');
+        }
+
+        /* Find Session For Provided Session Token */
+        $session = Session::where(['id' => $session_token])->first();
+
+        /* If Session Not Found, Return Error */
+        if(empty($session)){
+            return Self::generateErrorMessage(false, 400, 'Wrong Session Token Provided.');
+        }
+
+        /* If Session's User Id Doesn't Matches Provided User Id, Return Error */
+        if($session->user_id != $user_id){
+            return Self::generateErrorMessage(false, 400, 'Wrong User Id Provided.');
+        }
+
+        /* Get All User's Hidden Content */
+        $hidden_content = $user->user_hidden_content;
+        /* Container For Array Format Of Content */
+        $hidden_content_arr = [];
+
+        /* If Hidden Content For Provided User Is Not Empty, Get Array Format Of Content */
+        if(!empty($hidden_content)){
+            foreach ($hidden_content as $key => $value) {
+                array_push($hidden_content_arr, $value);
+            }
+        }
+
+        /* Return Status True, And Content Data In Response */
+        return [
+            'success' => true,
+            'data' => $hidden_content_arr
+        ];
+    }
+
+    public static function change_online_status($post){
+
+        /* If User Id Is Not Set Or Empty, Return Error */
+        if( !isset($post['user_id']) || empty($post['user_id']) ){
+            return Self::generateErrorMessage(false, 400, 'User id Not Provided.');
+        }
+
+        /* If User Id Is Not An Integer, Return Error */
+        if(! is_numeric($post['user_id'])){
+            return Self::generateErrorMessage(false, 400, 'Wrong User Id Provided.');
+        }
+
+        $user_id = $post['user_id'];
+        
+        /* Find User For The Provided Id */
+        $user = Self::where(['id' => $user_id])->first();
+
+        /* If User Not Found For The Provided User Id, Return Error */
+        if(empty($user)){
+            return Self::generateErrorMessage(false, 400, 'Wrong User id Provided.');
+        }
+
+        /* If Session Token Not Set Or Is Empty, Return Error */
+        if( !isset($post['session_token']) || empty($post['session_token']) ){
+            return Self::generateErrorMessage(false, 400, 'Session Token Not Provided.');
+        }
+
+        /* Find Session For The Provided Session Token */
+        $session = Session::where(['id' => $post['session_token']])->first();
+
+        /* If Session Not Found For The Provided Session Token, Return Error */
+        if(empty($session)){
+            return Self::generateErrorMessage(false, 400, 'Wrong Session Token Provided.');
+        }
+
+        /* If Session's User Id Doesn't Matches The Provided User Id, Return Error */
+        if( $session->user_id != $user_id){
+            return Self::generateErrorMessage(false, 400, 'Wrong User Id Provided.');
+        }
+        
+        /* If Status Field Is Not Set Or Empty, Return Error */
+        if(!isset($post['status']) || empty($post['status'])){
+            return Self::generateErrorMessage(false, 400, 'Status Not Provided.');
+        }
+
+        /* Set Session's Show Status Equal To Status */
+        $session->show_status = $post['status'];
+        $session->save();
+
+        /* Return Status True, And Message of Status Change Success */
+        return [
+            'status' => true,
+            'data' => [
+                'message' => 'Status Changed Successfully'
+            ]
+        ];
+    }
+
+    public static function unhide_content($post){
+
+        /* If User Id Not Provided or Is Empty, Return Error */
+        if(!isset($post['user_id']) || empty($post['user_id'])){
+            return Self::generateErrorMessage(false, 400, 'User Ids Not Provided.');
+        }
+
+        /* if User Id Is Not Integer, Return Error */
+        if(! is_numeric($post['user_id'])){
+            return Self::generateErrorMessage(false, 400, 'User Id Should Be An Integer.');
+        }
+
+        /* Find User For The Provided User Id */
+        $user = Self::where(['id' => $post['user_id']])->first();
+
+        /* If User Not Found For The Provided Id, Return Error */
+        if(empty($user)){
+            return Self::generateErrorMessage(false, 400, 'Wrong User Id Provided.');
+        }
+
+        /* If Session Token Not Provided Or Is Empty, Return Error */
+        if(!isset($post['session_token']) || empty($post['session_token'])){
+            return Self::generateErrorMessage(false, 400, 'Session Token Not Provided.');
+        }
+
+        /* Find Session For The Provided Session id */
+        $session = Session::where(['id' => $post['session_token']])->first();
+
+        /* If Session Not Found For The Provided Session Id, Return Error */
+        if(empty($session)){
+            return Self::generateErrorMessage(false, 400, 'Wrong Session Token Provided.');
+        }
+
+        /* If Session's User Doesn't Matches The Provided User Id, Return Error */
+        if($session->user_id != $post['user_id']){
+            return Self::generateErrorMessage(false, 400, 'Wrong User Id Provided.');
+        }
+
+        /* If Hidden Id Not Provided Or Is Empty, Return Error */
+        if( !isset($post['hidden_id']) || empty($post['hidden_id']) ){
+            return Self::generateErrorMessage(false, 400, 'Hidden Id Not Provided.');
+        }
+
+        /* If Hidden Id Is Not An Integer, Return Error */
+        if(!is_numeric($post['hidden_id'])){
+            return Self::generateErrorMessage(false, 400, 'Hidden Id Should Be An Integer.');
+        }
+
+        /* Find Hidden Content Relation In UsersHiddenContent Table */
+        $hidden = UsersHiddenContent::where(['id' => $post['hidden_id']])->first();
+            
+        /* If Relation Not Found, Return Error */
+        if( empty($hidden) ){
+            return Self::generateErrorMessage(false, 400, 'Wrong Hidden Id Provided.');
+        }
+
+        /* Delete The Searched Relation */
+        $hidden->delete();
+
+        /* Return Status True, And Success Message */
+        return [
+            'status' => true,
+            'data' => [
+                'message' => 'Content Unhidden Successfully'
+            ]
         ];
     }
 

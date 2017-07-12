@@ -48,7 +48,12 @@ Route::group([
         Route::get('/blocklist/{user_id}/{session_token}' , 'UserController@block_list');
         /* UnBlock Friend List Api */
         Route::post('/unblock' , 'UserController@unblock_friend');
-        
+        /* Show Hidden Content Api */
+        Route::get('/hiddencontent/{user_id}/{session_token}' , 'UserController@hidden_content');
+        /* Update Online Status Api */
+        Route::post('/onlinestatus' , 'UserController@change_online_status');
+        /* Unhide A Content Api */
+        Route::post('/unhideacontent' , 'UserController@unhide_content');
     }); 
 ?>
 
