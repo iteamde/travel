@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api\User;
 
 /* Dependencies */
 use App\Models\User\ApiUser as User;
-use App\Http\Controllers\Controller;
+use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 
 /**
