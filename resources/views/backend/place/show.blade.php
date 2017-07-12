@@ -33,7 +33,7 @@
         <div class="box-body">
 
             <div role="tabpanel">
-                
+
                 <table class="table table-striped table-hover">
 
                     @foreach($placetrans as $key => $place_translation)
@@ -100,7 +100,7 @@
                         </tr>
                     @endforeach
                     <tr>
-                         <th> <h3 style="color:#0A8F27">Common Fields</h3></th><td></td>   
+                         <th> <h3 style="color:#0A8F27">Common Fields</h3></th><td></td>
                     </tr>
                     <tr>
                         <th>Country </th>
@@ -111,18 +111,10 @@
                         <td> <p><?=$city->title?></p> </td>
                     </tr>
                     <tr>
-                        <th>Place Type </th>
-                        <td> <p><?=$type->title?></p> </td>
-                    </tr>
-                    <tr>
-                        <th>Safety Degree </th>
-                        <td> <p><?=$degree->title?></p> </td>
-                    </tr>
-                    <tr>
                         <th>Active </th>
                         <td>
-                            @if($place->active == 1) 
-                              <p><label class="label label-success">Active</label></p> 
+                            @if($place->active == 1)
+                              <p><label class="label label-success">Active</label></p>
                             @else
                               <p><label class="label label-danger">Deactive</label></p>
                             @endif
@@ -131,7 +123,7 @@
 
                     <!-- Start: Medias -->
                     <tr>
-                         <th> <h3 style="color:#0A8F27">Medias</h3></th><td></td>   
+                         <th> <h3 style="color:#0A8F27">Medias</h3></th><td></td>
                     </tr>
                     @if(empty($medias))
                       <tr>
@@ -146,13 +138,13 @@
                     <!-- End: Medias -->
 
                     <tr>
-                         <th> <h3 style="color:#0A8F27">Location</h3></th><td></td>   
+                         <th> <h3 style="color:#0A8F27">Location</h3></th><td></td>
                     </tr>
                     <tr>
                         <th>Latitude , Longitude</th>
                         <td> <p><?=$place->lat?> , <?=$place->lng?></p> </td>
                     </tr>
-                    
+
                 </table>
                 <!-- Map will be created in the "map" div -->
                 <div id="map"></div>
@@ -212,7 +204,7 @@
               position: myLatLng,
               draggable : true,
         }));
-        
+
         google.maps.event.addListener(markers[0], 'dragend', function (evt) {
                 var lat =  evt.latLng.lat().toFixed(3);
                 var longit = evt.latLng.lng().toFixed(3);
@@ -258,9 +250,9 @@
             }));
 
             var latitude = place.geometry.location.lat();
-            var longitude = place.geometry.location.lng();  
+            var longitude = place.geometry.location.lng();
             document.getElementById('lat-lng-input').setAttribute("value", latitude + "," + longitude );
-                document.getElementById('lat-lng-input_show').setAttribute("value", latitude + "," + longitude );        
+                document.getElementById('lat-lng-input_show').setAttribute("value", latitude + "," + longitude );
 
             google.maps.event.addListener(markers[0], 'dragend', function (evt) {
                 var lat =  evt.latLng.lat().toFixed(3);
