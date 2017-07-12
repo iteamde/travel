@@ -7,6 +7,7 @@ namespace App\Models\User;
 use App\Models\System\Session;
 use App\Models\User\Activation;
 use App\Models\User\UsersFriends;
+use App\Models\User\UsersBlocks;
 use Illuminate\Support\Facades\Storage;
 
 /**
@@ -868,6 +869,7 @@ class ApiUser extends User
         ];
     }
 
+    /* Change Provided User's Image */
     public static function upload_image($user_id, $session_token, $request){
 
         /* If User Id Is Not Integer, Return Error */
@@ -970,6 +972,199 @@ class ApiUser extends User
         ];
     }
 
+    public static function change_password($user_id, $session_token, $old_password, $new_password, $new_password_confirmation){
+        
+        if(!is_numeric($user_id)){
+            return Self::generateErrorMessage(false, 400, 'User Id Should Be An Integer.');
+        }
+
+        $user = Self::where(['id' => $user_id])->first();
+
+        if(empty($user)){
+            return Self::generateErrorMessage(false, 400, 'Wrong User Id Provided.');
+        }
+
+        $session = Session::where(['id' => $session_token])->first();
+
+        if(empty($session)){
+            return Self::generateErrorMessage(false, 400, 'Wrong Session Token Provided.');
+        }
+
+        if($session->user_id != $user_id){
+            return Self::generateErrorMessage(false, 400, 'Wrong User Id Provided');
+        }
+
+        $old_password = sha1($old_password);
+
+        if($user->password != $old_password){
+            return Self::generateErrorMessage(false, 400, 'Old Password Donot Match.');
+        }
+
+        /* New Password Length */
+        if( strlen( $new_password ) < 8 | strlen( $new_password ) > 32 ){
+            return Self::generateErrorMessage(false, 400, 'New Password Length Should Be Between (8-32) characters.');  
+        }
+
+        /* Check If New Password Matches The Required Format */
+        if( ! preg_match( '/^[a-zA-Z0-9._]+$/' , $new_password ) ){
+            return [
+                'data' => [
+                    'error'     => 400,
+                    'message'   => 'Password can only contain alphanumeric characters.',
+                ],
+                'status'    => false
+            ];
+        }
+
+        /* If New Password And Confirmation Password Don't Match, Return Error */
+        if($new_password != $new_password_confirmation){
+            return Self::generateErrorMessage(false, 400, 'New Password And Confirm Password Donot Match.');
+        }
+
+        /* Encode New Password Using Sh1 Encoding Before Saving To Database */
+        $user->password = sha1($new_password);
+
+        $user->save();
+
+        $user->sendPasswordChangeEmail();
+
+        return [
+            'status' => true,
+            'data' => [
+                'message' => 'Password Changed Successfully.'
+            ],
+        ];
+
+    }
+
+    /* Get List Of All Blocked Users In Database By The Provided User */
+    public static function block_list($user_id, $session_token){
+
+        /* If User Id Is Not An Integer, Return Error */
+        if(! is_numeric($user_id)){
+            return Self::generateErrorMessage(false, 400, 'User Id Should Be An Integer.');
+        }
+
+        /* Find User For Provided User Id */
+        $user = Self::where(['id' => $user_id])->first();
+        
+        /* If User Not Found For Provided Id, Return Error */
+        if(empty($user)){
+            return Self::generateErrorMessage(false, 400, 'Wrong User Id Provided.');
+        }
+
+        /* FInd Session For Provided Session Token */
+        $session = Session::where(['id' => $session_token])->first();
+
+        /* If Session Not Found for The Provided Session Token, Return Error. */
+        if(empty($session)){
+            return Self::generateErrorMessage(false, 400, 'Wrong Session Token Provided.');
+        }
+
+        /* If Provided User Id Doesn't Matches The Session's User Id, Return Error */
+        if($session->user_id != $user_id){
+            return Self::generateErrorMessage(false, 400, 'Wrong User Id Provided.');
+        }
+
+        /* Container For User's Block List */
+        $user_blocks_arr = [];
+
+        /* If Users In Block List Exist, Convert Their Information In Array Formati And Store In "user_blocks_arr" array */
+        if(!empty($user->user_blocks)){
+            foreach ($user->user_blocks as $key => $value) {
+                array_push($user_blocks_arr, Self::getArrayFormat($value->block));
+            }
+        }
+
+        /* Return Success Status, And Blocked User's List In Data */
+        return [
+            'status' => true,
+            'data'   => [
+                'blocked_list'  => $user_blocks_arr
+            ]
+        ];
+    }
+
+    /* Unblock Friend Api */
+    public static function unblock_friend($post){
+
+        /* If "user_id" Not Sent In Arguments, Or Is Empty, Return Error */
+        if( !isset($post['user_id']) || empty($post['user_id']) ){
+            return Self::generateErrorMessage(false, 400, 'User Id Not Provided.');
+        }
+
+        /* If User Id Is Not Numeric, Return Error */
+        if(!is_numeric($post['user_id'])){
+            return Self::generateErrorMessage(false, 400, 'User Id Should Be An Integer');
+        }
+
+        /* Find User With Provided User Id. */
+        $user_id = $post['user_id'];
+        $user = User::where(['id' =>  $post['user_id']])->first();
+
+        /* If User Not Found With Provided User Id, Return Error */
+        if(empty($user)){
+            return Self::generateErrorMessage(false, 400, 'Wrong User Id Provided.');
+        }
+
+        /* If "session_token" Not Sent Or Is Empty, Return Error */
+        if(!isset($post['session_token']) || empty($post['session_token'])){
+            return Self::generateErrorMessage(false, 400, 'Session Token Not Provided.');
+        }
+
+        /* Find Session With Provided Session Token */
+        $session_token = $post['session_token'];
+        $session = Session::where(['id' => $session_token])->first();
+
+        /* If Session Not Found, Return Error */
+        if(empty($session)){
+            return Self::generateErrorMessage(false, 400, 'Wrong Session Token Provided.');
+        }
+
+        /* If Session's User Doesn't Matches Provided User Id, Return Error  */
+        if($session->user_id != $user_id){
+            return Self::generateErrorMessage(false, 400, 'Wrong User Id Provided.');
+        }
+
+        /* If "friends_id" Not Provided, Or Is Empty, Return Error */
+        if( !isset($post['friend_id']) || empty($post['friend_id']) ){
+            return Self::generateErrorMessage(false, 400, 'Friend Id Not Provided.');
+        }
+
+        /* If Provided Friend Id Is Not An Integer, Return Error */
+        if( ! is_numeric($post['friend_id'])){
+            return Self::generateErrorMessage(false, 400, 'Friend Id Should Be An Integer.');
+        }
+
+        /* Find Friend For The Provided Friend Id */
+        $friend_id = $post['friend_id'];
+        $friend = Self::where(['id' => $friend_id])->first();
+
+        /* If Frind Not Found For The Provided Friend Id, Return Error */
+        if(empty($friend)){
+            return Self::generateErrorMessage(false, 400, 'Wrong Friend Id Provided.');
+        }
+
+        /* Find Relation Of User With The Friend In The UsersBlocks Table */
+        $friend_relation = UsersBlocks::where(['users_id' => $user_id, 'blocks_id' => $friend_id])->first();
+
+        /* If Relation Not Found, Return Error */
+        if(empty($friend_relation)){
+            return Self::generateErrorMessage(false, 400, 'Wrong Friend Id Provided.');
+        }
+       
+        /* Delete Relation Record With Friend */
+        $friend_relation->delete();
+        
+        /* Return Status True With Message */
+        return [
+            'status' => true,
+            'data' => [
+                'message' => 'Friend Unblocked Successfully.'
+            ],
+        ];
+    }
+
     /* Return User Information In Array Format */
     public function getArrayResponse(){
 
@@ -1060,6 +1255,34 @@ class ApiUser extends User
         $mail_status = mail($to, $subject, $message, $headers);
 
         return true;   
+    }
+
+    public function sendPasswordChangeEmail(){
+
+        header('Access-Control-Allow-Origin: *');
+        //if you need cookies or login etc
+        header('Access-Control-Allow-Credentials: true');
+        header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
+        header('Access-Control-Max-Age: 604800');
+          //if you need special headers
+        header('Access-Control-Allow-Headers: x-requested-with');
+
+        $password_reset_code = $this->password_reset_token;
+
+        $site_url = url('');
+        $new_password_url = 'javascript:void(0);' ;
+
+        $to = $this->email;
+        
+        $subject = 'Travoo Account Password Change';
+        $message = 'Your Travoo Account Password Has been Changed Successfully.';
+        $headers = 'From: travoo@abcd.com' . '\r\n' .
+    'CC: travoo-test@abcd.com';
+
+        // send email
+        $mail_status = mail($to, $subject, $message, $headers);
+
+        return true; 
     }
 
     /* Generate Random String of "length" = 63 */

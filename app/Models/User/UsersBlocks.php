@@ -6,16 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\User\User;
 
 /**
- * Class UsersFriends.
+ * Class UsersBlocks.
  */
-class UsersFriends extends Model
+class UsersBlocks extends Model
 {
 	/**
      * The database table used by the model.
      *
      * @var string
      */
-    public $table = 'users_friends';
+    public $table = 'users_blocks';
 
     /**
      * @return mixed
@@ -27,7 +27,7 @@ class UsersFriends extends Model
     /**
      * @return mixed
      */
-    public function friend(){
-        return $this->hasOne( User::class , 'id' , 'friends_id');
+    public function block(){
+        return $this->hasOne( User::class , 'id' , 'blocks_id');
     }
 }
