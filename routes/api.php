@@ -23,12 +23,12 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
  * Api Routes
  * Namespaces indicate folder structure
  */
-Route::group(['prefix' => 'api'], function () {
+// Route::group(['prefix' => 'api', 'middleware' => 'auth:api'], function () {
     /*
      * These routes need view-api permission
      * (good if you want to allow more than one group in the api,
      * then limit the api features by different roles or permissions)
      *
      */
-    includeRouteFiles(__DIR__.'/Api/');
-});
+    // includeRouteFiles(__DIR__.'/Api/');
+// });
