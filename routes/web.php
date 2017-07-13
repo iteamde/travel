@@ -10,7 +10,7 @@ Route::get('lang/{lang}', 'LanguageController@swap');
 
 /* ----------------------------------------------------------------------- */
 
-Route::post('login', function(Request $request){
+Route::post('test_login', function(Request $request){
             echo '<pre>';
             print_r($request->input());
             exit;
@@ -24,7 +24,23 @@ Route::post('login', function(Request $request){
                 return 'Sorry, but your Credentials seem to be wrong.';
             }
 
-        })->name('login.post');
+        });
+
+Route::get('test_login', function(){
+            echo '<pre>';
+            print_r('hello');
+            exit;
+            $credentials = array('u_username' => 'user', 'password' => 'pass123');
+
+            if(Auth::attempt($credentials, true)){
+                // return 'You have successfully logged in :D';
+                return Redirect::to('/');
+
+            } else {
+                return 'Sorry, but your Credentials seem to be wrong.';
+            }
+
+});
 
 /*
  * Frontend Routes
