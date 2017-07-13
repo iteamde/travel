@@ -484,10 +484,11 @@ class ApiUser extends User
                 $user->save();
             }
             
-            return [
-                'status' => true,
-                'data' => []
-            ];
+            return 'Account Activated Successfully';            
+            // return [
+            //     'status' => true,
+            //     'data' => []
+            // ];
         }
     }
 
