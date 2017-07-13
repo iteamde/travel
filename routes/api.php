@@ -23,12 +23,12 @@ use Illuminate\Http\Request;
  * Api Routes
  * Namespaces indicate folder structure
  */
-// Route::group([ 'as' => 'api.'], function () {
+Route::group([ 'as' => 'api.'], function () {
     /*
      * These routes need view-api permission
      * (good if you want to allow more than one group in the api,
      * then limit the api features by different roles or permissions)
      *
      */
-    // includeRouteFiles(__DIR__.'/Api/');
-// });
+    includeRouteFiles(__DIR__.'/Api/');
+});
