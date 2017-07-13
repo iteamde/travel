@@ -53,13 +53,14 @@
                         <th>{{$r->formatted_address}}</th>
                         <th>{{$r->geometry->location->lat}} {{$r->geometry->location->lng}}</th>
                         <th>
-                            <input type="hidden" name="place[{{$i}}][provider_id]" value='{{$r->id}}' />
+                            <input type="hidden" name="place[{{$i}}][provider_id]" value='{{$r->place_id}}' />
                             <input type="hidden" name="place[{{$i}}][name]" value='{{$r->name}}' />
                             <input type="hidden" name="place[{{$i}}][address]" value='{{$r->formatted_address}}' />
                             <input type="hidden" name="place[{{$i}}][lat]" value='{{$r->geometry->location->lat}}' />
                             <input type="hidden" name="place[{{$i}}][lng]" value='{{$r->geometry->location->lng}}' />
                             <input type="hidden" name="place[{{$i}}][phone]" value='{{@$r->international_phone_number}}' />
                             <input type="hidden" name="place[{{$i}}][rating]" value='{{@$r->rating}}' />
+                            <input type="hidden" name="place[{{$i}}][working_days]" value='{{@$r->working_days}}' />
                             <input type="checkbox" class='checkbox' name='save[{{$i}}]' />
                         </th>
                     </tr>

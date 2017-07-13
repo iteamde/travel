@@ -16,23 +16,21 @@ use App\Models\City\Cities;
 use App\Models\PlaceTypes\PlaceTypes;
 use App\Models\ActivityMedia\Media;
 
-class PlaceController extends Controller
-{
+class PlaceController extends Controller {
+
     protected $places;
 
-    public function __construct(PlaceRepository $places)
-    {
+    public function __construct(PlaceRepository $places) {
         $this->places = $places;
         $this->languages = \DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE)->get();
     }
 
-     /**
+    /**
      * @param ManagePlaceRequest $request
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index(ManagePlaceRequest $request)
-    {
+    public function index(ManagePlaceRequest $request) {
         return view('backend.place.index');
     }
 
@@ -41,14 +39,13 @@ class PlaceController extends Controller
      *
      * @return mixed
      */
-    public function create(ManagePlaceRequest $request)
-    {
+    public function create(ManagePlaceRequest $request) {
         /* Get All Countries */
         $countries = Countries::where(['active' => 1])->get();
         $countries_arr = [];
 
         foreach ($countries as $key => $value) {
-            if(isset($value->transsingle) && !empty($value->transsingle)){
+            if (isset($value->transsingle) && !empty($value->transsingle)) {
                 $countries_arr[$value->id] = $value->transsingle->title;
             }
         }
@@ -58,22 +55,23 @@ class PlaceController extends Controller
         $cities_arr = [];
 
         foreach ($cities as $key => $value) {
-            if(isset($value->transsingle) && !empty($value->transsingle)){
+            if (isset($value->transsingle) && !empty($value->transsingle)) {
                 $cities_arr[$value->id] = $value->transsingle->title;
             }
         }
+
 
         /* Get All Medias */
         $medias = Media::get();
         $medias_arr = [];
 
         foreach ($medias as $key => $value) {
-            if(isset($value->transsingle) && !empty($value->transsingle)){
+            if (isset($value->transsingle) && !empty($value->transsingle)) {
                 $medias_arr[$value->id] = $value->transsingle->title;
             }
         }
 
-        return view('backend.place.create',[
+        return view('backend.place.create', [
             'countries' => $countries_arr,
             'cities' => $cities_arr,
             'medias' => $medias_arr,
@@ -85,35 +83,34 @@ class PlaceController extends Controller
      *
      * @return mixed
      */
-    public function store(StorePlaceRequest $request)
-    {
+    public function store(StorePlaceRequest $request) {
         $data = [];
 
         foreach ($this->languages as $key => $language) {
-            $data[$language->id]['title_'.$language->id] = $request->input('title_'.$language->id);
-            $data[$language->id]['description_'.$language->id] = $request->input('description_'.$language->id);
-            $data[$language->id]['address_'.$language->id] = $request->input('address_'.$language->id);
-            $data[$language->id]['phone_'.$language->id] = $request->input('phone_'.$language->id);
-            $data[$language->id]['highlights_'.$language->id] = $request->input('highlights_'.$language->id);
-            $data[$language->id]['working_days_'.$language->id] = $request->input('working_days_'.$language->id);
-            $data[$language->id]['working_times_'.$language->id] = $request->input('working_times_'.$language->id);
-            $data[$language->id]['how_to_go_'.$language->id] = $request->input('how_to_go_'.$language->id);
-            $data[$language->id]['when_to_go_'.$language->id] = $request->input('when_to_go_'.$language->id);
-            $data[$language->id]['num_activities_'.$language->id] = $request->input('num_activities_'.$language->id);
-            $data[$language->id]['popularity_'.$language->id] = $request->input('popularity_'.$language->id);
-            $data[$language->id]['conditions_'.$language->id] = $request->input('conditions_'.$language->id);
-            $data[$language->id]['price_level_'.$language->id] = $request->input('price_level_'.$language->id);
-            $data[$language->id]['num_checkins_'.$language->id] = $request->input('num_checkins_'.$language->id);
-            $data[$language->id]['history_'.$language->id] = $request->input('history_'.$language->id);
+            $data[$language->id]['title_' . $language->id] = $request->input('title_' . $language->id);
+            $data[$language->id]['description_' . $language->id] = $request->input('description_' . $language->id);
+            $data[$language->id]['address_' . $language->id] = $request->input('address_' . $language->id);
+            $data[$language->id]['phone_' . $language->id] = $request->input('phone_' . $language->id);
+            $data[$language->id]['highlights_' . $language->id] = $request->input('highlights_' . $language->id);
+            $data[$language->id]['working_days_' . $language->id] = $request->input('working_days_' . $language->id);
+            $data[$language->id]['working_times_' . $language->id] = $request->input('working_times_' . $language->id);
+            $data[$language->id]['how_to_go_' . $language->id] = $request->input('how_to_go_' . $language->id);
+            $data[$language->id]['when_to_go_' . $language->id] = $request->input('when_to_go_' . $language->id);
+            $data[$language->id]['num_activities_' . $language->id] = $request->input('num_activities_' . $language->id);
+            $data[$language->id]['popularity_' . $language->id] = $request->input('popularity_' . $language->id);
+            $data[$language->id]['conditions_' . $language->id] = $request->input('conditions_' . $language->id);
+            $data[$language->id]['price_level_' . $language->id] = $request->input('price_level_' . $language->id);
+            $data[$language->id]['num_checkins_' . $language->id] = $request->input('num_checkins_' . $language->id);
+            $data[$language->id]['history_' . $language->id] = $request->input('history_' . $language->id);
         }
 
-        $location = explode(',',$request->input('lat_lng') );
+        $location = explode(',', $request->input('lat_lng'));
 
         /* Check if active field is enabled or disabled */
         $active = null;
-        if(empty($request->input('active')) || $request->input('active') == 0){
+        if (empty($request->input('active')) || $request->input('active') == 0) {
             $active = 2;
-        }else{
+        } else {
             $active = 1;
         }
 
@@ -140,12 +137,11 @@ class PlaceController extends Controller
      *
      * @return mixed
      */
-    public function delete($id, ManagePlaceRequest $request)
-    {
+    public function delete($id, ManagePlaceRequest $request) {
         $item = Place::findOrFail($id);
         /* Delete Children Tables Data of this country */
         $child = PlaceTranslations::where(['places_id' => $id])->get();
-        if(!empty($child)){
+        if (!empty($child)) {
             foreach ($child as $key => $value) {
                 $value->delete();
             }
@@ -162,8 +158,7 @@ class PlaceController extends Controller
      *
      * @return mixed
      */
-    public function edit($id, ManagePlaceRequest $request)
-    {
+    public function edit($id, ManagePlaceRequest $request) {
 
         $data = [];
         $place = Place::findOrFail(['id' => $id]);
@@ -171,46 +166,44 @@ class PlaceController extends Controller
 
         foreach ($this->languages as $key => $language) {
             $model = PlaceTranslations::where([
-                'languages_id' => $language->id,
-                'places_id'   => $id
-            ])->get();
+                        'languages_id' => $language->id,
+                        'places_id' => $id
+                    ])->get();
 
-            if(!empty($model[0])){
+            if (!empty($model[0])) {
 
-                $data['title_'.$language->id]           = $model[0]->title;
-                $data['description_'.$language->id]     = $model[0]->description;
-                $data['address_'.$language->id]         = $model[0]->address;
-                $data['phone_'.$language->id]           = $model[0]->phone;
-                $data['highlights_'.$language->id]      = $model[0]->highlights;
-                $data['working_days_'.$language->id]    = $model[0]->working_days;
-                $data['working_times_'.$language->id]   = $model[0]->working_times;
-                $data['how_to_go_'.$language->id]       = $model[0]->how_to_go;
-                $data['when_to_go_'.$language->id]      = $model[0]->when_to_go;
-                $data['num_activities_'.$language->id]  = $model[0]->num_activities;
-                $data['popularity_'.$language->id]      = $model[0]->popularity;
-                $data['conditions_'.$language->id]      = $model[0]->conditions;
-                $data['price_level_'.$language->id]     = $model[0]->price_level;
-                $data['num_checkins_'.$language->id]    = $model[0]->num_checkins;
-                $data['history_'.$language->id]         = $model[0]->history;
+                $data['title_' . $language->id] = $model[0]->title;
+                $data['description_' . $language->id] = $model[0]->description;
+                $data['address_' . $language->id] = $model[0]->address;
+                $data['phone_' . $language->id] = $model[0]->phone;
+                $data['highlights_' . $language->id] = $model[0]->highlights;
+                $data['working_days_' . $language->id] = $model[0]->working_days;
+                $data['working_times_' . $language->id] = $model[0]->working_times;
+                $data['how_to_go_' . $language->id] = $model[0]->how_to_go;
+                $data['when_to_go_' . $language->id] = $model[0]->when_to_go;
+                $data['num_activities_' . $language->id] = $model[0]->num_activities;
+                $data['popularity_' . $language->id] = $model[0]->popularity;
+                $data['conditions_' . $language->id] = $model[0]->conditions;
+                $data['price_level_' . $language->id] = $model[0]->price_level;
+                $data['num_checkins_' . $language->id] = $model[0]->num_checkins;
+                $data['history_' . $language->id] = $model[0]->history;
+            } else {
 
-            }else{
-
-                $data['title_'.$language->id]           = null;
-                $data['description_'.$language->id]     = null;
-                $data['address_'.$language->id]         = null;
-                $data['phone_'.$language->id]           = null;
-                $data['highlights_'.$language->id]      = null;
-                $data['working_days_'.$language->id]    = null;
-                $data['working_times_'.$language->id]   = null;
-                $data['how_to_go_'.$language->id]       = null;
-                $data['when_to_go_'.$language->id]      = null;
-                $data['num_activities_'.$language->id]  = null;
-                $data['popularity_'.$language->id]      = null;
-                $data['conditions_'.$language->id]      = null;
-                $data['price_level_'.$language->id]     = null;
-                $data['num_checkins_'.$language->id]    = null;
-                $data['history_'.$language->id]         = null;
-
+                $data['title_' . $language->id] = null;
+                $data['description_' . $language->id] = null;
+                $data['address_' . $language->id] = null;
+                $data['phone_' . $language->id] = null;
+                $data['highlights_' . $language->id] = null;
+                $data['working_days_' . $language->id] = null;
+                $data['working_times_' . $language->id] = null;
+                $data['how_to_go_' . $language->id] = null;
+                $data['when_to_go_' . $language->id] = null;
+                $data['num_activities_' . $language->id] = null;
+                $data['popularity_' . $language->id] = null;
+                $data['conditions_' . $language->id] = null;
+                $data['price_level_' . $language->id] = null;
+                $data['num_checkins_' . $language->id] = null;
+                $data['history_' . $language->id] = null;
             }
         }
 
@@ -227,7 +220,7 @@ class PlaceController extends Controller
         $countries_arr = [];
 
         foreach ($countries as $key => $value) {
-            if(isset($value->transsingle) && !empty($value->transsingle)){
+            if (isset($value->transsingle) && !empty($value->transsingle)) {
                 $countries_arr[$value->id] = $value->transsingle->title;
             }
         }
@@ -237,17 +230,17 @@ class PlaceController extends Controller
         $cities_arr = [];
 
         foreach ($cities as $key => $value) {
-            if(isset($value->transsingle) && !empty($value->transsingle)){
+            if (isset($value->transsingle) && !empty($value->transsingle)) {
                 $cities_arr[$value->id] = $value->transsingle->title;
             }
         }
 
-         /* Get All Place Types */
+        /* Get All Place Types */
         $places_types = PlaceTypes::all();
         $places_types_arr = [];
 
         foreach ($places_types as $key => $value) {
-            if(isset($value->transsingle) && !empty($value->transsingle)){
+            if (isset($value->transsingle) && !empty($value->transsingle)) {
                 $places_types_arr[$value->id] = $value->transsingle->title;
             }
         }
@@ -257,7 +250,7 @@ class PlaceController extends Controller
         $degrees_arr = [];
 
         foreach ($degrees as $key => $value) {
-            if(isset($value->transsingle) && !empty($value->transsingle)){
+            if (isset($value->transsingle) && !empty($value->transsingle)) {
                 $degrees_arr[$value->id] = $value->transsingle->title;
             }
         }
@@ -269,7 +262,7 @@ class PlaceController extends Controller
         foreach ($selected_medias as $key => $value) {
             $value = $value->media;
             // if(isset($value->transsingle) && !empty($value->transsingle)){
-                array_push($selected_medias_arr,$value->id);
+            array_push($selected_medias_arr, $value->id);
             // }
         }
 
@@ -280,21 +273,21 @@ class PlaceController extends Controller
         $medias_arr = [];
 
         foreach ($medias as $key => $value) {
-            if(isset($value->transsingle) && !empty($value->transsingle)){
+            if (isset($value->transsingle) && !empty($value->transsingle)) {
                 $medias_arr[$value->id] = $value->transsingle->title;
             }
         }
 
         return view('backend.place.edit')
-            ->withLanguages($this->languages)
-            ->withPlace($place)
-            ->withPlaceid($id)
-            ->withData($data)
-            ->withCountries($countries_arr)
-            ->withDegrees($degrees_arr)
-            ->withCities($cities_arr)
-            ->withPlace_types($places_types_arr)
-            ->withMedias($medias_arr);
+                        ->withLanguages($this->languages)
+                        ->withPlace($place)
+                        ->withPlaceid($id)
+                        ->withData($data)
+                        ->withCountries($countries_arr)
+                        ->withDegrees($degrees_arr)
+                        ->withCities($cities_arr)
+                        ->withPlace_types($places_types_arr)
+                        ->withMedias($medias_arr);
     }
 
     /**
@@ -303,8 +296,7 @@ class PlaceController extends Controller
      *
      * @return mixed
      */
-    public function update($id, ManagePlaceRequest $request)
-    {
+    public function update($id, ManagePlaceRequest $request) {
         $place = Place::findOrFail(['id' => $id]);
 
         $data = [];
@@ -312,38 +304,38 @@ class PlaceController extends Controller
         $data = [];
 
         foreach ($this->languages as $key => $language) {
-            $data[$language->id]['title_'.$language->id] = $request->input('title_'.$language->id);
-            $data[$language->id]['description_'.$language->id] = $request->input('description_'.$language->id);
-            $data[$language->id]['address_'.$language->id] = $request->input('address_'.$language->id);
-            $data[$language->id]['phone_'.$language->id] = $request->input('phone_'.$language->id);
-            $data[$language->id]['highlights_'.$language->id] = $request->input('highlights_'.$language->id);
-            $data[$language->id]['working_days_'.$language->id] = $request->input('working_days_'.$language->id);
-            $data[$language->id]['working_times_'.$language->id] = $request->input('working_times_'.$language->id);
-            $data[$language->id]['how_to_go_'.$language->id] = $request->input('how_to_go_'.$language->id);
-            $data[$language->id]['when_to_go_'.$language->id] = $request->input('when_to_go_'.$language->id);
-            $data[$language->id]['num_activities_'.$language->id] = $request->input('num_activities_'.$language->id);
-            $data[$language->id]['popularity_'.$language->id] = $request->input('popularity_'.$language->id);
-            $data[$language->id]['conditions_'.$language->id] = $request->input('conditions_'.$language->id);
-            $data[$language->id]['price_level_'.$language->id] = $request->input('price_level_'.$language->id);
-            $data[$language->id]['num_checkins_'.$language->id] = $request->input('num_checkins_'.$language->id);
-            $data[$language->id]['history_'.$language->id] = $request->input('history_'.$language->id);
+            $data[$language->id]['title_' . $language->id] = $request->input('title_' . $language->id);
+            $data[$language->id]['description_' . $language->id] = $request->input('description_' . $language->id);
+            $data[$language->id]['address_' . $language->id] = $request->input('address_' . $language->id);
+            $data[$language->id]['phone_' . $language->id] = $request->input('phone_' . $language->id);
+            $data[$language->id]['highlights_' . $language->id] = $request->input('highlights_' . $language->id);
+            $data[$language->id]['working_days_' . $language->id] = $request->input('working_days_' . $language->id);
+            $data[$language->id]['working_times_' . $language->id] = $request->input('working_times_' . $language->id);
+            $data[$language->id]['how_to_go_' . $language->id] = $request->input('how_to_go_' . $language->id);
+            $data[$language->id]['when_to_go_' . $language->id] = $request->input('when_to_go_' . $language->id);
+            $data[$language->id]['num_activities_' . $language->id] = $request->input('num_activities_' . $language->id);
+            $data[$language->id]['popularity_' . $language->id] = $request->input('popularity_' . $language->id);
+            $data[$language->id]['conditions_' . $language->id] = $request->input('conditions_' . $language->id);
+            $data[$language->id]['price_level_' . $language->id] = $request->input('price_level_' . $language->id);
+            $data[$language->id]['num_checkins_' . $language->id] = $request->input('num_checkins_' . $language->id);
+            $data[$language->id]['history_' . $language->id] = $request->input('history_' . $language->id);
         }
 
-        $location = explode(',',$request->input('lat_lng') );
+        $location = explode(',', $request->input('lat_lng'));
 
         /* Check if active field is enabled or disabled */
         $active = null;
-        if(empty($request->input('active')) || $request->input('active') == 0){
+        if (empty($request->input('active')) || $request->input('active') == 0) {
             $active = 2;
-        }else{
+        } else {
             $active = 1;
         }
 
         /* Send All Relation and Common fields through $extra Array */
         $extra = [
             'active' => $active,
-            'countries_id' =>  $request->input('countries_id'),
-            'cities_id' =>  $request->input('cities_id'),
+            'countries_id' => $request->input('countries_id'),
+            'cities_id' => $request->input('cities_id'),
             'place_types_ids' => $request->input('place_types_ids'),
             'medias' => $request->input('medias_id'),
             'lat' => $location[0],
@@ -352,10 +344,10 @@ class PlaceController extends Controller
         ];
 
 
-        $this->places->update($id , $place, $data , $extra);
+        $this->places->update($id, $place, $data, $extra);
 
         return redirect()->route('admin.location.place.index')
-            ->withFlashSuccess('Place updated Successfully!');
+                        ->withFlashSuccess('Place updated Successfully!');
     }
 
     /**
@@ -364,8 +356,7 @@ class PlaceController extends Controller
      *
      * @return mixed
      */
-    public function show($id, ManagePlaceRequest $request)
-    {
+    public function show($id, ManagePlaceRequest $request) {
         $place = Place::findOrFail(['id' => $id]);
         $placeTrans = PlaceTranslations::where(['places_id' => $id])->get();
         $place = $place[0];
@@ -393,19 +384,19 @@ class PlaceController extends Controller
 
         foreach ($selected_medias as $key => $value) {
             $value = $value->media;
-            if(isset($value->transsingle) && !empty($value->transsingle)){
-                array_push($selected_medias_arr,$value->transsingle->title);
+            if (isset($value->transsingle) && !empty($value->transsingle)) {
+                array_push($selected_medias_arr, $value->transsingle->title);
             }
         }
 
         return view('backend.place.show')
-            ->withPlace($place)
-            ->withPlacetrans($placeTrans)
-            ->withCountry($country)
-            ->withCity($city)
-            ->withType($type)
-            ->withDegree($safety_degree)
-            ->withMedias($selected_medias_arr);
+                        ->withPlace($place)
+                        ->withPlacetrans($placeTrans)
+                        ->withCountry($country)
+                        ->withCity($city)
+                        ->withType($type)
+                        ->withDegree($safety_degree)
+                        ->withMedias($selected_medias_arr);
     }
 
     /**
@@ -415,12 +406,11 @@ class PlaceController extends Controller
      *
      * @return mixed
      */
-    public function mark(Place $place, $status, ManagePlaceRequest $request)
-    {
+    public function mark(Place $place, $status, ManagePlaceRequest $request) {
         $place->active = $status;
         $place->save();
         return redirect()->route('admin.location.place.index')
-            ->withFlashSuccess('Place Status Updated!');
+                        ->withFlashSuccess('Place Status Updated!');
     }
 
     /**
@@ -428,13 +418,12 @@ class PlaceController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function import(ManagePlaceRequest $request)
-    {
+    public function import(ManagePlaceRequest $request) {
         $countries = Countries::where(['active' => 1])->get();
         $countries_arr = [];
 
         foreach ($countries as $key => $value) {
-            if(isset($value->transsingle) && !empty($value->transsingle)){
+            if (isset($value->transsingle) && !empty($value->transsingle)) {
                 $countries_arr[$value->id] = $value->transsingle->title;
             }
         }
@@ -443,7 +432,7 @@ class PlaceController extends Controller
         /* Get All Cities */
         $cities = Cities::where(['active' => 1])->get();
         foreach ($cities as $key => $value) {
-            if(isset($value->transsingle) && !empty($value->transsingle)){
+            if (isset($value->transsingle) && !empty($value->transsingle)) {
                 $cities_arr[$value->id] = $value->transsingle->title;
             }
         }
@@ -457,57 +446,65 @@ class PlaceController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function search(ManagePlaceRequest $request)
-    {
+    public function search(ManagePlaceRequest $request) {
         $data['countries_id'] = $request->input('countries_id');
         $data['cities_id'] = $request->input('cities_id');
 
         $city = $request->input('address');
         $query = $request->input('query');
-        $json = file_get_contents('http://db.travooo.com/places/go/'.$city.'/0/0/'.$query);
+        $json = file_get_contents('http://db.travooo.com/places/go/' . $city . '/0/0/' . $query);
         //dd('http://db.travooo.com/places/go/'.$city.'/0/0/'.$query);
         $result = json_decode($json);
         //dd($json);
-        $data['results'] = $result->results;
+        $data['results'] = $result;
+        //dd($result);
         return view('backend.place.importresults', $data);
     }
 
-    public function savesearch(ManagePlaceRequest $request)
-    {
+    public function savesearch(ManagePlaceRequest $request) {
         $data['countries_id'] = $request->input('countries_id');
         $data['cities_id'] = $request->input('cities_id');
-
         $to_save = $request->input('save');
-        $places = $request->input('place');
+            $places = $request->input('place');
 
-        foreach($to_save AS $k=>$v) {
-            $p = new Place();
-            $p->place_type_ids = 1;
-            $p->safety_degrees_id = 1;
-            $p->provider_id = $places[$k]['provider_id'];
-            $p->countries_id = $data['countries_id'];
-            $p->cities_id = $data['cities_id'];
-            $p->lat = $places[$k]['lat'];
-            $p->lng = $places[$k]['lng'];
-            $p->active = 1;
-            $p->save();
-            //dd($p->id);
+        if (is_array($to_save)) {
 
-            $pt = new PlaceTranslations();
-            $pt->languages_id = 1;
-            $pt->places_id = $p->id;
-            $pt->title = $places[$k]['name'];
-            if (isset($places[$k]['international_phone_number'])) $pt->phone = $places[$k]['international_phone_number'];
-            $pt->description = $places[$k]['website'];
-            $pt->save();
+            
+
+            foreach ($to_save AS $k => $v) {
+                $p = new Place();
+                $p->place_type_ids = 1;
+                $p->safety_degrees_id = 1;
+                $p->provider_id = $places[$k]['provider_id'];
+                $p->countries_id = $data['countries_id'];
+                $p->cities_id = $data['cities_id'];
+                $p->lat = $places[$k]['lat'];
+                $p->lng = $places[$k]['lng'];
+                $p->active = 1;
+                $p->save();
+                //dd($p->id);
+
+                $pt = new PlaceTranslations();
+                $pt->languages_id = 1;
+                $pt->places_id = $p->id;
+                $pt->title = $places[$k]['name'];
+                if (isset($places[$k]['international_phone_number']))
+                    $pt->phone = $places[$k]['international_phone_number'];
+                if (isset($places[$k]['website']))
+                    $pt->description = $places[$k]['website'];
+                $pt->working_days = $places[$k]['working_days'];
+                $pt->save();
+            }
+            //die();
+            $num = count($to_save);
+
+            return redirect()->route('admin.location.place.index')
+                            ->withFlashSuccess($num . ' Places imported successfully!');
         }
-        die();
-
-        $json = file_get_contents('http://travooodb.dev/places/go/'.$city.'/0/0/'.$query);
-        $result = json_decode($json);
-        $data['results'] = $result->results;
-        return view('backend.place.importresults', $data);
+        else {
+            return redirect()->route('admin.location.place.index')
+                            ->withFlashError('You didnt select any items to import!');
+        }
     }
-
 
 }
