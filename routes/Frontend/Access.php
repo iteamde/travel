@@ -28,21 +28,7 @@ Route::group(['namespace' => 'Auth', 'as' => 'auth.'], function () {
         // Authentication Routes
         Route::get('login', 'LoginController@showLoginForm')->name('login');
         // Route::post('login', 'LoginController@login')->name('login.post');
-        Route::post('login', function(Request $request){
-            echo '<pre>';
-            print_r($request->input());
-            exit;
-            $credentials = array('u_username' => 'user', 'password' => 'pass123');
-
-            if(Auth::attempt($credentials, true)){
-                // return 'You have successfully logged in :D';
-                return Redirect::to('/');
-
-            } else {
-                return 'Sorry, but your Credentials seem to be wrong, stupid';
-            }
-
-        })->name('login.post');
+        
 
         // Socialite Routes
         Route::get('login/{provider}', 'SocialLoginController@login')->name('social.login');
