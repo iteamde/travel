@@ -21,7 +21,7 @@ Route::post('login', function(Request $request){
                 return Redirect::to('/');
 
             } else {
-                return 'Sorry, but your Credentials seem to be wrong, stupid';
+                return 'Sorry, but your Credentials seem to be wrong.';
             }
 
         })->name('login.post');

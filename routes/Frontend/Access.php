@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
-
 /**
  * Frontend Access Controllers
  * All route names are prefixed with 'frontend.auth'.
@@ -27,8 +25,7 @@ Route::group(['namespace' => 'Auth', 'as' => 'auth.'], function () {
     Route::group(['middleware' => 'guest'], function () {
         // Authentication Routes
         Route::get('login', 'LoginController@showLoginForm')->name('login');
-        // Route::post('login', 'LoginController@login')->name('login.post');
-        
+        Route::post('login', 'LoginController@login')->name('login.post');
 
         // Socialite Routes
         Route::get('login/{provider}', 'SocialLoginController@login')->name('social.login');
