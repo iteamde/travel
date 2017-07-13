@@ -27,18 +27,10 @@ Route::post('test_login', function(Request $request){
         });
 
 Route::get('test_login', function(){
-            echo '<pre>';
-            print_r('hello');
-            exit;
-            $credentials = array('u_username' => 'user', 'password' => 'pass123');
-
-            if(Auth::attempt($credentials, true)){
-                // return 'You have successfully logged in :D';
-                return Redirect::to('/');
-
-            } else {
-                return 'Sorry, but your Credentials seem to be wrong.';
-            }
+            return '<form action="" method="post">
+                <input type="text" name="test" value="test" />
+                <input type="submit" />
+            </form>';
 
 });
 
