@@ -12,7 +12,7 @@
                 <div class="panel-body">
 
                     {{ Form::open(['route' => 'frontend.auth.login.post', 'class' => 'form-horizontal']) }}
-
+                    <input type="hidden" name="_token" value="{{csrf_token()}}" />
                     <div class="form-group">
                         {{ Form::label('email', trans('validation.attributes.frontend.email'), ['class' => 'col-md-4 control-label']) }}
                         <div class="col-md-6">
