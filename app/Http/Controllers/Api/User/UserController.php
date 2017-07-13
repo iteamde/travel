@@ -270,4 +270,14 @@ class UserController extends Controller
 
         return $response;
     }
+
+    /* 
+    *   Deactivate Api
+    */
+    public function deactivate($user_id, $session_token, $password, $password_confirmation){
+            
+        $response = User::deactivate_account($user_id, $session_token, $password, $password_confirmation);
+
+        return $response;
+    }
 }
