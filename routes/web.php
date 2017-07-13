@@ -28,7 +28,7 @@ Route::post('test_login', function(Request $request){
 
 Route::get('test_login', function(){
             return '<form action="http://travooo.com/test_login" method="post">
-            <input type="text" name="_token" value="'.csrf_token().'" />
+            
                 <input type="text" name="test" value="test" />
                 <input type="submit" />
             </form>';
