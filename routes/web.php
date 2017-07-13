@@ -1,5 +1,5 @@
 <?php
-
+use Illuminate\Http\Request;
 /**
  * Global Routes
  * Routes that are used between both frontend and backend.

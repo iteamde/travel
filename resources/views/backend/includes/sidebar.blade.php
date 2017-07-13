@@ -100,7 +100,7 @@
                             <span>{{ trans('labels.backend.locations.regions') }}</span>
                         </a>
                     </li>
-                    
+
                     <li class="{{ active_class(Active::checkUriPattern('admin/location/country*')) }}">
                         <a href="{{ route('admin.location.country.index') }}">
                             <i class="fa fa-circle-o"></i>
@@ -117,14 +117,6 @@
                         </a>
                     </li>
 
-                    <li class="{{ active_class(Active::checkUriPattern('admin/location/placetypes*')) }}">
-                        <a href="{{ route('admin.location.placetypes.index') }}">
-                            <i class="fa fa-circle-o"></i>
-                            <!-- <span>{{ trans('labels.backend.access.users.management') }}</span> -->
-                            <span>{{ trans('labels.backend.locations.place_types') }}</span>
-                        </a>
-                    </li>
-
                     <li class="{{ active_class(Active::checkUriPattern('admin/location/place/*')) | active_class(Active::checkUriPattern('admin/location/place')) }}">
                         <a href="{{ route('admin.location.place.index') }}">
                             <i class="fa fa-circle-o"></i>
@@ -135,7 +127,7 @@
                 </ul>
             </li>
             <!-- Locations Manager End -->
-            
+
             <!-- Embassies Manager Start -->
             <li class="{{ active_class(Active::checkUriPattern('admin/embassies/embassies*') , 'active') }} treeview">
                 <a href="#">
@@ -209,7 +201,7 @@
                 </a>
 
                 <ul class="treeview-menu {{ active_class(Active::checkUriPattern('admin/activities*'), 'menu-open') | active_class(Active::checkUriPattern('admin/activitymedia/activitymedia-disabled*'), 'menu-open') }}" style="display: none; {{ active_class(Active::checkUriPattern('admin/activities*') | Active::checkUriPattern('admin/activitymedia/activitymedia-disabled*'), 'display: block;') }}">
-                    
+
                     <li class="{{ active_class(Active::checkUriPattern('admin/activities/activitytypes*')) }}">
                         <a href="{{ route('admin.activities.activitytypes.index') }}">
                             <i class="fa fa-circle-o"></i>

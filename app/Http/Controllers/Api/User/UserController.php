@@ -225,11 +225,48 @@ class UserController extends Controller
         return $response;
     }
 
+    /* 
+    *   Unblock A Friend
+    */
     public function unblock_friend(Request $request){
         
         $post = $request->input();
 
         $response = User::unblock_friend($post);
+
+        return $response;
+    }
+
+    /* 
+    *   Show All Hidden Contents
+    */
+    public function hidden_content($user_id, $session_token){
+
+        $response = User::hidden_content($user_id, $session_token);
+
+        return $response;
+    }
+
+    /* 
+    *   Change Online Status Api
+    */
+    public function change_online_status(Request $request){
+
+        $post = $request->input();
+
+        $response = User::change_online_status($post);
+
+        return $response;
+    }
+
+    /* 
+    *   Unhide Content Api
+    */
+    public function unhide_content(Request $request){
+        
+        $post = $request->input();
+
+        $response = User::unhide_content($post);
 
         return $response;
     }

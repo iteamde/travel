@@ -60,25 +60,6 @@ class PlaceController extends Controller {
             }
         }
 
-        /* Get All Place Types */
-        $places_types = PlaceTypes::all();
-        $places_types_arr = [];
-
-        foreach ($places_types as $key => $value) {
-            if (isset($value->transsingle) && !empty($value->transsingle)) {
-                $places_types_arr[$value->id] = $value->transsingle->title;
-            }
-        }
-
-        /* Get All Safety Degrees */
-        $degrees = SafetyDegree::get();
-        $degrees_arr = [];
-
-        foreach ($degrees as $key => $value) {
-            if (isset($value->transsingle) && !empty($value->transsingle)) {
-                $degrees_arr[$value->id] = $value->transsingle->title;
-            }
-        }
 
         /* Get All Medias */
         $medias = Media::get();
@@ -93,8 +74,6 @@ class PlaceController extends Controller {
         return view('backend.place.create', [
             'countries' => $countries_arr,
             'cities' => $cities_arr,
-            'place_types' => $places_types_arr,
-            'degrees' => $degrees_arr,
             'medias' => $medias_arr,
         ]);
     }
@@ -138,13 +117,13 @@ class PlaceController extends Controller {
         /* Send All Relation and Common Fields Through $extra Array */
         $extra = [
             'active' => $active,
-            'countries_id' => $request->input('countries_id'),
-            'cities_id' => $request->input('cities_id'),
-            'place_types_ids' => $request->input('place_types_ids'),
+            'countries_id' =>  $request->input('countries_id'),
+            'cities_id' =>  $request->input('cities_id'),
+            'place_types_ids' => 1,
             'lat' => $location[0],
             'lng' => $location[1],
             'medias' => $request->input('medias_id'),
-            'safety_degrees_id' => $request->input('safety_degrees_id')
+            'safety_degrees_id' => 1
         ];
 
         $this->places->create($data, $extra);
