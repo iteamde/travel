@@ -24,16 +24,16 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
  * Namespaces indicate folder structure
  */
 Route::group(['prefix' => 'api'], function () {
-    /*
-     * These routes need view-api permission
-     * (good if you want to allow more than one group in the api,
-     * then limit the api features by different roles or permissions)
-     *
-     */
-    // includeRouteFiles(__DIR__.'/Api/');
+/*
+ * These routes need view-api permission
+ * (good if you want to allow more than one group in the api,
+ * then limit the api features by different roles or permissions)
+ *
+ */
+// includeRouteFiles(__DIR__.'/Api/');
 
  /*
- * User Manager
+ * User Manager 
  */
 Route::group([
     'prefix'     => 'users',
@@ -87,6 +87,6 @@ Route::group([
         /* Unhide A Content Api */
         Route::post('/unhideacontent' , 'UserController@unhide_content');
         /* Deactivate Account Api */
-        // Route::post('/' , 'UserController@unhide_content');
+        Route::put('/deactivate/{user_id}/{session_token}/{password}/{password_confirmation}' , 'UserController@deactivate');
     }); 
 });

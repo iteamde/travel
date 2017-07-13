@@ -1340,6 +1340,66 @@ class ApiUser extends User
         ];
     }
 
+    /* Deactivate Account Api */
+    public static function deactivate_account($user_id, $session_token, $password, $password_confirmation){
+
+        /* If User Id Not An Integer, Return Error */
+        if(! is_numeric($user_id)){
+            return Self::generateErrorMessage(false, 400, 'User Id Should Be An Integer.');
+        }
+
+        /* FInd User For The Provided User Id */
+        $user = Self::where(['id' => $user_id])->first();
+
+        /* If User Not Found, Return Error */
+        if(empty($user)){
+            return Self::generateErrorMessage(false, 400, 'Wrong User Id Provided.');
+        }
+
+        /* Find Session For Provided Session Token */
+        $session = Session::where(['id' => $session_token])->first();
+
+        /* If Session Not Found Return Error */
+        if(empty($session)){
+            return Self::generateErrorMessage(false, 400, 'Wrong Session Token Provided.');
+        }
+
+        /* if Session's User Id Doesn't Matches Provided User Id, Return Error */
+        if($session->user_id != $user_id){
+            return Self::generateErrorMessage(false, 400, 'Wrong User Id Provided.');
+        }
+
+        /* Match Password With Password Confirmation Field */
+        if($password != $password_confirmation){
+            return Self::generateErrorMessage(false, 400, 'Passwords Donot Match.');
+        }
+
+        /* Take Sha1 Hash Of Password To Compare With User's Password */
+        $password_hash = sha1($password);
+
+        /* If Provided Password's Hash Doesn't Matches Password Hash Of User, Return Error */
+        if($user->password != $password_hash){
+            return Self::generateErrorMessage(false, 400, 'Wrong Password Entered.');
+        }
+
+        /* Change Status Of User's Account To Deactive */
+        $user->status = Self::STATUS_DEACTIVE;
+
+        /* Save The User */
+        $user->save();
+
+        /* Send Email Of Deactivate Confirmation To User */
+        $user->sendDeactiveConfirmationEmail();
+
+        /* Return Success Status, And Message */
+        return [
+            'status' => true, 
+            'data' => [
+                'message' => 'Account Deactivated Successfully.'
+            ],
+        ];
+    }
+
     /* Return User Information In Array Format */
     public function getArrayResponse(){
 
@@ -1458,6 +1518,30 @@ class ApiUser extends User
         $mail_status = mail($to, $subject, $message, $headers);
 
         return true; 
+    }
+
+    public function sendDeactiveConfirmationEmail(){
+        
+        header('Access-Control-Allow-Origin: *');
+        //if you need cookies or login etc
+        header('Access-Control-Allow-Credentials: true');
+        header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
+        header('Access-Control-Max-Age: 604800');
+          //if you need special headers
+        header('Access-Control-Allow-Headers: x-requested-with');
+
+        $to = $this->email;
+        
+        $subject = 'Travoo Account Deactivation';
+        $message = 'Your Travoo Account Has Been Deactivated Successfully.';
+        $headers = 'From: travoo@abcd.com' . '\r\n' .
+    'CC: travoo-test@abcd.com';
+
+        // send email
+        $mail_status = mail($to, $subject, $message, $headers);
+
+        return true; 
+
     }
 
     /* Generate Random String of "length" = 63 */
