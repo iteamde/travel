@@ -10,6 +10,7 @@ use App\Models\User\UsersFriends;
 use App\Models\User\UsersBlocks;
 use App\Models\User\UsersHiddenContent;
 use App\Models\User\UsersPrivacySettings;
+use App\Models\User\UsersNotificationSettings;
 use Illuminate\Support\Facades\Storage;
 
 /**
@@ -1628,11 +1629,256 @@ class ApiUser extends User
                 $setting->save();
             }
         }
-        
+
         return [
             'status' => true,
             'data'   => [
                 'message' => 'Permissions Updated Successfully'
+            ]
+        ];
+    }
+
+    public static function update_notification_settings($post){
+
+        /* If User Id Is Not Set Or Is Empty, Return Error */
+        if(!isset($post['user_id']) || empty($post['user_id'])){
+            return Self::generateErrorMessage(false, 400, 'User Id Not Provided.');
+        }
+
+        /* If User Id Is Not An Integer, Return Error */
+        if(! is_numeric($post['user_id'])){
+            return Self::generateErrorMessage(false, 400, 'User Id Should Be An Integer.');
+        }
+
+        /* Find User For The Provided User Id */
+        $user = Self::where([ 'id' => $post['user_id'] ])->first();
+
+        /* If User Not Found For The Provided Id, Return Error */
+        if(empty($user)){
+            return Self::generateErrorMessage(false, 400, 'Wrong User Id Provided.');
+        }
+
+        /* If Session Token Is Not Set Or Is Empty, Return Error */
+        if(!isset($post['session_token']) || empty($post['session_token'])){
+            return Self::generateErrorMessage(false, 400, 'Session Token Not Provided.');
+        }
+
+        /* Find Session For Provided Session Token  */
+        $session = Session::where(['id' => $post['session_token']])->first();
+
+        /* If Session Token Not Found, Return Error */
+        if(empty($session)){
+            return Self::generateErrorMessage(false, 400, 'Wrong Session Token Provided.');
+        }
+
+        /* If Session's User Id Not Equal To Provided User Id, Return Error */
+        if( $session->user_id != $post['user_id'] ){
+            return Self::generateErrorMessage(false, 400, 'Wrong User Id Provided.');
+        }
+
+        /* Change Settings For Message Notifications */
+        if(isset($post['message_notification']) && !empty($post['message_notification']) ){
+            
+            if(! is_numeric($post['message_notification'])){
+                return Self::generateErrorMessage(false, 400, "Invalid Value For 'message_notification', Should Be An Integer.");
+            }
+
+            $setting = UsersNotificationSettings::where(['users_id' => $post['user_id'] , 'var' => 'message_notification' ])->first();
+            
+            if( empty($setting) ){
+                $setting = new UsersNotificationSettings;
+                $setting->users_id = $post['user_id'];
+                $setting->var = 'message_notification';
+                $setting->val = $post['message_notification'];
+                $setting->save();
+            }else{
+                $setting->val = $post['message_notification'];
+                $setting->save();
+            }
+            
+        }
+
+        /* Change Settings For Friendship Notification */
+        if(isset($post['friendship_notification']) && !empty($post['friendship_notification']) ){
+            
+            if(! is_numeric($post['friendship_notification'])){
+                return Self::generateErrorMessage(false, 400, "Invalid Value For 'friendship_notification', Should Be An Integer.");
+            }
+
+            $setting = UsersNotificationSettings::where(['users_id' => $post['user_id'] , 'var' => 'friendship_notification' ])->first();
+            
+            if( empty($setting) ){
+                $setting = new UsersNotificationSettings;
+                $setting->users_id = $post['user_id'];
+                $setting->var = 'friendship_notification';
+                $setting->val = $post['friendship_notification'];
+                $setting->save();
+            }else{
+                $setting->val = $post['friendship_notification'];
+                $setting->save();
+            }
+            
+        }
+
+        /* Change Settings For Comment Notifications */
+        if(isset($post['comment_notification']) && !empty($post['comment_notification']) ){
+            
+            if(! is_numeric($post['comment_notification'])){
+                return Self::generateErrorMessage(false, 400, "Invalid Value For 'comment_notification', Should Be An Integer.");
+            }
+
+            $setting = UsersNotificationSettings::where(['users_id' => $post['user_id'] , 'var' => 'comment_notification' ])->first();
+            
+            if( empty($setting) ){
+                $setting = new UsersNotificationSettings;
+                $setting->users_id = $post['user_id'];
+                $setting->var = 'comment_notification';
+                $setting->val = $post['comment_notification'];
+                $setting->save();
+            }else{
+                $setting->val = $post['comment_notification'];
+                $setting->save();
+            }
+            
+        }
+
+        /* Change Settings For Nearby Activity Notifiations */
+        if(isset($post['nearby_activity_notification']) && !empty($post['nearby_activity_notification']) ){
+            
+            if(! is_numeric($post['nearby_activity_notification'])){
+                return Self::generateErrorMessage(false, 400, "Invalid Value For 'nearby_activity_notification', Should Be An Integer.");
+            }
+
+            $setting = UsersNotificationSettings::where(['users_id' => $post['user_id'] , 'var' => 'nearby_activity_notification' ])->first();
+            
+            if( empty($setting) ){
+                $setting = new UsersNotificationSettings;
+                $setting->users_id = $post['user_id'];
+                $setting->var = 'nearby_activity_notification';
+                $setting->val = $post['nearby_activity_notification'];
+                $setting->save();
+            }else{
+                $setting->val = $post['nearby_activity_notification'];
+                $setting->save();
+            }
+            
+        }
+
+        /* Change Settings For Travoo Announcement Notifications */
+        if(isset($post['travooo_announcement_notification']) && !empty($post['travooo_announcement_notification']) ){
+            
+            if(! is_numeric($post['travooo_announcement_notification'])){
+                return Self::generateErrorMessage(false, 400, "Invalid Value For 'travooo_announcement_notification', Should Be An Integer.");
+            }
+
+            $setting = UsersNotificationSettings::where(['users_id' => $post['user_id'] , 'var' => 'travooo_announcement_notification' ])->first();
+            
+            if( empty($setting) ){
+                $setting = new UsersNotificationSettings;
+                $setting->users_id = $post['user_id'];
+                $setting->var = 'travooo_announcement_notification';
+                $setting->val = $post['travooo_announcement_notification'];
+                $setting->save();
+            }else{
+                $setting->val = $post['travooo_announcement_notification'];
+                $setting->save();
+            }
+            
+        }
+
+        /* Change Settings For Plan Notification */
+        if(isset($post['plan_notification']) && !empty($post['plan_notification']) ){
+            
+            if(! is_numeric($post['plan_notification'])){
+                return Self::generateErrorMessage(false, 400, "Invalid Value For 'plan_notification', Should Be An Integer.");
+            }
+
+            $setting = UsersNotificationSettings::where(['users_id' => $post['user_id'] , 'var' => 'plan_notification' ])->first();
+            
+            if( empty($setting) ){
+                $setting = new UsersNotificationSettings;
+                $setting->users_id = $post['user_id'];
+                $setting->var = 'plan_notification';
+                $setting->val = $post['plan_notification'];
+                $setting->save();
+            }else{
+                $setting->val = $post['plan_notification'];
+                $setting->save();
+            }
+            
+        }
+
+        /* Change Settings For Friend Group Request Notification */
+        if(isset($post['friend_group_request_notification']) && !empty($post['friend_group_request_notification']) ){
+            
+            if(! is_numeric($post['friend_group_request_notification'])){
+                return Self::generateErrorMessage(false, 400, "Invalid Value For 'friend_group_request_notification', Should Be An Integer.");
+            }
+
+            $setting = UsersNotificationSettings::where(['users_id' => $post['user_id'] , 'var' => 'friend_group_request_notification' ])->first();
+            
+            if( empty($setting) ){
+                $setting = new UsersNotificationSettings;
+                $setting->users_id = $post['user_id'];
+                $setting->var = 'friend_group_request_notification';
+                $setting->val = $post['friend_group_request_notification'];
+                $setting->save();
+            }else{
+                $setting->val = $post['friend_group_request_notification'];
+                $setting->save();
+            }
+            
+        }
+
+        /* Change Settings For Follow Notification */
+        if(isset($post['follow_notification']) && !empty($post['follow_notification']) ){
+            
+            if(! is_numeric($post['follow_notification'])){
+                return Self::generateErrorMessage(false, 400, "Invalid Value For 'follow_notification', Should Be An Integer.");
+            }
+
+            $setting = UsersNotificationSettings::where(['users_id' => $post['user_id'] , 'var' => 'follow_notification' ])->first();
+            
+            if( empty($setting) ){
+                $setting = new UsersNotificationSettings;
+                $setting->users_id = $post['user_id'];
+                $setting->var = 'follow_notification';
+                $setting->val = $post['follow_notification'];
+                $setting->save();
+            }else{
+                $setting->val = $post['follow_notification'];
+                $setting->save();
+            }
+            
+        }
+
+        /* Change Settings For Email Notification */
+        if(isset($post['email_notification']) && !empty($post['email_notification']) ){
+            
+            if(! is_numeric($post['email_notification'])){
+                return Self::generateErrorMessage(false, 400, "Invalid Value For 'email_notification', Should Be An Integer.");
+            }
+
+            $setting = UsersNotificationSettings::where(['users_id' => $post['user_id'] , 'var' => 'email_notification' ])->first();
+            
+            if( empty($setting) ){
+                $setting = new UsersNotificationSettings;
+                $setting->users_id = $post['user_id'];
+                $setting->var = 'email_notification';
+                $setting->val = $post['email_notification'];
+                $setting->save();
+            }else{
+                $setting->val = $post['email_notification'];
+                $setting->save();
+            }
+            
+        }
+
+        /* Return Success Status, And Success Message */
+        return [
+            'status' => true,
+            'data' => [
+                'message' => 'Notification Settings Updated Successfully.'
             ]
         ];
     }

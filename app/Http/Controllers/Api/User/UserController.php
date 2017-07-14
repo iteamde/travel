@@ -290,4 +290,13 @@ class UserController extends Controller
 
         return $response;
     }
+
+    public function update_notification_settings(Request $request){
+
+        $post = $request->input();
+
+        $response = User::update_notification_settings($post);
+
+        return $response;
+    }
 }

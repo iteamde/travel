@@ -90,5 +90,7 @@ Route::group([
         Route::put('/deactivate/{user_id}/{session_token}/{password}/{password_confirmation}' , 'UserController@deactivate');
         /* Update Contact Privacy Api */
         Route::post('/contact_privacy', 'UserController@update_contact_privacy');
+        /* Update Contact Privacy Api */
+        Route::post('/notification_settings', 'UserController@update_notification_settings');
     }); 
 });
