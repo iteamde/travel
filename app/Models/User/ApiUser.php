@@ -9,6 +9,7 @@ use App\Models\User\Activation;
 use App\Models\User\UsersFriends;
 use App\Models\User\UsersBlocks;
 use App\Models\User\UsersHiddenContent;
+use App\Models\User\UsersPrivacySettings;
 use Illuminate\Support\Facades\Storage;
 
 /**
@@ -1398,6 +1399,241 @@ class ApiUser extends User
             'data' => [
                 'message' => 'Account Deactivated Successfully.'
             ],
+        ];
+    }
+
+    public static function update_contact_privacy($post){
+
+        /* If User Id Is Not Set Or Is Empty, Return Error */
+        if(!isset($post['user_id']) || empty($post['user_id'])){
+            return Self::generateErrorMessage(false, 400, 'User Id Not Provided.');
+        }
+
+        /* If User Id Is Not An Integer, Return Error */
+        if(! is_numeric($post['user_id'])){
+            return Self::generateErrorMessage(false, 400, 'User Id Should Be An Integer.');
+        }
+
+        /* Find User For The Provided User Id */
+        $user = Self::where([ 'id' => $post['user_id'] ])->first();
+
+        /* If User Not Found For The Provided Id, Return Error */
+        if(empty($user)){
+            return Self::generateErrorMessage(false, 400, 'Wrong User Id Provided.');
+        }
+
+        /* If Session Token Is Not Set Or Is Empty, Return Error */
+        if(!isset($post['session_token']) || empty($post['session_token'])){
+            return Self::generateErrorMessage(false, 400, 'Session Token Not Provided.');
+        }
+
+        /* Find Session For Provided Session Token  */
+        $session = Session::where(['id' => $post['session_token']])->first();
+
+        /* If Session Token Not Found, Return Error */
+        if(empty($session)){
+            return Self::generateErrorMessage(false, 400, 'Wrong Session Token Provided.');
+        }
+
+        /* If Session's User Id Not Equal To Provided User Id, Return Error */
+        if( $session->user_id != $post['user_id'] ){
+            return Self::generateErrorMessage(false, 400, 'Wrong User Id Provided.');
+        }
+
+        /* Set Permission For Friendship Requests */
+        if(isset($post['permission_friendship_request']) && !empty($post['permission_friendship_request']) ){
+
+            if(! is_numeric($post['permission_friendship_request']) ){
+                return Self::generateErrorMessage(false, 400, "Invalid Value For 'permission_friendship_request', Should Be An Integer.");
+            }
+
+            $setting = UsersPrivacySettings::where([ 'users_id' => $post['user_id'], 'var' => 'permission_friendship_request' ])->first();
+
+            if( empty($setting) ){
+                $setting = new UsersPrivacySettings;
+                $setting->users_id = $post['user_id'];
+                $setting->var = 'permission_friendship_request';
+                $setting->val = $post['permission_friendship_request'];
+                $setting->save();
+            }else{
+                $setting->val = $post['permission_friendship_request'];
+                $setting->save();
+            }
+        }
+
+        /* Set Permission For Follow */
+        if(isset($post['permission_follow']) && !empty($post['permission_follow']) ){
+
+            if(! is_numeric($post['permission_follow']) ){
+                return Self::generateErrorMessage(false, 400, "Invalid Value For 'permission_follow', Should Be An Integer.");
+            }
+
+            $setting = UsersPrivacySettings::where([ 'users_id' => $post['user_id'], 'var' => 'permission_follow' ])->first();
+
+            if( empty($setting) ){
+                $setting = new UsersPrivacySettings;
+                $setting->users_id = $post['user_id'];
+                $setting->var = 'permission_follow';
+                $setting->val = $post['permission_follow'];
+                $setting->save();
+            }else{
+                $setting->val = $post['permission_follow'];
+                $setting->save();
+            }
+        }
+
+        /* Set Permission For Messages */
+        if(isset($post['permission_message']) && !empty($post['permission_message']) ){
+
+            if(! is_numeric($post['permission_message']) ){
+                return Self::generateErrorMessage(false, 400, "Invalid Value For 'permission_message', Should Be An Integer.");
+            }
+
+            $setting = UsersPrivacySettings::where([ 'users_id' => $post['user_id'], 'var' => 'permission_message' ])->first();
+
+            if( empty($setting) ){
+                $setting = new UsersPrivacySettings;
+                $setting->users_id = $post['user_id'];
+                $setting->var = 'permission_message';
+                $setting->val = $post['permission_message'];
+                $setting->save();
+            }else{
+                $setting->val = $post['permission_message'];
+                $setting->save();
+            }
+        }   
+
+        /* Set Permission For Email And Phone View */
+        if(isset($post['permission_view_email_phone']) && !empty($post['permission_view_email_phone']) ){
+
+            if(! is_numeric($post['permission_view_email_phone']) ){
+                return Self::generateErrorMessage(false, 400, "Invalid Value For 'permission_view_email_phone', Should Be An Integer.");
+            }
+
+            $setting = UsersPrivacySettings::where([ 'users_id' => $post['user_id'], 'var' => 'permission_view_email_phone' ])->first();
+
+            if( empty($setting) ){
+                $setting = new UsersPrivacySettings;
+                $setting->users_id = $post['user_id'];
+                $setting->var = 'permission_view_email_phone';
+                $setting->val = $post['permission_view_email_phone'];
+                $setting->save();
+            }else{
+                $setting->val = $post['permission_view_email_phone'];
+                $setting->save();
+            }
+        }
+
+        /* Set Permission For Last Seen */
+        if(isset($post['permission_view_last_seen']) && !empty($post['permission_view_last_seen']) ){
+
+            if(! is_numeric($post['permission_view_last_seen']) ){
+                return Self::generateErrorMessage(false, 400, "Invalid Value For 'permission_view_last_seen', Should Be An Integer.");
+            }
+
+            $setting = UsersPrivacySettings::where([ 'users_id' => $post['user_id'], 'var' => 'permission_view_last_seen' ])->first();
+
+            if( empty($setting) ){
+                $setting = new UsersPrivacySettings;
+                $setting->users_id = $post['user_id'];
+                $setting->var = 'permission_view_last_seen';
+                $setting->val = $post['permission_view_last_seen'];
+                $setting->save();
+            }else{
+                $setting->val = $post['permission_view_last_seen'];
+                $setting->save();
+            }
+        }
+
+        /* Set Permission For View Address */
+        if(isset($post['permission_view_address']) && !empty($post['permission_view_address']) ){
+
+            if(! is_numeric($post['permission_view_address']) ){
+                return Self::generateErrorMessage(false, 400, "Invalid Value For 'permission_view_address', Should Be An Integer.");
+            }
+
+            $setting = UsersPrivacySettings::where([ 'users_id' => $post['user_id'], 'var' => 'permission_view_address' ])->first();
+
+            if( empty($setting) ){
+                $setting = new UsersPrivacySettings;
+                $setting->users_id = $post['user_id'];
+                $setting->var = 'permission_view_address';
+                $setting->val = $post['permission_view_address'];
+                $setting->save();
+            }else{
+                $setting->val = $post['permission_view_address'];
+                $setting->save();
+            }
+        }
+
+        /* Set Permission For View Post */
+        if(isset($post['permission_view_post']) && !empty($post['permission_view_post']) ){
+
+            if(! is_numeric($post['permission_view_post']) ){
+                return Self::generateErrorMessage(false, 400, "Invalid Value For 'permission_view_post', Should Be An Integer.");
+            }
+
+            $setting = UsersPrivacySettings::where([ 'users_id' => $post['user_id'], 'var' => 'permission_view_post' ])->first();
+
+            if( empty($setting) ){
+                $setting = new UsersPrivacySettings;
+                $setting->users_id = $post['user_id'];
+                $setting->var = 'permission_view_post';
+                $setting->val = $post['permission_view_post'];
+                $setting->save();
+            }else{
+                $setting->val = $post['permission_view_post'];
+                $setting->save();
+            }
+        }
+
+        /* Set Permission For Friend List */
+        if(isset($post['permission_view_friendlist']) && !empty($post['permission_view_friendlist']) ){
+
+            if(! is_numeric($post['permission_view_friendlist']) ){
+                return Self::generateErrorMessage(false, 400, "Invalid Value For 'permission_view_friendlist', Should Be An Integer.");
+            }
+
+            $setting = UsersPrivacySettings::where([ 'users_id' => $post['user_id'], 'var' => 'permission_view_friendlist' ])->first();
+
+            if( empty($setting) ){
+                $setting = new UsersPrivacySettings;
+                $setting->users_id = $post['user_id'];
+                $setting->var = 'permission_view_friendlist';
+                $setting->val = $post['permission_view_friendlist'];
+                $setting->save();
+            }else{
+                $setting->val = $post['permission_view_friendlist'];
+                $setting->save();
+            }
+        }
+
+        /* Set Permission For View Age */
+        if(isset($post['permission_view_age']) && !empty($post['permission_view_age']) ){
+
+            if(! is_numeric($post['permission_view_age']) ){
+                return Self::generateErrorMessage(false, 400, "Invalid Value For 'permission_view_age', Should Be An Integer.");
+            }
+
+            $setting = UsersPrivacySettings::where([ 'users_id' => $post['user_id'], 'var' => 'permission_view_age' ])->first();
+
+            if( empty($setting) ){
+                $setting = new UsersPrivacySettings;
+                $setting->users_id = $post['user_id'];
+                $setting->var = 'permission_view_age';
+                $setting->val = $post['permission_view_age'];
+                $setting->save();
+            }else{
+                $setting->val = $post['permission_view_age'];
+                $setting->save();
+            }
+        }
+        
+        return [
+            'status' => true,
+            'data'   => [
+                'message' => 'Permissions Updated Successfully'
+            ]
         ];
     }
 

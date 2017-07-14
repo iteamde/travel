@@ -280,4 +280,14 @@ class UserController extends Controller
 
         return $response;
     }
+
+
+    public function update_contact_privacy(Request $request){
+
+        $post = $request->input();
+
+        $response = User::update_contact_privacy($post);
+
+        return $response;
+    }
 }
