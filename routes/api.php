@@ -88,5 +88,24 @@ Route::group([
         Route::post('/unhideacontent' , 'UserController@unhide_content');
         /* Deactivate Account Api */
         Route::put('/deactivate/{user_id}/{session_token}/{password}/{password_confirmation}' , 'UserController@deactivate');
+        /* Update Contact Privacy Api */
+        Route::post('/contact_privacy', 'UserController@update_contact_privacy');
+        /* Update Contact Privacy Api */
+        Route::post('/notification_settings', 'UserController@update_notification_settings');
     }); 
+
+/*
+ * Medias Manager 
+ */
+Route::group([
+    'prefix'     => 'medias',
+    'as'         => 'media.',
+    'namespace'  => 'Media' ,
+], function () {
+
+		/* Create Media Api */
+        Route::post('/create', 'MediasController@create');
+	});
+
+
 });
