@@ -1638,6 +1638,7 @@ class ApiUser extends User
         ];
     }
 
+    /* Update Notification Settings Api */
     public static function update_notification_settings($post){
 
         /* If User Id Is Not Set Or Is Empty, Return Error */
@@ -1695,7 +1696,6 @@ class ApiUser extends User
                 $setting->val = $post['message_notification'];
                 $setting->save();
             }
-            
         }
 
         /* Change Settings For Friendship Notification */
@@ -1717,7 +1717,6 @@ class ApiUser extends User
                 $setting->val = $post['friendship_notification'];
                 $setting->save();
             }
-            
         }
 
         /* Change Settings For Comment Notifications */
@@ -1739,7 +1738,6 @@ class ApiUser extends User
                 $setting->val = $post['comment_notification'];
                 $setting->save();
             }
-            
         }
 
         /* Change Settings For Nearby Activity Notifiations */
@@ -1761,7 +1759,6 @@ class ApiUser extends User
                 $setting->val = $post['nearby_activity_notification'];
                 $setting->save();
             }
-            
         }
 
         /* Change Settings For Travoo Announcement Notifications */
@@ -1783,7 +1780,6 @@ class ApiUser extends User
                 $setting->val = $post['travooo_announcement_notification'];
                 $setting->save();
             }
-            
         }
 
         /* Change Settings For Plan Notification */
@@ -1805,7 +1801,6 @@ class ApiUser extends User
                 $setting->val = $post['plan_notification'];
                 $setting->save();
             }
-            
         }
 
         /* Change Settings For Friend Group Request Notification */
@@ -1827,7 +1822,6 @@ class ApiUser extends User
                 $setting->val = $post['friend_group_request_notification'];
                 $setting->save();
             }
-            
         }
 
         /* Change Settings For Follow Notification */
@@ -1849,7 +1843,6 @@ class ApiUser extends User
                 $setting->val = $post['follow_notification'];
                 $setting->save();
             }
-            
         }
 
         /* Change Settings For Email Notification */
@@ -1871,7 +1864,6 @@ class ApiUser extends User
                 $setting->val = $post['email_notification'];
                 $setting->save();
             }
-            
         }
 
         /* Return Success Status, And Success Message */

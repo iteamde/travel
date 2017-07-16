@@ -281,7 +281,9 @@ class UserController extends Controller
         return $response;
     }
 
-
+    /* 
+    *   Update Contact Privacy Api
+    */
     public function update_contact_privacy(Request $request){
 
         $post = $request->input();
@@ -291,6 +293,9 @@ class UserController extends Controller
         return $response;
     }
 
+    /* 
+    *   Update Notification Settings Api
+    */
     public function update_notification_settings(Request $request){
 
         $post = $request->input();
