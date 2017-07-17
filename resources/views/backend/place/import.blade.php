@@ -92,7 +92,7 @@
             {{ Form::label('address', 'Address', ['class' => 'col-lg-2 control-label']) }}
 
             <div class="col-lg-10">
-                {{ Form::text('address', null, ['class' => 'form-control', 'maxlength' => '255', 'required' => 'required', 'autofocus' => 'autofocus', 'placeholder' => 'Enter city or location to search']) }}
+                {{ Form::text('address', null, ['class' => 'form-control', 'maxlength' => '255', 'autofocus' => 'autofocus', 'placeholder' => 'Enter city or location to search']) }}
             </div><!--col-lg-10-->
         </div><!--form control-->
         <!-- Title: End -->
