@@ -175,9 +175,11 @@ class UserController extends Controller
     /*
     *   Update Nationality Of The Session's User After Validating "session_token" and "user_id".
     */
-    public function update_nationality($user_id, $session_token, $nationality){
+    public function update_nationality(Request $request){
         
-        $response = User::update_nationality($user_id, $session_token, $nationality);
+        $post = $request->input();
+
+        $response = User::update_nationality($post);
 
         return $response;
     }

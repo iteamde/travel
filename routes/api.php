@@ -67,7 +67,7 @@ Route::group([
         /* Update Age Api */
         Route::post('/age', 'UserController@update_age');
         /* Update Nationality Api */
-        Route::put('/nationality/{user_id}/{session_token}/{nationality}', 'UserController@update_nationality');
+        Route::post('/nationality', 'UserController@update_nationality');
         /* Get All User's Friends APi */
         Route::get('/friends/{user_id}/{session_token}' , 'UserController@friends');
         /* Delete User's Friend Api */
