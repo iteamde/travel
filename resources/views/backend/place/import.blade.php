@@ -73,7 +73,7 @@
             {{ Form::label('title', 'Country', ['class' => 'col-lg-2 control-label']) }}
 
             <div class="col-lg-10">
-                {{ Form::select('countries_id', $countries , null,['class' => 'select2Class form-control']) }}
+                {{ Form::select('countries_id', $countries , null,['class' => 'select2Class form-control', 'id' => 'country_id']) }}
             </div><!--col-lg-10-->
         </div><!--form control-->
         <!-- Countries: End -->
@@ -83,7 +83,7 @@
             {{ Form::label('title', 'Cities', ['class' => 'col-lg-2 control-label']) }}
 
             <div class="col-lg-10">
-                {{ Form::select('cities_id', $cities , null,['class' => 'select2Class form-control']) }}
+                {{ Form::select('cities_id', $cities , null,['class' => 'select2Class form-control', 'id' => 'city_id']) }}
             </div><!--col-lg-10-->
         </div><!--form control-->
         <!-- Cities: End -->
@@ -150,11 +150,12 @@
     $('.select2Class').select2({
         placeHolder: 'Select Region'
     });
-    $('.select2Class').change(function () {
-        $.getJSON("{{ url('BeAdminCP/ads/jesoncities')}}",
-                {countryID: $(this).val()},
+    $('#country_id').change(function () {
+        $.getJSON("{{ url('admin/location/country/jsoncities')}}",
+                {
+                    countryID: $(this).val()},
                 function (data) {
-                    var model = $('select#cityid2');
+                    var model = $('select#city_id');
                     model.empty();
                     model.append("<option value=''>Select City </option>");
                     $.each(data, function (index, element) {
