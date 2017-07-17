@@ -129,9 +129,10 @@ class UserController extends Controller
     /*
     *   Update Fullname of User After Validating "session_token" and "user_id".
     */
-    public function update_fullname($user_id, $session_token, $fullname){
+    public function update_fullname(Request $request){
+        $post = $request->input();
 
-        $response = User::update_fullname($user_id, $session_token, $fullname);
+        $response = User::update_fullname($post);
 
         return $response;
     }
