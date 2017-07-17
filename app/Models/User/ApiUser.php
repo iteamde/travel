@@ -734,7 +734,23 @@ class ApiUser extends User
         ];
     }
 
-    public static function update_age($user_id, $session_token, $age){
+    public static function update_age($post){
+
+        if( !isset($post['user_id']) || empty($post['user_id']) ){
+            return Self::generateErrorMessage(false, 400, 'User Id Not Provided.');
+        }
+
+        if( !isset($post['session_token']) || empty($post['session_token']) ){
+            return Self::generateErrorMessage(false, 400, 'Session Token Not Provided.');
+        }
+
+        if( !isset($post['age']) || empty($post['age']) ){
+            return Self::generateErrorMessage(false, 400, 'Age Not Provided.');
+        }
+
+        $user_id = $post['user_id'];
+        $session_token = $post['session_token'];
+        $age = $post['age'];
 
         /* If User Id Is Not An Integer, Return Error */
         if(! is_numeric($user_id) ){

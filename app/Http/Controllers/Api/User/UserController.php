@@ -154,7 +154,7 @@ class UserController extends Controller
     public function update_address(Request $request){
 
         $post = $request->input();
-        
+
         $response = User::update_address($post);
 
         return $response;
@@ -163,9 +163,11 @@ class UserController extends Controller
     /*
     *   Update Age Of The Session's User After Validating "session_token" and "user_id".
     */
-    public function update_age($user_id, $session_token, $age){
+    public function update_age(Request $request){
 
-        $response = User::update_age($user_id, $session_token, $age);
+        $post = $request->input();
+
+        $response = User::update_age($post);
         
         return $response;
     }
