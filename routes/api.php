@@ -61,7 +61,7 @@ Route::group([
         /* Change Fullname Api */
         Route::post('/fullname', 'UserController@update_fullname');
         /* Update Mobile Number Api */
-        Route::put('/mobile/{user_id}/{session_token}/{mobile}', 'UserController@update_mobile');
+        Route::post('/mobile', 'UserController@update_mobile');
         /* Update Address Api */
         Route::put('/address/{user_id}/{session_token}/{address}', 'UserController@update_address');
         /* Update Age Api */
