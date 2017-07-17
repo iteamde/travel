@@ -61,6 +61,7 @@
                             <input type="hidden" name="place[{{$i}}][phone]" value='{{@$r->international_phone_number}}' />
                             <input type="hidden" name="place[{{$i}}][rating]" value='{{@$r->rating}}' />
                             <input type="hidden" name="place[{{$i}}][working_days]" value='{{@$r->working_days}}' />
+                            <input type="hidden" name="place[{{$i}}][website]" value='{{@$r->website}}' />
                             <input type="checkbox" class='checkbox' name='save[{{$i}}]' />
                         </th>
                     </tr>
