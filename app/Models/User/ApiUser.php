@@ -801,7 +801,23 @@ class ApiUser extends User
         ];
     }
 
-    public static function update_nationality($user_id, $session_token, $nationality){
+    public static function update_nationality($post){
+
+        if(! isset($post['user_id']) || empty($post['user_id']) ){
+            return Self::generateErrorMessage(false, 400, 'User Id Not Provided.');
+        }
+
+        if(! isset($post['session_token']) || empty($post['session_token']) ){
+            return Self::generateErrorMessage(false, 400, 'Session Token Not Provided.');
+        }
+
+        if(! isset($post['nationality']) || empty($post['nationality']) ){
+            return Self::generateErrorMessage(false, 400, 'Nationality Not Provided.');
+        }
+
+        $user_id = $post['user_id'];
+        $session_token = $post['session_token'];
+        $nationality = $post['nationality'];
 
         /* If User Id Is Not An Integer, Return Error */
         if(! is_numeric($user_id) ){
@@ -1040,8 +1056,34 @@ class ApiUser extends User
         ];
     }
 
-    public static function change_password($user_id, $session_token, $old_password, $new_password, $new_password_confirmation){
+    public static function change_password($post){
         
+        if( !isset($post['user_id']) || empty($post['user_id']) ){
+            return Self::generateErrorMessage(false, 400, 'User Id Not Provided.');
+        }
+
+        if( !isset($post['session_token']) || empty($post['session_token']) ){
+            return Self::generateErrorMessage(false, 400, 'Session Token Not Provided.');
+        }
+
+        if( !isset($post['old_password']) || empty($post['old_password']) ){
+            return Self::generateErrorMessage(false, 400, 'Old Password Not Provided.');
+        }
+
+        if( !isset($post['new_password']) || empty($post['new_password']) ){
+            return Self::generateErrorMessage(false, 400, 'New Password Not Provided.');
+        }
+
+        if( !isset($post['new_password_confirmation']) || empty($post['new_password_confirmation']) ){
+            return Self::generateErrorMessage(false, 400, 'Password Confirmation Not Provided.');
+        }
+
+        $user_id        = $post['user_id'];
+        $session_token  = $post['session_token'];
+        $old_password   = $post['old_password'];
+        $new_password   = $post['new_password'];
+        $new_password_confirmation = $post['new_password_confirmation'];
+
         if(!is_numeric($user_id)){
             return Self::generateErrorMessage(false, 400, 'User Id Should Be An Integer.');
         }
@@ -1408,7 +1450,28 @@ class ApiUser extends User
     }
 
     /* Deactivate Account Api */
-    public static function deactivate_account($user_id, $session_token, $password, $password_confirmation){
+    public static function deactivate_account($post){
+
+        if( !isset($post['user_id']) || empty($post['user_id']) ){
+            return Self::generateErrorMessage(false, 400, 'User Id Not Provided.');
+        }
+
+        if( !isset($post['session_token']) || empty($post['session_token']) ){
+            return Self::generateErrorMessage(false, 400, 'Session Token Not Provided.');
+        }
+
+        if( !isset($post['password']) || empty($post['password']) ){
+            return Self::generateErrorMessage(false, 400, 'Password Not Provided.');
+        }
+
+        if( !isset($post['password_confirmation']) || empty($post['password_confirmation']) ){
+            return Self::generateErrorMessage(false, 400, 'Password Confirmation Not Provided.');
+        }
+
+        $user_id = $post['user_id'];
+        $session_token = $post['session_token'];
+        $password = $post['password'];
+        $password_confirmation = $post['password_confirmation'];
 
         /* If User Id Not An Integer, Return Error */
         if(! is_numeric($user_id)){
@@ -2049,7 +2112,7 @@ class ApiUser extends User
         $to = $this->email;
         
         $subject = 'Travoo Account Password Change';
-        $message = 'Your Travoo Account Password Has been Changed Successfully.';
+        $message = 'Your Travoo Account Password Has Been Changed Successfully.';
         $headers = 'From: travoo@abcd.com' . '\r\n' .
     'CC: travoo-test@abcd.com';
 

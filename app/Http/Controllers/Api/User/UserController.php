@@ -175,9 +175,11 @@ class UserController extends Controller
     /*
     *   Update Nationality Of The Session's User After Validating "session_token" and "user_id".
     */
-    public function update_nationality($user_id, $session_token, $nationality){
+    public function update_nationality(Request $request){
         
-        $response = User::update_nationality($user_id, $session_token, $nationality);
+        $post = $request->input();
+
+        $response = User::update_nationality($post);
 
         return $response;
     }
@@ -215,9 +217,11 @@ class UserController extends Controller
     /*
     *   Change Password Of The Session's User After Validating "session_token" And "user_id", And Validation *   Provided Passwords.
     */
-    public function change_password($user_id, $session_token, $old_password, $new_password, $new_password_confirmation){
+    public function change_password(Request $request){
 
-        $response = User::change_password($user_id, $session_token, $old_password, $new_password, $new_password_confirmation);
+        $post = $request->input();
+
+        $response = User::change_password($post);
         
         return $response;
     }
@@ -281,9 +285,11 @@ class UserController extends Controller
     /* 
     *   Deactivate Api
     */
-    public function deactivate($user_id, $session_token, $password, $password_confirmation){
-            
-        $response = User::deactivate_account($user_id, $session_token, $password, $password_confirmation);
+    public function deactivate(Request $request){
+        
+        $post = $request->input();
+
+        $response = User::deactivate_account($post);
 
         return $response;
     }

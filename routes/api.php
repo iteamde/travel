@@ -67,7 +67,7 @@ Route::group([
         /* Update Age Api */
         Route::post('/age', 'UserController@update_age');
         /* Update Nationality Api */
-        Route::put('/nationality/{user_id}/{session_token}/{nationality}', 'UserController@update_nationality');
+        Route::post('/nationality', 'UserController@update_nationality');
         /* Get All User's Friends APi */
         Route::get('/friends/{user_id}/{session_token}' , 'UserController@friends');
         /* Delete User's Friend Api */
@@ -75,7 +75,7 @@ Route::group([
         /* Change Profile Picture Api */
         Route::post('/profilepicture/{user_id}/{session_token}' , 'UserController@update_profile_image');
         /* Change Password Api */
-        Route::put('/password/{user_id}/{session_token}/{old_password}/{new_password}/{new_password_confirmation}' , 'UserController@change_password');
+        Route::post('/password' , 'UserController@change_password');
         /* Block List Api */
         Route::get('/blocklist/{user_id}/{session_token}' , 'UserController@block_list');
         /* UnBlock Friend List Api */
@@ -87,7 +87,7 @@ Route::group([
         /* Unhide A Content Api */
         Route::post('/unhideacontent' , 'UserController@unhide_content');
         /* Deactivate Account Api */
-        Route::put('/deactivate/{user_id}/{session_token}/{password}/{password_confirmation}' , 'UserController@deactivate');
+        Route::post('/deactivate' , 'UserController@deactivate');
         /* Update Contact Privacy Api */
         Route::post('/contact_privacy', 'UserController@update_contact_privacy');
         /* Update Contact Privacy Api */
