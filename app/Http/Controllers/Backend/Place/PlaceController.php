@@ -494,8 +494,8 @@ class PlaceController extends Controller {
                 $pt->places_id = $p->id;
                 $pt->title = $places[$k]['name'];
                 $pt->address = $places[$k]['address'];
-                if (isset($places[$k]['international_phone_number']))
-                    $pt->phone = $places[$k]['international_phone_number'];
+                if (isset($places[$k]['phone']))
+                    $pt->phone = $places[$k]['phone'];
                 if (isset($places[$k]['website']))
                     $pt->description = $places[$k]['website'];
                 $pt->working_days = $places[$k]['working_days'];
