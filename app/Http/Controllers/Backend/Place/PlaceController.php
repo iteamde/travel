@@ -484,6 +484,7 @@ class PlaceController extends Controller {
                 $p->cities_id = $data['cities_id'];
                 $p->lat = $places[$k]['lat'];
                 $p->lng = $places[$k]['lng'];
+                $p->rating = $places[$k]['rating'];
                 $p->active = 1;
                 $p->save();
                 //dd($p->id);
@@ -492,6 +493,7 @@ class PlaceController extends Controller {
                 $pt->languages_id = 1;
                 $pt->places_id = $p->id;
                 $pt->title = $places[$k]['name'];
+                $pt->address = $places[$k]['address'];
                 if (isset($places[$k]['international_phone_number']))
                     $pt->phone = $places[$k]['international_phone_number'];
                 if (isset($places[$k]['website']))
