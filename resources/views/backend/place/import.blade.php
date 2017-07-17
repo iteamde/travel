@@ -106,10 +106,10 @@
             </div><!--col-lg-10-->
         </div><!--form control-->
         <div class="form-group">
-            {{ Form::label('latlng', 'Latitude, Longitude', ['class' => 'col-lg-2 control-label', 'id' => 'latlng']) }}
+            {{ Form::label('latlng', 'Latitude, Longitude', ['class' => 'col-lg-2 control-label']) }}
 
             <div class="col-lg-10">
-                {{ Form::text('latlng', null, ['class' => 'form-control', 'maxlength' => '255', 'autofocus' => 'autofocus', 'placeholder' => 'Enter Latitude and Lonitude']) }}
+                {{ Form::text('latlng', null, ['class' => 'form-control', 'id' => 'latlng', 'maxlength' => '255', 'autofocus' => 'autofocus', 'placeholder' => 'Enter Latitude and Lonitude']) }}
             </div><!--col-lg-10-->
         </div><!--form control-->
 
@@ -177,8 +177,7 @@
     function initAutocomplete() {
         var map = new google.maps.Map(document.getElementById('gmap'), {
             center: {lat: -33.8688, lng: 151.2195},
-            zoom: 13,
-            mapTypeId: 'roadmap'
+            zoom: 13
         });
 
         // Create the search box and link it to the UI element.
@@ -240,10 +239,9 @@
             map.fitBounds(bounds);
         });
         map.addListener('click', function (event) {
-            $('#latlng').val('1');
-            document.getElementById('latlng').value = '1';
-        //alert("Latitude: " + event.latLng.lat() + " " + ", longitude: " + event.latLng.lng());
-    });
+            var loc = event.latLng.lat() + "," + event.latLng.lng();
+            document.getElementById('latlng').value = loc;
+        });
     }
 
 
