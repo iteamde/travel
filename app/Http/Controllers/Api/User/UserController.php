@@ -139,9 +139,11 @@ class UserController extends Controller
     /*
     *   Update Mobile Number Of User After Validating "session_token" and "user_id".
     */
-    public function update_mobile($user_id, $session_token, $mobile){
+    public function update_mobile(Request $request){
 
-        $response = User::update_mobile($user_id, $session_token, $mobile);
+        $post = $request->input();
+
+        $response = User::update_mobile($post);
 
         return $response;
     }
