@@ -1450,7 +1450,7 @@ class ApiUser extends User
     }
 
     /* Deactivate Account Api */
-    public static function deactivate_account($user_id, $session_token, $password, $password_confirmation){
+    public static function deactivate_account($post){
 
         if( !isset($post['user_id']) || empty($post['user_id']) ){
             return Self::generateErrorMessage(false, 400, 'User Id Not Provided.');
