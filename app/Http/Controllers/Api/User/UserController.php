@@ -285,9 +285,11 @@ class UserController extends Controller
     /* 
     *   Deactivate Api
     */
-    public function deactivate($user_id, $session_token, $password, $password_confirmation){
-            
-        $response = User::deactivate_account($user_id, $session_token, $password, $password_confirmation);
+    public function deactivate(Request $request){
+        
+        $post = $request->input();
+
+        $response = User::deactivate_account($post);
 
         return $response;
     }

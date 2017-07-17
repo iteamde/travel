@@ -1452,6 +1452,27 @@ class ApiUser extends User
     /* Deactivate Account Api */
     public static function deactivate_account($user_id, $session_token, $password, $password_confirmation){
 
+        if( !isset($post['user_id']) || empty($post['user_id']) ){
+            return Self::generateErrorMessage(false, 400, 'User Id Not Provided.');
+        }
+
+        if( !isset($post['session_token']) || empty($post['session_token']) ){
+            return Self::generateErrorMessage(false, 400, 'Session Token Not Provided.');
+        }
+
+        if( !isset($post['password']) || empty($post['password']) ){
+            return Self::generateErrorMessage(false, 400, 'Password Not Provided.');
+        }
+
+        if( !isset($post['password_confirmation']) || empty($post['password_confirmation']) ){
+            return Self::generateErrorMessage(false, 400, 'Password Confirmation Not Provided.');
+        }
+
+        $user_id = $post['user_id'];
+        $session_token = $post['session_token'];
+        $password = $post['password'];
+        $password_confirmation = $post['password_confirmation'];
+
         /* If User Id Not An Integer, Return Error */
         if(! is_numeric($user_id)){
             return Self::generateErrorMessage(false, 400, 'User Id Should Be An Integer.');
@@ -2091,7 +2112,7 @@ class ApiUser extends User
         $to = $this->email;
         
         $subject = 'Travoo Account Password Change';
-        $message = 'Your Travoo Account Password Has been Changed Successfully.';
+        $message = 'Your Travoo Account Password Has Been Changed Successfully.';
         $headers = 'From: travoo@abcd.com' . '\r\n' .
     'CC: travoo-test@abcd.com';
 

@@ -87,7 +87,7 @@ Route::group([
         /* Unhide A Content Api */
         Route::post('/unhideacontent' , 'UserController@unhide_content');
         /* Deactivate Account Api */
-        Route::put('/deactivate/{user_id}/{session_token}/{password}/{password_confirmation}' , 'UserController@deactivate');
+        Route::post('/deactivate' , 'UserController@deactivate');
         /* Update Contact Privacy Api */
         Route::post('/contact_privacy', 'UserController@update_contact_privacy');
         /* Update Contact Privacy Api */
