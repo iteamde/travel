@@ -456,7 +456,7 @@ class PlaceController extends Controller {
         $lat = $latlng[0];
         $lng = $latlng[1];
 
-        $json = file_get_contents('http://db.travooo.com/places/go/' . $city . '/' . $lat . '/' . $lng . '/' . $query);
+        $json = file_get_contents('http://db.travooo.com/places/go/' . ($city ? $city : 0) . '/' . $lat . '/' . $lng . '/' . $query);
         //dd('http://db.travooo.com/places/go/'.$city.'/0/0/'.$query);
         $result = json_decode($json);
         //dd($json);
