@@ -452,10 +452,11 @@ class PlaceController extends Controller {
 
         $city = $request->input('address');
         $query = $request->input('query');
-        $lat = $request->input('lat');
-        $lng = $request->input('lng');
+        $latlng = @explode(",", $request->input('latlng'));
+        $lat = $latlng[0];
+        $lng = $latlng[1];
 
-        $json = file_get_contents('http://db.travooo.com/places/go/' . $city . '/' . $lat . '/' . $lng . '/' . $query);
+        $json = file_get_contents('http://db.travooo.com/places/go/' . ($city ? $city : 0) . '/' . $lat . '/' . $lng . '/' . $query);
         //dd('http://db.travooo.com/places/go/'.$city.'/0/0/'.$query);
         $result = json_decode($json);
         //dd($json);
