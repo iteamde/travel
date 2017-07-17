@@ -59,7 +59,7 @@ Route::group([
         /* Reset Password Api */
         Route::get('/reset/{token}/{new_password}/{confirm_password}' , 'UserController@reset');
         /* Change Fullname Api */
-        Route::put('/fullname/{user_id}/{session_token}/{fullname}', 'UserController@update_fullname');
+        Route::post('/fullname', 'UserController@update_fullname');
         /* Update Mobile Number Api */
         Route::put('/mobile/{user_id}/{session_token}/{mobile}', 'UserController@update_mobile');
         /* Update Address Api */
@@ -105,6 +105,8 @@ Route::group([
 
 		/* Create Media Api */
         Route::post('/create', 'MediasController@create');
+        /* Add Comment On Media Api */
+        Route::post('/comment', 'MediasController@comment');
 	});
 
 
