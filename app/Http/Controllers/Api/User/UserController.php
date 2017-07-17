@@ -151,9 +151,11 @@ class UserController extends Controller
     /*
     *   Update Address Of The Session's User After Validating "session_token" and "user_id".
     */
-    public function update_address($user_id, $session_token, $address){
+    public function update_address(Request $request){
 
-        $response = User::update_address($user_id, $session_token, $address);
+        $post = $request->input();
+        
+        $response = User::update_address($post);
 
         return $response;
     }
