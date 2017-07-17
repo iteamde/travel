@@ -117,8 +117,8 @@ class PlaceController extends Controller {
         /* Send All Relation and Common Fields Through $extra Array */
         $extra = [
             'active' => $active,
-            'countries_id' =>  $request->input('countries_id'),
-            'cities_id' =>  $request->input('cities_id'),
+            'countries_id' => $request->input('countries_id'),
+            'cities_id' => $request->input('cities_id'),
             'place_types_ids' => 1,
             'lat' => $location[0],
             'lng' => $location[1],
@@ -452,7 +452,10 @@ class PlaceController extends Controller {
 
         $city = $request->input('address');
         $query = $request->input('query');
-        $json = file_get_contents('http://db.travooo.com/places/go/' . $city . '/0/0/' . $query);
+        $lat = $request->input('lat');
+        $lng = $request->input('lng');
+
+        $json = file_get_contents('http://db.travooo.com/places/go/' . $city . '/' . $lat . '/' . $lng . '/' . $query);
         //dd('http://db.travooo.com/places/go/'.$city.'/0/0/'.$query);
         $result = json_decode($json);
         //dd($json);
@@ -465,11 +468,11 @@ class PlaceController extends Controller {
         $data['countries_id'] = $request->input('countries_id');
         $data['cities_id'] = $request->input('cities_id');
         $to_save = $request->input('save');
-            $places = $request->input('place');
+        $places = $request->input('place');
 
         if (is_array($to_save)) {
 
-            
+
 
             foreach ($to_save AS $k => $v) {
                 $p = new Place();
