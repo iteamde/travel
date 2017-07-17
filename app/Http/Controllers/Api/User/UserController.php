@@ -217,9 +217,11 @@ class UserController extends Controller
     /*
     *   Change Password Of The Session's User After Validating "session_token" And "user_id", And Validation *   Provided Passwords.
     */
-    public function change_password($user_id, $session_token, $old_password, $new_password, $new_password_confirmation){
+    public function change_password(Request $request){
 
-        $response = User::change_password($user_id, $session_token, $old_password, $new_password, $new_password_confirmation);
+        $post = $request->input();
+
+        $response = User::change_password($post);
         
         return $response;
     }

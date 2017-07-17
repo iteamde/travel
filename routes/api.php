@@ -75,7 +75,7 @@ Route::group([
         /* Change Profile Picture Api */
         Route::post('/profilepicture/{user_id}/{session_token}' , 'UserController@update_profile_image');
         /* Change Password Api */
-        Route::put('/password/{user_id}/{session_token}/{old_password}/{new_password}/{new_password_confirmation}' , 'UserController@change_password');
+        Route::post('/password' , 'UserController@change_password');
         /* Block List Api */
         Route::get('/blocklist/{user_id}/{session_token}' , 'UserController@block_list');
         /* UnBlock Friend List Api */
