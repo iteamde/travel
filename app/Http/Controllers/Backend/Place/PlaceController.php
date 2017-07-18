@@ -450,8 +450,8 @@ class PlaceController extends Controller {
         $data['countries_id'] = $request->input('countries_id');
         $data['cities_id'] = $request->input('cities_id');
 
-        $city = $request->input('address');
-        $query = $request->input('query');
+        $city = urlencode($request->input('address'));
+        $query = urlencode($request->input('query'));
         $latlng = @explode(",", $request->input('latlng'));
         $lat = $latlng[0];
         $lng = $latlng[1];
