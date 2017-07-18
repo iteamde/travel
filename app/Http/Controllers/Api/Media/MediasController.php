@@ -59,4 +59,11 @@ class MediasController extends Controller
 
     	return $response;
     }
+
+    public function hide(Request $request){
+
+    	$response = Media::hide($request);
+
+    	return $response;
+    }
 }

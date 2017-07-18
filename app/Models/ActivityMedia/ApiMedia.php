@@ -10,6 +10,7 @@ use App\Models\User\UsersMedias;
 use App\Models\ActivityMedia\MediasComments;
 use App\Models\ActivityMedia\MediasLikes;
 use App\Models\ActivityMedia\MediasShares;
+use App\Models\ActivityMedia\MediasHides;
 
 class ApiMedia extends Media
 {
@@ -588,6 +589,90 @@ class ApiMedia extends Media
             'data'   => [
                 'message' => 'Media Deleted Successfully.'
             ] 
+        ];
+    }
+
+    /* Hide Media Function */
+    public static function hide($request){
+
+        /* Get Input Arguments For Post Request */
+        $post = $request->input();
+
+        /* If User Id Is Not Set Or Is Empty, Return Error */
+        if( !isset($post['user_id']) || empty($post['user_id']) ){
+            return Self::generateErrorMessage(false, 400, 'User id not provided.');
+        }
+
+        /* If User Id Is Not Numeric, Or Is Empty, Return Error */
+        if( !is_numeric($post['user_id']) ){
+            return Self::generateErrorMessage(false, 400, 'User id should be an integer.');
+        }
+
+        /* Find User For The Provided User Id */
+        $user = User::where(['id' => $post['user_id'] ])->first();
+
+        /* If User Not Found, Return Error */
+        if(empty($user)){
+            return Self::generateErrorMessage(false, 400, 'Wrong user id provided.');
+        }
+
+        /* If Session Token Not Provided, Or Is Empty, Return Error */
+        if( !isset($post['session_token']) || empty($post['session_token']) ){
+            return Self::generateErrorMessage(false, 400, 'Session token not provided.');
+        }
+
+        /* Find Session For The Provided Session Id */
+        $session = Session::where(['id' => $post['session_token'] ])->first();
+
+        /* If Session Not Found, Return Error */
+        if(empty($session)){
+            return Self::generateErrorMessage(false, 400, 'Wrong session token provided.');
+        }
+
+        /* If Session's User Id Doesn't Matches Provided User Id, Return Error */
+        if( $session->user_id != $post['user_id'] ){
+            return Self::generateErrorMessage(false, 400, 'Wrong user id provided.');
+        }
+
+        /* If Medias Id Is Not Set, Or Is Empty, Return Error */
+        if(! isset($post['medias_id']) || empty($post['medias_id']) ){
+            return Self::generateErrorMessage(false, 400, 'Medias id not provided.');
+        }
+
+        /* If Medias Id Is Not An Integer, Return Error */
+        if(! is_numeric($post['medias_id'])){
+            return Self::generateErrorMessage(false, 400, 'Medias id should be an integer.');
+        }
+
+        /* Find Media For The Provided Media Id */
+        $media = Self::where(['id' => $post['medias_id']])->first();
+
+        /* If Media Not Found, Return Error */
+        if(empty($media)){
+            return Self::generateErrorMessage(false, 400, 'Wrong media id provided.');
+        }
+
+        /* Find Previous Entry For Provided User Id And Media Id. */
+        $media_hide = MediasHides::where(['users_id' => $post['user_id'], 'medias_id' => $post['medias_id'] ])->first();
+
+        /* If Previous Entry Not Found, Create New Entry */
+        if(empty($media_hide)){
+            $media_hide = new MediasHides;
+
+            /* Load Data In MediasHides Model */
+            $media_hide->users_id   = $post['user_id'];
+            $media_hide->medias_id  = $post['medias_id'];
+
+            /* Save MediasHides */
+            $media_hide->save();
+        }
+
+        /* Return Status True, And Success Message */
+        return [
+            'status' => true,
+            'data'   => [
+                'message' => 'Media hidden successfully'
+            ]
         ];
     }
 

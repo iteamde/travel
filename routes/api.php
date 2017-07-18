@@ -115,6 +115,8 @@ Route::group([
         Route::post('/share', 'MediasController@share');
         /* Deleting Media Api */
         Route::post('/delete', 'MediasController@delete');
+        /* Hiding Media Api */
+        Route::post('/hide', 'MediasController@hide');
 	});
 
 
