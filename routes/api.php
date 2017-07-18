@@ -113,6 +113,8 @@ Route::group([
         Route::post('/unlike', 'MediasController@unlike');
         /* Sharing Media Api */
         Route::post('/share', 'MediasController@share');
+        /* Deleting Media Api */
+        Route::post('/delete', 'MediasController@delete');
 	});
 
 

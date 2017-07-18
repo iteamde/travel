@@ -510,6 +510,87 @@ class ApiMedia extends Media
         ];
     }
 
+    /* Media Deleted Successfully */
+    public static function delete_media($request){
+
+        /* Get Post Arguments From Request */
+        $post = $request->input();
+
+        /* If User Id Not Set Or Is Empty, Return Error */
+        if( !isset($post['user_id']) || empty($post['user_id']) ){
+            return Self::generateErrorMessage(false, 400, 'User id not provided.');
+        }
+
+        /* If User Id Is Not An Integer, Return Error */
+        if( ! is_numeric($post['user_id']) ){
+            return Self::generateErrorMessage(false, 400, 'User id should be am integer.');
+        }
+
+        /* Find User For The Provided User Id */
+        $user = User::where(['id' => $post['user_id'] ])->first();
+
+        /* If User Not Found, Return Error */
+        if( empty($user) ){
+            return Self::generateErrorMessage(false, 400, 'Wrong user id provided.');
+        }
+
+        /* If Session Token Is Not Set, Or Is Empty, Return Error */
+        if(! isset($post['session_token']) || empty($post['session_token']) ){
+            return Self::generateErrorMessage(false, 400, 'Session token not provided.');
+        }
+
+        /* Find Session For The Provided Session Token */
+        $session = Session::where(['id' => $post['session_token'] ])->first();
+
+        /* If Session Not Found, Return Error */
+        if( empty($session) ){
+            return Self::generateErrorMessage(false, 400, 'Wrong session token provided.');
+        }
+
+        /* If Session's User Id Doesn't Matches Provided User Id, Return Error */
+        if( $session->user_id != $post['user_id'] ){
+            return Self::generateErrorMessage(false, 400, 'Wrong user id provided.');
+        }
+
+        /* If Medias Id Is Not Set Or Is Empty, Return Error */
+        if( !isset($post['medias_id']) || empty($post['medias_id']) ){
+            return Self::generateErrorMessage(false, 400, 'Medias id not provided.');
+        }
+
+        /* if Medias Id is Not An Integer, Return Error */
+        if( !is_numeric($post['medias_id']) ){  
+            return Self::generateErrorMessage(false, 400, 'Medias id should be an integer.');
+        }
+
+        /* Find Media For The Provided Medias Id */
+        $media = Self::where([ 'id' => $post['medias_id'] ])->first();
+
+        /* Id Media Not Found, Return Error */
+        if(empty($media)){
+            return Self::generateErrorMessage(false, 400, 'Wrong medias id provided.');
+        }
+
+        /* Find Relation For User Media */
+        $user_media = UsersMedias::where([ 'users_id' => $post['user_id'], 'medias_id' => $post['medias_id'] ])->first();
+        
+        /* If Relation Not Found, Return Access Permission Error */
+        if(empty($user_media)){
+            return Self::generateErrorMessage(false, 400, 'You don\'t have permission to perform this action.');
+        }
+
+        /* Delete Relation And Media */
+        $user_media->delete();
+        $media->delete();
+
+        /* Return Success Status, And Success Message */
+        return [
+            'status' => true,
+            'data'   => [
+                'message' => 'Media Deleted Successfully.'
+            ] 
+        ];
+    }
+
     /* Generate Error Message With provided "status", "code" and "message" */
     public static function generateErrorMessage($status, $code, $message){
 
