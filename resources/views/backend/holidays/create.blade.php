@@ -1,5 +1,6 @@
-<?php  
+<?php
 use App\Models\Access\language\Languages;
+
 $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE)->get();
 ?>
 @extends ('backend.layouts.app')
@@ -61,7 +62,7 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
             'role'   => 'form',
             'method' => 'post',
             'files'  => true
-        ]) 
+        ])
     }}
         <div class="box box-success">
             <div class="box-header with-border">
@@ -150,13 +151,13 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
     <!-- Error Alert Script : Start -->
     <script>
         $(document).on('click' , '.submit_button' , function(){
-        
+
             var msg = '<div id="language-alert" class="alert alert-danger alert-dismissable fade in"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Error!</strong> Please Fill Information In All Languages Tabs.</div>';
 
             $('.required').each(function(index,data){
                 var flag = false;
                 if($(this).val() == ''){
-                    
+
                     flag = true;
                 }
 
@@ -164,7 +165,7 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
                     $('.required_msg').html(msg);
                     $("#language-alert").fadeTo(5000, 500).slideUp(500, function(){
                         $("#language-alert").slideUp(500);
-                    });   
+                    });
                 }
             });
         });

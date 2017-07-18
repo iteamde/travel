@@ -53,6 +53,7 @@
                         <th>{{$r->formatted_address}}</th>
                         <th>{{$r->geometry->location->lat}} {{$r->geometry->location->lng}}</th>
                         <th>
+                            @if(!in_array($r->place_id, $provider_ids))
                             <input type="hidden" name="place[{{$i}}][provider_id]" value='{{$r->place_id}}' />
                             <input type="hidden" name="place[{{$i}}][name]" value='{{$r->name}}' />
                             <input type="hidden" name="place[{{$i}}][address]" value='{{$r->formatted_address}}' />
@@ -63,6 +64,7 @@
                             <input type="hidden" name="place[{{$i}}][working_days]" value='{{@$r->working_days}}' />
                             <input type="hidden" name="place[{{$i}}][website]" value='{{@$r->website}}' />
                             <input type="checkbox" class='checkbox' name='save[{{$i}}]' />
+                            @endif
                         </th>
                     </tr>
                     <?php $i++; ?>
