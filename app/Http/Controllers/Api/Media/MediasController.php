@@ -84,11 +84,4 @@ class MediasController extends Controller
     	return $response;
     }
 
-    /* Tag Friends Api */
-    public function tag($user_id, $session_token, $query){
-
-    	$response = Media::tag($user_id, $session_token, $query);
-
-    	return $response;
-    }
 }
