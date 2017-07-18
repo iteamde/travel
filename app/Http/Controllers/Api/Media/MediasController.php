@@ -43,4 +43,11 @@ class MediasController extends Controller
 
     	return $response;
     }
+
+    public function share(Request $request){
+
+    	$response = Media::share($request);
+
+    	return $response;
+    }
 }

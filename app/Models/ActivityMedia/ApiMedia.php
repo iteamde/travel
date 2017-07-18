@@ -9,6 +9,7 @@ use App\Models\System\Session;
 use App\Models\User\UsersMedias;
 use App\Models\ActivityMedia\MediasComments;
 use App\Models\ActivityMedia\MediasLikes;
+use App\Models\ActivityMedia\MediasShares;
 
 class ApiMedia extends Media
 {
@@ -427,6 +428,84 @@ class ApiMedia extends Media
             'status' => true,
             'data'   => [
                 'message' => 'Media Like Deleted Successfully.'
+            ]
+        ];
+    }
+
+    /* Share Media Function */
+    public static function share($request){
+
+        /* Get Post Array For Arguments Sent In Request */
+        $post = $request->input();
+
+        /* If User Id Not Set, Or Is Empty, Return Error */
+        if( ! isset($post['user_id']) || empty($post['user_id'])){
+            return Self::generateErrorMessage(false, 400, 'User id not provided.');
+        }
+
+        /* If User If Is Not An Integer, Return Error */
+        if(! is_numeric($post['user_id'])){
+            return Self::generateErrorMessage(false, 400, 'User id should be an integer.');
+        }
+
+        /* Find User For The Provided User Id */
+        $user = User::where(['id' => $post['user_id'] ])->first();
+
+        /* If User Not Found For The Provided User Id, Return Error */
+        if(empty($user)){
+            return Self::generateErrorMessage(false, 400, 'Wrong user id provided.');
+        }
+
+        /* If Session Token Is Not Set, Or Is Empty, Return Error */
+        if( !isset($post['session_token']) || empty($post['session_token']) ){
+            return Self::generateErrorMessage(false, 400, 'Session token not provided.');
+        }
+
+        /* Find Session For The Provided Session Token */
+        $session = Session::where([ 'id' => $post['session_token'] ])->first();
+
+        /* If Session Not Found, Return Error */
+        if(empty($session)){
+            return Self::generateErrorMessage(false, 400, 'Wrong session token provided.');
+        }
+
+        /* If Session's User Id Doesn't Matches Provided User Id, Return Error */
+        if( $session->user_id != $post['user_id'] ){
+            return Self::generateErrorMessage(false, 400, 'Wrong user id provided.');
+        }
+
+        /* If Medias Id Not Set Or Is Empty, return Error */
+        if( !isset($post['medias_id']) || empty($post['medias_id']) ){
+            return Self::generateErrorMessage(false, 400, 'Medias id not provided.');
+        }
+
+        /* If Media Id Is Not An Integer, Return Error */
+        if(! is_numeric($post['medias_id']) ){
+            return Self::generateErrorMessage(false, 400, 'Medias id should be an integer.');
+        }
+
+        /* Find Media For The Provided Media Id */
+        $media = Self::where(['id' => $post['medias_id'] ])->first();
+            
+        /* If Media Not Found, Return Error */
+        if( empty($media) ){
+            return Self::generateErrorMessage(false, 400, 'Wrong media id provided.');
+        }
+
+        /* Create New MediaShare Object */
+        $share = new MediasShares;
+
+        /* Load Information In Media Share Object*/
+        $share->users_id  = $post['user_id'];
+        $share->medias_id = $post['medias_id'];
+        $share->scope     = 0;
+        $share->save();
+
+        /* Return Status True, With Success Message */
+        return [
+            'status' => false,
+            'data' => [
+                'message' => 'Media shared successfully.'
             ]
         ];
     }
