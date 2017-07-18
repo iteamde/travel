@@ -75,4 +75,11 @@ class MediasController extends Controller
 
     	return $response;
     }
+
+    public function activity(Request $request){
+
+    	$response = Media::activity($request);
+
+    	return $response;
+    }
 }

@@ -772,6 +772,109 @@ class ApiMedia extends Media
         ]; 
     }
 
+    /* Display Media Information Function */
+    public static function activity($request){
+
+        /* Get Arguments From Post Request */
+        $post = $request->input();
+
+        /* If User Id Not Provided, Or Is Empty, Return Error */
+        if(!isset($post['user_id']) || empty($post['user_id'])){
+            return Self::generateErrorMessage(false, 400, 'User id not provided.');
+        }
+
+        /* if User Id Is Not An Integer, Return Error */
+        if(! is_numeric($post['user_id'])){
+            return Self::generateErrorMessage(false, 400, 'User id should be an integer.');
+        }
+
+        /* Find User For The Provided User Id */
+        $user = User::where([ 'id' => $post['user_id'] ])->first();
+
+        /* If User Not Found, Return Error */
+        if(empty($user)){
+            return Self::generateErrorMessage(false, 400, 'Wrong user id provided.');
+        }
+
+        /* If Session Token Not Provided, or Is Empty, Return Error */
+        if(! isset($post['session_token']) || empty($post['session_token'])){
+            return Self::generateErrorMessage(false, 400, 'Session token not provided.');
+        }
+
+        /* Find Session For The Provided Session Token */
+        $session = Session::where(['id' => $post['session_token'] ])->first();
+
+        /* If Session Not Found, Return Error */
+        if(empty($session)){
+            return Self::generateErrorMessage(false, 400, 'Wrong session token provided.');
+        }
+
+        /* If Session's User Id Doesn't Matches Provided User Id, Return Error */
+        if($session->user_id != $post['user_id']){
+            return Self::generateErrorMessage(false, 400, 'Wrong user id provided.');
+        }
+
+        /* If Medias id Not provided, Or Is Empty, Return Error */
+        if(! isset($post['medias_id']) || empty($post['medias_id']) ){
+            return Self::generateErrorMessage(false, 400, 'Medias id not provided.');
+        }
+
+        /* If Medias Id Is Not An Integer, Return Error */
+        if(!is_numeric($post['medias_id'])){
+            return Self::generateErrorMessage(false, 400, 'Medias id should be an integer.');
+        }
+
+        /* Find Media For The Provided Media Id */
+        $media = Self::where(['id' => $post['medias_id'] ])->first();
+
+        /* If Media Not Found, Return Error */
+        if(empty($media)){
+            return Self::generateErrorMessage(false, 400, 'Wrong medias id provided.');
+        }
+
+        /* Container For Array Format Response Of Media's Likes */
+        $medias_likes_arr = [];
+
+        /* If Media Has Likes, Get Array Format Of Likes Information */
+        if(!empty($media->likes)){
+            
+            foreach ($media->likes as $key => $value) {
+                # code...
+                array_push($medias_likes_arr,[
+                    'user_id' => $value->users_id,
+                    'media_id' => $value->medias_id,
+                    'created_at' => $value->created_at
+                ]);
+            }
+        }
+
+        /* Container For Media Comments Information */
+        $medias_comments_arr = [];
+
+        /* If Media has Comments, Get Array Format Of Comments Information */
+        if(!empty($media->comments)){
+            foreach ($media->comments as $key => $value) {
+                # code...
+                array_push($medias_comments_arr,[
+                    'user_id' => $value->users_id,
+                    'media_id' => $value->medias_id,
+                    'comment'  => $value->comment,
+                    'reply_to' => $value->reply_to,
+                    'created_at' => $value->created_at
+                ]);
+            }
+        }
+
+        /* Return Status True, Along With Success Message */
+        return [
+            'status' => true,
+            'data'   => [
+                'medias_likes' => $medias_likes_arr,
+                'medias_comments' => $medias_comments_arr
+            ]
+        ];
+    }
+
     /* Generate Error Message With provided "status", "code" and "message" */
     public static function generateErrorMessage($status, $code, $message){
 
