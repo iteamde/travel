@@ -121,5 +121,7 @@ Route::group([
         Route::post('/report', 'MediasController@report');
         /* Display Media Activities Api */
         Route::post('/activity', 'MediasController@activity');
+        /* Tagging Friends Api */
+        Route::get('/tag/{user_id}/{session_token}/{query}', 'MediasController@tag');
     });
 });

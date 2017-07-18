@@ -5,6 +5,7 @@ namespace App\Models\ActivityMedia;
 use App\Models\ActivityMedia\Media;
 use App\Models\ActivityMedia\MediaTranslations;
 use App\Models\User\ApiUser as User;
+use App\Models\User\UsersFriends;
 use App\Models\System\Session;
 use App\Models\User\UsersMedias;
 use App\Models\ActivityMedia\MediasComments;
@@ -871,6 +872,71 @@ class ApiMedia extends Media
             'data'   => [
                 'medias_likes' => $medias_likes_arr,
                 'medias_comments' => $medias_comments_arr
+            ]
+        ];
+    }
+
+    /* Tag Friends Function */
+    public static function tag($user_id, $session_token, $query){
+
+        /* If User Id Is Not An Integer, Return Error */
+        if(!is_numeric($user_id)){
+            return Self::generateErrorMessage(false, 400, 'User id should be an integer.');
+        }
+
+        /* Find User For Provided User Id */
+        $user = User::where(['id' => $user_id])->first();
+
+        /* If User Not Found, Return Error */
+        if(empty($user)){
+            return Self::generateErrorMessage(false, 400, 'Wrong user id provided.');
+        }   
+
+        /* Find Session For The Provided Session Token */
+        $session = Session::where(['id' => $session_token])->first();
+
+        /* If Session Not Found, Return Error */
+        if(empty($session)){
+            return Self::generateErrorMessage(false, 400, 'Wrong session token provided.');
+        }
+
+        /* If Session's User Id Doesn't matches Provided User Id, Return Error */
+        if($session->user_id != $user_id){
+            return Self::generateErrorMessage(false, 400, 'Wrong user id provided.');
+        }
+
+        /* If Query's Length Is Not Between 1-100, Return Error */
+        if( strlen($query) < 1 || strlen($query) > 100 ){
+            return Self::generateErrorMessage(false, 400, 'Query length should be between (1-100) characters.');
+        }   
+
+        /* If Query Is Not An Alphanumeric String, Return Error */
+        if( ! preg_match( '/^[a-zA-Z0-9.,_ ]+$/' , $query ) ){
+            return Self::generateErrorMessage(false, 400, 'Query can only contain alphanumeric characters.');
+        }
+
+        /* Container For Friends Information In Array Format */
+        $friends_arr = [];  
+            
+        /* If Friends Exist For Provided User, Return Array Response Of Friends Information */
+        if(!empty($user->user_friends)){
+            foreach ($user->user_friends as $key => $value) {
+                # code...
+                if(!empty($value->friend)){
+                    
+                    $friend = $value->friend;
+                    if (strpos( strtolower($friend->name), strtolower($query) ) !== false) {
+                        array_push($friends_arr,User::getArrayFormat($friend));
+                    }
+                }
+            }
+        }
+
+        /* Return Success Status, Along With Friends Data in "friends" key */
+        return [
+            'status' => true,
+            'data' => [
+                'friends' => $friends_arr
             ]
         ];
     }

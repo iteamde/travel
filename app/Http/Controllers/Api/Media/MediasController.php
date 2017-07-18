@@ -76,9 +76,18 @@ class MediasController extends Controller
     	return $response;
     }
 
+    /* Display Media Information Api */
     public function activity(Request $request){
 
     	$response = Media::activity($request);
+
+    	return $response;
+    }
+
+    /* Tag Friends Api */
+    public function tag($user_id, $session_token, $query){
+
+    	$response = Media::tag($user_id, $session_token, $query);
 
     	return $response;
     }
