@@ -15,6 +15,7 @@ Route::group([
          * For DataTables
          */
         Route::post('country/get', 'CountryTableController')->name('country.get');
+        Route::get('country/jsoncities', 'CountryController@jsoncities')->name('country.jsoncities');
 
         /*
          * Country CRUD

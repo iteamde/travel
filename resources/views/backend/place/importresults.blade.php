@@ -48,7 +48,7 @@
                 <tbody>
                     <?php $i = 0; ?>
                     @foreach($results AS $r)
-                    <tr>
+                    <tr @if(in_array($r->place_id, $provider_ids)) style="background-color:red" @endif>
                         <th>{{$r->name}}</th>
                         <th>{{$r->formatted_address}}</th>
                         <th>{{$r->geometry->location->lat}} {{$r->geometry->location->lng}}</th>
