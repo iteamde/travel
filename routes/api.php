@@ -107,6 +107,10 @@ Route::group([
         Route::post('/create', 'MediasController@create');
         /* Add Comment On Media Api */
         Route::post('/comment', 'MediasController@comment');
+        /* Liking Media Api */
+        Route::post('/like', 'MediasController@like');
+        /* Unliking Media Api */
+        Route::post('/unlike', 'MediasController@unlike');
 	});
 
 

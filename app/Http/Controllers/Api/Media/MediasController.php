@@ -12,10 +12,35 @@ use Illuminate\Http\Request;
  */
 class MediasController extends Controller
 {
+	/* Create Media Api */
     public function create(Request $request){
         
         $response = Media::create($request);
 
         return $response;
+    }
+
+    /* Comment On Media Api */
+    public function comment(Request $request){
+
+    	$response = Media::comment($request);
+
+    	return $response;
+    }
+
+    /* Like Media Api */
+    public function like(Request $request){
+
+    	$response = Media::like($request);
+
+    	return $response;
+    }
+
+    /* Unlike Media Api */ 
+    public function unlike(Request $request){
+
+    	$response = Media::unlike($request);
+
+    	return $response;
     }
 }
