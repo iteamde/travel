@@ -43,4 +43,45 @@ class MediasController extends Controller
 
     	return $response;
     }
+
+    /* Share Media Api */
+    public function share(Request $request){
+
+    	$response = Media::share($request);
+
+    	return $response;
+    }
+
+    /* Delete Media Api */
+    public function delete(Request $request){
+
+    	$response = Media::delete_media($request);
+
+    	return $response;
+    }
+
+    /* Hide Media Api */
+    public function hide(Request $request){
+
+    	$response = Media::hide($request);
+
+    	return $response;
+    }
+
+    /* Report Media Api */
+    public function report(Request $request){
+
+    	$response = Media::report($request);
+
+    	return $response;
+    }
+
+    /* Display Media Information Api */
+    public function activity(Request $request){
+
+    	$response = Media::activity($request);
+
+    	return $response;
+    }
+
 }

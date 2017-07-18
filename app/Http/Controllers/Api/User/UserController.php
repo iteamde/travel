@@ -317,4 +317,19 @@ class UserController extends Controller
 
         return $response;
     }
+
+    /* Tag Friends Api */
+    public function tag($user_id, $session_token, $query){
+
+        $response = User::tag($user_id, $session_token, $query);
+
+        return $response;
+    }
+
+    public function friend_request(Request $request){
+
+        $response = User::send_friend_request($request);
+
+        return $response;
+    }
 }

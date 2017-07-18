@@ -6,6 +6,8 @@ use App\Models\System\Session;
 use App\Models\Access\User\SocialLogin;
 use App\Models\ActivityMedia\Media;
 use App\Models\SafetyDegree\SafetyDegree;
+use App\Models\ActivityMedia\MediasLikes;
+use App\Models\ActivityMedia\MediasComments;
 
 /**
  * Class MediaRelationship.
@@ -51,5 +53,21 @@ trait MediaRelationship
     public function sessions()
     {
         return $this->hasMany(Session::class);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function likes()
+    {
+        return $this->hasMany(MediasLikes::class, 'medias_id' , 'id');
+    }
+
+    /**
+     * @return mixed
+     */
+    public function comments()
+    {
+        return $this->hasMany(MediasComments::class, 'medias_id' , 'id');
     }
 }

@@ -92,6 +92,10 @@ Route::group([
         Route::post('/contact_privacy', 'UserController@update_contact_privacy');
         /* Update Contact Privacy Api */
         Route::post('/notification_settings', 'UserController@update_notification_settings');
+        /* Tagging Friends Api */
+        Route::get('/tag/{user_id}/{session_token}/{query}', 'UserController@tag');
+        /* Send Friend Request Api */
+        Route::post('/friend_request', 'UserController@friend_request');
     }); 
 
 /*
@@ -111,7 +115,17 @@ Route::group([
         Route::post('/like', 'MediasController@like');
         /* Unliking Media Api */
         Route::post('/unlike', 'MediasController@unlike');
-	});
-
-
+        /* Sharing Media Api */
+        Route::post('/share', 'MediasController@share');
+        /* Deleting Media Api */
+        Route::post('/delete', 'MediasController@delete');
+        /* Hiding Media Api */
+        Route::post('/hide', 'MediasController@hide');
+	    /* Reporting Media Api */
+        Route::post('/report', 'MediasController@report');
+        /* Display Media Activities Api */
+        Route::post('/activity', 'MediasController@activity');
+        
+        
+    });
 });

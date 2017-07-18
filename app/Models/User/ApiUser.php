@@ -2002,6 +2002,119 @@ class ApiUser extends User
         ];
     }
 
+    /* Tag Friends Function */
+    public static function tag($user_id, $session_token, $query){
+
+        /* If User Id Is Not An Integer, Return Error */
+        if(!is_numeric($user_id)){
+            return Self::generateErrorMessage(false, 400, 'User id should be an integer.');
+        }
+
+        /* Find User For Provided User Id */
+        $user = User::where(['id' => $user_id])->first();
+
+        /* If User Not Found, Return Error */
+        if(empty($user)){
+            return Self::generateErrorMessage(false, 400, 'Wrong user id provided.');
+        }   
+
+        /* Find Session For The Provided Session Token */
+        $session = Session::where(['id' => $session_token])->first();
+
+        /* If Session Not Found, Return Error */
+        if(empty($session)){
+            return Self::generateErrorMessage(false, 400, 'Wrong session token provided.');
+        }
+
+        /* If Session's User Id Doesn't matches Provided User Id, Return Error */
+        if($session->user_id != $user_id){
+            return Self::generateErrorMessage(false, 400, 'Wrong user id provided.');
+        }
+
+        /* If Query's Length Is Not Between 1-100, Return Error */
+        if( strlen($query) < 1 || strlen($query) > 100 ){
+            return Self::generateErrorMessage(false, 400, 'Query length should be between (1-100) characters.');
+        }   
+
+        /* If Query Is Not An Alphanumeric String, Return Error */
+        if( ! preg_match( '/^[a-zA-Z0-9.,_ ]+$/' , $query ) ){
+            return Self::generateErrorMessage(false, 400, 'Query can only contain alphanumeric characters.');
+        }
+
+        /* Container For Friends Information In Array Format */
+        $friends_arr = [];  
+            
+        /* If Friends Exist For Provided User, Return Array Response Of Friends Information */
+        if(!empty($user->user_friends)){
+            foreach ($user->user_friends as $key => $value) {
+                # code...
+                if(!empty($value->friend)){
+                    
+                    $friend = $value->friend;
+                    if (strpos( strtolower($friend->name), strtolower($query) ) !== false) {
+                        array_push($friends_arr,Self::getArrayFormat($friend));
+                    }
+                }
+            }
+        }
+
+        /* Return Success Status, Along With Friends Data in "friends" key */
+        return [
+            'status' => true,
+            'data' => [
+                'friends' => $friends_arr
+            ]
+        ];
+    }
+
+    public static function send_friend_request($request){
+
+        $post = $request->input();
+
+        if(! isset($post['user_id']) || empty($post['user_id'])){
+            return Self::generateErrorMessage(false, 400, 'User id not provided.');
+        }
+
+        if(! is_numeric($post['user_id'])){
+            return Self::generateErrorMessage(false, 400, 'User id should be an integer.');
+        }
+
+        $user = User::where(['id' => $post['user_id']])->first();
+
+        if(empty($user)){
+            return Self::generateErrorMessage(false, 400, 'Wrong user id provided.');
+        }
+
+        if(!isset($post['session_token']) || empty($post['session_token'])){
+            return Self::generateErrorMessage(false, 400, 'Session token not provided.');
+        }
+
+        $session = Session::where(['id' => $post['session_token'] ])->first();
+
+        if(empty($session)){
+            return Self::generateErrorMessage(false, 400, 'Wrong session token provided.');
+        }
+
+        if($session->user_id != $post['user_id']){
+            return Self::generateErrorMessage(false, 400, 'Wrong user id provided.');
+        }
+
+        if(!isset($post['friend_id']) || empty($post['friend_id'])){
+            return Self::generateErrorMessage(false, 400, 'Friend id not provided.');
+        }
+
+        if(! is_numeric($post['friend_id'])){
+            return Self::generateErrorMessage(false, 400, 'Friend id should be an integer.');
+        }
+
+        $friend = User::where(['id' => $post['friend_id']])->first();
+
+        if(empty($friend)){
+            return Self::generateErrorMessage(false, 400, 'Wrong friend id provided.');
+        }
+        return [];
+    }
+
     /* Return User Information In Array Format */
     public function getArrayResponse(){
 
