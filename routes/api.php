@@ -117,7 +117,7 @@ Route::group([
         Route::post('/delete', 'MediasController@delete');
         /* Hiding Media Api */
         Route::post('/hide', 'MediasController@hide');
-	});
-
-
+	   /* Reporting Media Api */
+        Route::post('/report', 'MediasController@report');
+    });
 });

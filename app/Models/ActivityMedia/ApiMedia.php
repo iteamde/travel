@@ -11,6 +11,7 @@ use App\Models\ActivityMedia\MediasComments;
 use App\Models\ActivityMedia\MediasLikes;
 use App\Models\ActivityMedia\MediasShares;
 use App\Models\ActivityMedia\MediasHides;
+use App\Models\ActivityMedia\MediasReports;
 
 class ApiMedia extends Media
 {
@@ -674,6 +675,101 @@ class ApiMedia extends Media
                 'message' => 'Media hidden successfully'
             ]
         ];
+    }
+
+    /* Media Report Function */
+    public static function report($request){
+
+        /* Get Arguments From Post Request */
+        $post = $request->input();
+
+        /* If User Id Is Not Set, Or Is Empty, Return Error */
+        if(!isset($post['user_id']) || empty($post['user_id'])){
+            return Self::generateErrorMessage(false, 400, 'User id not provided.');
+        }
+
+        /* If User Id Is Not An Integer, Return Error */
+        if(! is_numeric($post['user_id'])){
+            return Self::generateErrorMessage(false, 400, 'User id should be an integer.');
+        }
+
+        /* Find user For Provided User Id */
+        $user = User::where(['id' => $post['user_id'] ])->first();
+
+        /* If User Not Found, Return Error */
+        if(empty($user)){
+            return Self::generateErrorMessage(false, 400, 'Wrong user id provided.');
+        }
+
+        /* If Session Token Not Set, Or Is Empty, Return Error */
+        if( !isset($post['session_token']) || empty($post['session_token']) ){
+            return Self::generateErrorMessage(false, 400, 'Session token not provided.');
+        }
+
+        /* Find Session For Provided Session Id */
+        $session = Session::where([ 'id' =>$post['session_token'] ])->first();
+
+        /* If Session Not Found, Return Error */
+        if(empty($session)){
+            return Self::generateErrorMessage(false, 400, 'Wrong session token provided.');
+        }
+
+        /* If Session's User Id Doesn't Matches Provided User Id, Return Error */
+        if($session->user_id != $post['user_id']){
+            return Self::generateErrorMessage(false, 400, 'Wrong user id provided.');
+        }
+
+        /* If Medias Id Not Set, Or Is Empty, Return Error */
+        if(! isset($post['medias_id']) || empty($post['medias_id'])){
+            return Self::generateErrorMessage(false, 400, 'Medias id not provided.');
+        }
+
+        /* If Medias Id Is Not An Integer, Return Error */
+        if(! is_numeric($post['medias_id'])){
+            return Self::generateErrorMessage(false, 400, 'Medias id should ne an integer.');
+        }
+
+        /* Find Media For The Provided Media Id */
+        $media = Self::where(['id' => $post['medias_id']])->first();
+
+        /* If Media Not Found, Return Error */
+        if(empty($media)){
+            return Self::generateErrorMessage(false, 400, 'Wrong medias id provided.');
+        }
+
+        /* If Reason For Reporting Not Set, Or is Empty, Return Error */
+        if(! isset($post['reason']) || empty($post['reason']) ){
+            return Self::generateErrorMessage(false, 400, 'Reason not provided.');
+        }
+
+        /* If Reason For Reporting Is Not An Integer, Return Error */
+        if(! is_numeric($post['reason'])){
+            return Self::generateErrorMessage(false, 400, 'Reason should be an integer.');
+        }
+
+        /* If Provided User Already Reported This Media, Find The Record */
+        $media_report = MediasReports::where(['medias_id' => $post['medias_id'], 'users_id' => $post['user_id']])->first();
+
+        /* If Previous Record Of Reporting Not Found, Create New Record */
+        if( empty($media_report) ){
+            $media_report = new MediasReports;
+
+            /* Load Information In MediasReports Model */
+            $media_report->reason    = $post['reason'];
+            $media_report->medias_id = $post['medias_id'];
+            $media_report->users_id  = $post['user_id'];
+            
+            /* Save MediasReports Model */
+            $media_report->save();
+        }
+
+        /* Return Success Status, Along With Success Message */
+        return [
+            'status' => true,
+            'data'   => [
+                'message' => 'Media reported successfully'
+            ]
+        ]; 
     }
 
     /* Generate Error Message With provided "status", "code" and "message" */

@@ -60,9 +60,18 @@ class MediasController extends Controller
     	return $response;
     }
 
+    /* Hide Media Api */
     public function hide(Request $request){
 
     	$response = Media::hide($request);
+
+    	return $response;
+    }
+
+    /* Report Media Api */
+    public function report(Request $request){
+
+    	$response = Media::report($request);
 
     	return $response;
     }
