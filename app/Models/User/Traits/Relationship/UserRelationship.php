@@ -7,6 +7,7 @@ use App\Models\User\SocialLogin;
 use App\Models\User\UsersFriends;
 use App\Models\User\UsersBlocks;
 use App\Models\User\UsersHiddenContent;
+use App\Models\User\UsersFriendRequests;
 
 /**
  * Class UserRelationship.
@@ -61,5 +62,12 @@ trait UserRelationship
     public function user_hidden_content(){
         
         return $this->hasMany(UsersHiddenContent::class, 'users_id', 'id');
+    }
+
+    /**
+     * @return mixed
+     */
+    public function my_friend_requests(){
+        return $this->hasMany(UsersFriendRequests::class, 'to', 'id');
     }
 }

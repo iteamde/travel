@@ -96,6 +96,8 @@ Route::group([
         Route::get('/tag/{user_id}/{session_token}/{query}', 'UserController@tag');
         /* Send Friend Request Api */
         Route::post('/friend_request', 'UserController@friend_request');
+        /* Display Friend Request */
+        Route::get('/my_friend_requests/{user_id}/{session_token}', 'UserController@my_friend_requests');
     }); 
 
 /*

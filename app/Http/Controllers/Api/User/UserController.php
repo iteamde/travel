@@ -326,9 +326,18 @@ class UserController extends Controller
         return $response;
     }
 
+    /* Send Friend Request Api */
     public function friend_request(Request $request){
 
         $response = User::send_friend_request($request);
+
+        return $response;
+    }
+
+    /* Display Friend Requests Api */
+    public function my_friend_requests($user_id, $session_token){
+
+        $response = User::display_friend_requests($user_id, $session_token);
 
         return $response;
     }

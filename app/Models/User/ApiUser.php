@@ -2166,6 +2166,60 @@ class ApiUser extends User
         ];
     }
 
+    /* Display Friend Requests Function */
+    public static function display_friend_requests($user_id, $session_token){
+
+        /* If User Id Is Not A Number, Return Error */
+        if(! is_numeric($user_id)){
+            return Self::generateErrorMessage(false, 400, 'User id not provided.');
+        }
+
+        /* Find User For Provided User Id */
+        $user = User::where(['id' => $user_id])->first();
+
+        /* If User Not Found, Return Error */
+        if(empty($user)){
+            return Self::generateErrorMessage(false, 400, 'Wrong user id provided.');
+        }
+
+        /* Find Session For The Provided Session Token */
+        $session = Session::where(['id' => $session_token])->first();
+
+        /* If Session Not Found, Return Error */
+        if(empty($session)){
+            return Self::generateErrorMessage(false, 400, 'Wrong session token provided.');
+        }
+
+        /* If Session's User Id Doesn't Matches Provided User Id, Return Error */
+        if($session->user_id != $user_id){
+            return Self::generateErrorMessage(false, 400, 'Wrong user id provided.');
+        }
+
+        /* Container For Array Response */
+        $array_response = [];
+
+        /* If User Has Friend Requests, Return Array Response */
+        if(!empty($user->my_friend_requests)){
+            foreach ($user->my_friend_requests as $key => $value) {
+                array_push($array_response, [
+                    'request_id' => $value->id,
+                    'from'       => $value->from,
+                    'to'         => $value->to,
+                    'status'     => $value->status,
+                    'created_at' => $value->created_at   
+                ]);
+            }
+        }
+
+        /* Return Success Status, Along With Friend Requests */
+        return [
+            'status' => true,
+            'data'   => [
+                'friend_requests' => $array_response
+            ]
+        ];
+    }
+
     /* Return User Information In Array Format */
     public function getArrayResponse(){
 
