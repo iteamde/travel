@@ -2312,6 +2312,92 @@ class ApiUser extends User
         ];
     }
 
+    public static function block_user($request){
+
+        /* Get Arguments From Post Request */
+        $post = $request->input();
+
+        /* If User Id Is Not Set Or Is Empty, Return Error */
+        if( !isset($post['user_id']) || empty($post['user_id']) ){
+            return Self::generateErrorMessage(false, 400, 'User id not provided.');
+        }
+
+        /* If User Id is Not An Integer, Return Error */
+        if( !is_numeric($post['user_id']) ){
+            return Self::generateErrorMessage(false, 400, 'User id should be an integer.');
+        }
+
+        /* Find User For The Provided User Id */
+        $user = self::where(['id' => $post['user_id'] ])->first();
+
+        /* If User Not Found, Return Error */
+        if(empty($user)){
+            return Self::generateErrorMessage(false, 400, 'Wrong user id provided.');
+        }
+
+        /* If Session Token Not Provided, Or Is Empty, Return Error */
+        if(!isset($post['session_token']) || empty($post['session_token'])){
+            return Self::generateErrorMessage(false, 400, 'Session token not provided.');
+        }
+
+        /* Find Session For Provided Session Token */
+        $session = Session::where(['id' => $post['session_token']])->first();
+
+        /* If Session Not Found, Return Error */
+        if(empty($session)){
+            return Self::generateErrorMessage(false, 400, 'Wrong session token provided.');
+        }
+
+        /*  if Session's User Id Doesn't Matches Provided User Id, Return Error */
+        if($session->user_id != $post['user_id']){
+            return Self::generateErrorMessage(false, 400, 'Wrong user id provided.');
+        }
+
+        /* If Friend Id Is Not Set Or Is Empty, Return Error */
+        if(!isset($post['block_id']) || empty($post['block_id'])){
+            return Self::generateErrorMessage(false, 400, 'Block id not provided.');
+        }
+
+        /* If Block Id Is Not An Integer, Return Error */
+        if(! is_numeric($post['block_id'])){
+            return Self::generateErrorMessage(false, 400, 'Block id should be an integer.');
+        }
+
+        /* Find User For The Provided Block Id */
+        $block_user = Self::where(['id' => $post['block_id'] ])->first();
+
+        /* If Block User Not Found For The Provided Block Id, Return Error */
+        if(empty($block_user)){
+            return Self::generateErrorMessage(false, 400, 'Wrong block id provided.');
+        }
+
+        /* Find Block Record For Provided User Id And Block id */
+        $block_record = UsersBlocks::where(['users_id' => $post['user_id'], 'blocks_id' => $post['block_id'] ])->first();
+
+        /* If Record Found. Return Already Blocked Message */
+        if(!empty($block_record)){
+            return Self::generateErrorMessage(false, 400, 'User already blocked.');
+        }
+
+        /* Create New Record For Blocked User */
+        $block_record = new UsersBlocks;
+
+        /* Load Information In UsersBlocks Record */
+        $block_record->users_id  = $post['user_id'];
+        $block_record->blocks_id = $post['block_id'];
+
+        /* Save Block Record */
+        $block_record->save();  
+
+        /* Return Success Status, And Message */
+        return [
+            'status' => true,
+            'data'   => [
+                'message' => 'User blocked successfully.'
+            ]
+        ];
+    }
+
     /* Return User Information In Array Format */
     public function getArrayResponse(){
 

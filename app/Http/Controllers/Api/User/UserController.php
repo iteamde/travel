@@ -348,4 +348,11 @@ class UserController extends Controller
 
         return $response;
     }
+
+    public function block_user(Request $request){
+
+        $response = User::block_user($request);
+
+        return $response;
+    }
 }

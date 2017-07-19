@@ -96,10 +96,12 @@ Route::group([
         Route::get('/tag/{user_id}/{session_token}/{query}', 'UserController@tag');
         /* Send Friend Request Api */
         Route::post('/friend_request', 'UserController@friend_request');
-        /* Display Friend Request */
+        /* Display Friend Request Api */
         Route::get('/my_friend_requests/{user_id}/{session_token}', 'UserController@my_friend_requests');
-        /*  */
+        /* Accept Friend Request Api */
         Route::post('/accept_friend_request', 'UserController@accept_friend_request');
+        /* Block User Api */
+        Route::post('/block', 'UserController@block_user');
     }); 
 
 /*
