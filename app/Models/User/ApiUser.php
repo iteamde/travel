@@ -11,6 +11,7 @@ use App\Models\User\UsersBlocks;
 use App\Models\User\UsersHiddenContent;
 use App\Models\User\UsersPrivacySettings;
 use App\Models\User\UsersNotificationSettings;
+use App\Models\User\UsersFriendRequests;
 use Illuminate\Support\Facades\Storage;
 
 /**
@@ -2067,52 +2068,102 @@ class ApiUser extends User
         ];
     }
 
+    /* Send Friend Request Function */
     public static function send_friend_request($request){
 
+        /* Get Arguments From Post Request */
         $post = $request->input();
 
+        /* If User Id Is Not Set Or Is Empty, Return Error */
         if(! isset($post['user_id']) || empty($post['user_id'])){
             return Self::generateErrorMessage(false, 400, 'User id not provided.');
         }
 
+        /* If User Id Is Not An Integer, Return Error */
         if(! is_numeric($post['user_id'])){
             return Self::generateErrorMessage(false, 400, 'User id should be an integer.');
         }
 
+        /* Find User For The Provided user Id */
         $user = User::where(['id' => $post['user_id']])->first();
 
+        /* If User Not Found, Return Error */
         if(empty($user)){
             return Self::generateErrorMessage(false, 400, 'Wrong user id provided.');
         }
 
+        /* If Session Token Is Not Set, Or Is Empty, Return Error */
         if(!isset($post['session_token']) || empty($post['session_token'])){
             return Self::generateErrorMessage(false, 400, 'Session token not provided.');
         }
 
+        /* Find Session For The Provided Session Token */
         $session = Session::where(['id' => $post['session_token'] ])->first();
 
+        /* If Session Not Found, Return Error */
         if(empty($session)){
             return Self::generateErrorMessage(false, 400, 'Wrong session token provided.');
         }
 
+        /* if Session's User Doesn't Matches Provided user Id, Return Error */
         if($session->user_id != $post['user_id']){
             return Self::generateErrorMessage(false, 400, 'Wrong user id provided.');
         }
 
+        /* If Friend Id Is Not Set Or is Empty, Return Error */
         if(!isset($post['friend_id']) || empty($post['friend_id'])){
             return Self::generateErrorMessage(false, 400, 'Friend id not provided.');
         }
 
+        /* If Friend Id Is Not An Integer, Return Error */
         if(! is_numeric($post['friend_id'])){
             return Self::generateErrorMessage(false, 400, 'Friend id should be an integer.');
         }
 
+        /* Find Friend For Provided Friend Id */
         $friend = User::where(['id' => $post['friend_id']])->first();
 
+        /* if Friend Not Found, Return Error */
         if(empty($friend)){
             return Self::generateErrorMessage(false, 400, 'Wrong friend id provided.');
         }
-        return [];
+
+        /* Find Old Highest Id To Assign Unique Id To New Entry */
+        $old_id = UsersFriendRequests::whereRaw('id = (select max(`id`) from `users_friend_requests`)')->first();
+
+        /* If Last Id Not Found, Start From 0 */
+        if(!empty($old_id)){
+            $old_id = $old_id->id;
+        }else{
+            $old_id = 0;
+        }
+
+        /* Increment 1 In Last Id And Assign To New Row */
+        $old_id++;
+
+        /* Find Previous Friend Request Record For This User Id And Friend Id */
+        $friend_request = UsersFriendRequests::where(['to' => $post['friend_id'] ,'from' => $post['user_id'] ])->first(); 
+        /* If Previous Record Not Found, Create New Entry */
+        if(empty($friend_request)){
+            $friend_request = new UsersFriendRequests;
+
+            /* Load Data In UsersFriendRequests Model */
+            $friend_request->id = $old_id;
+            $friend_request->from = $post['user_id'];
+            $friend_request->to = $post['friend_id'];
+            $friend_request->status = UsersFriendRequests::STATUS_PENDING;
+
+            /* Save Record */
+            $friend_request->save();
+        }
+
+        /* Return Success Status, Along With Message */
+        return [
+            'status' => true,
+            'data'   => [
+                'message' => 'Friend request sent.'
+            ]
+        ];
     }
 
     /* Return User Information In Array Format */
