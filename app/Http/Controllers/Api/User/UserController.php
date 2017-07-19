@@ -341,4 +341,11 @@ class UserController extends Controller
 
         return $response;
     }
+
+    public function accept_friend_request(Request $request){
+
+        $response = User::accept_friend_request($request);
+
+        return $response;
+    }
 }

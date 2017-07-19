@@ -98,6 +98,8 @@ Route::group([
         Route::post('/friend_request', 'UserController@friend_request');
         /* Display Friend Request */
         Route::get('/my_friend_requests/{user_id}/{session_token}', 'UserController@my_friend_requests');
+        /*  */
+        Route::post('/accept_friend_request', 'UserController@accept_friend_request');
     }); 
 
 /*

@@ -2220,6 +2220,98 @@ class ApiUser extends User
         ];
     }
 
+    /* Accept Friend Requests Function */
+    public static function accept_friend_request($request){
+
+        /* Get Arguments From Post Request */
+        $post = $request->input();
+
+        /* If User Id Is Not Set Or Is Empty, Return Error */
+        if( !isset($post['user_id']) || empty($post['user_id']) ){
+            return Self::generateErrorMessage(false, 400, 'User id not provided.');
+        }
+
+        /* If User Id is Not An Integer, Return Error */
+        if( !is_numeric($post['user_id']) ){
+            return Self::generateErrorMessage(false, 400, 'User id should be an integer.');
+        }
+
+        /* Find User For The Provided User Id */
+        $user = self::where(['id' => $post['user_id'] ])->first();
+
+        /* If User Not Found, Return Error */
+        if(empty($user)){
+            return Self::generateErrorMessage(false, 400, 'Wrong user id provided.');
+        }
+
+        /* If Session Token Not Provided, Or Is Empty, Return Error */
+        if(!isset($post['session_token']) || empty($post['session_token'])){
+            return Self::generateErrorMessage(false, 400, 'Session token not provided.');
+        }
+
+        /* Find Session For Provided Session Token */
+        $session = Session::where(['id' => $post['session_token']])->first();
+
+        /* If Session Not Found, Return Error */
+        if(empty($session)){
+            return Self::generateErrorMessage(false, 400, 'Wrong session token provided.');
+        }
+
+        /*  if Session's User Id Doesn't Matches Provided User Id, Return Error */
+        if($session->user_id != $post['user_id']){
+            return Self::generateErrorMessage(false, 400, 'Wrong user id provided.');
+        }
+
+        /* If Friend Id Is Not Set Or Is Empty, Return Error */
+        if(!isset($post['friend_id']) || empty($post['friend_id'])){
+            return Self::generateErrorMessage(false, 400, 'Friend id not provided.');
+        }
+
+        /* If Friend Id Is Not An Integer, Return Error */
+        if(! is_numeric($post['friend_id'])){
+            return Self::generateErrorMessage(false, 400, 'Friend id should be an integer.');
+        }
+
+        /* Find Friend For The Provided Friend Id */
+        $friend = Self::where(['id' => $post['friend_id'] ])->first();
+
+        /* If Friend Not Found For The Provided Friend Id, Return Error */
+        if(empty($friend)){
+            return Self::generateErrorMessage(false, 400, 'Wrong friend id provided.');
+        }
+
+        /* Find Friend Request Record For Provided User Id And Friend Id, With Status STATUS_PENDING */
+        $friend_request = UsersFriendRequests::where(['to' => $post['user_id'] , 'from' => $post['friend_id'] , 'status' => UsersFriendRequests::STATUS_PENDING  ])->first();
+        /* If Request Not Found, Return Error */
+        if(empty($friend_request)){
+            return Self::generateErrorMessage(false, 400, 'No pending friend request exists for this friend.');
+        }
+
+        /* Update Status Of Friend Request TO Accepted And Save Request */
+        $friend_request->status = UsersFriendRequests::STATUS_ACCEPTED;
+        $friend_request->save();
+
+        /* Create A UsersFriends Record With User To Friend */
+        $user_friend = new UsersFriends;
+        $user_friend->users_id = $post['user_id'];
+        $user_friend->friends_id = $post['friend_id'];
+        $user_friend->save();
+
+        /* Create A UsersFriends Record With Friend To User */
+        $user_friend = new UsersFriends;
+        $user_friend->users_id = $post['friend_id'];
+        $user_friend->friends_id = $post['user_id'];
+        $user_friend->save();
+
+        /* Return Success Status, Along With Success Message in Data */
+        return [
+            'status' => true,
+            'data'   => [
+                'message' => 'Friend request accepted.'
+            ]
+        ];
+    }
+
     /* Return User Information In Array Format */
     public function getArrayResponse(){
 

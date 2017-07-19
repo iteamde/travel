@@ -12,7 +12,9 @@ class UsersFriendRequests extends Model
 {
     public $timestamps = false;
     
-    const STATUS_PENDING = 0;
+    const STATUS_PENDING  = 0;
+    const STATUS_ACCEPTED = 1;
+
 	/**
      * The database table used by the model.
      *
