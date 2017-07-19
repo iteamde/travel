@@ -102,6 +102,8 @@ Route::group([
         Route::post('/accept_friend_request', 'UserController@accept_friend_request');
         /* Block User Api */
         Route::post('/block', 'UserController@block_user');
+        /* Show Profile Picture Api */
+        Route::get('/profilepicture/{user_id}/{session_token}', 'UserController@show_profile_picture');
     }); 
 
 /*

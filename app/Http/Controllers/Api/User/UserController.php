@@ -355,4 +355,11 @@ class UserController extends Controller
 
         return $response;
     }
+
+    public function show_profile_picture($user_id, $session_token){
+
+        $response = User::show_profile_picture($user_id, $session_token);
+
+        return $response;
+    }
 }

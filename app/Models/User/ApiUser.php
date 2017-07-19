@@ -14,6 +14,8 @@ use App\Models\User\UsersNotificationSettings;
 use App\Models\User\UsersFriendRequests;
 use Illuminate\Support\Facades\Storage;
 
+use App\Helpers\UrlGenerator;
+
 /**
  * Class ApiUser.
  */
@@ -1026,6 +1028,7 @@ class ApiUser extends User
             return [
                 'status' => true,
                 'data' => [
+                    'message' => 'No image provided.'
                 ],
             ];
         }
@@ -1052,7 +1055,8 @@ class ApiUser extends User
         return [
             'status' => true,
             'data' => [
-                'image_url' => $image_url
+                'image_url' => $image_url,
+                'message'   => 'Image updated successfully.'
             ],
         ];
     }
@@ -2398,6 +2402,38 @@ class ApiUser extends User
         ];
     }
 
+    public static function show_profile_picture($user_id, $session_token){
+
+        if(!is_numeric($user_id)){
+            return Self::generateErrorMessage(false, 400, 'User id should be an integer.');
+        }
+
+        $user = Self::where([ 'id' => $user_id ])->first();
+
+        if(empty($user)){
+            return Self::generateErrorMessage(false, 400, 'Wrong user id provided.');
+        }
+
+        $session = Session::where(['id' => $session_token])->first();
+
+        if(empty($session)){
+            return Self::generateErrorMessage(false, 400, 'Wrong session token provided.');
+        }
+
+        if($session->user_id != $user_id){
+            return Self::generateErrorMessage(false, 400, 'Wrong user id provided.');
+        }
+
+        $image_url = $user->getProfilePictureUrl();
+
+        return [
+            'status' => true,
+            'data'   => [
+                'profile_picture_url' => $image_url
+            ]
+        ];
+    }
+
     /* Return User Information In Array Format */
     public function getArrayResponse(){
 
@@ -2555,6 +2591,21 @@ class ApiUser extends User
         }
         
         return $randomString;
+    }
+
+    /**
+    * @return string
+    **/
+    public function getProfilePictureUrl(){
+
+        $path = 'users/' . $this->id . '/profile/' . $this->profile_picture;
+        
+        if( is_file( storage_path('uploads' . DIRECTORY_SEPARATOR . $path) ) ){
+            
+            $uploads_url = UrlGenerator::GetUploadsUrl();
+            
+            return $uploads_url . $path;
+        }
     }
 
     /* Generate Error Message With provided "status", "code" and "message" */
