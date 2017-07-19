@@ -1050,7 +1050,7 @@ class ApiUser extends User
         $user->save(); 
         
         /* New Url Of Uploaded Image */
-        $image_url = asset('/storage' . $new_path . '/' . $user->profile_picture);
+        $image_url = UrlGenerator::GetUploadsUrl() . 'users/' . $user_id . '/profile' . $user->profile_picture;
         
         return [
             'status' => true,
