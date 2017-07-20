@@ -8,7 +8,9 @@ use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 
 /**
- * Class UserController.
+ * @resource User
+ *
+ * All users & membership operations
  */
 class UserController extends Controller
 {
@@ -36,7 +38,7 @@ class UserController extends Controller
     *   Create New User.
     */
     public function create(Request $request){
-        
+
         $post = $request->input();
 
         $response = User::validateInputParams($post);
@@ -50,7 +52,7 @@ class UserController extends Controller
         if(!empty($response)){
             return $response;
         }
-        
+
         return false;
     }
 
@@ -60,7 +62,7 @@ class UserController extends Controller
     public function login(Request $request){
 
         $post = $request->input();
-        
+
         $response = User::loginValidation($post);
 
         if(!empty($response) ) {
@@ -102,7 +104,7 @@ class UserController extends Controller
     public function reset($token, $new_password, $confirm_password){
 
         $response = User::changePassword($token, $new_password, $confirm_password);
-        
+
         return $response;
     }
 
@@ -110,9 +112,9 @@ class UserController extends Controller
     *   Activate The User Associated With The Provided Activation "token".
     */
     public function activate($token){
-        
+
         $response = User::activate($token);
-        
+
         return $response;
     }
 
@@ -168,7 +170,7 @@ class UserController extends Controller
         $post = $request->input();
 
         $response = User::update_age($post);
-        
+
         return $response;
     }
 
@@ -176,7 +178,7 @@ class UserController extends Controller
     *   Update Nationality Of The Session's User After Validating "session_token" and "user_id".
     */
     public function update_nationality(Request $request){
-        
+
         $post = $request->input();
 
         $response = User::update_nationality($post);
@@ -210,7 +212,7 @@ class UserController extends Controller
     public function update_profile_image( $user_id, $session_token , Request $request){
 
         $response = User::upload_image($user_id, $session_token, $request);
-        
+
         return $response;
     }
 
@@ -222,25 +224,25 @@ class UserController extends Controller
         $post = $request->input();
 
         $response = User::change_password($post);
-        
+
         return $response;
     }
 
-    /* 
-    *   Get List Of Blocked Users By The Provided Session's User After Validation Session Token And User Id. 
+    /*
+    *   Get List Of Blocked Users By The Provided Session's User After Validation Session Token And User Id.
     */
     public function block_list($user_id, $session_token){
 
         $response = User::block_list($user_id, $session_token);
-        
+
         return $response;
     }
 
-    /* 
+    /*
     *   Unblock A Friend
     */
     public function unblock_friend(Request $request){
-        
+
         $post = $request->input();
 
         $response = User::unblock_friend($post);
@@ -248,7 +250,7 @@ class UserController extends Controller
         return $response;
     }
 
-    /* 
+    /*
     *   Show All Hidden Contents
     */
     public function hidden_content($user_id, $session_token){
@@ -258,7 +260,7 @@ class UserController extends Controller
         return $response;
     }
 
-    /* 
+    /*
     *   Change Online Status Api
     */
     public function change_online_status(Request $request){
@@ -270,11 +272,11 @@ class UserController extends Controller
         return $response;
     }
 
-    /* 
+    /*
     *   Unhide Content Api
     */
     public function unhide_content(Request $request){
-        
+
         $post = $request->input();
 
         $response = User::unhide_content($post);
@@ -282,11 +284,11 @@ class UserController extends Controller
         return $response;
     }
 
-    /* 
+    /*
     *   Deactivate Api
     */
     public function deactivate(Request $request){
-        
+
         $post = $request->input();
 
         $response = User::deactivate_account($post);
@@ -294,7 +296,7 @@ class UserController extends Controller
         return $response;
     }
 
-    /* 
+    /*
     *   Update Contact Privacy Api
     */
     public function update_contact_privacy(Request $request){
@@ -306,7 +308,7 @@ class UserController extends Controller
         return $response;
     }
 
-    /* 
+    /*
     *   Update Notification Settings Api
     */
     public function update_notification_settings(Request $request){
