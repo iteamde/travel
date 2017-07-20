@@ -104,6 +104,8 @@ Route::group([
         Route::post('/block', 'UserController@block_user');
         /* Show Profile Picture Api */
         Route::get('/profilepicture/{user_id}/{session_token}', 'UserController@show_profile_picture');
+        /* Add to favourites Api */
+        Route::post('/add_favourites','UserController@add_favourites');
     }); 
 
 /*
@@ -135,7 +137,7 @@ Route::group([
         Route::post('/activity', 'MediasController@activity');
         /* Updating Media Description Api */
         Route::post('/description', 'MediasController@update_description');
-        /*  */
+        /* List User's Media Api */
         Route::get('/listbyuser/{user_id}/{session_token}/{media_user_id}', 'MediasController@listbyuser');
     });
 });

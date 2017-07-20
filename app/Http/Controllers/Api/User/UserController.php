@@ -342,6 +342,7 @@ class UserController extends Controller
         return $response;
     }
 
+    /* Accept Friend Requests Api */
     public function accept_friend_request(Request $request){
 
         $response = User::accept_friend_request($request);
@@ -349,6 +350,7 @@ class UserController extends Controller
         return $response;
     }
 
+    /* Block User Api */
     public function block_user(Request $request){
 
         $response = User::block_user($request);
@@ -356,9 +358,18 @@ class UserController extends Controller
         return $response;
     }
 
+    /* Show Profile Picture Api */
     public function show_profile_picture($user_id, $session_token){
 
         $response = User::show_profile_picture($user_id, $session_token);
+
+        return $response;
+    }
+
+    /* Add to favourites Api */
+    public function add_favourites(Request $request){
+
+        $response = User::add_favourites($request);
 
         return $response;
     }

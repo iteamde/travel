@@ -12,6 +12,7 @@ use App\Models\User\UsersHiddenContent;
 use App\Models\User\UsersPrivacySettings;
 use App\Models\User\UsersNotificationSettings;
 use App\Models\User\UsersFriendRequests;
+use App\Models\User\UsersFavourites;
 use Illuminate\Support\Facades\Storage;
 
 use App\Helpers\UrlGenerator;
@@ -2506,6 +2507,98 @@ class ApiUser extends User
                 ]
             ];
         }
+    }
+
+    /* Add to favourites Function */
+    public static function add_favourites($request){
+
+        /* Get Arguments From Post Request */
+        $post = $request->input();
+
+        /* If User Id Is Not Set, Or Is Empty, Return Error */
+        if( !isset($post['user_id']) || empty($post['user_id']) ){
+            return Self::generateErrorMessage(false, 400, 'User id not provided.');
+        }
+
+        /* If User Id Is Not An Integer, Return Error */
+        if(! is_numeric($post['user_id'])){
+            return Self::generateErrorMessage(false, 400, 'User id should be an integer.');
+        }
+
+        /* Find User For The Provided User Id */
+        $user = Self::where(['id' => $post['user_id']])->first();
+
+        /* If User Not Found, Return Error */
+        if(empty($user)){
+            return Self::generateErrorMessage(false, 400, 'Wrong user id provided.');
+        }
+
+        /* If Session Token Is Not Set Or Is Empty, Return Error */
+        if(!isset($post['session_token']) || empty($post['session_token'])){
+            return Self::generateErrorMessage(false, 400, 'Session token not provided.');
+        }
+
+        /* Find Session For Provided Session Token */
+        $session = Session::where(['id' => $post['session_token'] ])->first();
+
+        /* If Session Not Found For Provided Session Token, Return Error */
+        if( empty($session) ){
+            return Self::generateErrorMessage(false, 400, 'Wrong session token provided.');
+        }   
+
+        /* If Session's User Id Doesn't Matches Provided User Id, Return Error */
+        if($session->user_id != $post['user_id']){
+            return Self::generateErrorMessage(false, 400, 'Wrong user id provided.');
+        }
+
+        /* If Favourite Type Not Found, Return Error */
+        if(!isset($post['fav_type']) || empty($post['fav_type'])){
+            return Self::generateErrorMessage(false, 400, 'Favourite type not provided.');
+        }
+
+        /* If Favourite User Id Not Provided, Or Is Empty, Return Error */
+        if(!isset($post['fav_id']) || empty($post['fav_id'])){
+            return Self::generateErrorMessage(false, 400, 'Favourite id not provided.');
+        }
+
+        /* If Favourite Id Is Not An Integer, Return Error */
+        if(! is_numeric($post['fav_id'])){
+            return Self::generateErrorMessage(false, 400, 'Favourite id should be an integer.');
+        }
+
+        /* Find Favourite User For Provided Favourite id */
+        $fav_user = Self::where(['id' => $post['fav_id'] ])->first();
+
+        /* if User Not Found, Return Error */
+        if(empty($fav_user)){
+            return Self::generateErrorMessage(false, 400, 'Wrong favourite id provided.');
+        }
+
+        /* Find Previous Record For Provided User Id And Favourite Id, In UsersFavourites Model */
+        $users_favourite = UsersFavourites::where([ 'users_id' => $post['user_id'], 'fav_id' => $post['fav_id'] ])->first();
+
+        /* If Record Not Found, Create New Record */
+        if(empty($users_favourite)){
+            $users_favourite = new UsersFavourites;
+
+            $users_favourite->users_id = $post['user_id'];
+            $users_favourite->fav_type = $post['fav_type'];
+            $users_favourite->fav_id   = $post['fav_id'];
+        
+            $users_favourite->save();
+        }else{
+
+            /* If Previous Record Found, Return Error */
+            return Self::generateErrorMessage(false, 400, 'This user is already in your favourite list.');
+        }
+
+        /* Return Success Status, Along With Message */
+        return [
+            'status' => true,
+            'data' => [
+                'message' => 'User added to favourites successfully.'
+            ] 
+        ];
     }
 
     /* Return User Information In Array Format */

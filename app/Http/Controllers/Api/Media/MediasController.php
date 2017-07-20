@@ -92,6 +92,7 @@ class MediasController extends Controller
         return $response;
     }
 
+    /* List User's Media Api */
     public function listbyuser($user_id, $session_token, $media_user_id){
         
         $response = Media::get_list_by_user( $user_id, $session_token, $media_user_id );
