@@ -1214,13 +1214,24 @@ class ApiUser extends User
             }
         }
 
-        /* Return Success Status, And Blocked User's List In Data */
-        return [
-            'status' => true,
-            'data'   => [
-                'blocked_list'  => $user_blocks_arr
-            ]
-        ];
+        if(!empty($user_blocks_arr)){
+            /* Return Success Status, And Blocked User's List In Data */
+            return [
+                'status' => true,
+                'data'   => [
+                    'blocked_list'  => $user_blocks_arr
+                ]
+            ];
+        }else{
+            /* Return Success Status, And Blocked User's List In Data */
+            return [
+                'status' => true,
+                'data'   => [
+                    'blocked_list'  => $user_blocks_arr,
+                    'message'   => 'No user exists in your block list.'
+                ]
+            ];
+        }
     }
 
     /* Unblock Friend Api */
