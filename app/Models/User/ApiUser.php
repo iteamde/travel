@@ -2676,6 +2676,73 @@ class ApiUser extends User
         ];
     }
 
+    /* Show Favourites Function */
+    public static function show_favourites($user_id,$session_token){
+
+        /* If User Id Is Not Numeric, Or Is Empty, Return Error */
+        if(!is_numeric($user_id)){
+            return Self::generateErrorMessage(false, 400, 'User id should be an integer.');
+        }
+
+        /* FInd User For The Provided User Id */
+        $user = Self::where([ 'id' => $user_id ])->first();
+
+        /* If User Not Found, Return Error */
+        if(empty($user)){
+            return Self::generateErrorMessage(false, 400, 'Wrong user id provided.');
+        }
+
+        /* Find Session For The Provided Session Token */
+        $session = Session::where([ 'id' => $session_token ])->first();
+
+        /* If Session Not Found, Return Error */
+        if(empty($session)){
+            return Self::generateErrorMessage(false, 400, 'Wrong session token provided.');
+        }
+
+        /* If Session's User Id Is Not Equal To Provided User Id, Return Error */
+        if($session->user_id != $user_id){
+            return Self::generateErrorMessage(false, 400, 'Wrong user id provided.');
+        }
+
+        /* Container For User's Favourite Items Array Format */
+        $user_favourites_arr = [];
+
+        /* If Favourite Items Exist For This User, Get Array Response */
+        if(!empty($user->favourites)){
+            foreach ($user->favourites as $key => $value) {
+                # code...
+                $fav = self::where(['id' => $value->fav_id])->first();
+                
+                if(!empty($fav)){
+                    array_push($user_favourites_arr,[
+                        'fav_type' => $value->fav_type,
+                        'fav_info' => $fav->getArrayResponse()
+                    ]);
+                }
+            }
+        }
+
+        /* if Favourite Items Exist For This User, Return Success Status, With Favourite Objects In Data */
+        if(!empty($user_favourites_arr)){
+            return [
+                'status' => true,
+                'data'   => [
+                    'favourites' => $user_favourites_arr
+                ]
+            ];
+        }else{
+            /* If Favourite Items Donot Exist For This User, Return Success Status, With "No Favourite item message". */
+            return [
+                'status' => true,
+                'data'   => [
+                    'favourites' => $user_favourites_arr,
+                    'messages'   => 'No favourites item found.'
+                ]
+            ];
+        }
+    }
+
     /* Return User Information In Array Format */
     public function getArrayResponse(){
 

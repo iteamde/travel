@@ -108,6 +108,8 @@ Route::group([
         Route::post('/add_favourites','UserController@add_favourites');
         /* Remove Favourties Api */
         Route::post('/remove_favourites','UserController@remove_favourites');
+        /* Show Favourties Api */
+        Route::get('/favourites/{user_id}/{session_token}','UserController@show_favourites');
     }); 
 
 /*

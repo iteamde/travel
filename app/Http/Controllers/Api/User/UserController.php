@@ -374,10 +374,18 @@ class UserController extends Controller
         return $response;
     }
 
-    /* Remove favourites Api */
+    /* Remove Favourites Api */
     public function remove_favourites(Request $request){
 
         $response = User::remove_favourites($request);
+
+        return $response;
+    }
+
+    /* Show Favourites Api */
+    public function show_favourites($user_id,$session_token){
+
+        $response = User::show_favourites($user_id,$session_token);
 
         return $response;
     }

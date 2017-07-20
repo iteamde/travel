@@ -25,11 +25,4 @@ class UsersFavourites extends Model
     public function user(){
         return $this->hasOne( User::class , 'id' , 'users_id');
     }
-
-    /**
-     * @return mixed
-     */
-    public function fav(){
-        return $this->hasOne( User::class , 'id' , 'fav_id');
-    }
 }
