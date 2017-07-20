@@ -10,6 +10,8 @@ use App\Models\User\User;
  */
 class UsersFriends extends Model
 {
+    public $timestamps = false;
+    
 	/**
      * The database table used by the model.
      *

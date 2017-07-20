@@ -326,9 +326,66 @@ class UserController extends Controller
         return $response;
     }
 
+    /* Send Friend Request Api */
     public function friend_request(Request $request){
 
         $response = User::send_friend_request($request);
+
+        return $response;
+    }
+
+    /* Display Friend Requests Api */
+    public function my_friend_requests($user_id, $session_token){
+
+        $response = User::display_friend_requests($user_id, $session_token);
+
+        return $response;
+    }
+
+    /* Accept Friend Requests Api */
+    public function accept_friend_request(Request $request){
+
+        $response = User::accept_friend_request($request);
+
+        return $response;
+    }
+
+    /* Block User Api */
+    public function block_user(Request $request){
+
+        $response = User::block_user($request);
+
+        return $response;
+    }
+
+    /* Show Profile Picture Api */
+    public function show_profile_picture($user_id, $session_token){
+
+        $response = User::show_profile_picture($user_id, $session_token);
+
+        return $response;
+    }
+
+    /* Add to favourites Api */
+    public function add_favourites(Request $request){
+
+        $response = User::add_favourites($request);
+
+        return $response;
+    }
+
+    /* Remove Favourites Api */
+    public function remove_favourites(Request $request){
+
+        $response = User::remove_favourites($request);
+
+        return $response;
+    }
+
+    /* Show Favourites Api */
+    public function show_favourites($user_id,$session_token){
+
+        $response = User::show_favourites($user_id,$session_token);
 
         return $response;
     }

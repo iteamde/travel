@@ -96,6 +96,20 @@ Route::group([
         Route::get('/tag/{user_id}/{session_token}/{query}', 'UserController@tag');
         /* Send Friend Request Api */
         Route::post('/friend_request', 'UserController@friend_request');
+        /* Display Friend Request Api */
+        Route::get('/my_friend_requests/{user_id}/{session_token}', 'UserController@my_friend_requests');
+        /* Accept Friend Request Api */
+        Route::post('/accept_friend_request', 'UserController@accept_friend_request');
+        /* Block User Api */
+        Route::post('/block', 'UserController@block_user');
+        /* Show Profile Picture Api */
+        Route::get('/profilepicture/{user_id}/{session_token}', 'UserController@show_profile_picture');
+        /* Add to favourites Api */
+        Route::post('/add_favourites','UserController@add_favourites');
+        /* Remove Favourties Api */
+        Route::post('/remove_favourites','UserController@remove_favourites');
+        /* Show Favourties Api */
+        Route::get('/favourites/{user_id}/{session_token}','UserController@show_favourites');
     }); 
 
 /*
@@ -125,7 +139,9 @@ Route::group([
         Route::post('/report', 'MediasController@report');
         /* Display Media Activities Api */
         Route::post('/activity', 'MediasController@activity');
-        
-        
+        /* Updating Media Description Api */
+        Route::post('/description', 'MediasController@update_description');
+        /* List User's Media Api */
+        Route::get('/listbyuser/{user_id}/{session_token}/{media_user_id}', 'MediasController@listbyuser');
     });
 });

@@ -11,7 +11,11 @@ use App\Models\User\UsersBlocks;
 use App\Models\User\UsersHiddenContent;
 use App\Models\User\UsersPrivacySettings;
 use App\Models\User\UsersNotificationSettings;
+use App\Models\User\UsersFriendRequests;
+use App\Models\User\UsersFavourites;
 use Illuminate\Support\Facades\Storage;
+
+use App\Helpers\UrlGenerator;
 
 /**
  * Class ApiUser.
@@ -398,6 +402,15 @@ class ApiUser extends User
     /* Send password reset request */
     public static function forgotPassword($post){
         
+        if(!isset($post['email']) || empty($post['email'])){
+            return Self::generateErrorMessage(false, 400, 'Email not provided.');
+        }
+
+         /* Check If Provided Email Matches The Email Format */
+        if( ! filter_var( $post['email'], FILTER_VALIDATE_EMAIL ) ){
+            return Self::generateErrorMessage(false, 400, "'".$post['email']."' is not a valid email address.");
+        }
+
         $model = Self::where([ 'email' => $post['email'] ])->first();
 
         if(empty($model)){
@@ -412,6 +425,7 @@ class ApiUser extends User
         
         return [
             'data' => [
+                'message' => 'An email with password reset link is sent to your email account.'
             ],
             'status' => true
         ];
@@ -460,7 +474,9 @@ class ApiUser extends User
 
         return [
             'status'  => true,
-            'data'    => []
+            'data'    => [
+                'message' => 'Password reset successfull.'
+            ]
         ];
     }
 
@@ -897,14 +913,25 @@ class ApiUser extends User
             }
         }
 
-        /* Return Success Status, And User Information In Array Format */
-        return [
-            'status' => true,
-            'data' => [
-                'user_info'     => $user->getArrayResponse(),
-                'user_friends'  => $friends_arr, 
-            ]
-        ];
+        if( empty($friends_arr) ){
+            return [
+                'status' => true,
+                'data' => [
+                    'user_info'     => $user->getArrayResponse(),
+                    'user_friends'  => $friends_arr,
+                    'message'   => 'No friend exists for this user.' 
+                ]
+            ];
+        }else{
+            /* Return Success Status, And User Information In Array Format */
+            return [
+                'status' => true,
+                'data' => [
+                    'user_info'     => $user->getArrayResponse(),
+                    'user_friends'  => $friends_arr, 
+                ]
+            ];
+        }
     }
 
     /* Delete Friends From UserFriends Relation Table */
@@ -1025,6 +1052,7 @@ class ApiUser extends User
             return [
                 'status' => true,
                 'data' => [
+                    'message' => 'No image provided.'
                 ],
             ];
         }
@@ -1046,12 +1074,13 @@ class ApiUser extends User
         $user->save(); 
         
         /* New Url Of Uploaded Image */
-        $image_url = asset('/storage' . $new_path . '/' . $user->profile_picture);
+        $image_url = UrlGenerator::GetUploadsUrl() . 'users/' . $user_id . '/profile/' . $user->profile_picture;
         
         return [
             'status' => true,
             'data' => [
-                'image_url' => $image_url
+                'image_url' => $image_url,
+                'message'   => 'Image updated successfully.'
             ],
         ];
     }
@@ -1186,13 +1215,24 @@ class ApiUser extends User
             }
         }
 
-        /* Return Success Status, And Blocked User's List In Data */
-        return [
-            'status' => true,
-            'data'   => [
-                'blocked_list'  => $user_blocks_arr
-            ]
-        ];
+        if(!empty($user_blocks_arr)){
+            /* Return Success Status, And Blocked User's List In Data */
+            return [
+                'status' => true,
+                'data'   => [
+                    'blocked_list'  => $user_blocks_arr
+                ]
+            ];
+        }else{
+            /* Return Success Status, And Blocked User's List In Data */
+            return [
+                'status' => true,
+                'data'   => [
+                    'blocked_list'  => $user_blocks_arr,
+                    'message'   => 'No user exists in your block list.'
+                ]
+            ];
+        }
     }
 
     /* Unblock Friend Api */
@@ -2058,61 +2098,649 @@ class ApiUser extends User
             }
         }
 
-        /* Return Success Status, Along With Friends Data in "friends" key */
-        return [
-            'status' => true,
-            'data' => [
-                'friends' => $friends_arr
-            ]
-        ];
+        if(!empty($friends_arr)){
+            /* Return Success Status, Along With Friends Data in "friends" key */
+            return [
+                'status' => true,
+                'data' => [
+                    'friends' => $friends_arr
+                ]
+            ];
+        }else{
+            /* Return Success Status, Along With Friends Data in "friends" key */
+            return [
+                'status' => true,
+                'data' => [
+                    'friends' => $friends_arr,
+                    'message' => 'No friends found for the given query.'
+                ]
+            ];
+        }
     }
 
+    /* Send Friend Request Function */
     public static function send_friend_request($request){
 
+        /* Get Arguments From Post Request */
         $post = $request->input();
 
+        /* If User Id Is Not Set Or Is Empty, Return Error */
         if(! isset($post['user_id']) || empty($post['user_id'])){
             return Self::generateErrorMessage(false, 400, 'User id not provided.');
         }
 
+        /* If User Id Is Not An Integer, Return Error */
         if(! is_numeric($post['user_id'])){
             return Self::generateErrorMessage(false, 400, 'User id should be an integer.');
         }
 
+        /* Find User For The Provided user Id */
         $user = User::where(['id' => $post['user_id']])->first();
 
+        /* If User Not Found, Return Error */
         if(empty($user)){
             return Self::generateErrorMessage(false, 400, 'Wrong user id provided.');
         }
 
+        /* If Session Token Is Not Set, Or Is Empty, Return Error */
         if(!isset($post['session_token']) || empty($post['session_token'])){
             return Self::generateErrorMessage(false, 400, 'Session token not provided.');
         }
 
+        /* Find Session For The Provided Session Token */
         $session = Session::where(['id' => $post['session_token'] ])->first();
 
+        /* If Session Not Found, Return Error */
         if(empty($session)){
             return Self::generateErrorMessage(false, 400, 'Wrong session token provided.');
         }
 
+        /* if Session's User Doesn't Matches Provided user Id, Return Error */
         if($session->user_id != $post['user_id']){
             return Self::generateErrorMessage(false, 400, 'Wrong user id provided.');
         }
 
+        /* If Friend Id Is Not Set Or is Empty, Return Error */
         if(!isset($post['friend_id']) || empty($post['friend_id'])){
             return Self::generateErrorMessage(false, 400, 'Friend id not provided.');
         }
 
+        /* If Friend Id Is Not An Integer, Return Error */
         if(! is_numeric($post['friend_id'])){
             return Self::generateErrorMessage(false, 400, 'Friend id should be an integer.');
         }
 
+        /* Find Friend For Provided Friend Id */
         $friend = User::where(['id' => $post['friend_id']])->first();
 
+        /* if Friend Not Found, Return Error */
         if(empty($friend)){
             return Self::generateErrorMessage(false, 400, 'Wrong friend id provided.');
         }
-        return [];
+
+        /* Find Old Highest Id To Assign Unique Id To New Entry */
+        $old_id = UsersFriendRequests::whereRaw('id = (select max(`id`) from `users_friend_requests`)')->first();
+
+        /* If Last Id Not Found, Start From 0 */
+        if(!empty($old_id)){
+            $old_id = $old_id->id;
+        }else{
+            $old_id = 0;
+        }
+
+        /* Increment 1 In Last Id And Assign To New Row */
+        $old_id++;
+
+        /* Find Previous Friend Request Record For This User Id And Friend Id */
+        $friend_request = UsersFriendRequests::where(['to' => $post['friend_id'] ,'from' => $post['user_id'] ])->first(); 
+        /* If Previous Record Not Found, Create New Entry */
+        if(empty($friend_request)){
+            $friend_request = new UsersFriendRequests;
+
+            /* Load Data In UsersFriendRequests Model */
+            $friend_request->id = $old_id;
+            $friend_request->from = $post['user_id'];
+            $friend_request->to = $post['friend_id'];
+            $friend_request->status = UsersFriendRequests::STATUS_PENDING;
+
+            /* Save Record */
+            $friend_request->save();
+        }
+
+        /* Return Success Status, Along With Message */
+        return [
+            'status' => true,
+            'data'   => [
+                'message' => 'Friend request sent.'
+            ]
+        ];
+    }
+
+    /* Display Friend Requests Function */
+    public static function display_friend_requests($user_id, $session_token){
+
+        /* If User Id Is Not A Number, Return Error */
+        if(! is_numeric($user_id)){
+            return Self::generateErrorMessage(false, 400, 'User id not provided.');
+        }
+
+        /* Find User For Provided User Id */
+        $user = User::where(['id' => $user_id])->first();
+
+        /* If User Not Found, Return Error */
+        if(empty($user)){
+            return Self::generateErrorMessage(false, 400, 'Wrong user id provided.');
+        }
+
+        /* Find Session For The Provided Session Token */
+        $session = Session::where(['id' => $session_token])->first();
+
+        /* If Session Not Found, Return Error */
+        if(empty($session)){
+            return Self::generateErrorMessage(false, 400, 'Wrong session token provided.');
+        }
+
+        /* If Session's User Id Doesn't Matches Provided User Id, Return Error */
+        if($session->user_id != $user_id){
+            return Self::generateErrorMessage(false, 400, 'Wrong user id provided.');
+        }
+
+        /* Container For Array Response */
+        $array_response = [];
+
+        /* If User Has Friend Requests, Return Array Response */
+        if(!empty($user->my_friend_requests)){
+            foreach ($user->my_friend_requests as $key => $value) {
+                array_push($array_response, [
+                    'request_id' => $value->id,
+                    'from'       => $value->from,
+                    'to'         => $value->to,
+                    'status'     => $value->status,
+                    'created_at' => $value->created_at   
+                ]);
+            }
+        }
+
+        if( !empty($array_response) ){
+            /* Return Success Status, Along With Friend Requests */
+            return [
+                'status' => true,
+                'data'   => [
+                    'friend_requests' => $array_response
+                ]
+            ];
+        }else{
+            /* Return Success Status, Along With Friend Requests */
+            return [
+                'status' => true,
+                'data'   => [
+                    'friend_requests' => $array_response,
+                    'message'   => 'No friend requests found for this user.'
+                ]
+            ];
+        }
+    }
+
+    /* Accept Friend Requests Function */
+    public static function accept_friend_request($request){
+
+        /* Get Arguments From Post Request */
+        $post = $request->input();
+
+        /* If User Id Is Not Set Or Is Empty, Return Error */
+        if( !isset($post['user_id']) || empty($post['user_id']) ){
+            return Self::generateErrorMessage(false, 400, 'User id not provided.');
+        }
+
+        /* If User Id is Not An Integer, Return Error */
+        if( !is_numeric($post['user_id']) ){
+            return Self::generateErrorMessage(false, 400, 'User id should be an integer.');
+        }
+
+        /* Find User For The Provided User Id */
+        $user = self::where(['id' => $post['user_id'] ])->first();
+
+        /* If User Not Found, Return Error */
+        if(empty($user)){
+            return Self::generateErrorMessage(false, 400, 'Wrong user id provided.');
+        }
+
+        /* If Session Token Not Provided, Or Is Empty, Return Error */
+        if(!isset($post['session_token']) || empty($post['session_token'])){
+            return Self::generateErrorMessage(false, 400, 'Session token not provided.');
+        }
+
+        /* Find Session For Provided Session Token */
+        $session = Session::where(['id' => $post['session_token']])->first();
+
+        /* If Session Not Found, Return Error */
+        if(empty($session)){
+            return Self::generateErrorMessage(false, 400, 'Wrong session token provided.');
+        }
+
+        /*  if Session's User Id Doesn't Matches Provided User Id, Return Error */
+        if($session->user_id != $post['user_id']){
+            return Self::generateErrorMessage(false, 400, 'Wrong user id provided.');
+        }
+
+        /* If Friend Id Is Not Set Or Is Empty, Return Error */
+        if(!isset($post['friend_id']) || empty($post['friend_id'])){
+            return Self::generateErrorMessage(false, 400, 'Friend id not provided.');
+        }
+
+        /* If Friend Id Is Not An Integer, Return Error */
+        if(! is_numeric($post['friend_id'])){
+            return Self::generateErrorMessage(false, 400, 'Friend id should be an integer.');
+        }
+
+        /* Find Friend For The Provided Friend Id */
+        $friend = Self::where(['id' => $post['friend_id'] ])->first();
+
+        /* If Friend Not Found For The Provided Friend Id, Return Error */
+        if(empty($friend)){
+            return Self::generateErrorMessage(false, 400, 'Wrong friend id provided.');
+        }
+
+        /* Find Friend Request Record For Provided User Id And Friend Id, With Status STATUS_PENDING */
+        $friend_request = UsersFriendRequests::where(['to' => $post['user_id'] , 'from' => $post['friend_id'] , 'status' => UsersFriendRequests::STATUS_PENDING  ])->first();
+        /* If Request Not Found, Return Error */
+        if(empty($friend_request)){
+            return Self::generateErrorMessage(false, 400, 'No pending friend request exists for this friend.');
+        }
+
+        /* Update Status Of Friend Request TO Accepted And Save Request */
+        $friend_request->status = UsersFriendRequests::STATUS_ACCEPTED;
+        $friend_request->save();
+
+        /* Create A UsersFriends Record With User To Friend */
+        $user_friend = new UsersFriends;
+        $user_friend->users_id = $post['user_id'];
+        $user_friend->friends_id = $post['friend_id'];
+        $user_friend->save();
+
+        /* Create A UsersFriends Record With Friend To User */
+        $user_friend = new UsersFriends;
+        $user_friend->users_id = $post['friend_id'];
+        $user_friend->friends_id = $post['user_id'];
+        $user_friend->save();
+
+        /* Return Success Status, Along With Success Message in Data */
+        return [
+            'status' => true,
+            'data'   => [
+                'message' => 'Friend request accepted.'
+            ]
+        ];
+    }
+
+    public static function block_user($request){
+
+        /* Get Arguments From Post Request */
+        $post = $request->input();
+
+        /* If User Id Is Not Set Or Is Empty, Return Error */
+        if( !isset($post['user_id']) || empty($post['user_id']) ){
+            return Self::generateErrorMessage(false, 400, 'User id not provided.');
+        }
+
+        /* If User Id is Not An Integer, Return Error */
+        if( !is_numeric($post['user_id']) ){
+            return Self::generateErrorMessage(false, 400, 'User id should be an integer.');
+        }
+
+        /* Find User For The Provided User Id */
+        $user = self::where(['id' => $post['user_id'] ])->first();
+
+        /* If User Not Found, Return Error */
+        if(empty($user)){
+            return Self::generateErrorMessage(false, 400, 'Wrong user id provided.');
+        }
+
+        /* If Session Token Not Provided, Or Is Empty, Return Error */
+        if(!isset($post['session_token']) || empty($post['session_token'])){
+            return Self::generateErrorMessage(false, 400, 'Session token not provided.');
+        }
+
+        /* Find Session For Provided Session Token */
+        $session = Session::where(['id' => $post['session_token']])->first();
+
+        /* If Session Not Found, Return Error */
+        if(empty($session)){
+            return Self::generateErrorMessage(false, 400, 'Wrong session token provided.');
+        }
+
+        /*  if Session's User Id Doesn't Matches Provided User Id, Return Error */
+        if($session->user_id != $post['user_id']){
+            return Self::generateErrorMessage(false, 400, 'Wrong user id provided.');
+        }
+
+        /* If Friend Id Is Not Set Or Is Empty, Return Error */
+        if(!isset($post['block_id']) || empty($post['block_id'])){
+            return Self::generateErrorMessage(false, 400, 'Block id not provided.');
+        }
+
+        /* If Block Id Is Not An Integer, Return Error */
+        if(! is_numeric($post['block_id'])){
+            return Self::generateErrorMessage(false, 400, 'Block id should be an integer.');
+        }
+
+        /* Find User For The Provided Block Id */
+        $block_user = Self::where(['id' => $post['block_id'] ])->first();
+
+        /* If Block User Not Found For The Provided Block Id, Return Error */
+        if(empty($block_user)){
+            return Self::generateErrorMessage(false, 400, 'Wrong block id provided.');
+        }
+
+        /* Find Block Record For Provided User Id And Block id */
+        $block_record = UsersBlocks::where(['users_id' => $post['user_id'], 'blocks_id' => $post['block_id'] ])->first();
+
+        /* If Record Found. Return Already Blocked Message */
+        if(!empty($block_record)){
+            return Self::generateErrorMessage(false, 400, 'User already blocked.');
+        }
+
+        /* Create New Record For Blocked User */
+        $block_record = new UsersBlocks;
+
+        /* Load Information In UsersBlocks Record */
+        $block_record->users_id  = $post['user_id'];
+        $block_record->blocks_id = $post['block_id'];
+
+        /* Save Block Record */
+        $block_record->save();  
+
+        /* Return Success Status, And Message */
+        return [
+            'status' => true,
+            'data'   => [
+                'message' => 'User blocked successfully.'
+            ]
+        ];
+    }
+
+    /* Show profile picture function */
+    public static function show_profile_picture($user_id, $session_token){
+
+        /* If User Id is Not An Integer, Return Error */
+        if(!is_numeric($user_id)){
+            return Self::generateErrorMessage(false, 400, 'User id should be an integer.');
+        }
+
+        /* Find User For The Provided User Id */
+        $user = Self::where([ 'id' => $user_id ])->first();
+
+        /* if User Not Found Return Error */
+        if(empty($user)){
+            return Self::generateErrorMessage(false, 400, 'Wrong user id provided.');
+        }
+        /* Find Session For The Provided Session Token */
+        $session = Session::where(['id' => $session_token])->first();
+
+        /* If Session Not Found, Return Error */
+        if(empty($session)){
+            return Self::generateErrorMessage(false, 400, 'Wrong session token provided.');
+        }
+
+        /* If Session's User Id Doesn't Matches Provided User Id, Return Error */
+        if($session->user_id != $user_id){
+            return Self::generateErrorMessage(false, 400, 'Wrong user id provided.');
+        }
+
+        /* get Url For The User's Profile Image */
+        $image_url = $user->getProfilePictureUrl();
+
+        /* If Url Found, Return In Data, Else Return Not Found Message */
+        if(!empty($image_url)){
+            return [
+                'status' => true,
+                'data'   => [
+                    'profile_picture_url' => $image_url
+                ]
+            ];
+        }else{
+            return [
+                'status' => true,
+                'data'   => [
+                    'profile_picture_url' => $image_url,
+                    'message'   => 'No profile image found for this user.'
+                ]
+            ];
+        }
+    }
+
+    /* Add to favourites Function */
+    public static function add_favourites($request){
+
+        /* Get Arguments From Post Request */
+        $post = $request->input();
+
+        /* If User Id Is Not Set, Or Is Empty, Return Error */
+        if( !isset($post['user_id']) || empty($post['user_id']) ){
+            return Self::generateErrorMessage(false, 400, 'User id not provided.');
+        }
+
+        /* If User Id Is Not An Integer, Return Error */
+        if(! is_numeric($post['user_id'])){
+            return Self::generateErrorMessage(false, 400, 'User id should be an integer.');
+        }
+
+        /* Find User For The Provided User Id */
+        $user = Self::where(['id' => $post['user_id']])->first();
+
+        /* If User Not Found, Return Error */
+        if(empty($user)){
+            return Self::generateErrorMessage(false, 400, 'Wrong user id provided.');
+        }
+
+        /* If Session Token Is Not Set Or Is Empty, Return Error */
+        if(!isset($post['session_token']) || empty($post['session_token'])){
+            return Self::generateErrorMessage(false, 400, 'Session token not provided.');
+        }
+
+        /* Find Session For Provided Session Token */
+        $session = Session::where(['id' => $post['session_token'] ])->first();
+
+        /* If Session Not Found For Provided Session Token, Return Error */
+        if( empty($session) ){
+            return Self::generateErrorMessage(false, 400, 'Wrong session token provided.');
+        }   
+
+        /* If Session's User Id Doesn't Matches Provided User Id, Return Error */
+        if($session->user_id != $post['user_id']){
+            return Self::generateErrorMessage(false, 400, 'Wrong user id provided.');
+        }
+
+        /* If Favourite Type Not Found, Return Error */
+        if(!isset($post['fav_type']) || empty($post['fav_type'])){
+            return Self::generateErrorMessage(false, 400, 'Favourite type not provided.');
+        }
+
+        /* If Favourite User Id Not Provided, Or Is Empty, Return Error */
+        if(!isset($post['fav_id']) || empty($post['fav_id'])){
+            return Self::generateErrorMessage(false, 400, 'Favourite id not provided.');
+        }
+
+        /* If Favourite Id Is Not An Integer, Return Error */
+        if(! is_numeric($post['fav_id'])){
+            return Self::generateErrorMessage(false, 400, 'Favourite id should be an integer.');
+        }
+
+        /* Find Favourite User For Provided Favourite id */
+        $fav_user = Self::where(['id' => $post['fav_id'] ])->first();
+
+        /* if User Not Found, Return Error */
+        if(empty($fav_user)){
+            return Self::generateErrorMessage(false, 400, 'Wrong favourite id provided.');
+        }
+
+        /* Find Previous Record For Provided User Id And Favourite Id, In UsersFavourites Model */
+        $users_favourite = UsersFavourites::where([ 'users_id' => $post['user_id'], 'fav_id' => $post['fav_id'] ])->first();
+
+        /* If Record Not Found, Create New Record */
+        if(empty($users_favourite)){
+            $users_favourite = new UsersFavourites;
+
+            $users_favourite->users_id = $post['user_id'];
+            $users_favourite->fav_type = $post['fav_type'];
+            $users_favourite->fav_id   = $post['fav_id'];
+        
+            $users_favourite->save();
+        }else{
+
+            /* If Previous Record Found, Return Error */
+            return Self::generateErrorMessage(false, 400, 'This user is already in your favourite list.');
+        }
+
+        /* Return Success Status, Along With Message */
+        return [
+            'status' => true,
+            'data' => [
+                'message' => 'User added to favourites successfully.'
+            ] 
+        ];
+    }
+
+    /* Remove Favourtie Function */
+    public static function remove_favourites($request){
+
+        /* Get Arguments From Post Request */
+        $post = $request->input();
+
+        /* If User Id Is Not Set Or Is Empty, Return Error */
+        if( !isset($post['user_id']) || empty($post['user_id']) ){
+            return Self::generateErrorMessage(false, 400, 'User id not provided.');
+        }
+
+        /* If User Id Is Not Numeric, Return Error */
+        if(! is_numeric($post['user_id'])){
+            return Self::generateErrorMessage(false, 400, 'User id should be an integer.');
+        }
+
+        /* Find User For The Provided User Id */
+        $user = Self::where(['id' => $post['user_id'] ])->first();
+
+        /* if User Not Found, Return Error */
+        if(empty($user)){
+            return Self::generateErrorMessage(false, 400, 'Wrong user id provided.');
+        }
+
+        /* If Session Token Not Set, Or Is Empty, Return Error */
+        if( !isset($post['session_token']) || empty($post['session_token']) ){
+            return Self::generateErrorMessage(false, 400, 'Session token not provided.');
+        }
+
+        /* Find Session For The Provided Session Token */
+        $session = Session::where(['id' => $post['session_token'] ])->first();
+
+        /* If Session Not Found, Return Error */
+        if(empty($session)){
+            return Self::generateErrorMessage(false, 400, 'Wrong session token provided.');
+        }
+
+        /* If Favourite Id Not Set, Or Is Empty, Return Error  */
+        if( ! isset($post['fav_id']) || empty($post['fav_id']) ){
+            return Self::generateErrorMessage(false, 400, 'Favourite id not provided.');
+        }
+
+        /* If Favourite Id Is Not An Integer, Return Error */
+        if( !is_numeric($post['fav_id']) ){
+            return Self::generateErrorMessage(false, 400, 'Favourite id should be an integer.');
+        }
+
+        /* Find Favourite User For The Provided Favouriteif */
+        $fav_user = Self::where(['id' => $post['fav_id']])->first();
+
+        /* If Favourite User Not Found, Return Error */
+        if(empty($fav_user)){
+            return Self::generateErrorMessage(false, 400, 'Wrong favourite id provided.');
+        }
+
+        /* Find Record For Provided User Id And Favourite Id In UsersFavourites Relationship Model  */
+        $favourite_record = UsersFavourites::where(['users_id' => $post['user_id'], 'fav_id' => $post['fav_id']])->first();
+
+        /* If Record Not Found, Return Error */
+        if(empty($favourite_record)){
+            return Self::generateErrorMessage(false, 400, 'This user is not in your favourite list.');
+        } 
+
+        /* Delete The Favourtie Relation Between User And Favourite User */
+        $favourite_record->delete();
+
+        /* Return Success Status, With Success Message */
+        return [
+            'status' => true,
+            'data' => [
+                'message' => 'User removed from favourite list successfully.'
+            ]
+        ];
+    }
+
+    /* Show Favourites Function */
+    public static function show_favourites($user_id,$session_token){
+
+        /* If User Id Is Not Numeric, Or Is Empty, Return Error */
+        if(!is_numeric($user_id)){
+            return Self::generateErrorMessage(false, 400, 'User id should be an integer.');
+        }
+
+        /* FInd User For The Provided User Id */
+        $user = Self::where([ 'id' => $user_id ])->first();
+
+        /* If User Not Found, Return Error */
+        if(empty($user)){
+            return Self::generateErrorMessage(false, 400, 'Wrong user id provided.');
+        }
+
+        /* Find Session For The Provided Session Token */
+        $session = Session::where([ 'id' => $session_token ])->first();
+
+        /* If Session Not Found, Return Error */
+        if(empty($session)){
+            return Self::generateErrorMessage(false, 400, 'Wrong session token provided.');
+        }
+
+        /* If Session's User Id Is Not Equal To Provided User Id, Return Error */
+        if($session->user_id != $user_id){
+            return Self::generateErrorMessage(false, 400, 'Wrong user id provided.');
+        }
+
+        /* Container For User's Favourite Items Array Format */
+        $user_favourites_arr = [];
+
+        /* If Favourite Items Exist For This User, Get Array Response */
+        if(!empty($user->favourites)){
+            foreach ($user->favourites as $key => $value) {
+                # code...
+                $fav = self::where(['id' => $value->fav_id])->first();
+                
+                if(!empty($fav)){
+                    array_push($user_favourites_arr,[
+                        'fav_type' => $value->fav_type,
+                        'fav_info' => $fav->getArrayResponse()
+                    ]);
+                }
+            }
+        }
+
+        /* if Favourite Items Exist For This User, Return Success Status, With Favourite Objects In Data */
+        if(!empty($user_favourites_arr)){
+            return [
+                'status' => true,
+                'data'   => [
+                    'favourites' => $user_favourites_arr
+                ]
+            ];
+        }else{
+            /* If Favourite Items Donot Exist For This User, Return Success Status, With "No Favourite item message". */
+            return [
+                'status' => true,
+                'data'   => [
+                    'favourites' => $user_favourites_arr,
+                    'messages'   => 'No favourites item found.'
+                ]
+            ];
+        }
     }
 
     /* Return User Information In Array Format */
@@ -2189,15 +2817,18 @@ class ApiUser extends User
         header('Access-Control-Allow-Headers: x-requested-with');
 
         $password_reset_code = $this->password_reset_token;
-
+        
         $site_url = url('');
         $new_password_url = 'javascript:void(0);' ;
 
         $to = $this->email;
         
         $subject = 'Travoo Account Password Reset';
-        $message = 'Click on the link given below to reset your travoo account password.<br />
-        <a href="' . $new_password_url . '">Reset My Travoo Account Password</a>';
+        // $message = 'Click on the link given below to reset your travoo account password.<br />
+        // <a href="' . $new_password_url . '">Reset My Travoo Account Password</a>';
+        // $message = 'Password reset token : <p>' . $this->password_reset_token . '</p>';
+        $message = 'Password reset token: ' . $password_reset_code;
+        
         $headers = 'From: travoo@abcd.com' . '\r\n' .
     'CC: travoo-test@abcd.com';
 
@@ -2272,6 +2903,21 @@ class ApiUser extends User
         }
         
         return $randomString;
+    }
+
+    /**
+    * @return string
+    **/
+    public function getProfilePictureUrl(){
+
+        $path = 'users/' . $this->id . '/profile/' . $this->profile_picture;
+        
+        if( is_file( storage_path('uploads' . DIRECTORY_SEPARATOR . $path) ) ){
+            
+            $uploads_url = UrlGenerator::GetUploadsUrl();
+            
+            return $uploads_url . $path;
+        }
     }
 
     /* Generate Error Message With provided "status", "code" and "message" */
