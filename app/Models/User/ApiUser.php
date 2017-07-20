@@ -912,14 +912,25 @@ class ApiUser extends User
             }
         }
 
-        /* Return Success Status, And User Information In Array Format */
-        return [
-            'status' => true,
-            'data' => [
-                'user_info'     => $user->getArrayResponse(),
-                'user_friends'  => $friends_arr, 
-            ]
-        ];
+        if( empty($friends_arr) ){
+            return [
+                'status' => true,
+                'data' => [
+                    'user_info'     => $user->getArrayResponse(),
+                    'user_friends'  => $friends_arr,
+                    'message'   => 'No friend exists for this user.' 
+                ]
+            ];
+        }else{
+            /* Return Success Status, And User Information In Array Format */
+            return [
+                'status' => true,
+                'data' => [
+                    'user_info'     => $user->getArrayResponse(),
+                    'user_friends'  => $friends_arr, 
+                ]
+            ];
+        }
     }
 
     /* Delete Friends From UserFriends Relation Table */
