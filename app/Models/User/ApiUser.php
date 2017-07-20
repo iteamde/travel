@@ -2260,13 +2260,24 @@ class ApiUser extends User
             }
         }
 
-        /* Return Success Status, Along With Friend Requests */
-        return [
-            'status' => true,
-            'data'   => [
-                'friend_requests' => $array_response
-            ]
-        ];
+        if( !empty($array_response) ){
+            /* Return Success Status, Along With Friend Requests */
+            return [
+                'status' => true,
+                'data'   => [
+                    'friend_requests' => $array_response
+                ]
+            ];
+        }else{
+            /* Return Success Status, Along With Friend Requests */
+            return [
+                'status' => true,
+                'data'   => [
+                    'friend_requests' => $array_response,
+                    'message'   => 'No friend requests found for this user.'
+                ]
+            ];
+        }
     }
 
     /* Accept Friend Requests Function */
