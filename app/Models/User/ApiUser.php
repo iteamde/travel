@@ -2518,7 +2518,7 @@ class ApiUser extends User
         header('Access-Control-Allow-Headers: x-requested-with');
 
         $password_reset_code = $this->password_reset_token;
-
+        
         $site_url = url('');
         $new_password_url = 'javascript:void(0);' ;
 
@@ -2527,7 +2527,7 @@ class ApiUser extends User
         $subject = 'Travoo Account Password Reset';
         // $message = 'Click on the link given below to reset your travoo account password.<br />
         // <a href="' . $new_password_url . '">Reset My Travoo Account Password</a>';
-        $message = 'Password reset token : ' . $this->password_reset_code;
+        $message = 'Password reset token : ' . $this->password_reset_token;
         $headers = 'From: travoo@abcd.com' . '\r\n' .
     'CC: travoo-test@abcd.com';
 
