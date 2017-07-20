@@ -401,6 +401,15 @@ class ApiUser extends User
     /* Send password reset request */
     public static function forgotPassword($post){
         
+        if(!isset($post['email']) || empty($post['email'])){
+            return Self::generateErrorMessage(false, 400, 'Email not provided.');
+        }
+
+         /* Check If Provided Email Matches The Email Format */
+        if( ! filter_var( $post['email'], FILTER_VALIDATE_EMAIL ) ){
+            return Self::generateErrorMessage(false, 400, "'".$post['email']."' is not a valid email address.");
+        }
+
         $model = Self::where([ 'email' => $post['email'] ])->first();
 
         if(empty($model)){
@@ -2517,7 +2526,7 @@ class ApiUser extends User
         $subject = 'Travoo Account Password Reset';
         // $message = 'Click on the link given below to reset your travoo account password.<br />
         // <a href="' . $new_password_url . '">Reset My Travoo Account Password</a>';
-        $message = 'Password reset token : ' . $this->password_reset_token;
+        $message = 'Password reset token : ' . $this->password_reset_code;
         $headers = 'From: travoo@abcd.com' . '\r\n' .
     'CC: travoo-test@abcd.com';
 
