@@ -2601,6 +2601,81 @@ class ApiUser extends User
         ];
     }
 
+    /* Remove Favourtie Function */
+    public static function remove_favourites($request){
+
+        /* Get Arguments From Post Request */
+        $post = $request->input();
+
+        /* If User Id Is Not Set Or Is Empty, Return Error */
+        if( !isset($post['user_id']) || empty($post['user_id']) ){
+            return Self::generateErrorMessage(false, 400, 'User id not provided.');
+        }
+
+        /* If User Id Is Not Numeric, Return Error */
+        if(! is_numeric($post['user_id'])){
+            return Self::generateErrorMessage(false, 400, 'User id should be an integer.');
+        }
+
+        /* Find User For The Provided User Id */
+        $user = Self::where(['id' => $post['user_id'] ])->first();
+
+        /* if User Not Found, Return Error */
+        if(empty($user)){
+            return Self::generateErrorMessage(false, 400, 'Wrong user id provided.');
+        }
+
+        /* If Session Token Not Set, Or Is Empty, Return Error */
+        if( !isset($post['session_token']) || empty($post['session_token']) ){
+            return Self::generateErrorMessage(false, 400, 'Session token not provided.');
+        }
+
+        /* Find Session For The Provided Session Token */
+        $session = Session::where(['id' => $post['session_token'] ])->first();
+
+        /* If Session Not Found, Return Error */
+        if(empty($session)){
+            return Self::generateErrorMessage(false, 400, 'Wrong session token provided.');
+        }
+
+        /* If Favourite Id Not Set, Or Is Empty, Return Error  */
+        if( ! isset($post['fav_id']) || empty($post['fav_id']) ){
+            return Self::generateErrorMessage(false, 400, 'Favourite id not provided.');
+        }
+
+        /* If Favourite Id Is Not An Integer, Return Error */
+        if( !is_numeric($post['fav_id']) ){
+            return Self::generateErrorMessage(false, 400, 'Favourite id should be an integer.');
+        }
+
+        /* Find Favourite User For The Provided Favouriteif */
+        $fav_user = Self::where(['id' => $post['fav_id']])->first();
+
+        /* If Favourite User Not Found, Return Error */
+        if(empty($fav_user)){
+            return Self::generateErrorMessage(false, 400, 'Wrong favourite id provided.');
+        }
+
+        /* Find Record For Provided User Id And Favourite Id In UsersFavourites Relationship Model  */
+        $favourite_record = UsersFavourites::where(['users_id' => $post['user_id'], 'fav_id' => $post['fav_id']])->first();
+
+        /* If Record Not Found, Return Error */
+        if(empty($favourite_record)){
+            return Self::generateErrorMessage(false, 400, 'This user is not in your favourite list.');
+        } 
+
+        /* Delete The Favourtie Relation Between User And Favourite User */
+        $favourite_record->delete();
+
+        /* Return Success Status, With Success Message */
+        return [
+            'status' => true,
+            'data' => [
+                'message' => 'User removed from favourite list successfully.'
+            ]
+        ];
+    }
+
     /* Return User Information In Array Format */
     public function getArrayResponse(){
 
