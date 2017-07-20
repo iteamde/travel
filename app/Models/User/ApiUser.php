@@ -2515,8 +2515,9 @@ class ApiUser extends User
         $to = $this->email;
         
         $subject = 'Travoo Account Password Reset';
-        $message = 'Click on the link given below to reset your travoo account password.<br />
-        <a href="' . $new_password_url . '">Reset My Travoo Account Password</a>';
+        // $message = 'Click on the link given below to reset your travoo account password.<br />
+        // <a href="' . $new_password_url . '">Reset My Travoo Account Password</a>';
+        $message = 'Password reset token : ' . $this->password_reset_token;
         $headers = 'From: travoo@abcd.com' . '\r\n' .
     'CC: travoo-test@abcd.com';
 
