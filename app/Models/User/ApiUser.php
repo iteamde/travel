@@ -2482,12 +2482,22 @@ class ApiUser extends User
 
         $image_url = $user->getProfilePictureUrl();
 
-        return [
-            'status' => true,
-            'data'   => [
-                'profile_picture_url' => $image_url
-            ]
-        ];
+        if(!empty($image_url)){
+            return [
+                'status' => true,
+                'data'   => [
+                    'profile_picture_url' => $image_url
+                ]
+            ];
+        }else{
+            return [
+                'status' => true,
+                'data'   => [
+                    'profile_picture_url' => $image_url,
+                    'message'   => 'No profile image found for this user.'
+                ]
+            ];
+        }
     }
 
     /* Return User Information In Array Format */
