@@ -964,42 +964,57 @@ class ApiMedia extends Media
         ];
     }
 
+    /* Get List Of User's Media Group By Languages */
     public static function get_list_by_user( $user_id, $session_token, $media_user_id ){
 
+        /* If User Id Is Not An Integer, Return Error */
         if(!is_numeric($user_id)){
             return Self::generateErrorMessage(false, 400, 'User id should be an integer.');
         }
 
+        /* Find User For The Provided User Id */
         $user = User::where(['id' => $user_id])->first();
 
-        if(empty($user)){
+        /* If User Not Found, Return Error */
+        if(empty($user)){   
             return Self::generateErrorMessage(false, 400, 'Wrong user id provided.');
         }
 
+        /* FInd Session For The Provided Session Token */
         $session = Session::where(['id' => $session_token ])->first();
 
+        /* If Session Not Found, Return Error */
         if(empty($session)){
             return Self::generateErrorMessage(false, 400, 'Wrong session token provided.');
-        }
+        }   
 
+        /* If Session's User Id Doesn't Matches Provided User Id, Return Error */
         if($session->user_id != $user_id){
             return Self::generateErrorMessage(false, 400, 'Wrong user id provided.');
         }
 
+        /* If Medias User Id Is Not An Integer, Return Error */
         if(!is_numeric($media_user_id)){
             return Self::generateErrorMessage(false, 400, 'Media user id should be an integer.');
         }
 
+        /* Find User For The Provided Medias User Id */
         $media_user = User::where(['id' => $media_user_id])->first();
 
+        /* If User Not Found For The Provided Medias User Id, Return Error */
         if(empty($media_user)){
             return Self::generateErrorMessage(false, 400, 'Wrong media user id provided.');
         }
 
+        /* Container To Hold The List Of Medias Of Provided User In Array Format */
         $medias_arr = [];
+
+        /* Find All Languages In The System */
         $languages = Languages::all();
         
+        /* if Media User Has Medias, Get Array Response */
         if(!empty($media_user->my_medias)){
+            /* For Each Media, Get Its Translation And Group By The Languages Ids */
             foreach ($media_user->my_medias as $key => $value) {
                 $media = $value->media;
                 if(!empty($media)){
@@ -1017,6 +1032,9 @@ class ApiMedia extends Media
                             }
                         }
                     }
+                    /* 
+                    * Push Medias Information ALong With All Available Translations FOund For This Media In "medias_arr" 
+                    */
                     array_push($medias_arr,[
                         'id' => $media->id,
                         'url' => $media->url,
@@ -1026,6 +1044,7 @@ class ApiMedia extends Media
             }
         }
         
+        /* Return Success Status, ALong With Medias Array */
         return [
             'status' => true,
             'data' => [
