@@ -2097,13 +2097,24 @@ class ApiUser extends User
             }
         }
 
-        /* Return Success Status, Along With Friends Data in "friends" key */
-        return [
-            'status' => true,
-            'data' => [
-                'friends' => $friends_arr
-            ]
-        ];
+        if(!empty($friends_arr)){
+            /* Return Success Status, Along With Friends Data in "friends" key */
+            return [
+                'status' => true,
+                'data' => [
+                    'friends' => $friends_arr
+                ]
+            ];
+        }else{
+            /* Return Success Status, Along With Friends Data in "friends" key */
+            return [
+                'status' => true,
+                'data' => [
+                    'friends' => $friends_arr,
+                    'message' => 'No friends found for the given query.'
+                ]
+            ];
+        }
     }
 
     /* Send Friend Request Function */
