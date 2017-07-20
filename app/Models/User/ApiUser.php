@@ -473,7 +473,9 @@ class ApiUser extends User
 
         return [
             'status'  => true,
-            'data'    => []
+            'data'    => [
+                'message' => 'Password reset successfull.'
+            ]
         ];
     }
 
