@@ -242,9 +242,10 @@
         map.addListener('click', function (event) {
             var loc = event.latLng.lat() + "," + event.latLng.lng();
             document.getElementById('latlng').value = loc;
+            Position=new google.maps.LatLng(event.latLng.lat(), event.latLng.lng());
+            
         });
     }
-
 
 </script>
 
