@@ -2458,30 +2458,38 @@ class ApiUser extends User
         ];
     }
 
+    /* Show profile picture function */
     public static function show_profile_picture($user_id, $session_token){
 
+        /* If User Id is Not An Integer, Return Error */
         if(!is_numeric($user_id)){
             return Self::generateErrorMessage(false, 400, 'User id should be an integer.');
         }
 
+        /* Find User For The Provided User Id */
         $user = Self::where([ 'id' => $user_id ])->first();
 
+        /* if User Not Found Return Error */
         if(empty($user)){
             return Self::generateErrorMessage(false, 400, 'Wrong user id provided.');
         }
-
+        /* Find Session For The Provided Session Token */
         $session = Session::where(['id' => $session_token])->first();
 
+        /* If Session Not Found, Return Error */
         if(empty($session)){
             return Self::generateErrorMessage(false, 400, 'Wrong session token provided.');
         }
 
+        /* If Session's User Id Doesn't Matches Provided User Id, Return Error */
         if($session->user_id != $user_id){
             return Self::generateErrorMessage(false, 400, 'Wrong user id provided.');
         }
 
+        /* get Url For The User's Profile Image */
         $image_url = $user->getProfilePictureUrl();
 
+        /* If Url Found, Return In Data, Else Return Not Found Message */
         if(!empty($image_url)){
             return [
                 'status' => true,
