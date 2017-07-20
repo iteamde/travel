@@ -13,6 +13,7 @@ use App\Models\ActivityMedia\MediasLikes;
 use App\Models\ActivityMedia\MediasShares;
 use App\Models\ActivityMedia\MediasHides;
 use App\Models\ActivityMedia\MediasReports;
+use App\Models\Access\language\Languages;
 
 class ApiMedia extends Media
 {
@@ -872,6 +873,163 @@ class ApiMedia extends Media
             'data'   => [
                 'medias_likes' => $medias_likes_arr,
                 'medias_comments' => $medias_comments_arr
+            ]
+        ];
+    }
+
+    /* Update Medias Description Api */
+    public static function update_description($request){
+
+        /* Get Arguments From Post Request */
+        $post = $request->input();
+
+        /* If User Id Is Not Set Or Is Empty, Return Error */
+        if(! isset($post['user_id']) || empty($post['user_id'])){
+            return Self::generateErrorMessage(false, 400, 'User id not provided.');
+        }
+
+        /* If User Id Is Not An Integer, Return Error */
+        if(! is_numeric($post['user_id']) ){
+            return Self::generateErrorMessage(false, 400, 'User id should be an integer.');
+        }   
+
+        /* Find User For The Provided User Id */
+        $user = User::where(['id' => $post['user_id'] ])->first();
+
+        /* If User Not Found, Return Error */
+        if(empty($user)){
+            return Self::generateErrorMessage(false, 400, 'Wrong user id provided.');
+        }
+
+        /* If Session Token Not Set, Or Is Empty, Return Error */
+        if( !isset($post['session_token']) || empty($post['session_token']) ){
+            return Self::generateErrorMessage(false, 400, 'Session token not provided.');
+        }
+
+        /* Find Session For Provided Session Token */
+        $session = Session::where(['id' => $post['session_token'] ])->first();
+
+        /* If Session Not Found, Return Error */
+        if(empty($session)){
+            return Self::generateErrorMessage(false, 400, 'Session token not provided.');
+        }
+
+        /* If Session's User Id Doesn't Matches Provided User Id, Return Error */
+        if($session->user_id != $post['user_id']){
+            return Self::generateErrorMessage(false, 400, 'Wrong user id provided.');
+        }
+
+        /* If Medias Id Is Not Set, Or Is Empty, Return Error */
+        if(!isset($post['medias_id']) || empty($post['medias_id'])){
+            return Self::generateErrorMessage(false, 400, 'Medias id not provided.');
+        }
+
+        /* If Medias Id Is Not An Integer, Return Error */
+        if(! is_numeric($post['medias_id']) ){
+            return Self::generateErrorMessage(false, 400, 'Medias id should be an integer.');
+        }
+
+        /* Find Media For Provided Medias Id */
+        $media = Self::where(['id' => $post['medias_id']])->first();
+
+        /* If Media Not Found, Return Error */
+        if(empty($media)){
+            return Self::generateErrorMessage(false, 400, 'Wrong media id provided.');
+        }
+
+        /* If Description Not Set, Or Is Empty, Return Error */
+        if(!isset($post['description']) || empty($post['description'])){
+            return Self::generateErrorMessage(false, 400, 'Description not provided.');
+        }
+
+        // Need Language Id To Decide Which Description To Update, For Not English Is Being Updated
+
+        /* Find Translation Model For Medias With Provided Language Id And Medias id */
+        $media_trans = MediaTranslations::where(['languages_id' => 1, 'medias_id' => $post['medias_id'] ])->first();   
+
+        /* If Translation Model Not Found,  */
+        if(!empty($media_trans)){
+            $media_trans->description = $post['description'];
+            $media_trans->save();
+        }else{
+            //Create New Model If Required
+        }
+
+        /* Return Success Status, Along With Success Message */
+        return [
+            'status' => true,
+            'data'   => [
+                'message' => 'Description of media updated successfully'
+            ]
+        ];
+    }
+
+    public static function get_list_by_user( $user_id, $session_token, $media_user_id ){
+
+        if(!is_numeric($user_id)){
+            return Self::generateErrorMessage(false, 400, 'User id should be an integer.');
+        }
+
+        $user = User::where(['id' => $user_id])->first();
+
+        if(empty($user)){
+            return Self::generateErrorMessage(false, 400, 'Wrong user id provided.');
+        }
+
+        $session = Session::where(['id' => $session_token ])->first();
+
+        if(empty($session)){
+            return Self::generateErrorMessage(false, 400, 'Wrong session token provided.');
+        }
+
+        if($session->user_id != $user_id){
+            return Self::generateErrorMessage(false, 400, 'Wrong user id provided.');
+        }
+
+        if(!is_numeric($media_user_id)){
+            return Self::generateErrorMessage(false, 400, 'Media user id should be an integer.');
+        }
+
+        $media_user = User::where(['id' => $media_user_id])->first();
+
+        if(empty($media_user)){
+            return Self::generateErrorMessage(false, 400, 'Wrong media user id provided.');
+        }
+
+        $medias_arr = [];
+        $languages = Languages::all();
+        
+        if(!empty($media_user->my_medias)){
+            foreach ($media_user->my_medias as $key => $value) {
+                $media = $value->media;
+                if(!empty($media)){
+                    $trans_temp_arr = [];
+                    if(!empty($languages)){
+                        foreach ($languages as $key_language => $value_language) {
+                            # code...
+                            $temp_trans = MediaTranslations::where(['medias_id' => $media->id, 'languages_id' => $value_language->id])->first();
+
+                            if(!empty($temp_trans)){
+                                $trans_temp_arr[$value_language->id] = [
+                                    'title' => $temp_trans->title,
+                                    'description' => $temp_trans->description
+                                ];
+                            }
+                        }
+                    }
+                    array_push($medias_arr,[
+                        'id' => $media->id,
+                        'url' => $media->url,
+                        'translations' => $trans_temp_arr
+                    ]);
+                }
+            }
+        }
+        
+        return [
+            'status' => true,
+            'data' => [
+                'medias' => $medias_arr
             ]
         ];
     }

@@ -133,7 +133,9 @@ Route::group([
         Route::post('/report', 'MediasController@report');
         /* Display Media Activities Api */
         Route::post('/activity', 'MediasController@activity');
-        
-        
+        /* Updating Media Description Api */
+        Route::post('/description', 'MediasController@update_description');
+        /*  */
+        Route::get('/listbyuser/{user_id}/{session_token}/{media_user_id}', 'MediasController@listbyuser');
     });
 });

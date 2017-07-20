@@ -8,6 +8,7 @@ use App\Models\User\UsersFriends;
 use App\Models\User\UsersBlocks;
 use App\Models\User\UsersHiddenContent;
 use App\Models\User\UsersFriendRequests;
+use App\Models\user\UsersMedias;
 
 /**
  * Class UserRelationship.
@@ -69,5 +70,12 @@ trait UserRelationship
      */
     public function my_friend_requests(){
         return $this->hasMany(UsersFriendRequests::class, 'to', 'id');
+    }
+
+    /**
+     * @return mixed
+     */
+    public function my_medias(){
+        return $this->hasMany(UsersMedias::class, 'users_id', 'id');
     }
 }

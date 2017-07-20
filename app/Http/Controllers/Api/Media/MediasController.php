@@ -84,4 +84,18 @@ class MediasController extends Controller
     	return $response;
     }
 
+    /* Update Media Description Api */
+    public function update_description(Request $request){
+
+        $response = Media::update_description($request);
+
+        return $response;
+    }
+
+    public function listbyuser($user_id, $session_token, $media_user_id){
+        
+        $response = Media::get_list_by_user( $user_id, $session_token, $media_user_id );
+
+        return $response;        
+    }
 }
