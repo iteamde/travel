@@ -424,6 +424,7 @@ class ApiUser extends User
         
         return [
             'data' => [
+                'message' => 'An email with password reset link is sent to your email account.'
             ],
             'status' => true
         ];
