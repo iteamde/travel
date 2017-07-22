@@ -34,4 +34,11 @@ class PagesController extends Controller
 
 		return $response;
 	}
+
+	public function deactivate(Request $request){
+
+		$response = Pages::deactivate($request);
+
+		return $response;
+	}
 }

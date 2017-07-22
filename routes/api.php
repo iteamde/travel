@@ -160,5 +160,7 @@ Route::group([
         Route::post('/add_admin', 'PagesController@add_admin');
         /* Remove Page Admin Api */
         Route::post('/remove_admin', 'PagesController@remove_admin');
+        /*  */
+        Route::post('/deactivate', 'PagesController@deactivate');
     });
 });
