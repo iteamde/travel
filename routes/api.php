@@ -143,6 +143,7 @@ Route::group([
         Route::post('/description', 'MediasController@update_description');
         /* List User's Media Api */
         Route::get('/listbyuser/{user_id}/{session_token}/{media_user_id}', 'MediasController@listbyuser');
+        
     });
 
 /*
@@ -156,5 +157,7 @@ Route::group([
 
         /* Create a Page Api */
         Route::post('/create', 'PagesController@create');
+        /* Add Page Admin Api */
+        Route::post('/add_admin', 'PagesController@add_admin');
     });
 });

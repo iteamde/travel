@@ -19,4 +19,12 @@ class PagesController extends Controller
 
 		return $response;
 	}
+
+	/* Add Admin Api */
+	public function add_admin(Request $request){
+
+		$response = Pages::add_admin($request);
+
+		return $response;
+	}
 }
