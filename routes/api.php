@@ -143,7 +143,6 @@ Route::group([
         Route::post('/description', 'MediasController@update_description');
         /* List User's Media Api */
         Route::get('/listbyuser/{user_id}/{session_token}/{media_user_id}', 'MediasController@listbyuser');
-        
     });
 
 /*

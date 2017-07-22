@@ -164,7 +164,7 @@ class ApiPages extends Pages
 
         /* If Session Not Found, Return Error */
         if(empty($session)){
-            return Self::getallheaders(false, 400, 'Wrong session token provided.');
+            return Self::generateErrorMessage(false, 400, 'Wrong session token provided.');
         }
 
         /* If Session's User Id Doesn't Matches Provided User Id, Return Error */
