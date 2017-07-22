@@ -233,6 +233,98 @@ class ApiPages extends Pages
         ];
     }
 
+    /* Remove Admin Function */
+    public static function remove_admin($request){
+        /* Get Arguments From Post Request */
+        $post = $request->input();
+
+        /* If User Id Is Not Set, Or Is Empty, Return Error */
+        if(!isset($post['user_id']) || empty($post['user_id'])){
+            return Self::generateErrorMessage(false, 400, 'User id not provided.');
+        }
+
+        /* If User Id Is Not An Integer, Return Error */
+        if(! is_numeric($post['user_id'])){
+            return Self::generateErrorMessage(false, 400, 'User id should be an integer.');
+        }
+
+        /* Find User For The Provided User Id */
+        $user = User::where(['id' => $post['user_id']])->first();
+
+        /* If User Not Found, Return Error */
+        if(empty($user)){
+            return Self::generateErrorMessage(false, 400, 'Wrong user id is provided.');
+        }
+
+        /* If Session Token Not Provided, Or Is Empty, Return Error */
+        if(!isset($post['session_token']) || empty($post['session_token'])){
+            return Self::generateErrorMessage(false, 400, 'Session token not provided.');
+        }
+
+        /* Find Session For The Provided Session Token */
+        $session = Session::where(['id' => $post['session_token']])->first();
+
+        /* If Session Not Found, Return Error */
+        if(empty($session)){
+            return Self::generateErrorMessage(false, 400, 'Wrong session token provided.');
+        }
+
+        /* If Page Id Not Provided, Or Is Empty, Return Error */
+        if(!isset($post['page_id']) || empty($post['page_id'])){
+            return Self::generateErrorMessage(false, 400, 'Page is not provided.');
+        }
+
+        /* If Page Id Is Not An Integer, Return Error */
+        if(!is_numeric($post['page_id'])){
+            return Self::generateErrorMessage(false, 400, 'Page id not provided.');
+        }
+
+        /* Find Page For The Provided Page id */
+        $page = Self::where(['id' => $post['page_id']])->first();
+
+        /* If Page Not Found, Return Error */
+        if(empty($page)){
+            return Self::generateErrorMessage(false, 400, 'Wrong page id provided.');
+        }
+
+        /* If Admin Id Not Provided, Or Is Empty, Return Error */
+        if(!isset($post['admin_id']) || empty($post['admin_id'])){
+            return Self::generateErrorMessage(false, 400, 'Admin id not provided.');
+        }
+
+        /* If Admin Id Is Not An Integer, Return Error */
+        if(!is_numeric($post['admin_id'])){
+            return Self::generateErrorMessage(false, 400, 'Admin id should be an integer.');
+        }
+
+        /* Find User For The Provided Admin Id */
+        $admin = User::where(['id' => $post['admin_id']])->first();
+
+        /* If Admin Not Found, Return Error */
+        if(empty($admin)){
+            return Self::generateErrorMessage(false, 400, 'Wrong admin id provided.');
+        }
+
+        /*Find Relation For The Provided Page Id And User Id In The PagesAdmins Table */
+        $pageAdmin = PagesAdmins::where([ 'pages_id' => $post['page_id'], 'users_id' => $post['admin_id'] ])->first();
+        
+        /* If Page Admin Not Found, Return Error */
+        if(empty($pageAdmin)){
+            return Self::generateErrorMessage(false, 400, 'This user is not an admin of this page.');
+        }
+
+        /* Delete Page Admin */
+        $pageAdmin->delete();
+
+        /* Return Success Status, Along With Success Message */
+        return [
+                'status' => true,
+                'data'   => [
+                    'message' => 'Admin removed successfully.'
+                ]
+        ];
+    }
+
     /* Generate Error Message With provided "status", "code" and "message" */
     public static function generateErrorMessage($status, $code, $message){
 

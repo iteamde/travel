@@ -27,4 +27,11 @@ class PagesController extends Controller
 
 		return $response;
 	}
+
+	public function remove_admin(Request $request){
+
+		$response = Pages::remove_admin($request);
+
+		return $response;
+	}
 }
