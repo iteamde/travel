@@ -1033,7 +1033,7 @@ class ApiMedia extends Media
                         }
                     }
                     /* 
-                    * Push Medias Information ALong With All Available Translations FOund For This Media In "medias_arr" 
+                    * Push Medias Information ALong With All Available Translations Found For This Media In "medias_arr" 
                     */
                     array_push($medias_arr,[
                         'id' => $media->id,

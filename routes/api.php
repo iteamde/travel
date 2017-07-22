@@ -144,4 +144,17 @@ Route::group([
         /* List User's Media Api */
         Route::get('/listbyuser/{user_id}/{session_token}/{media_user_id}', 'MediasController@listbyuser');
     });
+
+/*
+ * Medias Manager 
+ */
+Route::group([
+    'prefix'     => 'pages',
+    'as'         => 'page.',
+    'namespace'  => 'Page' ,
+], function () {
+
+        /* Create a Page Api */
+        Route::post('/create', 'PagesController@create');
+    });
 });
