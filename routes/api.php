@@ -163,6 +163,6 @@ Route::group([
         /* Deactivate Page Api */
         Route::post('/deactivate', 'PagesController@deactivate');
         /*  */
-        Route::post('notification_settings', 'PagesController@notification_settings');
+        Route::post('/notification_settings', 'PagesController@notification_settings');
     });
 });
