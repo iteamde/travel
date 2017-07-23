@@ -28,6 +28,7 @@ class PagesController extends Controller
 		return $response;
 	}
 
+	/* Remove Admin Api */
 	public function remove_admin(Request $request){
 
 		$response = Pages::remove_admin($request);
@@ -35,9 +36,17 @@ class PagesController extends Controller
 		return $response;
 	}
 
+	/* Deactivate Page Api */
 	public function deactivate(Request $request){
 
 		$response = Pages::deactivate($request);
+
+		return $response;
+	}
+
+	public function notification_settings(Request $request){
+
+		$response = Pages::notification_settings($request);
 
 		return $response;
 	}
