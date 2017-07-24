@@ -13,7 +13,7 @@
 @section('after-styles')
 <style>
     #gmap {
-        height: 300px;
+        height: 600px;
     }
     #pac-input {
         background-color: #fff;
@@ -243,7 +243,7 @@
             var loc = event.latLng.lat() + "," + event.latLng.lng();
             document.getElementById('latlng').value = loc;
             Position=new google.maps.LatLng(event.latLng.lat(), event.latLng.lng());
-            
+
         });
     }
 
