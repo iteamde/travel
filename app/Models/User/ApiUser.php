@@ -1361,6 +1361,10 @@ class ApiUser extends User
             return Self::generateErrorMessage(false, 400, 'Status Not Provided.');
         }
 
+        if($post['status'] != Session::ONLINE_STATUS_SHOW && $post['status'] != Session::ONLINE_STATUS_HIDE){
+            return Self::generateErrorMessage(false, 400, 'Status should be either ('. Session::ONLINE_STATUS_SHOW .','. Session::ONLINE_STATUS_HIDE .')');
+        }
+
         /* Set Session's Show Status Equal To Status */
         $session->show_status = $post['status'];
         $session->save();

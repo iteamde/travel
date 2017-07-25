@@ -60,7 +60,7 @@ class UserController extends Controller
     *   Validate User And Create New Session If Not Exists.
     */
     public function login(Request $request){
-
+        
         $post = $request->input();
 
         $response = User::loginValidation($post);
