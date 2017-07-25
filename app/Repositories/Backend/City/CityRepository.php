@@ -115,10 +115,11 @@ class CityRepository extends BaseRepository
         $model->lat         = $extra['lat'];
         $model->lng         = $extra['lng'];
         $model->safety_degree_id = $extra['safety_degree_id'];
+        $model->level_of_living_id = $extra['level_of_living_id'];
 
         DB::transaction(function () use ($model, $input, $extra) {
             $check = 1;
-            
+
             if ($model->save()) {
 
                 /* Entry in CityMedias table */
@@ -229,7 +230,7 @@ class CityRepository extends BaseRepository
         });
     }
 
-    
+
     /**
      * @param array $input
      */
@@ -319,7 +320,7 @@ class CityRepository extends BaseRepository
 
         DB::transaction(function () use ($model, $input, $extra) {
             $check = 1;
-            
+
             if ($model->save()) {
 
                 /* Entry in CityMedias table */

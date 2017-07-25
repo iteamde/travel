@@ -50,11 +50,11 @@ class CityController extends Controller
      * @return mixed
      */
     public function create(ManageCityRequest $request)
-    {   
+    {
         /* Get All Regions */
         $countries = Countries::where(['active' => Countries::ACTIVE])->get();
         $countries_arr = [];
-        
+
         foreach ($countries as $key => $value) {
             if(isset($value->transsingle) && !empty($value->transsingle)){
                 $countries_arr[$value->id] = $value->transsingle->title;
@@ -64,9 +64,9 @@ class CityController extends Controller
         /* Get All safety Degrees */
         $degrees = SafetyDegree::get();
         $degrees_arr = [];
-        
+
         foreach ($degrees as $key => $value) {
-            if(isset($value->transsingle) && !empty($value->transsingle)){  
+            if(isset($value->transsingle) && !empty($value->transsingle)){
                 $degrees_arr[$value->id] = $value->transsingle->title;
             }
         }
@@ -74,9 +74,9 @@ class CityController extends Controller
         /* Get All Places */
         $places = Place::get();
         $places_arr = [];
-        
+
         foreach ($places as $key => $value) {
-            if(isset($value->transsingle) && !empty($value->transsingle)){  
+            if(isset($value->transsingle) && !empty($value->transsingle)){
                 $places_arr[$value->id] = $value->transsingle->title;
             }
         }
@@ -84,9 +84,9 @@ class CityController extends Controller
         /* Get All Active Currencies */
         $currencies = Currencies::where([ 'active' => Currencies::ACTIVE ])->get();
         $currencies_arr = [];
-        
+
         foreach ($currencies as $key => $value) {
-            if(isset($value->transsingle) && !empty($value->transsingle)){  
+            if(isset($value->transsingle) && !empty($value->transsingle)){
                 $currencies_arr[$value->id] = $value->transsingle->title;
             }
         }
@@ -94,9 +94,9 @@ class CityController extends Controller
         /* Get All Emergency Numbers */
         $emergency_numbers = EmergencyNumbers::get();
         $emergency_numbers_arr = [];
-        
+
         foreach ($emergency_numbers as $key => $value) {
-            if(isset($value->transsingle) && !empty($value->transsingle)){  
+            if(isset($value->transsingle) && !empty($value->transsingle)){
                 $emergency_numbers_arr[$value->id] = $value->transsingle->title;
             }
         }
@@ -104,9 +104,9 @@ class CityController extends Controller
         /* Find All Holidays In The System */
         $holidays = Holidays::get();
         $holidays_arr = [];
-        
+
         foreach ($holidays as $key => $value) {
-            if(isset($value->transsingle) && !empty($value->transsingle)){  
+            if(isset($value->transsingle) && !empty($value->transsingle)){
                 $holidays_arr[$value->id] = $value->transsingle->title;
             }
         }
@@ -114,9 +114,9 @@ class CityController extends Controller
         /* Find All LanguagesSpoken In The System */
         $languages_spoken = LanguagesSpoken::get();
         $languages_spoken_arr = [];
-        
+
         foreach ($languages_spoken as $key => $value) {
-            if(isset($value->transsingle) && !empty($value->transsingle)){  
+            if(isset($value->transsingle) && !empty($value->transsingle)){
                 $languages_spoken_arr[$value->id] = $value->transsingle->title;
             }
         }
@@ -124,9 +124,9 @@ class CityController extends Controller
         /* Find All Lifestyles In The System */
         $lifestyles = Lifestyle::get();
         $lifestyles_arr = [];
-        
+
         foreach ($lifestyles as $key => $value) {
-            if(isset($value->transsingle) && !empty($value->transsingle)){  
+            if(isset($value->transsingle) && !empty($value->transsingle)){
                 $lifestyles_arr[$value->id] = $value->transsingle->title;
             }
         }
@@ -134,9 +134,9 @@ class CityController extends Controller
         /* Find All Medias In The System */
         $medias = Media::get();
         $medias_arr = [];
-        
+
         foreach ($medias as $key => $value) {
-            if(isset($value->transsingle) && !empty($value->transsingle)){  
+            if(isset($value->transsingle) && !empty($value->transsingle)){
                 $medias_arr[$value->id] = $value->transsingle->title;
             }
         }
@@ -144,9 +144,9 @@ class CityController extends Controller
         /* Find All Active Religions In The System */
         $religion = Religion::where([ 'active' => Religion::ACTIVE])->get();
         $religion_arr = [];
-        
+
         foreach ($religion as $key => $value) {
-            if(isset($value->transsingle) && !empty($value->transsingle)){  
+            if(isset($value->transsingle) && !empty($value->transsingle)){
                 $religion_arr[$value->id] = $value->transsingle->title;
             }
         }
@@ -172,23 +172,23 @@ class CityController extends Controller
      * @return mixed
      */
     public function store(StoreCityRequest $request)
-    {   
+    {
         $data = [];
-        
+
         foreach ($this->languages as $key => $language) {
             $data[$language->id]['title_'.$language->id] = $request->input('title_'.$language->id);
-            $data[$language->id]['description_'.$language->id] = $request->input('description_'.$language->id);
-            $data[$language->id]['best_time_'.$language->id] = $request->input('best_time_'.$language->id);
-            $data[$language->id]['best_place_'.$language->id] = $request->input('best_place_'.$language->id);
-            $data[$language->id]['cost_of_living_'.$language->id] = $request->input('cost_of_living_'.$language->id);
-            $data[$language->id]['geo_stats_'.$language->id] = $request->input('geo_stats_'.$language->id);
-            $data[$language->id]['demographics_'.$language->id] = $request->input('demographics_'.$language->id);
-            $data[$language->id]['suitable_for_'.$language->id] = $request->input('suitable_for_'.$language->id);
-            $data[$language->id]['economy_'.$language->id] = $request->input('economy_'.$language->id);  
+            $data[$language->id]['description_'.$language->id] = $request->input('description_'.$language->id) ? $request->input('description_'.$language->id) : '';
+            $data[$language->id]['best_time_'.$language->id] = $request->input('best_time_'.$language->id) ? $request->input('best_time_'.$language->id) : '';
+            $data[$language->id]['best_place_'.$language->id] = $request->input('best_place_'.$language->id) ? $request->input('best_place_'.$language->id) : '';
+            $data[$language->id]['cost_of_living_'.$language->id] = $request->input('cost_of_living_'.$language->id) ? $request->input('cost_of_living_'.$language->id) : '';
+            $data[$language->id]['geo_stats_'.$language->id] = $request->input('geo_stats_'.$language->id) ? $request->input('geo_stats_'.$language->id) : '';
+            $data[$language->id]['demographics_'.$language->id] = $request->input('demographics_'.$language->id) ? $request->input('demographics_'.$language->id) : '';
+            $data[$language->id]['suitable_for_'.$language->id] = $request->input('suitable_for_'.$language->id) ? $request->input('suitable_for_'.$language->id) : '';
+            $data[$language->id]['economy_'.$language->id] = $request->input('economy_'.$language->id) ? $request->input('economy_'.$language->id) : '';
         }
 
-        $location = explode(',',$request->input('lat_lng') ); 
-        
+        $location = explode(',',$request->input('lat_lng') );
+
         /* Check if active field is enabled or disabled */
         $active = null;
         if(empty($request->input('active')) || $request->input('active') == 0){
@@ -210,18 +210,19 @@ class CityController extends Controller
             'active' => $active,
             'is_capital' => $is_capital,
             'countries_id' =>  $request->input('countries_id'),
-            'code' => $request->input('code'),
-            'lat' => $location[0],
-            'lng' => $location[1],
-            'places' => $request->input('places_id'),
-            'currencies' => $request->input('currencies_id'),
-            'emergency_numbers' => $request->input('emergency_numbers_id'),
-            'holidays'  => $request->input('holidays_id'),
-            'languages_spoken' => $request->input('languages_spoken_id'),
-            'lifestyles'  => $request->input('lifestyles_id'),
-            'medias'  => $request->input('medias_id'),
-            'religions'  => $request->input('religions_id'),
-            'safety_degree_id' => $request->input('safety_degree_id')
+            'code' => $request->input('code') ? $request->input('code') : 0,
+            'lat' => $location[0] ? $location[0] : 0,
+            'lng' => isset($location[1]) ? $location[1] : 0,
+            'places' => $request->input('places_id') ? $request->input('places_id') : '',
+            'currencies' => $request->input('currencies_id') ? $request->input('currencies_id') : '',
+            'emergency_numbers' => $request->input('emergency_numbers_id') ? $request->input('emergency_numbers_id') : '',
+            'holidays'  => $request->input('holidays_id') ? $request->input('holidays_id') : '',
+            'languages_spoken' => $request->input('languages_spoken_id') ? $request->input('languages_spoken_id') : '',
+            'lifestyles'  => $request->input('lifestyles_id') ? $request->input('lifestyles_id') : '',
+            'medias'  => $request->input('medias_id') ? $request->input('medias_id') : '',
+            'religions'  => $request->input('religions_id') ? $request->input('religions_id') : '',
+            'safety_degree_id' => $request->input('safety_degree_id') ? $request->input('safety_degree_id') : '',
+            'level_of_living_id' => $request->input('level_of_living_id') ? $request->input('level_of_living_id') : 0
         ];
 
         $this->cities->create($data, $extra);
@@ -236,7 +237,7 @@ class CityController extends Controller
      * @return mixed
      */
     public function edit($id, ManageCityRequest $request)
-    {   
+    {
         /* $data array to pass data to view */
         $data = [];
 
@@ -298,7 +299,7 @@ class CityController extends Controller
         $degrees_arr = [];
         /* Get Title Id Pair For Each Model */
         foreach ($degrees as $key => $value) {
-            if(isset($value->transsingle) && !empty($value->transsingle)){  
+            if(isset($value->transsingle) && !empty($value->transsingle)){
                 $degrees_arr[$value->id] = $value->transsingle->title;
             }
         }
@@ -308,7 +309,7 @@ class CityController extends Controller
         $selected_airports_arr = [];
         /* Get Selected Id Pair From Each Model */
         foreach ($selected_airports as $key => $value) {
-            if(isset($value->place->transsingle) && !empty($value->place->transsingle)){  
+            if(isset($value->place->transsingle) && !empty($value->place->transsingle)){
                 // $selected_airports_arr[$value->place->id] = $value->place->transsingle->title;
                 array_push($selected_airports_arr,$value->place->id);
             }
@@ -321,7 +322,7 @@ class CityController extends Controller
         $places_arr = [];
         /* Get Title Id Pair For Each Model */
         foreach ($places as $key => $value) {
-            if(isset($value->transsingle) && !empty($value->transsingle)){  
+            if(isset($value->transsingle) && !empty($value->transsingle)){
                 $places_arr[$value->id] = $value->transsingle->title;
             }
         }
@@ -331,20 +332,20 @@ class CityController extends Controller
         $selected_currencies_arr = [];
         /* Get Selected Id Pair From Each Model */
         foreach ($selected_currencies as $key => $value) {
-            if(isset($value->currency->transsingle) && !empty($value->currency->transsingle)){  
+            if(isset($value->currency->transsingle) && !empty($value->currency->transsingle)){
                 // $selected_airports_arr[$value->place->id] = $value->place->transsingle->title;
                 array_push($selected_currencies_arr,$value->currency->id);
             }
         }
 
         $data['selected_currencies'] = $selected_currencies_arr;
-        
+
         /* Get All Currencies */
         $currencies = Currencies::where([ 'active' => Currencies::ACTIVE ])->get();
         $currencies_arr = [];
         /* Get Title Id Pair For Each Model */
         foreach ($currencies as $key => $value) {
-            if(isset($value->transsingle) && !empty($value->transsingle)){  
+            if(isset($value->transsingle) && !empty($value->transsingle)){
                 $currencies_arr[$value->id] = $value->transsingle->title;
             }
         }
@@ -354,20 +355,20 @@ class CityController extends Controller
         $selected_numbers_arr = [];
         /* Get Selected Id Pair From Each Model */
         foreach ($selected_numbers as $key => $value) {
-            if(isset($value->emergency_number->transsingle) && !empty($value->emergency_number->transsingle)){  
+            if(isset($value->emergency_number->transsingle) && !empty($value->emergency_number->transsingle)){
                 // $selected_airports_arr[$value->place->id] = $value->place->transsingle->title;
                 array_push($selected_numbers_arr,$value->emergency_number->id);
             }
         }
 
         $data['emergency_numbers'] = $selected_numbers_arr;
-        
+
          /* Get All Emergency Numbers */
         $emergency_numbers = EmergencyNumbers::get();
         $emergency_numbers_arr = [];
         /* Get Title Id Pair For Each Model */
         foreach ($emergency_numbers as $key => $value) {
-            if(isset($value->transsingle) && !empty($value->transsingle)){  
+            if(isset($value->transsingle) && !empty($value->transsingle)){
                 $emergency_numbers_arr[$value->id] = $value->transsingle->title;
             }
         }
@@ -377,7 +378,7 @@ class CityController extends Controller
         $selected_holidays_arr = [];
         /* Get Selected Id Pair From Each Model */
         foreach ($selected_holidays as $key => $value) {
-            if(isset($value->holiday->transsingle) && !empty($value->holiday->transsingle)){  
+            if(isset($value->holiday->transsingle) && !empty($value->holiday->transsingle)){
                 // $selected_airports_arr[$value->place->id] = $value->place->transsingle->title;
                 array_push($selected_holidays_arr,$value->holiday->id);
             }
@@ -390,7 +391,7 @@ class CityController extends Controller
         $holidays_arr = [];
         /* Get Title Id Pair For Each Model */
         foreach ($holidays as $key => $value) {
-            if(isset($value->transsingle) && !empty($value->transsingle)){  
+            if(isset($value->transsingle) && !empty($value->transsingle)){
                 $holidays_arr[$value->id] = $value->transsingle->title;
             }
         }
@@ -400,21 +401,21 @@ class CityController extends Controller
         $selected_languages_spoken_arr = [];
         /* Get Selected Id Pair From Each Model */
         foreach ($selected_languages_spoken as $key => $value) {
-            // if(isset($value->languages_spoken->transsingle) && !empty($value->languages_spoken->transsingle)){  
+            // if(isset($value->languages_spoken->transsingle) && !empty($value->languages_spoken->transsingle)){
                 // $selected_airports_arr[$value->place->id] = $value->place->transsingle->title;
                 array_push($selected_languages_spoken_arr,$value->languages_spoken->id);
             // }
         }
 
         $data['selected_languages_spoken'] = $selected_languages_spoken_arr;
-       
+
 
         /* Find All LanguagesSpoken In The System */
         $languages_spoken = LanguagesSpoken::get();
         $languages_spoken_arr = [];
         /* Get Title Id Pair For Each Model */
         foreach ($languages_spoken as $key => $value) {
-            if(isset($value->transsingle) && !empty($value->transsingle)){  
+            if(isset($value->transsingle) && !empty($value->transsingle)){
                 $languages_spoken_arr[$value->id] = $value->transsingle->title;
             }
         }
@@ -424,7 +425,7 @@ class CityController extends Controller
         $selected_lifestyles_arr = [];
         /* Get Selected Id Pair From Each Model */
         foreach ($selected_lifestyles as $key => $value) {
-            // if(isset($value->languages_spoken->transsingle) && !empty($value->languages_spoken->transsingle)){  
+            // if(isset($value->languages_spoken->transsingle) && !empty($value->languages_spoken->transsingle)){
                 // $selected_airports_arr[$value->place->id] = $value->place->transsingle->title;
                 array_push($selected_lifestyles_arr,$value->lifestyle->id);
             // }
@@ -437,7 +438,7 @@ class CityController extends Controller
         $lifestyles_arr = [];
         /* Get Title Id Pair For Each Model */
         foreach ($lifestyles as $key => $value) {
-            if(isset($value->transsingle) && !empty($value->transsingle)){  
+            if(isset($value->transsingle) && !empty($value->transsingle)){
                 $lifestyles_arr[$value->id] = $value->transsingle->title;
             }
         }
@@ -447,11 +448,11 @@ class CityController extends Controller
         $selected_medias_arr = [];
         /* Get Selected Id Pair From Each Model */
         foreach ($selected_medias as $key => $value) {
-            // if(isset($value->languages_spoken->transsingle) && !empty($value->languages_spoken->transsingle)){  
+            // if(isset($value->languages_spoken->transsingle) && !empty($value->languages_spoken->transsingle)){
                 // $selected_airports_arr[$value->place->id] = $value->place->transsingle->title;
                 array_push($selected_medias_arr,$value->medias->id);
             // }
-        }        
+        }
 
         $data['selected_medias'] = $selected_medias_arr;
 
@@ -460,7 +461,7 @@ class CityController extends Controller
         $medias_arr = [];
         /* Get Title Id Pair For Each Model */
         foreach ($medias as $key => $value) {
-            if(isset($value->transsingle) && !empty($value->transsingle)){  
+            if(isset($value->transsingle) && !empty($value->transsingle)){
                 $medias_arr[$value->id] = $value->transsingle->title;
             }
         }
@@ -470,20 +471,20 @@ class CityController extends Controller
         $selected_religions_arr = [];
         /* Get Selected Id Pair From Each Model */
         foreach ($selected_religions as $key => $value) {
-            // if(isset($value->languages_spoken->transsingle) && !empty($value->languages_spoken->transsingle)){  
+            // if(isset($value->languages_spoken->transsingle) && !empty($value->languages_spoken->transsingle)){
                 // $selected_airports_arr[$value->place->id] = $value->place->transsingle->title;
                 array_push($selected_religions_arr,$value->religion->id);
             // }
-        } 
+        }
 
-        $data['selected_religions'] = $selected_religions_arr;       
+        $data['selected_religions'] = $selected_religions_arr;
 
         /* Find All Religions In The System */
         $religion = Religion::where([ 'active' => Religion::ACTIVE ])->get();
         $religion_arr = [];
-        /* Get Title Id Pair For Each Model */ 
+        /* Get Title Id Pair For Each Model */
         foreach ($religion as $key => $value) {
-            if(isset($value->transsingle) && !empty($value->transsingle)){  
+            if(isset($value->transsingle) && !empty($value->transsingle)){
                 $religion_arr[$value->id] = $value->transsingle->title;
             }
         }
@@ -512,13 +513,13 @@ class CityController extends Controller
      * @return mixed
      */
     public function update($id, ManageCityRequest $request)
-    {   
+    {
         $country = Cities::findOrFail(['id' => $id]);
-        
+
         $data = [];
 
         $data = [];
-        
+
         foreach ($this->languages as $key => $language) {
             $data[$language->id]['title_'.$language->id] = $request->input('title_'.$language->id);
             $data[$language->id]['description_'.$language->id] = $request->input('description_'.$language->id);
@@ -528,11 +529,11 @@ class CityController extends Controller
             $data[$language->id]['geo_stats_'.$language->id] = $request->input('geo_stats_'.$language->id);
             $data[$language->id]['demographics_'.$language->id] = $request->input('demographics_'.$language->id);
             $data[$language->id]['suitable_for_'.$language->id] = $request->input('suitable_for_'.$language->id);
-            $data[$language->id]['economy_'.$language->id] = $request->input('economy_'.$language->id);  
+            $data[$language->id]['economy_'.$language->id] = $request->input('economy_'.$language->id);
         }
 
-        $location = explode(',',$request->input('lat_lng') ); 
-        
+        $location = explode(',',$request->input('lat_lng') );
+
         /* Check if active field is enabled or disabled */
         $active = null;
         if(empty($request->input('active')) || $request->input('active') == 0){
@@ -548,7 +549,7 @@ class CityController extends Controller
         }else{
             $is_capital = Cities::IS_CAPITAL;
         }
-        
+
         $extra = [
             'active' => $active,
             'is_capital' => $is_capital,
@@ -567,7 +568,7 @@ class CityController extends Controller
             'safety_degree_id' => $request->input('safety_degree_id')
         ];
 
-        
+
         $this->cities->update($id , $country, $data , $extra);
 
         return redirect()->route('admin.location.city.index')
@@ -581,7 +582,7 @@ class CityController extends Controller
      * @return mixed
      */
     public function show($id, ManageCityRequest $request)
-    {   
+    {
         $city = Cities::findOrFail(['id' => $id]);
         $cityTrans = CitiesTranslations::where(['cities_id' => $id])->get();
         $city = $city[0];
@@ -593,7 +594,7 @@ class CityController extends Controller
         /* Get Safety Degrees Information */
         $safety_degree = $city->degree;
         $safety_degree = $safety_degree->transsingle;
-       
+
         /*Get Airport Locations*/
         $airports = $city->airports;
         $airports_arr = [];
@@ -601,7 +602,7 @@ class CityController extends Controller
         /* If Model Exist, Get Translated Title For Each Model */
         if(!empty($airports)){
             foreach ($airports as $key => $value) {
-                
+
                 $place = $value->place;
                 if(!empty($place)){
 
@@ -620,7 +621,7 @@ class CityController extends Controller
         /* If Model Exist, Get Translated Title For Each Model */
         if(!empty($currencies)){
             foreach ($currencies as $key => $value) {
-                
+
                 $currency = $value->currency;
                 if(!empty($currency)){
 
@@ -639,9 +640,9 @@ class CityController extends Controller
         /* If Model Exist, Get Translated Title For Each Model */
         if(!empty($emergency_numbers)){
             foreach ($emergency_numbers as $key => $value) {
-                
+
                 $number = $value->emergency_number;
-               
+
                 if(!empty($number)){
 
                     $number = $number->transsingle;
@@ -659,9 +660,9 @@ class CityController extends Controller
         /* If Model Exist, Get Translated Title For Each Model */
         if(!empty($holidays)){
             foreach ($holidays as $key => $value) {
-                
+
                 $holiday = $value->holiday;
-               
+
                 if(!empty($holiday)){
 
                     $holiday = $holiday->transsingle;
@@ -679,9 +680,9 @@ class CityController extends Controller
         /* If Model Exist, Get Translated Title For Each Model */
         if(!empty($languages_spoken)){
             foreach ($languages_spoken as $key => $value) {
-                
+
                 $language_spoken = $value->languages_spoken;
-               
+
                 if(!empty($language_spoken)){
 
                     $language_spoken = $language_spoken->transsingle;
@@ -699,9 +700,9 @@ class CityController extends Controller
         /* If Model Exist, Get Translated Title For Each Model */
         if(!empty($lifestyles)){
             foreach ($lifestyles as $key => $value) {
-                
+
                 $lifestyle = $value->lifestyle;
-               
+
                 if(!empty($lifestyle)){
 
                     $lifestyle = $lifestyle->transsingle;
@@ -719,13 +720,13 @@ class CityController extends Controller
         /* If Model Exist, Get Translated Title For Each Model */
         if(!empty($medias)){
             foreach ($medias as $key => $value) {
-                
+
                 $media = $value->medias;
-               
+
                 if(!empty($media)){
-   
+
                     $media = $media->transsingle;
-                    
+
                     if(!empty($media)){
                         array_push($medias_arr,$media->title);
                     }
@@ -740,20 +741,20 @@ class CityController extends Controller
         /* If Model Exist, Get Translated Title For Each Model */
         if(!empty($religions)){
             foreach ($religions as $key => $value) {
-                
+
                 $religion = $value->religion;
-               
+
                 if(!empty($religion)){
-   
+
                     $religion = $religion->transsingle;
-                    
+
                     if(!empty($religion)){
                         array_push($religions_arr,$religion->title);
                     }
                 }
             }
         }
-        
+
         return view('backend.city.show')
             ->withCity($city)
             ->withCitytrans($cityTrans)
