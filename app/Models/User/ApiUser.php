@@ -197,60 +197,38 @@ class ApiUser extends User
 
     public static function loginValidation($post){
 
+        $error = [];
+
         /* "email" validation */
         if( !isset($post['email']) || empty($post['email']) ){
-            return [
-                'status' => false,
-                'data' => [
-                    'error' => 400,
-                    'message' => 'Email not provided.',
-                ],
-            ];
+            array_push($error, 'Email not provided.');
+        }else{
+            /* Check If Provided Email Matches The Email Format */
+            if( ! filter_var( $post['email'], FILTER_VALIDATE_EMAIL ) ){
+                array_push($error,"'".$post['email']."' is not a valid email address.");
+            }    
         }
         
-        /* Check If Provided Email Matches The Email Format */
-        if( ! filter_var( $post['email'], FILTER_VALIDATE_EMAIL ) ){
-            return [
-                'data' => [
-                    'error'     => 400,
-                    'message'   => "'".$post['email']."' is not a valid email address.",
-                ],
-                'status'    => false
-            ];
-        }
-
         /* "password" validation */
         if( !isset($post['password']) || empty($post['password'])   ){
-            return [
-                'data' => [
-                    'error'     => 400,
-                    'message'   => 'Password not provided.',
-                ],
-                'status'    => false
-            ];
+            array_push($error, 'Password not provided.');
+        }else{
+            /* Check If Provided Password Length Is Between ( 6-20 ) */
+            if( strlen($post['password']) < 6 || strlen($post['password']) > 20 ){
+                array_push($error,'Length of password should be between (6-20) characters.');
+            }
+
+            /* Check If Password Matches The Required Format */
+            if( ! preg_match( '/^[a-zA-Z0-9._]+$/' , $post['password']) ){
+                array_push($error,'Password can only contain alphanumeric characters.');
+            }    
+        }
+        
+        if(!empty($error)){
+            return Self::generateErrorMessage(false, 400, $error);
         }
 
-        /* Check If Provided Password Length Is Between ( 6-20 ) */
-        if( strlen($post['password']) < 6 || strlen($post['password']) > 20 ){
-            return [
-                'data' => [
-                    'error'     => 400,
-                    'message'   => 'Length of password should be between (6-20) characters.',
-                ],
-                'status'    => false
-            ];
-        }
-
-        /* Check If Password Matches The Required Format */
-        if( ! preg_match( '/^[a-zA-Z0-9._]+$/' , $post['password']) ){
-            return [
-                'data' => [
-                    'error'     => 400,
-                    'message'   => 'Password can only contain alphanumeric characters.',
-                ],
-                'status'    => false
-            ];
-        }
+        return false;
     }
 
     public static function loginUser($post , $request){
