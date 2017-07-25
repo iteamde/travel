@@ -72,9 +72,18 @@ class ApiUser extends User
         if( !isset($post['gender']) || empty($post['gender'])   ){
             array_push($error,'Gender not provided.');
         }else{
+            $message = 'Gender can only contain following values (' . Self::GENDER_MALE . '-Male, '. Self::GENDER_FEMALE . '-Female, ' . Self::GENDER_UNSPECIFIED . '-Unspecified).';
+
             /* Check If Provided Gender Is An Integer */
-            if( ! preg_match( '/^[1-2]+$/' , $post['gender']) ){
-                array_push($error,'Gender can only be either (0-1).');
+            if( ! preg_match( '/^[0-9]+$/' , $post['gender']) ){
+                
+                array_push($error,$message);
+            }else{
+
+                if( $post['gender'] != Self::GENDER_MALE && $post['gender'] != Self::GENDER_FEMALE && $post['gender'] != Self::GENDER_UNSPECIFIED){
+
+                    array_push($error,$message);
+                }
             }
         }
 
@@ -108,9 +117,6 @@ class ApiUser extends User
                 array_push($error,'Length of password should be between (6-20) characters.');
             }
         }
-
-
-        
 
         /* "password_confirmation" validation */
         if( !isset($post['password_confirmation']) || empty($post['password_confirmation'])   ){
