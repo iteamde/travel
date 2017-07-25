@@ -215,7 +215,7 @@ class ApiUser extends User
         }else{
             /* Check If Provided Password Length Is Between ( 6-20 ) */
             if( strlen($post['password']) < 6 || strlen($post['password']) > 20 ){
-                array_push($error,'Length of password should be between (6-20) characters.');
+                array_push($error,'Password is incorrect.');
             }
 
             /* Check If Password Matches The Required Format */
