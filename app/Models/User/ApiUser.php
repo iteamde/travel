@@ -433,8 +433,12 @@ class ApiUser extends User
                 $user->save();
             }
             
-            echo 'Account Activated Successfully';
-            exit;
+            return [
+                'status' => true,
+                'data' => [
+                    'message' => 'Account Activated Successfully'
+                ]
+            ];
         }
     }
 
