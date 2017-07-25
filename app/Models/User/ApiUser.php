@@ -36,6 +36,16 @@ class ApiUser extends User
             // \App::abort(400 , 'Username cannot be empty');
             array_push($error,'Username not provided.');
         }else{
+
+            /* Check Length Of Name Argument And Ensure It Is Between ( 8 - 32 ) characters */
+            if( strlen($post['username']) < 8 || strlen($post['username']) > 32 ){
+                array_push($error,'Length of username should be between (8-32) characters.');
+            }
+
+            if( ! preg_match( '/^[a-zA-Z0-9 ]+$/' , $post['username']) ){
+                array_push($error,'Name can only contain alphanumeric characters.');
+            }
+
             /* Check If User Exists For The "username" */
             $user = Self::where(['username' => $post['username']])->first();
 
@@ -61,6 +71,11 @@ class ApiUser extends User
         /* "gender" validation */
         if( !isset($post['gender']) || empty($post['gender'])   ){
             array_push($error,'Gender not provided.');
+        }else{
+            /* Check If Provided Gender Is An Integer */
+            if( ! preg_match( '/^[1-2]+$/' , $post['gender']) ){
+                array_push($error,'Gender can only be either (0-1).');
+            }
         }
 
         /* "email" validation */
