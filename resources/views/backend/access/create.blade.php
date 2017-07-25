@@ -12,7 +12,16 @@ use App\Models\Access\User\User;
     </h1>
 @endsection
 
+
 @section('content')
+<!-- Language Error Style: Start -->
+<style>
+    .required_msg{
+        padding-left: 20px;
+    }
+</style>
+<!-- Language Error Style: End -->
+
     {{ Form::open([
             'id'    => 'User_form',
             'route' => 'admin.access.user.store',
@@ -31,6 +40,15 @@ use App\Models\Access\User\User;
                     @include('backend.access.includes.partials.user-header-buttons')
                 </div><!--box-tools pull-right-->
             </div><!-- /.box-header -->
+
+            <!-- Required Error : Start -->
+            <div class="row error-box">
+                <div class="col-md-10">
+                    <div class="required_msg">
+                    </div>
+                </div>
+            </div>
+            <!-- Required Error : End -->
 
             <div class="box-body">
                 <div class="form-group">
@@ -320,6 +338,19 @@ use App\Models\Access\User\User;
 
             if($('#customer_phone').intlTelInput('isValidNumber')) {
                 $('#User_form').submit();
+            }else{
+                var text = '';
+                if($('#customer_phone').val() == ''){
+                    text = 'Phone number must not be empty.';
+                }else{
+                    text = 'Phone number should be according to the given format';    
+                }
+                var msg = '<div id="required-alert" class="alert alert-danger alert-dismissable fade in"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Error!</strong> ' + text + '.</div>';
+
+                $('.required_msg').html(msg);
+                $("#required-alert").fadeTo(5000, 500).slideUp(500, function(){
+                    $("#required-alert").slideUp(500);
+                });
             }
         });
     </script>
