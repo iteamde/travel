@@ -119,14 +119,27 @@ class ApiUser extends User
                 array_push($error,'Password and confirm password do not match.');
             }
         }
+
+        /* If Mobile Number Doesn't Matches The Required Format, Return Error */
+        if(isset($post['mobile_number'])){
+           
+            if( ! preg_match( '/^[+][0-9 -]+$/' , $post['mobile_number'] ) ){
+
+                array_push($error, 'Invalid Mobile Number Format. Please Provide A Valid Mobile Number Format. E.g,(+000 00000000)');
+            }
+        }
         
-        return [
-                'data' => [
-                    'error'     => 400,
-                    'message'   => $error,
-                ],
-                'status'    => false
-        ];
+        if(empty($error)){
+            return false;
+        }else{
+            return [
+                    'data' => [
+                        'error'     => 400,
+                        'message'   => $error,
+                    ],
+                    'status'    => false
+            ];
+        }
     }
 
     public static function createUser($post){
