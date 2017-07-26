@@ -1064,7 +1064,7 @@ class ApiUser extends User
         if($session->user_id != $user_id){
             return Self::generateErrorMessage(false, 400, 'Wrong User Id Provided');
         }
-        
+
         $old_password_check = $old_password;
         $old_password = sha1($old_password);
 
@@ -1094,7 +1094,7 @@ class ApiUser extends User
         }
 
         if($new_password == $old_password_check){
-            return Self::generateErrorMessage(false, 400, 'New password cannot be the same as old password.');
+            return Self::generateErrorMessage(false, 400, 'New password cannot be the same as old password, please enter new password.');
         }
 
         /* Encode New Password Using Sh1 Encoding Before Saving To Database */
