@@ -50,7 +50,7 @@ class UserController extends Controller {
             $data['logs'] = DB::table('admin_logs')
                     ->leftJoin('users', 'admin_logs.admin_id', '=', 'users.id')
                     ->where('admin_logs.admin_id', $admin_id)
-                    ->select('admin_logs.admin_id', 'users.email', DB::raw('count(*) as total'))
+                    ->select('admin_logs.admin_id', 'admin_logs.item_type', 'admin_logs.action', 'users.email', DB::raw('count(*) as total'))
                     ->groupBy('admin_logs.admin_id', 'users.email', 'admin_logs.item_type', 'admin_logs.action')
                     ->get();
 
