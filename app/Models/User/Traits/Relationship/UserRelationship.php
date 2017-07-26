@@ -8,7 +8,7 @@ use App\Models\User\UsersFriends;
 use App\Models\User\UsersBlocks;
 use App\Models\User\UsersHiddenContent;
 use App\Models\User\UsersFriendRequests;
-use App\Models\user\UsersMedias;
+use App\Models\User\UsersMedias;
 use App\Models\User\UsersFavourites;
 
 /**
