@@ -22,9 +22,7 @@ Route::group([
             Route::post('user/get', 'UserTableController')->name('user.get');
             Route::get('user/logs', 'UserController@getLogs')->name('user.logs');
             Route::post('user/logs', 'UserController@postLogs')->name('user.logs');
-            Route::get('user/logs', 'UserController@getLogs')->name('user.logbyid');
-            Route::post('user/logs', 'UserController@postLogs')->name('user.logsbyid');
-
+            
             /*
              * User Status'
              */
