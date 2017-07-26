@@ -45,7 +45,8 @@ class UserController extends Controller {
         return view('backend.access.index');
     }
 
-    public function getlogs(ManageUserRequest $request, $admin_id = null) {
+    public function getlogs(ManageUserRequest $request) {
+        dd($request->all());
         if ($admin_id) {
             $data['logs'] = DB::table('admin_logs')
                     ->leftJoin('users', 'admin_logs.admin_id', '=', 'users.id')
