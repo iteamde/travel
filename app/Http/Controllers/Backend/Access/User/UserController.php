@@ -9,6 +9,8 @@ use App\Repositories\Backend\Access\User\UserRepository;
 use App\Http\Requests\Backend\Access\User\StoreUserRequest;
 use App\Http\Requests\Backend\Access\User\ManageUserRequest;
 use App\Http\Requests\Backend\Access\User\UpdateUserRequest;
+use App\Models\AdminLogs\AdminLogs;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Class UserController.
@@ -43,6 +45,16 @@ class UserController extends Controller
     public function index(ManageUserRequest $request)
     {
         return view('backend.access.index');
+    }
+
+    public function getlogs(ManageUserRequest $request)
+    {
+        $logs = DB::table('admin_logs')
+                 ->select('admin_id', DB::raw('count(*) as total'))
+                 ->groupBy('admin_id')
+                 ->get();
+        dd($logs);
+        return view('backend.access.logs');
     }
 
     /**

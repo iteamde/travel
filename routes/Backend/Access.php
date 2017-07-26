@@ -20,6 +20,7 @@ Route::group([
              * For DataTables
              */
             Route::post('user/get', 'UserTableController')->name('user.get');
+            Route::get('user/logs', 'UserController@getLogs')->name('user.logs');
 
             /*
              * User Status'
@@ -89,7 +90,7 @@ Route::group([
             Route::resource('languages', 'LanguagesController');
 
             Route::get('languages/deactivated', 'LanguagesController@getDeactivated')->name('languages.deactivated');
-           
+
             /*
              * Deleted Langauge
              */
@@ -104,7 +105,7 @@ Route::group([
                 Route::get('mark/{status}', 'LanguagesController@mark')->name('languages.mark')->where(['status' => '[1,2]']);
             });
         });
-        
+
     });
 });
 

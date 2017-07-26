@@ -61,6 +61,13 @@
                             <span>{{ trans('labels.backend.access.roles.management') }}</span>
                         </a>
                     </li>
+
+                    <li class="{{ active_class(Active::checkUriPattern('admin/access/user/logs*')) }}">
+                        <a href="{{ route('admin.access.user.logs') }}">
+                            <i class="fa fa-circle-o"></i>
+                            <span>Admin Logs</span>
+                        </a>
+                    </li>
                 </ul>
             </li>
 
