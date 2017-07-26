@@ -13,8 +13,10 @@ use App\Models\Regions\Regions;
 use App\Models\SafetyDegree\SafetyDegree;
 use App\Models\Country\Countries;
 use App\Models\City\Cities;
+use App\Models\AdminLogs\AdminLogs;
 use App\Models\PlaceTypes\PlaceTypes;
 use App\Models\ActivityMedia\Media;
+use Illuminate\Support\Facades\Auth;
 
 class PlaceController extends Controller {
 
@@ -128,6 +130,9 @@ class PlaceController extends Controller {
 
         $this->places->create($data, $extra);
 
+
+        AdminLogs::create(['item_type'=>'places', 'item_id'=>0, 'action'=>'create', 'time'=>time(), 'admin_id'=>Auth::user()->id]);
+
         return redirect()->route('admin.location.place.index')->withFlashSuccess('Place Created!');
     }
 
@@ -148,6 +153,8 @@ class PlaceController extends Controller {
         }
         $item->deleteMedias();
         $item->delete();
+
+        AdminLogs::create(['item_type'=>'places', 'item_id'=>$id, 'action'=>'delete', 'time'=>time(), 'admin_id'=>Auth::user()->id]);
 
         return redirect()->route('admin.location.place.index')->withFlashSuccess('Place Deleted Successfully');
     }
@@ -346,6 +353,8 @@ class PlaceController extends Controller {
 
         $this->places->update($id, $place, $data, $extra);
 
+        AdminLogs::create(['item_type'=>'places', 'item_id'=>$id, 'action'=>'edit', 'time'=>time(), 'admin_id'=>Auth::user()->id]);
+
         return redirect()->route('admin.location.place.index')
                         ->withFlashSuccess('Place updated Successfully!');
     }
@@ -507,6 +516,8 @@ class PlaceController extends Controller {
                     $pt->description = $places[$k]['website'];
                 $pt->working_days = $places[$k]['working_days'];
                 $pt->save();
+                AdminLogs::create(['item_type'=>'places', 'item_id'=>$p->id, 'action'=>'import', 'time'=>time(), 'admin_id'=>Auth::user()->id]);
+
             }
             //die();
             $num = count($to_save);

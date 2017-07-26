@@ -107,18 +107,19 @@ class PlaceRepository extends BaseRepository
         $model->lat         = $extra['lat'];
         $model->lng         = $extra['lng'];
         $model->safety_degrees_id = $extra['safety_degrees_id'];
+        $model->provider_id = 0;
 
         DB::transaction(function () use ($model, $input, $extra) {
             $check = 1;
-            
+
             if ($model->save()) {
-                
+
                 if(!empty($extra['medias'])){
                     foreach ($extra['medias'] as $key => $value) {
                        $PlaceMedias = new PlaceMedias;
                        $PlaceMedias->places_id = $model->id;
                        $PlaceMedias->medias_id = $value;
-                       $PlaceMedias->save(); 
+                       $PlaceMedias->save();
                     }
                 }
 
@@ -157,7 +158,7 @@ class PlaceRepository extends BaseRepository
         });
     }
 
-    
+
     /**
      * @param array $input
      */
@@ -189,7 +190,7 @@ class PlaceRepository extends BaseRepository
 
         DB::transaction(function () use ($model, $input, $extra) {
             $check = 1;
-            
+
             if ($model->save()) {
 
                 if(!empty($extra['medias'])){
@@ -197,7 +198,7 @@ class PlaceRepository extends BaseRepository
                        $PlaceMedias = new PlaceMedias;
                        $PlaceMedias->places_id = $model->id;
                        $PlaceMedias->medias_id = $value;
-                       $PlaceMedias->save(); 
+                       $PlaceMedias->save();
                     }
                 }
 
