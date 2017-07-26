@@ -58,6 +58,33 @@ class UserController extends Controller
         return view('backend.access.logs', $data);
     }
 
+    public function postlogs(ManageUserRequest $request)
+    {
+        $date_from = $date_to = false;
+        if($request->has('date_from')) {
+            $date_from = strtotime($request->get('date_from'));
+        }
+        if($request->has('date_to')) {
+            $date_to = strtotime($request->get('date_to'));
+        }
+
+        $logs = DB::table('admin_logs')
+                ->leftJoin('users', 'admin_logs.admin_id', '=', 'users.id')
+                 ->select('admin_logs.admin_id', 'users.email', DB::raw('count(*) as total'));
+        if($date_from) {
+            $logs = $logs->where('admin_logs.time', '>', $date_from);
+        }
+        if($date_to) {
+            $logs = $logs->where('admin_logs.time', '<', $date_to);
+        }
+
+        $logs = $logs->groupBy('admin_logs.admin_id', 'users.email')
+                 ->get();
+
+        $data['logs'] =$logs;
+        return view('backend.access.logs', $data);
+    }
+
     /**
      * @param ManageUserRequest $request
      *

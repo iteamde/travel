@@ -4,6 +4,7 @@
 
 @section('after-styles')
 {{ Html::style("https://cdn.datatables.net/v/bs/dt-1.10.15/datatables.min.css") }}
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 @endsection
 
 @section('page-header')
@@ -19,6 +20,19 @@
         <h3 class="box-title">Admin Logs</h3>
 
         <div class="box-tools pull-right">
+            {{ Form::open([
+                    'id'     => 'logs_form',
+                    'route'  => 'admin.access.user.logs',
+                    'class'  => 'form-horizontal',
+                    'role'   => 'form',
+                    'method' => 'post',
+                    'files'  => true
+                ])
+            }}
+            <input type="text" name="date_from" class="datepicker" placeholder="Date from">
+            <input type="text" name="date_to" class="datepicker" placeholder="Date to">
+            <input type="submit" name="submit" value="filter"/>
+            {{ Form::close() }}
         </div><!--box-tools pull-right-->
     </div><!-- /.box-header -->
 
@@ -49,5 +63,10 @@
 
 @section('after-scripts')
 {{ Html::script("https://cdn.datatables.net/v/bs/dt-1.10.15/datatables.min.js") }}
-
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+  $( function() {
+    $( ".datepicker" ).datepicker();
+  } );
+  </script>
 @endsection
