@@ -50,8 +50,8 @@ class UserController extends Controller
     public function getlogs(ManageUserRequest $request)
     {
         $data['logs'] = DB::table('admin_logs')
-                ->join('users', 'admin_logs.admin_id', '=', 'users.id')
-                 ->select('admin_logs.admin_id', 'users.email', DB::raw('count(admin_logs.*) as total'))
+                ->leftJoin('users', 'admin_logs.admin_id', '=', 'users.id')
+                 ->select('admin_logs.admin_id', 'users.email', DB::raw('count(*) as total'))
                  ->groupBy('admin_logs.admin_id')
                  ->get();
 
