@@ -265,7 +265,7 @@ class ApiUser extends User
         }
 
         if($model->status == Self::STATUS_DEACTIVE){
-            $model->status == Self::STATUS_ACTIVE;
+            $model->status = Self::STATUS_ACTIVE;
             $model->save();
         }
         

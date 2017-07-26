@@ -378,7 +378,7 @@ class ApiPages extends Pages
         }
 
         /* Find Page For The Provided Page Id */
-        $page = Self::where(['id' => $post['page_id']])->first();
+        $page = Self::where(['id' => $post['page_id'], 'active' => Self::STATUS_ACTIVE ])->first();
 
         /* If Page Not Found, Return Error */
         if(empty($page)){
