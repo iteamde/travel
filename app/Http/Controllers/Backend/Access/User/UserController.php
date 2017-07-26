@@ -54,8 +54,6 @@ class UserController extends Controller {
                     ->groupBy('admin_logs.admin_id', 'users.email', 'admin_logs.item_type', 'admin_logs.action')
                     ->get();
 
-            dd($data['logs']);
-
             return view('backend.access.logsbyid', $data);
 
         } else {
