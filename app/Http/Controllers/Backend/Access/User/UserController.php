@@ -47,8 +47,8 @@ class UserController extends Controller {
 
     public function getlogs(ManageUserRequest $request) {
 
-        if ($request->has('admin_id')) {
-            $admin_id = $request->get('admin_id');
+        if ($request->has('id')) {
+            $admin_id = $request->get('id');
             $data['logs'] = DB::table('admin_logs')
                     ->leftJoin('users', 'admin_logs.admin_id', '=', 'users.id')
                     ->where('admin_logs.admin_id', $admin_id)
