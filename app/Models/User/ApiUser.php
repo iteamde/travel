@@ -1092,6 +1092,10 @@ class ApiUser extends User
             return Self::generateErrorMessage(false, 400, 'New Password And Confirm Password Donot Match.');
         }
 
+        if($new_password == $old_password){
+            return Self::generateErrorMessage(false, 400, 'New password cannot be the same as old password.');
+        }
+
         /* Encode New Password Using Sh1 Encoding Before Saving To Database */
         $user->password = sha1($new_password);
 
