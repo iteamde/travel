@@ -49,7 +49,7 @@
                 <tbody>
                     @foreach($logs AS $log)
                     <tr>
-                        <td><a href="{{route('user.logs', ['id' => $log->admin_id])}}">{{ $log->admin_id }}</a></td>
+                        <td><a href="{{route('admin.access.user.logs', ['id' => $log->admin_id])}}">{{ $log->admin_id }}</a></td>
                         <th>{{ $log->email }}</th>
                         <th>{{ $log->total }}</th>
                     </tr>
