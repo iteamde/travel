@@ -1341,7 +1341,7 @@ class ApiUser extends User
         }
         
         /* If Status Field Is Not Set Or Empty, Return Error */
-        if(!isset($post['status']) || empty($post['status'])){
+        if(!isset($post['status'])){
             return Self::generateErrorMessage(false, 400, 'Status Not Provided.');
         }
 
