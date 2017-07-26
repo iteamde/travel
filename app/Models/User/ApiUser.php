@@ -1072,8 +1072,8 @@ class ApiUser extends User
         }
 
         /* New Password Length */
-        if( strlen( $new_password ) < 8 | strlen( $new_password ) > 32 ){
-            return Self::generateErrorMessage(false, 400, 'New Password Length Should Be Between (8-32) characters.');  
+        if( strlen( $new_password ) < 6 | strlen( $new_password ) > 32 ){
+            return Self::generateErrorMessage(false, 400, 'New Password Length Should Be Between (6-32) characters.');  
         }
 
         /* Check If New Password Matches The Required Format */
