@@ -52,7 +52,7 @@ class UserController extends Controller
         $data['logs'] = DB::table('admin_logs')
                 ->leftJoin('users', 'admin_logs.admin_id', '=', 'users.id')
                  ->select('admin_logs.admin_id', 'users.email', DB::raw('count(*) as total'))
-                 ->groupBy('admin_logs.admin_id')
+                 ->groupBy('admin_logs.admin_id', 'users.email')
                  ->get();
 
         return view('backend.access.logs', $data);
