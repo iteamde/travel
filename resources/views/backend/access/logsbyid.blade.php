@@ -51,7 +51,7 @@
                 <tbody>
                     @foreach($logs AS $log)
                     <tr>
-                        <td><a href="{{route('user.logs', ['id' => $log->admin_id])}}">{{ $log->admin_id }}</a></td>
+                        <td>{{ $log->admin_id }}</td>
                         <th>{{ $log->email }}</th>
                         <th>{{ $log->item_type }}</th>
                         <th>{{ $log->action }}</th>
