@@ -1346,7 +1346,7 @@ class ApiUser extends User
         }
 
         if($post['status'] != Session::ONLINE_STATUS_SHOW && $post['status'] != Session::ONLINE_STATUS_HIDE){
-            return Self::generateErrorMessage(false, 400, 'Status should be either ('. Session::ONLINE_STATUS_SHOW .','. Session::ONLINE_STATUS_HIDE .')');
+            return Self::generateErrorMessage(false, 400, 'Status should be either ('. Session::ONLINE_STATUS_SHOW .' = show,'. Session::ONLINE_STATUS_HIDE .' = hide)');
         }
 
         /* Set Session's Show Status Equal To Status */
