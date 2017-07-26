@@ -484,7 +484,6 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
             $('.required').each(function(index,data){
                 var flag = false;
                 if($(this).val() == ''){
-                    
                     flag = true;
                 }
 

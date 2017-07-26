@@ -29,183 +29,136 @@ class ApiUser extends User
     /* Validate Arguments Passed From End Point */
     public static function validateInputParams($post){
         
+        $error = [];
+
         /* "username" validation */
         if(!isset($post['username']) || empty($post['username'])){
             // \App::abort(400 , 'Username cannot be empty');
-            return [
-                'data' => [
-                    'error'     => 400,
-                    'message'   => 'Username not provided.',
-                ],
-                'status'    => false
-            ];
-        }
+            array_push($error,'Username not provided.');
+        }else{
 
-        /* Check If User Exists For The "username" */
-        $user = Self::where(['username' => $post['username']])->first();
+            /* Check Length Of Name Argument And Ensure It Is Between ( 8 - 32 ) characters */
+            if( strlen($post['username']) < 8 || strlen($post['username']) > 32 ){
+                array_push($error,'Length of username should be between (8-32) characters.');
+            }
 
-        if( !empty($user) ){
-            return [
-                'data' => [
-                    'error'     => 400,
-                    'message'   => 'Username already taken.',
-                ],
-                'status'    => false
-            ];
+            if( ! preg_match( '/^[a-zA-Z0-9 ]+$/' , $post['username']) ){
+                array_push($error,'Name can only contain alphanumeric characters.');
+            }
+
+            /* Check If User Exists For The "username" */
+            $user = Self::where(['username' => $post['username']])->first();
+
+            if( !empty($user) ){
+                array_push($error,'Username already taken.');
+            }
         }
 
         /* "name" validation */
         if( !isset($post['name']) || empty($post['name'])   ){
-            return [
-                'data' => [
-                    'error'     => 400,
-                    'message'   => 'Name not provided.',
-                ],
-                'status'    => false
-            ];
-        }
-       
-        /* Check Length Of Name Argument And Ensure It Is Between ( 8 - 32 ) characters */
-        if( strlen($post['name']) < 8 || strlen($post['name']) > 32 ){
-            return [
-                'data' => [
-                    'error'     => 400,
-                    'message'   => 'Length of name should be between (8-32) characters.',
-                ],
-                'status'    => false
-            ];
-        }
+            array_push($error,'Name not provided.');
+        }else{
+            /* Check Length Of Name Argument And Ensure It Is Between ( 8 - 32 ) characters */
+            if( strlen($post['name']) < 8 || strlen($post['name']) > 32 ){
+                array_push($error,'Length of name should be between (8-32) characters.');
+            }
 
-        if( ! preg_match( '/^[a-zA-Z0-9 ]+$/' , $post['name']) ){
-            return [
-                'data' => [
-                    'error'     => 400,
-                    'message'   => 'Name can only contain alphanumeric characters.',
-                ],
-                'status'    => false
-            ];
+            if( ! preg_match( '/^[a-zA-Z0-9 ]+$/' , $post['name']) ){
+                array_push($error,'Name can only contain alphanumeric characters.');
+            }
         }
 
         /* "gender" validation */
         if( !isset($post['gender']) || empty($post['gender'])   ){
-            return [
-                'data' => [
-                    'error'     => 400,
-                    'message'   => 'Gender not provided.',
-                ],
-                'status'    => false
-            ];
+            array_push($error,'Gender not provided.');
+        }else{
+            $message = 'Gender can only contain following values (' . Self::GENDER_MALE . '-Male, '. Self::GENDER_FEMALE . '-Female, ' . Self::GENDER_UNSPECIFIED . '-Unspecified).';
+
+            /* Check If Provided Gender Is An Integer */
+            if( ! preg_match( '/^[0-9]+$/' , $post['gender']) ){
+                
+                array_push($error,$message);
+            }else{
+
+                if( $post['gender'] != Self::GENDER_MALE && $post['gender'] != Self::GENDER_FEMALE && $post['gender'] != Self::GENDER_UNSPECIFIED){
+
+                    array_push($error,$message);
+                }
+            }
         }
 
         /* "email" validation */
         if( !isset($post['email']) || empty($post['email'])   ){
-            return [
-                'data' => [
-                    'error'     => 400,
-                    'message'   => 'Email not provided.',
-                ],
-                'status'    => false
-            ];
-        }
+            array_push($error,'Email not provided.');
+        }else{
+            /* Check If Provided Email Argument Is In Email Format */
+            if( ! filter_var( $post['email'], FILTER_VALIDATE_EMAIL ) ){
+                array_push($error,"'".$post['email']."' is not a valid email address.");
+            }
 
-        /* Check If Provided Email Argument Is In Email Format */
-        if( ! filter_var( $post['email'], FILTER_VALIDATE_EMAIL ) ){
-            return [
-                'data' => [
-                    'error'     => 400,
-                    'message'   => "'".$post['email']."' is not a valid email address.",
-                ],
-                'status'    => false
-            ];
-        }
+            /* Check If User For Provided Email Exists */
+            $model = Self::where(['email' => $post['email']])->first();
 
-        /* Check If User For Provided Email Exists */
-        $model = Self::where(['email' => $post['email']])->first();
-
-        if(!empty($model)){
-            return [
-                'data' => [
-                    'error'     => 400,
-                    'message'   => 'Email already taken.',
-                ],
-                'status'    => false
-            ];
+            if(!empty($model)){
+                array_push($error,'Email already taken.');
+            }
         }
 
         /* "password" validation */
         if( !isset($post['password']) || empty($post['password'])   ){
-            return [
-                'data' => [
-                    'error'     => 400,
-                    'message'   => 'Password not provided.',
-                ],
-                'status'    => false
-            ];
-        }
-
-        /* Check If Provided Password Length Is Between ( 6-20 ) characters */
-        if( strlen($post['password']) < 6 || strlen($post['password']) > 20 ){
-            return [
-                'data' => [
-                    'error'     => 400,
-                    'message'   => 'Length of password should be between (6-20) characters.',
-                ],
-                'status'    => false
-            ];
-        }
-
-        /* Check If Provided Password Matches The Required Format */
-        if( ! preg_match( '/^[a-zA-Z0-9._]+$/' , $post['password']) ){
-            return [
-                'data' => [
-                    'error'     => 400,
-                    'message'   => 'Password can only contain alphanumeric characters.',
-                ],
-                'status'    => false
-            ];
+            array_push($error,'Password not provided.');
+        }else{
+            /* Check If Provided Password Matches The Required Format */
+            if( ! preg_match( '/^[a-zA-Z0-9._]+$/' , $post['password']) ){
+                array_push($error,'Password can only contain alphanumeric characters.');
+            }
+            /* Check If Provided Password Length Is Between ( 6-20 ) characters */
+            if( strlen($post['password']) < 6 || strlen($post['password']) > 20 ){
+                array_push($error,'Length of password should be between (6-20) characters.');
+            }
         }
 
         /* "password_confirmation" validation */
         if( !isset($post['password_confirmation']) || empty($post['password_confirmation'])   ){
-            return [
-                'data' => [
-                    'error'     => 400,
-                    'message'   => 'Confirm password not provided.',
-                ],
-                'status'    => false
-            ];
+            array_push($error,'Confirm password not provided.');
+        }else{
+
+            /* Check If Confirm Password Length Is Between ( 6-20 ) characters */
+            if( strlen($post['password_confirmation']) < 6 || strlen($post['password_confirmation']) > 20 ){
+                array_push($error,'Length of confirm password should be between (6-20) characters.');
+            }
+
+            /* Check If Password Confirmation Matches The Required Format */
+            if( ! preg_match( '/^[a-zA-Z0-9._]+$/' , $post['password_confirmation']) ){
+                array_push($error,'Confirm password can only contain alphanumeric characters.');
+            }
         }
 
-        /* Check If Confirm Password Length Is Between ( 6-20 ) characters */
-        if( strlen($post['password_confirmation']) < 6 || strlen($post['password_confirmation']) > 20 ){
-            return [
-                'data' => [
-                    'error'     => 400,
-                    'message'   => 'Length of confirm password should be between (6-20) characters.',
-                ],
-                'status'    => false
-            ];
+        if(isset($post['password_confirmation']) && isset($post['password'])){   
+            /* Check If "Password Confirmation" matches "Password" Argument */
+            if( $post['password_confirmation'] != $post['password'] ){
+                array_push($error,'Password and confirm password do not match.');
+            }
         }
 
-        /* Check If Password Confirmation Matches The Required Format */
-        if( ! preg_match( '/^[a-zA-Z0-9._]+$/' , $post['password_confirmation']) ){
-            return [
-                'data' => [
-                    'error'     => 400,
-                    'message'   => 'Confirm password can only contain alphanumeric characters.',
-                ],
-                'status'    => false
-            ];
-        }
+        /* If Mobile Number Doesn't Matches The Required Format, Return Error */
+        if(isset($post['mobile_number'])){
+           
+            if( ! preg_match( '/^[+][0-9 -]+$/' , $post['mobile_number'] ) ){
 
-        /* Check If "Password Confirmation" matches "Password" Argument */
-        if( $post['password_confirmation'] != $post['password'] ){
+                array_push($error, 'Invalid Mobile Number Format. Please Provide A Valid Mobile Number Format. E.g,(+000 00000000)');
+            }
+        }
+        
+        if(empty($error)){
+            return false;
+        }else{
             return [
-                'data' => [
-                    'error'     => 400,
-                    'message'   => 'Password and confirm password do not match.',
-                ],
-                'status'    => false
+                    'data' => [
+                        'error'     => 400,
+                        'message'   => $error,
+                    ],
+                    'status'    => false
             ];
         }
     }
@@ -244,60 +197,38 @@ class ApiUser extends User
 
     public static function loginValidation($post){
 
+        $error = [];
+
         /* "email" validation */
         if( !isset($post['email']) || empty($post['email']) ){
-            return [
-                'status' => false,
-                'data' => [
-                    'error' => 400,
-                    'message' => 'Email not provided.',
-                ],
-            ];
+            array_push($error, 'Email not provided.');
+        }else{
+            /* Check If Provided Email Matches The Email Format */
+            if( ! filter_var( $post['email'], FILTER_VALIDATE_EMAIL ) ){
+                array_push($error,"'".$post['email']."' is not a valid email address.");
+            }    
         }
         
-        /* Check If Provided Email Matches The Email Format */
-        if( ! filter_var( $post['email'], FILTER_VALIDATE_EMAIL ) ){
-            return [
-                'data' => [
-                    'error'     => 400,
-                    'message'   => "'".$post['email']."' is not a valid email address.",
-                ],
-                'status'    => false
-            ];
-        }
-
         /* "password" validation */
         if( !isset($post['password']) || empty($post['password'])   ){
-            return [
-                'data' => [
-                    'error'     => 400,
-                    'message'   => 'Password not provided.',
-                ],
-                'status'    => false
-            ];
+            array_push($error, 'Password not provided.');
+        }else{
+            /* Check If Provided Password Length Is Between ( 6-20 ) */
+            if( strlen($post['password']) < 6 || strlen($post['password']) > 20 ){
+                array_push($error,'Password is incorrect.');
+            }
+
+            /* Check If Password Matches The Required Format */
+            if( ! preg_match( '/^[a-zA-Z0-9._]+$/' , $post['password']) ){
+                array_push($error,'Password can only contain alphanumeric characters.');
+            }    
+        }
+        
+        if(!empty($error)){
+            return Self::generateErrorMessage(false, 400, $error);
         }
 
-        /* Check If Provided Password Length Is Between ( 6-20 ) */
-        if( strlen($post['password']) < 6 || strlen($post['password']) > 20 ){
-            return [
-                'data' => [
-                    'error'     => 400,
-                    'message'   => 'Length of password should be between (6-20) characters.',
-                ],
-                'status'    => false
-            ];
-        }
-
-        /* Check If Password Matches The Required Format */
-        if( ! preg_match( '/^[a-zA-Z0-9._]+$/' , $post['password']) ){
-            return [
-                'data' => [
-                    'error'     => 400,
-                    'message'   => 'Password can only contain alphanumeric characters.',
-                ],
-                'status'    => false
-            ];
-        }
+        return false;
     }
 
     public static function loginUser($post , $request){
@@ -502,11 +433,12 @@ class ApiUser extends User
                 $user->save();
             }
             
-            return 'Account Activated Successfully';            
-            // return [
-            //     'status' => true,
-            //     'data' => []
-            // ];
+            return [
+                'status' => true,
+                'data' => [
+                    'message' => 'Account Activated Successfully'
+                ]
+            ];
         }
     }
 
@@ -1133,6 +1065,7 @@ class ApiUser extends User
             return Self::generateErrorMessage(false, 400, 'Wrong User Id Provided');
         }
 
+        $old_password_check = $old_password;
         $old_password = sha1($old_password);
 
         if($user->password != $old_password){
@@ -1140,8 +1073,8 @@ class ApiUser extends User
         }
 
         /* New Password Length */
-        if( strlen( $new_password ) < 8 | strlen( $new_password ) > 32 ){
-            return Self::generateErrorMessage(false, 400, 'New Password Length Should Be Between (8-32) characters.');  
+        if( strlen( $new_password ) < 6 | strlen( $new_password ) > 32 ){
+            return Self::generateErrorMessage(false, 400, 'New Password Length Should Be Between (6-32) characters.');  
         }
 
         /* Check If New Password Matches The Required Format */
@@ -1158,6 +1091,10 @@ class ApiUser extends User
         /* If New Password And Confirmation Password Don't Match, Return Error */
         if($new_password != $new_password_confirmation){
             return Self::generateErrorMessage(false, 400, 'New Password And Confirm Password Donot Match.');
+        }
+
+        if($new_password == $old_password_check){
+            return Self::generateErrorMessage(false, 400, 'New password cannot be the same as old password, please enter new password.');
         }
 
         /* Encode New Password Using Sh1 Encoding Before Saving To Database */
@@ -1404,8 +1341,12 @@ class ApiUser extends User
         }
         
         /* If Status Field Is Not Set Or Empty, Return Error */
-        if(!isset($post['status']) || empty($post['status'])){
+        if(!isset($post['status'])){
             return Self::generateErrorMessage(false, 400, 'Status Not Provided.');
+        }
+
+        if($post['status'] != Session::ONLINE_STATUS_SHOW && $post['status'] != Session::ONLINE_STATUS_HIDE){
+            return Self::generateErrorMessage(false, 400, 'Status should be either ('. Session::ONLINE_STATUS_SHOW .' = show,'. Session::ONLINE_STATUS_HIDE .' = hide)');
         }
 
         /* Set Session's Show Status Equal To Status */
