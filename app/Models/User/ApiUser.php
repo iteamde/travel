@@ -259,6 +259,15 @@ class ApiUser extends User
                 'status'    => false
             ];
         }
+
+        if($model->status == Self::STATUS_INACTIVE){
+            return Self::generateErrorMessage(false, 400, 'Account not verified. Please verify your account through the verification email sent to your email id.');
+        }
+
+        if($model->status == Self::STATUS_DEACTIVE){
+            $model->status == Self::STATUS_ACTIVE;
+            $model->save();
+        }
         
         /* Find Session For The Provided User */
         $session = Session::where([ 'user_id' => $model->id ])->first();
