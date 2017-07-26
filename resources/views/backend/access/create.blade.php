@@ -1,4 +1,4 @@
-<?php  
+<?php
 use App\Models\Access\User\User;
 ?>
 @extends ('backend.layouts.app')
@@ -20,7 +20,7 @@ use App\Models\Access\User\User;
             'role' => 'form',
             'method' => 'post',
             'files' => true
-        ]) 
+        ])
     }}
 
         <div class="box box-success">
@@ -80,7 +80,7 @@ use App\Models\Access\User\User;
                     {{ Form::label('age', trans('validation.attributes.backend.access.users.age'), ['class' => 'col-lg-2 control-label']) }}
 
                     <div class="col-lg-10">
-                        {{ Form::text('age', null, ['class' => 'form-control', 'maxlength' => '191', 'required' => 'required', 'placeholder' => trans('validation.attributes.backend.access.users.age')]) }}
+                        {{ Form::text('age', null, ['class' => 'form-control', 'maxlength' => '191', 'placeholder' => trans('validation.attributes.backend.access.users.age')]) }}
                     </div><!--col-lg-10-->
                 </div><!--form control-->
                 <!-- Age: End -->
@@ -90,7 +90,7 @@ use App\Models\Access\User\User;
                     {{ Form::label('address', trans('validation.attributes.backend.access.users.address'), ['class' => 'col-lg-2 control-label']) }}
 
                     <div class="col-lg-10">
-                        {{ Form::text('address', null, ['class' => 'form-control', 'maxlength' => '191', 'required' => 'required', 'placeholder' => trans('validation.attributes.backend.access.users.address')]) }}
+                        {{ Form::text('address', null, ['class' => 'form-control', 'maxlength' => '191', 'placeholder' => trans('validation.attributes.backend.access.users.address')]) }}
                     </div><!--col-lg-10-->
                 </div><!--form control-->
                 <!-- Address: End -->
@@ -120,7 +120,7 @@ use App\Models\Access\User\User;
                     {{ Form::label('single', trans('validation.attributes.backend.access.users.children'), ['class' => 'col-lg-2 control-label']) }}
 
                     <div class="col-lg-10">
-                        {{ Form::text('single', null, ['class' => 'form-control', 'maxlength' => '191', 'required' => 'required', 'placeholder' => trans('validation.attributes.backend.access.users.children')]) }}
+                        {{ Form::text('single', null, ['class' => 'form-control', 'maxlength' => '191', 'placeholder' => trans('validation.attributes.backend.access.users.children')]) }}
                     </div><!--col-lg-10-->
                 </div><!--form control-->
                 <!-- Children: End -->
@@ -130,7 +130,7 @@ use App\Models\Access\User\User;
                     {{ Form::label('mobile', trans('validation.attributes.backend.access.users.mobile'), ['class' => 'col-lg-2 control-label']) }}
 
                     <div class="col-lg-10">
-                        {{ Form::text('mobile', null, ['id' => 'customer_phone', 'class' => 'form-control', 'maxlength' => '191', 'required' => 'required']) }}
+                        {{ Form::text('mobile', null, ['id' => 'customer_phone', 'class' => 'form-control', 'maxlength' => '191']) }}
                         <input type="hiddent" id="server_phone" name = "server_phone" hidden="true">
                     </div><!--col-lg-10-->
                 </div><!--form control-->
@@ -163,7 +163,7 @@ use App\Models\Access\User\User;
                     </div><!--col-lg-10-->
                 </div><!--form control-->
                 <!-- Travel Type: End -->
-            
+
                 <!-- Public Profile: Start -->
                 <div class="form-group">
                     {{ Form::label('public_profile', trans('validation.attributes.backend.access.users.public_profile'), ['class' => 'col-lg-2 control-label']) }}
@@ -204,7 +204,7 @@ use App\Models\Access\User\User;
                 </div><!--form control-->
                 <!-- SMS: End -->
 
-                <div class="form-group">    
+                <div class="form-group">
                     {{ Form::label('status', trans('validation.attributes.backend.access.users.active'), ['class' => 'col-lg-2 control-label']) }}
 
                     <div class="col-lg-1">
@@ -226,7 +226,7 @@ use App\Models\Access\User\User;
                     </label>
 
                     <div class="col-lg-1">
-                        {{ Form::checkbox('confirmation_email', '1') }}
+                        {{ Form::checkbox('confirmation_email', '1', true) }}
                     </div><!--col-lg-1-->
                 </div><!--form control-->
 
