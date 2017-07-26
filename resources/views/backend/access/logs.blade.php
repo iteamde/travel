@@ -36,7 +36,7 @@
                     @foreach($logs AS $log)
                     <tr>
                         <td>{{ $log->admin_id }}</td>
-                        <th>{{ $log->user->email }}</th>
+                        <th>{{ $log->user()->email }}</th>
                         <th>{{ $log->total }}</th>
                     </tr>
                     @endforeach
