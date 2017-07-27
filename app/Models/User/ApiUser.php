@@ -614,6 +614,10 @@ class ApiUser extends User
         if(empty($mobile)){
             return Self::generateErrorMessage(false, 400, 'Mobile Number Not Provided.');
         }
+
+        if($mobile[0] != '+'){
+            $mobile = '+' + $mobile;
+        }
         
         /* If Mobile Number Doesn't Matches The Required Format, Return Error */
         if(! preg_match( '/^[+][0-9 -]+$/' , $mobile )){
@@ -2673,7 +2677,7 @@ class ApiUser extends User
             }
         }
 
-        /* if Favourite Items Exist For This User, Return Success Status, With Favourite Objects In Data */
+        /* If Favourite Items Exist For This User, Return Success Status, With Favourite Objects In Data */
         if(!empty($user_favourites_arr)){
             return [
                 'status' => true,
