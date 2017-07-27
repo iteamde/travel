@@ -373,7 +373,7 @@ class ApiUser extends User
 
     /* Change Password Of Provided "$token" with "$new_password" after matching with "$confirm_password" and validating */
     public static function changePassword($token, $new_password, $confirm_password){
-    
+        
         $user = User::where([ 'password_reset_token' => $token ])->first();
         
         /* If User Not Found For Provided Password Reset Token, Send Error */
@@ -410,6 +410,15 @@ class ApiUser extends User
             /* If Password Changes Successfully, Reset "password_reset_token" field */
             $user->password_reset_token = null;
             $user->save();
+
+            $sessions = Session::where([ 'user_id' => $user->id])->get();
+
+            if(!empty($sessions[0])){
+                foreach ($sessions as $key => $value) {
+                    $value->id = Self::generateRandomString();
+                    $value->save();
+                }
+            }
         }
 
         return [
@@ -1116,6 +1125,10 @@ class ApiUser extends User
         $user->save();
 
         $user->sendPasswordChangeEmail();
+
+        $session->id = Self::generateRandomString();
+
+        $session->save();
 
         return [
             'status' => true,
