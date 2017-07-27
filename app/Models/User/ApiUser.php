@@ -616,7 +616,7 @@ class ApiUser extends User
         }
 
         if($mobile[0] != '+'){
-            $mobile = '+' + $mobile;
+            $mobile = '+' . $mobile;
         }
         
         /* If Mobile Number Doesn't Matches The Required Format, Return Error */
