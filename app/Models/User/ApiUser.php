@@ -378,7 +378,7 @@ class ApiUser extends User
         
         /* If User Not Found For Provided Password Reset Token, Send Error */
         if(empty($user)){
-            return Self::generateErrorMessage(false, 400, 'Wrong Password Reset Token');
+            return Self::generateErrorMessage(false, 400, 'Wrong Password Reset Token, Please Send The Password Reset Token You Received In The Email Sent To Your Email Account.');
         }
 
         /* Password Validation */
