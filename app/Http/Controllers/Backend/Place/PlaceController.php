@@ -474,10 +474,10 @@ class PlaceController extends Controller {
 
         if (time() % 2 == 0) {
             $json = file_get_contents('http://db.travooo.com/places/go/' . ($city ? $city : 0) . '/' . $lat . '/' . $lng . '/' . $query);
-            echo 1;
+            //echo 1;
         } else {
             $json = file_get_contents('http://db.travooodev.com/public/places/go/' . ($city ? $city : 0) . '/' . $lat . '/' . $lng . '/' . $query);
-            echo 2;
+            //echo 2;
         }
         //dd('http://db.travooo.com/places/go/'.$city.'/0/0/'.$query);
         $result = json_decode($json);
