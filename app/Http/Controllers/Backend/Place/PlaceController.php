@@ -553,7 +553,10 @@ class PlaceController extends Controller {
 
         $markers = PlaceSearchHistory::whereBetween('lat', array($sw_lat, $ne_lat))
                 ->whereBetween('lng', array($sw_lng, $ne_lng))
-                ->get()->toArray();
+                ->groupBy('lat', 'lng')
+                ->select('lat', 'lng')
+                ->get()
+                ->toArray();
         return json_encode($markers);
     }
 

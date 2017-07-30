@@ -257,8 +257,6 @@
         var ne = bounds.getNorthEast(); // LatLng of the north-east corner
         var sw = bounds.getSouthWest(); // LatLng of the south-west corder
 
-        console.log(ne.lat());
-
         $.ajax({
             type: "GET",
             url: "{{route('admin.location.place.searchhistory')}}",
