@@ -132,6 +132,8 @@ Route::group([
         Route::get('place/import', 'PlaceController@import')->name('place.import');
         Route::post('place/search', 'PlaceController@search')->name('place.search');
         Route::post('place/savesearch', 'PlaceController@savesearch')->name('place.savesearch');
+        Route::get('place/return_search_history', 'PlaceController@return_search_history')
+                ->name('place.searchhistory');
 
         /*
          * Place CRUD
