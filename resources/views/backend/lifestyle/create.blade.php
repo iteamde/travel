@@ -1,10 +1,10 @@
-<?php  
+<?php
 use App\Models\Access\language\Languages;
 $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE)->get();
 ?>
 @extends ('backend.layouts.app')
 
-@section ('title', 'Life Style Manager' . ' | ' . 'Create Life Style')
+@section ('title', 'Travel Styles Manager' . ' | ' . 'Create Travel Style')
 
 @section('page-header')
     <!-- <h1>
@@ -12,8 +12,8 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
         <small>{{ trans('labels.backend.access.users.create') }}</small>
     </h1> -->
     <h1>
-        Life Style Manager
-        <small>Create Life Style</small>
+        Travel Styles Manager
+        <small>Create Travel Style</small>
     </h1>
 @endsection
 
@@ -25,12 +25,12 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
             'role'   => 'form',
             'method' => 'post',
             'files'  => true
-        ]) 
+        ])
     }}
         <div class="box box-success">
             <div class="box-header with-border">
                 <!-- <h3 class="box-title">{{ trans('labels.backend.access.users.create') }}</h3> -->
-                <h3 class="box-title">Create Life Style</h3>
+                <h3 class="box-title">Create Travel Style</h3>
             </div><!-- /.box-header -->
             <!-- Language Error : Start -->
             <div class="row error-box">
@@ -74,7 +74,7 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
                                 </div><!--col-lg-10-->
                             </div><!--form control-->
                             <!-- End: Description -->
-                            
+
                             <!-- Languages Tabs: Start -->
                         </div>
                     @endforeach
@@ -126,13 +126,13 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
     <!-- Error Alert Script : Start -->
     <script>
         $(document).on('click' , '.submit_button' , function(){
-        
+
             var msg = '<div id="language-alert" class="alert alert-danger alert-dismissable fade in"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Error!</strong> Please Fill Information In All Languages Tabs.</div>';
 
             $('.required').each(function(index,data){
                 var flag = false;
                 if($(this).val() == ''){
-                    
+
                     flag = true;
                 }
 
@@ -140,7 +140,7 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
                     $('.required_msg').html(msg);
                     $("#language-alert").fadeTo(5000, 500).slideUp(500, function(){
                         $("#language-alert").slideUp(500);
-                    });   
+                    });
                 }
             });
         });

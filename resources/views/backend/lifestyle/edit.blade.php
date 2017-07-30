@@ -5,13 +5,13 @@ use App\Models\Access\language\Languages;
 
 @extends ('backend.layouts.app')
 
-@section ('title', 'Life Style Manager' . ' | ' . 'Edit Life Style')
+@section ('title', 'Travel Styles Manager' . ' | ' . 'Edit Travel Style')
 
 @section('page-header')
     <h1>
         <!-- {{ trans('labels.backend.access.users.management') }} -->
-        Life Style Management
-        <small>Create Life Style</small>
+        Travel Styles Management
+        <small>Create Travel Style</small>
     </h1>
 @endsection
 
@@ -22,16 +22,16 @@ use App\Models\Access\language\Languages;
             'class'  => 'form-horizontal',
             'role'   => 'form',
             'method' => 'PATCH',
-        ]) 
+        ])
     }}
 
         <div class="box box-success">
             <div class="box-header with-border">
                 <!-- <h3 class="box-title">{{ trans('labels.backend.access.users.create') }}</h3> -->
-                <h3 class="box-title">Update Life Style</h3>
+                <h3 class="box-title">Update Travel Style</h3>
 
                 <div class="box-tools pull-right">
-                
+
                 </div><!--box-tools pull-right-->
             </div><!-- /.box-header -->
 
@@ -43,7 +43,7 @@ use App\Models\Access\language\Languages;
                 </div>
             </div>
             <!-- Language Error : End -->
-            
+
             <div class="box-body">
                 @if(!empty($languages))
                     <ul class="nav nav-tabs">
@@ -81,7 +81,7 @@ use App\Models\Access\language\Languages;
                         </div>
                     @endforeach
                     </div>
-                    
+
                 @endif
             </div>
         </div><!--box-->
@@ -123,13 +123,13 @@ use App\Models\Access\language\Languages;
     <!-- Error Alert Script : Start -->
     <script>
         $(document).on('click' , '.submit_button' , function(){
-        
+
             var msg = '<div id="language-alert" class="alert alert-danger alert-dismissable fade in"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Error!</strong> Please Fill Information In All Languages Tabs.</div>';
 
             $('.required').each(function(index,data){
                 var flag = false;
                 if($(this).val() == ''){
-                    
+
                     flag = true;
                 }
 
@@ -137,7 +137,7 @@ use App\Models\Access\language\Languages;
                     $('.required_msg').html(msg);
                     $("#language-alert").fadeTo(5000, 500).slideUp(500, function(){
                         $("#language-alert").slideUp(500);
-                    });   
+                    });
                 }
             });
         });
