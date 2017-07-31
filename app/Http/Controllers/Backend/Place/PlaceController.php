@@ -14,6 +14,7 @@ use App\Models\SafetyDegree\SafetyDegree;
 use App\Models\Country\Countries;
 use App\Models\City\Cities;
 use App\Models\AdminLogs\AdminLogs;
+use App\Models\PlaceSearchHistory\PlaceSearchHistory;
 use App\Models\PlaceTypes\PlaceTypes;
 use App\Models\ActivityMedia\Media;
 use Illuminate\Support\Facades\Auth;
@@ -131,7 +132,7 @@ class PlaceController extends Controller {
         $this->places->create($data, $extra);
 
 
-        AdminLogs::create(['item_type'=>'places', 'item_id'=>0, 'action'=>'create', 'time'=>time(), 'admin_id'=>Auth::user()->id]);
+        AdminLogs::create(['item_type' => 'places', 'item_id' => 0, 'action' => 'create', 'time' => time(), 'admin_id' => Auth::user()->id]);
 
         return redirect()->route('admin.location.place.index')->withFlashSuccess('Place Created!');
     }
@@ -154,7 +155,7 @@ class PlaceController extends Controller {
         $item->deleteMedias();
         $item->delete();
 
-        AdminLogs::create(['item_type'=>'places', 'item_id'=>$id, 'action'=>'delete', 'time'=>time(), 'admin_id'=>Auth::user()->id]);
+        AdminLogs::create(['item_type' => 'places', 'item_id' => $id, 'action' => 'delete', 'time' => time(), 'admin_id' => Auth::user()->id]);
 
         return redirect()->route('admin.location.place.index')->withFlashSuccess('Place Deleted Successfully');
     }
@@ -353,7 +354,7 @@ class PlaceController extends Controller {
 
         $this->places->update($id, $place, $data, $extra);
 
-        AdminLogs::create(['item_type'=>'places', 'item_id'=>$id, 'action'=>'edit', 'time'=>time(), 'admin_id'=>Auth::user()->id]);
+        AdminLogs::create(['item_type' => 'places', 'item_id' => $id, 'action' => 'edit', 'time' => time(), 'admin_id' => Auth::user()->id]);
 
         return redirect()->route('admin.location.place.index')
                         ->withFlashSuccess('Place updated Successfully!');
@@ -467,14 +468,28 @@ class PlaceController extends Controller {
 
         $provider_ids = array();
         $get_provider_ids = Place::where('id', '>', 0)->select('provider_id')->get()->toArray();
-        foreach($get_provider_ids AS $gpi) {
+        foreach ($get_provider_ids AS $gpi) {
             $provider_ids[] = $gpi['provider_id'];
         }
         $data['provider_ids'] = $provider_ids;
 
-        $json = file_get_contents('http://db.travooo.com/places/go/' . ($city ? $city : 0) . '/' . $lat . '/' . $lng . '/' . $query);
+        if (time() % 2 == 0) {
+            $json = file_get_contents('http://db.travooo.com/places/go/' . ($city ? $city : 0) . '/' . $lat . '/' . $lng . '/' . $query);
+            //echo 1;
+        } else {
+            $json = file_get_contents('http://db.travooodev.com/public/places/go/' . ($city ? $city : 0) . '/' . $lat . '/' . $lng . '/' . $query);
+            //echo 2;
+        }
         //dd('http://db.travooo.com/places/go/'.$city.'/0/0/'.$query);
         $result = json_decode($json);
+
+        PlaceSearchHistory::create([
+            'lat' => $lat,
+            'lng' => $lng,
+            'time' => time(),
+            'admin_id' => Auth::user()->id
+                ]);
+
         //dd($json);
         $data['results'] = $result;
         //dd($result);
@@ -516,8 +531,7 @@ class PlaceController extends Controller {
                     $pt->description = $places[$k]['website'];
                 $pt->working_days = $places[$k]['working_days'];
                 $pt->save();
-                AdminLogs::create(['item_type'=>'places', 'item_id'=>$p->id, 'action'=>'import', 'time'=>time(), 'admin_id'=>Auth::user()->id]);
-
+                AdminLogs::create(['item_type' => 'places', 'item_id' => $p->id, 'action' => 'import', 'time' => time(), 'admin_id' => Auth::user()->id]);
             }
             //die();
             $num = count($to_save);
@@ -529,6 +543,21 @@ class PlaceController extends Controller {
             return redirect()->route('admin.location.place.index')
                             ->withFlashError('You didnt select any items to import!');
         }
+    }
+    public function return_search_history(ManagePlaceRequest $request) {
+        //dd($request->all());
+        $ne_lat = $request->get('ne_lat');
+        $sw_lat = $request->get('sw_lat');
+        $ne_lng = $request->get('ne_lng');
+        $sw_lng = $request->get('sw_lat');
+
+        $markers = PlaceSearchHistory::whereBetween('lat', array($sw_lat, $ne_lat))
+                ->whereBetween('lng', array($sw_lng, $ne_lng))
+                ->groupBy('lat', 'lng')
+                ->select('lat', 'lng')
+                ->get()
+                ->toArray();
+        return json_encode($markers);
     }
 
 }

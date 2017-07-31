@@ -242,11 +242,37 @@
         map.addListener('click', function (event) {
             var loc = event.latLng.lat() + "," + event.latLng.lng();
             document.getElementById('latlng').value = loc;
-            Position=new google.maps.LatLng(event.latLng.lat(), event.latLng.lng());
+            Position = new google.maps.LatLng(event.latLng.lat(), event.latLng.lng());
+
+        });
+        map.addListener('idle', function (event) {
+            draw_markers(map);
 
         });
     }
 
+    function draw_markers(Map) {
+
+        var bounds = Map.getBounds();
+        var ne = bounds.getNorthEast(); // LatLng of the north-east corner
+        var sw = bounds.getSouthWest(); // LatLng of the south-west corder
+
+        $.ajax({
+            type: "GET",
+            url: "{{route('admin.location.place.searchhistory')}}",
+            data: {ne_lat: ne.lat(), ne_lng: ne.lng(), sw_lat: sw.lat(), sw_lng: sw.lng()},
+            success: function (data) {
+                mrks = JSON.parse(data);
+                for (var i = 0; i < mrks.length; i++) {
+                    marker = new google.maps.Marker({
+                        position: new google.maps.LatLng(mrks[i].lat, mrks[i].lng),
+                        map: Map
+                    });
+                }
+
+            }
+        });
+    }
 </script>
 
 @endsection

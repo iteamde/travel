@@ -128,7 +128,7 @@
                         <a href="{{ route('admin.location.place.index') }}">
                             <i class="fa fa-circle-o"></i>
                             <!-- <span>{{ trans('labels.backend.access.users.management') }}</span> -->
-                            <span>{{ trans('labels.backend.locations.places') }}</span>
+                            <span>Places & Activities</span>
                         </a>
                     </li>
                 </ul>
@@ -198,43 +198,6 @@
             </li>
             <!-- Restaurants Manager End -->
 
-            <!-- Activities Manager -->
-            <li class="{{ active_class(Active::checkUriPattern('admin/activities*')) | active_class(Active::checkUriPattern('admin/activitymedia/activitymedia-disabled*')) }} treeview">
-                <a href="#">
-                    <i class="fa fa-users"></i>
-                     <!-- <span>{{ trans('menus.backend.language.title') }}</span> -->
-                     <span>{{ trans('labels.backend.activities.activities_manager') }}</span>
-                    <i class="fa fa-angle-left pull-right"></i>
-                </a>
-
-                <ul class="treeview-menu {{ active_class(Active::checkUriPattern('admin/activities*'), 'menu-open') | active_class(Active::checkUriPattern('admin/activitymedia/activitymedia-disabled*'), 'menu-open') }}" style="display: none; {{ active_class(Active::checkUriPattern('admin/activities*') | Active::checkUriPattern('admin/activitymedia/activitymedia-disabled*'), 'display: block;') }}">
-
-                    <li class="{{ active_class(Active::checkUriPattern('admin/activities/activitytypes*')) }}">
-                        <a href="{{ route('admin.activities.activitytypes.index') }}">
-                            <i class="fa fa-circle-o"></i>
-                            <!-- <span>{{ trans('labels.backend.access.langauge.management') }}</span> -->
-                            <span>{{ trans('labels.backend.activities.activity_types') }}</span>
-                        </a>
-                    </li>
-
-                    <li class="{{ active_class(Active::checkUriPattern('admin/activities/activity') | Active::checkUriPattern('admin/activities/activity/*')) }}">
-                        <a href="{{ route('admin.activities.activity.index') }}">
-                            <i class="fa fa-circle-o"></i>
-                            <!-- <span>{{ trans('labels.backend.access.users.management') }}</span> -->
-                            <span>{{ trans('labels.backend.activities.activities') }}</span>
-                        </a>
-                    </li>
-
-                    <li class="{{ active_class(Active::checkUriPattern('admin/activitymedia/activitymedia-disabled*')) }}">
-                        <a href="javascript:void(0);">
-                            <i class="fa fa-circle-o"></i>
-                            <!-- <span>{{ trans('labels.backend.access.users.management') }}</span> -->
-                            <span>{{ trans('labels.backend.activities.activity_media') }}</span>
-                        </a>
-                    </li>
-                </ul>
-            </li>
-
             <!-- Interests Manager -->
             <li class="{{ active_class(Active::checkUriPattern('admin/interest/interest*')) }} treeview">
                 <a href="#">
@@ -295,32 +258,14 @@
                 </ul>
             </li>
 
-            <!-- Levels Manager -->
-            <li class="{{ active_class(Active::checkUriPattern('admin/levels/levels*')) }} treeview">
-                <a href="#">
-                    <i class="fa fa-users"></i>
-                     <!-- <span>{{ trans('menus.backend.language.title') }}</span> -->
-                     <span>{{ trans('labels.backend.levels.levels_manager') }}</span>
-                    <i class="fa fa-angle-left pull-right"></i>
-                </a>
 
-                <ul class="treeview-menu {{ active_class(Active::checkUriPattern('admin/levels/levels*'), 'menu-open') }}" style="display: none; {{ active_class(Active::checkUriPattern('admin/levels/levels*'), 'display: block;') }}">
-                    <li class="{{ active_class(Active::checkUriPattern('admin/levels/levels*')) }}">
-                        <a href="{{ route('admin.levels.levels.index') }}">
-                            <i class="fa fa-circle-o"></i>
-                            <!-- <span>{{ trans('labels.backend.access.langauge.management') }}</span> -->
-                            <span>{{ trans('labels.backend.levels.levels') }}</span>
-                        </a>
-                    </li>
-                </ul>
-            </li>
 
             <!-- Life Styles Manager -->
             <li class="{{ active_class(Active::checkUriPattern('admin/lifestyle/lifestyle*')) }} treeview">
                 <a href="#">
                     <i class="fa fa-users"></i>
                      <!-- <span>{{ trans('menus.backend.language.title') }}</span> -->
-                     <span>{{ trans('labels.backend.lifestyles.lifestyles_manager') }}</span>
+                     <span>Travel Styles</span>
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
 
@@ -329,7 +274,7 @@
                         <a href="{{ route('admin.lifestyle.lifestyle.index') }}">
                             <i class="fa fa-circle-o"></i>
                             <!-- <span>{{ trans('labels.backend.access.langauge.management') }}</span> -->
-                            <span>{{ trans('labels.backend.lifestyles.lifestyles') }}</span>
+                            <span>Travel Styles</span>
                         </a>
                     </li>
                 </ul>
@@ -350,26 +295,6 @@
                             <i class="fa fa-circle-o"></i>
                             <!-- <span>{{ trans('labels.backend.access.langauge.management') }}</span> -->
                             <span>{{ trans('labels.backend.languages_spoken.languages_spoken') }}</span>
-                        </a>
-                    </li>
-                </ul>
-            </li>
-
-            <!-- Timings Manager -->
-            <li class="{{ active_class(Active::checkUriPattern('admin/timings/timings*')) }} treeview">
-                <a href="#">
-                    <i class="fa fa-users"></i>
-                     <!-- <span>{{ trans('menus.backend.language.title') }}</span> -->
-                     <span>{{ trans('labels.backend.timings.timings_manager') }}</span>
-                    <i class="fa fa-angle-left pull-right"></i>
-                </a>
-
-                <ul class="treeview-menu {{ active_class(Active::checkUriPattern('admin/timings/timings*'), 'menu-open') }}" style="display: none; {{ active_class(Active::checkUriPattern('admin/timings/timings*'), 'display: block;') }}">
-                    <li class="{{ active_class(Active::checkUriPattern('admin/timings/timings*')) }}">
-                        <a href="{{ route('admin.timings.timings.index') }}">
-                            <i class="fa fa-circle-o"></i>
-                            <!-- <span>{{ trans('labels.backend.access.langauge.management') }}</span> -->
-                            <span>{{ trans('labels.backend.timings.timings') }}</span>
                         </a>
                     </li>
                 </ul>
@@ -410,26 +335,6 @@
                             <i class="fa fa-circle-o"></i>
                             <!-- <span>{{ trans('labels.backend.access.langauge.management') }}</span> -->
                             <span>{{ trans('labels.backend.holidays.holidays') }}</span>
-                        </a>
-                    </li>
-                </ul>
-            </li>
-
-            <!-- Hobbies Manager -->
-            <li class="{{ active_class(Active::checkUriPattern('admin/hobbies/hobbies*')) }} treeview">
-                <a href="#">
-                    <i class="fa fa-users"></i>
-                     <!-- <span>{{ trans('menus.backend.language.title') }}</span> -->
-                     <span>{{ trans('labels.backend.hobbies.hobbies_manager') }}</span>
-                    <i class="fa fa-angle-left pull-right"></i>
-                </a>
-
-                <ul class="treeview-menu {{ active_class(Active::checkUriPattern('admin/hobbies/hobbies*'), 'menu-open') }}" style="display: none; {{ active_class(Active::checkUriPattern('admin/hobbies/hobbies*'), 'display: block;') }}">
-                    <li class="{{ active_class(Active::checkUriPattern('admin/hobbies/hobbies*')) }}">
-                        <a href="{{ route('admin.hobbies.hobbies.index') }}">
-                            <i class="fa fa-circle-o"></i>
-                            <!-- <span>{{ trans('labels.backend.access.langauge.management') }}</span> -->
-                            <span>{{ trans('labels.backend.hobbies.hobbies') }}</span>
                         </a>
                     </li>
                 </ul>

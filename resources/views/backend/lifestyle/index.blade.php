@@ -12,8 +12,8 @@
         <small>{{ trans('labels.backend.access.users.active') }}</small>
     </h1> -->
     <h1>
-    	Life Styles Manager
-    	<small>All Life Styles</small>
+    	Travel Styles Manager
+    	<small>All Travel Styles</small>
     </h1>
 @endsection
 
@@ -21,7 +21,7 @@
     <div class="box box-success">
         <div class="box-header with-border">
             <!-- <h3 class="box-title">{{ trans('labels.backend.access.users.active') }}</h3> -->
-            <h3 class="box-title">Life Styles</h3>
+            <h3 class="box-title">Travel Styles</h3>
 
             <div class="box-tools pull-right">
                 @include('backend.lifestyle.partials.header-buttons')
