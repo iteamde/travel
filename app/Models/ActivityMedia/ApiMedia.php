@@ -122,6 +122,8 @@ class ApiMedia extends Media
         /* If Description Of Media Is Set, Save It */
         if( isset($post['media_description']) && !empty($post['media_description']) ){
             $media_translation->description = $post['media_description']; 
+        }else{
+            $media_description->description = 'No description provided.';
         }
         
         $media_translation->languages_id = $post['language_id'];
@@ -130,6 +132,10 @@ class ApiMedia extends Media
         $media_translation->title = $new_file_name;
         $media_translation->save(); 
         
+        $user_media->users_id  = $user->id;
+        $user_media->medias_id = $media->id;
+        $user_media->save();
+
         /* Return Success Status, And Successfull Message */       
         return [
             'success' => true,
