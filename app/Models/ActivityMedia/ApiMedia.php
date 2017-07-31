@@ -15,6 +15,9 @@ use App\Models\ActivityMedia\MediasHides;
 use App\Models\ActivityMedia\MediasReports;
 use App\Models\Access\language\Languages;
 
+/* For Generating Url */
+use App\Helpers\UrlGenerator;
+
 class ApiMedia extends Media
 {
     /* Create Media For User Function */
@@ -111,8 +114,10 @@ class ApiMedia extends Media
         $media_translation = new MediaTranslations;
         $user_media = new UsersMedias;
 
+        $media_path = 'medias/users/' . $post['user_id'];
         /* New Url Of Uploaded Image */
-        $media_url = asset('/storage' . $new_path . '/' . $new_file_name);
+        $media_url = UrlGenerator::GetUploadsUrl() .  $media_path . '/' . $new_file_name
+        // $media_url = asset('/storage' . $media_path . '/' . $new_file_name);
 
         $media->url = $media_url;
         $media->save();
