@@ -116,7 +116,7 @@ class ApiMedia extends Media
 
         $media_path = 'medias/users/' . $post['user_id'];
         /* New Url Of Uploaded Image */
-        $media_url = UrlGenerator::GetUploadsUrl() .  $media_path . '/' . $new_file_name
+        $media_url = UrlGenerator::GetUploadsUrl() .  $media_path . '/' . $new_file_name;
         // $media_url = asset('/storage' . $media_path . '/' . $new_file_name);
 
         $media->url = $media_url;
