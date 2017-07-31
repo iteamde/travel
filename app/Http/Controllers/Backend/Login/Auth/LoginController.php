@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Frontend\Auth;
+namespace App\Http\Controllers\Backend\Login\Auth;
 
 use App\Helpers\Auth\Auth;
 use Illuminate\Http\Request;
@@ -77,7 +77,7 @@ class LoginController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function logout(Request $request)
-    {
+    {   
         /*
          * Boilerplate needed logic
          */
@@ -106,7 +106,7 @@ class LoginController extends Controller
         $request->session()->flush();
         $request->session()->regenerate();
 
-        return redirect('/');
+        return redirect('/admin/');
     }
 
     /**

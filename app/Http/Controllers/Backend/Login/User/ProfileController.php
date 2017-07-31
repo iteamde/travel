@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Frontend\User;
+namespace App\Http\Controllers\Backend\Login\User;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Frontend\User\UpdateProfileRequest;

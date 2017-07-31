@@ -1,19 +1,19 @@
 <?php
 
-namespace App\Http\Controllers\Frontend\User;
+namespace App\Http\Controllers\Backend\Login\User;
 
 use App\Http\Controllers\Controller;
 
 /**
- * Class DashboardController.
+ * Class AccountController.
  */
-class DashboardController extends Controller
+class AccountController extends Controller
 {
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index()
     {
-        return view('frontend.user.dashboard');
+        return view('frontend.user.account');
     }
 }

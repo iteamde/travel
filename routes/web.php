@@ -14,16 +14,25 @@ Route::get('lang/{lang}', 'LanguageController@swap');
  * Frontend Routes
  * Namespaces indicate folder structure
  */
-Route::group(['namespace' => 'Frontend', 'as' => 'frontend.'], function () {
-    includeRouteFiles(__DIR__.'/Frontend/');
-});
+// Route::group(['namespace' => 'Frontend', 'as' => 'frontend.'], function () {
+//     includeRouteFiles(__DIR__.'/Frontend/');
+// });
 
 /* ----------------------------------------------------------------------- */
+
+/*
+ * Admin Login Routes
+ * Namespaces indicate folder structure
+ */
+Route::group(['namespace' => 'Backend\Login', 'as' => 'frontend.','prefix' => 'admin'], function () {
+    includeRouteFiles(__DIR__.'/AdminLogin/');
+});
 
 /*
  * Backend Routes
  * Namespaces indicate folder structure
  */
+
 Route::group(['namespace' => 'Backend', 'prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'admin'], function () {
     /*
      * These routes need view-backend permission
@@ -34,6 +43,23 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'admin', 'as' => 'admin.', '
      */
     includeRouteFiles(__DIR__.'/Backend/');
 });
+
+// Route::group(['namespace' => 'Backend', 'prefix' => 'admin', 'as' => 'admin.'], function(){
+
+    // Route::group(['namespace' => 'Auth','as' => 'auth.'], function () {
+        // Route::get('logout-admin','LoginController@logoutAdmin')->name('logout-admin');
+    // });
+    /*
+     * These routes require no user to be logged in
+     */
+    // Route::group(['middleware' => 'guest','namespace' => 'Auth','as' => 'auth.'], function () {
+        
+        // Authentication Routes
+        // Route::get('login', 'LoginController@showLoginForm')->name('login');
+        // Route::post('login', 'LoginController@loginAdmin')->name('login.post');
+    // });
+
+// });
 
 /*
  * Api Routes
