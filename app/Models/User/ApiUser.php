@@ -2638,7 +2638,7 @@ class ApiUser extends User
         return [
             'status' => true,
             'data' => [
-                'message' => 'User removed from favourite list successfully.'
+                'message' => 'Favourites is removed from this user.'
             ]
         ];
     }
