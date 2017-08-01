@@ -680,7 +680,7 @@ class ApiMedia extends Media
             /* Save MediasHides */
             $media_hide->save();
         }else{
-            return Self::generateErrorMessage(false, 400, 'This media is already hidden before.')
+            return Self::generateErrorMessage(false, 400, 'This media is already hidden before.');
         }
 
         /* Return Status True, And Success Message */
