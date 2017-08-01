@@ -46,7 +46,7 @@ class PlaceTableController extends Controller
      */
     public function getForDataTable()
     {
-        return $this->query()
+        $this->query()
             // ->with('users', 'permissions')
             ->select([
                 config('locations.place_table').'.id',

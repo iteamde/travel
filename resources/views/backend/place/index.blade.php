@@ -64,8 +64,8 @@
                 columns: [
 	                {data: 'id', name: '{{config('locations.place_table')}}.id'},
 	                {data: 'transsingle.title', name: 'transsingle.title'},
-	                {data: 'address', name: 'transsingle.address'},
-	                {data: 'city', name: '{{config('locations.place_table')}}.cities_id'},
+	                {data: 'transsingle.address', name: 'transsingle.address'},
+	                {data: 'cities_id', name: '{{config('locations.place_table')}}.cities_id'},
 	                {
                         name: '{{config('locations.countries')}}.active',
                         data: 'active',

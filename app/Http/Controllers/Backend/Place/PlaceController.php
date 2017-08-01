@@ -456,44 +456,91 @@ class PlaceController extends Controller {
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function search(ManagePlaceRequest $request) {
-        $data['countries_id'] = $request->input('countries_id');
-        $data['cities_id'] = $request->input('cities_id');
+    public function search($admin_logs_id = 0, $country_id = 0, $city_id = 0, $latlng = 0, ManagePlaceRequest $request) {
+        if ($country_id)
+            $data['countries_id'] = $country_id;
+        else
+            $data['countries_id'] = $request->input('countries_id');
+
+        if ($city_id)
+            $data['cities_id'] = $city_id;
+        else
+            $data['cities_id'] = $request->input('cities_id');
 
         $city = urlencode($request->input('address'));
-        $query = urlencode($request->input('query'));
-        $latlng = @explode(",", $request->input('latlng'));
-        $lat = $latlng[0];
-        $lng = $latlng[1];
 
-        $provider_ids = array();
-        $get_provider_ids = Place::where('id', '>', 0)->select('provider_id')->get()->toArray();
-        foreach ($get_provider_ids AS $gpi) {
-            $provider_ids[] = $gpi['provider_id'];
-        }
-        $data['provider_ids'] = $provider_ids;
+        if ($admin_logs_id) {
+            $latlng = @explode(",", $latlng);
+            $lat = $latlng[0];
+            $lng = $latlng[1];
 
-        if (time() % 2 == 0) {
-            $json = file_get_contents('http://db.travooo.com/places/go/' . ($city ? $city : 0) . '/' . $lat . '/' . $lng . '/' . $query);
-            //echo 1;
+            $admin_logs = AdminLogs::find($admin_logs_id);
+            $qu = $admin_logs->query;
+            $queries = array_values(unserialize($qu));
+
+            if (count($queries)) {
+                $query = urlencode($queries[0]);
+                unset($queries[0]);
+                $queries = serialize($queries);
+                $ad = AdminLogs::find($admin_logs_id);
+                $ad->query = $queries;
+                $ad->save();
+            }
         } else {
-            $json = file_get_contents('http://db.travooodev.com/public/places/go/' . ($city ? $city : 0) . '/' . $lat . '/' . $lng . '/' . $query);
-            //echo 2;
+            $queries = explode(",", $request->input('query'));
+            $query = urlencode($queries[0]);
+            unset($queries[0]);
+            $queries = serialize($queries);
+
+            $latlng = @explode(",", $request->input('latlng'));
+            $lat = $latlng[0];
+            $lng = $latlng[1];
+
+            $admin_logs = new AdminLogs();
+            $admin_logs->item_type = 'places';
+            $admin_logs->item_id = 0;
+            $admin_logs->action = 'search';
+            $admin_logs->query = $queries;
+            $admin_logs->time = time();
+            $admin_logs->admin_id = Auth::user()->id;
+            $admin_logs->save();
         }
-        //dd('http://db.travooo.com/places/go/'.$city.'/0/0/'.$query);
-        $result = json_decode($json);
 
-        PlaceSearchHistory::create([
-            'lat' => $lat,
-            'lng' => $lng,
-            'time' => time(),
-            'admin_id' => Auth::user()->id
-                ]);
+        if (isset($query)) {
 
-        //dd($json);
-        $data['results'] = $result;
-        //dd($result);
-        return view('backend.place.importresults', $data);
+            $provider_ids = array();
+            $get_provider_ids = Place::where('id', '>', 0)->select('provider_id')->get()->toArray();
+            foreach ($get_provider_ids AS $gpi) {
+                $provider_ids[] = $gpi['provider_id'];
+            }
+            $data['provider_ids'] = $provider_ids;
+
+            if (time() % 2 == 0) {
+                $json = file_get_contents('http://db.travooo.com/places/go/' . ($city ? $city : 0) . '/' . $lat . '/' . $lng . '/' . $query);
+            } else {
+                $json = file_get_contents('http://db.travooodev.com/public/places/go/' . ($city ? $city : 0) . '/' . $lat . '/' . $lng . '/' . $query);
+            }
+            $result = json_decode($json);
+
+            PlaceSearchHistory::create([
+                'lat' => $lat,
+                'lng' => $lng,
+                'time' => time(),
+                'admin_id' => Auth::user()->id
+            ]);
+
+            $data['results'] = $result;
+            $data['queries'] = $queries;
+            if (isset($admin_logs) && is_object($admin_logs)) {
+                $data['admin_logs_id'] = $admin_logs->id;
+                $data['latlng'] = $lat . ',' . $lng;
+            }
+
+            return view('backend.place.importresults', $data);
+        } else {
+            return redirect()->route('admin.location.place.index')
+                            ->withFlashSuccess('Done!');
+        }
     }
 
     public function savesearch(ManagePlaceRequest $request) {
@@ -502,10 +549,9 @@ class PlaceController extends Controller {
         $to_save = $request->input('save');
         $places = $request->input('place');
 
+        //dd($request->all());
+
         if (is_array($to_save)) {
-
-
-
             foreach ($to_save AS $k => $v) {
                 $p = new Place();
                 $p->place_type_ids = 1;
@@ -531,19 +577,37 @@ class PlaceController extends Controller {
                     $pt->description = $places[$k]['website'];
                 $pt->working_days = $places[$k]['working_days'];
                 $pt->save();
-                AdminLogs::create(['item_type' => 'places', 'item_id' => $p->id, 'action' => 'import', 'time' => time(), 'admin_id' => Auth::user()->id]);
+                AdminLogs::create(['item_type' => 'places', 'item_id' => $p->id, 'action' => 'import', 'query' => '', 'time' => time(), 'admin_id' => Auth::user()->id]);
             }
             //die();
             $num = count($to_save);
 
-            return redirect()->route('admin.location.place.index')
-                            ->withFlashSuccess($num . ' Places imported successfully!');
-        }
-        else {
+            if ($request->input('admin_logs_id')) {
+                //die();
+                return redirect()->route('admin.location.place.search', array($request->get('admin_logs_id'),
+                                    $request->get('countries_id'),
+                                    $request->get('cities_id'),
+                                    $request->get('latlng')))
+                                ->withFlashSuccess($num . ' Places imported successfully!');
+            } else {
+                return redirect()->route('admin.location.place.index')
+                                ->withFlashSuccess($num . ' Places imported successfully!');
+            }
+        } else {
+            if ($request->input('admin_logs_id')) {
+                //die();
+                return redirect()->route('admin.location.place.search', array($request->get('admin_logs_id'),
+                                    $request->get('countries_id'),
+                                    $request->get('cities_id'),
+                                    $request->get('latlng')))
+                                ->withFlashSuccess($num . ' Places imported successfully!');
+            } else {
             return redirect()->route('admin.location.place.index')
                             ->withFlashError('You didnt select any items to import!');
+            }
         }
     }
+
     public function return_search_history(ManagePlaceRequest $request) {
         //dd($request->all());
         $ne_lat = $request->get('ne_lat');

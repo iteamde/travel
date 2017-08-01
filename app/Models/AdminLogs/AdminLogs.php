@@ -7,7 +7,7 @@ use App\Models\Access\User\User;
 
 class AdminLogs extends Model
 {
-    protected $fillable = ['item_type', 'item_id', 'action', 'time', 'admin_id'];
+    protected $fillable = ['item_type', 'item_id', 'action', 'query', 'time', 'admin_id'];
     public $timestamps = false;
 
     public function user()

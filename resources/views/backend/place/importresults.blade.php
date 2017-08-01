@@ -82,6 +82,10 @@
             <div class="pull-right">
                 <input type="hidden" name="countries_id" value='{{$countries_id}}' />
                 <input type="hidden" name="cities_id" value='{{$cities_id}}' />
+                @if(isset($admin_logs_id))
+                <input type="hidden" name="admin_logs_id" value='{{$admin_logs_id}}' />
+                <input type="hidden" name="latlng" value='{{$latlng}}' />
+                @endif
 
                 {{ Form::submit('Save Places', ['class' => 'btn btn-success btn-xs submit_button']) }}
             </div><!--pull-right-->
