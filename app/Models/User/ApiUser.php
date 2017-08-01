@@ -265,8 +265,9 @@ class ApiUser extends User
         }
 
         if($model->status == Self::STATUS_DEACTIVE){
-            $model->status = Self::STATUS_ACTIVE;
-            $model->save();
+            // $model->status = Self::STATUS_ACTIVE;
+            // $model->save();
+            return Self::generateErrorMessage(false, 400, 'The user is deactivated.');
         }
         
         /* Find Session For The Provided User */
