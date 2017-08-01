@@ -687,7 +687,7 @@ class ApiMedia extends Media
         return [
             'status' => true,
             'data'   => [
-                'message' => 'Media hidden successfully'
+                'message' => 'Media hidden successfully.'
             ]
         ];
     }
@@ -776,6 +776,8 @@ class ApiMedia extends Media
             
             /* Save MediasReports Model */
             $media_report->save();
+        }else{
+            return Self::generateErrorMessage(false, 400, 'Media is already reported before.');
         }
 
         /* Return Success Status, Along With Success Message */
