@@ -53,6 +53,10 @@ class ApiEmbassy extends Embassies
                 return Self::generateErrorMessage(false, 400, 'Wrong embassy id provided.');
             }
 
+            if($embassies->active != Self::ACTIVE){
+                return Self::generateErrorMessage(false, 400, 'This embassy is deactivated.')
+            }
+
             $embassies_trans = [];
             if(!empty($embassies->trans)){
                 foreach ($embassies->trans as $key => $value) {
@@ -79,7 +83,7 @@ class ApiEmbassy extends Embassies
 
         $embassies_arr = [];
 
-        $embassies = Self::where(['countries_id' => $country_id])->get();
+        $embassies = Self::where(['countries_id' => $country_id, 'active' => Self::ACTIVE])->get();
         
         if(!empty($embassies[0])){
             
