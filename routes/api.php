@@ -165,4 +165,17 @@ Route::group([
         /* Page Notification Settings Api */
         Route::post('/notification_settings', 'PagesController@notification_settings');
     });
+
+/*
+ * Embassy Manager 
+ */
+Route::group([
+    'prefix'     => 'embassy',
+    'as'         => 'embassy.',
+    'namespace'  => 'Embassies' ,
+], function () {
+
+        /* Show Embassies */
+        Route::get('/{user_id}/{session_token}/{country_id}/{embassy_id?}' , 'EmbassyController@show_embassies');
+    });
 });
