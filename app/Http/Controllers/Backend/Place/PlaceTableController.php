@@ -52,6 +52,7 @@ class PlaceTableController extends Controller
                 config('locations.place_table').'.id',
                 config('locations.place_table').'.lat',
                 config('locations.place_table').'.lng',
+                config('locations.place_table').'.cities_id',
                 config('locations.place_table').'.active'
             ]);
     }
