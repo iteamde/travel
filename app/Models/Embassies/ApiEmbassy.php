@@ -54,7 +54,7 @@ class ApiEmbassy extends Embassies
             }
 
             if($embassies->active != Self::ACTIVE){
-                return Self::generateErrorMessage(false, 400, 'This embassy is deactivated.')
+                return Self::generateErrorMessage(false, 400, 'This embassy is deactivated.');
             }
 
             $embassies_trans = [];
