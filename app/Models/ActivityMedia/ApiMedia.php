@@ -507,6 +507,12 @@ class ApiMedia extends Media
             return Self::generateErrorMessage(false, 400, 'Wrong media id provided.');
         }
 
+        $report = MediasReports::where(['medias_id' => $post['medias_id'] ])->first();
+
+        if(!empty($report)){
+            return Self::generateErrorMessage(false, 400, 'Media has been reported and cannot be shared.');
+        }
+
         /* Create New MediaShare Object */
         $share = new MediasShares;
 
