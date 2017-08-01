@@ -8,13 +8,10 @@
                 <span class="icon-bar"></span>
             </button>
 
-            {{ link_to_route('frontend.index', app_name(), [], ['class' => 'navbar-brand']) }}
+            {{ link_to_route('frontend.index', 'Laravel 5 Boilerplate (Admin End)', [], ['class' => 'navbar-brand']) }}
         </div><!--navbar-header-->
 
         <div class="collapse navbar-collapse" id="frontend-navbar-collapse">
-            <ul class="nav navbar-nav">
-                <li>{{ link_to_route('frontend.macros', trans('navs.frontend.macros'), [], ['class' => active_class(Active::checkRoute('frontend.macros')) ]) }}</li>
-            </ul>
 
             <ul class="nav navbar-nav navbar-right">
                 @if (config('locale.status') && count(config('locale.languages')) > 1)
@@ -29,15 +26,11 @@
                 @endif
 
                 @if ($logged_in_user)
-                    <li>{{ link_to_route('admin.dashboard', trans('navs.frontend.dashboard'), [], ['class' => active_class(Active::checkRoute('admin.dashboard')) ]) }}</li>
+                    <li>{{ link_to_route('backend.admin.dashboard', trans('navs.frontend.dashboard'), [], ['class' => active_class(Active::checkRoute('frontend.user.dashboard')) ]) }}</li>
                 @endif
 
                 @if (! $logged_in_user)
-                    <li>{{ link_to_route('frontend.auth.login', trans('navs.frontend.login'), [], ['class' => active_class(Active::checkRoute('frontend.auth.login')) ]) }}</li>
-
-                    @if (config('access.users.registration'))
-                        <li>{{ link_to_route('frontend.auth.register', trans('navs.frontend.register'), [], ['class' => active_class(Active::checkRoute('frontend.auth.register')) ]) }}</li>
-                    @endif
+                    <li>{{ link_to_route('admin.auth.login', trans('navs.frontend.login'), [], ['class' => active_class(Active::checkRoute('frontend.auth.login')) ]) }}</li>
                 @else
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
