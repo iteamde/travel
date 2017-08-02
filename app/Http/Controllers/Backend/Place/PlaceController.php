@@ -600,7 +600,7 @@ class PlaceController extends Controller {
                                     $request->get('countries_id'),
                                     $request->get('cities_id'),
                                     $request->get('latlng')))
-                                ->withFlashSuccess($num . ' Places imported successfully!');
+                                ->withFlashSuccess('You didnt select any items to import!');
             } else {
             return redirect()->route('admin.location.place.index')
                             ->withFlashError('You didnt select any items to import!');
