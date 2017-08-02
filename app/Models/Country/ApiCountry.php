@@ -50,12 +50,27 @@ class ApiCountry extends Countries
             return Self::generateErrorMessage(false, 400, 'Wrong country id provided.');
         }
 
+        /* Get Country Information In Array Format */
+        $country_arr = $country->getArrayResponse();
+
+        /* Return Success Status, And Country Information */
+        return [
+            'status' => true,
+            'data'   => [
+                'country_info' => $country_arr
+            ]
+        ];
+
+    }
+
+    public function getArrayResponse(){
+
         /* Container For Country Translations */
         $country_translations = [];
 
         /* If Country Translations Exist, Get Translation Information In Array Format */
-        if(!empty($country->trans)){
-            foreach ($country->trans as $key => $value) {
+        if(!empty($this->trans)){
+            foreach ($this->trans as $key => $value) {
                 $country_translations[$value->languages_id] = [
                     'title'         => $value->title,
                     'description'   => $value->description,
@@ -78,33 +93,23 @@ class ApiCountry extends Countries
         $country_media_arr = [];
 
         /* If Country Media Exists, Get Media Information In Array Format */
-        if(!empty($country->medias)){
-            foreach ($country->medias as $key => $value) {
+        if(!empty($this->medias)){
+            foreach ($this->medias as $key => $value) {
                 array_push($country_media_arr,$value->media->getArrayResponse());
             }
         }
 
-        /* Get Country Information In Array Format */
-        $country_arr = [
-            'id' => $country->id,
-            'regions_id' => $country->id,
-            'code' => $country->code,
-            'lat' => $country->lat,
-            'lng' => $country->lng,
-            'safety_degree_id' => $country->safety_degree_id,
-            'active' => $country->active,
+        return [
+            'id' => $this->id,
+            'regions_id' => $this->id,
+            'code' => $this->code,
+            'lat' => $this->lat,
+            'lng' => $this->lng,
+            'safety_degree_id' => $this->safety_degree_id,
+            'active' => $this->active,
             'translations' => $country_translations,
             'country_medias' => $country_media_arr
         ];
-
-        /* Return Success Status, And Country Information */
-        return [
-            'status' => true,
-            'data'   => [
-                'country_info' => $country_arr
-            ]
-        ];
-
     }
 
     /* Generate Error Message With provided "status", "code" and "message" */
