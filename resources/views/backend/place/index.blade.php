@@ -65,7 +65,7 @@
 	                {data: 'id', name: '{{config('locations.place_table')}}.id'},
 	                {data: 'transsingle.title', name: 'transsingle.title'},
 	                {data: 'transsingle.address', name: 'transsingle.address'},
-	                {data: 'cities_id', name: '{{config('locations.place_table')}}.cities_id'},
+	                {data: 'city_title', name: 'city_title'},
 	                {
                         name: '{{config('locations.countries')}}.active',
                         data: 'active',

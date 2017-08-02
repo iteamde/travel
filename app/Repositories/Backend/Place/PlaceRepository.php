@@ -4,6 +4,7 @@ namespace App\Repositories\Backend\Place;
 
 use App\Models\Place\Place;
 use App\Models\Place\PlaceTranslations;
+use App\Models\Place\Relationship\PlaceRelationship;
 use Illuminate\Support\Facades\DB;
 use App\Exceptions\GeneralException;
 use App\Repositories\BaseRepository;
@@ -83,10 +84,10 @@ class PlaceRepository extends BaseRepository
         $dataTableQuery = $this->query()
             // ->with('roles')
             ->with('transsingle')
+            ->with('city')
             ->select([
                 config('locations.place_table').'.id',
-                config('locations.place_table').'.lat',
-                config('locations.place_table').'.lng',
+                config('locations.place_table').'.cities_id',
                 config('locations.place_table').'.active'
             ]);
 
