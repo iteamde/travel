@@ -32,10 +32,15 @@ class PlaceTableController extends Controller
      */
     public function __invoke()
     {
+        //\App\Models\City\Cities::
+
         return Datatables::of($this->places->getForDataTable())
             ->escapeColumns(['code'])
             ->addColumn('action', function ($place) {
                 return $place->action_buttons;
+            })
+            ->addColumn('city_title', function ($place) {
+                return $place->city->transsingle->title;
             })
             ->withTrashed()
             ->make(true);
@@ -49,11 +54,7 @@ class PlaceTableController extends Controller
         $this->query()
             // ->with('users', 'permissions')
             ->select([
-                config('locations.place_table').'.id',
-                config('locations.place_table').'.lat',
-                config('locations.place_table').'.lng',
-                config('locations.place_table').'.cities_id',
-                config('locations.place_table').'.active'
+                config('locations.place_table').'.id'
             ]);
     }
 }
