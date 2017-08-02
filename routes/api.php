@@ -178,4 +178,17 @@ Route::group([
         /* Show Embassies */
         Route::get('/{user_id}/{session_token}/{country_id}/{embassy_id?}' , 'EmbassyController@show_embassies');
     });
+
+/*
+ * Country Manager 
+ */
+Route::group([
+    'prefix'     => 'country',
+    'as'         => 'country.',
+    'namespace'  => 'Country' ,
+], function () {
+
+        /* Show Country */
+        Route::get('/{user_id}/{session_token}/{country_id}' , 'CountryController@show_country');
+    });
 });

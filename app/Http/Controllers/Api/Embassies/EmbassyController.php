@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
  */
 class EmbassyController extends Controller
 {
-	
+	/* Show Embassies Api */
 	public function show_embassies($user_id, $session_token, $country_id, $embassy_id = 0){
 		
 		$response = Embassy::show_embassies($user_id, $session_token, $country_id, $embassy_id);
