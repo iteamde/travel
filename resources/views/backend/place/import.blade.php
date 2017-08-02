@@ -102,7 +102,7 @@
             {{ Form::label('query', 'Query', ['class' => 'col-lg-2 control-label']) }}
 
             <div class="col-lg-10">
-                {{ Form::text('query', null, ['class' => 'form-control', 'maxlength' => '255', 'autofocus' => 'autofocus', 'placeholder' => 'Enter query to search']) }}
+                {{ Form::textarea('query', null, ['class' => 'form-control', 'autofocus' => 'autofocus', 'placeholder' => 'Enter comma delimited queries to search']) }}
             </div><!--col-lg-10-->
         </div><!--form control-->
         <div class="form-group">
