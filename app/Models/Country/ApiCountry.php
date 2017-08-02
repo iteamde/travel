@@ -6,6 +6,7 @@ use App\Models\Country\Countries;
 use App\Models\User\ApiUser as User;
 use App\Models\System\Session;
 
+/* Api Country Model */
 class ApiCountry extends Countries
 {
     /* Show Country Function */
@@ -99,16 +100,17 @@ class ApiCountry extends Countries
             }
         }
 
+        /* Return Array Response */
         return [
-            'id' => $this->id,
-            'regions_id' => $this->id,
-            'code' => $this->code,
-            'lat' => $this->lat,
-            'lng' => $this->lng,
+            'id'               => $this->id,
+            'regions_id'       => $this->id,
+            'code'             => $this->code,
+            'lat'              => $this->lat,
+            'lng'              => $this->lng,
             'safety_degree_id' => $this->safety_degree_id,
-            'active' => $this->active,
-            'translations' => $country_translations,
-            'country_medias' => $country_media_arr
+            'active'           => $this->active,
+            'translations'     => $country_translations,
+            'country_medias'   => $country_media_arr
         ];
     }
 
