@@ -15,7 +15,7 @@ class Countries extends Model
      *
      * @var string
      */
-    protected $table;
+    protected $table = 'countries';
     
     use CountriesRelationship,
         CountryAttribute;

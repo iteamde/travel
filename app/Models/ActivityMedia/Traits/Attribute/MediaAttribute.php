@@ -100,4 +100,26 @@ trait MediaAttribute
             $this->getStatusButtonAttribute().
             $this->getDeleteButtonAttribute();
     }
+
+    public function getArrayResponse(){
+
+        $translations = [];
+
+        if(!empty($this->trans)){
+            foreach ($this->trans as $key => $value) {
+                $translations[$value->languages_id] = [
+                    'title' => $value->title,
+                    'description' => $value->description
+                ];
+            }
+        }
+
+        $media_arr = [
+            'id' => $this->id,
+            'url' => $this->url,
+            'translations' => $translations
+        ];
+
+        return $media_arr;
+    }
 }
