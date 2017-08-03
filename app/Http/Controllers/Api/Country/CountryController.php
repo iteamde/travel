@@ -8,7 +8,7 @@ use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 
 /**
- * Class CountryController.
+ * Class Api/CountryController.
  */
 class CountryController extends Controller
 {

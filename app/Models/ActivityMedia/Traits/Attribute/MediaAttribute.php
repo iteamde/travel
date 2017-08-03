@@ -101,8 +101,10 @@ trait MediaAttribute
             $this->getDeleteButtonAttribute();
     }
 
+    /* This function returns Medias information in Array format */
     public function getArrayResponse(){
 
+        /* Get All Translations In Array Format */
         $translations = [];
 
         if(!empty($this->trans)){
