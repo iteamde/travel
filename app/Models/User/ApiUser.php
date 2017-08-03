@@ -403,8 +403,14 @@ class ApiUser extends User
             ];
         }        
 
+
         /* Hash New Password Using Sha1 Encryption */
         $password_hash = sha1($new_password);
+        
+        if($new_password == $user->password){
+            return Self::generateErrorMessage(false, 400, 'New password cannot be the same as old password, please enter new password.');
+        }
+
         $user->password = $password_hash;
         
         if($user->save()){
