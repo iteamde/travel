@@ -1393,7 +1393,7 @@ class ApiUser extends User
 
         /* If User Id Not Provided or Is Empty, Return Error */
         if(!isset($post['user_id']) || empty($post['user_id'])){
-            return Self::generateErrorMessage(false, 400, 'User Ids Not Provided.');
+            return Self::generateErrorMessage(false, 400, 'User Id Not Provided.');
         }
 
         /* if User Id Is Not Integer, Return Error */
