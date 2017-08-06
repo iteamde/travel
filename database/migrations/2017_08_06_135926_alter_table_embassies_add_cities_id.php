@@ -15,7 +15,8 @@ class AlterTableEmbassiesAddCitiesId extends Migration {
         //
         Schema::table('embassies', function(Blueprint $table) {
             $sql = 'ALTER TABLE `embassies`
-            ADD `cities_id` int(11) NOT NULL AFTER `countries_id`,
+            ADD `cities_id` int(11) NOT NULL AFTER `countries_id`;
+            ALTER TABLE `embassies`
             ADD FOREIGN KEY (`cities_id`) REFERENCES `cities` (`id`) ON DELETE CASCADE;';
             DB::connection()->getPdo()->exec($sql);
         });
