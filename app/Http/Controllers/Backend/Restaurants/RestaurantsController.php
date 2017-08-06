@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend\Restaurants;
 
 use App\Models\AdminLogs\AdminLogs;
+use App\Models\RestaurantsSearchHistory\RestaurantsSearchHistory;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Restaurants\Restaurants;
 use App\Models\Restaurants\RestaurantsTranslations;
@@ -486,7 +487,7 @@ class RestaurantsController extends Controller
             $data['provider_ids'] = $provider_ids;
 
             if (time() % 2 == 0) {
-                $json = file_get_contents('http://db.travooo.com/restaurants/go/' . ($city ? $city : 0) . '/' . $lat . '/' . $lng . '/' . $query);
+                $json = file_get_contents('http://db.travooo.com/public/restaurants/go/' . ($city ? $city : 0) . '/' . $lat . '/' . $lng . '/' . $query);
             } else {
                 $json = file_get_contents('http://db.travooodev.com/public/restaurants/go/' . ($city ? $city : 0) . '/' . $lat . '/' . $lng . '/' . $query);
             }
@@ -523,12 +524,11 @@ class RestaurantsController extends Controller
 
         if (is_array($to_save)) {
             foreach ($to_save AS $k => $v) {
-                $p = new Place();
-                $p->place_type_ids = 1;
-                $p->safety_degrees_id = 1;
+                $p = new Restaurants();
                 $p->provider_id = $places[$k]['provider_id'];
                 $p->countries_id = $data['countries_id'];
                 $p->cities_id = $data['cities_id'];
+                $p->places_id = 1;
                 $p->lat = $places[$k]['lat'];
                 $p->lng = $places[$k]['lng'];
                 $p->rating = $places[$k]['rating'];
@@ -536,43 +536,43 @@ class RestaurantsController extends Controller
                 $p->save();
                 //dd($p->id);
 
-                $pt = new PlaceTranslations();
+                $pt = new RestaurantsTranslations();
                 $pt->languages_id = 1;
-                $pt->places_id = $p->id;
+                $pt->restaurants_id = $p->id;
                 $pt->title = $places[$k]['name'];
                 $pt->address = $places[$k]['address'];
                 if (isset($places[$k]['phone']))
                     $pt->phone = $places[$k]['phone'];
                 if (isset($places[$k]['website']))
                     $pt->description = $places[$k]['website'];
-                $pt->working_days = $places[$k]['working_days'];
+                $pt->working_days = $places[$k]['working_days'] ? $places[$k]['working_days'] : '';
                 $pt->save();
-                AdminLogs::create(['item_type' => 'places', 'item_id' => $p->id, 'action' => 'import', 'query' => '', 'time' => time(), 'admin_id' => Auth::user()->id]);
+                AdminLogs::create(['item_type' => 'restaurants', 'item_id' => $p->id, 'action' => 'import', 'query' => '', 'time' => time(), 'admin_id' => Auth::user()->id]);
             }
             //die();
             $num = count($to_save);
 
             if ($request->input('admin_logs_id')) {
                 //die();
-                return redirect()->route('admin.location.place.search', array($request->get('admin_logs_id'),
+                return redirect()->route('admin.restaurants.restaurants.search', array($request->get('admin_logs_id'),
                                     $request->get('countries_id'),
                                     $request->get('cities_id'),
                                     $request->get('latlng')))
-                                ->withFlashSuccess($num . ' Places imported successfully!');
+                                ->withFlashSuccess($num . ' Restaurants imported successfully!');
             } else {
-                return redirect()->route('admin.location.place.index')
-                                ->withFlashSuccess($num . ' Places imported successfully!');
+                return redirect()->route('admin.restaurants.restaurants.index')
+                                ->withFlashSuccess($num . ' Restaurants imported successfully!');
             }
         } else {
             if ($request->input('admin_logs_id')) {
                 //die();
-                return redirect()->route('admin.location.place.search', array($request->get('admin_logs_id'),
+                return redirect()->route('admin.restaurants.restaurants.search', array($request->get('admin_logs_id'),
                                     $request->get('countries_id'),
                                     $request->get('cities_id'),
                                     $request->get('latlng')))
                                 ->withFlashSuccess('You didnt select any items to import!');
             } else {
-            return redirect()->route('admin.location.place.index')
+            return redirect()->route('admin.restaurants.restaurants.index')
                             ->withFlashError('You didnt select any items to import!');
             }
         }
@@ -585,7 +585,7 @@ class RestaurantsController extends Controller
         $ne_lng = $request->get('ne_lng');
         $sw_lng = $request->get('sw_lat');
 
-        $markers = RestaurantSearchHistory::whereBetween('lat', array($sw_lat, $ne_lat))
+        $markers = RestaurantsSearchHistory::whereBetween('lat', array($sw_lat, $ne_lat))
                 ->whereBetween('lng', array($sw_lng, $ne_lng))
                 ->groupBy('lat', 'lng')
                 ->select('lat', 'lng')

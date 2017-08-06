@@ -18,7 +18,7 @@ Route::group([
         Route::get('Restaurants/import', 'RestaurantsController@import')->name('restaurants.import');
         Route::post('Restaurants/search', 'RestaurantsController@search')->name('restaurants.search');
         Route::get('Restaurants/search/{admin_logs_id?}/{country_id?}/{city_id?}/{latlng?}', 'RestaurantsController@search')->name('restaurants.search');
-        Route::post('Restaurants/savesearch', 'RestaurantsController@savesearch')->name('place.savesearch');
+        Route::post('Restaurants/savesearch', 'RestaurantsController@savesearch')->name('restaurants.savesearch');
         Route::get('Restaurants/return_search_history', 'RestaurantsController@return_search_history')
                 ->name('restaurants.searchhistory');
 
