@@ -403,8 +403,14 @@ class ApiUser extends User
             ];
         }        
 
+
         /* Hash New Password Using Sha1 Encryption */
         $password_hash = sha1($new_password);
+        
+        if($password_hash == $user->password){
+            return Self::generateErrorMessage(false, 400, 'New password cannot be the same as old password, please enter new password.');
+        }
+
         $user->password = $password_hash;
         
         if($user->save()){
@@ -1393,7 +1399,7 @@ class ApiUser extends User
 
         /* If User Id Not Provided or Is Empty, Return Error */
         if(!isset($post['user_id']) || empty($post['user_id'])){
-            return Self::generateErrorMessage(false, 400, 'User Ids Not Provided.');
+            return Self::generateErrorMessage(false, 400, 'User Id Not Provided.');
         }
 
         /* if User Id Is Not Integer, Return Error */

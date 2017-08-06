@@ -85,7 +85,7 @@ Route::group([
         /* Update Online Status Api */
         Route::post('/onlinestatus' , 'UserController@change_online_status');
         /* Unhide A Content Api */
-        Route::post('/unhideacontent' , 'UserController@unhide_content');
+        Route::post('/unhidecontent' , 'UserController@unhide_content');
         /* Deactivate Account Api */
         Route::post('/deactivate' , 'UserController@deactivate');
         /* Update Contact Privacy Api */
