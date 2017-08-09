@@ -89,9 +89,11 @@
                     </li>
                 </ul>
             </li>
+            @endauth
 
             <!-- Locations Manager Start -->
             <li class="{{ active_class(Active::checkUriPattern('admin/location/*')) }} treeview">
+                @role(1)
                 <a href="#">
                     <i class="fa fa-users"></i>
                     <!-- <span>{{ trans('menus.backend.access.title') }}</span> -->
@@ -123,7 +125,9 @@
                             <span>{{ trans('labels.backend.locations.cities') }}</span>
                         </a>
                     </li>
+                    @endauth
 
+                    @role(4)
                     <li class="{{ active_class(Active::checkUriPattern('admin/location/place/*')) | active_class(Active::checkUriPattern('admin/location/place')) }}">
                         <a href="{{ route('admin.location.place.index') }}">
                             <i class="fa fa-circle-o"></i>
@@ -131,10 +135,12 @@
                             <span>Places & Activities</span>
                         </a>
                     </li>
+                    @endauth
                 </ul>
             </li>
             <!-- Locations Manager End -->
 
+            @role(5)
             <!-- Embassies Manager Start -->
             <li class="{{ active_class(Active::checkUriPattern('admin/embassies/embassies*') , 'active') }} treeview">
                 <a href="#">
@@ -155,7 +161,9 @@
                 </ul>
             </li>
             <!-- Embassies Manager End -->
+            @endauth
 
+            @role(6)
             <!-- Hotels Manager Start -->
             <li class="{{ active_class(Active::checkUriPattern('admin/hotels/hotels*') , 'active') }} treeview">
                 <a href="#">
@@ -176,7 +184,9 @@
                 </ul>
             </li>
             <!-- Hotels Manager End -->
+            @endauth
 
+            @role(7)
             <!-- Restaurants Manager Start -->
             <li class="{{ active_class(Active::checkUriPattern('admin/restaurants/restaurants*') , 'active') }} treeview">
                 <a href="#">
@@ -197,7 +207,9 @@
                 </ul>
             </li>
             <!-- Restaurants Manager End -->
+            @endauth
 
+            @role(1)
             <!-- Interests Manager -->
             <li class="{{ active_class(Active::checkUriPattern('admin/interest/interest*')) }} treeview">
                 <a href="#">
