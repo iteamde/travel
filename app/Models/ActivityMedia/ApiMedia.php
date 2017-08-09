@@ -14,13 +14,16 @@ use App\Models\ActivityMedia\MediasShares;
 use App\Models\ActivityMedia\MediasHides;
 use App\Models\ActivityMedia\MediasReports;
 use App\Models\Access\language\Languages;
+use App\Models\User\UsersHiddenContent;
 
 /* For Generating Url */
+
 use App\Helpers\UrlGenerator;
 
 class ApiMedia extends Media
 {
     /* Create Media For User Function */
+
     public static function create($request){
         
         $post = $request->input();
@@ -152,6 +155,7 @@ class ApiMedia extends Media
     }
 
     /* Function For Adding Comment To A Media */
+
     public static function comment($request){
 
         /* Get Post Array From Request */
@@ -292,6 +296,7 @@ class ApiMedia extends Media
     }
 
     /* Media Like Function */
+
     public static function like($request){
 
         /* Get Post Arguments From Request */
@@ -371,6 +376,7 @@ class ApiMedia extends Media
     }
 
     /* Unlike Function */
+
     public static function unlike($request){
 
         /* Get Post Arguments From Request Input */
@@ -448,6 +454,7 @@ class ApiMedia extends Media
     }
 
     /* Share Media Function */
+
     public static function share($request){
 
         /* Get Post Array For Arguments Sent In Request */
@@ -532,6 +539,7 @@ class ApiMedia extends Media
     }
 
     /* Media Deleted Successfully */
+
     public static function delete_media($request){
 
         /* Get Post Arguments From Request */
@@ -613,6 +621,7 @@ class ApiMedia extends Media
     }
 
     /* Hide Media Function */
+
     public static function hide($request){
 
         /* Get Input Arguments For Post Request */
@@ -674,17 +683,32 @@ class ApiMedia extends Media
 
         /* Find Previous Entry For Provided User Id And Media Id. */
         $media_hide = MediasHides::where(['users_id' => $post['user_id'], 'medias_id' => $post['medias_id'] ])->first();
+        $user_hide  = UsersHiddenContent::where(['users_id' => $post['user_id'], 'content_id' => $post['medias_id'], 'content_type' => UsersHiddenContent::CONTENT_MEDIA ])->first();
 
         /* If Previous Entry Not Found, Create New Entry */
-        if(empty($media_hide)){
-            $media_hide = new MediasHides;
+        if(empty($media_hide) || empty($user_hide)){
+            
+            if(empty($media_hide)){
+                $media_hide = new MediasHides;
 
-            /* Load Data In MediasHides Model */
-            $media_hide->users_id   = $post['user_id'];
-            $media_hide->medias_id  = $post['medias_id'];
+                /* Load Data In MediasHides Model */
+                $media_hide->users_id   = $post['user_id'];
+                $media_hide->medias_id  = $post['medias_id'];
 
-            /* Save MediasHides */
-            $media_hide->save();
+                /* Save MediasHides */
+                $media_hide->save();
+            }
+
+            if(empty($user_hide)){
+                $user_hide = new UsersHiddenContent;
+
+                $user_hide->users_id     = $post['user_id'];
+                $user_hide->content_id   = $post['medias_id'];
+                $user_hide->content_type = UsersHiddenContent::CONTENT_MEDIA;
+
+                $user_hide->save();
+            }
+
         }else{
             return Self::generateErrorMessage(false, 400, 'This media is already hidden before.');
         }
@@ -699,6 +723,7 @@ class ApiMedia extends Media
     }
 
     /* Media Report Function */
+
     public static function report($request){
 
         /* Get Arguments From Post Request */
@@ -796,6 +821,7 @@ class ApiMedia extends Media
     }
 
     /* Display Media Information Function */
+
     public static function activity($request){
 
         /* Get Arguments From Post Request */
@@ -899,6 +925,7 @@ class ApiMedia extends Media
     }
 
     /* Update Medias Description Api */
+
     public static function update_description($request){
 
         /* Get Arguments From Post Request */
@@ -986,6 +1013,7 @@ class ApiMedia extends Media
     }
 
     /* Get List Of User's Media Group By Languages */
+
     public static function get_list_by_user( $user_id, $session_token, $media_user_id ){
 
         /* If User Id Is Not An Integer, Return Error */
@@ -1075,6 +1103,7 @@ class ApiMedia extends Media
     }
 
     /* Generate Error Message With provided "status", "code" and "message" */
+
     public static function generateErrorMessage($status, $code, $message){
 
         $response = [];

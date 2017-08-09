@@ -403,7 +403,6 @@ class ApiUser extends User
             ];
         }        
 
-
         /* Hash New Password Using Sha1 Encryption */
         $password_hash = sha1($new_password);
         
@@ -1322,7 +1321,7 @@ class ApiUser extends User
         /* If Hidden Content For Provided User Is Not Empty, Get Array Format Of Content */
         if(!empty($hidden_content)){
             foreach ($hidden_content as $key => $value) {
-                array_push($hidden_content_arr, $value);
+                array_push($hidden_content_arr, $value->getArrayResponse());
             }
         }
 
