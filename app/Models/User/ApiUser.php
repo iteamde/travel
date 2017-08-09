@@ -1325,6 +1325,11 @@ class ApiUser extends User
             }
         }
 
+        if(empty($hidden_content_arr)){
+            $hidden_content_arr = [
+                'message' => 'No hidden content found.'
+            ];
+        }
         /* Return Status True, And Content Data In Response */
         return [
             'success' => true,
