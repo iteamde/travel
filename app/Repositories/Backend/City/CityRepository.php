@@ -18,6 +18,12 @@ use App\Repositories\BaseRepository;
 use Illuminate\Database\Eloquent\Model;
 use App\Repositories\Backend\Access\Role\RoleRepository;
 
+use App\Models\ActivityMedia\Media;
+use App\Models\ActivityMedia\MediaTranslations;
+use App\Models\Access\language\Languages;
+
+use App\Helpers\UrlGenerator;
+
 /**
  * Class CityRepository.
  */
@@ -121,6 +127,44 @@ class CityRepository extends BaseRepository
             $check = 1;
 
             if ($model->save()) {
+
+                if(!empty($extra['files'])){
+                    
+                    $url = UrlGenerator::GetUploadsUrl();
+                    $i = 0;
+                    foreach ($extra['files'] as $key => $file) {
+                        $extension = $file->extension();
+
+                        if(self::validateUpload($extension)){
+                            $new_file_name = time() . $i++ . '_city.' . $file->extension();
+                            $new_path = '/uploads/medias/cities/' . $model->id . '/';
+                            $file->storeAs( $new_path , $new_file_name);
+                            
+                            $media = new Media;
+                            $media->url = $url . 'medias/cities/' . $model->id . '/' . $new_file_name;
+                            $media->type = Media::TYPE_IMAGE;
+                            $media->save();
+                            
+                            $languages = Languages::all();
+
+                            if(!empty($languages)){
+                                foreach ($languages as $key => $value) {
+                                    $media_trans = new MediaTranslations;
+                                    $media_trans->medias_id = $media->id;
+                                    $media_trans->languages_id = $value->id;
+                                    $media_trans->title = $new_file_name;
+                                    $media_trans->description = "Image";
+                                    $media_trans->save();
+                                }
+                            }
+
+                            $cities_media = new CitiesMedias;
+                            $cities_media->cities_id = $model->id;
+                            $cities_media->medias_id = $media->id;
+                            $cities_media->save();
+                        }
+                    }
+                }
 
                 /* Entry in CityMedias table */
                 if(!empty($extra['medias'])){
@@ -306,7 +350,9 @@ class CityRepository extends BaseRepository
         $prev_medias = CitiesMedias::where(['cities_id' => $id])->get();
         if(!empty($prev_medias)){
             foreach ($prev_medias as $key => $value) {
-                $value->delete();
+                if($value->medias->type == null){
+                    $value->delete();
+                }
             }
         }
 
@@ -318,10 +364,77 @@ class CityRepository extends BaseRepository
             }
         }
 
+        if(!empty($extra['delete-images'])){
+            $images_arr = explode(',' , $extra['delete-images']);
+            
+            if(!empty($images_arr)){
+                foreach ($images_arr as $key => $value) {
+                    $temp = Media::where(['id' => $value])->first();
+                    
+                    if(!empty($temp)){
+                        if($temp->type == Media::TYPE_IMAGE){
+                            $city_media = CitiesMedias::where(['medias_id' => $temp->id])->first();
+                            $path = storage_path() . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . 'medias' . DIRECTORY_SEPARATOR . 'cities' . DIRECTORY_SEPARATOR;
+                            
+                            if(!empty($city_media)){
+                                $filename = explode('/',$temp->url);
+                                $filename = end($filename);
+                                $path .= $city_media->cities_id . DIRECTORY_SEPARATOR;
+                                $path .= $filename;
+                                
+                                if(is_file($path)){
+                                    unlink($path);
+                                }
+                            }
+                            $temp->delete();
+                        }
+                    }
+                }
+            }
+        }
+
         DB::transaction(function () use ($model, $input, $extra) {
             $check = 1;
 
             if ($model->save()) {
+
+                if(!empty($extra['files'])){
+                    
+                    $url = UrlGenerator::GetUploadsUrl();
+                    $i = 0;
+                    foreach ($extra['files'] as $key => $file) {
+                        $extension = $file->extension();
+
+                        if(self::validateUpload($extension)){
+                            $new_file_name = time() . $i++ . '_city.' . $file->extension();
+                            $new_path = '/uploads/medias/cities/' . $model->id . '/';
+                            $file->storeAs( $new_path , $new_file_name);
+                            
+                            $media = new Media;
+                            $media->url = $url . 'medias/cities/' . $model->id . '/' . $new_file_name;
+                            $media->type = Media::TYPE_IMAGE;
+                            $media->save();
+                            
+                            $languages = Languages::all();
+
+                            if(!empty($languages)){
+                                foreach ($languages as $key => $value) {
+                                    $media_trans = new MediaTranslations;
+                                    $media_trans->medias_id = $media->id;
+                                    $media_trans->languages_id = $value->id;
+                                    $media_trans->title = $new_file_name;
+                                    $media_trans->description = "Image";
+                                    $media_trans->save();
+                                }
+                            }
+
+                            $cities_media = new CitiesMedias;
+                            $cities_media->cities_id = $model->id;
+                            $cities_media->medias_id = $media->id;
+                            $cities_media->save();
+                        }
+                    }
+                }
 
                 /* Entry in CityMedias table */
                 if(!empty($extra['medias'])){
@@ -430,5 +543,26 @@ class CityRepository extends BaseRepository
 
             throw new GeneralException('Unexpected Error Occured!');
         });
+    }
+
+    public static function validateUpload($extension) {
+        
+        $extension = strtolower($extension);
+
+        switch($extension){
+            case 'jpeg':
+                return true;
+            case 'jpg':
+                return true;
+                break;
+            case 'png':
+                return true;
+                break;
+            case 'gif':
+                return true;
+                break;
+            default:
+                return false;
+        }
     }
 }

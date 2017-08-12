@@ -252,14 +252,31 @@
                     @endforeach
                     <!-- End: Medias -->
 
+                    <!-- Start: Images -->
+                    <tr>
+                         <th> <h3 style="color:#0A8F27">Images</h3></th><td></td>   
+                    </tr>
+                </table>
+                <div class="row">
+                    @if(empty($images))
+                        <div style="padding-left: 20px;"><p>No Images Added.</p></div>
+                    @endif
+                    @foreach($images as $key => $image)
+                        <div class="col-md-2" style="margin-right: 20px;margin-top:10px;">  
+                            <a href="<?=$image?>"><img src="<?=$image?>" style="width:170px;height:150px;"/>
+                            </a>
+                        </div>
+                    @endforeach
+                </div>
+                    <!-- End: Medias -->
+                <table class="table table-striped table-hover">
                     <tr>
                          <th> <h3 style="color:#0A8F27">Location</h3></th><td></td>   
                     </tr>
                     <tr>
                         <th>Latitude , Longitude</th>
-                        <td> <p><?=$country->lat?> , <?=$country->lng?></p> </td>
+                        <td> <p><?= $country->lat ?> , <?= $country->lng ?></p> </td>
                     </tr>
-                    
                 </table>
                 <!-- Map will be created in the "map" div -->
                 <div id="map"></div>

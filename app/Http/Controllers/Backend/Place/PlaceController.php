@@ -65,7 +65,7 @@ class PlaceController extends Controller {
 
 
         /* Get All Medias */
-        $medias = Media::get();
+        $medias = Media::where(['type' => null])->get();
         $medias_arr = [];
 
         foreach ($medias as $key => $value) {
@@ -117,16 +117,36 @@ class PlaceController extends Controller {
             $active = 1;
         }
 
+        $files = null;
+        if($request->hasFile('pictures')){
+            $files = $request->file('pictures');
+        }
+
+        $place_type_ids = null;
+        $types = PlaceTypes::get();
+
+        if(!empty($types[0])){
+            $place_type_ids = $types[0]->id;
+        }
+
+        $safety_degrees_id = null;
+        $degrees = SafetyDegree::get();
+
+        if(!empty($degrees[0])){
+            $safety_degrees_id = $degrees[0]->id;
+        }
+
         /* Send All Relation and Common Fields Through $extra Array */
         $extra = [
             'active' => $active,
             'countries_id' => $request->input('countries_id'),
             'cities_id' => $request->input('cities_id'),
-            'place_types_ids' => 1,
+            'place_types_ids' => $place_type_ids,
             'lat' => $location[0],
             'lng' => $location[1],
             'medias' => $request->input('medias_id'),
-            'safety_degrees_id' => 1
+            'safety_degrees_id' => $safety_degrees_id,
+            'files' => $files
         ];
 
         $this->places->create($data, $extra);
@@ -266,18 +286,26 @@ class PlaceController extends Controller {
         /* Get All Selected Medias */
         $selected_medias = $place->medias;
         $selected_medias_arr = [];
+        $images_arr = [];
 
         foreach ($selected_medias as $key => $value) {
             $value = $value->media;
             // if(isset($value->transsingle) && !empty($value->transsingle)){
-            array_push($selected_medias_arr, $value->id);
+            if($value->type == null){
+                array_push($selected_medias_arr, $value->id);
+            }else{
+                array_push($images_arr,[
+                    'id' => $value->id,
+                    'url' => $value->url
+                ]);
+            }
             // }
         }
 
         $data['selected_medias'] = $selected_medias_arr;
 
         /* Get All Medias */
-        $medias = Media::get();
+        $medias = Media::where([ 'type' => null ])->get();
         $medias_arr = [];
 
         foreach ($medias as $key => $value) {
@@ -295,6 +323,7 @@ class PlaceController extends Controller {
                         ->withDegrees($degrees_arr)
                         ->withCities($cities_arr)
                         ->withPlace_types($places_types_arr)
+                        ->withImages($images_arr)
                         ->withMedias($medias_arr);
     }
 
@@ -339,6 +368,11 @@ class PlaceController extends Controller {
             $active = 1;
         }
 
+        $files = null;
+        if($request->hasFile('pictures')){
+            $files = $request->file('pictures');
+        }
+
         /* Send All Relation and Common fields through $extra Array */
         $extra = [
             'active' => $active,
@@ -348,9 +382,10 @@ class PlaceController extends Controller {
             'medias' => $request->input('medias_id'),
             'lat' => $location[0],
             'lng' => $location[1],
-            'safety_degrees_id' => $request->input('safety_degrees_id')
+            'safety_degrees_id' => $request->input('safety_degrees_id'),
+            'files'             => $files,
+            'delete-images'     => $request->input('delete-images'),
         ];
-
 
         $this->places->update($id, $place, $data, $extra);
 
@@ -381,32 +416,41 @@ class PlaceController extends Controller {
 
         /* Get Country Information */
         $type = $place->type;
-        $type = $type->transsingle;
-
+        if(!empty($type)){
+            $type = $type->transsingle;
+        }
+        
         /* Get Safety Degrees Information */
         $safety_degree = $place->degree;
-        $safety_degree = $safety_degree->transsingle;
-
-
+        if(!empty($safety_degrees)){
+            $safety_degree = $safety_degree->transsingle;
+        }
+        
         /* Get All Selected Medias */
         $selected_medias = $place->medias;
+        $image_urls = [];
         $selected_medias_arr = [];
 
         foreach ($selected_medias as $key => $value) {
             $value = $value->media;
-            if (isset($value->transsingle) && !empty($value->transsingle)) {
-                array_push($selected_medias_arr, $value->transsingle->title);
+            if($value->type == null){
+                if (isset($value->transsingle) && !empty($value->transsingle)) {
+                    array_push($selected_medias_arr, $value->transsingle->title);
+                }
+            }else{
+                array_push($image_urls,$value->url);
             }
         }
 
         return view('backend.place.show')
-                        ->withPlace($place)
-                        ->withPlacetrans($placeTrans)
-                        ->withCountry($country)
-                        ->withCity($city)
-                        ->withType($type)
-                        ->withDegree($safety_degree)
-                        ->withMedias($selected_medias_arr);
+                ->withPlace($place)
+                ->withPlacetrans($placeTrans)
+                ->withCountry($country)
+                ->withCity($city)
+                ->withType($type)
+                ->withDegree($safety_degree)
+                ->withImages($image_urls)
+                ->withMedias($selected_medias_arr);
     }
 
     /**

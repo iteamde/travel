@@ -132,7 +132,7 @@ class CityController extends Controller
         }
 
         /* Find All Medias In The System */
-        $medias = Media::get();
+        $medias = Media::where(['type' => null])->get();
         $medias_arr = [];
 
         foreach ($medias as $key => $value) {
@@ -205,6 +205,11 @@ class CityController extends Controller
             $is_capital = Cities::IS_CAPITAL;
         }
 
+        $files = null;
+        if($request->hasFile('pictures')){
+            $files = $request->file('pictures');
+        }
+
         /* Pass All Relation and Common Fields Through $extra Array */
         $extra = [
             'active' => $active,
@@ -222,7 +227,8 @@ class CityController extends Controller
             'medias'  => $request->input('medias_id') ? $request->input('medias_id') : '',
             'religions'  => $request->input('religions_id') ? $request->input('religions_id') : '',
             'safety_degree_id' => $request->input('safety_degree_id') ? $request->input('safety_degree_id') : '',
-            'level_of_living_id' => $request->input('level_of_living_id') ? $request->input('level_of_living_id') : 0
+            'level_of_living_id' => $request->input('level_of_living_id') ? $request->input('level_of_living_id') : 0,
+            'files' => $files,
         ];
 
         $this->cities->create($data, $extra);
@@ -446,18 +452,28 @@ class CityController extends Controller
         /* Get Selected Medias */
         $selected_medias = $cities->medias;
         $selected_medias_arr = [];
+        $selected_images = [];
+
         /* Get Selected Id Pair From Each Model */
         foreach ($selected_medias as $key => $value) {
             // if(isset($value->languages_spoken->transsingle) && !empty($value->languages_spoken->transsingle)){
                 // $selected_airports_arr[$value->place->id] = $value->place->transsingle->title;
+            $media = $value->medias;
+            if($media->type != Media::TYPE_IMAGE){
                 array_push($selected_medias_arr,$value->medias->id);
+            }else{
+                array_push($selected_images,[
+                    'id' => $media->id,
+                    'url' => $media->url
+                ]);
+            }
             // }
         }
 
         $data['selected_medias'] = $selected_medias_arr;
 
         /* Find All Medias In The System */
-        $medias = Media::get();
+        $medias = Media::where([ 'type' => null ])->get();
         $medias_arr = [];
         /* Get Title Id Pair For Each Model */
         foreach ($medias as $key => $value) {
@@ -503,7 +519,8 @@ class CityController extends Controller
             ->withEmergency_numbers($emergency_numbers_arr)
             ->withLifestyles($lifestyles_arr)
             ->withReligions($religion_arr)
-            ->withMedias($medias_arr);
+            ->withMedias($medias_arr)
+            ->withImages($selected_images);
     }
 
     /**
@@ -550,6 +567,11 @@ class CityController extends Controller
             $is_capital = Cities::IS_CAPITAL;
         }
 
+        $files = null;
+        if($request->hasFile('pictures')){
+            $files = $request->file('pictures');
+        }
+
         $extra = [
             'active' => $active,
             'is_capital' => $is_capital,
@@ -565,7 +587,9 @@ class CityController extends Controller
             'languages_spoken' => $request->input('languages_spoken_id'),
             'medias' => $request->input('medias_id'),
             'religions'  => $request->input('religions_id'),
-            'safety_degree_id' => $request->input('safety_degree_id')
+            'safety_degree_id' => $request->input('safety_degree_id'),
+            'files'             => $files,
+            'delete-images'     => $request->input('delete-images'),
         ];
 
 
@@ -716,6 +740,7 @@ class CityController extends Controller
         /* Get All Added Medias */
         $medias = $city->medias;
         $medias_arr = [];
+        $images_arr = [];
 
         /* If Model Exist, Get Translated Title For Each Model */
         if(!empty($medias)){
@@ -725,10 +750,14 @@ class CityController extends Controller
 
                 if(!empty($media)){
 
-                    $media = $media->transsingle;
+                    if($media->type != Media::TYPE_IMAGE){
+                        $media = $media->transsingle;
 
-                    if(!empty($media)){
-                        array_push($medias_arr,$media->title);
+                        if(!empty($media)){
+                            array_push($medias_arr,$media->title);
+                        }
+                    }else{
+                        array_push($images_arr,$media->url);
                     }
                 }
             }
@@ -766,6 +795,7 @@ class CityController extends Controller
             ->withLifestyles($lifestyles_arr)
             ->withLanguages_spoken($languages_spoken_arr)
             ->withMedias($medias_arr)
+            ->withImages($images_arr)
             ->withEmergencynumbers($emergency_numbers_arr)
             ->withReligions($religions_arr);
     }
