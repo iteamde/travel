@@ -14,7 +14,7 @@ class UrlGenerator
         /* Change this url to your sites upload directory */
         // $url = asset('storage');
         /* Local Url */
-        // $url = 'localhost/travoo-api/storage/uploads/';
+        // $url = 'http://localhost/travoo-api/storage/uploads/';
         /* Travooo Site Url */
         $url = 'storage.travooo.com/';
         

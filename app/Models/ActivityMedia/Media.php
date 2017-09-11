@@ -8,6 +8,7 @@ use App\Models\ActivityMedia\Traits\Attribute\MediaAttribute;
 
 class Media extends Model
 {
+    const TYPE_IMAGE = 1;
     /**
      * The database table used by the model.
      *

@@ -56,6 +56,7 @@ use App\Models\Access\language\Languages;
             'class'  => 'form-horizontal',
             'role'   => 'form',
             'method' => 'PATCH',
+            'files'  => true
         ]) 
     }}
 
@@ -336,6 +337,34 @@ use App\Models\Access\language\Languages;
                         </div><!--col-lg-10-->
                     </div><!--form control-->
                     <!-- EmergencyNumbers: End -->
+                    <!-- Images: Start -->
+                    <input type="hidden" id="delete-images" name="delete-images" value="" />
+                    <div class="form-group">
+                        {{ Form::label('title', 'Images', ['class' => 'col-lg-2 control-label']) }}
+
+                        <div class="col-lg-10">
+                        {{ Form::file('file_name',[ 'name' => 'pictures[]', 'multiple' => 'multiple' ]) }}
+                        </div><!--col-lg-10-->
+                    </div><!--form control-->
+                    <!-- Images: End -->
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-2" style="margin-right: 0px;margin-left: 20px;text-align: right;">
+                                {{ Form::label('title', 'Uploaded Images', ['class' => 'col-md-2 control-label', 'style' => 'margin-left: 55px;']) }}
+                            </div>
+                            <div class="col-md-8">
+                                @if(empty($images))
+                                    <div style="padding-left: 20px;"><p>No Images Added.</p></div>
+                                @endif
+                                @foreach( $images as $image)
+                                    <div class="col-md-2" style="">
+                                        <i class="fa fa-times delete-image" data-id="<?= $image['id'] ?>" aria-hidden="true" style="color:red;position: relative;top:20px;left:85px;" ></i>
+                                        <img src="<?= $image['url'] ?>" style="width:100px;height:100px;"/>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
                 @endif
                 <!-- Languages Tabs: End -->
             </div>
@@ -499,6 +528,22 @@ use App\Models\Access\language\Languages;
                     });   
                 }
             });
+        });
+
+        $(document).on('click', '.delete-image', function(){
+
+            var id = $(this).attr('data-id');
+            $(this).parent().remove();
+            
+            var value = $('#delete-images').val();
+            
+            if(value == ''){
+                $('#delete-images').val(id);
+            }else{
+                value += ',' + id;
+                $('#delete-images').val(value);
+            }
+            // alert($('#delete-images').val());
         });
     </script>
     <!-- Error Alert Script : End -->

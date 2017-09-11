@@ -16,6 +16,12 @@ use App\Models\Country\CountriesMedias;
 use App\Models\Country\CountriesReligions;
 /* Country Models End */
 
+use App\Models\ActivityMedia\Media;
+use App\Models\ActivityMedia\MediaTranslations;
+use App\Models\Access\language\Languages;
+
+use App\Helpers\UrlGenerator;
+
 use Illuminate\Support\Facades\DB;
 use App\Exceptions\GeneralException;
 use App\Repositories\BaseRepository;
@@ -123,6 +129,44 @@ class CountryRepository extends BaseRepository
             $check = 1;
             
             if ($model->save()) {
+
+                if(!empty($extra['files'])){
+                    
+                    $url = UrlGenerator::GetUploadsUrl();
+                    $i = 0;
+                    foreach ($extra['files'] as $key => $file) {
+                        $extension = $file->extension();
+                        
+                        if(self::validateUpload($extension)){
+                            $new_file_name = time() . $i++ . '_country.' . $file->extension();
+                            $new_path = '/uploads/medias/countries/' . $model->id . '/';
+                            $file->storeAs( $new_path , $new_file_name);
+                            
+                            $media = new Media;
+                            $media->url = $url . 'medias/countries/' . $model->id . '/' . $new_file_name;
+                            $media->type = Media::TYPE_IMAGE;
+                            $media->save();
+                            
+                            $languages = Languages::all();
+
+                            if(!empty($languages)){
+                                foreach ($languages as $key => $value) {
+                                    $media_trans = new MediaTranslations;
+                                    $media_trans->medias_id = $media->id;
+                                    $media_trans->languages_id = $value->id;
+                                    $media_trans->title = $new_file_name;
+                                    $media_trans->description = "Image";
+                                    $media_trans->save();
+                                }
+                            }
+
+                            $country_media = new CountriesMedias;
+                            $country_media->countries_id = $model->id;
+                            $country_media->medias_id = $media->id;
+                            $country_media->save();
+                        }
+                    }
+                }
 
                 /* ADD Religions IN CountriesReligions */  
                 if(!empty($extra['religions'])){
@@ -326,9 +370,16 @@ class CountryRepository extends BaseRepository
 
         /* Delete Previous CountriesMedias */
         $prev_medias = CountriesMedias::where(['countries_id' => $id])->get();
+        
         if(!empty($prev_medias)){
             foreach ($prev_medias as $key => $value) {
-                $value->delete();
+                if(!empty($value->media)){
+                    if($value->media->type != Media::TYPE_IMAGE){
+                        $value->delete();
+                    }
+                }else{
+                    $value->delete();
+                }
             }
         }
 
@@ -340,10 +391,77 @@ class CountryRepository extends BaseRepository
             }
         }
 
+        if(!empty($extra['delete-images'])){
+            $images_arr = explode(',' , $extra['delete-images']);
+            
+            if(!empty($images_arr)){
+                foreach ($images_arr as $key => $value) {
+                    $temp = Media::where(['id' => $value])->first();
+                    
+                    if(!empty($temp)){
+                        if($temp->type == Media::TYPE_IMAGE){
+                            $countries_media = CountriesMedias::where(['medias_id' => $temp->id])->first();
+                            $path = storage_path() . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . 'medias' . DIRECTORY_SEPARATOR . 'countries' . DIRECTORY_SEPARATOR;
+                            if(!empty($countries_media)){
+                                
+                                $filename = explode('/',$temp->url);
+                                $filename = end($filename);
+                                $path .= $countries_media->countries_id . DIRECTORY_SEPARATOR;
+                                $path .= $filename;
+                                
+                                if(is_file($path)){
+                                    unlink($path);
+                                }
+                            }
+                            $temp->delete();
+                        }
+                    }
+                }
+            }
+        }
+
         DB::transaction(function () use ($model, $input, $extra) {
             $check = 1;
             
             if ($model->save()) {
+
+                 if(!empty($extra['files'])){
+                    
+                    $url = UrlGenerator::GetUploadsUrl();
+                    $i = 0;
+                    foreach ($extra['files'] as $key => $file) {
+                        $extension = $file->extension();
+
+                        if(self::validateUpload($extension)){
+                            $new_file_name = time() . $i++ . '_country.' . $file->extension();
+                            $new_path = '/uploads/medias/countries/' . $model->id . '/';
+                            $file->storeAs( $new_path , $new_file_name);
+                            
+                            $media = new Media;
+                            $media->url = $url . 'medias/countries/' . $model->id . '/' . $new_file_name;
+                            $media->type = Media::TYPE_IMAGE;
+                            $media->save();
+                            
+                            $languages = Languages::all();
+
+                            if(!empty($languages)){
+                                foreach ($languages as $key => $value) {
+                                    $media_trans = new MediaTranslations;
+                                    $media_trans->medias_id = $media->id;
+                                    $media_trans->languages_id = $value->id;
+                                    $media_trans->title = $new_file_name;
+                                    $media_trans->description = "Image";
+                                    $media_trans->save();
+                                }
+                            }
+
+                            $country_media = new CountriesMedias;
+                            $country_media->countries_id = $model->id;
+                            $country_media->medias_id = $media->id;
+                            $country_media->save();
+                        }
+                    }
+                }
 
                 /* ADD Religions IN CountriesReligions */  
                 if(!empty($extra['religions'])){
@@ -464,5 +582,26 @@ class CountryRepository extends BaseRepository
 
             throw new GeneralException('Unexpected Error Occured!');
         });
+    }
+
+    public static function validateUpload($extension) {
+        
+        $extension = strtolower($extension);
+
+        switch($extension){
+            case 'jpeg':
+                return true;
+            case 'jpg':
+                return true;
+                break;
+            case 'png':
+                return true;
+                break;
+            case 'gif':
+                return true;
+                break;
+            default:
+                return false;
+        }
     }
 }

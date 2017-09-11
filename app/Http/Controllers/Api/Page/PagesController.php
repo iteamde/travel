@@ -44,6 +44,7 @@ class PagesController extends Controller
 		return $response;
 	}
 
+	/* Notification Settings Api */
 	public function notification_settings(Request $request){
 
 		$response = Pages::notification_settings($request);
