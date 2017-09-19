@@ -48,7 +48,115 @@ class CountryController extends Controller
      */
     public function create(ManageCountryRequest $request)
     {
-        
+        /* Get All Regions */
+        $regions = Regions::where(['active' => 1])->get();
+        $regions_arr = [];
+
+        foreach ($regions as $key => $value) {
+            if(isset($value->transsingle) && !empty($value->transsingle)){
+                $regions_arr[$value->id] = $value->transsingle->title;
+            }
+        }
+
+        /* Get All safety Degrees */
+        $degrees = SafetyDegree::get();
+        $degrees_arr = [];
+
+        foreach ($degrees as $key => $value) {
+            if(isset($value->transsingle) && !empty($value->transsingle)){
+                $degrees_arr[$value->id] = $value->transsingle->title;
+            }
+        }
+
+        /* Get All Places For Airports*/
+        $places = Place::where(['active' => 1])->get();
+        $places_arr = [];
+
+        foreach ($places as $key => $value) {
+            if(isset($value->transsingle) && !empty($value->transsingle)){
+                $places_arr[$value->id] = $value->transsingle->title;
+            }
+        }
+
+        /* Get All Currencies */
+        $currencies = Currencies::where(['active' => 1])->get();
+        $currencies_arr = [];
+
+        foreach ($currencies as $key => $value) {
+            if(isset($value->transsingle) && !empty($value->transsingle)){
+                $currencies_arr[$value->id] = $value->transsingle->title;
+            }
+        }
+
+        /* Get All Cities */
+        $cities = Cities::where(['active' => 1])->get();
+        $cities_arr = [];
+
+        foreach ($cities as $key => $value) {
+            if(isset($value->transsingle) && !empty($value->transsingle)){
+                $cities_arr[$value->id] = $value->transsingle->title;
+            }
+        }
+
+        /* Get All EmergencyNumbers */
+        $emergency_numbers = EmergencyNumbers::get();
+        $emergency_numbers_arr = [];
+
+        foreach ($emergency_numbers as $key => $value) {
+            if(isset($value->transsingle) && !empty($value->transsingle)){
+                $emergency_numbers_arr[$value->id] = $value->transsingle->title;
+            }
+        }
+
+        /* Get All Holidays */
+        $holidays = Holidays::get();
+        $holidays_arr = [];
+
+        foreach ($holidays as $key => $value) {
+            if(isset($value->transsingle) && !empty($value->transsingle)){
+                $holidays_arr[$value->id] = $value->transsingle->title;
+            }
+        }
+
+        /* Get All LanguagesSpoken */
+        $languages_spoken = LanguagesSpoken::where(['active' => 1])->get();
+        $languages_spoken_arr = [];
+
+        foreach ($languages_spoken as $key => $value) {
+            if(isset($value->transsingle) && !empty($value->transsingle)){
+                $languages_spoken_arr[$value->id] = $value->transsingle->title;
+            }
+        }
+
+        /* Get All Lifestyles */
+        $lifestyles = Lifestyle::get();
+        $lifestyles_arr = [];
+
+        foreach ($lifestyles as $key => $value) {
+            if(isset($value->transsingle) && !empty($value->transsingle)){
+                $lifestyles_arr[$value->id] = $value->transsingle->title;
+            }
+        }
+
+        /* Get All Medias */
+        $medias = Media::where(['type' => null])->get();
+        $medias_arr = [];
+
+        foreach ($medias as $key => $value) {
+            if(isset($value->transsingle) && !empty($value->transsingle)){
+                $medias_arr[$value->id] = $value->transsingle->title;
+            }
+        }
+
+        /* Get All Religions */
+        $religions = Religion::where([ 'active' => 1 ])->get();
+        $religions_arr = [];
+
+        foreach ($religions as $key => $value) {
+            if(isset($value->transsingle) && !empty($value->transsingle)){
+                $religions_arr[$value->id] = $value->transsingle->title;
+            }
+        }
 
         return view('backend.country.create',[
             'regions' => $regions_arr,
