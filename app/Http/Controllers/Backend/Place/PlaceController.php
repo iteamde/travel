@@ -552,13 +552,18 @@ class PlaceController extends Controller {
 
         if (isset($query)) {
 
-            $provider_ids = array();
+            /*
+             * $provider_ids = array();
 
             $get_provider_ids = Place::where('id', '>', 0)->select('provider_id')->get()->toArray();
             foreach ($get_provider_ids AS $gpi) {
                 $provider_ids[] = $gpi['provider_id'];
             }
             $data['provider_ids'] = $provider_ids;
+             *
+             */
+
+            $data['provider_ids'] = array();
 
             if (time() % 2 == 0) {
                 $json = file_get_contents('http://db.travooo.com/public/places/go/' . ($city ? $city : 0) . '/' . $lat . '/' . $lng . '/' . $query);
@@ -599,7 +604,7 @@ class PlaceController extends Controller {
         if (is_array($to_save)) {
             foreach ($to_save AS $k => $v) {
                 $p = new Place();
-                $p->place_type = @join(',', $places[$k]['types']);
+                $p->place_type = $places[$k]['types'];
                 $p->safety_degrees_id = 1;
                 $p->provider_id = $places[$k]['provider_id'];
                 $p->countries_id = $data['countries_id'];
