@@ -56,6 +56,7 @@
                             @if(!in_array($r->place_id, $provider_ids))
                             <input type="hidden" name="place[{{$i}}][provider_id]" value='{{$r->place_id}}' />
                             <input type="hidden" name="place[{{$i}}][name]" value='{{$r->name}}' />
+                            <input type="hidden" name="place[{{$i}}][types]" value='{{$r->types}}' />
                             <input type="hidden" name="place[{{$i}}][address]" value='{{$r->formatted_address}}' />
                             <input type="hidden" name="place[{{$i}}][lat]" value='{{$r->geometry->location->lat}}' />
                             <input type="hidden" name="place[{{$i}}][lng]" value='{{$r->geometry->location->lng}}' />
