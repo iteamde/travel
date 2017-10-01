@@ -34,6 +34,9 @@ class RegionsTableController extends Controller
     public function __invoke(ManageRegionsRequest $request)
     {   
         return Datatables::of($this->regions->getForDataTable())
+            ->addColumn('',function(){
+                return null;
+            })
             ->addColumn('action', function ($regions) {
                 return $regions->action_buttons;
             })
