@@ -34,6 +34,9 @@ class CityTableController extends Controller
     {
         return Datatables::of($this->cities->getForDataTable())
             ->escapeColumns(['code'])
+            ->addColumn('',function(){
+                return null;
+            })
             ->addColumn('action', function ($city) {
                 return $city->action_buttons;
             })
