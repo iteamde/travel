@@ -34,6 +34,9 @@ class HotelsTableController extends Controller
     {
         return Datatables::of($this->hotels->getForDataTable())
             // ->escapeColumns(['code'])
+            ->addColumn('',function(){
+                return null;
+            })
             ->addColumn('action', function ($hotels) {
                 return $hotels->action_buttons;
             })
