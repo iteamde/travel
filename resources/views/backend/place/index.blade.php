@@ -3,7 +3,8 @@
 @section('title', 'Places Manager')
 
 @section('after-styles')
-{{ Html::style("https://cdn.datatables.net/v/bs/dt-1.10.15/datatables.min.css") }}
+{{ Html::style("https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css") }}
+{{ Html::style("https://cdn.datatables.net/select/1.2.3/css/select.dataTables.min.css") }}
 @endsection
 
 @section('page-header')
@@ -34,6 +35,7 @@
                 <thead>
                     <tr>
                         <!-- <th>{{ trans('labels.backend.access.users.table.id') }}</th> -->
+                        <th></th>
                         <th>id</th>
                         <th>Title</th>
                         <th>Address</th>
@@ -49,12 +51,23 @@
 @endsection
 
 @section('after-scripts')
-{{ Html::script("https://cdn.datatables.net/v/bs/dt-1.10.15/datatables.min.js") }}
+{{ Html::script("https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js") }}
+{{ Html::script("https://cdn.datatables.net/select/1.2.3/js/dataTables.select.min.js") }}
 
 <script>
     $(function () {
     $('#place-table').DataTable({
-    processing: true,
+        columnDefs: [ {
+            orderable: false,
+            className: 'select-checkbox',
+            targets:   0
+        } ],
+        select: {
+            style:    'os',
+            selector: 'td:first-child'
+        },
+        // order: [[ 1, 'asc' ]]
+        processing: true,
             serverSide: true,
             ajax: {
             url: '{{ route("admin.location.place.get") }}',
@@ -62,6 +75,7 @@
                     data: {status: 1, trashed: false}
             },
             columns: [
+            {data: '', name: ''},
             {data: 'id', name: '{{config('locations.place_table')}}.id'},
             {data: 'transsingle.title', name: 'transsingle.title'},
             {data: 'transsingle.address', name: 'transsingle.address'},
@@ -72,16 +86,16 @@
                     sortable: false,
                     searchable: false,
                     render: function(data) {
-                    if (data == 1) {
-                    return '<label class="label label-success">Active</label>';
-                    } else {
-                    return '<label class="label label-danger">Deactive</label>';
-                    }
+                        if (data == 1) {
+                            return '<label class="label label-success">Active</label>';
+                        } else {
+                            return '<label class="label label-danger">Deactive</label>';
+                        }
                     }
             },
             {data: 'action', name: 'action', searchable: false, sortable: false}
             ],
-            order: [[0, "asc"]],
+            order: [[1, "asc"]],
             searchDelay: 500,
             initComplete: function () {
             this.api().columns().every(function () {

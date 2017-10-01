@@ -36,6 +36,9 @@ class PlaceTableController extends Controller
 
         return Datatables::of($this->places->getForDataTable())
             ->escapeColumns(['code'])
+            ->addColumn('',function(){
+                return null;
+            })
             ->addColumn('action', function ($place) {
                 return $place->action_buttons;
             })
