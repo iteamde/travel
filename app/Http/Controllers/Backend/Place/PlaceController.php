@@ -673,5 +673,4 @@ class PlaceController extends Controller {
                 ->toArray();
         return json_encode($markers);
     }
-
 }
