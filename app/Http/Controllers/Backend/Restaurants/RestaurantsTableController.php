@@ -34,6 +34,9 @@ class RestaurantsTableController extends Controller
     {   
         /* Get Data To Populate Datatable In Restaurants Page */
         return Datatables::of($this->restaurants->getForDataTable())
+            ->addColumn('',function(){
+                return null;
+            })
             ->addColumn('action', function ($restaurants) {
                 return $restaurants->action_buttons;
             })

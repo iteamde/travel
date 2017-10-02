@@ -3,7 +3,8 @@
 @section ('title', 'Region Manager')
 
 @section('after-styles')
-    {{ Html::style("https://cdn.datatables.net/v/bs/dt-1.10.15/datatables.min.css") }}
+{{ Html::style("https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css") }}
+{{ Html::style("https://cdn.datatables.net/select/1.2.3/css/select.dataTables.min.css") }}
 @endsection
 
 @section('page-header')
@@ -30,6 +31,7 @@
                     <thead>
                     <tr>
                         <!-- <th>{{ trans('labels.backend.access.users.table.id') }}</th> -->
+                        <th></th>
                         <th>id</th>
                         <th>Title</th>
                         <th>Active</th>
@@ -43,11 +45,21 @@
 @endsection
 
 @section('after-scripts')
-    {{ Html::script("https://cdn.datatables.net/v/bs/dt-1.10.15/datatables.min.js") }}
+    {{ Html::script("https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js") }}
+    {{ Html::script("https://cdn.datatables.net/select/1.2.3/js/dataTables.select.min.js") }}
 
     <script>
         $(function () {
             $('#regions-table').DataTable({
+                columnDefs: [ {
+                    orderable: false,
+                    className: 'select-checkbox',
+                    targets:   0
+                } ],
+                select: {
+                    style:    'os',
+                    selector: 'td:first-child'
+                },
                 processing: true,
                 serverSide: true,
                 ajax: {
@@ -56,7 +68,8 @@
                     data: {status: 1}
                 },
                 columns: [
-	                {data: 'id', name: '{{config('locations.regions_table')}}.id'},
+	                {data: '', name: ''},
+                    {data: 'id', name: '{{config('locations.regions_table')}}.id'},
                     {data: 'transsingle.title', name: 'transsingle.title'},
                     {
                         name: '{{config('locations.regions_table')}}.active',
@@ -73,7 +86,7 @@
                     },
                     {data: 'action', name: 'action', searchable: false, sortable: false}
                 ],
-                order: [[0, "asc"]],
+                order: [[1, "asc"]],
                 searchDelay: 500
             });
         });

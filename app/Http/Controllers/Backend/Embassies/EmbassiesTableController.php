@@ -33,6 +33,9 @@ class EmbassiesTableController extends Controller
     public function __invoke()
     {
         return Datatables::of($this->embassies->getForDataTable())
+            ->addColumn('',function(){
+                return null;
+            })
             ->addColumn('action', function ($embassies) {
                 return $embassies->action_buttons;
             })

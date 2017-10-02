@@ -3,7 +3,8 @@
 @section ('title', trans('labels.backend.access.users.management'))
 
 @section('after-styles')
-    {{ Html::style("https://cdn.datatables.net/v/bs/dt-1.10.15/datatables.min.css") }}
+{{ Html::style("https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css") }}
+{{ Html::style("https://cdn.datatables.net/select/1.2.3/css/select.dataTables.min.css") }}
 @endsection
 
 @section('page-header')
@@ -28,6 +29,7 @@
                 <table id="users-table" class="table table-condensed table-hover">
                     <thead>
                     <tr>
+                        <th></th>
                         <th>{{ trans('labels.backend.access.users.table.id') }}</th>
                         <th>{{ trans('labels.backend.access.users.table.name') }}</th>
                         <th>{{ trans('labels.backend.access.users.table.email') }}</th>
@@ -57,11 +59,21 @@
 @endsection
 
 @section('after-scripts')
-    {{ Html::script("https://cdn.datatables.net/v/bs/dt-1.10.15/datatables.min.js") }}
+{{ Html::script("https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js") }}
+{{ Html::script("https://cdn.datatables.net/select/1.2.3/js/dataTables.select.min.js") }}
 
     <script>
         $(function () {
             $('#users-table').DataTable({
+                columnDefs: [ {
+                    orderable: false,
+                    className: 'select-checkbox',
+                    targets:   0
+                } ],
+                select: {
+                    style:    'os',
+                    selector: 'td:first-child'
+                },
                 processing: true,
                 serverSide: true,
                 ajax: {
@@ -70,6 +82,7 @@
                     data: {status: 1, trashed: false}
                 },
                 columns: [
+                    {data: '',name: ''},
                     {data: 'id', name: '{{config('access.users_table')}}.id'},
                     {data: 'name', name: '{{config('access.users_table')}}.name'},
                     {data: 'email', name: '{{config('access.users_table')}}.email'},
@@ -79,7 +92,7 @@
                     {data: 'updated_at', name: '{{config('access.users_table')}}.updated_at'},
                     {data: 'actions', name: 'actions', searchable: false, sortable: false}
                 ],
-                order: [[0, "asc"]],
+                order: [[1, "asc"]],
                 searchDelay: 500
             });
         });
