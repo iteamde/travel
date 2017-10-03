@@ -674,4 +674,45 @@ class PlaceController extends Controller {
         return json_encode($markers);
     }
 
+    public function delete_ajax(ManagePlaceRequest $request){
+
+        $ids = $request->input('ids');
+        // if(isset($request->input('ids')) && !empty($request->input('ids'))){
+        // }
+        if(!empty($ids)){
+            $ids = explode(',',$request->input('ids'));
+            foreach ($ids as $key => $value) {
+                $this->delete_single_ajax($value);
+            }
+        }
+        
+        echo json_encode([
+            'result' => true
+        ]);
+    }
+
+    /**
+     * @param Place $id
+     * @param ManagePlaceRequest $request
+     *
+     * @return mixed
+     */
+    public function delete_single_ajax($id) {
+        $item = Place::find($id);
+        if(empty($item)){
+            return false;
+        }
+        /* Delete Children Tables Data of this country */
+        $child = PlaceTranslations::where(['places_id' => $id])->get();
+        if (!empty($child)) {
+            foreach ($child as $key => $value) {
+                $value->delete();
+            }
+        }
+        $item->deleteMedias();
+        $item->delete();
+
+        AdminLogs::create(['item_type' => 'places', 'item_id' => $id, 'action' => 'delete', 'time' => time(), 'admin_id' => Auth::user()->id]);
+    }
+
 }
