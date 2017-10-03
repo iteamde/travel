@@ -41,6 +41,7 @@
                         <th>Title</th>
                         <th>Address</th>
                         <th>City</th>
+                        <th>Place Type</th>
                         <th>Active</th>
                         <th>{{ trans('labels.general.actions') }}</th>
                     </tr>
@@ -81,6 +82,7 @@
             {data: 'transsingle.title', name: 'transsingle.title'},
             {data: 'transsingle.address', name: 'transsingle.address'},
             {data: 'city_title', name: 'city_title'},
+            {data: 'place_id_title', name: '{{config('locations.place_table')}}.place_id_title'},
             {
             name: '{{config('locations.countries')}}.active',
                     data: 'active',

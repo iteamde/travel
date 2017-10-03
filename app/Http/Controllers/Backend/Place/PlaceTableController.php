@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Yajra\Datatables\Facades\Datatables;
 use App\Repositories\Backend\Place\PlaceRepository;
 use App\Http\Requests\Backend\Place\ManagePlaceRequest;
+use App\Models\PlaceTypes\PlaceTypes;
 
 /**
  * Class UserTableController.
@@ -37,6 +38,15 @@ class PlaceTableController extends Controller
         return Datatables::of($this->places->getForDataTable())
             ->escapeColumns(['code'])
             ->addColumn('',function(){
+                return null;
+            })
+            ->addColumn('place_id_title',function($place){
+                $temp = PlaceTypes::find($place->place_type_ids);
+                if(!empty($temp)){
+                    if(!empty($temp->transsingle)){
+                        return $temp->transsingle->title;
+                    }
+                }
                 return null;
             })
             ->addColumn('action', function ($place) {
