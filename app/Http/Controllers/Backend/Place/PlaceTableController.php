@@ -40,6 +40,15 @@ class PlaceTableController extends Controller
             ->addColumn('',function(){
                 return null;
             })
+            ->addColumn('place_id_title',function($place){
+                $temp = PlaceTypes::find($place->place_type);
+                if(!empty($temp)){
+                    if(!empty($temp->transsingle)){
+                        return $temp->transsingle->title;
+                    }
+                }
+                return null;
+            })
             ->addColumn('action', function ($place) {
                 return $place->action_buttons;
             })
