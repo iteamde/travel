@@ -714,5 +714,4 @@ class PlaceController extends Controller {
 
         AdminLogs::create(['item_type' => 'places', 'item_id' => $id, 'action' => 'delete', 'time' => time(), 'admin_id' => Auth::user()->id]);
     }
-
 }
