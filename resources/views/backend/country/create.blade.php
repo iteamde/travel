@@ -260,16 +260,6 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
                         </div>
                     </div>
 
-                    <!-- Airports: Start -->
-                    <div class="form-group">
-                        {{ Form::label('title', 'Airports', ['class' => 'col-lg-2 control-label']) }}
-
-                        <div class="col-lg-10">
-                            {{ Form::select('places_id[]', $places , null,['class' => 'select2Class form-control' , 'multiple' => 'multiple']) }}
-                        </div><!--col-lg-10-->
-                    </div><!--form control-->
-                    <!-- Airports: End -->
-
                     <!-- Currencies: Start -->
                     <div class="form-group">
                         {{ Form::label('title', 'Currencies', ['class' => 'col-lg-2 control-label']) }}
