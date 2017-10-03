@@ -687,7 +687,7 @@ class PlaceController extends Controller {
         // }
         
         echo json_encode([
-            'result' => true
+            'result' => false
         ]);
     }
 
