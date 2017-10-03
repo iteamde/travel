@@ -70,16 +70,6 @@ class CountryController extends Controller
             }
         }
 
-        /* Get All Places For Airports*/
-        $places = Place::where(['active' => 1])->get();
-        $places_arr = [];
-
-        foreach ($places as $key => $value) {
-            if(isset($value->transsingle) && !empty($value->transsingle)){
-                $places_arr[$value->id] = $value->transsingle->title;
-            }
-        }
-
         /* Get All Currencies */
         $currencies = Currencies::where(['active' => 1])->get();
         $currencies_arr = [];
@@ -163,7 +153,7 @@ class CountryController extends Controller
         return view('backend.country.create',[
             'regions' => $regions_arr,
             'degrees' => $degrees_arr,
-            'places'  => $places_arr,
+            //'places'  => $places_arr,
             'currencies' => $currencies_arr,
             'cities' => $cities_arr,
             'emergency_numbers' => $emergency_numbers_arr,
@@ -908,7 +898,7 @@ class CountryController extends Controller
                 $this->delete_single_ajax($value);
             }
         }
-        
+
         echo json_encode([
             'result' => true
         ]);

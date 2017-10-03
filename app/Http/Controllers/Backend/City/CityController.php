@@ -73,16 +73,6 @@ class CityController extends Controller
             }
         }
 
-        /* Get All Places */
-        $places = Place::get();
-        $places_arr = [];
-
-        foreach ($places as $key => $value) {
-            if(isset($value->transsingle) && !empty($value->transsingle)){
-                $places_arr[$value->id] = $value->transsingle->title;
-            }
-        }
-
         /* Get All Active Currencies */
         $currencies = Currencies::where([ 'active' => Currencies::ACTIVE ])->get();
         $currencies_arr = [];
@@ -156,7 +146,7 @@ class CityController extends Controller
         return view('backend.city.create',[
             'countries' => $countries_arr,
             'degrees'   => $degrees_arr,
-            'places'    => $places_arr,
+            //'places'    => $places_arr,
             'currencies'=> $currencies_arr,
             'languages_spoken' => $languages_spoken,
             'emergency_numbers' => $emergency_numbers_arr,
@@ -309,29 +299,6 @@ class CityController extends Controller
         foreach ($degrees as $key => $value) {
             if(isset($value->transsingle) && !empty($value->transsingle)){
                 $degrees_arr[$value->id] = $value->transsingle->title;
-            }
-        }
-
-        /* Get All Selected Airport Locations */
-        $selected_airports = $cities->airports;
-        $selected_airports_arr = [];
-        /* Get Selected Id Pair From Each Model */
-        foreach ($selected_airports as $key => $value) {
-            if(isset($value->place->transsingle) && !empty($value->place->transsingle)){
-                // $selected_airports_arr[$value->place->id] = $value->place->transsingle->title;
-                array_push($selected_airports_arr,$value->place->id);
-            }
-        }
-
-        $data['selected_airports'] = $selected_airports_arr;
-
-        /* Get All Places */
-        $places = Place::get();
-        $places_arr = [];
-        /* Get Title Id Pair For Each Model */
-        foreach ($places as $key => $value) {
-            if(isset($value->transsingle) && !empty($value->transsingle)){
-                $places_arr[$value->id] = $value->transsingle->title;
             }
         }
 
@@ -514,7 +481,7 @@ class CityController extends Controller
             ->withData($data)
             ->withCountries($countries_arr)
             ->withDegrees($degrees_arr)
-            ->withPlaces($places_arr)
+            //->withPlaces($places_arr)
             ->withCurrencies($currencies_arr)
             ->withLanguages_spoken($languages_spoken_arr)
             ->withHolidays($holidays_arr)
@@ -851,7 +818,7 @@ class CityController extends Controller
                 $this->delete_single_ajax($value);
             }
         }
-        
+
         echo json_encode([
             'result' => true
         ]);
