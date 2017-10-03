@@ -679,12 +679,12 @@ class PlaceController extends Controller {
         $ids = $request->input('ids');
         // if(isset($request->input('ids')) && !empty($request->input('ids'))){
         // }
-        if(!empty($ids)){
-            $ids = explode(',',$request->input('ids'));
-            foreach ($ids as $key => $value) {
-                $this->delete_single_ajax($value);
-            }
-        }
+        // if(!empty($ids)){
+        //     $ids = explode(',',$request->input('ids'));
+        //     foreach ($ids as $key => $value) {
+        //         $this->delete_single_ajax($value);
+        //     }
+        // }
         
         echo json_encode([
             'result' => true
