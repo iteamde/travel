@@ -273,6 +273,12 @@ class RegionsController extends Controller
         if(empty($item)){
             return false;
         }
+        $trans = RegionsTranslation::where(['regions_id' => $item->id])->get();
+        if(!empty($trans)){
+            foreach ($trans as $key => $value) {
+                $value->delete();
+            }
+        }
         $item->delete();
 
         AdminLogs::create(['item_type' => 'regions', 'item_id' => $id, 'action' => 'delete', 'time' => time(), 'admin_id' => Auth::user()->id]);
