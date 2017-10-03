@@ -95,7 +95,7 @@ class PlaceRepository extends BaseRepository
             ->select([
                 config('locations.place_table').'.id',
                 config('locations.place_table').'.cities_id',
-                config('locations.place_table').'.place_type_ids',
+                config('locations.place_table').'.place_type',
                 config('locations.place_table').'.active'
             ]);
 
