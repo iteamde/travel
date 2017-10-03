@@ -110,7 +110,7 @@ class PlaceRepository extends BaseRepository
         $model = new Place;
         $model->countries_id  = $extra['countries_id'];
         $model->cities_id  = $extra['cities_id'];
-        $model->place_type_ids  = $extra['place_types_ids'];
+        // $model->place_type_ids  = $extra['place_types_ids'];
         $model->active      = $extra['active'];
         $model->lat         = $extra['lat'];
         $model->lng         = $extra['lng'];
