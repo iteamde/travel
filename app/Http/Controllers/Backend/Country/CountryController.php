@@ -20,6 +20,8 @@ use App\Models\LanguagesSpoken\LanguagesSpoken;
 use App\Models\Lifestyle\Lifestyle;
 use App\Models\ActivityMedia\Media;
 use App\Models\Religion\Religion;
+use Illuminate\Support\Facades\Auth;
+use App\Models\AdminLogs\AdminLogs;
 
 class CountryController extends Controller
 {
@@ -893,5 +895,38 @@ class CountryController extends Controller
                 ->get()
                 ->toArray();
         return json_encode($cities_list);
+    }
+
+    public function delete_ajax(ManageCountryRequest $request){
+
+        $ids = $request->input('ids');
+        // if(isset($request->input('ids')) && !empty($request->input('ids'))){
+        // }
+        if(!empty($ids)){
+            $ids = explode(',',$request->input('ids'));
+            foreach ($ids as $key => $value) {
+                $this->delete_single_ajax($value);
+            }
+        }
+        
+        echo json_encode([
+            'result' => true
+        ]);
+    }
+
+    /**
+     * @param User $id
+     * @param ManageUserRequest $request
+     *
+     * @return mixed
+     */
+    public function delete_single_ajax($id) {
+        $item = Countries::find($id);
+        if(empty($item)){
+            return false;
+        }
+        $item->delete();
+
+        AdminLogs::create(['item_type' => 'countries', 'item_id' => $id, 'action' => 'delete', 'time' => time(), 'admin_id' => Auth::user()->id]);
     }
 }

@@ -23,7 +23,7 @@
         <div class="box-header with-border">
             <!-- <h3 class="box-title">{{ trans('labels.backend.access.users.active') }}</h3> -->
             <h3 class="box-title">Cities</h3>
-
+            @include('backend.select-deselect-all-buttons')
             <div class="box-tools pull-right">
                 @include('backend.access.includes.partials.city-header-buttons')
             </div><!--box-tools pull-right-->
@@ -109,4 +109,60 @@
             });
         });
     </script>
+    <script>
+    $(document).ready(function(){
+        $(document).on('click','#select-all',function(){
+            // alert('select-all');
+            if($('#cities-table tbody tr').length == 1){
+                if($('#cities-table tbody tr td').hasClass('dataTables_empty')){
+                    return false;
+                }
+            }
+            $('#cities-table tbody tr').addClass('selected');
+        });
+
+        $(document).on('click','#deselect-all',function(){
+            // alert('deselect-all');
+            $('#cities-table tbody tr').removeClass('selected');
+        });
+        
+        $(document).on('click','#delete-all-selected',function(){
+            // alert('delete all');
+            // alert($('#cities-table tr.selected').length);
+            
+            if($('#cities-table tbody tr.selected').length == 0){
+                alert('Please select some rows first.');
+                return false;
+            }
+
+            if(!confirm('Are you sure you want to delete the selected rows?')){
+                return false;
+            }
+            var ids = '';
+            var i = 0;
+            $('#cities-table tbody tr.selected').each(function(){
+                if(i != 0){
+                    ids += ',';
+                }
+                ids += $(this).find('td:nth-child(2)').html();
+                i++;
+            });
+            // alert(ids);
+            $.ajax({
+                url: '{{ route("admin.location.city.delete_ajax") }}',
+                type: 'post',
+                data: {
+                    ids: ids
+                },
+                success: function(data){
+                    var result = JSON.parse(data);
+                    // alert(result.result);
+                    if(result.result == true){
+                        document.location.reload(); 
+                    }
+                }
+            });
+        });
+    });
+</script>
 @endsection

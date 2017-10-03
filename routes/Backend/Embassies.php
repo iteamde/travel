@@ -27,7 +27,9 @@ Route::group([
          */
         Route::resource('embassies', 'EmbassiesController');
 
-          /*
+        Route::post('embassies/delete-ajax', 'EmbassiesController@delete_ajax')->name('embassies.delete_ajax');
+
+        /*
          * Deleted Specific Embassies
          */
         Route::group(['prefix' => 'embassies/{deletedEmbassies}'], function () {

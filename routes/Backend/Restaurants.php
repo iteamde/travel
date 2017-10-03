@@ -27,7 +27,9 @@ Route::group([
          */
         Route::resource('restaurants', 'RestaurantsController');
 
-          /*
+        Route::post('restaurants/delete-ajax', 'RestaurantsController@delete_ajax')->name('restaurants.delete_ajax');
+
+        /*
          * Deleted Specific Restaurants
          */
         Route::group(['prefix' => 'restaurants/{deletedRestaurants}'], function () {

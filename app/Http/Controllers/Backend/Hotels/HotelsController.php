@@ -614,4 +614,37 @@ class HotelsController extends Controller
                 ->toArray();
         return json_encode($markers);
     }
+
+    public function delete_ajax(ManageHotelsRequest $request){
+
+        $ids = $request->input('ids');
+        // if(isset($request->input('ids')) && !empty($request->input('ids'))){
+        // }
+        if(!empty($ids)){
+            $ids = explode(',',$request->input('ids'));
+            foreach ($ids as $key => $value) {
+                $this->delete_single_ajax($value);
+            }
+        }
+        
+        echo json_encode([
+            'result' => true
+        ]);
+    }
+
+    /**
+     * @param Hotels $id
+     * @param ManageHotelsRequest $request
+     *
+     * @return mixed
+     */
+    public function delete_single_ajax($id) {
+        $item = Hotels::find($id);
+        if(empty($item)){
+            return false;
+        }
+        $item->delete();
+
+        AdminLogs::create(['item_type' => 'hotels', 'item_id' => $id, 'action' => 'delete', 'time' => time(), 'admin_id' => Auth::user()->id]);
+    }
 }

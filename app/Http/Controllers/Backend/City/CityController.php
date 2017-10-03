@@ -20,6 +20,8 @@ use App\Repositories\Backend\City\CityRepository;
 use App\Models\EmergencyNumbers\EmergencyNumbers;
 use App\Http\Requests\Backend\City\StoreCityRequest;
 use App\Http\Requests\Backend\City\ManageCityRequest;
+use Illuminate\Support\Facades\Auth;
+use App\Models\AdminLogs\AdminLogs;
 
 class CityController extends Controller
 {
@@ -836,5 +838,38 @@ class CityController extends Controller
         $city->save();
         return redirect()->route('admin.location.city.index')
             ->withFlashSuccess('City Status Updated!');
+    }
+
+    public function delete_ajax(ManageCityRequest $request){
+
+        $ids = $request->input('ids');
+        // if(isset($request->input('ids')) && !empty($request->input('ids'))){
+        // }
+        if(!empty($ids)){
+            $ids = explode(',',$request->input('ids'));
+            foreach ($ids as $key => $value) {
+                $this->delete_single_ajax($value);
+            }
+        }
+        
+        echo json_encode([
+            'result' => true
+        ]);
+    }
+
+    /**
+     * @param City $id
+     * @param ManageCityRequest $request
+     *
+     * @return mixed
+     */
+    public function delete_single_ajax($id) {
+        $item = Cities::find($id);
+        if(empty($item)){
+            return false;
+        }
+        $item->delete();
+
+        AdminLogs::create(['item_type' => 'cities', 'item_id' => $id, 'action' => 'delete', 'time' => time(), 'admin_id' => Auth::user()->id]);
     }
 }
