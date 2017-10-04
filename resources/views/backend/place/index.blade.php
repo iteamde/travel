@@ -46,6 +46,8 @@
                         <th>{{ trans('labels.general.actions') }}</th>
                     </tr>
                 </thead>
+                <tbody>
+                </tbody>
             </table>
         </div><!--table-responsive-->
     </div><!-- /.box-body -->
@@ -58,6 +60,7 @@
 
 <script>
     $(function () {
+
     $('#place-table').DataTable({
         columnDefs: [ {
             orderable: false,
@@ -101,22 +104,55 @@
             order: [[1, "asc"]],
             searchDelay: 500,
             initComplete: function () {
-            this.api().columns().every(function () {
-            var column = this;
-            var select = $('<select><option value=""></option></select>')
-                    .appendTo($(column.footer()).empty())
-                    .on('change', function () {
-                    var val = $.fn.dataTable.util.escapeRegex(
+                this.api().columns().every(function () {
+                    var column = this;
+                    var select = $('<select><option value=""></option></select>')
+                        .appendTo($(column.footer()).empty())
+                        .on('change', function () {
+                        var val = $.fn.dataTable.util.escapeRegex(
                             $(this).val()
-                            );
-                    column
-                            .search(val ? '^' + val + '$' : '', true, false)
-                            .draw();
+                        );
+                        column.search(val ? '^' + val + '$' : '', true, false)
+                        .draw();
                     });
-            column.data().unique().sort().each(function (d, j) {
-            select.append('<option value="' + d + '">' + d + '</option>')
-            });
-            });
+                    column.data().unique().sort().each(function (d, j) {
+                    select.append('<option value="' + d + '">' + d + '</option>')
+                    });
+                });
+
+                var cities = [];
+                var place_types = [];
+                $('#place-table tbody tr').each(function(){
+                    var temp_text = $(this).find('td:nth-child(5)').html();
+                        cities[temp_text] = temp_text;
+                        temp_text = $(this).find('td:nth-child(6)').html();
+                        place_types[temp_text] = temp_text;
+                });
+
+                $('#place-table tbody').prepend('<tr><td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr>');
+                var count = 0;
+                $('#place-table tbody tr:nth-child(1) td').each( function () {
+                    // var title = $(this).text();
+                    var title = "hello";
+                    if(count == 4){
+                        $(this).html( '<select id="city-filter" class="custom-filters"><option value="">Search City</option></select>' );
+                    }
+
+                    if(count == 5){
+                        $(this).html( '<select id="place-type-filter" class="custom-filters"><option value="">Search Place Type</option></select>' );
+                    }
+                    count++;
+                } );
+
+                /*Append Cities To City Filter*/
+                for (var key in cities) {
+                    $('#city-filter').append('<option value="'+key+'">'+key+'</option>')
+                }
+
+                /*Append Place Types To Place Type Filter*/
+                for (var key in place_types) {
+                    $('#place-type-filter').append('<option value="'+key+'">'+key+'</option>')
+                } 
             }
     });
     });
@@ -176,5 +212,19 @@
             });
         });
     });
+
+    // $(document).ready(function(){
+        // var cities = 
+        // var html = '<select id="city-filter">';
+        //         html += '<option value="">Select city to filter</option>';
+        //     html += '</select>';
+        // $('#place-table_wrapper').prepend(html);
+        
+    // });
 </script>
+<style>
+    .custom-filters{
+        margin-left: 0;
+    }
+</style>
 @endsection
