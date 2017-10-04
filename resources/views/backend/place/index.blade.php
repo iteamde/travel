@@ -171,7 +171,7 @@ if(!empty($place)){
 
                 /*Append Cities To City Filter*/
                 // for (var key in cities) {
-                    // $('#city-filter').append('<?php $city_filter_html; ?>');
+                    $('#city-filter').append('');
                 // }
 
                 /*Append Place Types To Place Type Filter*/
