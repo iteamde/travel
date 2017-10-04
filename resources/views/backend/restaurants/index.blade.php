@@ -38,16 +38,10 @@
                         <th></th>
                         <th>id</th>
                         <th>Title</th>
-                        <th>lat</th>
-                        <th>lng</th>
+                        <th>Address</th>
+                        <th>City</th>
+                        <th>Place Type</th>
                         <th>Active</th>
-                        <!-- <th>{{ trans('labels.backend.access.users.table.name') }}</th>
-                        <th>{{ trans('labels.backend.access.users.table.email') }}</th>
-                        <th>{{ trans('labels.backend.access.users.table.confirmed') }}</th>
-                        <th>{{ trans('labels.backend.access.users.table.roles') }}</th>
-                        <th>{{ trans('labels.backend.access.users.table.created') }}</th>
-                        <th>{{ trans('labels.backend.access.users.table.last_updated') }}</th>
-                        <th>{{ trans('labels.general.actions') }}</th> -->
                         <th>{{ trans('labels.general.actions') }}</th>
                     </tr>
                     </thead>
@@ -84,8 +78,9 @@
 	                {data: '', name: ''},
                     {data: 'id', name: '{{config('restaurants.restaurants_table')}}.id'},
                     {data: 'transsingle.title', name: 'transsingle.title'},
-	                {data: 'lat', name: '{{config('restaurants.restaurants_table')}}.lat'},
-	                {data: 'lng', name: '{{config('restaurants.restaurants_table')}}.lng'},
+	                {data: 'address', name: 'address'},
+	                {data: 'city_title', name: 'city_title'},
+                    {data: 'place_id_title', name: 'place_id_title'},
 	                {
                         name: '{{config('restaurants.restaurants_table')}}.active',
                         data: 'active',
