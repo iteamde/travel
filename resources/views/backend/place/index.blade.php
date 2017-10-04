@@ -19,6 +19,25 @@
 @endsection
 
 @section('content')
+<?php 
+use App\Models\Place\Place;
+use App\Models\City\Cities;
+
+$place = Place::distinct()->select('cities_id')->get();
+$temp_city = [];
+$city_filter_html = null;
+if(!empty($place)){
+    foreach ($place as $key => $value) {
+        $city = Cities::find($value->cities_id);
+        if(!empty($city)){
+            if(!empty($city->transsingle)){
+                $temp_city[$city->id] = $city->transsingle->title;
+                $city_filter_html .= '<option value="'.$city->id.'">'.$city->transsingle->title.'</option>';
+            }
+        }
+    }
+}
+?>
 <div class="box box-success">
     <div class="box-header with-border">
         <!-- <h3 class="box-title">{{ trans('labels.backend.access.users.active') }}</h3> -->
@@ -44,6 +63,7 @@
                         <th>Place Type</th>
                         <th>Active</th>
                         <th>{{ trans('labels.general.actions') }}</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -100,11 +120,14 @@
                         }
                     }
             },
-            {data: 'action', name: 'action', searchable: false, sortable: false}
+            {data: 'action', name: 'action', searchable: false, sortable: false},
+            {data: 'cities_id', name: '{{config('locations.place_table')}}.cities_id'},
             ],
             order: [[1, "asc"]],
             searchDelay: 500,
             initComplete: function () {
+                $('#place-table thead tr th:nth-child(9)').hide();
+                $('#place-table tbody tr td:nth-child(9)').hide();
                 this.api().columns().every(function () {
                     var column = this;
                     var select = $('<select><option value=""></option></select>')
@@ -146,9 +169,9 @@
                 } );
 
                 /*Append Cities To City Filter*/
-                for (var key in cities) {
-                    $('#city-filter').append('<option value="'+key+'">'+key+'</option>')
-                }
+                // for (var key in cities) {
+                    $('#city-filter').append('<?php echo $city_filter_html; ?>');
+                // }
 
                 /*Append Place Types To Place Type Filter*/
                 for (var key in place_types) {
@@ -218,9 +241,9 @@
         $(document).on('change','#city-filter',function(){
             var val = $(this).val();
             if(val != ''){
-                table.columns(5).search()
-                if ( table.columns(5).search() !== val ) {
-                        table.columns(5).search(val).draw();
+                // table.columns(5).search()
+                if ( table.columns(8).search() !== val ) {
+                        table.columns(8).search(val).draw();
                 }
             }
         });
