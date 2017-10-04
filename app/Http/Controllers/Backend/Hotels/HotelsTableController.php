@@ -7,6 +7,10 @@ use Yajra\Datatables\Facades\Datatables;
 use App\Repositories\Backend\Hotels\HotelsRepository;
 use App\Http\Requests\Backend\Hotels\ManageHotelsRequest;
 
+use App\Models\City\Cities;
+use App\Models\Place\Place;
+use App\Models\PlaceTypes\PlaceTypes;
+
 /**
  * Class HotelsTableController.
  */
@@ -35,6 +39,41 @@ class HotelsTableController extends Controller
         return Datatables::of($this->hotels->getForDataTable())
             // ->escapeColumns(['code'])
             ->addColumn('',function(){
+                return null;
+            })
+            ->addColumn('address',function($hotels){
+                $place = Place::find($hotels->places_id);
+                if(!empty($place)){
+                    if(!empty($place->transsingle)){
+                        return $place->transsingle->address;
+                    }
+                }
+                return null;
+            })
+            ->addColumn('city_title',function($hotels){
+                $place = Place::find($hotels->places_id);
+                $temp = null;
+                if(!empty($place)){
+                    $temp = Cities::find($place->cities_id);
+                }
+                if(!empty($temp)){
+                    if(!empty($temp->transsingle)){
+                        return $temp->transsingle->title;
+                    }
+                }
+                return null;
+            })
+            ->addColumn('place_id_title',function($hotels){
+                $place = Place::find($hotels->places_id);
+                $temp = null;
+                if(!empty($place)){
+                    $temp = PlaceTypes::find($place->place_type);
+                }
+                if(!empty($temp)){
+                    if(!empty($temp->transsingle)){
+                        return $temp->transsingle->title;
+                    }
+                }
                 return null;
             })
             ->addColumn('action', function ($hotels) {

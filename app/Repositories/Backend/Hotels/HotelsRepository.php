@@ -88,6 +88,8 @@ class HotelsRepository extends BaseRepository
                 config('hotels.hotels_table').'.id',
                 config('hotels.hotels_table').'.lat',
                 config('hotels.hotels_table').'.lng',
+                config('hotels.hotels_table').'.places_id',
+                config('hotels.hotels_table').'.cities_id',
                 config('hotels.hotels_table').'.active'
             ]);
         // active() is a scope on the UserScope trait
