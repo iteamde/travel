@@ -5,6 +5,7 @@
 @section('after-styles')
 {{ Html::style("https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css") }}
 {{ Html::style("https://cdn.datatables.net/select/1.2.3/css/select.dataTables.min.css") }}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
 @endsection
 
 @section('page-header')
@@ -19,26 +20,6 @@
 @endsection
 
 @section('content')
-<?php 
-use App\Models\Place\Place;
-use App\Models\City\Cities;
-
-$place = Place::distinct()->select('cities_id')->get();
-$temp_city = [];
-$city_filter_html = null;
-if(!empty($place)){
-    foreach ($place as $key => $value) {
-        $city = Cities::find($value->cities_id);
-        if(!empty($city)){
-            if(!empty($city->transsingle)){
-                // $temp_city[$city->id] = $city->transsingle->title;
-                $city_filter_html .= '<option value="'.$city->id.'">'.$city->transsingle->title.'</option>';
-                array_push($temp_city,$city->transsingle->title);
-            }
-        }
-    }
-}
-?>
 <div class="box box-success">
     <div class="box-header with-border">
         <!-- <h3 class="box-title">{{ trans('labels.backend.access.users.active') }}</h3> -->
@@ -78,7 +59,7 @@ if(!empty($place)){
 @section('after-scripts')
 {{ Html::script("https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js") }}
 {{ Html::script("https://cdn.datatables.net/select/1.2.3/js/dataTables.select.min.js") }}
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 <script>
     var table = null;
     $(function () {
@@ -127,8 +108,8 @@ if(!empty($place)){
             order: [[1, "asc"]],
             searchDelay: 500,
             initComplete: function () {
-                $('#place-table thead tr th:nth-child(9)').hide();
-                $('#place-table tbody tr td:nth-child(9)').hide();
+                // $('#place-table thead tr th:nth-child(9)').hide();
+                // $('#place-table tbody tr td:nth-child(9)').hide();
                 this.api().columns().every(function () {
                     var column = this;
                     var select = $('<select><option value=""></option></select>')
@@ -160,7 +141,7 @@ if(!empty($place)){
                     // var title = $(this).text();
                     var title = "hello";
                     if(count == 4){
-                        $(this).html( '<select id="city-filter" class="custom-filters"><option value="">Search City</option></select>' );
+                        $(this).html( '<select id="city-filter" class="custom-filters form-control"><option value="">Search City</option></select>' );
                     }
 
                     if(count == 5){
@@ -171,7 +152,21 @@ if(!empty($place)){
 
                 /*Append Cities To City Filter*/
                 // for (var key in cities) {
-                    $('#city-filter').append('<?php echo $city_filter_html; ?>');
+                    // $('#city-filter').append('<?php  $city_filter_html; ?>');
+                        $('#city-filter').select2({
+                            placeholder: 'Search City',
+                            ajax: {
+                                url: '{{ route("admin.location.place.cities") }}',
+                                dataType: 'json',
+                                delay: 250,
+                                processResults: function (data) {
+                                    return {
+                                        results: data
+                                    };
+                                },
+                                cache: true
+                            }
+                        });
                 // }
 
                 /*Append Place Types To Place Type Filter*/
