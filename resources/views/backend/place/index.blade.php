@@ -59,9 +59,10 @@
 {{ Html::script("https://cdn.datatables.net/select/1.2.3/js/dataTables.select.min.js") }}
 
 <script>
+    var table = null;
     $(function () {
 
-    $('#place-table').DataTable({
+        table = $('#place-table').DataTable({
         columnDefs: [ {
             orderable: false,
             className: 'select-checkbox',
@@ -85,7 +86,7 @@
             {data: 'transsingle.title', name: 'transsingle.title'},
             {data: 'transsingle.address', name: 'transsingle.address'},
             {data: 'city_title', name: 'city_title'},
-            {data: 'place_id_title', name: 'place_id_title'},
+            {data: 'place_id_title', name: 'place_id_title', searchable: false},
             {
             name: '{{config('locations.countries')}}.active',
                     data: 'active',
@@ -129,9 +130,9 @@
                         place_types[temp_text] = temp_text;
                 });
 
-                $('#place-table tbody').prepend('<tr><td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr>');
+                $('#place-table thead').append('<tr><td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr>');
                 var count = 0;
-                $('#place-table tbody tr:nth-child(1) td').each( function () {
+                $('#place-table thead tr:nth-child(2) td').each( function () {
                     // var title = $(this).text();
                     var title = "hello";
                     if(count == 4){
@@ -213,14 +214,17 @@
         });
     });
 
-    // $(document).ready(function(){
-        // var cities = 
-        // var html = '<select id="city-filter">';
-        //         html += '<option value="">Select city to filter</option>';
-        //     html += '</select>';
-        // $('#place-table_wrapper').prepend(html);
-        
-    // });
+    $(document).ready(function(){
+        $(document).on('change','#city-filter',function(){
+            var val = $(this).val();
+            if(val != ''){
+                table.columns(5).search()
+                if ( table.columns(5).search() !== val ) {
+                        table.columns(5).search(val).draw();
+                }
+            }
+        });
+    });
 </script>
 <style>
     .custom-filters{
