@@ -33,7 +33,7 @@ if(!empty($place)){
             if(!empty($city->transsingle)){
                 // $temp_city[$city->id] = $city->transsingle->title;
                 $city_filter_html .= '<option value="'.$city->id.'">'.$city->transsingle->title.'</option>';
-                array_push($temp_city,$value->cities_id);
+                array_push($temp_city,$city->transsingle->title);
             }
         }
     }
