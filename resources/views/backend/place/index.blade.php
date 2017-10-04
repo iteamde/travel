@@ -31,12 +31,16 @@ if(!empty($place)){
         $city = Cities::find($value->cities_id);
         if(!empty($city)){
             if(!empty($city->transsingle)){
-                $temp_city[$city->id] = $city->transsingle->title;
+                // $temp_city[$city->id] = $city->transsingle->title;
                 $city_filter_html .= '<option value="'.$city->id.'">'.$city->transsingle->title.'</option>';
+                array_push($temp_city,$value->cities_id);
             }
         }
     }
 }
+echo '<pre>';
+print_r($temp_city);
+exit;
 ?>
 <div class="box box-success">
     <div class="box-header with-border">
