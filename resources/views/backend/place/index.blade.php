@@ -39,7 +39,7 @@ if(!empty($place)){
     }
 }
 echo '<pre>';
-print_r($temp_city);
+print_r($city_filter_html);
 exit;
 ?>
 <div class="box box-success">
