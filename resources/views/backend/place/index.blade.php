@@ -71,8 +71,10 @@
             className: 'select-checkbox',
             targets:   0,
         },
-        { "width": "15%" , "targets" : 3 },
+        { "width": "5%" , "targets" : 1 },
+        { "width": "10%" , "targets" : 3 },
         { "width": "10%" , "targets" : 2 },
+        { "width": "15%" , "targets" : 4 },
          ],
         select: {
             style:    'os',
