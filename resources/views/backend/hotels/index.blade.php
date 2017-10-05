@@ -43,6 +43,8 @@
                         <th>Place Type</th>
                         <th>Active</th>
                         <th>{{ trans('labels.general.actions') }}</th>
+                        <th></th><!-- For Cities -->
+                        <th></th><!-- For Place Types -->
                     </tr>
                     </thead>
                 </table>
@@ -56,13 +58,17 @@
 {{ Html::script("https://cdn.datatables.net/select/1.2.3/js/dataTables.select.min.js") }}
 
     <script>
+        var table;
         $(function () {
-            $('#hotels-table').DataTable({
+             table = $('#hotels-table').DataTable({
                 columnDefs: [ {
                     orderable: false,
                     className: 'select-checkbox',
                     targets:   0
-                } ],
+                },
+                { "width": "20%" , "targets" : 4 },
+                { "width": "20%" , "targets" : 5 } 
+                ],
                 select: {
                     style:    'os',
                     selector: 'td:first-child'
@@ -94,10 +100,96 @@
                             }
                         }
                     },
-                    {data: 'action', name: 'action', searchable: false, sortable: false}
+                    {data: 'action', name: 'action', searchable: false, sortable: false},
+                    {data: 'cities_id', name: '{{config('hotels.hotels_table')}}.cities_id'},
+                    {data: 'place.place_type', name: 'place.place_type'},
                 ],
                 order: [[0, "asc"]],
-                searchDelay: 500
+                searchDelay: 500,
+                initComplete: function () {
+                    // $('#hotels-table thead tr th:nth-child(10)').hide();
+                    // $('#hotels-table tbody tr td:nth-child(10)').hide();
+                    // $('#hotels-table thead tr th:nth-child(9)').hide();
+                    // $('#hotels-table tbody tr td:nth-child(9)').hide();
+                    this.api().columns().every(function () {
+                        var column = this;
+                        var select = $('<select><option value=""></option></select>')
+                            .appendTo($(column.footer()).empty())
+                            .on('change', function () {
+                            var val = $.fn.dataTable.util.escapeRegex(
+                                $(this).val()
+                            );
+                            column.search(val ? '^' + val + '$' : '', true, false)
+                            .draw();
+                        });
+                        column.data().unique().sort().each(function (d, j) {
+                        select.append('<option value="' + d + '">' + d + '</option>')
+                        });
+                    });
+
+                    var cities = [];
+                    var place_types = [];
+                    $('#hotels-table tbody tr').each(function(){
+                        var temp_text = $(this).find('td:nth-child(5)').html();
+                            cities[temp_text] = temp_text;
+                            temp_text = $(this).find('td:nth-child(6)').html();
+                            place_types[temp_text] = temp_text;
+                    });
+
+                    $('#hotels-table thead').append('<tr><td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr>');
+                    var count = 0;
+                    $('#hotels-table thead tr:nth-child(2) td').each( function () {
+                        // var title = $(this).text();
+                        var title = "hello";
+                        if(count == 4){
+                            $(this).html( '<select id="city-filter" class="custom-filters form-control"><option value="">Search City</option></select>' );
+                        }
+
+                        if(count == 5){
+                            $(this).html( '<select id="place-type-filter" class="custom-filters"><option value="">Search Place Type</option></select>' );
+                        }
+                        count++;
+                    } );
+
+                    /*Append Cities To City Filter*/
+                    // for (var key in cities) {
+                        // $('#city-filter').append('<?php  $city_filter_html; ?>');
+                            $('#city-filter').select2({
+                                placeholder: 'Search City',
+                                ajax: {
+                                    url: '{{ route("admin.hotels.hotels.cities") }}',
+                                    dataType: 'json',
+                                    delay: 250,
+                                    processResults: function (data) {
+                                        return {
+                                            results: data
+                                        };
+                                    },
+                                    cache: true
+                                }
+                            });
+
+                             $('#place-type-filter').select2({
+                                placeholder: 'Search Place Types',
+                                ajax: {
+                                    url: '{{ route("admin.hotels.hotels.types") }}',
+                                    dataType: 'json',
+                                    delay: 250,
+                                    processResults: function (data) {
+                                        return {
+                                            results: data
+                                        };
+                                    },
+                                    cache: true
+                                }
+                            });
+                    // }
+
+                    /*Append Place Types To Place Type Filter*/
+                    // for (var key in place_types) {
+                    //     $('#place-type-filter').append('<option value="'+key+'">'+key+'</option>')
+                    // } 
+                }
             });
         });
     </script>
@@ -154,6 +246,38 @@
                     }
                 }
             });
+        });
+    });
+</script>
+<script>
+    $(document).ready(function(){
+        $(document).on('change','#city-filter',function(){
+            var val = $(this).val();
+            if(val != ''){
+                // table.columns(5).search()
+                if ( table.columns(8).search() !== val ) {
+                        table.columns(8).search(val).draw();
+                        $('#hotels-table thead tr th:nth-child(10)').hide();
+                        $('#hotels-table tbody tr td:nth-child(10)').attr('style','display:none !important;');
+                        $('#hotels-table thead tr th:nth-child(9)').hide();
+                        $('#hotels-table tbody tr td:nth-child(9)').attr('style','display:none !important;');
+                }
+            }
+        });
+    });
+    $(document).ready(function(){
+        $(document).on('change','#place-type-filter',function(){
+            var val = $(this).val();
+            if(val != ''){
+                // table.columns(5).search()
+                if ( table.columns(9).search() !== val ) {
+                        table.columns(9).search(val).draw();
+                        $('#hotels-table thead tr th:nth-child(10)').hide();
+                        $('#hotels-table tbody tr td:nth-child(10)').attr('style','display:none !important;');
+                        $('#hotels-table thead tr th:nth-child(9)').hide();
+                        $('#hotels-table tbody tr td:nth-child(9)').attr('style','display:none !important;');
+                }
+            }
         });
     });
 </script>

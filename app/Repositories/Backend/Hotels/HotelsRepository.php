@@ -84,6 +84,7 @@ class HotelsRepository extends BaseRepository
         $dataTableQuery = $this->query()
             // ->with('roles')
             ->with('transsingle')
+            ->with('place')
             ->select([
                 config('hotels.hotels_table').'.id',
                 config('hotels.hotels_table').'.lat',
@@ -103,8 +104,8 @@ class HotelsRepository extends BaseRepository
     {
         $model = new Hotels;
         $model->countries_id  = $extra['country_id'];
-        $model->cities_id  = $extra['city_id'];
-        $model->places_id  = $extra['place_id'];
+        $model->cities_id   = $extra['city_id'];
+        $model->places_id   = $extra['place_id'];
         $model->active      = $extra['active'];
         $model->lat         = $extra['lat'];
         $model->lng         = $extra['lng'];
