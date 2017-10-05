@@ -265,6 +265,10 @@
                 // table.columns(5).search()
                 if ( table.columns(8).search() !== val ) {
                         table.columns(8).search(val).draw();
+                        $('#place-table thead tr th:nth-child(10)').hide();
+                    $('#place-table tbody tr td:nth-child(10)').hide();
+                    $('#place-table thead tr th:nth-child(9)').hide();
+                    $('#place-table tbody tr td:nth-child(9)').hide();
                 }
             }
         });
@@ -276,6 +280,10 @@
                 // table.columns(5).search()
                 if ( table.columns(9).search() !== val ) {
                         table.columns(9).search(val).draw();
+                        $('#place-table thead tr th:nth-child(10)').hide();
+                        $('#place-table tbody tr td:nth-child(10)').hide();
+                        $('#place-table thead tr th:nth-child(9)').hide();
+                        $('#place-table tbody tr td:nth-child(9)').hide();
                 }
             }
         });
