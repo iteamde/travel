@@ -52,11 +52,11 @@ class HotelsTableController extends Controller
                 return null;
             })
             ->addColumn('city_title',function($hotels){
-                $place = Place::find($hotels->places_id);
-                $temp = null;
-                if(!empty($place)){
-                    $temp = Cities::find($place->cities_id);
-                }
+                // $place = Place::find($hotels->places_id);
+                // $temp = null;
+                // if(!empty($place)){
+                    $temp = Cities::find($hotels->cities_id);
+                // }
                 if(!empty($temp)){
                     if(!empty($temp->transsingle)){
                         return $temp->transsingle->title;
