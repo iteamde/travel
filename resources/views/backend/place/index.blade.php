@@ -69,8 +69,10 @@
         columnDefs: [ {
             orderable: false,
             className: 'select-checkbox',
-            targets:   0
-        } ],
+            targets:   0,
+        },
+        { "width": "15%" , "targets" : 3 },
+         ],
         select: {
             style:    'os',
             selector: 'td:first-child'
