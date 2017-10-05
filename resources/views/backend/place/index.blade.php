@@ -45,7 +45,8 @@
                         <th>Place Type</th>
                         <th>Active</th>
                         <th>{{ trans('labels.general.actions') }}</th>
-                        <th></th>
+                        <th></th><!-- For Cities -->
+                        <th></th><!-- For Place Types -->
                     </tr>
                 </thead>
                 <tbody>
@@ -104,12 +105,15 @@
             },
             {data: 'action', name: 'action', searchable: false, sortable: false},
             {data: 'cities_id', name: '{{config('locations.place_table')}}.cities_id'},
+            {data: 'place_type', name: '{{config('locations.place_table')}}.place_type'},
             ],
             order: [[1, "asc"]],
             searchDelay: 500,
             initComplete: function () {
                 $('#place-table thead tr th:nth-child(9)').hide();
                 $('#place-table tbody tr td:nth-child(9)').hide();
+                $('#place-table thead tr th:nth-child(10)').hide();
+                $('#place-table tbody tr td:nth-child(10)').hide();
                 this.api().columns().every(function () {
                     var column = this;
                     var select = $('<select><option value=""></option></select>')
@@ -167,12 +171,27 @@
                                 cache: true
                             }
                         });
+
+                         $('#place-type-filter').select2({
+                            placeholder: 'Search Place Types',
+                            ajax: {
+                                url: '{{ route("admin.location.place.types") }}',
+                                dataType: 'json',
+                                delay: 250,
+                                processResults: function (data) {
+                                    return {
+                                        results: data
+                                    };
+                                },
+                                cache: true
+                            }
+                        });
                 // }
 
                 /*Append Place Types To Place Type Filter*/
-                for (var key in place_types) {
-                    $('#place-type-filter').append('<option value="'+key+'">'+key+'</option>')
-                } 
+                // for (var key in place_types) {
+                //     $('#place-type-filter').append('<option value="'+key+'">'+key+'</option>')
+                // } 
             }
     });
     });
@@ -240,6 +259,17 @@
                 // table.columns(5).search()
                 if ( table.columns(8).search() !== val ) {
                         table.columns(8).search(val).draw();
+                }
+            }
+        });
+    });
+    $(document).ready(function(){
+        $(document).on('change','#place-type-filter',function(){
+            var val = $(this).val();
+            if(val != ''){
+                // table.columns(5).search()
+                if ( table.columns(9).search() !== val ) {
+                        table.columns(9).search(val).draw();
                 }
             }
         });

@@ -134,7 +134,10 @@ Route::group([
          * For DataTables
          */
         Route::post('place/get', 'PlaceTableController')->name('place.get');
+        
         Route::get('place/cities', 'PlaceTableController@getAddedCities')->name('place.cities');
+        Route::get('place/types', 'PlaceTableController@getPlaceTypes')->name('place.types');
+
         Route::get('place/import', 'PlaceController@import')->name('place.import');
         Route::post('place/search', 'PlaceController@search')->name('place.search');
         Route::get('place/search/{admin_logs_id?}/{country_id?}/{city_id?}/{latlng?}', 'PlaceController@search')->name('place.search');
@@ -147,7 +150,7 @@ Route::group([
          */
         Route::resource('place', 'PlaceController');
 
-          /*
+        /*
          * Deleted Specific Place
          */
         Route::group(['prefix' => 'place/{deletedPlace}'], function () {
