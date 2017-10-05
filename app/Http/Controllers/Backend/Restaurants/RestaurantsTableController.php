@@ -10,6 +10,7 @@ use App\Http\Requests\Backend\Restaurants\ManageRestaurantsRequest;
 use App\Models\City\Cities;
 use App\Models\Place\Place;
 use App\Models\PlaceTypes\PlaceTypes;
+use App\Models\Restaurants\Restaurants;
 
 /**
  * Class RestaurantsTableController.
@@ -81,6 +82,59 @@ class RestaurantsTableController extends Controller
             })
             ->withTrashed()
             ->make(true);
+    }
+
+    public function getAddedCities(){
+
+        $place = Restaurants::distinct()->select('cities_id')->get();
+        $temp_city = [];
+        $city_filter_html = null;
+        $json = [];
+
+        if(!empty($place)){
+            foreach ($place as $key => $value) {
+                $city = Cities::find($value->cities_id);
+                if(!empty($city)){
+                    if(!empty($city->transsingle)){
+                        // $temp_city[$city->id] = $city->transsingle->title;
+                        $city_filter_html .= '<option value="'.$city->id.'">'.$city->transsingle->title.'</option>';
+                        array_push($temp_city,$city->transsingle->title);
+                         $json[] = ['id'=>$city->id, 'text'=>$city->transsingle->title];
+                    }
+                }
+            }
+        }
+
+        echo json_encode($json);
+        // return $temp_city;
+    }
+
+    public function getPlaceTypes(){
+
+        $place = Restaurants::distinct()->select('places_id')->get();
+        $temp_city = [];
+        $city_filter_html = null;
+        $json = [];
+
+        if(!empty($place)){
+            foreach ($place as $key => $value) {
+                $temp_place = Place::find($value->places_id);
+                if(!empty($temp_place)){
+                    $temp_type = PlaceTypes::find($temp_place->place_type);
+                    if(!empty($temp_type)){
+                        if(!empty($temp_type->transsingle)){
+                            // $temp_city[$city->id] = $city->transsingle->title;
+                            $city_filter_html .= '<option value="'.$temp_type->id.'">'.$temp_type->transsingle->title.'</option>';
+                            array_push($temp_city,$temp_type->transsingle->title);
+                             $json[] = ['id'=>$temp_type->id, 'text'=>$temp_type->transsingle->title];
+                        }    
+                    }
+                }
+            }
+        }
+
+        echo json_encode($json);
+        // return $temp_city;
     }
 
     /**

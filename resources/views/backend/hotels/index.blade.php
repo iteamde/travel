@@ -107,10 +107,10 @@
                 order: [[0, "asc"]],
                 searchDelay: 500,
                 initComplete: function () {
-                    // $('#hotels-table thead tr th:nth-child(10)').hide();
-                    // $('#hotels-table tbody tr td:nth-child(10)').hide();
-                    // $('#hotels-table thead tr th:nth-child(9)').hide();
-                    // $('#hotels-table tbody tr td:nth-child(9)').hide();
+                    $('#hotels-table thead tr th:nth-child(10)').hide();
+                    $('#hotels-table tbody tr td:nth-child(10)').hide();
+                    $('#hotels-table thead tr th:nth-child(9)').hide();
+                    $('#hotels-table tbody tr td:nth-child(9)').hide();
                     this.api().columns().every(function () {
                         var column = this;
                         var select = $('<select><option value=""></option></select>')

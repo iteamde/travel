@@ -16,6 +16,10 @@ Route::group([
          */
         Route::post('Restaurants/get', 'RestaurantsTableController')->name('restaurants.get');
         Route::get('Restaurants/import', 'RestaurantsController@import')->name('restaurants.import');
+
+        Route::get('Restaurants/cities', 'RestaurantsTableController@getAddedCities')->name('restaurants.cities');
+        Route::get('Restaurants/types', 'RestaurantsTableController@getPlaceTypes')->name('restaurants.types');
+
         Route::post('Restaurants/search', 'RestaurantsController@search')->name('restaurants.search');
         Route::get('Restaurants/search/{admin_logs_id?}/{country_id?}/{city_id?}/{latlng?}', 'RestaurantsController@search')->name('restaurants.search');
         Route::post('Restaurants/savesearch', 'RestaurantsController@savesearch')->name('restaurants.savesearch');
