@@ -256,8 +256,8 @@
             if(val != ''){
                 // table.columns(5).search()
                 if ( table.columns(8).search() !== val ) {
-                    alert(val);
-                        table.columns(8).search(val,true, false,true).draw();
+                    // alert("^\\s*"+val+"\\s*$");
+                        table.columns(8).search("^\\s*"+val+"\\s*$", true).draw();
                         $('#hotels-table thead tr th:nth-child(10)').hide();
                         $('#hotels-table tbody tr td:nth-child(10)').attr('style','display:none !important;');
                         $('#hotels-table thead tr th:nth-child(9)').hide();
@@ -273,7 +273,8 @@
                 // table.columns(5).search()
                 if ( table.columns(9).search() !== val ) {
                         // alert(val);
-                        table.columns(9).search(val,true, false,true).draw();
+                        // alert("^\\s*"+val+"\\s*$");
+                        table.columns(9).search("^\\s*"+val+"\\s*$", true).draw();
                         $('#hotels-table thead tr th:nth-child(10)').hide();
                         $('#hotels-table tbody tr td:nth-child(10)').attr('style','display:none !important;');
                         $('#hotels-table thead tr th:nth-child(9)').hide();
