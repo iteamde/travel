@@ -52,11 +52,11 @@ class RestaurantsTableController extends Controller
                 return null;
             })
             ->addColumn('city_title',function($restaurants){
-                $place = Place::find($restaurants->places_id);
-                $temp = null;
-                if(!empty($place)){
-                    $temp = Cities::find($place->cities_id);
-                }
+                // $place = Place::find($restaurants->places_id);
+                // $temp = null;
+                // if(!empty($place)){
+                    $temp = Cities::find($restaurants->cities_id);
+                // }
                 if(!empty($temp)){
                     if(!empty($temp->transsingle)){
                         return $temp->transsingle->title;
