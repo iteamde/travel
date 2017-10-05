@@ -281,4 +281,18 @@
         });
     });
 </script>
+<style>
+    #hotels-table thead tr th:nth-child(10){
+        display:none !important;
+    }
+    #hotels-table tbody tr td:nth-child(10){
+        display:none !important;
+    }
+    #hotels-table thead tr th:nth-child(9){
+        display:none !important;
+    }
+    #hotels-table tbody tr td:nth-child(9){
+        display:none !important;
+    }
+</style>
 @endsection
