@@ -72,7 +72,7 @@
             targets:   0,
         },
         { "width": "15%" , "targets" : 3 },
-        { "width": "15%" , "targets" : 2 },
+        { "width": "10%" , "targets" : 2 },
          ],
         select: {
             style:    'os',
