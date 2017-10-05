@@ -281,9 +281,9 @@
                 if ( table.columns(9).search() !== val ) {
                         table.columns(9).search(val).draw();
                         $('#place-table thead tr th:nth-child(10)').hide();
-                        $('#place-table tbody tr td:nth-child(10)').hide();
+                        $('#place-table tbody tr td:nth-child(10)').attr('style','display:none !important;');
                         $('#place-table thead tr th:nth-child(9)').hide();
-                        $('#place-table tbody tr td:nth-child(9)').hide();
+                        $('#place-table tbody tr td:nth-child(9)').attr('style','display:none !important;');
                 }
             }
         });
