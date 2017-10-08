@@ -70,6 +70,11 @@
     <div class="box-body">
         <!-- Countries: Start -->
         <div class="form-group">
+
+            <?php
+            $countries = array_merge(array(0=>'Please select ...'), $countries);
+            $cities = array_merge(array(0=>'Please select ...'));
+            ?>
             {{ Form::label('title', 'Country', ['class' => 'col-lg-2 control-label']) }}
 
             <div class="col-lg-10">
