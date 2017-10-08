@@ -83,10 +83,13 @@ class RestaurantsRepository extends BaseRepository
         $dataTableQuery = $this->query()
             // ->with('roles')
             ->with('transsingle')
+            ->with('place')
             ->select([
                 config('restaurants.restaurants_table').'.id',
                 config('restaurants.restaurants_table').'.lat',
                 config('restaurants.restaurants_table').'.lng',
+                config('restaurants.restaurants_table').'.cities_id',
+                config('restaurants.restaurants_table').'.places_id',
                 config('restaurants.restaurants_table').'.active'
             ]);
 

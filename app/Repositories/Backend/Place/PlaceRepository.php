@@ -98,7 +98,7 @@ class PlaceRepository extends BaseRepository
                 config('locations.place_table').'.place_type',
                 config('locations.place_table').'.active'
             ]);
-
+        
         // active() is a scope on the UserScope trait
         return $dataTableQuery;
     }

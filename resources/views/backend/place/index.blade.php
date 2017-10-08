@@ -5,6 +5,7 @@
 @section('after-styles')
 {{ Html::style("https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css") }}
 {{ Html::style("https://cdn.datatables.net/select/1.2.3/css/select.dataTables.min.css") }}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
 @endsection
 
 @section('page-header')
@@ -44,8 +45,12 @@
                         <th>Place Type</th>
                         <th>Active</th>
                         <th>{{ trans('labels.general.actions') }}</th>
+                        <th></th><!-- For Cities -->
+                        <th></th><!-- For Place Types -->
                     </tr>
                 </thead>
+                <tbody>
+                </tbody>
             </table>
         </div><!--table-responsive-->
     </div><!-- /.box-body -->
@@ -55,15 +60,23 @@
 @section('after-scripts')
 {{ Html::script("https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js") }}
 {{ Html::script("https://cdn.datatables.net/select/1.2.3/js/dataTables.select.min.js") }}
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 <script>
+    var table = null;
     $(function () {
-    $('#place-table').DataTable({
+
+        table = $('#place-table').DataTable({
         columnDefs: [ {
             orderable: false,
             className: 'select-checkbox',
-            targets:   0
-        } ],
+            targets:   0,
+        },
+        // { "width": "5%" , "targets" : 1 },
+        // { "width": "10%" , "targets" : 3 },
+        // { "width": "10%" , "targets" : 2 },
+        { "width": "20%" , "targets" : 4 },
+        { "width": "20%" , "targets" : 5 },
+         ],
         select: {
             style:    'os',
             selector: 'td:first-child'
@@ -82,7 +95,7 @@
             {data: 'transsingle.title', name: 'transsingle.title'},
             {data: 'transsingle.address', name: 'transsingle.address'},
             {data: 'city_title', name: 'city_title'},
-            {data: 'place_id_title', name: 'place_id_title'},
+            {data: 'place_id_title', name: 'place_id_title', searchable: false},
             {
             name: '{{config('locations.countries')}}.active',
                     data: 'active',
@@ -96,27 +109,95 @@
                         }
                     }
             },
-            {data: 'action', name: 'action', searchable: false, sortable: false}
+            {data: 'action', name: 'action', searchable: false, sortable: false},
+            {data: 'cities_id', name: '{{config('locations.place_table')}}.cities_id'},
+            {data: 'place_type', name: '{{config('locations.place_table')}}.place_type'},
             ],
             order: [[1, "asc"]],
             searchDelay: 500,
             initComplete: function () {
-            this.api().columns().every(function () {
-            var column = this;
-            var select = $('<select><option value=""></option></select>')
-                    .appendTo($(column.footer()).empty())
-                    .on('change', function () {
-                    var val = $.fn.dataTable.util.escapeRegex(
+                $('#place-table thead tr th:nth-child(10)').hide();
+                $('#place-table tbody tr td:nth-child(10)').hide();
+                $('#place-table thead tr th:nth-child(9)').hide();
+                $('#place-table tbody tr td:nth-child(9)').hide();
+                this.api().columns().every(function () {
+                    var column = this;
+                    var select = $('<select><option value=""></option></select>')
+                        .appendTo($(column.footer()).empty())
+                        .on('change', function () {
+                        var val = $.fn.dataTable.util.escapeRegex(
                             $(this).val()
-                            );
-                    column
-                            .search(val ? '^' + val + '$' : '', true, false)
-                            .draw();
+                        );
+                        column.search(val ? '^' + val + '$' : '', true, false)
+                        .draw();
                     });
-            column.data().unique().sort().each(function (d, j) {
-            select.append('<option value="' + d + '">' + d + '</option>')
-            });
-            });
+                    column.data().unique().sort().each(function (d, j) {
+                    select.append('<option value="' + d + '">' + d + '</option>')
+                    });
+                });
+
+                var cities = [];
+                var place_types = [];
+                $('#place-table tbody tr').each(function(){
+                    var temp_text = $(this).find('td:nth-child(5)').html();
+                        cities[temp_text] = temp_text;
+                        temp_text = $(this).find('td:nth-child(6)').html();
+                        place_types[temp_text] = temp_text;
+                });
+
+                $('#place-table thead').append('<tr><td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr>');
+                var count = 0;
+                $('#place-table thead tr:nth-child(2) td').each( function () {
+                    // var title = $(this).text();
+                    var title = "hello";
+                    if(count == 4){
+                        $(this).html( '<select id="city-filter" class="custom-filters form-control"><option value="">Search City</option></select>' );
+                    }
+
+                    if(count == 5){
+                        $(this).html( '<select id="place-type-filter" class="custom-filters"><option value="">Search Place Type</option></select>' );
+                    }
+                    count++;
+                } );
+
+                /*Append Cities To City Filter*/
+                // for (var key in cities) {
+                    // $('#city-filter').append('<?php  $city_filter_html; ?>');
+                        $('#city-filter').select2({
+                            placeholder: 'Search City',
+                            ajax: {
+                                url: '{{ route("admin.location.place.cities") }}',
+                                dataType: 'json',
+                                delay: 250,
+                                processResults: function (data) {
+                                    return {
+                                        results: data
+                                    };
+                                },
+                                cache: true
+                            }
+                        });
+
+                         $('#place-type-filter').select2({
+                            placeholder: 'Search Place Types',
+                            ajax: {
+                                url: '{{ route("admin.location.place.types") }}',
+                                dataType: 'json',
+                                delay: 250,
+                                processResults: function (data) {
+                                    return {
+                                        results: data
+                                    };
+                                },
+                                cache: true
+                            }
+                        });
+                // }
+
+                /*Append Place Types To Place Type Filter*/
+                // for (var key in place_types) {
+                //     $('#place-type-filter').append('<option value="'+key+'">'+key+'</option>')
+                // } 
             }
     });
     });
@@ -176,5 +257,55 @@
             });
         });
     });
+
+    $(document).ready(function(){
+        $(document).on('change','#city-filter',function(){
+            var val = $(this).val();
+            if(val != ''){
+                // table.columns(5).search()
+                if ( table.columns(8).search() !== val ) {
+                        table.columns(8).search("^\\s*"+val+"\\s*$", true).draw();
+                        $('#place-table thead tr th:nth-child(10)').hide();
+                        $('#place-table tbody tr td:nth-child(10)').attr('style','display:none !important;');
+                        $('#place-table thead tr th:nth-child(9)').hide();
+                        $('#place-table tbody tr td:nth-child(9)').attr('style','display:none !important;');
+                }
+            }
+        });
+    });
+    $(document).ready(function(){
+        $(document).on('change','#place-type-filter',function(){
+            var val = $(this).val();
+            if(val != ''){
+                // table.columns(5).search()
+                if ( table.columns(9).search() !== val ) {
+                        table.columns(9).search("^\\s*"+val+"\\s*$", true).draw();
+                        $('#place-table thead tr th:nth-child(10)').hide();
+                        $('#place-table tbody tr td:nth-child(10)').attr('style','display:none !important;');
+                        $('#place-table thead tr th:nth-child(9)').hide();
+                        $('#place-table tbody tr td:nth-child(9)').attr('style','display:none !important;');
+                }
+            }
+        });
+    });
 </script>
+<style>
+    .custom-filters{
+        margin-left: 0;
+    }
+</style>
+<style>
+    #place-table thead tr th:nth-child(10){
+        display:none !important;
+    }
+    #place-table tbody tr td:nth-child(10){
+        display:none !important;
+    }
+    #place-table thead tr th:nth-child(9){
+        display:none !important;
+    }
+    #place-table tbody tr td:nth-child(9){
+        display:none !important;
+    }
+</style>
 @endsection
