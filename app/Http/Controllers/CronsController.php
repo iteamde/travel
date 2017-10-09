@@ -38,7 +38,9 @@ class CronsController extends Controller {
                     $place_media->medias_id = $media->id;
                     $place_media->save();
                 }
+                var_dump($photos);
             }
+            var_dump($pwm->provider_id);
 
             $pwm->media_done = 1;
             $pwm->save();
