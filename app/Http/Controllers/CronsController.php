@@ -12,7 +12,7 @@ class CronsController extends Controller {
     public function getPlacesMedia(Request $request) {
         $places_without_media = \App\Models\Place\Place::whereNull('media_done')
                 ->orderBy('id', 'ASC')
-                ->take(1)
+                ->take(5)
                 ->get();
 
         foreach ($places_without_media AS $pwm) {
