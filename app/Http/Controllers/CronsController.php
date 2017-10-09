@@ -15,7 +15,7 @@ class CronsController extends Controller {
                 ->take(1)
                 ->get();
 
-        //dd($places_without_media);
+        dd($places_without_media);
         foreach ($places_without_media AS $pwm) {
             //var_dump($pwm->provider_id);
                         var_dump($pwm->provider_id);
