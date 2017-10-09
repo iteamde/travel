@@ -15,11 +15,7 @@ class CronsController extends Controller {
                 ->take(1)
                 ->get();
 
-        //dd($places_without_media);
         foreach ($places_without_media AS $pwm) {
-            //var_dump($pwm->provider_id);
-                        var_dump($pwm->provider_id);
-
             if (time() % 2 == 0) {
                 $json = file_get_contents('http://db.travooo.com/public/places/media/go/' . $pwm->provider_id);
             } else {
@@ -28,9 +24,7 @@ class CronsController extends Controller {
 
             $photos = unserialize($json);
 
-            dd($photos);
-
-
+        
             foreach ($photos AS $p) {
                 $media_file = 'places_media/' . $pwm->provider_id . '/' . sha1(microtime()) . '.jpg';
                 Storage::disk('public')->put($media_file, $p);
