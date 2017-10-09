@@ -39,8 +39,9 @@ class CronsController extends Controller {
                     $place_media->medias_id = $media->id;
                     $place_media->save();
                 }
-                echo count($photos) . '<br />';
+                echo count($photos);
             }
+            echo '<br />';
 
             $pwm->media_done = 1;
             $pwm->save();
