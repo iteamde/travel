@@ -24,19 +24,20 @@ class CronsController extends Controller {
 
             $photos = unserialize($json);
 
-        
-            foreach ($photos AS $p) {
-                $media_file = 'places_media/' . $pwm->provider_id . '/' . sha1(microtime()) . '.jpg';
-                Storage::disk('public')->put($media_file, $p);
+            if (is_array($photos)) {
+                foreach ($photos AS $p) {
+                    $media_file = 'places_media/' . $pwm->provider_id . '/' . sha1(microtime()) . '.jpg';
+                    Storage::disk('public')->put($media_file, $p);
 
-                $media = new Media;
-                $media->url = $media_file;
-                $media->save();
+                    $media = new Media;
+                    $media->url = $media_file;
+                    $media->save();
 
-                $place_media = new PlaceMedias;
-                $place_media->places_id = $pwm->id;
-                $place_media->medias_id = $media->id;
-                $place_media->save();
+                    $place_media = new PlaceMedias;
+                    $place_media->places_id = $pwm->id;
+                    $place_media->medias_id = $media->id;
+                    $place_media->save();
+                }
             }
 
             $pwm->media_done = 1;
