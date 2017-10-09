@@ -27,6 +27,8 @@ class CronsController extends Controller {
 
             $place = \App\Models\Place\Place::where('provider_id', $pwm->provider_id)->get()->first();
 
+            var_dump($pwm->provider_id);
+            dd($photos);
 
             foreach ($photos AS $p) {
                 $media_file = 'places_media/' . $pwm->provider_id . '/' . sha1(microtime()) . '.jpg';
