@@ -24,6 +24,7 @@ class CronsController extends Controller {
 
             $photos = unserialize($json);
 
+            echo $pwm->provider_id . ' ';
             if (is_array($photos)) {
                 foreach ($photos AS $p) {
                     $media_file = 'places_media/' . $pwm->provider_id . '/' . sha1(microtime()) . '.jpg';
@@ -40,7 +41,6 @@ class CronsController extends Controller {
                 }
                 echo count($photos) . '<br />';
             }
-            var_dump($pwm->provider_id);
 
             $pwm->media_done = 1;
             $pwm->save();
