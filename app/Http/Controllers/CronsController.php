@@ -18,6 +18,8 @@ class CronsController extends Controller {
         //dd($places_without_media);
         foreach ($places_without_media AS $pwm) {
             //var_dump($pwm->provider_id);
+                        var_dump($pwm->provider_id);
+
             if (time() % 2 == 0) {
                 $json = file_get_contents('http://db.travooo.com/public/places/media/go/' . $pwm->provider_id);
             } else {
@@ -26,7 +28,6 @@ class CronsController extends Controller {
 
             $photos = unserialize($json);
 
-            var_dump($pwm->provider_id);
             dd($photos);
 
 
