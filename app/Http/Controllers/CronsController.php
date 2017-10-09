@@ -10,7 +10,7 @@ use App\Models\Place\PlaceMedias;
 class CronsController extends Controller {
 
     public function getPlacesMedia(Request $request) {
-        $places_without_media = \App\Models\Place\Place::where('media_done', '!=', 1)
+        $places_without_media = \App\Models\Place\Place::whereNull('media_done')
                 ->orderBy('id', 'ASC')
                 ->take(1)
                 ->get();
