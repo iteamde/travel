@@ -10,9 +10,8 @@ use App\Models\Place\PlaceMedias;
 class CronsController extends Controller {
 
     public function getPlacesMedia(Request $request) {
-        $places_without_media = \App\Models\Place\Place::leftJoin('places_medias', 'places.id', '=', 'places_medias.places_id')
-                ->whereNull('places_medias.places_id')
-                ->orderBy('places.id', 'ASC')
+        $places_without_media = \App\Models\Place\Place::where('media_done', '!=', 1)
+                ->orderBy('id', 'ASC')
                 ->take(1)
                 ->get();
         foreach ($places_without_media AS $pwm) {
@@ -25,12 +24,10 @@ class CronsController extends Controller {
 
             $photos = unserialize($json);
 
-            $place = \App\Models\Place\Place::where('provider_id', $pwm->provider_id)->get()->first();
-
             /*
             var_dump($pwm->provider_id);
             dd($photos);
-             * 
+             *
              */
 
             foreach ($photos AS $p) {
@@ -42,12 +39,13 @@ class CronsController extends Controller {
                 $media->save();
 
                 $place_media = new PlaceMedias;
-                $place_media->places_id = $place->id;
+                $place_media->places_id = $pwm->id;
                 $place_media->medias_id = $media->id;
                 $place_media->save();
             }
 
-//            var_dump($photos);
+            $pwm->media_done = 1;
+            $pwm->save();
         }
     }
 
