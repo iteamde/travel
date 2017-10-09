@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 // Switch between the included languages
 Route::get('lang/{lang}', 'LanguageController@swap');
 
+Route::get('crons/places/media', 'CronsController@getPlacesMedia');
+
 /* ----------------------------------------------------------------------- */
 
 /*
@@ -53,7 +55,7 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'admin', 'as' => 'admin.', '
      * These routes require no user to be logged in
      */
     // Route::group(['middleware' => 'guest','namespace' => 'Auth','as' => 'auth.'], function () {
-        
+
         // Authentication Routes
         // Route::get('login', 'LoginController@showLoginForm')->name('login');
         // Route::post('login', 'LoginController@loginAdmin')->name('login.post');

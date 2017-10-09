@@ -70,15 +70,10 @@
     <div class="box-body">
         <!-- Countries: Start -->
         <div class="form-group">
-
-            <?php
-            $countries = array_merge(array(0=>'Please select ...'), $countries);
-            $cities = array_merge(array(0=>'Please select ...'));
-            ?>
             {{ Form::label('title', 'Country', ['class' => 'col-lg-2 control-label']) }}
 
             <div class="col-lg-10">
-                {{ Form::select('countries_id', $countries , null,['class' => 'select2Class form-control', 'id' => 'country_id']) }}
+                {{ Form::select('countries_id', array('0' => 'Please select ...') + $countries , null,['class' => 'select2Class form-control', 'id' => 'country_id']) }}
             </div><!--col-lg-10-->
         </div><!--form control-->
         <!-- Countries: End -->
@@ -88,7 +83,7 @@
             {{ Form::label('title', 'Cities', ['class' => 'col-lg-2 control-label']) }}
 
             <div class="col-lg-10">
-                {{ Form::select('cities_id', $cities , null,['class' => 'select2Class form-control', 'id' => 'city_id']) }}
+                {{ Form::select('cities_id', array('0' => 'Please select ...') + $cities , null,['class' => 'select2Class form-control', 'id' => 'city_id']) }}
             </div><!--col-lg-10-->
         </div><!--form control-->
         <!-- Cities: End -->

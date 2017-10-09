@@ -878,12 +878,15 @@ class CountryController extends Controller
     public function jsoncities(ManageCountryRequest $request)
     {
         $country_id = $request->get('countryID');
+
         $cities_list = Cities::leftJoin('cities_trans', 'cities.id', '=', 'cities_trans.cities_id')
                 ->where('cities.countries_id', $country_id)
                 ->where('cities_trans.languages_id', 1)
                 ->select('cities.id', 'cities_trans.title')
+                ->orderBy('cities_trans.title', 'ASC')
                 ->get()
                 ->toArray();
+
         return json_encode($cities_list);
     }
 

@@ -483,6 +483,8 @@ class PlaceController extends Controller {
         }
         $data['countries'] = $countries_arr;
 
+        
+
         /* Get All Cities */
         $cities = Cities::where(['active' => 1])->get();
         foreach ($cities as $key => $value) {
@@ -677,14 +679,14 @@ class PlaceController extends Controller {
     public function delete_ajax(ManagePlaceRequest $request){
 
         $ids = $request->input('ids');
-        
+
         if(!empty($ids)){
             $ids = explode(',',$request->input('ids'));
             foreach ($ids as $key => $value) {
                 $this->delete_single_ajax($value);
             }
         }
-        
+
         echo json_encode([
             'result' => true
         ]);
