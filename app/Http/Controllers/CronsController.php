@@ -14,6 +14,8 @@ class CronsController extends Controller {
                 ->orderBy('id', 'ASC')
                 ->take(1)
                 ->get();
+
+        //dd($places_without_media);
         foreach ($places_without_media AS $pwm) {
             //var_dump($pwm->provider_id);
             if (time() % 2 == 0) {
