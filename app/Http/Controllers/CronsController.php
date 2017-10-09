@@ -26,11 +26,9 @@ class CronsController extends Controller {
 
             $photos = unserialize($json);
 
-            /*
             var_dump($pwm->provider_id);
             dd($photos);
-             *
-             */
+
 
             foreach ($photos AS $p) {
                 $media_file = 'places_media/' . $pwm->provider_id . '/' . sha1(microtime()) . '.jpg';
