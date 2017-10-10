@@ -65,7 +65,8 @@ class CronsController extends Controller {
             //$details = $json;
 
             echo $pmd->provider_id . ' ';
-            dd($json);
+            var_dump($json);
+            die();
 
             if (is_object($details)) {
                 $types = @join(",", $details->types);
