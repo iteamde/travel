@@ -52,7 +52,7 @@ class CronsController extends Controller {
 
         $places_missing_details = \App\Models\Place\Place::whereNull($field)
                 ->orderBy('id', 'ASC')
-                ->take(10)
+                ->take(50)
                 ->get();
 
         foreach ($places_missing_details AS $pmd) {
@@ -71,8 +71,8 @@ class CronsController extends Controller {
             }
             echo '<br />';
 
-            //$pwm->media_done = 1;
-            //$pwm->save();
+            $pmd->place_type = $types;
+            $pmd->save();
         }
     }
 
