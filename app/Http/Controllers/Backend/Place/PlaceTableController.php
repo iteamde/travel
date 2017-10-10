@@ -111,13 +111,13 @@ class PlaceTableController extends Controller
 
         if(!empty($place)){
             foreach ($place as $key => $value) {
-                $city = PlaceTypes::find($value->place_type);
-                if(!empty($city)){
-                    if(!empty($city->transsingle)){
+                // $city = PlaceTypes::find($value->place_type);
+                // if(!empty($city)){
+                    // if(!empty($city->transsingle)){
                         // $temp_city[$city->id] = $city->transsingle->title;
-                        $city_filter_html .= '<option value="'.$city->id.'">'.$city->transsingle->title.'</option>';
-                        array_push($temp_city,$city->transsingle->title);
-                         $json[] = ['id'=>$city->id, 'text'=>$city->transsingle->title];
+                        // $city_filter_html .= '<option value="'.$city->id.'">'.$city->transsingle->title.'</option>';
+                        // array_push($temp_city,$city->transsingle->title);
+                         $json[] = ['id'=>$value, 'text'=>$value];
                     }
                 }
             }
