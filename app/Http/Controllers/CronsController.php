@@ -62,9 +62,8 @@ class CronsController extends Controller {
                 $json = file_get_contents('http://db.travooodev.com/public/places/details/go/' . $pmd->provider_id);
             }
 
-            $details = json_decode($json);
-
-            dd($json);
+            var_dump($json);
+            die();
             echo $pmd->provider_id . ' ';
 
             if (is_object($details)) {
