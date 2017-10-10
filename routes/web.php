@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 Route::get('lang/{lang}', 'LanguageController@swap');
 
 Route::get('crons/places/media', 'CronsController@getPlacesMedia');
+Route::get('crons/places/details/{field}', 'CronsController@getPlacesDetails');
 
 /* ----------------------------------------------------------------------- */
 
