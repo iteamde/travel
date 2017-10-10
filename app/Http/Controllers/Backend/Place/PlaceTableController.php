@@ -117,12 +117,14 @@ class PlaceTableController extends Controller
                         // $temp_city[$city->id] = $city->transsingle->title;
                         // $city_filter_html .= '<option value="'.$city->id.'">'.$city->transsingle->title.'</option>';
                         // array_push($temp_city,$city->transsingle->title);
-                         $json[] = ['id'=>$value->place_type, 'text'=>$value->place_type];
+                         $json[] = [ 'id' => $value->place_type, 'text' => $value->place_type ];
                     // }
                 // }
             }
         }
-
+        echo '<pre>';
+        print($json);
+        exit;
         echo json_encode($json);
         // return $temp_city;
     }
