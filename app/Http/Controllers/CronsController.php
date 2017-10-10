@@ -66,6 +66,7 @@ class CronsController extends Controller {
 
             echo $pmd->provider_id . ' ';
             if (is_array($details)) {
+                dd($details);
                 $types = join(",", $details->types);
                 echo $types;
             }
