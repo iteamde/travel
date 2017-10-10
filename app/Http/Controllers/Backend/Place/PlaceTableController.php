@@ -122,9 +122,6 @@ class PlaceTableController extends Controller
                 // }
             }
         }
-        echo '<pre>';
-        print($json);
-        exit;
         echo json_encode($json);
         // return $temp_city;
     }
