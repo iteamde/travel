@@ -57,9 +57,9 @@ class CronsController extends Controller {
 
         foreach ($places_missing_details AS $pmd) {
             if (time() % 2 == 0) {
-                $json = file_get_contents('http://db.travooo.com/public/places/details/go/' . $pwm->provider_id);
+                $json = file_get_contents('http://db.travooo.com/public/places/details/go/' . $pmd->provider_id);
             } else {
-                $json = file_get_contents('http://db.travooodev.com/public/places/details/go/' . $pwm->provider_id);
+                $json = file_get_contents('http://db.travooodev.com/public/places/details/go/' . $pmd->provider_id);
             }
 
             $details = unserialize($json);
