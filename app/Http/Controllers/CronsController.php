@@ -48,4 +48,32 @@ class CronsController extends Controller {
         }
     }
 
+    public function getPlacesDetails($field, Request $request) {
+
+        $places_missing_details = \App\Models\Place\Place::whereNull($field)
+                ->orderBy('id', 'ASC')
+                ->take(10)
+                ->get();
+
+        foreach ($places_missing_details AS $pmd) {
+            if (time() % 2 == 0) {
+                $json = file_get_contents('http://db.travooo.com/public/places/details/go/' . $pwm->provider_id);
+            } else {
+                $json = file_get_contents('http://db.travooodev.com/public/places/details/go/' . $pwm->provider_id);
+            }
+
+            $details = unserialize($json);
+
+            echo $pmd->provider_id . ' ';
+            if (is_array($details)) {
+                $types = join(",", $details->types);
+                echo $types;
+            }
+            echo '<br />';
+
+            //$pwm->media_done = 1;
+            //$pwm->save();
+        }
+    }
+
 }
