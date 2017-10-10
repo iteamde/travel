@@ -135,7 +135,7 @@ Route::group([
          */
         Route::post('place/get', 'PlaceTableController')->name('place.get');
         
-        Route::get('place/cities', 'PlaceTableController@getAddedCities')->name('place.cities');
+        Route::get('place/cities/{term?}/{type?}/{q?}', 'PlaceTableController@getAddedCities')->name('place.cities');
         Route::get('place/types', 'PlaceTableController@getPlaceTypes')->name('place.types');
 
         Route::get('place/import', 'PlaceController@import')->name('place.import');
