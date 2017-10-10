@@ -71,6 +71,9 @@ class CronsController extends Controller {
                 $types = @join(",", $details->types);
                 echo $types;
             }
+            else {
+                $types = '';
+            }
             echo '<br />';
 
             $pmd->place_type = $types;
