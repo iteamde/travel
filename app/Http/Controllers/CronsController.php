@@ -62,10 +62,10 @@ class CronsController extends Controller {
                 $json = file_get_contents('http://db.travooodev.com/public/places/details/go/' . $pmd->provider_id);
             }
 
-            $details = $json;
+            //$details = $json;
 
             echo $pmd->provider_id . ' ';
-            dd($details);
+            dd($json);
 
             if (is_object($details)) {
                 $types = @join(",", $details->types);
