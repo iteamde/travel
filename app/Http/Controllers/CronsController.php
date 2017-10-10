@@ -65,7 +65,7 @@ class CronsController extends Controller {
             //$details = $json;
 
             echo $pmd->provider_id . ' ';
-            var_dump($json);
+            var_dump($json->types);
             die();
 
             if (is_object($details)) {
