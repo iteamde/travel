@@ -300,5 +300,8 @@ table = $('#place-table').DataTable({
     #place-table tbody tr td:nth-child(9){
         display:none !important;
     }
+    table.dataTable tbody td.select-checkbox, table.dataTable tbody th.select-checkbox {
+        width:75px !important;
+    }
 </style>
 @endsection
