@@ -16,10 +16,12 @@ class CronsController extends Controller {
                 ->get();
 
         foreach ($places_without_media AS $pwm) {
-            if (time() % 2 == 0) {
+            if (time() % 3 == 0) {
                 $json = file_get_contents('http://db.travooo.com/public/places/media/go/' . $pwm->provider_id);
-            } else {
+            } elseif (time() % 3 == 1) {
                 $json = file_get_contents('http://db.travooodev.com/public/places/media/go/' . $pwm->provider_id);
+            } elseif (time() % 3 == 2) {
+                $json = file_get_contents('http://db.travoooapi.com/public/places/media/go/' . $pwm->provider_id);
             }
 
             $photos = unserialize($json);
@@ -56,12 +58,15 @@ class CronsController extends Controller {
                 ->get();
 
         foreach ($places_missing_details AS $pmd) {
-            if (time() % 2 == 0) {
+            if (time() % 3 == 0) {
                 $json = file_get_contents('http://db.travooo.com/public/places/details/go/' . $pmd->provider_id);
                 echo 'http://db.travooo.com/public/places/details/go/' . $pmd->provider_id . ' ';
-            } else {
+            } elseif (time() % 3 == 1)  {
                 $json = file_get_contents('http://db.travooodev.com/public/places/details/go/' . $pmd->provider_id);
                 echo 'http://db.travooodev.com/public/places/details/go/' . $pmd->provider_id . ' ';
+            } elseif (time() % 3 == 2)  {
+                $json = file_get_contents('http://db.travoooapi.com/public/places/details/go/' . $pmd->provider_id);
+                echo 'http://db.travoooapi.com/public/places/details/go/' . $pmd->provider_id . ' ';
             }
 
             $details = json_decode($json);
