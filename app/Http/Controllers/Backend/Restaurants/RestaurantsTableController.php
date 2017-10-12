@@ -11,6 +11,7 @@ use App\Models\City\Cities;
 use App\Models\Place\Place;
 use App\Models\PlaceTypes\PlaceTypes;
 use App\Models\Restaurants\Restaurants;
+use App\Models\City\CitiesTranslations;
 
 /**
  * Class RestaurantsTableController.
@@ -86,6 +87,11 @@ class RestaurantsTableController extends Controller
 
     public function getAddedCities(){
 
+        $q = null;
+        if(isset($_GET['q'])){
+            $q = $_GET['q'];
+        }
+        
         $place = Restaurants::distinct()->select('cities_id')->get();
         $temp_city = [];
         $city_filter_html = null;
@@ -93,13 +99,24 @@ class RestaurantsTableController extends Controller
 
         if(!empty($place)){
             foreach ($place as $key => $value) {
-                $city = Cities::find($value->cities_id);
+                if(empty($q)){
+                    $city = Cities::find($value->cities_id);
+                    
+                }else{
+                    // $city = Cities::find($value->cities_id);
+                    $city = Cities::leftJoin('cities_trans', function($join){
+                        $join->on('cities_trans.cities_id', '=', 'cities.id');
+                    })->where('cities_trans.title', 'LIKE', '%'.$q.'%')->where(['cities.id' => $value->cities_id])->first();
+                }
                 if(!empty($city)){
-                    if(!empty($city->transsingle)){
+
+                    $transingle = CitiesTranslations::where(['cities_id' => $value->cities_id])->first();
+                    
+                    if(!empty($transingle)){
                         // $temp_city[$city->id] = $city->transsingle->title;
-                        $city_filter_html .= '<option value="'.$city->id.'">'.$city->transsingle->title.'</option>';
-                        array_push($temp_city,$city->transsingle->title);
-                         $json[] = ['id'=>$city->id, 'text'=>$city->transsingle->title];
+                        $city_filter_html .= '<option value="'.$value->cities_id.'">'.$transingle->title.'</option>';
+                        array_push($temp_city,$transingle->title);
+                         $json[] = ['id' => $value->cities_id, 'text' => $transingle->title];
                     }
                 }
             }
