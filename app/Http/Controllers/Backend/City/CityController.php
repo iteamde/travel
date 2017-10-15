@@ -123,15 +123,6 @@ class CityController extends Controller
             }
         }
 
-        /* Find All Medias In The System */
-        $medias = Media::where(['type' => null])->get();
-        $medias_arr = [];
-
-        foreach ($medias as $key => $value) {
-            if(isset($value->transsingle) && !empty($value->transsingle)){
-                $medias_arr[$value->id] = $value->transsingle->title;
-            }
-        }
 
         /* Find All Active Religions In The System */
         $religion = Religion::where([ 'active' => Religion::ACTIVE])->get();
@@ -153,7 +144,7 @@ class CityController extends Controller
             'languages_spoken'  => $languages_spoken_arr,
             'holidays'  => $holidays_arr,
             'lifestyles' => $lifestyles_arr,
-            'medias' => $medias_arr,
+            //'medias' => $medias_arr,
             'religions' => $religion_arr,
         ]);
     }
@@ -210,13 +201,13 @@ class CityController extends Controller
             'code' => $request->input('code') ? $request->input('code') : 0,
             'lat' => $location[0] ? $location[0] : 0,
             'lng' => isset($location[1]) ? $location[1] : 0,
-            'places' => $request->input('places_id') ? $request->input('places_id') : '',
+            //'places' => $request->input('places_id') ? $request->input('places_id') : '',
             'currencies' => $request->input('currencies_id') ? $request->input('currencies_id') : '',
             'emergency_numbers' => $request->input('emergency_numbers_id') ? $request->input('emergency_numbers_id') : '',
             'holidays'  => $request->input('holidays_id') ? $request->input('holidays_id') : '',
             'languages_spoken' => $request->input('languages_spoken_id') ? $request->input('languages_spoken_id') : '',
             'lifestyles'  => $request->input('lifestyles_id') ? $request->input('lifestyles_id') : '',
-            'medias'  => $request->input('medias_id') ? $request->input('medias_id') : '',
+            //'medias'  => $request->input('medias_id') ? $request->input('medias_id') : '',
             'religions'  => $request->input('religions_id') ? $request->input('religions_id') : '',
             'safety_degree_id' => $request->input('safety_degree_id') ? $request->input('safety_degree_id') : '',
             'level_of_living_id' => $request->input('level_of_living_id') ? $request->input('level_of_living_id') : 0,
