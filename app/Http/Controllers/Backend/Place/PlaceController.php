@@ -315,8 +315,8 @@ class PlaceController extends Controller {
                         ->withDegrees($degrees_arr)
                         ->withCities($cities_arr)
                         ->withPlace_types($places_types_arr)
-                        ->withImages($images_arr)
-                        ->withMedias($medias_arr);
+                        ->withImages($images_arr);
+                        //->withMedias($medias_arr);
     }
 
     /**
