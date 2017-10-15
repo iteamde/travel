@@ -18,6 +18,7 @@ use App\Models\PlaceSearchHistory\PlaceSearchHistory;
 use App\Models\PlaceTypes\PlaceTypes;
 use App\Models\ActivityMedia\Media;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class PlaceController extends Controller {
 
@@ -301,7 +302,6 @@ class PlaceController extends Controller {
 
         $data['selected_medias'] = $selected_medias_arr;
         $data['images'] = $images_arr;
-
 
 
         return view('backend.place.edit')
