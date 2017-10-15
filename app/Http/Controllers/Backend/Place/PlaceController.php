@@ -294,7 +294,7 @@ class PlaceController extends Controller {
             // if(isset($value->transsingle) && !empty($value->transsingle)){
                 array_push($images_arr,[
                     'id' => $value->id,
-                    'url' => asset(Storage::disk('public')->url($value->url))
+                    'url' => asset(Storage::url($value->url))
                 ]);
 
         }
