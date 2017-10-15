@@ -283,7 +283,6 @@ class PlaceController extends Controller {
             }
         }
 
-        dd($place->medias);
         /* Get All Selected Medias */
         $selected_medias = $place->medias;
         $selected_medias_arr = [];
