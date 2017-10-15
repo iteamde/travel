@@ -297,9 +297,10 @@ class PlaceController extends Controller {
                 ]);
 
         }
-        dd($images_arr);
+        //dd($images_arr);
 
         $data['selected_medias'] = $selected_medias_arr;
+        $data['images'] = $images_arr;
 
 
 
