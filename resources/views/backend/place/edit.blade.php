@@ -50,8 +50,7 @@ use App\Models\Access\language\Languages;
 @endsection
 
 @section('content')
-{{var_dump($images)}}
-{{dd($medias)}}
+{{dd($images)}}
     {{ Form::model($place, [
             'id'     => 'place_update_form',
             'route'  => ['admin.location.place.update', $placeid],
