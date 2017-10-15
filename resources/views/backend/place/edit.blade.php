@@ -322,7 +322,7 @@ use App\Models\Access\language\Languages;
                                 @foreach( $images as $image)
                                     <div class="col-md-2" style="">
                                         <i class="fa fa-times delete-image" data-id="<?= $image['id'] ?>" aria-hidden="true" style="color:red;position: relative;top:20px;left:85px;" ></i>
-                                        <img src="<?php Storage::get($image['url']); ?>" style="width:100px;height:100px;"/>
+                                        <img src="<?= $image['url'] ?>" style="width:100px;height:100px;"/>
                                     </div>
                                 @endforeach
                             </div>
