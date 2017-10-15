@@ -283,15 +283,6 @@ use App\Models\Access\language\Languages;
                     </div><!--form control-->
                     <!-- Cities: End -->
 
-                    <!-- Medias: Start -->
-                    <div class="form-group">
-                        {{ Form::label('title', 'Medias', ['class' => 'col-lg-2 control-label']) }}
-
-                        <div class="col-lg-10">
-                            {{ Form::select('medias_id[]', $medias , $data['selected_medias'],['class' => 'select2Class form-control' , 'multiple' => 'multiple']) }}
-                        </div><!--col-lg-10-->
-                    </div><!--form control-->
-                    <!-- Medias: End -->
 
                     <div class="form-group">
                     {{ Form::label('title', 'Select Location', ['class' => 'col-lg-2 control-label']) }}
@@ -506,9 +497,9 @@ use App\Models\Access\language\Languages;
 
             var id = $(this).attr('data-id');
             $(this).parent().remove();
-            
+
             var value = $('#delete-images').val();
-            
+
             if(value == ''){
                 $('#delete-images').val(id);
             }else{

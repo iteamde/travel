@@ -304,15 +304,7 @@ class PlaceController extends Controller {
 
         $data['selected_medias'] = $selected_medias_arr;
 
-        /* Get All Medias */
-        $medias = Media::where([ 'type' => null ])->get();
-        $medias_arr = [];
 
-        foreach ($medias as $key => $value) {
-            if (isset($value->transsingle) && !empty($value->transsingle)) {
-                $medias_arr[$value->id] = $value->transsingle->title;
-            }
-        }
 
         return view('backend.place.edit')
                         ->withLanguages($this->languages)
@@ -323,8 +315,8 @@ class PlaceController extends Controller {
                         ->withDegrees($degrees_arr)
                         ->withCities($cities_arr)
                         ->withPlace_types($places_types_arr)
-                        ->withImages($images_arr)
-                        ->withMedias($medias_arr);
+                        ->withImages($images_arr);
+                        //->withMedias($medias_arr);
     }
 
     /**
