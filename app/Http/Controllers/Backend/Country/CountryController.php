@@ -130,15 +130,7 @@ class CountryController extends Controller
             }
         }
 
-        /* Get All Medias */
-        $medias = Media::where(['type' => null])->get();
-        $medias_arr = [];
 
-        foreach ($medias as $key => $value) {
-            if(isset($value->transsingle) && !empty($value->transsingle)){
-                $medias_arr[$value->id] = $value->transsingle->title;
-            }
-        }
 
         /* Get All Religions */
         $religions = Religion::where([ 'active' => 1 ])->get();
@@ -160,7 +152,7 @@ class CountryController extends Controller
             'holidays' => $holidays_arr,
             'languages_spoken' => $languages_spoken_arr,
             'lifestyles' => $lifestyles_arr,
-            'medias' => $medias_arr,
+            //'medias' => $medias_arr,
             'religions' => $religions_arr
         ]);
     }
@@ -210,14 +202,14 @@ class CountryController extends Controller
             'code' => $request->input('code'),
             'lat' => $location[0],
             'lng' => $location[1],
-            'places' => $request->input('places_id'),
+            //'places' => $request->input('places_id'),
             'currencies' => $request->input('currencies_id'),
             'cities' => $request->input('cities_id'),
             'emergency_numbers' => $request->input('emergency_numbers_id'),
             'holidays' => $request->input('holidays_id'),
             'languages_spoken' => $request->input('languages_spoken_id'),
             'lifestyles' => $request->input('lifestyles_id'),
-            'medias' => $request->input('medias_id'),
+            //'medias' => $request->input('medias_id'),
             'religions' => $request->input('religions_id'),
             'safety_degree_id' => $request->input('safety_degree_id'),
             'files' => $files
