@@ -11,6 +11,7 @@ use App\Models\City\Cities;
 use App\Models\Place\Place;
 use App\Models\Hotels\Hotels;
 use App\Models\PlaceTypes\PlaceTypes;
+use App\Models\City\CitiesTranslations;
 
 /**
  * Class HotelsTableController.
@@ -65,15 +66,9 @@ class HotelsTableController extends Controller
                 return null;
             })
             ->addColumn('place_id_title',function($hotels){
-                $place = Place::find($hotels->places_id);
-                $temp = null;
-                if(!empty($place)){
-                    $temp = PlaceTypes::find($place->place_type);
-                }
+                $temp = Place::find($hotels->places_id);
                 if(!empty($temp)){
-                    if(!empty($temp->transsingle)){
-                        return $temp->transsingle->title;
-                    }
+                        return $temp->place_type;
                 }
                 return null;
             })
@@ -99,6 +94,11 @@ class HotelsTableController extends Controller
 
     public function getAddedCities(){
 
+        $q = null;
+        if(isset($_GET['q'])){
+            $q = $_GET['q'];
+        }
+
         $place = Hotels::distinct()->select('cities_id')->get();
         $temp_city = [];
         $city_filter_html = null;
@@ -106,13 +106,24 @@ class HotelsTableController extends Controller
 
         if(!empty($place)){
             foreach ($place as $key => $value) {
-                $city = Cities::find($value->cities_id);
+                if(empty($q)){
+                    $city = Cities::find($value->cities_id);
+                    
+                }else{
+                    // $city = Cities::find($value->cities_id);
+                    $city = Cities::leftJoin('cities_trans', function($join){
+                        $join->on('cities_trans.cities_id', '=', 'cities.id');
+                    })->where('cities_trans.title', 'LIKE', '%'.$q.'%')->where(['cities.id' => $value->cities_id])->first();
+                }
                 if(!empty($city)){
-                    if(!empty($city->transsingle)){
+
+                    $transingle = CitiesTranslations::where(['cities_id' => $value->cities_id])->first();
+                    
+                    if(!empty($transingle)){
                         // $temp_city[$city->id] = $city->transsingle->title;
-                        $city_filter_html .= '<option value="'.$city->id.'">'.$city->transsingle->title.'</option>';
-                        array_push($temp_city,$city->transsingle->title);
-                         $json[] = ['id'=>$city->id, 'text'=>$city->transsingle->title];
+                        $city_filter_html .= '<option value="'.$value->cities_id.'">'.$transingle->title.'</option>';
+                        array_push($temp_city,$transingle->title);
+                         $json[] = ['id' => $value->cities_id, 'text' => $transingle->title];
                     }
                 }
             }
@@ -124,6 +135,11 @@ class HotelsTableController extends Controller
 
     public function getPlaceTypes(){
 
+        $q = null;
+        if(isset($_GET['q'])){
+            $q = $_GET['q'];
+        }
+
         $place = Hotels::distinct()->select('places_id')->get();
         $temp_city = [];
         $city_filter_html = null;
@@ -131,17 +147,13 @@ class HotelsTableController extends Controller
 
         if(!empty($place)){
             foreach ($place as $key => $value) {
-                $temp_place = Place::find($value->places_id);
+                if(!empty($q)){
+                    $temp_place = Place::where([ 'id' => $value->places_id])->where('place_type', 'LIKE', '%'.$q.'%')->first();
+                }else{
+                    $temp_place = Place::find($value->places_id);
+                }
                 if(!empty($temp_place)){
-                    $temp_type = PlaceTypes::find($temp_place->place_type);
-                    if(!empty($temp_type)){
-                        if(!empty($temp_type->transsingle)){
-                            // $temp_city[$city->id] = $city->transsingle->title;
-                            $city_filter_html .= '<option value="'.$temp_type->id.'">'.$temp_type->transsingle->title.'</option>';
-                            array_push($temp_city,$temp_type->transsingle->title);
-                             $json[] = ['id'=>$temp_type->id, 'text'=>$temp_type->transsingle->title];
-                        }    
-                    }
+                    $json[] = ['id' => $temp_place->place_type, 'text' => $temp_place->place_type];
                 }
             }
         }

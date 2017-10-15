@@ -155,6 +155,7 @@
                     // for (var key in cities) {
                         // $('#city-filter').append('<?php  $city_filter_html; ?>');
                             $('#city-filter').select2({
+                                width:'100%',
                                 placeholder: 'Search City',
                                 ajax: {
                                     url: '{{ route("admin.restaurants.restaurants.cities") }}',
@@ -170,6 +171,7 @@
                             });
 
                              $('#place-type-filter').select2({
+                                width:'100%',
                                 placeholder: 'Search Place Types',
                                 ajax: {
                                     url: '{{ route("admin.restaurants.restaurants.types") }}',

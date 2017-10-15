@@ -17,8 +17,8 @@ Route::group([
         Route::post('hotels/get', 'HotelsTableController')->name('hotels.get');
         Route::get('hotels/import', 'HotelsController@import')->name('hotels.import');
 
-        Route::get('hotels/cities', 'HotelsTableController@getAddedCities')->name('hotels.cities');
-        Route::get('hotels/types', 'HotelsTableController@getPlaceTypes')->name('hotels.types');
+        Route::get('hotels/cities/{term?}/{type?}/{q?}', 'HotelsTableController@getAddedCities')->name('hotels.cities');
+        Route::get('hotels/types/{term?}/{type?}/{q?}', 'HotelsTableController@getPlaceTypes')->name('hotels.types');
 
         Route::post('hotels/search', 'HotelsController@search')->name('hotels.search');
         Route::get('hotels/search/{admin_logs_id?}/{country_id?}/{city_id?}/{latlng?}', 'HotelsController@search')->name('hotels.search');

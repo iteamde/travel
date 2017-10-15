@@ -107,22 +107,25 @@ class PlaceTableController extends Controller
     }
 
     public function getPlaceTypes(){
-        $place = Place::distinct()->select('place_type')->get();
+        
+        $q = null;
+        if(isset($_GET['q'])){
+            $q = $_GET['q'];
+        }
+
+        if(!empty($q)){
+            $place = Place::distinct()->select('place_type')->where('place_type', 'LIKE', '%'.$q.'%')->get();
+        }else{
+            $place = Place::distinct()->select('place_type')->get();
+        }
         $temp_city = [];
         $city_filter_html = null;
         $json = [];
 
         if(!empty($place)){
             foreach ($place as $key => $value) {
-                // $city = PlaceTypes::find($value->place_type);
-                // if(!empty($city)){
-                    // if(!empty($city->transsingle)){
-                        // $temp_city[$city->id] = $city->transsingle->title;
-                        // $city_filter_html .= '<option value="'.$city->id.'">'.$city->transsingle->title.'</option>';
-                        // array_push($temp_city,$city->transsingle->title);
-                         $json[] = [ 'id' => $value->place_type, 'text' => $value->place_type ];
-                    // }
-                // }
+                
+                $json[] = [ 'id' => $value->place_type, 'text' => $value->place_type ];
             }
         }
         echo json_encode($json);
