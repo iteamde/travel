@@ -90,7 +90,9 @@ class RestaurantsRepository extends BaseRepository
                 config('restaurants.restaurants_table').'.lng',
                 config('restaurants.restaurants_table').'.cities_id',
                 config('restaurants.restaurants_table').'.places_id',
-                config('restaurants.restaurants_table').'.active'
+                config('restaurants.restaurants_table').'.active',
+                config('restaurants.restaurants_table').'.place_type',
+                 
             ]);
 
         // active() is a scope on the UserScope trait
