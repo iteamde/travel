@@ -67,7 +67,7 @@
                     targets:   0
                 },
                 { "width": "20%" , "targets" : 4 },
-                { "width": "20%" , "targets" : 5 }, 
+                { "width": "20%" , "targets" : 5 },
                 ],
                 select: {
                     style:    'os',
@@ -190,7 +190,7 @@
                     /*Append Place Types To Place Type Filter*/
                     // for (var key in place_types) {
                     //     $('#place-type-filter').append('<option value="'+key+'">'+key+'</option>')
-                    // } 
+                    // }
                 }
             });
         });
@@ -211,11 +211,11 @@
             // alert('deselect-all');
             $('#restaurants-table tbody tr').removeClass('selected');
         });
-        
+
         $(document).on('click','#delete-all-selected',function(){
             // alert('delete all');
             // alert($('#restaurants-table tr.selected').length);
-            
+
             if($('#restaurants-table tbody tr.selected').length == 0){
                 alert('Please select some rows first.');
                 return false;
@@ -244,7 +244,7 @@
                     var result = JSON.parse(data);
                     // alert(result.result);
                     if(result.result == true){
-                        document.location.reload(); 
+                        document.location.reload();
                     }
                 }
             });
@@ -295,6 +295,9 @@
     }
     #restaurants-table tbody tr td:nth-child(9){
         display:none !important;
+    }
+    table.dataTable tbody td.select-checkbox, table.dataTable tbody th.select-checkbox {
+        width:20px !important;
     }
 </style>
 @endsection

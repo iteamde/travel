@@ -22,7 +22,7 @@
     <div class="box box-success">
         <div class="box-header with-border">
             <!-- <h3 class="box-title">{{ trans('labels.backend.access.users.active') }}</h3> -->
-            <h3 class="box-title">Hotels</h3>   
+            <h3 class="box-title">Hotels</h3>
             @include('backend.select-deselect-all-buttons')
             <div class="box-tools pull-right">
                 @include('backend.hotels.partials.header-buttons')
@@ -67,7 +67,7 @@
                     targets:   0
                 },
                 { "width": "20%" , "targets" : 4 },
-                { "width": "20%" , "targets" : 5 } 
+                { "width": "20%" , "targets" : 5 }
                 ],
                 select: {
                     style:    'os',
@@ -190,7 +190,7 @@
                     /*Append Place Types To Place Type Filter*/
                     // for (var key in place_types) {
                     //     $('#place-type-filter').append('<option value="'+key+'">'+key+'</option>')
-                    // } 
+                    // }
                 }
             });
         });
@@ -211,11 +211,11 @@
             // alert('deselect-all');
             $('#hotels-table tbody tr').removeClass('selected');
         });
-        
+
         $(document).on('click','#delete-all-selected',function(){
             // alert('delete all');
             // alert($('#hotels-table tr.selected').length);
-            
+
             if($('#hotels-table tbody tr.selected').length == 0){
                 alert('Please select some rows first.');
                 return false;
@@ -244,7 +244,7 @@
                     var result = JSON.parse(data);
                     // alert(result.result);
                     if(result.result == true){
-                        document.location.reload(); 
+                        document.location.reload();
                     }
                 }
             });
@@ -299,6 +299,9 @@
     }
     #hotels-table tbody tr td:nth-child(9){
         display:none !important;
+    }
+    table.dataTable tbody td.select-checkbox, table.dataTable tbody th.select-checkbox {
+        width:20px !important;
     }
 </style>
 @endsection
