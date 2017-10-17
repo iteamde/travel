@@ -82,7 +82,7 @@ class CronsController extends Controller {
                 echo $types;
             }
             if(!isset($types)) {
-                $types = 'none';
+                $types = '';
             }
             echo '<br />';
 
