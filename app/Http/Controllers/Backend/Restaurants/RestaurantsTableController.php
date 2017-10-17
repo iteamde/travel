@@ -135,9 +135,9 @@ class RestaurantsTableController extends Controller
         }
 
         if(!empty($q)){
-            $place = Restaurants::distinct()->select('places_type')->where('place_type', 'LIKE', '%'.$q.'%')->get();
+            $place = Restaurants::distinct()->select('place_type')->where('place_type', 'LIKE', '%'.$q.'%')->get();
         }else{
-            $place = Restaurants::distinct()->select('places_type')->get();
+            $place = Restaurants::distinct()->select('place_type')->get();
         }
         $temp_city = [];
         $city_filter_html = null;
