@@ -91,4 +91,124 @@ class CronsController extends Controller {
         }
     }
 
+    public function getEmbassiesDetails($field, Request $request) {
+
+
+        $places_missing_details = \App\Models\Embassies\Embassies::whereNull($field)
+                ->orderBy('id', 'ASC')
+                ->take(100)
+                ->get();
+
+        foreach ($places_missing_details AS $pmd) {
+            if (time() % 4 == 0) {
+                $json = file_get_contents('http://db.travooo.com/public/embassies/details/go/' . $pmd->provider_id);
+                echo 'http://db.travooo.com/public/embassies/details/go/' . $pmd->provider_id . ' ';
+            } elseif (time() % 4 == 1)  {
+                $json = file_get_contents('http://db.travooodev.com/public/embassies/details/go/' . $pmd->provider_id);
+                echo 'http://db.travooodev.com/public/embassies/details/go/' . $pmd->provider_id . ' ';
+            } elseif (time() % 4 == 2)  {
+                $json = file_get_contents('http://db.travoooapi.com/public/embassies/details/go/' . $pmd->provider_id);
+                echo 'http://db.travoooapi.com/public/embassies/details/go/' . $pmd->provider_id . ' ';
+            } elseif (time() % 4 == 3)  {
+                $json = file_get_contents('http://db.travoooapi.net/public/embassies/details/go/' . $pmd->provider_id);
+                echo 'http://db.travoooapi.net/public/embassies/details/go/' . $pmd->provider_id . ' ';
+            }
+
+            $details = json_decode($json);
+            echo $pmd->provider_id . ' ';
+
+            if (is_object($details)) {
+                $types = @join(",", $details->types);
+                echo $types;
+            }
+            if(!isset($types)) {
+                $types = '';
+            }
+            echo '<br />';
+
+            $pmd->place_type = $types;
+            $pmd->save();
+        }
+    }
+
+    public function getHotelsDetails($field, Request $request) {
+
+
+        $places_missing_details = \App\Models\Hotels\Hotels::whereNull($field)
+                ->orderBy('id', 'ASC')
+                ->take(100)
+                ->get();
+
+        foreach ($places_missing_details AS $pmd) {
+            if (time() % 4 == 0) {
+                $json = file_get_contents('http://db.travooo.com/public/hotels/details/go/' . $pmd->provider_id);
+                echo 'http://db.travooo.com/public/hotels/details/go/' . $pmd->provider_id . ' ';
+            } elseif (time() % 4 == 1)  {
+                $json = file_get_contents('http://db.travooodev.com/public/hotels/details/go/' . $pmd->provider_id);
+                echo 'http://db.travooodev.com/public/hotels/details/go/' . $pmd->provider_id . ' ';
+            } elseif (time() % 4 == 2)  {
+                $json = file_get_contents('http://db.travoooapi.com/public/hotels/details/go/' . $pmd->provider_id);
+                echo 'http://db.travoooapi.com/public/hotels/details/go/' . $pmd->provider_id . ' ';
+            } elseif (time() % 4 == 3)  {
+                $json = file_get_contents('http://db.travoooapi.net/public/hotels/details/go/' . $pmd->provider_id);
+                echo 'http://db.travoooapi.net/public/hotels/details/go/' . $pmd->provider_id . ' ';
+            }
+
+            $details = json_decode($json);
+            echo $pmd->provider_id . ' ';
+
+            if (is_object($details)) {
+                $types = @join(",", $details->types);
+                echo $types;
+            }
+            if(!isset($types)) {
+                $types = '';
+            }
+            echo '<br />';
+
+            $pmd->place_type = $types;
+            $pmd->save();
+        }
+    }
+
+    public function getRestaurantsDetails($field, Request $request) {
+
+
+        $places_missing_details = \App\Models\Restaurants\Restaurants::whereNull($field)
+                ->orderBy('id', 'ASC')
+                ->take(100)
+                ->get();
+
+        foreach ($places_missing_details AS $pmd) {
+            if (time() % 4 == 0) {
+                $json = file_get_contents('http://db.travooo.com/public/restaurants/details/go/' . $pmd->provider_id);
+                echo 'http://db.travooo.com/public/restaurants/details/go/' . $pmd->provider_id . ' ';
+            } elseif (time() % 4 == 1)  {
+                $json = file_get_contents('http://db.travooodev.com/public/restaurants/details/go/' . $pmd->provider_id);
+                echo 'http://db.travooodev.com/public/restaurants/details/go/' . $pmd->provider_id . ' ';
+            } elseif (time() % 4 == 2)  {
+                $json = file_get_contents('http://db.travoooapi.com/public/restaurants/details/go/' . $pmd->provider_id);
+                echo 'http://db.travoooapi.com/public/restaurants/details/go/' . $pmd->provider_id . ' ';
+            } elseif (time() % 4 == 3)  {
+                $json = file_get_contents('http://db.travoooapi.net/public/restaurants/details/go/' . $pmd->provider_id);
+                echo 'http://db.travoooapi.net/public/restaurants/details/go/' . $pmd->provider_id . ' ';
+            }
+
+            $details = json_decode($json);
+            echo $pmd->provider_id . ' ';
+
+            if (is_object($details)) {
+                $types = @join(",", $details->types);
+                echo $types;
+            }
+            if(!isset($types)) {
+                $types = '';
+            }
+            echo '<br />';
+
+            $pmd->place_type = $types;
+            $pmd->save();
+        }
+    }
+
 }
