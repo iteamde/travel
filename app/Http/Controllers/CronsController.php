@@ -56,7 +56,7 @@ class CronsController extends Controller {
 
         $places_missing_details = \App\Models\Place\Place::whereNull($field)
                 ->orderBy('id', 'ASC')
-                ->take(200)
+                ->take(100)
                 ->get();
 
         foreach ($places_missing_details AS $pmd) {
@@ -82,7 +82,7 @@ class CronsController extends Controller {
                 echo $types;
             }
             else {
-                $types = '';
+                $types = 'none';
             }
             echo '<br />';
 
