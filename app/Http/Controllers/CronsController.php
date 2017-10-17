@@ -56,7 +56,7 @@ class CronsController extends Controller {
 
         $places_missing_details = \App\Models\Place\Place::whereNull($field)
                 ->orderBy('id', 'ASC')
-                ->take(100)
+                ->take(200)
                 ->get();
 
         foreach ($places_missing_details AS $pmd) {
