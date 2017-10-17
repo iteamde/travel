@@ -489,8 +489,12 @@ class RestaurantsController extends Controller
 
             if (time() % 2 == 0) {
                 $json = file_get_contents('http://db.travooo.com/public/restaurants/go/' . ($city ? $city : 0) . '/' . $lat . '/' . $lng . '/' . $query);
-            } else {
+            } elseif (time() % 2 == 1) {
                 $json = file_get_contents('http://db.travooodev.com/public/restaurants/go/' . ($city ? $city : 0) . '/' . $lat . '/' . $lng . '/' . $query);
+            } elseif (time() % 3 == 2) {
+                $json = file_get_contents('http://db.travoooapi.com/public/restaurants/go/' . ($city ? $city : 0) . '/' . $lat . '/' . $lng . '/' . $query);
+            } elseif (time() % 4 == 3) {
+                $json = file_get_contents('http://db.travoooapi.net/public/restaurants/go/' . ($city ? $city : 0) . '/' . $lat . '/' . $lng . '/' . $query);
             }
             $result = json_decode($json);
 
@@ -529,6 +533,8 @@ class RestaurantsController extends Controller
                 $p->provider_id = $places[$k]['provider_id'];
                 $p->countries_id = $data['countries_id'];
                 $p->cities_id = $data['cities_id'];
+                $p->place_type = $places[$k]['types'];
+
                 $p->places_id = 1;
                 $p->lat = $places[$k]['lat'];
                 $p->lng = $places[$k]['lng'];
@@ -606,7 +612,7 @@ class RestaurantsController extends Controller
                 $this->delete_single_ajax($value);
             }
         }
-        
+
         echo json_encode([
             'result' => true
         ]);
