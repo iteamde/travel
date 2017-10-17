@@ -107,7 +107,7 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
                                 {{ Form::label('description_'.$language->id, 'Description', ['class' => 'col-lg-2 control-label description_input']) }}
 
                                 <div class="col-lg-10">
-                                    {{ Form::textarea('description_'.$language->id, null, ['class' => 'form-control description_input description required', 'required' => 'required', 'placeholder' => 'Description']) }}
+                                    {{ Form::textarea('description_'.$language->id, null, ['class' => 'form-control description_input description', 'placeholder' => 'Description']) }}
                                 </div><!--col-lg-10-->
                             </div><!--form control-->
                             <!-- End: Description -->
@@ -117,7 +117,7 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
                                 {{ Form::label('nationality_'.$language->id, 'Nationality', ['class' => 'col-lg-2 control-label']) }}
 
                                 <div class="col-lg-10">
-                                    {{ Form::text('nationality_'.$language->id, null, ['class' => 'form-control required', 'maxlength' => '191', 'required' => 'required', 'placeholder' => 'Nationality']) }}
+                                    {{ Form::text('nationality_'.$language->id, null, ['class' => 'form-control', 'maxlength' => '191', 'placeholder' => 'Nationality']) }}
                                 </div><!--col-lg-10-->
                             </div><!--form control-->
                             <!-- End: Nationality -->
@@ -127,7 +127,7 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
                                 {{ Form::label('population_'.$language->id, 'Population', ['class' => 'col-lg-2 control-label']) }}
 
                                 <div class="col-lg-10">
-                                    {{ Form::text('population_'.$language->id, null, ['class' => 'form-control required', 'maxlength' => '191', 'required' => 'required', 'placeholder' => 'Population']) }}
+                                    {{ Form::text('population_'.$language->id, null, ['class' => 'form-control', 'maxlength' => '191', 'placeholder' => 'Population']) }}
                                 </div><!--col-lg-10-->
                             </div><!--form control-->
                             <!-- End: Population -->
@@ -137,7 +137,7 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
                                 {{ Form::label('best_place_'.$language->id, 'Best place', ['class' => 'col-lg-2 control-label']) }}
 
                                 <div class="col-lg-10">
-                                    {{ Form::textarea('best_place_'.$language->id, null, ['class' => 'form-control required', 'maxlength' => '191', 'required' => 'required', 'placeholder' => 'Best Place']) }}
+                                    {{ Form::textarea('best_place_'.$language->id, null, ['class' => 'form-control', 'maxlength' => '191', 'placeholder' => 'Best Place']) }}
                                 </div><!--col-lg-10-->
                             </div><!--form control-->
                             <!-- End: best_place -->
@@ -147,7 +147,7 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
                                 {{ Form::label('best_time_'.$language->id, 'Best time', ['class' => 'col-lg-2 control-label']) }}
 
                                 <div class="col-lg-10">
-                                    {{ Form::textarea('best_time_'.$language->id, null, ['class' => 'form-control required', 'maxlength' => '191', 'required' => 'required', 'placeholder' => 'Best time']) }}
+                                    {{ Form::textarea('best_time_'.$language->id, null, ['class' => 'form-control', 'maxlength' => '191', 'placeholder' => 'Best time']) }}
                                 </div><!--col-lg-10-->
                             </div><!--form control-->
                             <!-- End: best_time -->
@@ -157,7 +157,7 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
                                 {{ Form::label('cost_of_living_'.$language->id, 'Cost of living', ['class' => 'col-lg-2 control-label']) }}
 
                                 <div class="col-lg-10">
-                                    {{ Form::textarea('cost_of_living_'.$language->id, null, ['class' => 'form-control required', 'maxlength' => '191', 'required' => 'required', 'placeholder' => 'Cost of living']) }}
+                                    {{ Form::textarea('cost_of_living_'.$language->id, null, ['class' => 'form-control', 'maxlength' => '191', 'placeholder' => 'Cost of living']) }}
                                 </div><!--col-lg-10-->
                             </div><!--form control-->
                             <!-- End: cost_of_living -->
@@ -167,7 +167,7 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
                                 {{ Form::label('geo_stats_'.$language->id, 'Geo stats', ['class' => 'col-lg-2 control-label']) }}
 
                                 <div class="col-lg-10">
-                                    {{ Form::textarea('geo_stats_'.$language->id, null, ['class' => 'form-control required', 'maxlength' => '191', 'required' => 'required', 'placeholder' => 'Geo stats']) }}
+                                    {{ Form::textarea('geo_stats_'.$language->id, null, ['class' => 'form-control', 'maxlength' => '191', 'placeholder' => 'Geo stats']) }}
                                 </div><!--col-lg-10-->
                             </div><!--form control-->
                             <!-- End: geo_stats -->
@@ -177,7 +177,7 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
                                 {{ Form::label('demographics_'.$language->id, 'Demographics', ['class' => 'col-lg-2 control-label']) }}
 
                                 <div class="col-lg-10">
-                                    {{ Form::textarea('demographics_'.$language->id, null, ['class' => 'form-control required', 'maxlength' => '191', 'required' => 'required', 'placeholder' => 'Demographics']) }}
+                                    {{ Form::textarea('demographics_'.$language->id, null, ['class' => 'form-control', 'maxlength' => '191','placeholder' => 'Demographics']) }}
                                 </div><!--col-lg-10-->
                             </div><!--form control-->
                             <!-- End: demographics -->
@@ -187,7 +187,7 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
                                 {{ Form::label('economy_'.$language->id, 'Economy', ['class' => 'col-lg-2 control-label']) }}
 
                                 <div class="col-lg-10">
-                                    {{ Form::textarea('economy_'.$language->id, null, ['class' => 'form-control required', 'maxlength' => '191', 'required' => 'required', 'placeholder' => 'Economy']) }}
+                                    {{ Form::textarea('economy_'.$language->id, null, ['class' => 'form-control', 'maxlength' => '191', 'placeholder' => 'Economy']) }}
                                 </div><!--col-lg-10-->
                             </div><!--form control-->
                             <!-- End: economy -->
@@ -197,7 +197,7 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
                                 {{ Form::label('suitable_for_'.$language->id, 'Suitable for', ['class' => 'col-lg-2 control-label']) }}
 
                                 <div class="col-lg-10">
-                                    {{ Form::text('suitable_for_'.$language->id, null, ['class' => 'form-control required', 'maxlength' => '191', 'required' => 'required', 'placeholder' => 'Suitable for']) }}
+                                    {{ Form::text('suitable_for_'.$language->id, null, ['class' => 'form-control', 'maxlength' => '191', 'placeholder' => 'Suitable for']) }}
                                 </div><!--col-lg-10-->
                             </div><!--form control-->
                             <!-- End: suitable_for -->
@@ -246,7 +246,7 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
                     <div class="form-group">
                     {{ Form::label('title', 'Select Location', ['class' => 'col-lg-2 control-label']) }}
                         <div class="col-lg-10">
-                            <input id="pac-input" class="form-control" type="text" placeholder="Search Box" required>
+                            <input id="pac-input" class="form-control" type="text" placeholder="Search Box">
                             <div id="map"></div>
                         </div>
                     </div>
@@ -254,9 +254,9 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
                         {{ Form::label('title', 'Lat,Lng', ['class' => 'col-lg-2 control-label']) }}
                         <div class="col-lg-10">
 
-                            {{ Form::hidden('lat_lng', null, ['class' => 'form-control disabled', 'id' => 'lat-lng-input', 'required' => 'required', 'placeholder' => 'Lat,Lng']) }}
+                            {{ Form::hidden('lat_lng', null, ['class' => 'form-control disabled', 'id' => 'lat-lng-input', 'placeholder' => 'Lat,Lng']) }}
 
-                            {{ Form::text('lat_lng_show', null, ['class' => 'form-control disabled', 'id' => 'lat-lng-input_show', 'required' => 'required', 'placeholder' => 'Lat,Lng' , 'disabled' => 'disabled']) }}
+                            {{ Form::text('lat_lng_show', null, ['class' => 'form-control disabled', 'id' => 'lat-lng-input_show', 'placeholder' => 'Lat,Lng' , 'disabled' => 'disabled']) }}
                         </div>
                     </div>
 
