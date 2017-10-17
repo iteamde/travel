@@ -81,7 +81,7 @@ class CronsController extends Controller {
                 $types = @join(",", $details->types);
                 echo $types;
             }
-            else {
+            if(!isset($types)) {
                 $types = 'none';
             }
             echo '<br />';
