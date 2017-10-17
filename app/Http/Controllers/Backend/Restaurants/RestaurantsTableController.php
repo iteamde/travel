@@ -66,18 +66,18 @@ class RestaurantsTableController extends Controller
                 return null;
             })
             ->addColumn('place_id_title',function($restaurants){
-                $temp = Place::find($restaurants->places_id);
+                // $temp = Place::find($restaurants->places_id);
                 // $temp = $place;
                 // if(!empty($place)){
                 //     $temp = PlaceTypes::find($place->place_type);
                 // }
-                if(!empty($temp)){
+                // if(!empty($temp)){
                     // if(!empty($temp->transsingle)){
                     //     return $temp->transsingle->title;
                     // }
-                    return $temp->place_type;
-                }
-                return null;
+                    // return $temp->place_type;
+                // }
+                return $restaurants->place_type;
             })
             ->addColumn('action', function ($restaurants) {
                 return $restaurants->action_buttons;
