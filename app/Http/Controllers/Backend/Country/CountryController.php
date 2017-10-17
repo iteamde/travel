@@ -317,32 +317,6 @@ class CountryController extends Controller
             }
         }
 
-        /* Get All Selected Places For Country Airports */
-        $selected_places = $country->airports;
-        $selected_places_arr = [];
-
-        if(!empty($selected_places)){
-            foreach ($selected_places as $key => $value) {
-                $place = $value->place;
-
-                if(!empty($place)){
-                    array_push($selected_places_arr,$place->id);
-                }
-            }
-        }
-
-        $data['selected_places'] = $selected_places_arr;
-
-        /* Get Active Places */
-        $places = Place::where(['active' => 1])->get();
-        $places_arr = [];
-
-        foreach ($places as $key => $value) {
-            if(isset($value->transsingle) && !empty($value->transsingle)){
-                $places_arr[$value->id] = $value->transsingle->title;
-            }
-        }
-
         /* Get All Selected Currencies */
         $selected_currencies = $country->currencies;
         $selected_currencies_arr = [];
@@ -524,16 +498,6 @@ class CountryController extends Controller
 
         $data['selected_medias'] = $selected_medias_arr;
 
-        /* Get All Medias For Dropdown*/
-        $medias = Media::where([ 'type' => null ])->get();
-        $medias_arr = [];
-
-        foreach ($medias as $key => $value) {
-            if(isset($value->transsingle) && !empty($value->transsingle)){
-                $medias_arr[$value->id] = $value->transsingle->title;
-            }
-        }
-
         /* Get Selected Religions */
         $selected_religions = $country->religions;
         $selected_religions_arr = [];
@@ -567,14 +531,14 @@ class CountryController extends Controller
             ->withData($data)
             ->withRegions($regions_arr)
             ->withDegrees($degrees_arr)
-            ->withPlaces($places_arr)
+            //->withPlaces($places_arr)
             ->withCurrencies($currencies_arr)
             ->withCities($cities_arr)
             ->withEmergency_numbers($emergency_numbers_arr)
             ->withHolidays($holidays_arr)
             ->withLanguages_spoken($languages_spoken_arr)
             ->withLifestyles($lifestyles_arr)
-            ->withMedias($medias_arr)
+            //->withMedias($medias_arr)
             ->withImages($selected_images)
             ->withReligions($religions_arr);
     }
