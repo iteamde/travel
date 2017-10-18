@@ -228,6 +228,7 @@ class PlaceRepository extends BaseRepository
             }
         }
 
+        /*
         $prev_medias = PlaceMedias::where(['places_id' => $id])->get();
         if(!empty($prev_medias)){
             foreach ($prev_medias as $key => $value) {
@@ -264,7 +265,7 @@ class PlaceRepository extends BaseRepository
                     }
                 }
             }
-        }
+        }*/
 
         DB::transaction(function () use ($model, $input, $extra) {
             $check = 1;
