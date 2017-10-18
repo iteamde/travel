@@ -367,7 +367,7 @@ class PlaceController extends Controller {
             'active' => $active,
             'countries_id' => $request->input('countries_id'),
             'cities_id' => $request->input('cities_id'),
-            'place_types_ids' => $request->input('place_types_ids'),
+            //'place_types_ids' => $request->input('place_types_ids'),
             'medias' => $request->input('medias_id'),
             'lat' => $location[0],
             'lng' => $location[1],
