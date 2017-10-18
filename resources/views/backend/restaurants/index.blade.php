@@ -102,7 +102,7 @@
                     },
                     {data: 'action', name: 'action', searchable: false, sortable: false},
                     {data: 'cities_id', name: '{{config('restaurants.restaurants_table')}}.cities_id'},
-                    {data: 'place.place_type', name: 'place.place_type'},
+                    {data: 'place_type', name: 'place_type'},
                 ],
                 order: [[1, "asc"]],
                 searchDelay: 500,

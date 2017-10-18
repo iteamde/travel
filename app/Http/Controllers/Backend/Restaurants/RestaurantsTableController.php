@@ -66,18 +66,18 @@ class RestaurantsTableController extends Controller
                 return null;
             })
             ->addColumn('place_id_title',function($restaurants){
-                $temp = Place::find($restaurants->places_id);
+                // $temp = Place::find($restaurants->places_id);
                 // $temp = $place;
                 // if(!empty($place)){
                 //     $temp = PlaceTypes::find($place->place_type);
                 // }
-                if(!empty($temp)){
+                // if(!empty($temp)){
                     // if(!empty($temp->transsingle)){
                     //     return $temp->transsingle->title;
                     // }
-                    return $temp->place_type;
-                }
-                return null;
+                    // return $temp->place_type;
+                // }
+                return $restaurants->place_type;
             })
             ->addColumn('action', function ($restaurants) {
                 return $restaurants->action_buttons;
@@ -134,23 +134,27 @@ class RestaurantsTableController extends Controller
             $q = $_GET['q'];
         }
 
-        $place = Restaurants::distinct()->select('places_id')->get();
+        if(!empty($q)){
+            $place = Restaurants::distinct()->select('place_type')->where('place_type', 'LIKE', '%'.$q.'%')->get();
+        }else{
+            $place = Restaurants::distinct()->select('place_type')->get();
+        }
         $temp_city = [];
         $city_filter_html = null;
         $json = [];
 
         if(!empty($place)){
             foreach ($place as $key => $value) {
-                if(!empty($q)){
-                    $temp_place = Place::where([ 'id' => $value->places_id ])->where('place_type', 'LIKE', '%'.$q.'%')->first();
-                }else{
-                    $temp_place = Place::find($value->places_id);
-                }
-                if(!empty($temp_place)){
+        //         if(!empty($q)){
+        //             $temp_place = Place::where([ 'id' => $value->places_id ])->where('place_type', 'LIKE', '%'.$q.'%')->first();
+        //         }else{
+        //             $temp_place = Place::find($value->places_id);
+        //         }
+        //         if(!empty($temp_place)){
                     
-                    $json[] = ['id' => $temp_place->place_type, 'text' => $temp_place->place_type];
+                    $json[] = ['id' => $value->place_type, 'text' => $value->place_type];
                     
-                }
+        //         }
             }
         }
 

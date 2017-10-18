@@ -91,7 +91,8 @@ class HotelsRepository extends BaseRepository
                 config('hotels.hotels_table').'.lng',
                 config('hotels.hotels_table').'.places_id',
                 config('hotels.hotels_table').'.cities_id',
-                config('hotels.hotels_table').'.active'
+                config('hotels.hotels_table').'.active',
+                config('hotels.hotels_table').'.place_type',
             ]);
         // active() is a scope on the UserScope trait
         return $dataTableQuery;
