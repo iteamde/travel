@@ -106,7 +106,7 @@ use App\Models\Access\language\Languages;
                                 {{ Form::label('description_'.$language->id, 'Description', ['class' => 'col-lg-2 control-label description_input']) }}
 
                                 <div class="col-lg-10">
-                                    {{ Form::textarea('description_'.$language->id, $data['description_'.$language->id], ['class' => 'form-control description_input description required', 'required' => 'required', 'placeholder' => 'Description']) }}
+                                    {{ Form::textarea('description_'.$language->id, $data['description_'.$language->id], ['class' => 'form-control description_input description', 'placeholder' => 'Description']) }}
                                 </div><!--col-lg-10-->
                             </div><!--form control-->
                             <!-- End: Description -->
@@ -116,7 +116,7 @@ use App\Models\Access\language\Languages;
                                 {{ Form::label('address_'.$language->id, 'Address', ['class' => 'col-lg-2 control-label']) }}
 
                                 <div class="col-lg-10">
-                                    {{ Form::textarea('address_'.$language->id, $data['address_'.$language->id], ['class' => 'form-control required', 'required' => 'required', 'placeholder' => 'Address']) }}
+                                    {{ Form::textarea('address_'.$language->id, $data['address_'.$language->id], ['class' => 'form-control', 'placeholder' => 'Address']) }}
                                 </div><!--col-lg-10-->
                             </div><!--form control-->
                             <!-- End: Address -->
@@ -126,7 +126,7 @@ use App\Models\Access\language\Languages;
                                 {{ Form::label('phone_'.$language->id, 'Phone', ['class' => 'col-lg-2 control-label']) }}
 
                                 <div class="col-lg-10">
-                                    {{ Form::text('phone_'.$language->id, $data['phone_'.$language->id], ['class' => 'form-control required', 'maxlength' => '191', 'required' => 'required', 'placeholder' => 'Phone']) }}
+                                    {{ Form::text('phone_'.$language->id, $data['phone_'.$language->id], ['class' => 'form-control', 'maxlength' => '191', 'placeholder' => 'Phone']) }}
                                 </div><!--col-lg-10-->
                             </div><!--form control-->
                             <!-- End: Phone -->
@@ -136,7 +136,7 @@ use App\Models\Access\language\Languages;
                                 {{ Form::label('highlights_'.$language->id, 'High Lights', ['class' => 'col-lg-2 control-label']) }}
 
                                 <div class="col-lg-10">
-                                    {{ Form::textarea('highlights_'.$language->id, $data['highlights_'.$language->id], ['class' => 'form-control required', 'maxlength' => '191', 'required' => 'required', 'placeholder' => 'High Lights']) }}
+                                    {{ Form::textarea('highlights_'.$language->id, $data['highlights_'.$language->id], ['class' => 'form-control', 'maxlength' => '191', 'placeholder' => 'High Lights']) }}
                                 </div><!--col-lg-10-->
                             </div><!--form control-->
                             <!-- End: High Lights -->
@@ -146,7 +146,7 @@ use App\Models\Access\language\Languages;
                                 {{ Form::label('working_days_'.$language->id, 'Best time', ['class' => 'col-lg-2 control-label']) }}
 
                                 <div class="col-lg-10">
-                                    {{ Form::textarea('working_days_'.$language->id, $data['working_days_'.$language->id], ['class' => 'form-control required', 'maxlength' => '191', 'required' => 'required', 'placeholder' => 'Working Days']) }}
+                                    {{ Form::textarea('working_days_'.$language->id, $data['working_days_'.$language->id], ['class' => 'form-control', 'maxlength' => '191', 'placeholder' => 'Working Days']) }}
                                 </div><!--col-lg-10-->
                             </div><!--form control-->
                             <!-- End: Working Days -->
@@ -156,7 +156,7 @@ use App\Models\Access\language\Languages;
                                 {{ Form::label('working_times_'.$language->id, 'Working Times', ['class' => 'col-lg-2 control-label']) }}
 
                                 <div class="col-lg-10">
-                                    {{ Form::textarea('working_times_'.$language->id, $data['working_times_'.$language->id], ['class' => 'form-control required', 'maxlength' => '191', 'required' => 'required', 'placeholder' => 'Working Times']) }}
+                                    {{ Form::textarea('working_times_'.$language->id, $data['working_times_'.$language->id], ['class' => 'form-control', 'maxlength' => '191', 'placeholder' => 'Working Times']) }}
                                 </div><!--col-lg-10-->
                             </div><!--form control-->
                             <!-- End: Working Times -->
@@ -166,7 +166,7 @@ use App\Models\Access\language\Languages;
                                 {{ Form::label('how_to_go_'.$language->id, 'How To Go', ['class' => 'col-lg-2 control-label']) }}
 
                                 <div class="col-lg-10">
-                                    {{ Form::textarea('how_to_go_'.$language->id, $data['how_to_go_'.$language->id], ['class' => 'form-control required', 'maxlength' => '191', 'required' => 'required', 'placeholder' => 'How To Go']) }}
+                                    {{ Form::textarea('how_to_go_'.$language->id, $data['how_to_go_'.$language->id], ['class' => 'form-control', 'maxlength' => '191', 'placeholder' => 'How To Go']) }}
                                 </div><!--col-lg-10-->
                             </div><!--form control-->
                             <!-- End: How To Go -->
@@ -176,7 +176,7 @@ use App\Models\Access\language\Languages;
                                 {{ Form::label('when_to_go_'.$language->id, 'When To Go', ['class' => 'col-lg-2 control-label']) }}
 
                                 <div class="col-lg-10">
-                                    {{ Form::textarea('when_to_go_'.$language->id, $data['when_to_go_'.$language->id], ['class' => 'form-control required', 'maxlength' => '191', 'required' => 'required', 'placeholder' => 'When To Go']) }}
+                                    {{ Form::textarea('when_to_go_'.$language->id, $data['when_to_go_'.$language->id], ['class' => 'form-control', 'maxlength' => '191', 'placeholder' => 'When To Go']) }}
                                 </div><!--col-lg-10-->
                             </div><!--form control-->
                             <!-- End: When To Go -->
@@ -186,7 +186,7 @@ use App\Models\Access\language\Languages;
                                 {{ Form::label('num_activities_'.$language->id, 'No. of Activities', ['class' => 'col-lg-2 control-label']) }}
 
                                 <div class="col-lg-10">
-                                    {{ Form::input('number','num_activities_'.$language->id, $data['num_activities_'.$language->id], ['class' => 'form-control required', 'required' => 'required', 'placeholder' => 'No. of Activities']) }}
+                                    {{ Form::input('number','num_activities_'.$language->id, $data['num_activities_'.$language->id], ['class' => 'form-control', 'placeholder' => 'No. of Activities']) }}
                                 </div><!--col-lg-10-->
                             </div><!--form control-->
                             <!-- End: Num Activities -->
@@ -196,7 +196,7 @@ use App\Models\Access\language\Languages;
                                 {{ Form::label('popularity_'.$language->id, 'Popularity', ['class' => 'col-lg-2 control-label']) }}
 
                                 <div class="col-lg-10">
-                                    {{ Form::text('popularity_'.$language->id, $data['popularity_'.$language->id], ['class' => 'form-control required', 'maxlength' => '191', 'required' => 'required', 'placeholder' => 'Popularity']) }}
+                                    {{ Form::text('popularity_'.$language->id, $data['popularity_'.$language->id], ['class' => 'form-control', 'maxlength' => '191', 'placeholder' => 'Popularity']) }}
                                 </div><!--col-lg-10-->
                             </div><!--form control-->
                             <!-- End: Popularity -->
@@ -206,7 +206,7 @@ use App\Models\Access\language\Languages;
                                 {{ Form::label('conditions_'.$language->id, 'Conditions', ['class' => 'col-lg-2 control-label']) }}
 
                                 <div class="col-lg-10">
-                                    {{ Form::textarea('conditions_'.$language->id, $data['conditions_'.$language->id], ['class' => 'form-control required', 'maxlength' => '191', 'required' => 'required', 'placeholder' => 'Conditions']) }}
+                                    {{ Form::textarea('conditions_'.$language->id, $data['conditions_'.$language->id], ['class' => 'form-control', 'maxlength' => '191', 'placeholder' => 'Conditions']) }}
                                 </div><!--col-lg-10-->
                             </div><!--form control-->
                             <!-- End: Popularity -->
@@ -216,7 +216,7 @@ use App\Models\Access\language\Languages;
                                 {{ Form::label('price_level_'.$language->id, 'Price Level', ['class' => 'col-lg-2 control-label']) }}
 
                                 <div class="col-lg-10">
-                                    {{ Form::input('number','price_level_'.$language->id, $data['price_level_'.$language->id], ['class' => 'form-control required', 'required' => 'required', 'placeholder' => 'Price Level']) }}
+                                    {{ Form::input('number','price_level_'.$language->id, $data['price_level_'.$language->id], ['class' => 'form-control', 'placeholder' => 'Price Level']) }}
 
                                 </div><!--col-lg-10-->
                             </div><!--form control-->
@@ -227,7 +227,7 @@ use App\Models\Access\language\Languages;
                                 {{ Form::label('num_checkins'.$language->id, 'No. of Checkins', ['class' => 'col-lg-2 control-label']) }}
 
                                 <div class="col-lg-10">
-                                    {{ Form::input('number','num_checkins_'.$language->id, $data['num_checkins_'.$language->id], ['class' => 'form-control required', 'required' => 'required', 'placeholder' => 'No. of Checkins']) }}
+                                    {{ Form::input('number','num_checkins_'.$language->id, $data['num_checkins_'.$language->id], ['class' => 'form-control', 'placeholder' => 'No. of Checkins']) }}
 
                                 </div><!--col-lg-10-->
                             </div><!--form control-->
@@ -239,7 +239,7 @@ use App\Models\Access\language\Languages;
                                 {{ Form::label('history_'.$language->id, 'History', ['class' => 'col-lg-2 control-label']) }}
 
                                 <div class="col-lg-10">
-                                    {{ Form::textarea('history_'.$language->id, $data['history_'.$language->id ], ['class' => 'form-control required', 'maxlength' => '191', 'required' => 'required', 'placeholder' => 'History']) }}
+                                    {{ Form::textarea('history_'.$language->id, $data['history_'.$language->id ], ['class' => 'form-control', 'maxlength' => '191', 'placeholder' => 'History']) }}
                                 </div><!--col-lg-10-->
                             </div><!--form control-->
                             <!-- End: History -->
