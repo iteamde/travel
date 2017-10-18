@@ -302,13 +302,6 @@ use App\Models\Access\language\Languages;
                     </div>
                     <!-- Images: Start -->
                     <input type="hidden" id="delete-images" name="delete-images" value="" />
-                    <div class="form-group">
-                        {{ Form::label('title', 'Images', ['class' => 'col-lg-2 control-label']) }}
-
-                        <div class="col-lg-10">
-                        {{ Form::file('file_name',[ 'name' => 'pictures[]', 'multiple' => 'multiple' ]) }}
-                        </div><!--col-lg-10-->
-                    </div><!--form control-->
                     <!-- Images: End -->
                     <div class="form-group">
                         <div class="row">
