@@ -358,7 +358,7 @@ class PlaceController extends Controller {
                     ->update(['featured' => NULL]);
             $featured_media = Media::where('id', $featured_media_id)
                     ->update(['featured' => 1]);
-            dd($featured_media);
+            //dd($featured_media);
         }
         // end handle featured media for place
 
