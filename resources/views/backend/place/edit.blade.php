@@ -45,9 +45,9 @@ use App\Models\Access\language\Languages;
     menu, nav, section { display: block; }
     ul { list-style: none; }
     ul li { display: inline; }
-    ul li img { border: 2px solid white; cursor: pointer; }
-    ul li img:hover { border: 2px solid black; }
-    ul li img.hover { border: 2px solid black; }
+    ul li img { border: 3px solid white; cursor: pointer; }
+    ul li img:hover { border: 3px solid mediumblue; }
+    ul li img.hover { border: 3px solid mediumblue; }
 </style>
 <!-- Language Error Style: Start -->
 <style>
