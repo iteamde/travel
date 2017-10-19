@@ -368,7 +368,7 @@ $(function() {
 
     $("img").not(this).removeClass("hover");
     $(this).toggleClass("hover");
-    $("#featured_media").val($(this).val());
+    $("#featured_media").val($(this).attr('id'));
 
   });
 
