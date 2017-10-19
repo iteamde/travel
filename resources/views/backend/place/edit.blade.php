@@ -330,7 +330,7 @@ use App\Models\Access\language\Languages;
                     </li>
                     @endforeach
                     </ul>
-                    {{ Form::hidden('featured_media', 0, ['id' => 'featured_media']) }}
+                    {{ Form::hidden('featured_media', isset($featured_media) ? $featured_media : 0, ['id' => 'featured_media']) }}
                 </div>
             </div>
         </div>

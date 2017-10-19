@@ -288,13 +288,15 @@ class PlaceController extends Controller {
         $selected_medias = $place->medias;
         $selected_medias_arr = [];
         $images_arr = [];
+        $featured_media = 0;
 
         foreach ($selected_medias as $key => $value) {
             $value = $value->media;
-            var_dump($value);
             // if(isset($value->transsingle) && !empty($value->transsingle)){
+            if($value->featured==1) $data['featured_media'] = $value->id;
             array_push($images_arr, [
                 'id' => $value->id,
+                'featured' => $value->featured,
                 'url' => asset(Storage::url($value->url))
             ]);
         }
