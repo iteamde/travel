@@ -12,7 +12,7 @@ class CronsController extends Controller {
 
     public function getPlacesMedia(Request $request) {
         $places_without_media = \App\Models\Place\Place::whereNull('media_done')
-                ->where(DB::RAW("WHERE SPLIT_STRING(`place_type`, ',', 1) IN ('airport', 'amusement_park', 'aquarium', 'art_gallery',
+                ->where(DB::RAW("SPLIT_STRING(`place_type`, ',', 1) IN ('airport', 'amusement_park', 'aquarium', 'art_gallery',
                     'bar', 'beauty_salon', 'book_store',  'bowling_alley', 'campground', 'car_rental',
                     'casino', 'church', 'clothing_store', 'dentist', 'department_store', 'doctor',
                     'establishment', 'florist', 'gym', 'hindu_temple', 'health', 'hospital', 'jewelry_store',
