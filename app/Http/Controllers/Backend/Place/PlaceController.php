@@ -351,9 +351,9 @@ class PlaceController extends Controller {
             $featured_media_id = $request->input('featured_media');
             $place_media = Media::leftJoin('places_medias', 'places_medias.medias_id', '=', 'medias.id')
                     ->where('places_medias.places_id', $id)
-                    ->update(['featured'=>NULL]);
-            dd($place_media);
-
+                    ->update(['featured' => NULL]);
+            $featured_media = Media::find($featured_media_id)
+                    ->update(['featured' => 1]);
         }
         // end handle featured media for place
 
