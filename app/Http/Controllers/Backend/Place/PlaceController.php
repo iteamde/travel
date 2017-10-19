@@ -300,6 +300,7 @@ class PlaceController extends Controller {
                 'url' => asset(Storage::url($value->url))
             ]);
         }
+        dd($data['featured_media']);
 
         $data['selected_medias'] = $selected_medias_arr;
         $data['images'] = $images_arr;
