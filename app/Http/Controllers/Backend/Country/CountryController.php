@@ -871,9 +871,21 @@ class CountryController extends Controller
      */
     public function delete_single_ajax($id) {
         $item = Countries::find($id);
+
         if(empty($item)){
             return false;
         }
+
+        $item->deleteTrans();
+        $item->deleteAirports();
+        $item->deleteCurrencies();
+        $item->deleteCapitals();
+        $item->deleteEmergencyNumbers();
+        $item->deleteHolidays();
+        $item->deleteLanguagesSpoken();
+        $item->deleteLifestyles();
+        $item->deleteReligions();
+        $item->deleteMedias();
         $item->delete();
 
         AdminLogs::create(['item_type' => 'countries', 'item_id' => $id, 'action' => 'delete', 'time' => time(), 'admin_id' => Auth::user()->id]);

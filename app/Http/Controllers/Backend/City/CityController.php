@@ -823,9 +823,21 @@ class CityController extends Controller
      */
     public function delete_single_ajax($id) {
         $item = Cities::find($id);
+        
         if(empty($item)){
             return false;
         }
+
+        $item->deleteTrans();
+        $item->deleteAirports();
+        $item->deleteCurrencies();
+        $item->deleteEmergency_numbers();
+        $item->deleteHolidays();
+        $item->deleteLanguagesSpoken();
+        $item->deleteLifestyles();
+        $item->deleteMedias();
+        $item->deleteReligions();
+
         $item->delete();
 
         AdminLogs::create(['item_type' => 'cities', 'item_id' => $id, 'action' => 'delete', 'time' => time(), 'admin_id' => Auth::user()->id]);

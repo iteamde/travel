@@ -466,6 +466,7 @@ class EmbassiesController extends Controller
         if(empty($item)){
             return false;
         }
+        $item->trans()->delete();
         $item->delete();
 
         AdminLogs::create(['item_type' => 'embassies', 'item_id' => $id, 'action' => 'delete', 'time' => time(), 'admin_id' => Auth::user()->id]);
