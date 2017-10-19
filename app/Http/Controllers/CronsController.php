@@ -11,6 +11,15 @@ class CronsController extends Controller {
 
     public function getPlacesMedia(Request $request) {
         $places_without_media = \App\Models\Place\Place::whereNull('media_done')
+                ->whereIn('places.place_type', array('airport', 'amusement_park', 'aquarium', 'art_gallery',
+                    'bar', 'beauty_salon', 'book_store',  'bowling_alley', 'campground', 'car_rental',
+                    'casino', 'church', 'clothing_store', 'dentist', 'department_store', 'doctor',
+                    'establishment', 'florist', 'gym', 'hindu_temple', 'health', 'hospital', 'jewelry_store',
+                    'library', 'lodging', 'mosque', 'movie_theater', 'museum', 'night_club', 'park', 'pet_store',
+                    'pharmacy', 'place_of_worship', 'point_of_interest', 'police', 'school', 'shoe_store',
+                    'shopping_mall', 'spa', 'stadium', 'store', 'subway_station', 'synagogue', 'train_station',
+                    'transit_station', 'travel_agency', 'university', 'zoo'))
+                ->whereIn('places.cities_id', array(214, 216, 57, 211, 221, 222, 58, 218, 212, 59, 219, 215, 220, 217, 213))
                 ->orderBy('id', 'ASC')
                 ->take(5)
                 ->get();
