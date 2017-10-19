@@ -300,13 +300,12 @@ class PlaceController extends Controller {
                 'url' => asset(Storage::url($value->url))
             ]);
         }
-        dd($data['featured_media']);
 
         $data['selected_medias'] = $selected_medias_arr;
         $data['images'] = $images_arr;
 
 
-        return view('backend.place.edit')
+        return view('backend.place.edit', $data)
                         ->withLanguages($this->languages)
                         ->withPlace($place)
                         ->withPlaceid($id)
