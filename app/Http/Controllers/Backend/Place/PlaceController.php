@@ -291,6 +291,7 @@ class PlaceController extends Controller {
 
         foreach ($selected_medias as $key => $value) {
             $value = $value->media;
+            var_dump($value);
             // if(isset($value->transsingle) && !empty($value->transsingle)){
             array_push($images_arr, [
                 'id' => $value->id,
