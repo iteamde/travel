@@ -319,6 +319,7 @@ use App\Models\Access\language\Languages;
                     {{ Form::label('title', 'Uploaded Images', ['class' => 'col-md-2 control-label', 'style' => 'margin-left: 55px;']) }}
                 </div>
                 <div class="col-md-8">
+                    Please select an image to be "Cover Photo"<br />
                     <ul>
                     @if(empty($images))
                     <li style="padding-left: 20px;"><p>No Images Added.</p></li>
