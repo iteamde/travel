@@ -361,6 +361,24 @@ use App\Models\Access\language\Languages;
 @section('after-scripts')
 <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.3/summernote.js"></script>
 <script type="text/javascript">
+$(function() {
+
+  $("img").click(function() {
+
+    $(this).toggleClass("hover");
+
+  });
+
+  $("#btn").click(function() {
+
+    var imgs = $("img.hover").length;
+    alert('there are ' + imgs + ' images selected');
+
+  });
+
+});
+</script>
+<script type="text/javascript">
 $('.description').summernote({
     height: 200
 });
