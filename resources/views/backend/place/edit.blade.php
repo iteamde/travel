@@ -367,8 +367,8 @@ $(function() {
   $("img").click(function() {
 
     $("img").not(this).removeClass("hover");
-
     $(this).toggleClass("hover");
+    $("#featured_media").val($(this).val());
 
   });
 
