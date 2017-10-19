@@ -119,21 +119,21 @@ class PlaceController extends Controller {
         }
 
         $files = null;
-        if($request->hasFile('pictures')){
+        if ($request->hasFile('pictures')) {
             $files = $request->file('pictures');
         }
 
         $place_type_ids = null;
         $types = PlaceTypes::get();
 
-        if(!empty($types[0])){
+        if (!empty($types[0])) {
             $place_type_ids = $types[0]->id;
         }
 
         $safety_degrees_id = null;
         $degrees = SafetyDegree::get();
 
-        if(!empty($degrees[0])){
+        if (!empty($degrees[0])) {
             $safety_degrees_id = $degrees[0]->id;
         }
 
@@ -292,11 +292,10 @@ class PlaceController extends Controller {
         foreach ($selected_medias as $key => $value) {
             $value = $value->media;
             // if(isset($value->transsingle) && !empty($value->transsingle)){
-                array_push($images_arr,[
-                    'id' => $value->id,
-                    'url' => asset(Storage::url($value->url))
-                ]);
-
+            array_push($images_arr, [
+                'id' => $value->id,
+                'url' => asset(Storage::url($value->url))
+            ]);
         }
 
         $data['selected_medias'] = $selected_medias_arr;
@@ -313,7 +312,7 @@ class PlaceController extends Controller {
                         ->withCities($cities_arr)
                         ->withPlace_types($places_types_arr)
                         ->withImages($images_arr);
-                        //->withMedias($medias_arr);
+        //->withMedias($medias_arr);
     }
 
     /**
@@ -347,6 +346,16 @@ class PlaceController extends Controller {
             $data[$language->id]['history_' . $language->id] = $request->input('history_' . $language->id);
         }
 
+        // handle featured media for place - Hussien 19/10/2017
+        if ($request->has('featured_media')) {
+            $featured_media_id = $request->input('featured_media');
+            $place_media = Media::leftJoin('places_medias')
+                    ->where('places_medias.places_id', $id);
+            dd($place_media);
+
+        }
+        // end handle featured media for place
+
         $location = explode(',', $request->input('lat_lng'));
 
         /* Check if active field is enabled or disabled */
@@ -358,7 +367,7 @@ class PlaceController extends Controller {
         }
 
         $files = null;
-        if($request->hasFile('pictures')){
+        if ($request->hasFile('pictures')) {
             $files = $request->file('pictures');
         }
 
@@ -372,8 +381,8 @@ class PlaceController extends Controller {
             'lat' => $location[0],
             'lng' => $location[1],
             'safety_degrees_id' => $request->input('safety_degrees_id'),
-            'files'             => $files,
-            'delete-images'     => $request->input('delete-images'),
+            'files' => $files,
+            'delete-images' => $request->input('delete-images'),
         ];
 
         $this->places->update($id, $place, $data, $extra);
@@ -405,13 +414,13 @@ class PlaceController extends Controller {
 
         /* Get Country Information */
         $type = $place->type;
-        if(!empty($type)){
+        if (!empty($type)) {
             $type = $type->transsingle;
         }
 
         /* Get Safety Degrees Information */
         $safety_degree = $place->degree;
-        if(!empty($safety_degrees)){
+        if (!empty($safety_degrees)) {
             $safety_degree = $safety_degree->transsingle;
         }
 
@@ -422,24 +431,24 @@ class PlaceController extends Controller {
 
         foreach ($selected_medias as $key => $value) {
             $value = $value->media;
-            if($value->type == null){
+            if ($value->type == null) {
                 if (isset($value->transsingle) && !empty($value->transsingle)) {
                     array_push($selected_medias_arr, $value->transsingle->title);
                 }
-            }else{
-                array_push($image_urls,$value->url);
+            } else {
+                array_push($image_urls, $value->url);
             }
         }
 
         return view('backend.place.show')
-                ->withPlace($place)
-                ->withPlacetrans($placeTrans)
-                ->withCountry($country)
-                ->withCity($city)
-                ->withType($type)
-                ->withDegree($safety_degree)
-                ->withImages($image_urls)
-                ->withMedias($selected_medias_arr);
+                        ->withPlace($place)
+                        ->withPlacetrans($placeTrans)
+                        ->withCountry($country)
+                        ->withCity($city)
+                        ->withType($type)
+                        ->withDegree($safety_degree)
+                        ->withImages($image_urls)
+                        ->withMedias($selected_medias_arr);
     }
 
     /**
@@ -546,11 +555,11 @@ class PlaceController extends Controller {
             /*
              * $provider_ids = array();
 
-            $get_provider_ids = Place::where('id', '>', 0)->select('provider_id')->get()->toArray();
-            foreach ($get_provider_ids AS $gpi) {
-                $provider_ids[] = $gpi['provider_id'];
-            }
-            $data['provider_ids'] = $provider_ids;
+              $get_provider_ids = Place::where('id', '>', 0)->select('provider_id')->get()->toArray();
+              foreach ($get_provider_ids AS $gpi) {
+              $provider_ids[] = $gpi['provider_id'];
+              }
+              $data['provider_ids'] = $provider_ids;
              *
              */
 
@@ -558,11 +567,11 @@ class PlaceController extends Controller {
 
             if (time() % 4 == 0) {
                 $json = file_get_contents('http://db.travooo.com/public/places/go/' . ($city ? $city : 0) . '/' . $lat . '/' . $lng . '/' . $query);
-            } elseif (time() % 4 == 1)  {
+            } elseif (time() % 4 == 1) {
                 $json = file_get_contents('http://db.travooodev.com/public/places/go/' . ($city ? $city : 0) . '/' . $lat . '/' . $lng . '/' . $query);
-            } elseif (time() % 4 == 2)  {
+            } elseif (time() % 4 == 2) {
                 $json = file_get_contents('http://db.travoooapi.com/public/places/go/' . ($city ? $city : 0) . '/' . $lat . '/' . $lng . '/' . $query);
-            } elseif (time() % 4 == 3)  {
+            } elseif (time() % 4 == 3) {
                 $json = file_get_contents('http://db.travoooapi.net/public/places/go/' . ($city ? $city : 0) . '/' . $lat . '/' . $lng . '/' . $query);
             }
             $result = json_decode($json);
@@ -647,8 +656,8 @@ class PlaceController extends Controller {
                                     $request->get('latlng')))
                                 ->withFlashSuccess('You didnt select any items to import!');
             } else {
-            return redirect()->route('admin.location.place.index')
-                            ->withFlashError('You didnt select any items to import!');
+                return redirect()->route('admin.location.place.index')
+                                ->withFlashError('You didnt select any items to import!');
             }
         }
     }
@@ -669,12 +678,12 @@ class PlaceController extends Controller {
         return json_encode($markers);
     }
 
-    public function delete_ajax(ManagePlaceRequest $request){
+    public function delete_ajax(ManagePlaceRequest $request) {
 
         $ids = $request->input('ids');
 
-        if(!empty($ids)){
-            $ids = explode(',',$request->input('ids'));
+        if (!empty($ids)) {
+            $ids = explode(',', $request->input('ids'));
             foreach ($ids as $key => $value) {
                 $this->delete_single_ajax($value);
             }
@@ -693,7 +702,7 @@ class PlaceController extends Controller {
      */
     public function delete_single_ajax($id) {
         $item = Place::find($id);
-        if(empty($item)){
+        if (empty($item)) {
             return false;
         }
         /* Delete Children Tables Data of this country */
@@ -708,4 +717,5 @@ class PlaceController extends Controller {
 
         AdminLogs::create(['item_type' => 'places', 'item_id' => $id, 'action' => 'delete', 'time' => time(), 'admin_id' => Auth::user()->id]);
     }
+
 }
