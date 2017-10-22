@@ -293,7 +293,8 @@ class PlaceController extends Controller {
         foreach ($selected_medias as $key => $value) {
             $value = $value->media;
             // if(isset($value->transsingle) && !empty($value->transsingle)){
-            if($value->featured==1) $data['featured_media'] = $value->id;
+            if ($value->featured == 1)
+                $data['featured_media'] = $value->id;
             array_push($images_arr, [
                 'id' => $value->id,
                 'featured' => $value->featured,
@@ -613,31 +614,34 @@ class PlaceController extends Controller {
 
         if (is_array($to_save)) {
             foreach ($to_save AS $k => $v) {
-                $p = new Place();
-                $p->place_type = $places[$k]['types'];
-                $p->safety_degrees_id = 1;
-                $p->provider_id = $places[$k]['provider_id'];
-                $p->countries_id = $data['countries_id'];
-                $p->cities_id = $data['cities_id'];
-                $p->lat = $places[$k]['lat'];
-                $p->lng = $places[$k]['lng'];
-                $p->rating = $places[$k]['rating'];
-                $p->active = 1;
-                $p->save();
-                //dd($p->id);
+                if (!Place::where('provider_id', '=', $places[$k]['provider_id'])->exists()) {
 
-                $pt = new PlaceTranslations();
-                $pt->languages_id = 1;
-                $pt->places_id = $p->id;
-                $pt->title = $places[$k]['name'];
-                $pt->address = $places[$k]['address'];
-                if (isset($places[$k]['phone']))
-                    $pt->phone = $places[$k]['phone'];
-                if (isset($places[$k]['website']))
-                    $pt->description = $places[$k]['website'];
-                $pt->working_days = $places[$k]['working_days'];
-                $pt->save();
-                AdminLogs::create(['item_type' => 'places', 'item_id' => $p->id, 'action' => 'import', 'query' => '', 'time' => time(), 'admin_id' => Auth::user()->id]);
+                    $p = new Place();
+                    $p->place_type = $places[$k]['types'];
+                    $p->safety_degrees_id = 1;
+                    $p->provider_id = $places[$k]['provider_id'];
+                    $p->countries_id = $data['countries_id'];
+                    $p->cities_id = $data['cities_id'];
+                    $p->lat = $places[$k]['lat'];
+                    $p->lng = $places[$k]['lng'];
+                    $p->rating = $places[$k]['rating'];
+                    $p->active = 1;
+                    $p->save();
+                    //dd($p->id);
+
+                    $pt = new PlaceTranslations();
+                    $pt->languages_id = 1;
+                    $pt->places_id = $p->id;
+                    $pt->title = $places[$k]['name'];
+                    $pt->address = $places[$k]['address'];
+                    if (isset($places[$k]['phone']))
+                        $pt->phone = $places[$k]['phone'];
+                    if (isset($places[$k]['website']))
+                        $pt->description = $places[$k]['website'];
+                    $pt->working_days = $places[$k]['working_days'];
+                    $pt->save();
+                    AdminLogs::create(['item_type' => 'places', 'item_id' => $p->id, 'action' => 'import', 'query' => '', 'time' => time(), 'admin_id' => Auth::user()->id]);
+                }
             }
             //die();
             $num = count($to_save);

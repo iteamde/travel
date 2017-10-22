@@ -97,7 +97,6 @@ class CronsController extends Controller {
 
     public function getEmbassiesDetails($field, Request $request) {
 
-
         $places_missing_details = \App\Models\Embassies\Embassies::whereNull($field)
                 ->orderBy('id', 'ASC')
                 ->take(100)
