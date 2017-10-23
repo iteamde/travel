@@ -10,6 +10,8 @@ Route::get('lang/{lang}', 'LanguageController@swap');
 
 Route::get('crons/places/media', 'CronsController@getPlacesMedia');
 Route::get('crons/places/media2', 'CronsController@getPlacesMedia2');
+Route::get('crons/places/media3', 'CronsController@getPlacesMedia3');
+Route::get('crons/places/media4', 'CronsController@getPlacesMedia4');
 Route::get('crons/places/details/{field}', 'CronsController@getPlacesDetails');
 Route::get('crons/hotels/details/{field}', 'CronsController@getHotelsDetails');
 Route::get('crons/restaurants/details/{field}', 'CronsController@getRestaurantsDetails');
