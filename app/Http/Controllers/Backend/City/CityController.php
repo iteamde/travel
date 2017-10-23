@@ -432,15 +432,6 @@ class CityController extends Controller
 
         $data['selected_medias'] = $selected_medias_arr;
 
-        /* Find All Medias In The System */
-        $medias = Media::where([ 'type' => null ])->get();
-        $medias_arr = [];
-        /* Get Title Id Pair For Each Model */
-        foreach ($medias as $key => $value) {
-            if(isset($value->transsingle) && !empty($value->transsingle)){
-                $medias_arr[$value->id] = $value->transsingle->title;
-            }
-        }
 
         /* Get Selected Religions */
         $selected_religions = $cities->religions;
@@ -479,7 +470,7 @@ class CityController extends Controller
             ->withEmergency_numbers($emergency_numbers_arr)
             ->withLifestyles($lifestyles_arr)
             ->withReligions($religion_arr)
-            ->withMedias($medias_arr)
+            //->withMedias($medias_arr)
             ->withImages($selected_images);
     }
 
@@ -823,7 +814,7 @@ class CityController extends Controller
      */
     public function delete_single_ajax($id) {
         $item = Cities::find($id);
-        
+
         if(empty($item)){
             return false;
         }
