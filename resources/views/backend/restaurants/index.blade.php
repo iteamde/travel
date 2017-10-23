@@ -84,7 +84,7 @@
 	                {data: '', name: ''},
                     {data: 'id', name: '{{config('restaurants.restaurants_table')}}.id'},
                     {data: 'transsingle.title', name: 'transsingle.title'},
-	                {data: 'address', name: 'address'},
+	                {data: 'transsingle.address', name: 'transsingle.address'},
 	                {data: 'city_title', name: 'city_title'},
                     {data: 'place_id_title', name: 'place_id_title'},
 	                {
