@@ -5,6 +5,10 @@ use Illuminate\Http\Request;
  * Routes that are used between both frontend and backend.
  */
 
+Route::get('/', function () {
+    return view('frontend.index');
+});
+
 // Switch between the included languages
 Route::get('lang/{lang}', 'LanguageController@swap');
 

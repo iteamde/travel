@@ -20,8 +20,8 @@
         "laravel/tinker": "~1.0",
         "laravelcollective/html": "5.4.*",
         "mpociot/laravel-apidoc-generator": "^2.0",
-        "yajra/laravel-datatables-oracle": "^7.0",
-        "tymon/jwt-auth": "0.5.*"
+        "tymon/jwt-auth": "^0.5.12",
+        "yajra/laravel-datatables-oracle": "^7.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

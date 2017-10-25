@@ -193,6 +193,6 @@ Route::group(['prefix' => 'api'], function () {
             ], function () {
 
         /* Show Country */
-        Route::get('/{user_id}/{session_token}/{country_id}', 'CountryController@show_country');
+        Route::get('/', 'CountryController@show_country');
     });
 });
