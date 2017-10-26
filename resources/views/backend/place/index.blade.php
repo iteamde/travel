@@ -43,6 +43,8 @@
                         <th>Address</th>
                         <th>City</th>
                         <th>Place Type</th>
+                        <th>Media</th>
+                        <th>Cover</th>
                         <th>Active</th>
                         <th>{{ trans('labels.general.actions') }}</th>
                         <th></th><!-- For Cities -->
