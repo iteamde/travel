@@ -43,8 +43,6 @@
                         <th>Address</th>
                         <th>City</th>
                         <th>Place Type</th>
-                        <th>Media</th>
-                        <th>Cover</th>
                         <th>Active</th>
                         <th>{{ trans('labels.general.actions') }}</th>
                         <th></th><!-- For Cities -->
@@ -99,7 +97,6 @@ table = $('#place-table').DataTable({
                                 {data: 'transsingle.address', name: 'transsingle.address'},
                                 {data: 'city_title', name: 'city_title'},
                                 {data: 'place_id_title', name: 'place_id_title', searchable: false},
-                                {data: 'media_done', name: 'media_done'},
                                 {
                                 name: '{{config('locations.countries')}}.active',
                                         data: 'active',
@@ -120,10 +117,10 @@ table = $('#place-table').DataTable({
                                 order: [[1, "asc"]],
                                 searchDelay: 500,
                                 initComplete: function () {
-                                //$('#place-table thead tr th:nth-child(10)').hide();
-                                //$('#place-table tbody tr td:nth-child(10)').hide();
-                                //$('#place-table thead tr th:nth-child(9)').hide();
-                                //$('#place-table tbody tr td:nth-child(9)').hide();
+                                $('#place-table thead tr th:nth-child(10)').hide();
+                                $('#place-table tbody tr td:nth-child(10)').hide();
+                                $('#place-table thead tr th:nth-child(9)').hide();
+                                $('#place-table tbody tr td:nth-child(9)').hide();
                                 this.api().columns().every(function () {
                                 var column = this;
                                 var select = $('<select><option value=""></option></select>')
