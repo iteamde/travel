@@ -99,8 +99,6 @@ table = $('#place-table').DataTable({
                                 {data: 'transsingle.address', name: 'transsingle.address'},
                                 {data: 'city_title', name: 'city_title'},
                                 {data: 'place_id_title', name: 'place_id_title', searchable: false},
-                                {data: 'media_done', name: '{{config('locations.place_table')}}.media_done'},
-
                                 {
                                 name: '{{config('locations.countries')}}.active',
                                         data: 'active',
