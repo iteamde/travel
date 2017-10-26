@@ -60,6 +60,9 @@ class PlaceTableController extends Controller
             ->addColumn('city_title', function ($place) {
                 return $place->city->transsingle->title;
             })
+            ->addColumn('media_done', function ($place) {
+                if($place->media_done==1) return 'Yes';
+            })
             ->withTrashed()
             ->make(true);
     }
@@ -81,7 +84,7 @@ class PlaceTableController extends Controller
                 $city = null;
                 if(empty($q)){
                     $city = Cities::find($value->cities_id);
-                    
+
                 }else{
                     // $city = Cities::find($value->cities_id);
                     $city = Cities::leftJoin('cities_trans', function($join){
@@ -89,9 +92,9 @@ class PlaceTableController extends Controller
                     })->where('cities_trans.title', 'LIKE', '%'.$q.'%')->where(['cities.id' => $value->cities_id])->first();
                 }
                 if(!empty($city)){
-                    
+
                     $transingle = CitiesTranslations::where(['cities_id' => $value->cities_id])->first();
-                    
+
                     if(!empty($transingle)){
                         // $temp_city[$city->id] = $city->transsingle->title;
                         $city_filter_html .= '<option value="'.$value->cities_id.'">'.$transingle->title.'</option>';
@@ -107,7 +110,7 @@ class PlaceTableController extends Controller
     }
 
     public function getPlaceTypes(){
-        
+
         $q = null;
         if(isset($_GET['q'])){
             $q = $_GET['q'];
@@ -124,7 +127,7 @@ class PlaceTableController extends Controller
 
         if(!empty($place)){
             foreach ($place as $key => $value) {
-                
+
                 $json[] = [ 'id' => $value->place_type, 'text' => $value->place_type ];
             }
         }
