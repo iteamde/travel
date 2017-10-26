@@ -115,6 +115,7 @@ table = $('#place-table').DataTable({
                                 {data: 'action', name: 'action', searchable: false, sortable: false},
                                 {data: 'cities_id', name: '{{config('locations.place_table')}}.cities_id'},
                                 {data: 'place_type', name: '{{config('locations.place_table')}}.place_type'},
+                                {data: 'media_done', name: '{{config('locations.place_table')}}.media_done'},
                                 ],
                                 order: [[1, "asc"]],
                                 searchDelay: 500,
