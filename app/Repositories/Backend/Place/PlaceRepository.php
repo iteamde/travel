@@ -119,7 +119,7 @@ class PlaceRepository extends BaseRepository
             if($media == '1' || $media == 1){
                 $dataTableQuery = $dataTableQuery->where('media_done','LIKE','1');
             }else{
-                $dataTableQuery = $dataTableQuery->where('media_done', '!=' ,1)->orWhereNull('media_done');
+                $dataTableQuery = $dataTableQuery->where('media_done', '!=' ,1);
             }
         }
 
