@@ -45,6 +45,7 @@
                         <th>City</th>
                         <th>Place Type</th>
                         <th>Media Done</th>
+                        <th>Images Count</th>
                         <th>Active</th>
                         <th>{{ trans('labels.general.actions') }}</th>
                         <th></th>
@@ -100,6 +101,7 @@ table = $('#place-table').DataTable({
                                 {data: 'city_title', name: '{{config('locations.place_table')}}.cities_id'},
                                 {data: 'place_id_title', name: '{{config('locations.place_table')}}.place_type'},
                                 {data: 'media_done_new', name: '{{config('locations.place_table')}}.media_done'},
+                                {data: 'media_count', name: 'media_count'},
                                 {
                                 name: '{{config('locations.countries')}}.active',
                                         data: 'active',
@@ -142,7 +144,7 @@ table = $('#place-table').DataTable({
                                 temp_text = $(this).find('td:nth-child(7)').html();
                                 place_types[temp_text] = temp_text;
                                 });
-                                $('#place-table thead').append('<tr><td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr>');
+                                $('#place-table thead').append('<tr><td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr>');
                                 var count = 0;
                                 $('#place-table thead tr:nth-child(2) td').each(function () {
                                 // var title = $(this).text();

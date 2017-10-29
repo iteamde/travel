@@ -93,20 +93,10 @@ class PlaceTableController extends Controller
                 }else{
                     return 'No';
                 }
-                // if($flag == true){
-                //     $place->media_done = 1;
-                //     $place->save();
-                //     return 'Yes';
-                // }else{
-                //     $place->media_done = 0;
-                //     $place->save();
-                //     return 'No';
-                // }
-
-                // if( $place->media_done == 1 ){ 
-                //     return 'Yes';
-                // }
-                // return 'No';
+            })
+            ->addColumn('media_count', function ($place) {
+                $medias = $place->medias;
+                return count($medias);
             })
             ->withTrashed()
             ->make(true);
