@@ -72,7 +72,7 @@ class PlaceTableController extends Controller
             ->addColumn('country_title', function ($place) {
                 return $place->country->transsingle->title;
             })
-            ->addColumn('media_done', function ($place) {
+            ->addColumn('media_done_new', function ($place) {
                 $medias = $place->medias;
                 $flag = false;
                 if(!empty($medias)){

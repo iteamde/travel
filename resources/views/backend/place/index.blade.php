@@ -99,7 +99,7 @@ table = $('#place-table').DataTable({
                                 {data: 'country_title', name: '{{config('locations.place_table')}}.countries_id'},
                                 {data: 'city_title', name: '{{config('locations.place_table')}}.cities_id'},
                                 {data: 'place_id_title', name: '{{config('locations.place_table')}}.place_type'},
-                                {data: 'media_done', name: '{{config('locations.place_table')}}.media_done'},
+                                {data: 'media_done_new', name: '{{config('locations.place_table')}}.media_done'},
                                 {
                                 name: '{{config('locations.countries')}}.active',
                                         data: 'active',
