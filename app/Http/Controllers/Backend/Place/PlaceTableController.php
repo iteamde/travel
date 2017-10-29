@@ -46,6 +46,9 @@ class PlaceTableController extends Controller
                 $media = $temp_media;
             } 
         }
+        echo '<pre>';
+        print_r($_POST);
+        exit;
         
         //\App\Models\City\Cities::
         return Datatables::of($this->places->getForDataTable($media))
