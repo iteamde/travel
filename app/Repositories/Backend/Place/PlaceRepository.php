@@ -116,11 +116,11 @@ class PlaceRepository extends BaseRepository
                     config('locations.place_table').'.media_done',
                     config('locations.place_table').'.active'
                 ]);
-            if($media == '1' || $media == 1){
-                $dataTableQuery = $dataTableQuery->where('media_done', '=' ,0);
-            }else{
-                $dataTableQuery = $dataTableQuery->where('media_done','=',1);
-            }
+            // if($media == '1' || $media == 1){
+                $dataTableQuery = $dataTableQuery->where('media_done', '=' ,$media);
+            // }else{
+                // $dataTableQuery = $dataTableQuery->where('media_done','=',1);
+            // }
         }
 
         // active() is a scope on the UserScope trait
