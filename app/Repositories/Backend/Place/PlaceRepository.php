@@ -117,9 +117,9 @@ class PlaceRepository extends BaseRepository
                     config('locations.place_table').'.active'
                 ]);
             if($media == '1' || $media == 1){
-                $dataTableQuery = $dataTableQuery->where('media_done','LIKE','1');
+                $dataTableQuery = $dataTableQuery->where('media_done', '=' ,0);
             }else{
-                $dataTableQuery = $dataTableQuery->where('media_done', '!=' ,1);
+                $dataTableQuery = $dataTableQuery->where('media_done','=',1);
             }
         }
 
