@@ -78,30 +78,31 @@ class PlaceTableController extends Controller
                 if(!empty($medias)){
                     foreach ($medias as $key => $value) {
                         if(!empty($value->media)){
-                            if($value->media->featured == 1){
-                                echo '<pre>';
-                                print_r($value->media);
-                                exit;
+                            if($value->media->featured == 1 || $value->media->featured == '1'){
                                 $flag = true;
+                                $place->media_done = 1;
+                                $place->save();
+                                return 'Yes';
                             }
                         }
                     }
                 }
                 
-                if($flag == true){
-                    $place->media_done = 1;
-                    $place->save();
-                    return 'Yes';
-                }else{
-                    $place->media_done = 0;
-                    $place->save();
-                    return 'No';
-                }
-
-                if( $place->media_done == 1 ){ 
-                    return 'Yes';
-                }
                 return 'No';
+                // if($flag == true){
+                //     $place->media_done = 1;
+                //     $place->save();
+                //     return 'Yes';
+                // }else{
+                //     $place->media_done = 0;
+                //     $place->save();
+                //     return 'No';
+                // }
+
+                // if( $place->media_done == 1 ){ 
+                //     return 'Yes';
+                // }
+                // return 'No';
             })
             ->withTrashed()
             ->make(true);
