@@ -79,6 +79,9 @@ class PlaceTableController extends Controller
                     foreach ($medias as $key => $value) {
                         if(!empty($value->media)){
                             if($value->media->featured == 1){
+                                echo '<pre>';
+                                print_r($value->media);
+                                exit;
                                 $flag = true;
                             }
                         }
