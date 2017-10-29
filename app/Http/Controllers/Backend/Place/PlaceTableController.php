@@ -88,7 +88,11 @@ class PlaceTableController extends Controller
                     }
                 }
                 
-                return 'No';
+                if($place->media_done.'' == '1'){
+                    return 'Yes';
+                }else{
+                    return 'No';
+                }
                 // if($flag == true){
                 //     $place->media_done = 1;
                 //     $place->save();
