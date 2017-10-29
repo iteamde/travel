@@ -41,12 +41,13 @@
                         <th>id</th>
                         <th>Title</th>
                         <th>Address</th>
+                        <th>Country</th>
                         <th>City</th>
                         <th>Place Type</th>
+                        <th>Media Done</th>
                         <th>Active</th>
                         <th>{{ trans('labels.general.actions') }}</th>
-                        <th></th><!-- For Cities -->
-                        <th></th><!-- For Place Types -->
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -95,8 +96,10 @@ table = $('#place-table').DataTable({
                                 {data: 'id', name: '{{config('locations.place_table')}}.id'},
                                 {data: 'transsingle.title', name: 'transsingle.title'},
                                 {data: 'transsingle.address', name: 'transsingle.address'},
-                                {data: 'city_title', name: 'city_title'},
-                                {data: 'place_id_title', name: 'place_id_title', searchable: false},
+                                {data: 'country_title', name: '{{config('locations.place_table')}}.countries_id'},
+                                {data: 'city_title', name: '{{config('locations.place_table')}}.cities_id'},
+                                {data: 'place_id_title', name: '{{config('locations.place_table')}}.place_type'},
+                                {data: 'media_done', name: '{{config('locations.place_table')}}.media_done'},
                                 {
                                 name: '{{config('locations.countries')}}.active',
                                         data: 'active',
@@ -111,8 +114,6 @@ table = $('#place-table').DataTable({
                                         }
                                 },
                                 {data: 'action', name: 'action', searchable: false, sortable: false},
-                                {data: 'cities_id', name: '{{config('locations.place_table')}}.cities_id'},
-                                {data: 'place_type', name: '{{config('locations.place_table')}}.place_type'},
                                 ],
                                 order: [[1, "asc"]],
                                 searchDelay: 500,
@@ -136,9 +137,9 @@ table = $('#place-table').DataTable({
                                 var cities = [];
                                 var place_types = [];
                                 $('#place-table tbody tr').each(function(){
-                                var temp_text = $(this).find('td:nth-child(5)').html();
+                                var temp_text = $(this).find('td:nth-child(6)').html();
                                 cities[temp_text] = temp_text;
-                                temp_text = $(this).find('td:nth-child(6)').html();
+                                temp_text = $(this).find('td:nth-child(7)').html();
                                 place_types[temp_text] = temp_text;
                                 });
                                 $('#place-table thead').append('<tr><td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr>');
@@ -146,18 +147,41 @@ table = $('#place-table').DataTable({
                                 $('#place-table thead tr:nth-child(2) td').each(function () {
                                 // var title = $(this).text();
                                 var title = "hello";
+                                
                                 if (count == 4){
-                                $(this).html('<select id="city-filter" class="custom-filters form-control"><option value="">Search City</option></select>');
+                                $(this).html('<select id="country-filter" class="custom-filters form-control"><option value="">Search Country</option></select>');
                                 }
 
                                 if (count == 5){
+                                $(this).html('<select id="city-filter" class="custom-filters form-control"><option value="">Search City</option></select>');
+                                }
+
+                                if (count == 6){
                                 $(this).html('<select id="place-type-filter" class="custom-filters"><option value="">Search Place Type</option></select>');
+                                }
+                                if (count == 7){
+                                $(this).html('<select id="media-done-filter" class="custom-filters"><option value="">Search Media Done</option><option value="1">Yes</option><option value="0">No</option></select>');
                                 }
                                 count++;
                                 });
                                 /*Append Cities To City Filter*/
                                 // for (var key in cities) {
                                 // $('#city-filter').append('<?php $city_filter_html; ?>');
+                                $('#country-filter').select2({
+                                    width:'100%',
+                                placeholder: 'Search Country',
+                                        ajax: {
+                                        url: '{{ route("admin.location.place.countries") }}',
+                                                dataType: 'json',
+                                                delay: 250,
+                                                processResults: function (data) {
+                                                return {
+                                                results: data
+                                                };
+                                                },
+                                                cache: true
+                                        }
+                                });
                                 $('#city-filter').select2({
                                     width:'100%',
                                 placeholder: 'Search City',
@@ -187,6 +211,10 @@ table = $('#place-table').DataTable({
                                                 },
                                                 cache: true
                                         }
+                                });
+                                $('#media-done-filter').select2({
+                                    width:'100%',
+                                    placeholder: 'Yes/No',
                                 });
                                 // }
 
@@ -251,16 +279,22 @@ table = $('#place-table').DataTable({
             });
             });
             $(document).ready(function(){
+            
+            $(document).on('change', '#country-filter', function(){
+                var val = $(this).val();
+                if (val != ''){
+                    // table.columns(5).search()
+                    if (table.columns(4).search() !== val) {
+                        table.columns(4).search("^\\s*" + val + "\\s*$", true).draw();
+                    }
+                }
+            });
             $(document).on('change', '#city-filter', function(){
             var val = $(this).val();
             if (val != ''){
             // table.columns(5).search()
-            if (table.columns(8).search() !== val) {
-            table.columns(8).search("^\\s*" + val + "\\s*$", true).draw();
-            $('#place-table thead tr th:nth-child(10)').hide();
-            $('#place-table tbody tr td:nth-child(10)').attr('style', 'display:none !important;');
-            $('#place-table thead tr th:nth-child(9)').hide();
-            $('#place-table tbody tr td:nth-child(9)').attr('style', 'display:none !important;');
+            if (table.columns(5).search() !== val) {
+            table.columns(5).search("^\\s*" + val + "\\s*$", true).draw();
             }
             }
             });
@@ -270,14 +304,23 @@ table = $('#place-table').DataTable({
             var val = $(this).val();
             if (val != ''){
             // table.columns(5).search()
-            if (table.columns(9).search() !== val) {
-            table.columns(9).search("^\\s*" + val + "\\s*$", true).draw();
-            $('#place-table thead tr th:nth-child(10)').hide();
-            $('#place-table tbody tr td:nth-child(10)').attr('style', 'display:none !important;');
-            $('#place-table thead tr th:nth-child(9)').hide();
-            $('#place-table tbody tr td:nth-child(9)').attr('style', 'display:none !important;');
+            if (table.columns(6).search() !== val) {
+            table.columns(6).search("^\\s*" + val + "\\s*$", true).draw();
             }
             }
+            });
+            $(document).on('change', '#media-done-filter', function(){
+            var val = $(this).val();
+            if(val == '1'){
+                table.columns(7).search("1", false).draw();
+            }else{
+                table.columns(7).search("0", false).draw();
+            }
+            // if (val != ''){
+            // table.columns(5).search()
+            // if (table.columns(7).search() !== val) {
+            // }
+            // }
             });
             });
 </script>
@@ -287,18 +330,11 @@ table = $('#place-table').DataTable({
     }
 </style>
 <style>
-    #place-table thead tr th:nth-child(10){
-        display:none !important;
+
+    #place-table tr td:nth-child(5),th:nth-child(5){
+        display: none !important;  
     }
-    #place-table tbody tr td:nth-child(10){
-        display:none !important;
-    }
-    #place-table thead tr th:nth-child(9){
-        display:none !important;
-    }
-    #place-table tbody tr td:nth-child(9){
-        display:none !important;
-    }
+
     table.dataTable tbody td.select-checkbox, table.dataTable tbody th.select-checkbox {
         width:20px !important;
     }

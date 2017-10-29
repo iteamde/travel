@@ -134,7 +134,8 @@ Route::group([
          * For DataTables
          */
         Route::post('place/get', 'PlaceTableController')->name('place.get');
-        
+
+        Route::get('place/countries/{term?}/{type?}/{q?}', 'PlaceTableController@getAddedCountries')->name('place.countries');
         Route::get('place/cities/{term?}/{type?}/{q?}', 'PlaceTableController@getAddedCities')->name('place.cities');
         Route::get('place/types/{term?}/{type?}/{q?}', 'PlaceTableController@getPlaceTypes')->name('place.types');
 
