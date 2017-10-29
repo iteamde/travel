@@ -312,9 +312,9 @@ table = $('#place-table').DataTable({
             $(document).on('change', '#media-done-filter', function(){
             var val = $(this).val();
             if(val == '1' || val == 1){
-                table.columns(8).search("1", false).draw();
+                table.columns(7).search("1", false).draw();
             }else{
-                table.columns(8).search("0", false).draw();
+                table.columns(7).search("0", false).draw();
             }
             // if (val != ''){
             // table.columns(5).search()
