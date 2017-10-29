@@ -47,7 +47,7 @@ class PlaceTableController extends Controller
             } 
         }
         echo '<pre>';
-        print_r($_POST);
+        print_r($_POST['columns'][7]['search']['value']);
         exit;
         
         //\App\Models\City\Cities::
