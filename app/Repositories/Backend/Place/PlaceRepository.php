@@ -116,7 +116,7 @@ class PlaceRepository extends BaseRepository
                     config('locations.place_table').'.media_done',
                     config('locations.place_table').'.active'
                 ]);
-            if($media == '1'){
+            if($media == '1' || $media == 1){
                 $dataTableQuery = $dataTableQuery->where('media_done','LIKE','1');
             }else{
                 $dataTableQuery = $dataTableQuery->where('media_done', '!=' ,1)->orWhereNull('media_done');
