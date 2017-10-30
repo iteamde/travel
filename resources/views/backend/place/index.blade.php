@@ -44,8 +44,8 @@
                         <th>Country</th>
                         <th>City</th>
                         <th>Place Type</th>
-                        <th>Media Done</th>
-                        <th>Images Count</th>
+                        <th>Featured</th>
+                        <th>Images</th>
                         <th>Active</th>
                         <th>{{ trans('labels.general.actions') }}</th>
                         <th></th>
