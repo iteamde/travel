@@ -12,9 +12,8 @@ class CronsController extends Controller {
 
     public function getPlacesMedia(Request $request) {
         $places_without_media = \App\Models\Place\Place::whereNull('media_done')
-                ->whereIn('places.cities_id',
-                        array(214, 216, 57, 211, 221, 222, 58, 218, 212, 59, 219, 215, 220, 217, 213)
-                        )
+                ->whereIn('places.cities_id', array(214, 216, 57, 211, 221, 222, 58, 218, 212, 59, 219, 215, 220, 217, 213)
+                )
                 ->orderBy('id', 'ASC')
                 ->take(5)
                 ->get();
@@ -58,9 +57,8 @@ class CronsController extends Controller {
 
     public function getPlacesMedia2(Request $request) {
         $places_without_media = \App\Models\Place\Place::whereNull('media_done')
-                ->whereIn('places.cities_id',
-                        array(172,169,167,171,238,170,239,240,241,242,243)
-                        )
+                ->whereIn('places.cities_id', array(172, 169, 167, 171, 238, 170, 239, 240, 241, 242, 243)
+                )
                 ->orderBy('id', 'ASC')
                 ->take(5)
                 ->get();
@@ -104,9 +102,8 @@ class CronsController extends Controller {
 
     public function getPlacesMedia3(Request $request) {
         $places_without_media = \App\Models\Place\Place::whereNull('media_done')
-                ->whereIn('places.cities_id',
-                        array(244,245,246,247,248,249,250)
-                        )
+                ->whereIn('places.cities_id', array(244, 245, 246, 247, 248, 249, 250)
+                )
                 ->orderBy('id', 'ASC')
                 ->take(5)
                 ->get();
@@ -150,9 +147,369 @@ class CronsController extends Controller {
 
     public function getPlacesMedia4(Request $request) {
         $places_without_media = \App\Models\Place\Place::whereNull('media_done')
-                ->whereIn('places.cities_id',
-                        array(223,224,225,226,227,53,228,52,229,230,231,50,232,51,233,234,235,236,237)
-                        )
+                ->whereIn('places.cities_id', array(223, 224, 225, 226, 227, 53, 228, 52, 229, 230, 231, 50, 232, 51, 233, 234, 235, 236, 237)
+                )
+                ->orderBy('id', 'ASC')
+                ->take(5)
+                ->get();
+
+        foreach ($places_without_media AS $pwm) {
+            if (time() % 4 == 0) {
+                $json = file_get_contents('http://db.travooo.com/public/places/media/go/' . $pwm->provider_id);
+            } elseif (time() % 4 == 1) {
+                $json = file_get_contents('http://db.travooodev.com/public/places/media/go/' . $pwm->provider_id);
+            } elseif (time() % 4 == 2) {
+                $json = file_get_contents('http://db.travoooapi.com/public/places/media/go/' . $pwm->provider_id);
+            } elseif (time() % 4 == 3) {
+                $json = file_get_contents('http://db.travoooapi.net/public/places/media/go/' . $pwm->provider_id);
+            }
+
+            $photos = unserialize($json);
+
+            echo $pwm->provider_id . ' ';
+            if (is_array($photos)) {
+                foreach ($photos AS $p) {
+                    $media_file = 'places_media/' . $pwm->provider_id . '/' . sha1(microtime()) . '.jpg';
+                    Storage::disk('public')->put($media_file, $p);
+
+                    $media = new Media;
+                    $media->url = $media_file;
+                    $media->save();
+
+                    $place_media = new PlaceMedias;
+                    $place_media->places_id = $pwm->id;
+                    $place_media->medias_id = $media->id;
+                    $place_media->save();
+                }
+                echo count($photos);
+            }
+            echo '<br />';
+
+            $pwm->media_done = 1;
+            $pwm->save();
+        }
+    }
+
+    public function getHotelsMedia(Request $request) {
+        $places_without_media = \App\Models\Hotels\Hotels::whereNull('media_done')
+                ->whereIn('hotels.cities_id', array(214, 216, 57, 211, 221, 222, 58, 218, 212, 59, 219, 215, 220, 217, 213)
+                )
+                ->orderBy('id', 'ASC')
+                ->take(5)
+                ->get();
+
+        foreach ($places_without_media AS $pwm) {
+            if (time() % 4 == 0) {
+                $json = file_get_contents('http://db.travooo.com/public/hotels/media/go/' . $pwm->provider_id);
+            } elseif (time() % 4 == 1) {
+                $json = file_get_contents('http://db.travooodev.com/public/hotels/media/go/' . $pwm->provider_id);
+            } elseif (time() % 4 == 2) {
+                $json = file_get_contents('http://db.travoooapi.com/public/hotels/media/go/' . $pwm->provider_id);
+            } elseif (time() % 4 == 3) {
+                $json = file_get_contents('http://db.travoooapi.net/public/hotels/media/go/' . $pwm->provider_id);
+            }
+
+            $photos = unserialize($json);
+
+            echo $pwm->provider_id . ' ';
+            if (is_array($photos)) {
+                foreach ($photos AS $p) {
+                    $media_file = 'hotels_media/' . $pwm->provider_id . '/' . sha1(microtime()) . '.jpg';
+                    Storage::disk('public')->put($media_file, $p);
+
+                    $media = new Media;
+                    $media->url = $media_file;
+                    $media->save();
+
+                    $place_media = new \App\Models\Hotels\HotelsMedias;
+                    $place_media->hotels_id = $pwm->id;
+                    $place_media->medias_id = $media->id;
+                    $place_media->save();
+                }
+                echo count($photos);
+            }
+            echo '<br />';
+
+            $pwm->media_done = 1;
+            $pwm->save();
+        }
+    }
+
+    public function getHotelsMedia2(Request $request) {
+        $places_without_media = \App\Models\Place\Place::whereNull('media_done')
+                ->whereIn('places.cities_id', array(172, 169, 167, 171, 238, 170, 239, 240, 241, 242, 243)
+                )
+                ->orderBy('id', 'ASC')
+                ->take(5)
+                ->get();
+
+        foreach ($places_without_media AS $pwm) {
+            if (time() % 4 == 0) {
+                $json = file_get_contents('http://db.travooo.com/public/places/media/go/' . $pwm->provider_id);
+            } elseif (time() % 4 == 1) {
+                $json = file_get_contents('http://db.travooodev.com/public/places/media/go/' . $pwm->provider_id);
+            } elseif (time() % 4 == 2) {
+                $json = file_get_contents('http://db.travoooapi.com/public/places/media/go/' . $pwm->provider_id);
+            } elseif (time() % 4 == 3) {
+                $json = file_get_contents('http://db.travoooapi.net/public/places/media/go/' . $pwm->provider_id);
+            }
+
+            $photos = unserialize($json);
+
+            echo $pwm->provider_id . ' ';
+            if (is_array($photos)) {
+                foreach ($photos AS $p) {
+                    $media_file = 'places_media/' . $pwm->provider_id . '/' . sha1(microtime()) . '.jpg';
+                    Storage::disk('public')->put($media_file, $p);
+
+                    $media = new Media;
+                    $media->url = $media_file;
+                    $media->save();
+
+                    $place_media = new PlaceMedias;
+                    $place_media->places_id = $pwm->id;
+                    $place_media->medias_id = $media->id;
+                    $place_media->save();
+                }
+                echo count($photos);
+            }
+            echo '<br />';
+
+            $pwm->media_done = 1;
+            $pwm->save();
+        }
+    }
+
+    public function getHotelsMedia3(Request $request) {
+        $places_without_media = \App\Models\Place\Place::whereNull('media_done')
+                ->whereIn('places.cities_id', array(244, 245, 246, 247, 248, 249, 250)
+                )
+                ->orderBy('id', 'ASC')
+                ->take(5)
+                ->get();
+
+        foreach ($places_without_media AS $pwm) {
+            if (time() % 4 == 0) {
+                $json = file_get_contents('http://db.travooo.com/public/places/media/go/' . $pwm->provider_id);
+            } elseif (time() % 4 == 1) {
+                $json = file_get_contents('http://db.travooodev.com/public/places/media/go/' . $pwm->provider_id);
+            } elseif (time() % 4 == 2) {
+                $json = file_get_contents('http://db.travoooapi.com/public/places/media/go/' . $pwm->provider_id);
+            } elseif (time() % 4 == 3) {
+                $json = file_get_contents('http://db.travoooapi.net/public/places/media/go/' . $pwm->provider_id);
+            }
+
+            $photos = unserialize($json);
+
+            echo $pwm->provider_id . ' ';
+            if (is_array($photos)) {
+                foreach ($photos AS $p) {
+                    $media_file = 'places_media/' . $pwm->provider_id . '/' . sha1(microtime()) . '.jpg';
+                    Storage::disk('public')->put($media_file, $p);
+
+                    $media = new Media;
+                    $media->url = $media_file;
+                    $media->save();
+
+                    $place_media = new PlaceMedias;
+                    $place_media->places_id = $pwm->id;
+                    $place_media->medias_id = $media->id;
+                    $place_media->save();
+                }
+                echo count($photos);
+            }
+            echo '<br />';
+
+            $pwm->media_done = 1;
+            $pwm->save();
+        }
+    }
+
+    public function getHotelsMedia4(Request $request) {
+        $places_without_media = \App\Models\Place\Place::whereNull('media_done')
+                ->whereIn('places.cities_id', array(223, 224, 225, 226, 227, 53, 228, 52, 229, 230, 231, 50, 232, 51, 233, 234, 235, 236, 237)
+                )
+                ->orderBy('id', 'ASC')
+                ->take(5)
+                ->get();
+
+        foreach ($places_without_media AS $pwm) {
+            if (time() % 4 == 0) {
+                $json = file_get_contents('http://db.travooo.com/public/places/media/go/' . $pwm->provider_id);
+            } elseif (time() % 4 == 1) {
+                $json = file_get_contents('http://db.travooodev.com/public/places/media/go/' . $pwm->provider_id);
+            } elseif (time() % 4 == 2) {
+                $json = file_get_contents('http://db.travoooapi.com/public/places/media/go/' . $pwm->provider_id);
+            } elseif (time() % 4 == 3) {
+                $json = file_get_contents('http://db.travoooapi.net/public/places/media/go/' . $pwm->provider_id);
+            }
+
+            $photos = unserialize($json);
+
+            echo $pwm->provider_id . ' ';
+            if (is_array($photos)) {
+                foreach ($photos AS $p) {
+                    $media_file = 'places_media/' . $pwm->provider_id . '/' . sha1(microtime()) . '.jpg';
+                    Storage::disk('public')->put($media_file, $p);
+
+                    $media = new Media;
+                    $media->url = $media_file;
+                    $media->save();
+
+                    $place_media = new PlaceMedias;
+                    $place_media->places_id = $pwm->id;
+                    $place_media->medias_id = $media->id;
+                    $place_media->save();
+                }
+                echo count($photos);
+            }
+            echo '<br />';
+
+            $pwm->media_done = 1;
+            $pwm->save();
+        }
+    }
+
+
+    public function getReataurantsMedia(Request $request) {
+        $places_without_media = \App\Models\Place\Place::whereNull('media_done')
+                ->whereIn('places.cities_id', array(214, 216, 57, 211, 221, 222, 58, 218, 212, 59, 219, 215, 220, 217, 213)
+                )
+                ->orderBy('id', 'ASC')
+                ->take(5)
+                ->get();
+
+        foreach ($places_without_media AS $pwm) {
+            if (time() % 4 == 0) {
+                $json = file_get_contents('http://db.travooo.com/public/places/media/go/' . $pwm->provider_id);
+            } elseif (time() % 4 == 1) {
+                $json = file_get_contents('http://db.travooodev.com/public/places/media/go/' . $pwm->provider_id);
+            } elseif (time() % 4 == 2) {
+                $json = file_get_contents('http://db.travoooapi.com/public/places/media/go/' . $pwm->provider_id);
+            } elseif (time() % 4 == 3) {
+                $json = file_get_contents('http://db.travoooapi.net/public/places/media/go/' . $pwm->provider_id);
+            }
+
+            $photos = unserialize($json);
+
+            echo $pwm->provider_id . ' ';
+            if (is_array($photos)) {
+                foreach ($photos AS $p) {
+                    $media_file = 'places_media/' . $pwm->provider_id . '/' . sha1(microtime()) . '.jpg';
+                    Storage::disk('public')->put($media_file, $p);
+
+                    $media = new Media;
+                    $media->url = $media_file;
+                    $media->save();
+
+                    $place_media = new PlaceMedias;
+                    $place_media->places_id = $pwm->id;
+                    $place_media->medias_id = $media->id;
+                    $place_media->save();
+                }
+                echo count($photos);
+            }
+            echo '<br />';
+
+            $pwm->media_done = 1;
+            $pwm->save();
+        }
+    }
+
+    public function getReataurantsMedia2(Request $request) {
+        $places_without_media = \App\Models\Place\Place::whereNull('media_done')
+                ->whereIn('places.cities_id', array(172, 169, 167, 171, 238, 170, 239, 240, 241, 242, 243)
+                )
+                ->orderBy('id', 'ASC')
+                ->take(5)
+                ->get();
+
+        foreach ($places_without_media AS $pwm) {
+            if (time() % 4 == 0) {
+                $json = file_get_contents('http://db.travooo.com/public/places/media/go/' . $pwm->provider_id);
+            } elseif (time() % 4 == 1) {
+                $json = file_get_contents('http://db.travooodev.com/public/places/media/go/' . $pwm->provider_id);
+            } elseif (time() % 4 == 2) {
+                $json = file_get_contents('http://db.travoooapi.com/public/places/media/go/' . $pwm->provider_id);
+            } elseif (time() % 4 == 3) {
+                $json = file_get_contents('http://db.travoooapi.net/public/places/media/go/' . $pwm->provider_id);
+            }
+
+            $photos = unserialize($json);
+
+            echo $pwm->provider_id . ' ';
+            if (is_array($photos)) {
+                foreach ($photos AS $p) {
+                    $media_file = 'places_media/' . $pwm->provider_id . '/' . sha1(microtime()) . '.jpg';
+                    Storage::disk('public')->put($media_file, $p);
+
+                    $media = new Media;
+                    $media->url = $media_file;
+                    $media->save();
+
+                    $place_media = new PlaceMedias;
+                    $place_media->places_id = $pwm->id;
+                    $place_media->medias_id = $media->id;
+                    $place_media->save();
+                }
+                echo count($photos);
+            }
+            echo '<br />';
+
+            $pwm->media_done = 1;
+            $pwm->save();
+        }
+    }
+
+    public function getReataurantsMedia3(Request $request) {
+        $places_without_media = \App\Models\Place\Place::whereNull('media_done')
+                ->whereIn('places.cities_id', array(244, 245, 246, 247, 248, 249, 250)
+                )
+                ->orderBy('id', 'ASC')
+                ->take(5)
+                ->get();
+
+        foreach ($places_without_media AS $pwm) {
+            if (time() % 4 == 0) {
+                $json = file_get_contents('http://db.travooo.com/public/places/media/go/' . $pwm->provider_id);
+            } elseif (time() % 4 == 1) {
+                $json = file_get_contents('http://db.travooodev.com/public/places/media/go/' . $pwm->provider_id);
+            } elseif (time() % 4 == 2) {
+                $json = file_get_contents('http://db.travoooapi.com/public/places/media/go/' . $pwm->provider_id);
+            } elseif (time() % 4 == 3) {
+                $json = file_get_contents('http://db.travoooapi.net/public/places/media/go/' . $pwm->provider_id);
+            }
+
+            $photos = unserialize($json);
+
+            echo $pwm->provider_id . ' ';
+            if (is_array($photos)) {
+                foreach ($photos AS $p) {
+                    $media_file = 'places_media/' . $pwm->provider_id . '/' . sha1(microtime()) . '.jpg';
+                    Storage::disk('public')->put($media_file, $p);
+
+                    $media = new Media;
+                    $media->url = $media_file;
+                    $media->save();
+
+                    $place_media = new PlaceMedias;
+                    $place_media->places_id = $pwm->id;
+                    $place_media->medias_id = $media->id;
+                    $place_media->save();
+                }
+                echo count($photos);
+            }
+            echo '<br />';
+
+            $pwm->media_done = 1;
+            $pwm->save();
+        }
+    }
+
+    public function getReataurantsMedia4(Request $request) {
+        $places_without_media = \App\Models\Place\Place::whereNull('media_done')
+                ->whereIn('places.cities_id', array(223, 224, 225, 226, 227, 53, 228, 52, 229, 230, 231, 50, 232, 51, 233, 234, 235, 236, 237)
+                )
                 ->orderBy('id', 'ASC')
                 ->take(5)
                 ->get();
@@ -205,13 +562,13 @@ class CronsController extends Controller {
             if (time() % 4 == 0) {
                 $json = file_get_contents('http://db.travooo.com/public/places/details/go/' . $pmd->provider_id);
                 echo 'http://db.travooo.com/public/places/details/go/' . $pmd->provider_id . ' ';
-            } elseif (time() % 4 == 1)  {
+            } elseif (time() % 4 == 1) {
                 $json = file_get_contents('http://db.travooodev.com/public/places/details/go/' . $pmd->provider_id);
                 echo 'http://db.travooodev.com/public/places/details/go/' . $pmd->provider_id . ' ';
-            } elseif (time() % 4 == 2)  {
+            } elseif (time() % 4 == 2) {
                 $json = file_get_contents('http://db.travoooapi.com/public/places/details/go/' . $pmd->provider_id);
                 echo 'http://db.travoooapi.com/public/places/details/go/' . $pmd->provider_id . ' ';
-            } elseif (time() % 4 == 3)  {
+            } elseif (time() % 4 == 3) {
                 $json = file_get_contents('http://db.travoooapi.net/public/places/details/go/' . $pmd->provider_id);
                 echo 'http://db.travoooapi.net/public/places/details/go/' . $pmd->provider_id . ' ';
             }
@@ -223,7 +580,7 @@ class CronsController extends Controller {
                 $types = @join(",", $details->types);
                 echo $types;
             }
-            if(!isset($types)) {
+            if (!isset($types)) {
                 $types = '';
             }
             echo '<br />';
@@ -244,13 +601,13 @@ class CronsController extends Controller {
             if (time() % 4 == 0) {
                 $json = file_get_contents('http://db.travooo.com/public/embassies/details/go/' . $pmd->provider_id);
                 echo 'http://db.travooo.com/public/embassies/details/go/' . $pmd->provider_id . ' ';
-            } elseif (time() % 4 == 1)  {
+            } elseif (time() % 4 == 1) {
                 $json = file_get_contents('http://db.travooodev.com/public/embassies/details/go/' . $pmd->provider_id);
                 echo 'http://db.travooodev.com/public/embassies/details/go/' . $pmd->provider_id . ' ';
-            } elseif (time() % 4 == 2)  {
+            } elseif (time() % 4 == 2) {
                 $json = file_get_contents('http://db.travoooapi.com/public/embassies/details/go/' . $pmd->provider_id);
                 echo 'http://db.travoooapi.com/public/embassies/details/go/' . $pmd->provider_id . ' ';
-            } elseif (time() % 4 == 3)  {
+            } elseif (time() % 4 == 3) {
                 $json = file_get_contents('http://db.travoooapi.net/public/embassies/details/go/' . $pmd->provider_id);
                 echo 'http://db.travoooapi.net/public/embassies/details/go/' . $pmd->provider_id . ' ';
             }
@@ -262,7 +619,7 @@ class CronsController extends Controller {
                 $types = @join(",", $details->types);
                 echo $types;
             }
-            if(!isset($types)) {
+            if (!isset($types)) {
                 $types = '';
             }
             echo '<br />';
@@ -284,13 +641,13 @@ class CronsController extends Controller {
             if (time() % 4 == 0) {
                 $json = file_get_contents('http://db.travooo.com/public/hotels/details/go/' . $pmd->provider_id);
                 echo 'http://db.travooo.com/public/hotels/details/go/' . $pmd->provider_id . ' ';
-            } elseif (time() % 4 == 1)  {
+            } elseif (time() % 4 == 1) {
                 $json = file_get_contents('http://db.travooodev.com/public/hotels/details/go/' . $pmd->provider_id);
                 echo 'http://db.travooodev.com/public/hotels/details/go/' . $pmd->provider_id . ' ';
-            } elseif (time() % 4 == 2)  {
+            } elseif (time() % 4 == 2) {
                 $json = file_get_contents('http://db.travoooapi.com/public/hotels/details/go/' . $pmd->provider_id);
                 echo 'http://db.travoooapi.com/public/hotels/details/go/' . $pmd->provider_id . ' ';
-            } elseif (time() % 4 == 3)  {
+            } elseif (time() % 4 == 3) {
                 $json = file_get_contents('http://db.travoooapi.net/public/hotels/details/go/' . $pmd->provider_id);
                 echo 'http://db.travoooapi.net/public/hotels/details/go/' . $pmd->provider_id . ' ';
             }
@@ -302,7 +659,7 @@ class CronsController extends Controller {
                 $types = @join(",", $details->types);
                 echo $types;
             }
-            if(!isset($types)) {
+            if (!isset($types)) {
                 $types = '';
             }
             echo '<br />';
@@ -324,13 +681,13 @@ class CronsController extends Controller {
             if (time() % 4 == 0) {
                 $json = file_get_contents('http://db.travooo.com/public/restaurants/details/go/' . $pmd->provider_id);
                 echo 'http://db.travooo.com/public/restaurants/details/go/' . $pmd->provider_id . ' ';
-            } elseif (time() % 4 == 1)  {
+            } elseif (time() % 4 == 1) {
                 $json = file_get_contents('http://db.travooodev.com/public/restaurants/details/go/' . $pmd->provider_id);
                 echo 'http://db.travooodev.com/public/restaurants/details/go/' . $pmd->provider_id . ' ';
-            } elseif (time() % 4 == 2)  {
+            } elseif (time() % 4 == 2) {
                 $json = file_get_contents('http://db.travoooapi.com/public/restaurants/details/go/' . $pmd->provider_id);
                 echo 'http://db.travoooapi.com/public/restaurants/details/go/' . $pmd->provider_id . ' ';
-            } elseif (time() % 4 == 3)  {
+            } elseif (time() % 4 == 3) {
                 $json = file_get_contents('http://db.travoooapi.net/public/restaurants/details/go/' . $pmd->provider_id);
                 echo 'http://db.travoooapi.net/public/restaurants/details/go/' . $pmd->provider_id . ' ';
             }
@@ -342,7 +699,7 @@ class CronsController extends Controller {
                 $types = @join(",", $details->types);
                 echo $types;
             }
-            if(!isset($types)) {
+            if (!isset($types)) {
                 $types = '';
             }
             echo '<br />';
