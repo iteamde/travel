@@ -38,15 +38,15 @@ class PlaceTableController extends Controller
      * @return mixed
      */
     public function __invoke()
-    {   
+    {
         $media = '3';
         if(isset($_POST['columns']) && isset($_POST['columns'][7]) && isset($_POST['columns'][7]['search']) && isset($_POST['columns'][7]['search']['value'])){
             $temp_media =  $_POST['columns'][7]['search']['value'].'';
             if($temp_media != ''){
                 $media = $temp_media;
-            } 
+            }
         }
-        
+
         //\App\Models\City\Cities::
         return Datatables::of($this->places->getForDataTable($media))
             ->escapeColumns(['code'])
@@ -67,7 +67,7 @@ class PlaceTableController extends Controller
                 return $place->action_buttons;
             })
             ->addColumn('city_title', function ($place) {
-                return $place->city->transsingle->title;
+                return @$place->city->transsingle->title;
             })
             ->addColumn('country_title', function ($place) {
                 return $place->country->transsingle->title;
@@ -87,7 +87,7 @@ class PlaceTableController extends Controller
                         }
                     }
                 }
-                
+
                 if($place->media_done.'' == '1'){
                     return 'Yes';
                 }else{
