@@ -716,13 +716,13 @@ class PlaceController extends Controller {
             return false;
         }
         /* Delete Children Tables Data of this country */
-        $child = PlaceTranslations::where(['places_id' => $id])->get();
-        if (!empty($child)) {
-            foreach ($child as $key => $value) {
-                $value->delete();
-            }
-        }
-        $item->deleteMedias();
+        // $child = PlaceTranslations::where(['places_id' => $id])->get();
+        // if (!empty($child)) {
+        //     foreach ($child as $key => $value) {
+        //         $value->delete();
+        //     }
+        // }
+        // $item->deleteMedias();
         $item->delete();
 
         AdminLogs::create(['item_type' => 'places', 'item_id' => $id, 'action' => 'delete', 'time' => time(), 'admin_id' => Auth::user()->id]);

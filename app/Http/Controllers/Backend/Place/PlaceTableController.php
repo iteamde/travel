@@ -11,6 +11,8 @@ use App\Models\PlaceTypes\PlaceTypes;
 use App\Models\Place\Place;
 use App\Models\City\Cities;
 use App\Models\City\CitiesTranslations;
+use App\Models\Country\Countries;
+use App\Models\Country\CountriesTranslations;
 
 /**
  * Class UserTableController.
@@ -36,10 +38,17 @@ class PlaceTableController extends Controller
      * @return mixed
      */
     public function __invoke()
-    {
+    {   
+        $media = '3';
+        if(isset($_POST['columns']) && isset($_POST['columns'][7]) && isset($_POST['columns'][7]['search']) && isset($_POST['columns'][7]['search']['value'])){
+            $temp_media =  $_POST['columns'][7]['search']['value'].'';
+            if($temp_media != ''){
+                $media = $temp_media;
+            } 
+        }
+        
         //\App\Models\City\Cities::
-
-        return Datatables::of($this->places->getForDataTable())
+        return Datatables::of($this->places->getForDataTable($media))
             ->escapeColumns(['code'])
             ->addColumn('',function(){
                 return null;
@@ -60,11 +69,79 @@ class PlaceTableController extends Controller
             ->addColumn('city_title', function ($place) {
                 return $place->city->transsingle->title;
             })
-            ->addColumn('media_done', function ($place) {
-                if($place->media_done==1) return 'Yes';
+            ->addColumn('country_title', function ($place) {
+                return $place->country->transsingle->title;
+            })
+            ->addColumn('media_done_new', function ($place) {
+                $medias = $place->medias;
+                $flag = false;
+                if(!empty($medias)){
+                    foreach ($medias as $key => $value) {
+                        if(!empty($value->media)){
+                            if($value->media->featured == 1 || $value->media->featured == '1'){
+                                $flag = true;
+                                $place->media_done = 1;
+                                $place->save();
+                                return 'Yes';
+                            }
+                        }
+                    }
+                }
+                
+                if($place->media_done.'' == '1'){
+                    return 'Yes';
+                }else{
+                    return 'No';
+                }
+            })
+            ->addColumn('media_count', function ($place) {
+                $medias = $place->medias;
+                return count($medias);
             })
             ->withTrashed()
             ->make(true);
+    }
+
+    public function getAddedCountries(){
+
+        $q = null;
+        if(isset($_GET['q'])){
+            $q = $_GET['q'];
+        }
+
+        $place = Place::distinct()->select('countries_id')->get();
+        $temp_country = [];
+        $filter_html = null;
+        $json = [];
+
+        if(!empty($place)){
+            foreach ($place as $key => $value) {
+                $country = null;
+                if(empty($q)){
+                    $country = Countries::find($value->countries_id);
+
+                }else{
+                    // $country = Countries::find($value->cities_id);
+                    $country = Countries::leftJoin('countries_trans', function($join){
+                        $join->on('countries_trans.countries_id', '=', 'countries.id');
+                    })->where('countries_trans.title', 'LIKE', '%'.$q.'%')->where(['countries.id' => $value->countries_id])->first();
+                }
+                if(!empty($country)){
+
+                    $transingle = CountriesTranslations::where(['countries_id' => $value->countries_id])->first();
+
+                    if(!empty($transingle)){
+                        // $temp_city[$city->id] = $city->transsingle->title;
+                        $filter_html .= '<option value="'.$value->countries_id.'">'.$transingle->title.'</option>';
+                        array_push($temp_country,$transingle->title);
+                         $json[] = ['id' => $value->countries_id, 'text' => $transingle->title];
+                    }
+                }
+            }
+        }
+        // exit;
+        echo json_encode($json);
+        // return $temp_city;
     }
 
     public function getAddedCities(){

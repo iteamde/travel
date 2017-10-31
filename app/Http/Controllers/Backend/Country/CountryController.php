@@ -230,15 +230,15 @@ class CountryController extends Controller
     {
         $item = Countries::findOrFail($id);
         $item->deleteTrans();
-        $item->deleteAirports();
-        $item->deleteCurrencies();
-        $item->deleteCapitals();
-        $item->deleteEmergencyNumbers();
-        $item->deleteHolidays();
-        $item->deleteLanguagesSpoken();
-        $item->deleteLifestyles();
-        $item->deleteReligions();
-        $item->deleteMedias();
+        // $item->deleteAirports();
+        // $item->deleteCurrencies();
+        // $item->deleteCapitals();
+        // $item->deleteEmergencyNumbers();
+        // $item->deleteHolidays();
+        // $item->deleteLanguagesSpoken();
+        // $item->deleteLifestyles();
+        // $item->deleteReligions();
+        // $item->deleteMedias();
         $item->delete();
 
         return redirect()->route('admin.location.country.index')->withFlashSuccess('Country Deleted Successfully');
@@ -877,15 +877,15 @@ class CountryController extends Controller
         }
 
         $item->deleteTrans();
-        $item->deleteAirports();
-        $item->deleteCurrencies();
-        $item->deleteCapitals();
-        $item->deleteEmergencyNumbers();
-        $item->deleteHolidays();
-        $item->deleteLanguagesSpoken();
-        $item->deleteLifestyles();
-        $item->deleteReligions();
-        $item->deleteMedias();
+        // $item->deleteAirports();
+        // $item->deleteCurrencies();
+        // $item->deleteCapitals();
+        // $item->deleteEmergencyNumbers();
+        // $item->deleteHolidays();
+        // $item->deleteLanguagesSpoken();
+        // $item->deleteLifestyles();
+        // $item->deleteReligions();
+        // $item->deleteMedias();
         $item->delete();
 
         AdminLogs::create(['item_type' => 'countries', 'item_id' => $id, 'action' => 'delete', 'time' => time(), 'admin_id' => Auth::user()->id]);

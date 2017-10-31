@@ -761,14 +761,14 @@ class CityController extends Controller
     {
         $item = Cities::findOrFail($id);
         $item->deleteTrans();
-        $item->deleteAirports();
-        $item->deleteCurrencies();
-        $item->deleteEmergency_numbers();
-        $item->deleteHolidays();
-        $item->deleteLanguagesSpoken();
-        $item->deleteLifestyles();
-        $item->deleteMedias();
-        $item->deleteReligions();
+        // $item->deleteAirports();
+        // $item->deleteCurrencies();
+        // $item->deleteEmergency_numbers();
+        // $item->deleteHolidays();
+        // $item->deleteLanguagesSpoken();
+        // $item->deleteLifestyles();
+        // $item->deleteMedias();
+        // $item->deleteReligions();
         $item->delete();
 
         return redirect()->route('admin.location.city.index')->withFlashSuccess('City Deleted Successfully');
@@ -820,14 +820,14 @@ class CityController extends Controller
         }
 
         $item->deleteTrans();
-        $item->deleteAirports();
-        $item->deleteCurrencies();
-        $item->deleteEmergency_numbers();
-        $item->deleteHolidays();
-        $item->deleteLanguagesSpoken();
-        $item->deleteLifestyles();
-        $item->deleteMedias();
-        $item->deleteReligions();
+        // $item->deleteAirports();
+        // $item->deleteCurrencies();
+        // $item->deleteEmergency_numbers();
+        // $item->deleteHolidays();
+        // $item->deleteLanguagesSpoken();
+        // $item->deleteLifestyles();
+        // $item->deleteMedias();
+        // $item->deleteReligions();
 
         $item->delete();
 

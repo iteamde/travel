@@ -82,23 +82,46 @@ class PlaceRepository extends BaseRepository
      *
      * @return mixed
      */
-    public function getForDataTable()
+    public function getForDataTable($media = null)
     {
         /**
          * Note: You must return deleted_at or the User getActionButtonsAttribute won't
          * be able to differentiate what buttons to show for each row.
          */
-        $dataTableQuery = $this->query()
+        if($media == '3'){
+            $dataTableQuery = $this->query()
             // ->with('roles')
             ->with('transsingle')
             ->with('city')
+            ->with('country')
             ->select([
                 config('locations.place_table').'.id',
                 config('locations.place_table').'.cities_id',
+                config('locations.place_table').'.countries_id',
                 config('locations.place_table').'.place_type',
                 config('locations.place_table').'.media_done',
                 config('locations.place_table').'.active'
             ]);
+        }else{
+            $dataTableQuery = $this->query()
+                // ->with('roles')
+                ->with('transsingle')
+                ->with('city')
+                ->with('country')
+                ->select([
+                    config('locations.place_table').'.id',
+                    config('locations.place_table').'.cities_id',
+                    config('locations.place_table').'.countries_id',
+                    config('locations.place_table').'.place_type',
+                    config('locations.place_table').'.media_done',
+                    config('locations.place_table').'.active'
+                ]);
+            // if($media == '1' || $media == 1){
+                $dataTableQuery = $dataTableQuery->where(['media_done' => $media]);
+            // }else{
+                // $dataTableQuery = $dataTableQuery->where('media_done','=',1);
+            // }
+        }
 
         // active() is a scope on the UserScope trait
         return $dataTableQuery;
