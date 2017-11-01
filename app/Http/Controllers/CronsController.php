@@ -505,7 +505,7 @@ class CronsController extends Controller { //spain
         }
     }
 
-    public function getReataurantsMedia(Request $request) { // Mexico
+    public function getRestaurantsMedia(Request $request) { // Mexico
         $places_without_media = \App\Models\Restaurants\Restaurants::whereNull('media_done')
                 ->whereIn('restaurants.cities_id', array(214, 216, 57, 211, 221, 222, 58, 218, 212, 59, 219, 215, 220, 217, 213)
                 )
@@ -550,7 +550,7 @@ class CronsController extends Controller { //spain
         }
     }
 
-    public function getReataurantsMedia2(Request $request) { // France
+    public function getRestaurantsMedia2(Request $request) { // France
         $places_without_media = \App\Models\Restaurants\Restaurants::whereNull('media_done')
                 ->whereIn('places.cities_id', array(193,251,252,192,253,190,191,254,255,256,257,258,259)
                 )
@@ -595,7 +595,7 @@ class CronsController extends Controller { //spain
         }
     }
 
-    public function getReataurantsMedia3(Request $request) { // Canada
+    public function getRestaurantsMedia3(Request $request) { // Canada
         $places_without_media = \App\Models\Restaurants\Restaurants::whereNull('media_done')
                 ->whereIn('places.cities_id', array(223,224,225,226,227,53,228,52,229,230,231,50,232,51,233,234,235,236,237)
                 )
