@@ -67,7 +67,7 @@ class PlaceTableController extends Controller
                 return $place->action_buttons;
             })
             ->addColumn('city_title', function ($place) {
-                return @$place->city->transsingle->title;
+                return $place->city->transsingle->title;
             })
             ->addColumn('country_title', function ($place) {
                 return $place->country->transsingle->title;
