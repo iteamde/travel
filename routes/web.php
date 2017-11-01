@@ -26,12 +26,8 @@ Route::get('crons/places/media10', 'CronsController@getPlacesMedia10');
 Route::get('crons/restaurants/media', 'CronsController@getRestaurantsMedia');
 Route::get('crons/restaurants/media2', 'CronsController@getRestaurantsMedia2');
 Route::get('crons/restaurants/media3', 'CronsController@getRestaurantsMedia3');
-Route::get('crons/restaurants/media4', 'CronsController@getRestaurantsMedia4');
 
 Route::get('crons/hotels/media', 'CronsController@getHotelsMedia');
-Route::get('crons/hotels/media2', 'CronsController@getHotelsMedia2');
-Route::get('crons/hotels/media3', 'CronsController@getHotelsMedia3');
-Route::get('crons/hotels/media4', 'CronsController@getHotelsMedia4');
 
 
 Route::get('crons/places/details/{field}', 'CronsController@getPlacesDetails');
