@@ -100,9 +100,9 @@ class CronsController extends Controller { //spain
         }
     }
 
-    public function getPlacesMedia3(Request $request) { //jamaica
+    public function getPlacesMedia3(Request $request) { // UAE
         $places_without_media = \App\Models\Place\Place::whereNull('media_done')
-                ->whereIn('places.cities_id', array(277, 278, 279, 280, 282, 283, 284)
+                ->whereIn('places.cities_id', array(47,48,49,422,425,424)
                 )
                 ->orderBy('id', 'ASC')
                 ->take(5)
@@ -370,9 +370,9 @@ class CronsController extends Controller { //spain
         }
     }
 
-    public function getPlacesMedia9(Request $request) { //costa rica
+    public function getPlacesMedia9(Request $request) { // Turkey
         $places_without_media = \App\Models\Place\Place::whereNull('media_done')
-                ->whereIn('places.cities_id', array(313,314,315,54,316,317,318,319,320,321)
+                ->whereIn('places.cities_id', array(157,416,417,418,419,420,421,156)
                 )
                 ->orderBy('id', 'ASC')
                 ->take(5)
