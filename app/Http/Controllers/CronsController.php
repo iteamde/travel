@@ -325,9 +325,9 @@ class CronsController extends Controller { //spain
         }
     }
 
-    public function getPlacesMedia8(Request $request) { //france
+    public function getPlacesMedia8(Request $request) { //Columbia
         $places_without_media = \App\Models\Place\Place::whereNull('media_done')
-                ->whereIn('places.cities_id', array(193,251,252,192,253,190,191,254,255,256,257,258,259)
+                ->whereIn('places.cities_id', array(96,355,356,97,357,358,359,360,361)
                 )
                 ->orderBy('id', 'ASC')
                 ->take(5)
