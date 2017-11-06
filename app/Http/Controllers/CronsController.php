@@ -460,9 +460,9 @@ class CronsController extends Controller { //spain
         }
     }
 
-    public function getHotelsMedia(Request $request) { // Mexico
+    public function getHotelsMedia(Request $request) { // UAE
         $places_without_media = \App\Models\Hotels\Hotels::whereNull('media_done')
-                ->whereIn('hotels.cities_id', array(214, 216, 57, 211, 221, 222, 58, 218, 212, 59, 219, 215, 220, 217, 213)
+                ->whereIn('hotels.cities_id', array(47,48,49,422,424,425)
                 )
                 ->orderBy('id', 'ASC')
                 ->take(5)
