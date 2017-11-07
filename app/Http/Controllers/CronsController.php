@@ -500,9 +500,9 @@ class CronsController extends Controller { //spain
         }
     }
 
-    public function getHotelsMedia(Request $request) { // UAE
+    public function getHotelsMedia(Request $request) { // Turkey
         $places_without_media = \App\Models\Hotels\Hotels::whereNull('media_done')
-                ->whereIn('hotels.cities_id', array(47,48,49,422,424,425)
+                ->whereIn('hotels.cities_id', array(156,157,416,417,418,419,420,421)
                 )
                 ->orderBy('id', 'ASC')
                 ->take(5)
@@ -549,9 +549,9 @@ class CronsController extends Controller { //spain
         }
     }
 
-    public function getRestaurantsMedia(Request $request) { // Turkey
+    public function getRestaurantsMedia(Request $request) { // Thailand
         $places_without_media = \App\Models\Restaurants\Restaurants::whereNull('media_done')
-                ->whereIn('restaurants.cities_id', array(157,416,417,418,419,420,421,156)
+                ->whereIn('restaurants.cities_id', array(403,404,405,406,407,408,144)
                 )
                 ->orderBy('id', 'ASC')
                 ->take(5)
@@ -598,9 +598,9 @@ class CronsController extends Controller { //spain
         }
     }
 
-    public function getRestaurantsMedia2(Request $request) { // UAE
+    public function getRestaurantsMedia2(Request $request) { // Taiwan
         $places_without_media = \App\Models\Restaurants\Restaurants::whereNull('media_done')
-                ->whereIn('restaurants.cities_id', array(47,48,49,422,424,425)
+                ->whereIn('restaurants.cities_id', array(115,116,378,379,380)
                 )
                 ->orderBy('id', 'ASC')
                 ->take(5)
@@ -647,9 +647,9 @@ class CronsController extends Controller { //spain
         }
     }
 
-    public function getRestaurantsMedia3(Request $request) { // Canada
+    public function getRestaurantsMedia3(Request $request) { // Switzerland
         $places_without_media = \App\Models\Restaurants\Restaurants::whereNull('media_done')
-                ->whereIn('restaurants.cities_id', array(223,224,225,226,227,53,228,52,229,230,231,50,232,51,233,234,235,236,237)
+                ->whereIn('restaurants.cities_id', array(362,363,364,365,366,367,368,369,370,204,205,206)
                 )
                 ->orderBy('id', 'ASC')
                 ->take(5)
