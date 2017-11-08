@@ -11,52 +11,7 @@ use Illuminate\Support\Facades\DB;
 class CronsController extends Controller { //spain
 
     public function getPlacesMedia(Request $request) {
-        $places_without_media = \App\Models\Place\Place::whereNull('media_done')
-                ->whereIn('places.cities_id', array(184, 285, 286, 287, 288, 289, 290, 185, 291, 292, 293, 294, 186)
-                )
-                ->orderBy('id', 'ASC')
-                ->take(5)
-                ->get();
-
-        foreach ($places_without_media AS $pwm) {
-            if (time() % 6 == 0) {
-                $json = file_get_contents('http://db.travooo.com/public/places/media/go/' . $pwm->provider_id);
-            } elseif (time() % 6 == 1) {
-                $json = file_get_contents('http://db.travooodev.com/public/places/media/go/' . $pwm->provider_id);
-            } elseif (time() % 6 == 2) {
-                $json = file_get_contents('http://db.travoooapi.com/public/places/media/go/' . $pwm->provider_id);
-            } elseif (time() % 6 == 3) {
-                $json = file_get_contents('http://db.travoooapi.net/public/places/media/go/' . $pwm->provider_id);
-            } elseif (time() % 6 == 4) {
-                $json = file_get_contents('http://db2.travoooapi.net/public/places/media/go/' . $pwm->provider_id);
-            } elseif (time() % 6 == 5) {
-                $json = file_get_contents('http://db2.travoooapi.com/public/places/media/go/' . $pwm->provider_id);
-            }
-
-            $photos = unserialize($json);
-
-            echo $pwm->provider_id . ' ';
-            if (is_array($photos)) {
-                foreach ($photos AS $p) {
-                    $media_file = 'places_media/' . $pwm->provider_id . '/' . sha1(microtime()) . '.jpg';
-                    Storage::disk('public')->put($media_file, $p);
-
-                    $media = new Media;
-                    $media->url = $media_file;
-                    $media->save();
-
-                    $place_media = new PlaceMedias;
-                    $place_media->places_id = $pwm->id;
-                    $place_media->medias_id = $media->id;
-                    $place_media->save();
-                }
-                echo count($photos);
-            }
-            echo '<br />';
-
-            $pwm->media_done = 1;
-            $pwm->save();
-        }
+        getPlacesMediaPerCities(array(184, 285, 286, 287, 288, 289, 290, 185, 291, 292, 293, 294, 186));
     }
 
     public function getPlacesMedia2(Request $request) {  // japan
