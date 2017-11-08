@@ -15,449 +15,44 @@ class CronsController extends Controller { //spain
     }
 
     public function getPlacesMedia2(Request $request) {  // japan
-        $places_without_media = \App\Models\Place\Place::whereNull('media_done')
-                ->whereIn('places.cities_id', array(109, 322, 323, 108, 324, 325, 326, 327, 328, 330)
-                )
-                ->orderBy('id', 'ASC')
-                ->take(5)
-                ->get();
-
-        foreach ($places_without_media AS $pwm) {
-            if (time() % 6 == 0) {
-                $json = file_get_contents('http://db.travooo.com/public/places/media/go/' . $pwm->provider_id);
-            } elseif (time() % 6 == 1) {
-                $json = file_get_contents('http://db.travooodev.com/public/places/media/go/' . $pwm->provider_id);
-            } elseif (time() % 6 == 2) {
-                $json = file_get_contents('http://db.travoooapi.com/public/places/media/go/' . $pwm->provider_id);
-            } elseif (time() % 6 == 3) {
-                $json = file_get_contents('http://db.travoooapi.net/public/places/media/go/' . $pwm->provider_id);
-            } elseif (time() % 6 == 4) {
-                $json = file_get_contents('http://db2.travoooapi.net/public/places/media/go/' . $pwm->provider_id);
-            } elseif (time() % 6 == 5) {
-                $json = file_get_contents('http://db2.travoooapi.com/public/places/media/go/' . $pwm->provider_id);
-            }
-
-            $photos = unserialize($json);
-
-            echo $pwm->provider_id . ' ';
-            if (is_array($photos)) {
-                foreach ($photos AS $p) {
-                    $media_file = 'places_media/' . $pwm->provider_id . '/' . sha1(microtime()) . '.jpg';
-                    Storage::disk('public')->put($media_file, $p);
-
-                    $media = new Media;
-                    $media->url = $media_file;
-                    $media->save();
-
-                    $place_media = new PlaceMedias;
-                    $place_media->places_id = $pwm->id;
-                    $place_media->medias_id = $media->id;
-                    $place_media->save();
-                }
-                echo count($photos);
-            }
-            echo '<br />';
-
-            $pwm->media_done = 1;
-            $pwm->save();
-        }
+        getPlacesMediaPerCities(array(109, 322, 323, 108, 324, 325, 326, 327, 328, 330));
     }
 
     public function getPlacesMedia3(Request $request) { // Austria
-        $places_without_media = \App\Models\Place\Place::whereNull('media_done')
-                ->whereIn('places.cities_id', array(187,396,397,398,399,400,401,402)
-                )
-                ->orderBy('id', 'ASC')
-                ->take(5)
-                ->get();
-
-        foreach ($places_without_media AS $pwm) {
-            if (time() % 6 == 0) {
-                $json = file_get_contents('http://db.travooo.com/public/places/media/go/' . $pwm->provider_id);
-            } elseif (time() % 6 == 1) {
-                $json = file_get_contents('http://db.travooodev.com/public/places/media/go/' . $pwm->provider_id);
-            } elseif (time() % 6 == 2) {
-                $json = file_get_contents('http://db.travoooapi.com/public/places/media/go/' . $pwm->provider_id);
-            } elseif (time() % 6 == 3) {
-                $json = file_get_contents('http://db.travoooapi.net/public/places/media/go/' . $pwm->provider_id);
-            } elseif (time() % 6 == 4) {
-                $json = file_get_contents('http://db2.travoooapi.net/public/places/media/go/' . $pwm->provider_id);
-            } elseif (time() % 6 == 5) {
-                $json = file_get_contents('http://db2.travoooapi.com/public/places/media/go/' . $pwm->provider_id);
-            }
-
-            $photos = unserialize($json);
-
-            echo $pwm->provider_id . ' ';
-            if (is_array($photos)) {
-                foreach ($photos AS $p) {
-                    $media_file = 'places_media/' . $pwm->provider_id . '/' . sha1(microtime()) . '.jpg';
-                    Storage::disk('public')->put($media_file, $p);
-
-                    $media = new Media;
-                    $media->url = $media_file;
-                    $media->save();
-
-                    $place_media = new PlaceMedias;
-                    $place_media->places_id = $pwm->id;
-                    $place_media->medias_id = $media->id;
-                    $place_media->save();
-                }
-                echo count($photos);
-            }
-            echo '<br />';
-
-            $pwm->media_done = 1;
-            $pwm->save();
-        }
+        getPlacesMediaPerCities(array(187, 396, 397, 398, 399, 400, 401, 402));
     }
 
     public function getPlacesMedia4(Request $request) { // Thailand
-        $places_without_media = \App\Models\Place\Place::whereNull('media_done')
-                ->whereIn('places.cities_id', array(403,404,144,405,406,407,408)
-                )
-                ->orderBy('id', 'ASC')
-                ->take(5)
-                ->get();
-
-        foreach ($places_without_media AS $pwm) {
-            if (time() % 6 == 0) {
-                $json = file_get_contents('http://db.travooo.com/public/places/media/go/' . $pwm->provider_id);
-            } elseif (time() % 6 == 1) {
-                $json = file_get_contents('http://db.travooodev.com/public/places/media/go/' . $pwm->provider_id);
-            } elseif (time() % 6 == 2) {
-                $json = file_get_contents('http://db.travoooapi.com/public/places/media/go/' . $pwm->provider_id);
-            } elseif (time() % 6 == 3) {
-                $json = file_get_contents('http://db.travoooapi.net/public/places/media/go/' . $pwm->provider_id);
-            } elseif (time() % 6 == 4) {
-                $json = file_get_contents('http://db2.travoooapi.net/public/places/media/go/' . $pwm->provider_id);
-            } elseif (time() % 6 == 5) {
-                $json = file_get_contents('http://db2.travoooapi.com/public/places/media/go/' . $pwm->provider_id);
-            }
-
-            $photos = unserialize($json);
-
-            echo $pwm->provider_id . ' ';
-            if (is_array($photos)) {
-                foreach ($photos AS $p) {
-                    $media_file = 'places_media/' . $pwm->provider_id . '/' . sha1(microtime()) . '.jpg';
-                    Storage::disk('public')->put($media_file, $p);
-
-                    $media = new Media;
-                    $media->url = $media_file;
-                    $media->save();
-
-                    $place_media = new PlaceMedias;
-                    $place_media->places_id = $pwm->id;
-                    $place_media->medias_id = $media->id;
-                    $place_media->save();
-                }
-                echo count($photos);
-            }
-            echo '<br />';
-
-            $pwm->media_done = 1;
-            $pwm->save();
-        }
+        getPlacesMediaPerCities(array(403, 404, 144, 405, 406, 407, 408));
     }
 
     public function getPlacesMedia5(Request $request) { // Taiwan
-        $places_without_media = \App\Models\Place\Place::whereNull('media_done')
-                ->whereIn('places.cities_id', array(116,378,115,379,380)
-                )
-                ->orderBy('id', 'ASC')
-                ->take(5)
-                ->get();
-
-        foreach ($places_without_media AS $pwm) {
-            if (time() % 6 == 0) {
-                $json = file_get_contents('http://db.travooo.com/public/places/media/go/' . $pwm->provider_id);
-            } elseif (time() % 6 == 1) {
-                $json = file_get_contents('http://db.travooodev.com/public/places/media/go/' . $pwm->provider_id);
-            } elseif (time() % 6 == 2) {
-                $json = file_get_contents('http://db.travoooapi.com/public/places/media/go/' . $pwm->provider_id);
-            } elseif (time() % 6 == 3) {
-                $json = file_get_contents('http://db.travoooapi.net/public/places/media/go/' . $pwm->provider_id);
-            }elseif (time() % 6 == 4) {
-                $json = file_get_contents('http://db2.travoooapi.net/public/places/media/go/' . $pwm->provider_id);
-            } elseif (time() % 6 == 5) {
-                $json = file_get_contents('http://db2.travoooapi.com/public/places/media/go/' . $pwm->provider_id);
-            }
-
-            $photos = unserialize($json);
-
-            echo $pwm->provider_id . ' ';
-            if (is_array($photos)) {
-                foreach ($photos AS $p) {
-                    $media_file = 'places_media/' . $pwm->provider_id . '/' . sha1(microtime()) . '.jpg';
-                    Storage::disk('public')->put($media_file, $p);
-
-                    $media = new Media;
-                    $media->url = $media_file;
-                    $media->save();
-
-                    $place_media = new PlaceMedias;
-                    $place_media->places_id = $pwm->id;
-                    $place_media->medias_id = $media->id;
-                    $place_media->save();
-                }
-                echo count($photos);
-            }
-            echo '<br />';
-
-            $pwm->media_done = 1;
-            $pwm->save();
-        }
+        getPlacesMediaPerCities(array(116, 378, 115, 379, 380));
     }
 
     public function getPlacesMedia6(Request $request) { //india
-        $places_without_media = \App\Models\Place\Place::whereNull('media_done')
-                ->whereIn('places.cities_id', array(303,129,304,305,131,306,307,308,309,310,311,312)
-                )
-                ->orderBy('id', 'ASC')
-                ->take(5)
-                ->get();
-
-        foreach ($places_without_media AS $pwm) {
-            if (time() % 6 == 0) {
-                $json = file_get_contents('http://db.travooo.com/public/places/media/go/' . $pwm->provider_id);
-            } elseif (time() % 6 == 1) {
-                $json = file_get_contents('http://db.travooodev.com/public/places/media/go/' . $pwm->provider_id);
-            } elseif (time() % 6 == 2) {
-                $json = file_get_contents('http://db.travoooapi.com/public/places/media/go/' . $pwm->provider_id);
-            } elseif (time() % 6 == 3) {
-                $json = file_get_contents('http://db.travoooapi.net/public/places/media/go/' . $pwm->provider_id);
-            } elseif (time() % 6 == 4) {
-                $json = file_get_contents('http://db2.travoooapi.net/public/places/media/go/' . $pwm->provider_id);
-            } elseif (time() % 6 == 5) {
-                $json = file_get_contents('http://db2.travoooapi.com/public/places/media/go/' . $pwm->provider_id);
-            }
-
-            $photos = unserialize($json);
-
-            echo $pwm->provider_id . ' ';
-            if (is_array($photos)) {
-                foreach ($photos AS $p) {
-                    $media_file = 'places_media/' . $pwm->provider_id . '/' . sha1(microtime()) . '.jpg';
-                    Storage::disk('public')->put($media_file, $p);
-
-                    $media = new Media;
-                    $media->url = $media_file;
-                    $media->save();
-
-                    $place_media = new PlaceMedias;
-                    $place_media->places_id = $pwm->id;
-                    $place_media->medias_id = $media->id;
-                    $place_media->save();
-                }
-                echo count($photos);
-            }
-            echo '<br />';
-
-            $pwm->media_done = 1;
-            $pwm->save();
-        }
+        getPlacesMediaPerCities(array(303, 129, 304, 305, 131, 306, 307, 308, 309, 310, 311, 312));
     }
 
     public function getPlacesMedia7(Request $request) { //germany
-        $places_without_media = \App\Models\Place\Place::whereNull('media_done')
-                ->whereIn('places.cities_id', array(194,197,198,196,195,268,269,270,271,272,273,274,275,276)
-                )
-                ->orderBy('id', 'ASC')
-                ->take(5)
-                ->get();
-
-        foreach ($places_without_media AS $pwm) {
-            if (time() % 6 == 0) {
-                $json = file_get_contents('http://db.travooo.com/public/places/media/go/' . $pwm->provider_id);
-            } elseif (time() % 6 == 1) {
-                $json = file_get_contents('http://db.travooodev.com/public/places/media/go/' . $pwm->provider_id);
-            } elseif (time() % 6 == 2) {
-                $json = file_get_contents('http://db.travoooapi.com/public/places/media/go/' . $pwm->provider_id);
-            } elseif (time() % 6 == 3) {
-                $json = file_get_contents('http://db.travoooapi.net/public/places/media/go/' . $pwm->provider_id);
-            } elseif (time() % 6 == 4) {
-                $json = file_get_contents('http://db2.travoooapi.net/public/places/media/go/' . $pwm->provider_id);
-            } elseif (time() % 6 == 5) {
-                $json = file_get_contents('http://db2.travoooapi.com/public/places/media/go/' . $pwm->provider_id);
-            }
-
-            $photos = unserialize($json);
-
-            echo $pwm->provider_id . ' ';
-            if (is_array($photos)) {
-                foreach ($photos AS $p) {
-                    $media_file = 'places_media/' . $pwm->provider_id . '/' . sha1(microtime()) . '.jpg';
-                    Storage::disk('public')->put($media_file, $p);
-
-                    $media = new Media;
-                    $media->url = $media_file;
-                    $media->save();
-
-                    $place_media = new PlaceMedias;
-                    $place_media->places_id = $pwm->id;
-                    $place_media->medias_id = $media->id;
-                    $place_media->save();
-                }
-                echo count($photos);
-            }
-            echo '<br />';
-
-            $pwm->media_done = 1;
-            $pwm->save();
-        }
+        getPlacesMediaPerCities(array(194, 197, 198, 196, 195, 268, 269, 270, 271, 272, 273, 274, 275, 276));
     }
 
     public function getPlacesMedia8(Request $request) { //Columbia
-        $places_without_media = \App\Models\Place\Place::whereNull('media_done')
-                ->whereIn('places.cities_id', array(96,355,356,97,357,358,359,360,361)
-                )
-                ->orderBy('id', 'ASC')
-                ->take(5)
-                ->get();
-
-        foreach ($places_without_media AS $pwm) {
-            if (time() % 6 == 0) {
-                $json = file_get_contents('http://db.travooo.com/public/places/media/go/' . $pwm->provider_id);
-            } elseif (time() % 6 == 1) {
-                $json = file_get_contents('http://db.travooodev.com/public/places/media/go/' . $pwm->provider_id);
-            } elseif (time() % 6 == 2) {
-                $json = file_get_contents('http://db.travoooapi.com/public/places/media/go/' . $pwm->provider_id);
-            } elseif (time() % 6 == 3) {
-                $json = file_get_contents('http://db.travoooapi.net/public/places/media/go/' . $pwm->provider_id);
-            } elseif (time() % 6 == 4) {
-                $json = file_get_contents('http://db2.travoooapi.net/public/places/media/go/' . $pwm->provider_id);
-            } elseif (time() % 6 == 5) {
-                $json = file_get_contents('http://db2.travoooapi.com/public/places/media/go/' . $pwm->provider_id);
-            }
-
-            $photos = unserialize($json);
-
-            echo $pwm->provider_id . ' ';
-            if (is_array($photos)) {
-                foreach ($photos AS $p) {
-                    $media_file = 'places_media/' . $pwm->provider_id . '/' . sha1(microtime()) . '.jpg';
-                    Storage::disk('public')->put($media_file, $p);
-
-                    $media = new Media;
-                    $media->url = $media_file;
-                    $media->save();
-
-                    $place_media = new PlaceMedias;
-                    $place_media->places_id = $pwm->id;
-                    $place_media->medias_id = $media->id;
-                    $place_media->save();
-                }
-                echo count($photos);
-            }
-            echo '<br />';
-
-            $pwm->media_done = 1;
-            $pwm->save();
-        }
+        getPlacesMediaPerCities(array(96, 355, 356, 97, 357, 358, 359, 360, 361));
     }
 
     public function getPlacesMedia9(Request $request) { // Turkey
-        $places_without_media = \App\Models\Place\Place::whereNull('media_done')
-                ->whereIn('places.cities_id', array(157,416,417,418,419,420,421,156)
-                )
-                ->orderBy('id', 'ASC')
-                ->take(5)
-                ->get();
-
-        foreach ($places_without_media AS $pwm) {
-            if (time() % 6 == 0) {
-                $json = file_get_contents('http://db.travooo.com/public/places/media/go/' . $pwm->provider_id);
-            } elseif (time() % 6 == 1) {
-                $json = file_get_contents('http://db.travooodev.com/public/places/media/go/' . $pwm->provider_id);
-            } elseif (time() % 6 == 2) {
-                $json = file_get_contents('http://db.travoooapi.com/public/places/media/go/' . $pwm->provider_id);
-            } elseif (time() % 6 == 3) {
-                $json = file_get_contents('http://db.travoooapi.net/public/places/media/go/' . $pwm->provider_id);
-            } elseif (time() % 6 == 4) {
-                $json = file_get_contents('http://db2.travoooapi.net/public/places/media/go/' . $pwm->provider_id);
-            } elseif (time() % 6 == 5) {
-                $json = file_get_contents('http://db2.travoooapi.com/public/places/media/go/' . $pwm->provider_id);
-            }
-
-            $photos = unserialize($json);
-
-            echo $pwm->provider_id . ' ';
-            if (is_array($photos)) {
-                foreach ($photos AS $p) {
-                    $media_file = 'places_media/' . $pwm->provider_id . '/' . sha1(microtime()) . '.jpg';
-                    Storage::disk('public')->put($media_file, $p);
-
-                    $media = new Media;
-                    $media->url = $media_file;
-                    $media->save();
-
-                    $place_media = new PlaceMedias;
-                    $place_media->places_id = $pwm->id;
-                    $place_media->medias_id = $media->id;
-                    $place_media->save();
-                }
-                echo count($photos);
-            }
-            echo '<br />';
-
-            $pwm->media_done = 1;
-            $pwm->save();
-        }
+        getPlacesMediaPerCities(array(157, 416, 417, 418, 419, 420, 421, 156));
     }
 
     public function getPlacesMedia10(Request $request) { //china
-        $places_without_media = \App\Models\Place\Place::whereNull('media_done')
-                ->whereIn('places.cities_id', array(104,106,295,296,297,298,299,300,301)
-                )
-                ->orderBy('id', 'ASC')
-                ->take(5)
-                ->get();
-
-        foreach ($places_without_media AS $pwm) {
-            if (time() % 6 == 0) {
-                $json = file_get_contents('http://db.travooo.com/public/places/media/go/' . $pwm->provider_id);
-            } elseif (time() % 6 == 1) {
-                $json = file_get_contents('http://db.travooodev.com/public/places/media/go/' . $pwm->provider_id);
-            } elseif (time() % 6 == 2) {
-                $json = file_get_contents('http://db.travoooapi.com/public/places/media/go/' . $pwm->provider_id);
-            } elseif (time() % 6 == 3) {
-                $json = file_get_contents('http://db.travoooapi.net/public/places/media/go/' . $pwm->provider_id);
-            } elseif (time() % 6 == 4) {
-                $json = file_get_contents('http://db2.travoooapi.net/public/places/media/go/' . $pwm->provider_id);
-            } elseif (time() % 6 == 5) {
-                $json = file_get_contents('http://db2.travoooapi.com/public/places/media/go/' . $pwm->provider_id);
-            }
-
-            $photos = unserialize($json);
-
-            echo $pwm->provider_id . ' ';
-            if (is_array($photos)) {
-                foreach ($photos AS $p) {
-                    $media_file = 'places_media/' . $pwm->provider_id . '/' . sha1(microtime()) . '.jpg';
-                    Storage::disk('public')->put($media_file, $p);
-
-                    $media = new Media;
-                    $media->url = $media_file;
-                    $media->save();
-
-                    $place_media = new PlaceMedias;
-                    $place_media->places_id = $pwm->id;
-                    $place_media->medias_id = $media->id;
-                    $place_media->save();
-                }
-                echo count($photos);
-            }
-            echo '<br />';
-
-            $pwm->media_done = 1;
-            $pwm->save();
-        }
+        getPlacesMediaPerCities(array(104, 106, 295, 296, 297, 298, 299, 300, 301));
     }
 
     public function getHotelsMedia(Request $request) { // Turkey
         $places_without_media = \App\Models\Hotels\Hotels::whereNull('media_done')
-                ->whereIn('hotels.cities_id', array(156,157,416,417,418,419,420,421)
+                ->whereIn('hotels.cities_id', array(156, 157, 416, 417, 418, 419, 420, 421)
                 )
                 ->orderBy('id', 'ASC')
                 ->take(5)
@@ -506,7 +101,7 @@ class CronsController extends Controller { //spain
 
     public function getRestaurantsMedia(Request $request) { // Thailand
         $places_without_media = \App\Models\Restaurants\Restaurants::whereNull('media_done')
-                ->whereIn('restaurants.cities_id', array(403,404,405,406,407,408,144)
+                ->whereIn('restaurants.cities_id', array(403, 404, 405, 406, 407, 408, 144)
                 )
                 ->orderBy('id', 'ASC')
                 ->take(5)
@@ -555,7 +150,7 @@ class CronsController extends Controller { //spain
 
     public function getRestaurantsMedia2(Request $request) { // Taiwan
         $places_without_media = \App\Models\Restaurants\Restaurants::whereNull('media_done')
-                ->whereIn('restaurants.cities_id', array(115,116,378,379,380)
+                ->whereIn('restaurants.cities_id', array(115, 116, 378, 379, 380)
                 )
                 ->orderBy('id', 'ASC')
                 ->take(5)
@@ -604,7 +199,7 @@ class CronsController extends Controller { //spain
 
     public function getRestaurantsMedia3(Request $request) { // Switzerland
         $places_without_media = \App\Models\Restaurants\Restaurants::whereNull('media_done')
-                ->whereIn('restaurants.cities_id', array(362,363,364,365,366,367,368,369,370,204,205,206)
+                ->whereIn('restaurants.cities_id', array(362, 363, 364, 365, 366, 367, 368, 369, 370, 204, 205, 206)
                 )
                 ->orderBy('id', 'ASC')
                 ->take(5)
