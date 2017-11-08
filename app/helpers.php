@@ -1,5 +1,6 @@
 <?php
-
+use App\Models\ActivityMedia\Media;
+use App\Models\Place\PlaceMedias;
 /**
  * Global helpers file with misc functions.
  */
