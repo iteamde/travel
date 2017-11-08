@@ -1,6 +1,8 @@
 <?php
+
 use App\Models\ActivityMedia\Media;
 use App\Models\Place\PlaceMedias;
+
 /**
  * Global helpers file with misc functions.
  */
@@ -136,6 +138,104 @@ function getPlacesMediaPerCities($cities) {
 
                 $place_media = new PlaceMedias;
                 $place_media->places_id = $pwm->id;
+                $place_media->medias_id = $media->id;
+                $place_media->save();
+            }
+            echo count($photos);
+        }
+        echo '<br />';
+
+        $pwm->media_done = 1;
+        $pwm->save();
+    }
+}
+
+function getHotelsMediaPerCities($cities) {
+    $places_without_media = \App\Models\Hotels\Hotels::whereNull('media_done')
+            ->whereIn('hotels.cities_id', $cities
+            )
+            ->orderBy('id', 'ASC')
+            ->take(5)
+            ->get();
+
+    foreach ($places_without_media AS $pwm) {
+        if (time() % 6 == 0) {
+            $json = file_get_contents('http://db.travooo.com/public/hotels/media/go/' . $pwm->provider_id);
+        } elseif (time() % 6 == 1) {
+            $json = file_get_contents('http://db.travooodev.com/public/hotels/media/go/' . $pwm->provider_id);
+        } elseif (time() % 6 == 2) {
+            $json = file_get_contents('http://db.travoooapi.com/public/hotels/media/go/' . $pwm->provider_id);
+        } elseif (time() % 6 == 3) {
+            $json = file_get_contents('http://db.travoooapi.net/public/hotels/media/go/' . $pwm->provider_id);
+        } elseif (time() % 6 == 4) {
+            $json = file_get_contents('http://db2.travoooapi.net/public/hotels/media/go/' . $pwm->provider_id);
+        } elseif (time() % 6 == 5) {
+            $json = file_get_contents('http://db2.travoooapi.com/public/hotels/media/go/' . $pwm->provider_id);
+        }
+
+        $photos = unserialize($json);
+
+        echo $pwm->provider_id . ' ';
+        if (is_array($photos)) {
+            foreach ($photos AS $p) {
+                $media_file = 'hotels_media/' . $pwm->provider_id . '/' . sha1(microtime()) . '.jpg';
+                Storage::disk('public')->put($media_file, $p);
+
+                $media = new Media;
+                $media->url = $media_file;
+                $media->save();
+
+                $place_media = new \App\Models\Hotels\HotelsMedias;
+                $place_media->hotels_id = $pwm->id;
+                $place_media->medias_id = $media->id;
+                $place_media->save();
+            }
+            echo count($photos);
+        }
+        echo '<br />';
+
+        $pwm->media_done = 1;
+        $pwm->save();
+    }
+}
+
+function getRestaurantsMediaPerCities($cities) {
+    $places_without_media = \App\Models\Restaurants\Restaurants::whereNull('media_done')
+            ->whereIn('restaurants.cities_id', $cities
+            )
+            ->orderBy('id', 'ASC')
+            ->take(5)
+            ->get();
+
+    foreach ($places_without_media AS $pwm) {
+        if (time() % 6 == 0) {
+            $json = file_get_contents('http://db.travooo.com/public/restaurants/media/go/' . $pwm->provider_id);
+        } elseif (time() % 6 == 1) {
+            $json = file_get_contents('http://db.travooodev.com/public/restaurants/media/go/' . $pwm->provider_id);
+        } elseif (time() % 6 == 2) {
+            $json = file_get_contents('http://db.travoooapi.com/public/restaurants/media/go/' . $pwm->provider_id);
+        } elseif (time() % 6 == 3) {
+            $json = file_get_contents('http://db.travoooapi.net/public/restaurants/media/go/' . $pwm->provider_id);
+        } elseif (time() % 6 == 4) {
+            $json = file_get_contents('http://db2.travoooapi.net/public/restaurants/media/go/' . $pwm->provider_id);
+        } elseif (time() % 6 == 5) {
+            $json = file_get_contents('http://db2.travoooapi.com/public/restaurants/media/go/' . $pwm->provider_id);
+        }
+
+        $photos = unserialize($json);
+
+        echo $pwm->provider_id . ' ';
+        if (is_array($photos)) {
+            foreach ($photos AS $p) {
+                $media_file = 'restaurants_media/' . $pwm->provider_id . '/' . sha1(microtime()) . '.jpg';
+                Storage::disk('public')->put($media_file, $p);
+
+                $media = new Media;
+                $media->url = $media_file;
+                $media->save();
+
+                $place_media = new \App\Models\Restaurants\RestaurantsMedias;
+                $place_media->restaurants_id = $pwm->id;
                 $place_media->medias_id = $media->id;
                 $place_media->save();
             }
