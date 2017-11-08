@@ -42,28 +42,28 @@ class CronsController extends Controller { //spain
         getPlacesMediaPerCities(array(96, 355, 356, 97, 357, 358, 359, 360, 361));
     }
 
-    public function getPlacesMedia9(Request $request) { // Turkey
-        getPlacesMediaPerCities(array(157, 416, 417, 418, 419, 420, 421, 156));
+    public function getPlacesMedia9(Request $request) { // Czech
+        getPlacesMediaPerCities(array(189,431,432,433,434,435));
     }
 
     public function getPlacesMedia10(Request $request) { //china
         getPlacesMediaPerCities(array(104, 106, 295, 296, 297, 298, 299, 300, 301));
     }
 
-    public function getHotelsMedia(Request $request) { // Turkey
-        getHotelsMediaPerCities(array(156, 157, 416, 417, 418, 419, 420, 421));
+    public function getHotelsMedia(Request $request) { // thailand
+        getHotelsMediaPerCities(array(144,403,404,405,406,407,408));
     }
 
-    public function getRestaurantsMedia(Request $request) { // Thailand
-        getRestaurantsMediaPerCities(array(403, 404, 405, 406, 407, 408, 144));
+    public function getRestaurantsMedia(Request $request) { // Spain
+        getRestaurantsMediaPerCities(array(184,185,186,285,286,287,288,289,290,291,292,293,294));
     }
 
-    public function getRestaurantsMedia2(Request $request) { // Taiwan
-        getRestaurantsMediaPerCities(array(115, 116, 378, 379, 380));
+    public function getRestaurantsMedia2(Request $request) { // Singapore
+        getRestaurantsMediaPerCities(array(460));
     }
 
-    public function getRestaurantsMedia3(Request $request) { // Switzerland
-        getRestaurantsMediaPerCities(array(362, 363, 364, 365, 366, 367, 368, 369, 370, 204, 205, 206));
+    public function getRestaurantsMedia3(Request $request) { // Poland
+        getRestaurantsMediaPerCities(array(147,149,150,461,462,463));
     }
 
     public function getPlacesDetails($field, Request $request) {
