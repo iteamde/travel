@@ -8,26 +8,26 @@ use App\Models\ActivityMedia\Media;
 use App\Models\Place\PlaceMedias;
 use Illuminate\Support\Facades\DB;
 
-class CronsController extends Controller { //spain
+class CronsController extends Controller {
 
-    public function getPlacesMedia(Request $request) {
-        getPlacesMediaPerCities(array(184, 285, 286, 287, 288, 289, 290, 185, 291, 292, 293, 294, 186));
+    public function getPlacesMedia(Request $request) { //greece
+        getPlacesMediaPerCities(array(176,409,410,411,412,413,414,415));
     }
 
-    public function getPlacesMedia2(Request $request) {  // japan
-        getPlacesMediaPerCities(array(109, 322, 323, 108, 324, 325, 326, 327, 328, 330));
+    public function getPlacesMedia2(Request $request) {  // Hong kong
+        getPlacesMediaPerCities(array(377));
     }
 
-    public function getPlacesMedia3(Request $request) { // Austria
-        getPlacesMediaPerCities(array(187, 396, 397, 398, 399, 400, 401, 402));
+    public function getPlacesMedia3(Request $request) { // Hungary
+        getPlacesMediaPerCities(array(199,436,437,438,439));
     }
 
-    public function getPlacesMedia4(Request $request) { // Thailand
-        getPlacesMediaPerCities(array(403, 404, 144, 405, 406, 407, 408));
+    public function getPlacesMedia4(Request $request) { // Ireland
+        getPlacesMediaPerCities(array(165,166,347,348,349,350,351,352,353));
     }
 
-    public function getPlacesMedia5(Request $request) { // Taiwan
-        getPlacesMediaPerCities(array(116, 378, 115, 379, 380));
+    public function getPlacesMedia5(Request $request) { // Netherlands
+        getPlacesMediaPerCities(array(201,202,203,331,332,333,334,335,336,337,338));
     }
 
     public function getPlacesMedia6(Request $request) { //india
@@ -42,12 +42,12 @@ class CronsController extends Controller { //spain
         getPlacesMediaPerCities(array(96, 355, 356, 97, 357, 358, 359, 360, 361));
     }
 
-    public function getPlacesMedia9(Request $request) { // Czech
-        getPlacesMediaPerCities(array(189,431,432,433,434,435));
+    public function getPlacesMedia9(Request $request) { // Phillippines
+        getPlacesMediaPerCities(array(142,339,340,341,342,343,344,345,346));
     }
 
-    public function getPlacesMedia10(Request $request) { //china
-        getPlacesMediaPerCities(array(104, 106, 295, 296, 297, 298, 299, 300, 301));
+    public function getPlacesMedia10(Request $request) { // Poland
+        getPlacesMediaPerCities(array(147,149,150,461,462,463));
     }
 
     public function getHotelsMedia(Request $request) { // thailand
