@@ -38,8 +38,8 @@ class CronsController extends Controller {
         getPlacesMediaPerCities(array(194, 197, 198, 196, 195, 268, 269, 270, 271, 272, 273, 274, 275, 276));
     }
 
-    public function getPlacesMedia8(Request $request) { //Columbia
-        getPlacesMediaPerCities(array(96, 355, 356, 97, 357, 358, 359, 360, 361));
+    public function getPlacesMedia8(Request $request) { // Singapore
+        getPlacesMediaPerCities(array(460));
     }
 
     public function getPlacesMedia9(Request $request) { // Phillippines
@@ -50,9 +50,65 @@ class CronsController extends Controller {
         getPlacesMediaPerCities(array(147,149,150,461,462,463));
     }
 
+
+
+
+
+
+
+
+
+
+
     public function getHotelsMedia(Request $request) { // thailand
         getHotelsMediaPerCities(array(144,403,404,405,406,407,408));
     }
+
+    public function getHotelsMedia2(Request $request) { // thailand
+        getHotelsMediaPerCities(array(144,403,404,405,406,407,408));
+    }
+
+    public function getHotelsMedia3(Request $request) { // thailand
+        getHotelsMediaPerCities(array(144,403,404,405,406,407,408));
+    }
+
+    public function getHotelsMedia4(Request $request) { // thailand
+        getHotelsMediaPerCities(array(144,403,404,405,406,407,408));
+    }
+
+    public function getHotelsMedia5(Request $request) { // thailand
+        getHotelsMediaPerCities(array(144,403,404,405,406,407,408));
+    }
+
+    public function getHotelsMedia6(Request $request) { // thailand
+        getHotelsMediaPerCities(array(144,403,404,405,406,407,408));
+    }
+
+    public function getHotelsMedia7(Request $request) { // thailand
+        getHotelsMediaPerCities(array(144,403,404,405,406,407,408));
+    }
+
+    public function getHotelsMedia8(Request $request) { // thailand
+        getHotelsMediaPerCities(array(144,403,404,405,406,407,408));
+    }
+
+    public function getHotelsMedia9(Request $request) { // thailand
+        getHotelsMediaPerCities(array(144,403,404,405,406,407,408));
+    }
+
+    public function getHotelsMedia10(Request $request) { // thailand
+        getHotelsMediaPerCities(array(144,403,404,405,406,407,408));
+    }
+
+
+
+
+
+
+
+
+
+
 
     public function getRestaurantsMedia(Request $request) { // Spain
         getRestaurantsMediaPerCities(array(184,185,186,285,286,287,288,289,290,291,292,293,294));
@@ -65,6 +121,38 @@ class CronsController extends Controller {
     public function getRestaurantsMedia3(Request $request) { // Poland
         getRestaurantsMediaPerCities(array(147,149,150,461,462,463));
     }
+
+    public function getRestaurantsMedia4(Request $request) { // Philippines
+        getRestaurantsMediaPerCities(array(142,339,340,341,342,343,344,345,346));
+    }
+
+    public function getRestaurantsMedia5(Request $request) { // Netherlands
+        getRestaurantsMediaPerCities(array(201,202,203,331,332,333,334,335,336,337,338));
+    }
+
+    public function getRestaurantsMedia6(Request $request) { // Japan
+        getRestaurantsMediaPerCities(array(108,109,322,323,324,325,326,327,328,330));
+    }
+    public function getRestaurantsMedia7(Request $request) { // Jamaica
+        getRestaurantsMediaPerCities(array(277,278,279,280,282,283,284));
+    }
+
+    public function getRestaurantsMedia8(Request $request) { // Italy
+        getRestaurantsMediaPerCities(array(177,178,179,180,181,260,261,262,263,264,265,266,267));
+    }
+
+    public function getRestaurantsMedia9(Request $request) { // Ireland
+        getRestaurantsMediaPerCities(array(165,166,347,348,349,350,351,352,353));
+    }
+
+    public function getRestaurantsMedia10(Request $request) { // India
+        getRestaurantsMediaPerCities(array(129,131,303,304,305,306,307,308,309,310,311,312));
+    }
+
+
+
+
+
 
     public function getPlacesDetails($field, Request $request) {
 

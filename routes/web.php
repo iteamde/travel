@@ -26,8 +26,24 @@ Route::get('crons/places/media10', 'CronsController@getPlacesMedia10');
 Route::get('crons/restaurants/media', 'CronsController@getRestaurantsMedia');
 Route::get('crons/restaurants/media2', 'CronsController@getRestaurantsMedia2');
 Route::get('crons/restaurants/media3', 'CronsController@getRestaurantsMedia3');
+Route::get('crons/restaurants/media4', 'CronsController@getRestaurantsMedia4');
+Route::get('crons/restaurants/media5', 'CronsController@getRestaurantsMedia5');
+Route::get('crons/restaurants/media6', 'CronsController@getRestaurantsMedia6');
+Route::get('crons/restaurants/media7', 'CronsController@getRestaurantsMedia7');
+Route::get('crons/restaurants/media8', 'CronsController@getRestaurantsMedia8');
+Route::get('crons/restaurants/media9', 'CronsController@getRestaurantsMedia9');
+Route::get('crons/restaurants/media10', 'CronsController@getRestaurantsMedia10');
 
 Route::get('crons/hotels/media', 'CronsController@getHotelsMedia');
+Route::get('crons/hotels/media2', 'CronsController@getHotelsMedia2');
+Route::get('crons/hotels/media3', 'CronsController@getHotelsMedia3');
+Route::get('crons/hotels/media4', 'CronsController@getHotelsMedia4');
+Route::get('crons/hotels/media5', 'CronsController@getHotelsMedia5');
+Route::get('crons/hotels/media6', 'CronsController@getHotelsMedia6');
+Route::get('crons/hotels/media7', 'CronsController@getHotelsMedia7');
+Route::get('crons/hotels/media8', 'CronsController@getHotelsMedia8');
+Route::get('crons/hotels/media9', 'CronsController@getHotelsMedia9');
+Route::get('crons/hotels/media10', 'CronsController@getHotelsMedia10');
 
 
 Route::get('crons/places/details/{field}', 'CronsController@getPlacesDetails');
