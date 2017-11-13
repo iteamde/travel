@@ -64,40 +64,40 @@ class CronsController extends Controller {
         getHotelsMediaPerCities(array(144,403,404,405,406,407,408));
     }
 
-    public function getHotelsMedia2(Request $request) { // thailand
-        getHotelsMediaPerCities(array(144,403,404,405,406,407,408));
+    public function getHotelsMedia2(Request $request) { // Taiwan
+        getHotelsMediaPerCities(array(115,116,378,379,380));
     }
 
-    public function getHotelsMedia3(Request $request) { // thailand
-        getHotelsMediaPerCities(array(144,403,404,405,406,407,408));
+    public function getHotelsMedia3(Request $request) { // Switzerland
+        getHotelsMediaPerCities(array(204,205,206,362,363,364,365,366,367,368,369,370));
     }
 
-    public function getHotelsMedia4(Request $request) { // thailand
-        getHotelsMediaPerCities(array(144,403,404,405,406,407,408));
+    public function getHotelsMedia4(Request $request) { // Spain
+        getHotelsMediaPerCities(array(184,185,186,285,286,287,288,289,290,291,292,293,294));
     }
 
-    public function getHotelsMedia5(Request $request) { // thailand
-        getHotelsMediaPerCities(array(144,403,404,405,406,407,408));
+    public function getHotelsMedia5(Request $request) { // Singapore
+        getHotelsMediaPerCities(array(460));
     }
 
-    public function getHotelsMedia6(Request $request) { // thailand
-        getHotelsMediaPerCities(array(144,403,404,405,406,407,408));
+    public function getHotelsMedia6(Request $request) { // Poland
+        getHotelsMediaPerCities(array(147,149,150,461,462,463));
     }
 
-    public function getHotelsMedia7(Request $request) { // thailand
-        getHotelsMediaPerCities(array(144,403,404,405,406,407,408));
+    public function getHotelsMedia7(Request $request) { // Philippines
+        getHotelsMediaPerCities(array(142,339,340,341,342,343,344,345,346));
     }
 
-    public function getHotelsMedia8(Request $request) { // thailand
-        getHotelsMediaPerCities(array(144,403,404,405,406,407,408));
+    public function getHotelsMedia8(Request $request) { // Netherlands
+        getHotelsMediaPerCities(array(201,202,203,331,332,333,334,335,336,337,338));
     }
 
-    public function getHotelsMedia9(Request $request) { // thailand
-        getHotelsMediaPerCities(array(144,403,404,405,406,407,408));
+    public function getHotelsMedia9(Request $request) { // Japan
+        getHotelsMediaPerCities(array(108,109,322,323,324,325,326,327,328,330));
     }
 
-    public function getHotelsMedia10(Request $request) { // thailand
-        getHotelsMediaPerCities(array(144,403,404,405,406,407,408));
+    public function getHotelsMedia10(Request $request) { // Jamaica
+        getHotelsMediaPerCities(array(277,278,279,280,282,283,284));
     }
 
 
