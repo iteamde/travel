@@ -10,12 +10,12 @@ use Illuminate\Support\Facades\DB;
 
 class CronsController extends Controller {
 
-    public function getPlacesMedia(Request $request) { //greece
-        getPlacesMediaPerCities(array(176,409,410,411,412,413,414,415));
+    public function getPlacesMedia(Request $request) { // Switzerland
+        getPlacesMediaPerCities(array(204,205,206,362,363,364,365,366,367,368,369,370));
     }
 
-    public function getPlacesMedia2(Request $request) {  // Hong kong
-        getPlacesMediaPerCities(array(377));
+    public function getPlacesMedia2(Request $request) {  // Taiwan
+        getPlacesMediaPerCities(array(115,116,378,379,380));
     }
 
     public function getPlacesMedia3(Request $request) { // Hungary
