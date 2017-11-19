@@ -64,16 +64,16 @@ class CronsController extends Controller {
         getHotelsMediaPerCities(array(96,97,355,356,357,358,359,360,361));
     }
 
-    public function getHotelsMedia2(Request $request) { // Ireland
-        getHotelsMediaPerCities(array(165,166,347,348,349,350,351,352,353));
+    public function getHotelsMedia2(Request $request) { // China
+        getHotelsMediaPerCities(array(104,106,295,296,297,298,299,300,301));
     }
 
-    public function getHotelsMedia3(Request $request) { // India
-        getHotelsMediaPerCities(array(129,131,303,304,305,306,307,308,309,310,311,312));
+    public function getHotelsMedia3(Request $request) { // Canada
+        getHotelsMediaPerCities(array(50,51,52,53,223,224,225,226,227,228,229,230,231,232,233,234,235,236,237));
     }
 
-    public function getHotelsMedia4(Request $request) { // Hungary
-        getHotelsMediaPerCities(array(199,436,437,438,439));
+    public function getHotelsMedia4(Request $request) { // Austria
+        getHotelsMediaPerCities(array(187,396,397,398,399,400,401,402));
     }
 
     public function getHotelsMedia5(Request $request) { // Hong Kong
@@ -105,45 +105,44 @@ class CronsController extends Controller {
 
 
 
-    public function getRestaurantsMedia(Request $request) { // Spain
-        getRestaurantsMediaPerCities(array(184,185,186,285,286,287,288,289,290,291,292,293,294));
+    public function getRestaurantsMedia(Request $request) { // Hungary
+        getRestaurantsMediaPerCities(array(199,436,437,438,439));
     }
 
-    public function getRestaurantsMedia2(Request $request) { // Singapore
-        getRestaurantsMediaPerCities(array(460));
+    public function getRestaurantsMedia2(Request $request) { // Hong Kong
+        getRestaurantsMediaPerCities(array(377));
     }
 
-    public function getRestaurantsMedia3(Request $request) { // Poland
-        getRestaurantsMediaPerCities(array(147,149,150,461,462,463));
+    public function getRestaurantsMedia3(Request $request) { // Greece
+        getRestaurantsMediaPerCities(array(176,409,410,411,412,413,414,415));
     }
 
-    public function getRestaurantsMedia4(Request $request) { // Philippines
-        getRestaurantsMediaPerCities(array(142,339,340,341,342,343,344,345,346));
+    public function getRestaurantsMedia4(Request $request) { // Germany
+        getRestaurantsMediaPerCities(array(194,195,196,197,198,268,269,270,271,272,273,274,275,276));
     }
 
-    public function getRestaurantsMedia5(Request $request) { // Netherlands
-        getRestaurantsMediaPerCities(array(201,202,203,331,332,333,334,335,336,337,338));
+    public function getRestaurantsMedia5(Request $request) { // Czech Republic
+        getRestaurantsMediaPerCities(array(189,431,432,433,434,435));
     }
 
-    public function getRestaurantsMedia6(Request $request) { // Japan
-        getRestaurantsMediaPerCities(array(108,109,322,323,324,325,326,327,328,330));
+    public function getRestaurantsMedia6(Request $request) { // Costa Rica
+        getRestaurantsMediaPerCities(array(54,313,314,315,316,317,318,319,320,321));
     }
-    public function getRestaurantsMedia7(Request $request) { // Jamaica
-        getRestaurantsMediaPerCities(array(277,278,279,280,282,283,284));
-    }
-
-    public function getRestaurantsMedia8(Request $request) { // Italy
-        getRestaurantsMediaPerCities(array(177,178,179,180,181,260,261,262,263,264,265,266,267));
+    public function getRestaurantsMedia7(Request $request) { // Colombia
+        getRestaurantsMediaPerCities(array(96,97,355,356,357,358,359,360,361));
     }
 
-    public function getRestaurantsMedia9(Request $request) { // Ireland
-        getRestaurantsMediaPerCities(array(165,166,347,348,349,350,351,352,353));
+    public function getRestaurantsMedia8(Request $request) { // China
+        getRestaurantsMediaPerCities(array(104,106,295,296,297,298,299,300,301));
+    }
+
+    public function getRestaurantsMedia9(Request $request) { // Austria
+        getRestaurantsMediaPerCities(array(187,396,397,398,399,400,401,402));
     }
 
     public function getRestaurantsMedia10(Request $request) { // India
         getRestaurantsMediaPerCities(array(129,131,303,304,305,306,307,308,309,310,311,312));
     }
-
 
 
 
