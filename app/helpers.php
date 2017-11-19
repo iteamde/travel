@@ -130,7 +130,7 @@ function getPlacesMediaPerCities($cities) {
         if (is_array($photos)) {
             foreach ($photos AS $p) {
                 $media_file = 'places_media/' . $pwm->provider_id . '/' . sha1(microtime()) . '.jpg';
-                Storage::disk('s3')->put($media_file, $p);
+                Storage::disk('s3')->put($media_file, $p, 'public');
 
                 $media = new Media;
                 $media->url = $media_file;
@@ -179,7 +179,7 @@ function getHotelsMediaPerCities($cities) {
         if (is_array($photos)) {
             foreach ($photos AS $p) {
                 $media_file = 'hotels_media/' . $pwm->provider_id . '/' . sha1(microtime()) . '.jpg';
-                Storage::disk('s3')->put($media_file, $p);
+                Storage::disk('s3')->put($media_file, $p, 'public');
 
                 $media = new Media;
                 $media->url = $media_file;
@@ -228,7 +228,7 @@ function getRestaurantsMediaPerCities($cities) {
         if (is_array($photos)) {
             foreach ($photos AS $p) {
                 $media_file = 'restaurants_media/' . $pwm->provider_id . '/' . sha1(microtime()) . '.jpg';
-                Storage::disk('s3')->put($media_file, $p);
+                Storage::disk('s3')->put($media_file, $p, 'public');
 
                 $media = new Media;
                 $media->url = $media_file;
