@@ -10,44 +10,44 @@ use Illuminate\Support\Facades\DB;
 
 class CronsController extends Controller {
 
-    public function getPlacesMedia(Request $request) { // Switzerland
-        getPlacesMediaPerCities(array(204,205,206,362,363,364,365,366,367,368,369,370));
+    public function getPlacesMedia(Request $request) { // Wyoming
+        getPlacesMediaPerCities(array(702,703,704));
     }
 
-    public function getPlacesMedia2(Request $request) {  // Taiwan
-        getPlacesMediaPerCities(array(115,116,378,379,380));
+    public function getPlacesMedia2(Request $request) {  // Wisconsin
+        getPlacesMediaPerCities(array(699,700,701));
     }
 
-    public function getPlacesMedia3(Request $request) { // Hungary
-        getPlacesMediaPerCities(array(199,436,437,438,439));
+    public function getPlacesMedia3(Request $request) { // West Virginia
+        getPlacesMediaPerCities(array(697,698));
     }
 
-    public function getPlacesMedia4(Request $request) { // Ireland
-        getPlacesMediaPerCities(array(165,166,347,348,349,350,351,352,353));
+    public function getPlacesMedia4(Request $request) { // Washington DC
+        getPlacesMediaPerCities(array(705));
     }
 
-    public function getPlacesMedia5(Request $request) { // Netherlands
-        getPlacesMediaPerCities(array(201,202,203,331,332,333,334,335,336,337,338));
+    public function getPlacesMedia5(Request $request) { // Washington
+        getPlacesMediaPerCities(array(690,691,692,693,694,695,696));
     }
 
-    public function getPlacesMedia6(Request $request) { //india
-        getPlacesMediaPerCities(array(303, 129, 304, 305, 131, 306, 307, 308, 309, 310, 311, 312));
+    public function getPlacesMedia6(Request $request) { //Virginia
+        getPlacesMediaPerCities(array(682,683,684,685,686,687,688,689));
     }
 
-    public function getPlacesMedia7(Request $request) { //germany
-        getPlacesMediaPerCities(array(194, 197, 198, 196, 195, 268, 269, 270, 271, 272, 273, 274, 275, 276));
+    public function getPlacesMedia7(Request $request) { //Vermont
+        getPlacesMediaPerCities(array(680,681));
     }
 
-    public function getPlacesMedia8(Request $request) { // Singapore
-        getPlacesMediaPerCities(array(460));
+    public function getPlacesMedia8(Request $request) { // Utah
+        getPlacesMediaPerCities(array(676,678,679,723));
     }
 
-    public function getPlacesMedia9(Request $request) { // Phillippines
-        getPlacesMediaPerCities(array(142,339,340,341,342,343,344,345,346));
+    public function getPlacesMedia9(Request $request) { // Texas
+        getPlacesMediaPerCities(array(666,667,668,669,670,671,672,673,674,675));
     }
 
-    public function getPlacesMedia10(Request $request) { // Poland
-        getPlacesMediaPerCities(array(147,149,150,461,462,463));
+    public function getPlacesMedia10(Request $request) { // Tennessee
+        getPlacesMediaPerCities(array(660,661,662,663,664,665));
     }
 
 
