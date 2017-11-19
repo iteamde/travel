@@ -60,8 +60,8 @@ class CronsController extends Controller {
 
 
 
-    public function getHotelsMedia(Request $request) { // Italy
-        getHotelsMediaPerCities(array(177,178,179,180,181,260,261,262,263,264,265,266,267));
+    public function getHotelsMedia(Request $request) { // Colombia
+        getHotelsMediaPerCities(array(96,97,355,356,357,358,359,360,361));
     }
 
     public function getHotelsMedia2(Request $request) { // Ireland
@@ -99,11 +99,6 @@ class CronsController extends Controller {
     public function getHotelsMedia10(Request $request) { // Costa Rica
         getHotelsMediaPerCities(array(54,313,314,315,316,317,318,319,320,321));
     }
-
-
-
-
-
 
 
 
