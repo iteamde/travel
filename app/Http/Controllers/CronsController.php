@@ -60,44 +60,44 @@ class CronsController extends Controller {
 
 
 
-    public function getHotelsMedia(Request $request) { // Colombia
-        getHotelsMediaPerCities(array(96,97,355,356,357,358,359,360,361));
+    public function getHotelsMedia(Request $request) { // Wyoming
+        getHotelsMediaPerCities(array(702,703,704));
     }
 
-    public function getHotelsMedia2(Request $request) { // China
-        getHotelsMediaPerCities(array(104,106,295,296,297,298,299,300,301));
+    public function getHotelsMedia2(Request $request) { // Wisconsin
+        getHotelsMediaPerCities(array(699,700,701));
     }
 
-    public function getHotelsMedia3(Request $request) { // Canada
-        getHotelsMediaPerCities(array(50,51,52,53,223,224,225,226,227,228,229,230,231,232,233,234,235,236,237));
+    public function getHotelsMedia3(Request $request) { // West Virginia
+        getHotelsMediaPerCities(array(697,698));
     }
 
-    public function getHotelsMedia4(Request $request) { // Austria
-        getHotelsMediaPerCities(array(187,396,397,398,399,400,401,402));
+    public function getHotelsMedia4(Request $request) { // Washington, D.C
+        getHotelsMediaPerCities(array(705));
     }
 
-    public function getHotelsMedia5(Request $request) { // Hong Kong
-        getHotelsMediaPerCities(array(377));
+    public function getHotelsMedia5(Request $request) { // Washington
+        getHotelsMediaPerCities(array(690,691,692,693,694,695,696));
     }
 
-    public function getHotelsMedia6(Request $request) { // Greece
-        getHotelsMediaPerCities(array(176,409,410,411,412,413,414,415));
+    public function getHotelsMedia6(Request $request) { // Virginia
+        getHotelsMediaPerCities(array(682,683,684,685,686,687,688,689));
     }
 
-    public function getHotelsMedia7(Request $request) { // Germany
-        getHotelsMediaPerCities(array(194,195,196,197,198,268,269,270,271,272,273,274,275,276));
+    public function getHotelsMedia7(Request $request) { // Vermont
+        getHotelsMediaPerCities(array(680,681));
     }
 
-    public function getHotelsMedia8(Request $request) { // France
-        getHotelsMediaPerCities(array(190,191,192,193,251,252,253,254,255,256,257,258,259));
+    public function getHotelsMedia8(Request $request) { // Utah
+        getHotelsMediaPerCities(array(676,678,679,723));
     }
 
-    public function getHotelsMedia9(Request $request) { // Czech
-        getHotelsMediaPerCities(array(189,431,432,433,434,435));
+    public function getHotelsMedia9(Request $request) { // Texas
+        getHotelsMediaPerCities(array(666,667,668,669,670,671,672,673,674,675));
     }
 
-    public function getHotelsMedia10(Request $request) { // Costa Rica
-        getHotelsMediaPerCities(array(54,313,314,315,316,317,318,319,320,321));
+    public function getHotelsMedia10(Request $request) { // Tennessee
+        getHotelsMediaPerCities(array(660,661,662,663,664,665));
     }
 
 
