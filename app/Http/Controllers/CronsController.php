@@ -10,20 +10,20 @@ use Illuminate\Support\Facades\DB;
 
 class CronsController extends Controller {
 
-    public function getPlacesMedia(Request $request) { // Wyoming
-        getPlacesMediaPerCities(array(702,703,704));
+    public function getPlacesMedia(Request $request) { // South Dakota
+        getPlacesMediaPerCities(array(658,659));
     }
 
     public function getPlacesMedia2(Request $request) {  // Wisconsin
         getPlacesMediaPerCities(array(699,700,701));
     }
 
-    public function getPlacesMedia3(Request $request) { // West Virginia
-        getPlacesMediaPerCities(array(697,698));
+    public function getPlacesMedia3(Request $request) { // South Carolina
+        getPlacesMediaPerCities(array(654,655,656,657));
     }
 
-    public function getPlacesMedia4(Request $request) { // Washington DC
-        getPlacesMediaPerCities(array(705));
+    public function getPlacesMedia4(Request $request) { // Rhode Island
+        getPlacesMediaPerCities(array(651,652,653));
     }
 
     public function getPlacesMedia5(Request $request) { // Washington
@@ -34,12 +34,12 @@ class CronsController extends Controller {
         getPlacesMediaPerCities(array(682,683,684,685,686,687,688,689));
     }
 
-    public function getPlacesMedia7(Request $request) { //Vermont
-        getPlacesMediaPerCities(array(680,681));
+    public function getPlacesMedia7(Request $request) { //Pennsylvania
+        getPlacesMediaPerCities(array(648,649,650));
     }
 
-    public function getPlacesMedia8(Request $request) { // Utah
-        getPlacesMediaPerCities(array(676,678,679,723));
+    public function getPlacesMedia8(Request $request) { // Oregon
+        getPlacesMediaPerCities(array(644,645,646,647));
     }
 
     public function getPlacesMedia9(Request $request) { // Texas
