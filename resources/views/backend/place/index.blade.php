@@ -68,7 +68,7 @@ var table = null;
 $(function () {
 
 table = $('#place-table').DataTable({
-"lengthMenu": [ 10, 25, 50, 100, 1000 ],
+"lengthMenu": [ 10, 25, 50, 100, 1000,10000 ],
         columnDefs: [ {
         orderable: false,
                 className: 'select-checkbox',
@@ -120,7 +120,7 @@ table = $('#place-table').DataTable({
                                 order: [[1, "asc"]],
                                 searchDelay: 500,
                                 initComplete: function () {
-                                
+
                                 this.api().columns().every(function () {
                                 var column = this;
                                 var select = $('<select><option value=""></option></select>')
@@ -149,7 +149,7 @@ table = $('#place-table').DataTable({
                                 $('#place-table thead tr:nth-child(2) td').each(function () {
                                 // var title = $(this).text();
                                 var title = "hello";
-                                
+
                                 if (count == 4){
                                 $(this).html('<select id="country-filter" class="custom-filters form-control"><option value="">Search Country</option></select>');
                                 }
@@ -281,7 +281,7 @@ table = $('#place-table').DataTable({
             });
             });
             $(document).ready(function(){
-            
+
             $(document).on('change', '#country-filter', function(){
                 var val = $(this).val();
                 if (val != ''){
@@ -334,7 +334,7 @@ table = $('#place-table').DataTable({
 <style>
 
     #place-table tr td:nth-child(5),th:nth-child(5){
-        display: none !important;  
+        display: none !important;
     }
 
     table.dataTable tbody td.select-checkbox, table.dataTable tbody th.select-checkbox {
