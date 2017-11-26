@@ -10,44 +10,44 @@ use Illuminate\Support\Facades\DB;
 
 class CronsController extends Controller {
 
-    public function getPlacesMedia(Request $request) { // South Dakota
-        getPlacesMediaPerCities(array(658,659));
+    public function getPlacesMedia(Request $request) { // Oklahoma
+        getPlacesMediaPerCities(array(722,641,642,643));
     }
 
-    public function getPlacesMedia2(Request $request) {  // Wisconsin
-        getPlacesMediaPerCities(array(699,700,701));
+    public function getPlacesMedia2(Request $request) {  // Ohio
+        getPlacesMediaPerCities(array(634,635,636,637,638,639));
     }
 
-    public function getPlacesMedia3(Request $request) { // South Carolina
-        getPlacesMediaPerCities(array(654,655,656,657));
+    public function getPlacesMedia3(Request $request) { // North Dakota
+        getPlacesMediaPerCities(array(631,632,633));
     }
 
-    public function getPlacesMedia4(Request $request) { // Rhode Island
-        getPlacesMediaPerCities(array(651,652,653));
+    public function getPlacesMedia4(Request $request) { // North Carolina
+        getPlacesMediaPerCities(array(624,625,626,627,628,629,630));
     }
 
-    public function getPlacesMedia5(Request $request) { // Washington
-        getPlacesMediaPerCities(array(690,691,692,693,694,695,696));
+    public function getPlacesMedia5(Request $request) { // New York
+        getPlacesMediaPerCities(array(620,621,622,623));
     }
 
-    public function getPlacesMedia6(Request $request) { //Virginia
-        getPlacesMediaPerCities(array(682,683,684,685,686,687,688,689));
+    public function getPlacesMedia6(Request $request) { // New Mexico
+        getPlacesMediaPerCities(array(617,618,619));
     }
 
-    public function getPlacesMedia7(Request $request) { //Pennsylvania
-        getPlacesMediaPerCities(array(648,649,650));
+    public function getPlacesMedia7(Request $request) { // New Jersey
+        getPlacesMediaPerCities(array(611,612,613,614,615,616));
     }
 
-    public function getPlacesMedia8(Request $request) { // Oregon
-        getPlacesMediaPerCities(array(644,645,646,647));
+    public function getPlacesMedia8(Request $request) { // New Hampshire
+        getPlacesMediaPerCities(array(608,609,610));
     }
 
     public function getPlacesMedia9(Request $request) { // Texas
         getPlacesMediaPerCities(array(666,667,668,669,670,671,672,673,674,675));
     }
 
-    public function getPlacesMedia10(Request $request) { // Tennessee
-        getPlacesMediaPerCities(array(660,661,662,663,664,665));
+    public function getPlacesMedia10(Request $request) { // Nevada
+        getPlacesMediaPerCities(array(600,601,602,603,604,605,606,607));
     }
 
 
