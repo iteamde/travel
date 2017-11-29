@@ -60,44 +60,44 @@ class CronsController extends Controller {
 
 
 
-    public function getHotelsMedia(Request $request) { // South Dakota
-        getHotelsMediaPerCities(array(658,659));
+    public function getHotelsMedia(Request $request) { // New Mexico
+        getHotelsMediaPerCities(array(617,618,619));
     }
 
-    public function getHotelsMedia2(Request $request) { // South Carolina
-        getHotelsMediaPerCities(array(654,655,656,657));
+    public function getHotelsMedia2(Request $request) { // New Jersey
+        getHotelsMediaPerCities(array(611,612,613,614,615,616));
     }
 
-    public function getHotelsMedia3(Request $request) { // Rhode Island
-        getHotelsMediaPerCities(array(651,652,653));
+    public function getHotelsMedia3(Request $request) { // New Hampshire
+        getHotelsMediaPerCities(array(608,609,610));
     }
 
-    public function getHotelsMedia4(Request $request) { // Pennsylvania
-        getHotelsMediaPerCities(array(648,649,650));
+    public function getHotelsMedia4(Request $request) { // Nevada
+        getHotelsMediaPerCities(array(600,601,602,603,604,605,606,607));
     }
 
-    public function getHotelsMedia5(Request $request) { // Oregon
-        getHotelsMediaPerCities(array(644,645,646,647));
+    public function getHotelsMedia5(Request $request) { // Nebraska
+        getHotelsMediaPerCities(array(597,598,599));
     }
 
-    public function getHotelsMedia6(Request $request) { // Oklahoma
-        getHotelsMediaPerCities(array(722,641,642,643));
+    public function getHotelsMedia6(Request $request) { // Montana
+        getHotelsMediaPerCities(array(594,595,596));
     }
 
-    public function getHotelsMedia7(Request $request) { // Ohio
-        getHotelsMediaPerCities(array(634,635,636,637,638,639));
+    public function getHotelsMedia7(Request $request) { // Missouri
+        getHotelsMediaPerCities(array(589,590,591,592,593));
     }
 
     public function getHotelsMedia8(Request $request) { // North Dakota
         getHotelsMediaPerCities(array(631,632,633));
     }
 
-    public function getHotelsMedia9(Request $request) { // North Carolina
-        getHotelsMediaPerCities(array(624,625,626,627,628,629,630));
+    public function getHotelsMedia9(Request $request) { // Mississippi
+        getHotelsMediaPerCities(array(587,588));
     }
 
-    public function getHotelsMedia10(Request $request) { // New York
-        getHotelsMediaPerCities(array(620,621,622,623));
+    public function getHotelsMedia10(Request $request) { // Minnesota
+        getHotelsMediaPerCities(array(583,584,585,586));
     }
 
 
