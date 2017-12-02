@@ -291,7 +291,7 @@ table = $('#place-table').DataTable({
                 if (val != ''){
                     // table.columns(5).search()
                     if (table.columns(3).search() !== val) {
-                        table.columns(3).search("^\\s*" + val + "\\s*$", true).draw();
+                        table.columns(3).search("\\s*" + val + "\\s*", true).draw();
                     }
                 }
             });
