@@ -141,6 +141,9 @@
                     $('#restaurants-table thead tr:nth-child(2) td').each( function () {
                         // var title = $(this).text();
                         var title = "hello";
+                        if (count == 3){
+                                $(this).html('<input type="text" id="address-filter" class="custom-filters form-control" style="width:150px" />');
+                                }
                         if(count == 4){
                             $(this).html( '<select id="city-filter" class="custom-filters form-control"><option value="">Search City</option></select>' );
                         }
@@ -268,6 +271,18 @@
         });
     });
     $(document).ready(function(){
+
+        $(document).on('change', '#address-filter', function(){
+                var val = $(this).val();
+                if (val != ''){
+                    // table.columns(5).search()
+                    if (table.columns(3).search() !== val) {
+                        table.columns(3).search("\\s*" + val + "\\s*", true).draw();
+                    }
+                }
+            });
+
+
         $(document).on('change','#place-type-filter',function(){
             var val = $(this).val();
             if(val != ''){
