@@ -14,36 +14,36 @@ class CronsController extends Controller {
         getPlacesMediaPerCities(array(597,598,599));
     }
 
-    public function getPlacesMedia2(Request $request) {  // Montana
-        getPlacesMediaPerCities(array(594,595,596));
+    public function getPlacesMedia2(Request $request) {  // Maine
+        getPlacesMediaPerCities(array(566,567,568));
     }
 
-    public function getPlacesMedia3(Request $request) { // Missouri
-        getPlacesMediaPerCities(array(589,590,591,592,593));
+    public function getPlacesMedia3(Request $request) { // Louisiana
+        getPlacesMediaPerCities(array(561,562,563,564,565));
     }
 
-    public function getPlacesMedia4(Request $request) { // North Carolina
-        getPlacesMediaPerCities(array(624,625,626,627,628,629,630));
+    public function getPlacesMedia4(Request $request) { // Kentucky
+        getPlacesMediaPerCities(array(558,559,560));
     }
 
-    public function getPlacesMedia5(Request $request) { // New York
-        getPlacesMediaPerCities(array(620,621,622,623));
+    public function getPlacesMedia5(Request $request) { // Kansas
+        getPlacesMediaPerCities(array(553,554,555,556,557));
     }
 
-    public function getPlacesMedia6(Request $request) { // Mississippi
-        getPlacesMediaPerCities(array(587,588));
+    public function getPlacesMedia6(Request $request) { // Iowa
+        getPlacesMediaPerCities(array(550,551,552));
     }
 
-    public function getPlacesMedia7(Request $request) { // Minnesota
-        getPlacesMediaPerCities(array(583,584,585,586));
+    public function getPlacesMedia7(Request $request) { // Indiana
+        getPlacesMediaPerCities(array(546,547,548,549));
     }
 
     public function getPlacesMedia8(Request $request) { // Michigan
         getPlacesMediaPerCities(array(577,578,579,580,581));
     }
 
-    public function getPlacesMedia9(Request $request) { // Massachusetts
-        getPlacesMediaPerCities(array(572,573,574,575,576));
+    public function getPlacesMedia9(Request $request) { // Illinois
+        getPlacesMediaPerCities(array(540,541,542,543,544,545));
     }
 
     public function getPlacesMedia10(Request $request) { // Maryland
