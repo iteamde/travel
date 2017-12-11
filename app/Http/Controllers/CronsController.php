@@ -10,12 +10,12 @@ use Illuminate\Support\Facades\DB;
 
 class CronsController extends Controller {
 
-    public function getPlacesMedia(Request $request) { // Idaho
-        getPlacesMediaPerCities(array(537,538,539));
+    public function getPlacesMedia(Request $request) { // Alaska
+        getPlacesMediaPerCities(array(470,471,472,473,474,475));
     }
 
-    public function getPlacesMedia2(Request $request) {  // Hawaii
-        getPlacesMediaPerCities(array(530,531,532,533,534,535,536));
+    public function getPlacesMedia2(Request $request) {  // Alabama
+        getPlacesMediaPerCities(array(476,477,478));
     }
 
     public function getPlacesMedia3(Request $request) { // Georgia
@@ -60,12 +60,12 @@ class CronsController extends Controller {
 
 
 
-    public function getHotelsMedia(Request $request) { // Idaho
-        getHotelsMediaPerCities(array(537,538,539));
+    public function getHotelsMedia(Request $request) { // Alaska
+        getHotelsMediaPerCities(array(476,477,478));
     }
 
-    public function getHotelsMedia2(Request $request) { // Hawaii
-        getHotelsMediaPerCities(array(530,531,532,533,534,535,536));
+    public function getHotelsMedia2(Request $request) { // Alabama
+        getHotelsMediaPerCities(array(470,471,472,473,474,475));
     }
 
     public function getHotelsMedia3(Request $request) { // Georgia
@@ -105,43 +105,43 @@ class CronsController extends Controller {
 
 
 
-    public function getRestaurantsMedia(Request $request) { // Michigan
-        getRestaurantsMediaPerCities(array(577,578,579,580,581));
+    public function getRestaurantsMedia(Request $request) { // Idaho
+        getRestaurantsMediaPerCities(array(537,538,539));
     }
 
-    public function getRestaurantsMedia2(Request $request) { // Massachusetts
-        getRestaurantsMediaPerCities(array(572,573,574,575,576));
+    public function getRestaurantsMedia2(Request $request) { // Hawaii
+        getRestaurantsMediaPerCities(array(530,531,532,533,534,535,536));
     }
 
-    public function getRestaurantsMedia3(Request $request) { // Maryland
-        getRestaurantsMediaPerCities(array(569,570,571));
+    public function getRestaurantsMedia3(Request $request) { // Georgia
+        getRestaurantsMediaPerCities(array(524,525,526,527,529));
     }
 
-    public function getRestaurantsMedia4(Request $request) { // Maine
-        getRestaurantsMediaPerCities(array(566,567,568));
+    public function getRestaurantsMedia4(Request $request) { // Flordia
+        getRestaurantsMediaPerCities(array(515,516,517,518,519,520,521,522,523));
     }
 
-    public function getRestaurantsMedia5(Request $request) { // Louisiana
-        getRestaurantsMediaPerCities(array(561,562,563,564,565));
+    public function getRestaurantsMedia5(Request $request) { // Delaware
+        getRestaurantsMediaPerCities(array(511,512,513,514));
     }
 
-    public function getRestaurantsMedia6(Request $request) { // Kentucky
-        getRestaurantsMediaPerCities(array(558,559,560));
+    public function getRestaurantsMedia6(Request $request) { // Connecticut
+        getRestaurantsMediaPerCities(array(506,507,508,509,510));
     }
-    public function getRestaurantsMedia7(Request $request) { // Kansas
-        getRestaurantsMediaPerCities(array(553,554,555,556,557));
-    }
-
-    public function getRestaurantsMedia8(Request $request) { // Iowa
-        getRestaurantsMediaPerCities(array(550,551,552));
+    public function getRestaurantsMedia7(Request $request) { // Colorado
+        getRestaurantsMediaPerCities(array(500,501,502,503,504,505));
     }
 
-    public function getRestaurantsMedia9(Request $request) { // Indiana
-        getRestaurantsMediaPerCities(array(546,547,548,549));
+    public function getRestaurantsMedia8(Request $request) { // California
+        getRestaurantsMediaPerCities(array(490,491,492,493,494,495,496,497,498,499));
     }
 
-    public function getRestaurantsMedia10(Request $request) { // Illinois
-        getRestaurantsMediaPerCities(array(540,541,542,543,544,545));
+    public function getRestaurantsMedia9(Request $request) { // Arkansas
+        getRestaurantsMediaPerCities(array(487,488,489));
+    }
+
+    public function getRestaurantsMedia10(Request $request) { // Arizona
+        getRestaurantsMediaPerCities(array(479,480,481,482,483,484,485,486));
     }
 
 
