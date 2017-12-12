@@ -146,8 +146,6 @@ class CronsController extends Controller {
 
 
 
-
-
     public function getPlacesDetails($field, Request $request) {
 
         $places_missing_details = \App\Models\Place\Place::whereNull($field)
