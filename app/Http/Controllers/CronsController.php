@@ -105,12 +105,12 @@ class CronsController extends Controller {
 
 
 
-    public function getRestaurantsMedia(Request $request) { // Idaho
-        getRestaurantsMediaPerCities(array(537,538,539));
+    public function getRestaurantsMedia(Request $request) { // Alabama
+        getRestaurantsMediaPerCities(array(470,471,472,473,474,475));
     }
 
-    public function getRestaurantsMedia2(Request $request) { // Hawaii
-        getRestaurantsMediaPerCities(array(530,531,532,533,534,535,536));
+    public function getRestaurantsMedia2(Request $request) { // Alaska
+        getRestaurantsMediaPerCities(array(476,477,478));
     }
 
     public function getRestaurantsMedia3(Request $request) { // Georgia
