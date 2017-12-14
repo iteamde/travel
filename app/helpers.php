@@ -101,10 +101,8 @@ if (!function_exists('getRtlCss')) {
 
 }
 
-function getPlacesMediaPerCities($cities) {
+function getPlacesMediaPerCities() {
     $places_without_media = \App\Models\Place\Place::whereNull('media_done')
-            ->whereIn('places.cities_id', $cities
-            )
             ->orderBy('id', 'ASC')
             ->take(5)
             ->get();
@@ -150,10 +148,8 @@ function getPlacesMediaPerCities($cities) {
     }
 }
 
-function getHotelsMediaPerCities($cities) {
+function getHotelsMediaPerCities() {
     $places_without_media = \App\Models\Hotels\Hotels::whereNull('media_done')
-            ->whereIn('hotels.cities_id', $cities
-            )
             ->orderBy('id', 'ASC')
             ->take(5)
             ->get();
@@ -199,10 +195,8 @@ function getHotelsMediaPerCities($cities) {
     }
 }
 
-function getRestaurantsMediaPerCities($cities) {
+function getRestaurantsMediaPerCities() {
     $places_without_media = \App\Models\Restaurants\Restaurants::whereNull('media_done')
-            ->whereIn('restaurants.cities_id', $cities
-            )
             ->orderBy('id', 'ASC')
             ->take(5)
             ->get();
