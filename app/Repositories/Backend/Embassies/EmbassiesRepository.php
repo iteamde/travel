@@ -86,10 +86,12 @@ class EmbassiesRepository extends BaseRepository
             // ->with('roles')
             ->with('transsingle')
             ->select([
-                config('embassies.embassies_table').'.id',
+                 config('embassies.embassies_table').'.id',
                 config('embassies.embassies_table').'.lat',
                 config('embassies.embassies_table').'.lng',
-                config('embassies.embassies_table').'.active'
+                config('embassies.embassies_table').'.cities_id',
+                config('embassies.embassies_table').'.active',
+                config('embassies.embassies_table').'.place_type',
             ]);
 
         // active() is a scope on the UserScope trait

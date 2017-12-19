@@ -20,6 +20,8 @@ use App\Repositories\Backend\City\CityRepository;
 use App\Models\EmergencyNumbers\EmergencyNumbers;
 use App\Http\Requests\Backend\City\StoreCityRequest;
 use App\Http\Requests\Backend\City\ManageCityRequest;
+use Illuminate\Support\Facades\Auth;
+use App\Models\AdminLogs\AdminLogs;
 
 class CityController extends Controller
 {
@@ -68,16 +70,6 @@ class CityController extends Controller
         foreach ($degrees as $key => $value) {
             if(isset($value->transsingle) && !empty($value->transsingle)){
                 $degrees_arr[$value->id] = $value->transsingle->title;
-            }
-        }
-
-        /* Get All Places */
-        $places = Place::get();
-        $places_arr = [];
-
-        foreach ($places as $key => $value) {
-            if(isset($value->transsingle) && !empty($value->transsingle)){
-                $places_arr[$value->id] = $value->transsingle->title;
             }
         }
 
@@ -131,15 +123,6 @@ class CityController extends Controller
             }
         }
 
-        /* Find All Medias In The System */
-        $medias = Media::where(['type' => null])->get();
-        $medias_arr = [];
-
-        foreach ($medias as $key => $value) {
-            if(isset($value->transsingle) && !empty($value->transsingle)){
-                $medias_arr[$value->id] = $value->transsingle->title;
-            }
-        }
 
         /* Find All Active Religions In The System */
         $religion = Religion::where([ 'active' => Religion::ACTIVE])->get();
@@ -154,14 +137,14 @@ class CityController extends Controller
         return view('backend.city.create',[
             'countries' => $countries_arr,
             'degrees'   => $degrees_arr,
-            'places'    => $places_arr,
+            //'places'    => $places_arr,
             'currencies'=> $currencies_arr,
             'languages_spoken' => $languages_spoken,
             'emergency_numbers' => $emergency_numbers_arr,
             'languages_spoken'  => $languages_spoken_arr,
             'holidays'  => $holidays_arr,
             'lifestyles' => $lifestyles_arr,
-            'medias' => $medias_arr,
+            //'medias' => $medias_arr,
             'religions' => $religion_arr,
         ]);
     }
@@ -218,13 +201,13 @@ class CityController extends Controller
             'code' => $request->input('code') ? $request->input('code') : 0,
             'lat' => $location[0] ? $location[0] : 0,
             'lng' => isset($location[1]) ? $location[1] : 0,
-            'places' => $request->input('places_id') ? $request->input('places_id') : '',
+            //'places' => $request->input('places_id') ? $request->input('places_id') : '',
             'currencies' => $request->input('currencies_id') ? $request->input('currencies_id') : '',
             'emergency_numbers' => $request->input('emergency_numbers_id') ? $request->input('emergency_numbers_id') : '',
             'holidays'  => $request->input('holidays_id') ? $request->input('holidays_id') : '',
             'languages_spoken' => $request->input('languages_spoken_id') ? $request->input('languages_spoken_id') : '',
             'lifestyles'  => $request->input('lifestyles_id') ? $request->input('lifestyles_id') : '',
-            'medias'  => $request->input('medias_id') ? $request->input('medias_id') : '',
+            //'medias'  => $request->input('medias_id') ? $request->input('medias_id') : '',
             'religions'  => $request->input('religions_id') ? $request->input('religions_id') : '',
             'safety_degree_id' => $request->input('safety_degree_id') ? $request->input('safety_degree_id') : '',
             'level_of_living_id' => $request->input('level_of_living_id') ? $request->input('level_of_living_id') : 0,
@@ -307,29 +290,6 @@ class CityController extends Controller
         foreach ($degrees as $key => $value) {
             if(isset($value->transsingle) && !empty($value->transsingle)){
                 $degrees_arr[$value->id] = $value->transsingle->title;
-            }
-        }
-
-        /* Get All Selected Airport Locations */
-        $selected_airports = $cities->airports;
-        $selected_airports_arr = [];
-        /* Get Selected Id Pair From Each Model */
-        foreach ($selected_airports as $key => $value) {
-            if(isset($value->place->transsingle) && !empty($value->place->transsingle)){
-                // $selected_airports_arr[$value->place->id] = $value->place->transsingle->title;
-                array_push($selected_airports_arr,$value->place->id);
-            }
-        }
-
-        $data['selected_airports'] = $selected_airports_arr;
-
-        /* Get All Places */
-        $places = Place::get();
-        $places_arr = [];
-        /* Get Title Id Pair For Each Model */
-        foreach ($places as $key => $value) {
-            if(isset($value->transsingle) && !empty($value->transsingle)){
-                $places_arr[$value->id] = $value->transsingle->title;
             }
         }
 
@@ -472,15 +432,6 @@ class CityController extends Controller
 
         $data['selected_medias'] = $selected_medias_arr;
 
-        /* Find All Medias In The System */
-        $medias = Media::where([ 'type' => null ])->get();
-        $medias_arr = [];
-        /* Get Title Id Pair For Each Model */
-        foreach ($medias as $key => $value) {
-            if(isset($value->transsingle) && !empty($value->transsingle)){
-                $medias_arr[$value->id] = $value->transsingle->title;
-            }
-        }
 
         /* Get Selected Religions */
         $selected_religions = $cities->religions;
@@ -512,14 +463,14 @@ class CityController extends Controller
             ->withData($data)
             ->withCountries($countries_arr)
             ->withDegrees($degrees_arr)
-            ->withPlaces($places_arr)
+            //->withPlaces($places_arr)
             ->withCurrencies($currencies_arr)
             ->withLanguages_spoken($languages_spoken_arr)
             ->withHolidays($holidays_arr)
             ->withEmergency_numbers($emergency_numbers_arr)
             ->withLifestyles($lifestyles_arr)
             ->withReligions($religion_arr)
-            ->withMedias($medias_arr)
+            //->withMedias($medias_arr)
             ->withImages($selected_images);
     }
 
@@ -810,14 +761,14 @@ class CityController extends Controller
     {
         $item = Cities::findOrFail($id);
         $item->deleteTrans();
-        $item->deleteAirports();
-        $item->deleteCurrencies();
-        $item->deleteEmergency_numbers();
-        $item->deleteHolidays();
-        $item->deleteLanguagesSpoken();
-        $item->deleteLifestyles();
-        $item->deleteMedias();
-        $item->deleteReligions();
+        // $item->deleteAirports();
+        // $item->deleteCurrencies();
+        // $item->deleteEmergency_numbers();
+        // $item->deleteHolidays();
+        // $item->deleteLanguagesSpoken();
+        // $item->deleteLifestyles();
+        // $item->deleteMedias();
+        // $item->deleteReligions();
         $item->delete();
 
         return redirect()->route('admin.location.city.index')->withFlashSuccess('City Deleted Successfully');
@@ -836,5 +787,50 @@ class CityController extends Controller
         $city->save();
         return redirect()->route('admin.location.city.index')
             ->withFlashSuccess('City Status Updated!');
+    }
+
+    public function delete_ajax(ManageCityRequest $request){
+
+        $ids = $request->input('ids');
+        // if(isset($request->input('ids')) && !empty($request->input('ids'))){
+        // }
+        if(!empty($ids)){
+            $ids = explode(',',$request->input('ids'));
+            foreach ($ids as $key => $value) {
+                $this->delete_single_ajax($value);
+            }
+        }
+
+        echo json_encode([
+            'result' => true
+        ]);
+    }
+
+    /**
+     * @param City $id
+     * @param ManageCityRequest $request
+     *
+     * @return mixed
+     */
+    public function delete_single_ajax($id) {
+        $item = Cities::find($id);
+
+        if(empty($item)){
+            return false;
+        }
+
+        $item->deleteTrans();
+        // $item->deleteAirports();
+        // $item->deleteCurrencies();
+        // $item->deleteEmergency_numbers();
+        // $item->deleteHolidays();
+        // $item->deleteLanguagesSpoken();
+        // $item->deleteLifestyles();
+        // $item->deleteMedias();
+        // $item->deleteReligions();
+
+        $item->delete();
+
+        AdminLogs::create(['item_type' => 'cities', 'item_id' => $id, 'action' => 'delete', 'time' => time(), 'admin_id' => Auth::user()->id]);
     }
 }

@@ -34,6 +34,9 @@ class UserTableController extends Controller
     {
         return Datatables::of($this->users->getForDataTable($request->get('status'), $request->get('trashed')))
             ->escapeColumns(['name', 'email'])
+            ->addColumn('',function(){
+                return null;
+            })
             ->editColumn('confirmed', function ($user) {
                 return $user->confirmed_label;
             })

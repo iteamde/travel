@@ -20,6 +20,8 @@ use App\Models\LanguagesSpoken\LanguagesSpoken;
 use App\Models\Lifestyle\Lifestyle;
 use App\Models\ActivityMedia\Media;
 use App\Models\Religion\Religion;
+use Illuminate\Support\Facades\Auth;
+use App\Models\AdminLogs\AdminLogs;
 
 class CountryController extends Controller
 {
@@ -65,16 +67,6 @@ class CountryController extends Controller
         foreach ($degrees as $key => $value) {
             if(isset($value->transsingle) && !empty($value->transsingle)){
                 $degrees_arr[$value->id] = $value->transsingle->title;
-            }
-        }
-
-        /* Get All Places For Airports*/
-        $places = Place::where(['active' => 1])->get();
-        $places_arr = [];
-
-        foreach ($places as $key => $value) {
-            if(isset($value->transsingle) && !empty($value->transsingle)){
-                $places_arr[$value->id] = $value->transsingle->title;
             }
         }
 
@@ -138,15 +130,7 @@ class CountryController extends Controller
             }
         }
 
-        /* Get All Medias */
-        $medias = Media::where(['type' => null])->get();
-        $medias_arr = [];
 
-        foreach ($medias as $key => $value) {
-            if(isset($value->transsingle) && !empty($value->transsingle)){
-                $medias_arr[$value->id] = $value->transsingle->title;
-            }
-        }
 
         /* Get All Religions */
         $religions = Religion::where([ 'active' => 1 ])->get();
@@ -161,14 +145,14 @@ class CountryController extends Controller
         return view('backend.country.create',[
             'regions' => $regions_arr,
             'degrees' => $degrees_arr,
-            'places'  => $places_arr,
+            //'places'  => $places_arr,
             'currencies' => $currencies_arr,
             'cities' => $cities_arr,
             'emergency_numbers' => $emergency_numbers_arr,
             'holidays' => $holidays_arr,
             'languages_spoken' => $languages_spoken_arr,
             'lifestyles' => $lifestyles_arr,
-            'medias' => $medias_arr,
+            //'medias' => $medias_arr,
             'religions' => $religions_arr
         ]);
     }
@@ -216,16 +200,16 @@ class CountryController extends Controller
             'active' => $active,
             'region_id' =>  $request->input('region_id'),
             'code' => $request->input('code'),
-            'lat' => $location[0],
-            'lng' => $location[1],
-            'places' => $request->input('places_id'),
+            'lat' => isset($location[0]) && $location[0]>0 ? $location[0] : 0,
+            'lng' => isset($location[1]) && $location[1]>0 ? $location[1] : 0,
+            //'places' => $request->input('places_id'),
             'currencies' => $request->input('currencies_id'),
             'cities' => $request->input('cities_id'),
             'emergency_numbers' => $request->input('emergency_numbers_id'),
             'holidays' => $request->input('holidays_id'),
             'languages_spoken' => $request->input('languages_spoken_id'),
             'lifestyles' => $request->input('lifestyles_id'),
-            'medias' => $request->input('medias_id'),
+            //'medias' => $request->input('medias_id'),
             'religions' => $request->input('religions_id'),
             'safety_degree_id' => $request->input('safety_degree_id'),
             'files' => $files
@@ -246,15 +230,15 @@ class CountryController extends Controller
     {
         $item = Countries::findOrFail($id);
         $item->deleteTrans();
-        $item->deleteAirports();
-        $item->deleteCurrencies();
-        $item->deleteCapitals();
-        $item->deleteEmergencyNumbers();
-        $item->deleteHolidays();
-        $item->deleteLanguagesSpoken();
-        $item->deleteLifestyles();
-        $item->deleteReligions();
-        $item->deleteMedias();
+        // $item->deleteAirports();
+        // $item->deleteCurrencies();
+        // $item->deleteCapitals();
+        // $item->deleteEmergencyNumbers();
+        // $item->deleteHolidays();
+        // $item->deleteLanguagesSpoken();
+        // $item->deleteLifestyles();
+        // $item->deleteReligions();
+        // $item->deleteMedias();
         $item->delete();
 
         return redirect()->route('admin.location.country.index')->withFlashSuccess('Country Deleted Successfully');
@@ -330,32 +314,6 @@ class CountryController extends Controller
         foreach ($degrees as $key => $value) {
             if(isset($value->transsingle) && !empty($value->transsingle)){
                 $degrees_arr[$value->id] = $value->transsingle->title;
-            }
-        }
-
-        /* Get All Selected Places For Country Airports */
-        $selected_places = $country->airports;
-        $selected_places_arr = [];
-
-        if(!empty($selected_places)){
-            foreach ($selected_places as $key => $value) {
-                $place = $value->place;
-
-                if(!empty($place)){
-                    array_push($selected_places_arr,$place->id);
-                }
-            }
-        }
-
-        $data['selected_places'] = $selected_places_arr;
-
-        /* Get Active Places */
-        $places = Place::where(['active' => 1])->get();
-        $places_arr = [];
-
-        foreach ($places as $key => $value) {
-            if(isset($value->transsingle) && !empty($value->transsingle)){
-                $places_arr[$value->id] = $value->transsingle->title;
             }
         }
 
@@ -540,16 +498,6 @@ class CountryController extends Controller
 
         $data['selected_medias'] = $selected_medias_arr;
 
-        /* Get All Medias For Dropdown*/
-        $medias = Media::where([ 'type' => null ])->get();
-        $medias_arr = [];
-
-        foreach ($medias as $key => $value) {
-            if(isset($value->transsingle) && !empty($value->transsingle)){
-                $medias_arr[$value->id] = $value->transsingle->title;
-            }
-        }
-
         /* Get Selected Religions */
         $selected_religions = $country->religions;
         $selected_religions_arr = [];
@@ -583,14 +531,14 @@ class CountryController extends Controller
             ->withData($data)
             ->withRegions($regions_arr)
             ->withDegrees($degrees_arr)
-            ->withPlaces($places_arr)
+            //->withPlaces($places_arr)
             ->withCurrencies($currencies_arr)
             ->withCities($cities_arr)
             ->withEmergency_numbers($emergency_numbers_arr)
             ->withHolidays($holidays_arr)
             ->withLanguages_spoken($languages_spoken_arr)
             ->withLifestyles($lifestyles_arr)
-            ->withMedias($medias_arr)
+            //->withMedias($medias_arr)
             ->withImages($selected_images)
             ->withReligions($religions_arr);
     }
@@ -886,12 +834,60 @@ class CountryController extends Controller
     public function jsoncities(ManageCountryRequest $request)
     {
         $country_id = $request->get('countryID');
+
         $cities_list = Cities::leftJoin('cities_trans', 'cities.id', '=', 'cities_trans.cities_id')
                 ->where('cities.countries_id', $country_id)
                 ->where('cities_trans.languages_id', 1)
                 ->select('cities.id', 'cities_trans.title')
+                ->orderBy('cities_trans.title', 'ASC')
                 ->get()
                 ->toArray();
+
         return json_encode($cities_list);
+    }
+
+    public function delete_ajax(ManageCountryRequest $request){
+
+        $ids = $request->input('ids');
+        // if(isset($request->input('ids')) && !empty($request->input('ids'))){
+        // }
+        if(!empty($ids)){
+            $ids = explode(',',$request->input('ids'));
+            foreach ($ids as $key => $value) {
+                $this->delete_single_ajax($value);
+            }
+        }
+
+        echo json_encode([
+            'result' => true
+        ]);
+    }
+
+    /**
+     * @param User $id
+     * @param ManageUserRequest $request
+     *
+     * @return mixed
+     */
+    public function delete_single_ajax($id) {
+        $item = Countries::find($id);
+
+        if(empty($item)){
+            return false;
+        }
+
+        $item->deleteTrans();
+        // $item->deleteAirports();
+        // $item->deleteCurrencies();
+        // $item->deleteCapitals();
+        // $item->deleteEmergencyNumbers();
+        // $item->deleteHolidays();
+        // $item->deleteLanguagesSpoken();
+        // $item->deleteLifestyles();
+        // $item->deleteReligions();
+        // $item->deleteMedias();
+        $item->delete();
+
+        AdminLogs::create(['item_type' => 'countries', 'item_id' => $id, 'action' => 'delete', 'time' => time(), 'admin_id' => Auth::user()->id]);
     }
 }

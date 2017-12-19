@@ -3,7 +3,8 @@
 @section('title', 'Country Manager')
 
 @section('after-styles')
-    {{ Html::style("https://cdn.datatables.net/v/bs/dt-1.10.15/datatables.min.css") }}
+{{ Html::style("https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css") }}
+{{ Html::style("https://cdn.datatables.net/select/1.2.3/css/select.dataTables.min.css") }}
 @endsection
 
 @section('page-header')
@@ -22,7 +23,7 @@
         <div class="box-header with-border">
             <!-- <h3 class="box-title">{{ trans('labels.backend.access.users.active') }}</h3> -->
             <h3 class="box-title">Countries</h3>
-
+            @include('backend.select-deselect-all-buttons')
             <div class="box-tools pull-right">
                 @include('backend.access.includes.partials.country-header-buttons')
             </div><!--box-tools pull-right-->
@@ -34,6 +35,7 @@
                     <thead>
                     <tr>
                         <!-- <th>{{ trans('labels.backend.access.users.table.id') }}</th> -->
+                        <th></th>
                         <th>id</th>
                         <th>Title</th>
                         <th>Code</th>
@@ -57,11 +59,21 @@
 @endsection
 
 @section('after-scripts')
-    {{ Html::script("https://cdn.datatables.net/v/bs/dt-1.10.15/datatables.min.js") }}
+{{ Html::script("https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js") }}
+{{ Html::script("https://cdn.datatables.net/select/1.2.3/js/dataTables.select.min.js") }}
 
     <script>
         $(function () {
             $('#countries-table').DataTable({
+                columnDefs: [ {
+                    orderable: false,
+                    className: 'select-checkbox',
+                    targets:   0
+                } ],
+                select: {
+                    style:    'os',
+                    selector: 'td:first-child'
+                },
                 processing: true,
                 serverSide: true,
                 ajax: {
@@ -70,6 +82,7 @@
                     data: {status: 1, trashed: false}
                 },
                 columns: [
+                    {data: '',name: ''},
 	                {data: 'id', name: '{{config('locations.country_table')}}.id'},
                     {data: 'transsingle.title', name: 'transsingle.title'},
 	                {data: 'code', name: '{{config('locations.country_table')}}.code'},
@@ -90,9 +103,65 @@
                     },
                     {data: 'action', name: 'action', searchable: false, sortable: false}
                 ],
-                order: [[0, "asc"]],
+                order: [[1, "asc"]],
                 searchDelay: 500
             });
         });
     </script>
+    <script>
+    $(document).ready(function(){
+        $(document).on('click','#select-all',function(){
+            // alert('select-all');
+            if($('#countries-table tbody tr').length == 1){
+                if($('#countries-table tbody tr td').hasClass('dataTables_empty')){
+                    return false;
+                }
+            }
+            $('#countries-table tbody tr').addClass('selected');
+        });
+
+        $(document).on('click','#deselect-all',function(){
+            // alert('deselect-all');
+            $('#countries-table tbody tr').removeClass('selected');
+        });
+        
+        $(document).on('click','#delete-all-selected',function(){
+            // alert('delete all');
+            // alert($('#countries-table tr.selected').length);
+            
+            if($('#countries-table tbody tr.selected').length == 0){
+                alert('Please select some rows first.');
+                return false;
+            }
+
+            if(!confirm('Are you sure you want to delete the selected rows?')){
+                return false;
+            }
+            var ids = '';
+            var i = 0;
+            $('#countries-table tbody tr.selected').each(function(){
+                if(i != 0){
+                    ids += ',';
+                }
+                ids += $(this).find('td:nth-child(2)').html();
+                i++;
+            });
+            // alert(ids);
+            $.ajax({
+                url: '{{ route("admin.location.country.delete_ajax") }}',
+                type: 'post',
+                data: {
+                    ids: ids
+                },
+                success: function(data){
+                    var result = JSON.parse(data);
+                    // alert(result.result);
+                    if(result.result == true){
+                        document.location.reload(); 
+                    }
+                }
+            });
+        });
+    });
+</script>
 @endsection

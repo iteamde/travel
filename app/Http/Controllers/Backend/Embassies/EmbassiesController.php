@@ -325,10 +325,14 @@ class EmbassiesController extends Controller
             }
             $data['provider_ids'] = $provider_ids;
 
-            if (time() % 2 == 0) {
+            if (time() % 4 == 0) {
                 $json = file_get_contents('http://db.travooo.com/public/embassies/go/' . ($city ? $city : 0) . '/' . $lat . '/' . $lng . '/' . $query);
-            } else {
+            } elseif (time() % 4 == 1)  {
                 $json = file_get_contents('http://db.travooodev.com/public/embassies/go/' . ($city ? $city : 0) . '/' . $lat . '/' . $lng . '/' . $query);
+            } elseif (time() % 4 == 2)  {
+                $json = file_get_contents('http://db.travoooapi.com/public/embassies/go/' . ($city ? $city : 0) . '/' . $lat . '/' . $lng . '/' . $query);
+            } elseif (time() % 4 == 3)  {
+                $json = file_get_contents('http://db.travoooapi.net/public/embassies/go/' . ($city ? $city : 0) . '/' . $lat . '/' . $lng . '/' . $query);
             }
             $result = json_decode($json);
 
@@ -364,6 +368,7 @@ class EmbassiesController extends Controller
         if (is_array($to_save)) {
             foreach ($to_save AS $k => $v) {
                 $p = new Embassies();
+                $p->place_type = $places[$k]['types'];
                 $p->provider_id = $places[$k]['provider_id'];
                 $p->countries_id = $data['countries_id'];
                 $p->cities_id = $data['cities_id'];
@@ -431,5 +436,39 @@ class EmbassiesController extends Controller
                 ->get()
                 ->toArray();
         return json_encode($markers);
+    }
+
+    public function delete_ajax(ManageEmbassiesRequest $request){
+
+        $ids = $request->input('ids');
+        // if(isset($request->input('ids')) && !empty($request->input('ids'))){
+        // }
+        if(!empty($ids)){
+            $ids = explode(',',$request->input('ids'));
+            foreach ($ids as $key => $value) {
+                $this->delete_single_ajax($value);
+            }
+        }
+
+        echo json_encode([
+            'result' => true
+        ]);
+    }
+
+    /**
+     * @param Embassies $id
+     * @param ManageEmbassiesRequest $request
+     *
+     * @return mixed
+     */
+    public function delete_single_ajax($id) {
+        $item = Embassies::find($id);
+        if(empty($item)){
+            return false;
+        }
+        $item->trans()->delete();
+        $item->delete();
+
+        AdminLogs::create(['item_type' => 'embassies', 'item_id' => $id, 'action' => 'delete', 'time' => time(), 'admin_id' => Auth::user()->id]);
     }
 }

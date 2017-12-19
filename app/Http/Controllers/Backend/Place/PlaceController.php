@@ -18,6 +18,7 @@ use App\Models\PlaceSearchHistory\PlaceSearchHistory;
 use App\Models\PlaceTypes\PlaceTypes;
 use App\Models\ActivityMedia\Media;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class PlaceController extends Controller {
 
@@ -118,21 +119,21 @@ class PlaceController extends Controller {
         }
 
         $files = null;
-        if($request->hasFile('pictures')){
+        if ($request->hasFile('pictures')) {
             $files = $request->file('pictures');
         }
 
         $place_type_ids = null;
         $types = PlaceTypes::get();
 
-        if(!empty($types[0])){
+        if (!empty($types[0])) {
             $place_type_ids = $types[0]->id;
         }
 
         $safety_degrees_id = null;
         $degrees = SafetyDegree::get();
 
-        if(!empty($degrees[0])){
+        if (!empty($degrees[0])) {
             $safety_degrees_id = $degrees[0]->id;
         }
 
@@ -287,34 +288,25 @@ class PlaceController extends Controller {
         $selected_medias = $place->medias;
         $selected_medias_arr = [];
         $images_arr = [];
+        $featured_media = 0;
 
         foreach ($selected_medias as $key => $value) {
             $value = $value->media;
             // if(isset($value->transsingle) && !empty($value->transsingle)){
-            if($value->type == null){
-                array_push($selected_medias_arr, $value->id);
-            }else{
-                array_push($images_arr,[
-                    'id' => $value->id,
-                    'url' => $value->url
-                ]);
-            }
-            // }
+            if ($value->featured == 1)
+                $data['featured_media'] = $value->id;
+            array_push($images_arr, [
+                'id' => $value->id,
+                'featured' => $value->featured,
+                'url' => asset(Storage::url($value->url))
+            ]);
         }
 
         $data['selected_medias'] = $selected_medias_arr;
+        $data['images'] = $images_arr;
 
-        /* Get All Medias */
-        $medias = Media::where([ 'type' => null ])->get();
-        $medias_arr = [];
 
-        foreach ($medias as $key => $value) {
-            if (isset($value->transsingle) && !empty($value->transsingle)) {
-                $medias_arr[$value->id] = $value->transsingle->title;
-            }
-        }
-
-        return view('backend.place.edit')
+        return view('backend.place.edit', $data)
                         ->withLanguages($this->languages)
                         ->withPlace($place)
                         ->withPlaceid($id)
@@ -323,8 +315,8 @@ class PlaceController extends Controller {
                         ->withDegrees($degrees_arr)
                         ->withCities($cities_arr)
                         ->withPlace_types($places_types_arr)
-                        ->withImages($images_arr)
-                        ->withMedias($medias_arr);
+                        ->withImages($images_arr);
+        //->withMedias($medias_arr);
     }
 
     /**
@@ -358,6 +350,19 @@ class PlaceController extends Controller {
             $data[$language->id]['history_' . $language->id] = $request->input('history_' . $language->id);
         }
 
+        // handle featured media for place - Hussien 19/10/2017
+        if ($request->has('featured_media')) {
+            $featured_media_id = $request->input('featured_media');
+
+            $place_media = Media::leftJoin('places_medias', 'places_medias.medias_id', '=', 'medias.id')
+                    ->where('places_medias.places_id', $id)
+                    ->update(['featured' => NULL]);
+            $featured_media = Media::where('id', $featured_media_id)
+                    ->update(['featured' => 1]);
+            //dd($featured_media);
+        }
+        // end handle featured media for place
+
         $location = explode(',', $request->input('lat_lng'));
 
         /* Check if active field is enabled or disabled */
@@ -369,7 +374,7 @@ class PlaceController extends Controller {
         }
 
         $files = null;
-        if($request->hasFile('pictures')){
+        if ($request->hasFile('pictures')) {
             $files = $request->file('pictures');
         }
 
@@ -378,13 +383,13 @@ class PlaceController extends Controller {
             'active' => $active,
             'countries_id' => $request->input('countries_id'),
             'cities_id' => $request->input('cities_id'),
-            'place_types_ids' => $request->input('place_types_ids'),
+            //'place_types_ids' => $request->input('place_types_ids'),
             'medias' => $request->input('medias_id'),
             'lat' => $location[0],
             'lng' => $location[1],
             'safety_degrees_id' => $request->input('safety_degrees_id'),
-            'files'             => $files,
-            'delete-images'     => $request->input('delete-images'),
+            'files' => $files,
+            'delete-images' => $request->input('delete-images'),
         ];
 
         $this->places->update($id, $place, $data, $extra);
@@ -416,13 +421,13 @@ class PlaceController extends Controller {
 
         /* Get Country Information */
         $type = $place->type;
-        if(!empty($type)){
+        if (!empty($type)) {
             $type = $type->transsingle;
         }
 
         /* Get Safety Degrees Information */
         $safety_degree = $place->degree;
-        if(!empty($safety_degrees)){
+        if (!empty($safety_degrees)) {
             $safety_degree = $safety_degree->transsingle;
         }
 
@@ -433,24 +438,24 @@ class PlaceController extends Controller {
 
         foreach ($selected_medias as $key => $value) {
             $value = $value->media;
-            if($value->type == null){
+            if ($value->type == null) {
                 if (isset($value->transsingle) && !empty($value->transsingle)) {
                     array_push($selected_medias_arr, $value->transsingle->title);
                 }
-            }else{
-                array_push($image_urls,$value->url);
+            } else {
+                array_push($image_urls, $value->url);
             }
         }
 
         return view('backend.place.show')
-                ->withPlace($place)
-                ->withPlacetrans($placeTrans)
-                ->withCountry($country)
-                ->withCity($city)
-                ->withType($type)
-                ->withDegree($safety_degree)
-                ->withImages($image_urls)
-                ->withMedias($selected_medias_arr);
+                        ->withPlace($place)
+                        ->withPlacetrans($placeTrans)
+                        ->withCountry($country)
+                        ->withCity($city)
+                        ->withType($type)
+                        ->withDegree($safety_degree)
+                        ->withImages($image_urls)
+                        ->withMedias($selected_medias_arr);
     }
 
     /**
@@ -482,6 +487,8 @@ class PlaceController extends Controller {
             }
         }
         $data['countries'] = $countries_arr;
+
+
 
         /* Get All Cities */
         $cities = Cities::where(['active' => 1])->get();
@@ -555,20 +562,24 @@ class PlaceController extends Controller {
             /*
              * $provider_ids = array();
 
-            $get_provider_ids = Place::where('id', '>', 0)->select('provider_id')->get()->toArray();
-            foreach ($get_provider_ids AS $gpi) {
-                $provider_ids[] = $gpi['provider_id'];
-            }
-            $data['provider_ids'] = $provider_ids;
+              $get_provider_ids = Place::where('id', '>', 0)->select('provider_id')->get()->toArray();
+              foreach ($get_provider_ids AS $gpi) {
+              $provider_ids[] = $gpi['provider_id'];
+              }
+              $data['provider_ids'] = $provider_ids;
              *
              */
 
             $data['provider_ids'] = array();
 
-            if (time() % 2 == 0) {
+            if (time() % 4 == 0) {
                 $json = file_get_contents('http://db.travooo.com/public/places/go/' . ($city ? $city : 0) . '/' . $lat . '/' . $lng . '/' . $query);
-            } else {
+            } elseif (time() % 4 == 1) {
                 $json = file_get_contents('http://db.travooodev.com/public/places/go/' . ($city ? $city : 0) . '/' . $lat . '/' . $lng . '/' . $query);
+            } elseif (time() % 4 == 2) {
+                $json = file_get_contents('http://db.travoooapi.com/public/places/go/' . ($city ? $city : 0) . '/' . $lat . '/' . $lng . '/' . $query);
+            } elseif (time() % 4 == 3) {
+                $json = file_get_contents('http://db.travoooapi.net/public/places/go/' . ($city ? $city : 0) . '/' . $lat . '/' . $lng . '/' . $query);
             }
             $result = json_decode($json);
 
@@ -603,31 +614,34 @@ class PlaceController extends Controller {
 
         if (is_array($to_save)) {
             foreach ($to_save AS $k => $v) {
-                $p = new Place();
-                $p->place_type = $places[$k]['types'];
-                $p->safety_degrees_id = 1;
-                $p->provider_id = $places[$k]['provider_id'];
-                $p->countries_id = $data['countries_id'];
-                $p->cities_id = $data['cities_id'];
-                $p->lat = $places[$k]['lat'];
-                $p->lng = $places[$k]['lng'];
-                $p->rating = $places[$k]['rating'];
-                $p->active = 1;
-                $p->save();
-                //dd($p->id);
+                if (!Place::where('provider_id', '=', $places[$k]['provider_id'])->exists()) {
 
-                $pt = new PlaceTranslations();
-                $pt->languages_id = 1;
-                $pt->places_id = $p->id;
-                $pt->title = $places[$k]['name'];
-                $pt->address = $places[$k]['address'];
-                if (isset($places[$k]['phone']))
-                    $pt->phone = $places[$k]['phone'];
-                if (isset($places[$k]['website']))
-                    $pt->description = $places[$k]['website'];
-                $pt->working_days = $places[$k]['working_days'];
-                $pt->save();
-                AdminLogs::create(['item_type' => 'places', 'item_id' => $p->id, 'action' => 'import', 'query' => '', 'time' => time(), 'admin_id' => Auth::user()->id]);
+                    $p = new Place();
+                    $p->place_type = $places[$k]['types'];
+                    $p->safety_degrees_id = 1;
+                    $p->provider_id = $places[$k]['provider_id'];
+                    $p->countries_id = $data['countries_id'];
+                    $p->cities_id = $data['cities_id'];
+                    $p->lat = $places[$k]['lat'];
+                    $p->lng = $places[$k]['lng'];
+                    $p->rating = $places[$k]['rating'];
+                    $p->active = 1;
+                    $p->save();
+                    //dd($p->id);
+
+                    $pt = new PlaceTranslations();
+                    $pt->languages_id = 1;
+                    $pt->places_id = $p->id;
+                    $pt->title = $places[$k]['name'];
+                    $pt->address = $places[$k]['address'];
+                    if (isset($places[$k]['phone']))
+                        $pt->phone = $places[$k]['phone'];
+                    if (isset($places[$k]['website']))
+                        $pt->description = $places[$k]['website'];
+                    $pt->working_days = $places[$k]['working_days'];
+                    $pt->save();
+                    AdminLogs::create(['item_type' => 'places', 'item_id' => $p->id, 'action' => 'import', 'query' => '', 'time' => time(), 'admin_id' => Auth::user()->id]);
+                }
             }
             //die();
             $num = count($to_save);
@@ -652,8 +666,8 @@ class PlaceController extends Controller {
                                     $request->get('latlng')))
                                 ->withFlashSuccess('You didnt select any items to import!');
             } else {
-            return redirect()->route('admin.location.place.index')
-                            ->withFlashError('You didnt select any items to import!');
+                return redirect()->route('admin.location.place.index')
+                                ->withFlashError('You didnt select any items to import!');
             }
         }
     }
@@ -672,6 +686,46 @@ class PlaceController extends Controller {
                 ->get()
                 ->toArray();
         return json_encode($markers);
+    }
+
+    public function delete_ajax(ManagePlaceRequest $request) {
+
+        $ids = $request->input('ids');
+
+        if (!empty($ids)) {
+            $ids = explode(',', $request->input('ids'));
+            foreach ($ids as $key => $value) {
+                $this->delete_single_ajax($value);
+            }
+        }
+
+        echo json_encode([
+            'result' => true
+        ]);
+    }
+
+    /**
+     * @param Place $id
+     * @param ManagePlaceRequest $request
+     *
+     * @return mixed
+     */
+    public function delete_single_ajax($id) {
+        $item = Place::find($id);
+        if (empty($item)) {
+            return false;
+        }
+        /* Delete Children Tables Data of this country */
+        // $child = PlaceTranslations::where(['places_id' => $id])->get();
+        // if (!empty($child)) {
+        //     foreach ($child as $key => $value) {
+        //         $value->delete();
+        //     }
+        // }
+        // $item->deleteMedias();
+        $item->delete();
+
+        AdminLogs::create(['item_type' => 'places', 'item_id' => $id, 'action' => 'delete', 'time' => time(), 'admin_id' => Auth::user()->id]);
     }
 
 }

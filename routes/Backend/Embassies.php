@@ -15,6 +15,10 @@ Route::group([
          * For DataTables
          */
         Route::post('embassies/get', 'EmbassiesTableController')->name('embassies.get');
+
+        Route::get('embassies/cities/{term?}/{type?}/{q?}', 'EmbassiesTableController@getAddedCities')->name('embassies.cities');
+        Route::get('embassies/types/{term?}/{type?}/{q?}', 'EmbassiesTableController@getPlaceTypes')->name('embassies.types');
+        
         Route::get('embassies/import', 'EmbassiesController@import')->name('embassies.import');
         Route::post('embassies/search', 'EmbassiesController@search')->name('embassies.search');
         Route::get('embassies/search/{admin_logs_id?}/{country_id?}/{city_id?}/{latlng?}', 'EmbassiesController@search')->name('embassies.search');
@@ -27,7 +31,9 @@ Route::group([
          */
         Route::resource('embassies', 'EmbassiesController');
 
-          /*
+        Route::post('embassies/delete-ajax', 'EmbassiesController@delete_ajax')->name('embassies.delete_ajax');
+
+        /*
          * Deleted Specific Embassies
          */
         Route::group(['prefix' => 'embassies/{deletedEmbassies}'], function () {

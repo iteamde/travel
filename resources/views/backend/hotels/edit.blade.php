@@ -56,7 +56,7 @@ use App\Models\Access\language\Languages;
             'class'  => 'form-horizontal',
             'role'   => 'form',
             'method' => 'PATCH',
-        ]) 
+        ])
     }}
 
         <div class="box box-success">
@@ -74,7 +74,7 @@ use App\Models\Access\language\Languages;
                 </div>
             </div>
             <!-- Language Error : End -->
-            
+
             <div class="box-body">
                 @if(!empty($languages))
                     <ul class="nav nav-tabs">
@@ -179,14 +179,11 @@ use App\Models\Access\language\Languages;
                                 </div><!--col-lg-10-->
                             </div><!--form control-->
                             <!-- End: Conditions -->
-
-
-
                             <!-- Languages Tabs: Start -->
                         </div>
                     @endforeach
                     </div>
-                    
+
                     <!-- Active: Start -->
                     <div class="form-group">
                         {{ Form::label('title', trans('validation.attributes.backend.access.languages.active'), ['class' => 'col-lg-2 control-label']) }}
@@ -200,7 +197,7 @@ use App\Models\Access\language\Languages;
                         </div><!--col-lg-10-->
                     </div><!--form control-->
                     <!-- Active: End -->
-                    
+
                     <!-- Countries: Start -->
                     <div class="form-group">
                         {{ Form::label('title', 'Country', ['class' => 'col-lg-2 control-label']) }}
@@ -210,7 +207,7 @@ use App\Models\Access\language\Languages;
                         </div><!--col-lg-10-->
                     </div><!--form control-->
                     <!-- Countries: End -->
-                    
+
                     <!-- Cities: Start -->
                     <div class="form-group">
                         {{ Form::label('title', 'Cities', ['class' => 'col-lg-2 control-label']) }}
@@ -251,7 +248,7 @@ use App\Models\Access\language\Languages;
                     <div class="form-group">
                         {{ Form::label('title', 'Lat,Lng', ['class' => 'col-lg-2 control-label']) }}
                         <div class="col-lg-10">
-                            
+
                             {{ Form::hidden('lat_lng', $data['lat_lng'], ['class' => 'form-control disabled', 'id' => 'lat-lng-input', 'required' => 'required', 'placeholder' => 'Lat,Lng']) }}
 
                             {{ Form::text('lat_lng_show', $data['lat_lng'], ['class' => 'form-control disabled', 'id' => 'lat-lng-input_show', 'required' => 'required', 'placeholder' => 'Lat,Lng' , 'disabled' => 'disabled']) }}
@@ -330,7 +327,7 @@ use App\Models\Access\language\Languages;
               position: myLatLng,
               draggable : true,
         }));
-        
+
         google.maps.event.addListener(markers[0], 'dragend', function (evt) {
                 var lat =  evt.latLng.lat().toFixed(3);
                 var longit = evt.latLng.lng().toFixed(3);
@@ -376,9 +373,9 @@ use App\Models\Access\language\Languages;
             }));
 
             var latitude = place.geometry.location.lat();
-            var longitude = place.geometry.location.lng();  
+            var longitude = place.geometry.location.lng();
             document.getElementById('lat-lng-input').setAttribute("value", latitude + "," + longitude );
-                document.getElementById('lat-lng-input_show').setAttribute("value", latitude + "," + longitude );        
+                document.getElementById('lat-lng-input_show').setAttribute("value", latitude + "," + longitude );
 
             google.maps.event.addListener(markers[0], 'dragend', function (evt) {
                 var lat =  evt.latLng.lat().toFixed(3);
@@ -403,13 +400,13 @@ use App\Models\Access\language\Languages;
     <!-- Error Alert Script : Start -->
     <script>
         $(document).on('click' , '.submit_button' , function(){
-        
+
             var msg = '<div id="language-alert" class="alert alert-danger alert-dismissable fade in"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Error!</strong> Please Fill Information In All Languages Tabs.</div>';
 
             $('.required').each(function(index,data){
                 var flag = false;
                 if($(this).val() == ''){
-                    
+
                     flag = true;
                 }
 
@@ -417,7 +414,7 @@ use App\Models\Access\language\Languages;
                     $('.required_msg').html(msg);
                     $("#language-alert").fadeTo(5000, 500).slideUp(500, function(){
                         $("#language-alert").slideUp(500);
-                    });   
+                    });
                 }
             });
         });

@@ -34,6 +34,8 @@ Route::group([
              */
             Route::resource('user', 'UserController');
 
+            Route::post('user/delete-ajax', 'UserController@delete_ajax')->name('user.delete_ajax');
+
             /*
              * Specific User
              */

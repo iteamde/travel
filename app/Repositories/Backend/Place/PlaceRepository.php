@@ -82,21 +82,46 @@ class PlaceRepository extends BaseRepository
      *
      * @return mixed
      */
-    public function getForDataTable()
+    public function getForDataTable($media = null)
     {
         /**
          * Note: You must return deleted_at or the User getActionButtonsAttribute won't
          * be able to differentiate what buttons to show for each row.
          */
-        $dataTableQuery = $this->query()
+        if($media == '3'){
+            $dataTableQuery = $this->query()
             // ->with('roles')
             ->with('transsingle')
             ->with('city')
+            ->with('country')
             ->select([
                 config('locations.place_table').'.id',
                 config('locations.place_table').'.cities_id',
+                config('locations.place_table').'.countries_id',
+                config('locations.place_table').'.place_type',
+                config('locations.place_table').'.media_done',
                 config('locations.place_table').'.active'
             ]);
+        }else{
+            $dataTableQuery = $this->query()
+                // ->with('roles')
+                ->with('transsingle')
+                ->with('city')
+                ->with('country')
+                ->select([
+                    config('locations.place_table').'.id',
+                    config('locations.place_table').'.cities_id',
+                    config('locations.place_table').'.countries_id',
+                    config('locations.place_table').'.place_type',
+                    config('locations.place_table').'.media_done',
+                    config('locations.place_table').'.active'
+                ]);
+            // if($media == '1' || $media == 1){
+                $dataTableQuery = $dataTableQuery->where(['media_done' => $media]);
+            // }else{
+                // $dataTableQuery = $dataTableQuery->where('media_done','=',1);
+            // }
+        }
 
         // active() is a scope on the UserScope trait
         return $dataTableQuery;
@@ -110,7 +135,7 @@ class PlaceRepository extends BaseRepository
         $model = new Place;
         $model->countries_id  = $extra['countries_id'];
         $model->cities_id  = $extra['cities_id'];
-        $model->place_type_ids  = $extra['place_types_ids'];
+        // $model->place_type_ids  = $extra['place_types_ids'];
         $model->active      = $extra['active'];
         $model->lat         = $extra['lat'];
         $model->lng         = $extra['lng'];
@@ -123,22 +148,22 @@ class PlaceRepository extends BaseRepository
             if ($model->save()) {
 
                 if(!empty($extra['files'])){
-                    
+
                     $url = UrlGenerator::GetUploadsUrl();
                     $i = 0;
                     foreach ($extra['files'] as $key => $file) {
                         $extension = $file->extension();
-                        
+
                         if(self::validateUpload($extension)){
                             $new_file_name = time() . $i++ . '_place.' . $file->extension();
                             $new_path = '/uploads/medias/places/' . $model->id . '/';
                             $file->storeAs( $new_path , $new_file_name);
-                            
+
                             $media = new Media;
                             $media->url = $url . 'medias/places/' . $model->id . '/' . $new_file_name;
                             $media->type = Media::TYPE_IMAGE;
                             $media->save();
-                            
+
                             $languages = Languages::all();
 
                             if(!empty($languages)){
@@ -214,7 +239,7 @@ class PlaceRepository extends BaseRepository
         $model = $model[0];
         $model->countries_id  = $extra['countries_id'];
         $model->cities_id  = $extra['cities_id'];
-        $model->place_type_ids  = $extra['place_types_ids'];
+        //$model->place_type_ids  = $extra['place_types_ids'];
         $model->active      = $extra['active'];
         $model->lat         = $extra['lat'];
         $model->lng         = $extra['lng'];
@@ -227,6 +252,7 @@ class PlaceRepository extends BaseRepository
             }
         }
 
+        /*
         $prev_medias = PlaceMedias::where(['places_id' => $id])->get();
         if(!empty($prev_medias)){
             foreach ($prev_medias as $key => $value) {
@@ -238,22 +264,22 @@ class PlaceRepository extends BaseRepository
 
         if(!empty($extra['delete-images'])){
             $images_arr = explode(',' , $extra['delete-images']);
-            
+
             if(!empty($images_arr)){
                 foreach ($images_arr as $key => $value) {
                     $temp = Media::where(['id' => $value])->first();
-                    
+
                     if(!empty($temp)){
                         if($temp->type == Media::TYPE_IMAGE){
                             $places_media = PlaceMedias::where(['medias_id' => $temp->id])->first();
                             $path = storage_path() . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . 'medias' . DIRECTORY_SEPARATOR . 'places' . DIRECTORY_SEPARATOR;
                             if(!empty($places_media)){
-                                
+
                                 $filename = explode('/',$temp->url);
                                 $filename = end($filename);
                                 $path .= $places_media->places_id . DIRECTORY_SEPARATOR;
                                 $path .= $filename;
-                                
+
                                 if(is_file($path)){
                                     unlink($path);
                                 }
@@ -263,7 +289,7 @@ class PlaceRepository extends BaseRepository
                     }
                 }
             }
-        }
+        }*/
 
         DB::transaction(function () use ($model, $input, $extra) {
             $check = 1;
@@ -271,22 +297,22 @@ class PlaceRepository extends BaseRepository
             if ($model->save()) {
 
                 if(!empty($extra['files'])){
-                    
+
                     $url = UrlGenerator::GetUploadsUrl();
                     $i = 0;
                     foreach ($extra['files'] as $key => $file) {
                         $extension = $file->extension();
-                        
+
                         if(self::validateUpload($extension)){
                             $new_file_name = time() . $i++ . '_place.' . $file->extension();
                             $new_path = '/uploads/medias/places/' . $model->id . '/';
                             $file->storeAs( $new_path , $new_file_name);
-                            
+
                             $media = new Media;
                             $media->url = $url . 'medias/places/' . $model->id . '/' . $new_file_name;
                             $media->type = Media::TYPE_IMAGE;
                             $media->save();
-                            
+
                             $languages = Languages::all();
 
                             if(!empty($languages)){
@@ -352,7 +378,7 @@ class PlaceRepository extends BaseRepository
     }
 
     public static function validateUpload($extension) {
-        
+
         $extension = strtolower($extension);
 
         switch($extension){

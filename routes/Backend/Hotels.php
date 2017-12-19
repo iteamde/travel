@@ -16,6 +16,10 @@ Route::group([
          */
         Route::post('hotels/get', 'HotelsTableController')->name('hotels.get');
         Route::get('hotels/import', 'HotelsController@import')->name('hotels.import');
+
+        Route::get('hotels/cities/{term?}/{type?}/{q?}', 'HotelsTableController@getAddedCities')->name('hotels.cities');
+        Route::get('hotels/types/{term?}/{type?}/{q?}', 'HotelsTableController@getPlaceTypes')->name('hotels.types');
+
         Route::post('hotels/search', 'HotelsController@search')->name('hotels.search');
         Route::get('hotels/search/{admin_logs_id?}/{country_id?}/{city_id?}/{latlng?}', 'HotelsController@search')->name('hotels.search');
         Route::post('hotels/savesearch', 'HotelsController@savesearch')->name('hotels.savesearch');
@@ -27,7 +31,9 @@ Route::group([
          */
         Route::resource('hotels', 'HotelsController');
 
-          /*
+        Route::post('hotels/delete-ajax', 'HotelsController@delete_ajax')->name('hotels.delete_ajax');
+
+        /*
          * Deleted Specific Hotels
          */
         Route::group(['prefix' => 'hotels/{deletedHotels}'], function () {

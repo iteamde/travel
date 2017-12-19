@@ -14,7 +14,7 @@ class Place extends Model
      * @var string
      */
     protected $table = 'places';
-    
+
     use PlaceRelationship,
         PlaceAttribute;
 
@@ -25,7 +25,8 @@ class Place extends Model
      *
      * @var array
      */
-    protected $fillable = ['region_id', 'code', 'lat', 'lng', 'safety_degree', 'active'];
+    protected $fillable = ['region_id', 'code', 'lat', 'lng', 'safety_degree', 'active',
+        'place_type', 'safety_degrees_id', 'provider_id', 'countries_id', 'cities_id', 'rating'];
 
     /**
      * @return mixed

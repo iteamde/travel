@@ -11,6 +11,8 @@ use App\Repositories\Backend\Regions\RegionsRepository;
 use App\Models\Regions\RegionsTranslation;
 use App\Http\Requests\Backend\Regions\UpdateRegionsRequest;
 use App\Models\ActivityMedia\Media;
+use Illuminate\Support\Facades\Auth;
+use App\Models\AdminLogs\AdminLogs;
 
 class RegionsController extends Controller
 {
@@ -241,5 +243,44 @@ class RegionsController extends Controller
         return view('backend.regions.show')
             ->withRegions($region)
             ->withMedias($selected_medias_arr);
+    }
+
+    public function delete_ajax(ManageRegionsRequest $request){
+
+        $ids = $request->input('ids');
+        // if(isset($request->input('ids')) && !empty($request->input('ids'))){
+        // }
+        if(!empty($ids)){
+            $ids = explode(',',$request->input('ids'));
+            foreach ($ids as $key => $value) {
+                $this->delete_single_ajax($value);
+            }
+        }
+        
+        echo json_encode([
+            'result' => true
+        ]);
+    }
+
+    /**
+     * @param User $id
+     * @param ManageUserRequest $request
+     *
+     * @return mixed
+     */
+    public function delete_single_ajax($id) {
+        $item = Regions::find($id);
+        if(empty($item)){
+            return false;
+        }
+        $trans = RegionsTranslation::where(['regions_id' => $item->id])->get();
+        if(!empty($trans)){
+            foreach ($trans as $key => $value) {
+                $value->delete();
+            }
+        }
+        $item->delete();
+
+        AdminLogs::create(['item_type' => 'regions', 'item_id' => $id, 'action' => 'delete', 'time' => time(), 'admin_id' => Auth::user()->id]);
     }
 }

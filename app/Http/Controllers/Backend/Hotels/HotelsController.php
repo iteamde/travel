@@ -505,10 +505,14 @@ class HotelsController extends Controller
             }
             $data['provider_ids'] = $provider_ids;
 
-            if (time() % 2 == 0) {
+            if (time() % 4 == 0) {
                 $json = file_get_contents('http://db.travooo.com/public/hotels/go/' . ($city ? $city : 0) . '/' . $lat . '/' . $lng . '/' . $query);
-            } else {
+            } elseif (time() % 4 == 1)  {
                 $json = file_get_contents('http://db.travooodev.com/public/hotels/go/' . ($city ? $city : 0) . '/' . $lat . '/' . $lng . '/' . $query);
+            } elseif (time() % 4 == 2)  {
+                $json = file_get_contents('http://db.travoooapi.com/public/hotels/go/' . ($city ? $city : 0) . '/' . $lat . '/' . $lng . '/' . $query);
+            } elseif (time() % 4 == 3)  {
+                $json = file_get_contents('http://db.travoooapi.net/public/hotels/go/' . ($city ? $city : 0) . '/' . $lat . '/' . $lng . '/' . $query);
             }
             $result = json_decode($json);
 
@@ -545,7 +549,8 @@ class HotelsController extends Controller
             foreach ($to_save AS $k => $v) {
                 $p = new Hotels();
                 //$p->place_type_ids = 1;
-                //$p->safety_degrees_id = 1;
+                $p->place_type = $places[$k]['types'];
+
                 $p->provider_id = $places[$k]['provider_id'];
                 $p->countries_id = $data['countries_id'];
                 $p->cities_id = $data['cities_id'];
@@ -613,5 +618,38 @@ class HotelsController extends Controller
                 ->get()
                 ->toArray();
         return json_encode($markers);
+    }
+
+    public function delete_ajax(ManageHotelsRequest $request){
+
+        $ids = $request->input('ids');
+        // if(isset($request->input('ids')) && !empty($request->input('ids'))){
+        // }
+        if(!empty($ids)){
+            $ids = explode(',',$request->input('ids'));
+            foreach ($ids as $key => $value) {
+                $this->delete_single_ajax($value);
+            }
+        }
+
+        echo json_encode([
+            'result' => true
+        ]);
+    }
+
+    /**
+     * @param Hotels $id
+     * @param ManageHotelsRequest $request
+     *
+     * @return mixed
+     */
+    public function delete_single_ajax($id) {
+        $item = Hotels::find($id);
+        if(empty($item)){
+            return false;
+        }
+        $item->delete();
+
+        AdminLogs::create(['item_type' => 'hotels', 'item_id' => $id, 'action' => 'delete', 'time' => time(), 'admin_id' => Auth::user()->id]);
     }
 }

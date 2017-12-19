@@ -34,6 +34,9 @@ class CountryTableController extends Controller
     {
         return Datatables::of($this->countries->getForDataTable())
             ->escapeColumns(['code'])
+            ->addColumn('',function(){
+                return null;
+            })
             ->addColumn('action', function ($country) {
                 return $country->action_buttons;
             })

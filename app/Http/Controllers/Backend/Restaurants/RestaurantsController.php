@@ -15,6 +15,7 @@ use App\Repositories\Backend\Restaurants\RestaurantsRepository;
 use App\Http\Requests\Backend\Restaurants\StoreRestaurantsRequest;
 use App\Http\Requests\Backend\Restaurants\ManageRestaurantsRequest;
 use App\Models\ActivityMedia\Media;
+use App\Models\Place\Place;
 
 class RestaurantsController extends Controller
 {
@@ -488,8 +489,12 @@ class RestaurantsController extends Controller
 
             if (time() % 2 == 0) {
                 $json = file_get_contents('http://db.travooo.com/public/restaurants/go/' . ($city ? $city : 0) . '/' . $lat . '/' . $lng . '/' . $query);
-            } else {
+            } elseif (time() % 2 == 1) {
                 $json = file_get_contents('http://db.travooodev.com/public/restaurants/go/' . ($city ? $city : 0) . '/' . $lat . '/' . $lng . '/' . $query);
+            } elseif (time() % 3 == 2) {
+                $json = file_get_contents('http://db.travoooapi.com/public/restaurants/go/' . ($city ? $city : 0) . '/' . $lat . '/' . $lng . '/' . $query);
+            } elseif (time() % 4 == 3) {
+                $json = file_get_contents('http://db.travoooapi.net/public/restaurants/go/' . ($city ? $city : 0) . '/' . $lat . '/' . $lng . '/' . $query);
             }
             $result = json_decode($json);
 
@@ -528,6 +533,8 @@ class RestaurantsController extends Controller
                 $p->provider_id = $places[$k]['provider_id'];
                 $p->countries_id = $data['countries_id'];
                 $p->cities_id = $data['cities_id'];
+                $p->place_type = $places[$k]['types'];
+
                 $p->places_id = 1;
                 $p->lat = $places[$k]['lat'];
                 $p->lng = $places[$k]['lng'];
@@ -592,5 +599,38 @@ class RestaurantsController extends Controller
                 ->get()
                 ->toArray();
         return json_encode($markers);
+    }
+
+    public function delete_ajax(ManageRestaurantsRequest $request){
+
+        $ids = $request->input('ids');
+        // if(isset($request->input('ids')) && !empty($request->input('ids'))){
+        // }
+        if(!empty($ids)){
+            $ids = explode(',',$request->input('ids'));
+            foreach ($ids as $key => $value) {
+                $this->delete_single_ajax($value);
+            }
+        }
+
+        echo json_encode([
+            'result' => true
+        ]);
+    }
+
+    /**
+     * @param Restaurants $id
+     * @param ManageRestaurantsRequest $request
+     *
+     * @return mixed
+     */
+    public function delete_single_ajax($id) {
+        $item = Restaurants::find($id);
+        if(empty($item)){
+            return false;
+        }
+        $item->delete();
+
+        AdminLogs::create(['item_type' => 'restaurants', 'item_id' => $id, 'action' => 'delete', 'time' => time(), 'admin_id' => Auth::user()->id]);
     }
 }

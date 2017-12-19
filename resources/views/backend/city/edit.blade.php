@@ -57,7 +57,7 @@ use App\Models\Access\language\Languages;
             'role'   => 'form',
             'method' => 'PATCH',
             'files'  => true
-        ]) 
+        ])
     }}
 
         <div class="box box-success">
@@ -75,7 +75,7 @@ use App\Models\Access\language\Languages;
                 </div>
             </div>
             <!-- Language Error : End -->
-            
+
             <div class="box-body">
                 @if(!empty($languages))
                     <ul class="nav nav-tabs">
@@ -106,7 +106,7 @@ use App\Models\Access\language\Languages;
                                 {{ Form::label('description_'.$language->id, 'Description', ['class' => 'col-lg-2 control-label description_input']) }}
 
                                 <div class="col-lg-10">
-                                    {{ Form::textarea('description_'.$language->id, $data['description_'.$language->id], ['class' => 'form-control description_input description required', 'maxlength' => '191', 'required' => 'required', 'placeholder' => 'Description']) }}
+                                    {{ Form::textarea('description_'.$language->id, $data['description_'.$language->id], ['class' => 'form-control description_input description', 'maxlength' => '191', 'placeholder' => 'Description']) }}
                                 </div><!--col-lg-10-->
                             </div><!--form control-->
                             <!-- End: Description -->
@@ -116,7 +116,7 @@ use App\Models\Access\language\Languages;
                                 {{ Form::label('best_place_'.$language->id, 'Best place', ['class' => 'col-lg-2 control-label']) }}
 
                                 <div class="col-lg-10">
-                                    {{ Form::textarea('best_place_'.$language->id, $data['best_place_'.$language->id], ['class' => 'form-control required', 'maxlength' => '191', 'required' => 'required', 'placeholder' => 'Best Place']) }}
+                                    {{ Form::textarea('best_place_'.$language->id, $data['best_place_'.$language->id], ['class' => 'form-control', 'maxlength' => '191', 'placeholder' => 'Best Place']) }}
                                 </div><!--col-lg-10-->
                             </div><!--form control-->
                             <!-- End: best_place -->
@@ -126,7 +126,7 @@ use App\Models\Access\language\Languages;
                                 {{ Form::label('best_time_'.$language->id, 'Best time', ['class' => 'col-lg-2 control-label']) }}
 
                                 <div class="col-lg-10">
-                                    {{ Form::textarea('best_time_'.$language->id, $data['best_time_'.$language->id], ['class' => 'form-control required', 'maxlength' => '191', 'required' => 'required', 'placeholder' => 'Best time']) }}
+                                    {{ Form::textarea('best_time_'.$language->id, $data['best_time_'.$language->id], ['class' => 'form-control', 'maxlength' => '191', 'placeholder' => 'Best time']) }}
                                 </div><!--col-lg-10-->
                             </div><!--form control-->
                             <!-- End: best_time -->
@@ -136,7 +136,7 @@ use App\Models\Access\language\Languages;
                                 {{ Form::label('cost_of_living_'.$language->id, 'Cost of living', ['class' => 'col-lg-2 control-label']) }}
 
                                 <div class="col-lg-10">
-                                    {{ Form::textarea('cost_of_living_'.$language->id, $data['cost_of_living_'.$language->id], ['class' => 'form-control required', 'maxlength' => '191', 'required' => 'required', 'placeholder' => 'Cost of living']) }}
+                                    {{ Form::textarea('cost_of_living_'.$language->id, $data['cost_of_living_'.$language->id], ['class' => 'form-control', 'maxlength' => '191', 'placeholder' => 'Cost of living']) }}
                                 </div><!--col-lg-10-->
                             </div><!--form control-->
                             <!-- End: cost_of_living -->
@@ -146,7 +146,7 @@ use App\Models\Access\language\Languages;
                                 {{ Form::label('geo_stats_'.$language->id, 'Geo stats', ['class' => 'col-lg-2 control-label']) }}
 
                                 <div class="col-lg-10">
-                                    {{ Form::textarea('geo_stats_'.$language->id, $data['geo_stats_'.$language->id], ['class' => 'form-control required', 'maxlength' => '191', 'required' => 'required', 'placeholder' => 'Geo stats']) }}
+                                    {{ Form::textarea('geo_stats_'.$language->id, $data['geo_stats_'.$language->id], ['class' => 'form-control', 'maxlength' => '191', 'placeholder' => 'Geo stats']) }}
                                 </div><!--col-lg-10-->
                             </div><!--form control-->
                             <!-- End: geo_stats -->
@@ -156,7 +156,7 @@ use App\Models\Access\language\Languages;
                                 {{ Form::label('demographics_'.$language->id, 'Demographics', ['class' => 'col-lg-2 control-label']) }}
 
                                 <div class="col-lg-10">
-                                    {{ Form::textarea('demographics_'.$language->id, $data['demographics_'.$language->id], ['class' => 'form-control required', 'maxlength' => '191', 'required' => 'required', 'placeholder' => 'Demographics']) }}
+                                    {{ Form::textarea('demographics_'.$language->id, $data['demographics_'.$language->id], ['class' => 'form-control', 'maxlength' => '191', 'placeholder' => 'Demographics']) }}
                                 </div><!--col-lg-10-->
                             </div><!--form control-->
                             <!-- End: demographics -->
@@ -166,7 +166,7 @@ use App\Models\Access\language\Languages;
                                 {{ Form::label('economy_'.$language->id, 'Economy', ['class' => 'col-lg-2 control-label']) }}
 
                                 <div class="col-lg-10">
-                                    {{ Form::textarea('economy_'.$language->id, $data['economy_'.$language->id], ['class' => 'form-control required', 'maxlength' => '191', 'required' => 'required', 'placeholder' => 'Economy']) }}
+                                    {{ Form::textarea('economy_'.$language->id, $data['economy_'.$language->id], ['class' => 'form-control', 'maxlength' => '191', 'placeholder' => 'Economy']) }}
                                 </div><!--col-lg-10-->
                             </div><!--form control-->
                             <!-- End: economy -->
@@ -176,7 +176,7 @@ use App\Models\Access\language\Languages;
                                 {{ Form::label('suitable_for_'.$language->id, 'Suitable for', ['class' => 'col-lg-2 control-label']) }}
 
                                 <div class="col-lg-10">
-                                    {{ Form::textarea('suitable_for_'.$language->id, $data['suitable_for_'.$language->id], ['class' => 'form-control required', 'maxlength' => '191', 'required' => 'required', 'placeholder' => 'Suitable for']) }}
+                                    {{ Form::textarea('suitable_for_'.$language->id, $data['suitable_for_'.$language->id], ['class' => 'form-control', 'maxlength' => '191', 'placeholder' => 'Suitable for']) }}
                                 </div><!--col-lg-10-->
                             </div><!--form control-->
                             <!-- End: suitable_for -->
@@ -185,13 +185,13 @@ use App\Models\Access\language\Languages;
                         </div>
                     @endforeach
                     </div>
-                    
+
                     <!-- Start: code -->
                     <div class="form-group">
                         {{ Form::label('code', 'Code', ['class' => 'col-lg-2 control-label']) }}
 
                         <div class="col-lg-10">
-                            {{ Form::input('number' ,'code', $data['code'], ['class' => 'form-control', 'maxlength' => '3', 'required' => 'required', 'placeholder' => 'Suitable for']) }}
+                            {{ Form::input('number' ,'code', $data['code'], ['class' => 'form-control', 'maxlength' => '3', 'placeholder' => 'Suitable for']) }}
                         </div><!--col-lg-10-->
                     </div><!--form control-->
                     <!-- End: code -->
@@ -211,7 +211,7 @@ use App\Models\Access\language\Languages;
                     <!-- Active: Is Capital -->
                     <div class="form-group">
                         {{ Form::label('title', 'Is Capital?', ['class' => 'col-lg-2 control-label']) }}
-                        
+
                         <div class="col-lg-10">
                             @if($data['is_capital'] == 1)
                                 {{ Form::checkbox('is_capital', $data['is_capital'] , true) }}
@@ -221,7 +221,7 @@ use App\Models\Access\language\Languages;
                         </div><!--col-lg-10-->
                     </div><!--form control-->
                     <!-- Is Capital: End -->
-                    
+
                     <!-- Country: Start -->
                     <div class="form-group">
                         {{ Form::label('title', 'Country', ['class' => 'col-lg-2 control-label']) }}
@@ -252,21 +252,12 @@ use App\Models\Access\language\Languages;
                     <div class="form-group">
                         {{ Form::label('title', 'Lat,Lng', ['class' => 'col-lg-2 control-label']) }}
                         <div class="col-lg-10">
-                            
-                            {{ Form::hidden('lat_lng', $data['lat_lng'], ['class' => 'form-control disabled', 'id' => 'lat-lng-input', 'required' => 'required', 'placeholder' => 'Lat,Lng']) }}
 
-                            {{ Form::text('lat_lng_show', $data['lat_lng'], ['class' => 'form-control disabled', 'id' => 'lat-lng-input_show', 'required' => 'required', 'placeholder' => 'Lat,Lng' , 'disabled' => 'disabled']) }}
+                            {{ Form::hidden('lat_lng', $data['lat_lng'], ['class' => 'form-control disabled', 'id' => 'lat-lng-input', 'placeholder' => 'Lat,Lng']) }}
+
+                            {{ Form::text('lat_lng_show', $data['lat_lng'], ['class' => 'form-control disabled', 'id' => 'lat-lng-input_show', 'placeholder' => 'Lat,Lng' , 'disabled' => 'disabled']) }}
                         </div>
                     </div>
-                    <!-- Airports: Start -->
-                    <div class="form-group">
-                        {{ Form::label('title', 'Airport Locations', ['class' => 'col-lg-2 control-label']) }}
-
-                        <div class="col-lg-10">
-                            {{ Form::select('places_id[]', $places , $data['selected_airports'],['class' => 'select2Class form-control' , 'multiple' => 'multiple' ]) }}
-                        </div><!--col-lg-10-->
-                    </div><!--form control-->
-                    <!-- Airports: End -->
 
                     <!-- Currencies: Start -->
                     <div class="form-group">
@@ -317,16 +308,6 @@ use App\Models\Access\language\Languages;
                         </div><!--col-lg-10-->
                     </div><!--form control-->
                     <!-- Holidays: End -->
-
-                    <!-- Medias: Start -->
-                    <div class="form-group">
-                        {{ Form::label('title', 'Medias', ['class' => 'col-lg-2 control-label']) }}
-
-                        <div class="col-lg-10">
-                            {{ Form::select('medias_id[]', $medias , $data['selected_medias'],['class' => 'select2Class form-control' , 'multiple' => 'multiple' ]) }}
-                        </div><!--col-lg-10-->
-                    </div><!--form control-->
-                    <!-- Medias: End -->
 
                     <!-- EmergencyNumbers: Start -->
                     <div class="form-group">
@@ -438,7 +419,7 @@ use App\Models\Access\language\Languages;
               position: myLatLng,
               draggable : true,
         }));
-        
+
         google.maps.event.addListener(markers[0], 'dragend', function (evt) {
                 var lat =  evt.latLng.lat().toFixed(3);
                 var longit = evt.latLng.lng().toFixed(3);
@@ -484,9 +465,9 @@ use App\Models\Access\language\Languages;
             }));
 
             var latitude = place.geometry.location.lat();
-            var longitude = place.geometry.location.lng();  
+            var longitude = place.geometry.location.lng();
             document.getElementById('lat-lng-input').setAttribute("value", latitude + "," + longitude );
-                document.getElementById('lat-lng-input_show').setAttribute("value", latitude + "," + longitude );        
+                document.getElementById('lat-lng-input_show').setAttribute("value", latitude + "," + longitude );
 
             google.maps.event.addListener(markers[0], 'dragend', function (evt) {
                 var lat =  evt.latLng.lat().toFixed(3);
@@ -511,13 +492,13 @@ use App\Models\Access\language\Languages;
     <!-- Error Alert Script : Start -->
     <script>
         $(document).on('click' , '.submit_button' , function(){
-        
+
             var msg = '<div id="language-alert" class="alert alert-danger alert-dismissable fade in"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Error!</strong> Please Fill Information In All Languages Tabs.</div>';
 
             $('.required').each(function(index,data){
                 var flag = false;
                 if($(this).val() == ''){
-                    
+
                     flag = true;
                 }
 
@@ -525,7 +506,7 @@ use App\Models\Access\language\Languages;
                     $('.required_msg').html(msg);
                     $("#language-alert").fadeTo(5000, 500).slideUp(500, function(){
                         $("#language-alert").slideUp(500);
-                    });   
+                    });
                 }
             });
         });
@@ -534,9 +515,9 @@ use App\Models\Access\language\Languages;
 
             var id = $(this).attr('data-id');
             $(this).parent().remove();
-            
+
             var value = $('#delete-images').val();
-            
+
             if(value == ''){
                 $('#delete-images').val(id);
             }else{

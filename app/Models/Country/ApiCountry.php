@@ -10,33 +10,7 @@ use App\Models\System\Session;
 class ApiCountry extends Countries
 {
     /* Show Country Function */
-    public static function show_country($user_id, $session_token, $country_id){
-
-        /* If User Id Is Not An Integer, Return Error */
-        if(!is_numeric($user_id)){
-            return Self::generateErrorMessage(false, 400, 'User id should be an integer.');
-        }
-
-        /* Find User For The Provided User Id */
-        $user = User::where(['id' => $user_id])->first();
-
-        /* If User Not Found, Return Error */
-        if(empty($user)){
-            return Self::generateErrorMessage(false, 400, 'Wrong user id prrovided.');
-        }
-
-        /* Find Session For The Provided Session Token */
-        $session = Session::where(['id' => $session_token])->first();
-
-        /* If Session Not Found, Return Error */
-        if(empty($session)){
-            return Self::generateErrorMessage(false, 400, 'Wrong session token provided.');
-        }
-
-        /* If Session's User Id Is Not Equal To Provided User Id, Return Error */
-        if( $session->user_id != $user_id ){
-            return Self::generateErrorMessage(false, 400, 'Wrong user id provided.');
-        }
+    public static function show_country($country_id){
 
         /* If Country Id Is Not An Integer, Return Error */
         if(! is_numeric($country_id)){
