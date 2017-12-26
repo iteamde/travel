@@ -81,6 +81,7 @@ Route::group([
          */
         Route::post('city/get', 'CityTableController')->name('city.get');
 
+        Route::get('city/countries/{term?}/{type?}/{q?}', 'CityTableController@getAddedCountries')->name('city.countries');
         /*
          * City CRUD
          */
@@ -94,6 +95,7 @@ Route::group([
         Route::group(['prefix' => 'city/{deletedCity}'], function () {
             Route::delete('delete', 'CityController@delete')->name('city.delete');
         });
+
 
         /*
          * Enable/Disable Specific City

@@ -101,6 +101,7 @@ class CityRepository extends BaseRepository
                 config('locations.city_table').'.code',
                 config('locations.city_table').'.lat',
                 config('locations.city_table').'.lng',
+                config('locations.city_table').'.countries_id',
                 config('locations.city_table').'.active'
             ]);
 

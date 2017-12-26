@@ -5,6 +5,7 @@
 @section('after-styles')
 {{ Html::style("https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css") }}
 {{ Html::style("https://cdn.datatables.net/select/1.2.3/css/select.dataTables.min.css") }}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
 @endsection
 
 @section('page-header')
@@ -39,6 +40,7 @@
                         <th>id</th>
                         <th>Title</th>
                         <th>Code</th>
+                        <th>Country</th>
                         <th>lat</th>
                         <th>lng</th>
                         <th>Active</th>
@@ -61,11 +63,12 @@
 @section('after-scripts')
 {{ Html::script("https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js") }}
 {{ Html::script("https://cdn.datatables.net/select/1.2.3/js/dataTables.select.min.js") }}
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 
     <script>
+        var table;
         $(function () {
-            $('#cities-table').DataTable({
+            table = $('#cities-table').DataTable({
                 columnDefs: [ {
                     orderable: false,
                     className: 'select-checkbox',
@@ -87,7 +90,8 @@
 	                {data: 'id', name: '{{config('locations.city_table')}}.id'},
                     {data: 'transsingle.title', name: 'transsingle.title'},
 	                {data: 'code', name: '{{config('locations.city_table')}}.code'},
-	                {data: 'lat', name: '{{config('locations.city_table')}}.lat'},
+	                {data: 'country', name: '{{config('locations.city_table')}}.countries_id'},
+                    {data: 'lat', name: '{{config('locations.city_table')}}.lat'},
 	                {data: 'lng', name: '{{config('locations.city_table')}}.lng'},
 	                {
                         name: '{{config('locations.city_table')}}.active',
@@ -105,7 +109,40 @@
                     {data: 'action', name: 'action', searchable: false, sortable: false}
                 ],
                 order: [[1, "asc"]],
-                searchDelay: 500
+                searchDelay: 500,
+                initComplete: function () {        
+                    $('#cities-table thead').append('<tr class="even custom-filter-row" role="row"><td> </td><td> </td><td> </td><td> </td><td> </td><td> </td><td> </td><td> </td></tr>');
+
+                    //Adding input field for "Country" filter.
+                    $('.custom-filter-row td:nth-child(5)').html('<select id="country-filter" class="custom-filters form-control"><option value="">Search Country</option></select>');
+
+                    $('#country-filter').select2({
+                        width:'100%',
+                        placeholder: 'Search Country',
+                            ajax: {
+                            url: '{{ route("admin.location.city.countries") }}',
+                                    dataType: 'json',
+                                    delay: 250,
+                                    processResults: function (data) {
+                                    return {
+                                    results: data
+                                    };
+                                    },
+                                    cache: true
+                            }
+                    });
+                }
+            });
+
+            /* FILTER BASED ON COUNTRIES */     
+            $(document).on('change', '#country-filter', function(){
+                var val = $(this).val();
+                if (val != ''){
+                    // table.columns(5).search()
+                    if (table.columns(4).search() !== val) {
+                        table.columns(4).search("^\\s*" + val + "\\s*$", true).draw();
+                    }
+                }
             });
         });
     </script>
