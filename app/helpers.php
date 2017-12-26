@@ -101,9 +101,11 @@ if (!function_exists('getRtlCss')) {
 
 }
 
-function getPlacesMediaPerCities() {
+function getPlacesMediaPerCities($page) {
+    $skip = $page*5;
     $places_without_media = \App\Models\Place\Place::whereNull('media_done')
             ->orderBy('id', 'ASC')
+            ->skip($skip)
             ->take(5)
             ->get();
 

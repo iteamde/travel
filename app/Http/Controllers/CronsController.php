@@ -11,43 +11,43 @@ use Illuminate\Support\Facades\DB;
 class CronsController extends Controller {
 
     public function getPlacesMedia(Request $request) { // Alaska
-        getPlacesMediaPerCities();
+        getPlacesMediaPerCities(1);
     }
 
     public function getPlacesMedia2(Request $request) {  // Alabama
-        getPlacesMediaPerCities();
+        getPlacesMediaPerCities(2);
     }
 
     public function getPlacesMedia3(Request $request) { // Georgia
-        getPlacesMediaPerCities();
+        getPlacesMediaPerCities(3);
     }
 
     public function getPlacesMedia4(Request $request) { // Flordia
-        getPlacesMediaPerCities();
+        getPlacesMediaPerCities(4);
     }
 
     public function getPlacesMedia5(Request $request) { // Delaware
-        getPlacesMediaPerCities();
+        getPlacesMediaPerCities(5);
     }
 
     public function getPlacesMedia6(Request $request) { // Connecticut
-        getPlacesMediaPerCities();
+        getPlacesMediaPerCities(6);
     }
 
     public function getPlacesMedia7(Request $request) { // Colorado
-        getPlacesMediaPerCities();
+        getPlacesMediaPerCities(7);
     }
 
     public function getPlacesMedia8(Request $request) { // California
-        getPlacesMediaPerCities();
+        getPlacesMediaPerCities(8);
     }
 
     public function getPlacesMedia9(Request $request) { // Arkansas
-        getPlacesMediaPerCities();
+        getPlacesMediaPerCities(9);
     }
 
     public function getPlacesMedia10(Request $request) { // Arizona
-        getPlacesMediaPerCities();
+        getPlacesMediaPerCities(10);
     }
 
 
