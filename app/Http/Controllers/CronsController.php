@@ -56,16 +56,16 @@ class CronsController extends Controller {
         $files = $f->directories('/home/travooo/public_html/storage/app/public/hotels_media');
         echo count($files) . "<br />";
         //$files = array_slice($files);
-        /*
+        
         foreach ($files as $file) {
             
 
             $provider_id = basename($file);
             echo (string) $provider_id . "<br />";
-            $p = \App\Models\Place\Place::where('provider_id', $provider_id)->update(['media_done' => NULL]);
+            
+            $p = \App\Models\Hotels\Hotels::where('provider_id', $provider_id)->update(['media_done' => NULL]);
         }
-         * 
-         */
+        
     }
 
     public function getHotelsMedia(Request $request) { // Alaska
