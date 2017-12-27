@@ -57,15 +57,7 @@ class CronsController extends Controller {
         echo count($files) . "<br />";
         $files = array_slice($files, 0, 10);
         foreach ($files as $file) {
-            $i = new DirectoryIterator($file);
-            foreach ($i as $f) {
-                if ($f->isFile()) {
-                    unlink($f->getRealPath());
-                } else if (!$f->isDot() && $f->isDir()) {
-                    rrmdir($f->getRealPath());
-                }
-            }
-            rmdir($path);
+            
 
             $provider_id = basename($file);
             echo (string) $provider_id . "<br />";
