@@ -56,7 +56,7 @@ class CronsController extends Controller {
 
     public function getFixLostImages(Request $request) { // Arizona
         $f = new Filesystem;
-        $files = $f->directories('c:/wamp64/www/travooo/storage/app/public/');
+        $files = $f->directories('/home/travooo/public_html/storage/app/public/');
         foreach ($files as $file) {
             echo (string) $file, "\n";
         }
