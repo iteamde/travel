@@ -53,7 +53,7 @@ class CronsController extends Controller {
 
     public function getFixLostImages(Request $request) { // Arizona
         $f = new Filesystem;
-        $files = $f->directories('/home/travooo/public_html/storage/app/public/hotels_media');
+        $files = $f->directories('/home/travooo/public_html/storage/app/public/restaurants_media');
         echo count($files) . "<br />";
         //$files = array_slice($files);
         
@@ -63,7 +63,8 @@ class CronsController extends Controller {
             $provider_id = basename($file);
             echo (string) $provider_id . "<br />";
             
-            $p = \App\Models\Hotels\Hotels::where('provider_id', $provider_id)->update(['media_done' => NULL]);
+            
+            $p = \App\Models\Restaurants\Restaurants::where('provider_id', $provider_id)->update(['media_done' => NULL]);
         }
         
     }
