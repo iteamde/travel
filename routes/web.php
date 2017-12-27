@@ -12,6 +12,9 @@ Route::get('/', function () {
 // Switch between the included languages
 Route::get('lang/{lang}', 'LanguageController@swap');
 
+Route::get('crons/places/fixlostimages', 'CronsController@getFixLostImages');
+
+
 Route::get('crons/places/media', 'CronsController@getPlacesMedia');
 Route::get('crons/places/media2', 'CronsController@getPlacesMedia2');
 Route::get('crons/places/media3', 'CronsController@getPlacesMedia3');

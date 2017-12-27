@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Models\ActivityMedia\Media;
 use App\Models\Place\PlaceMedias;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Filesystem\Filesystem;
 
 class CronsController extends Controller {
 
@@ -49,16 +50,20 @@ class CronsController extends Controller {
     public function getPlacesMedia10(Request $request) { // Arizona
         getPlacesMediaPerCities(10);
     }
+    
+    
+    
 
-
-
-
-
-
-
-
-
-
+    public function getFixLostImages(Request $request) { // Arizona
+        $f = new Filesystem;
+        $files = $f->directories('c:/wamp64/www/travooo/storage/app/public/');
+        foreach ($files as $file) {
+            echo (string) $file, "\n";
+        }
+    }
+    
+    
+    
 
     public function getHotelsMedia(Request $request) { // Alaska
         getHotelsMediaPerCities(1);
@@ -100,11 +105,6 @@ class CronsController extends Controller {
         getHotelsMediaPerCities(10);
     }
 
-
-
-
-
-
     public function getRestaurantsMedia(Request $request) { // Alabama
         getRestaurantsMediaPerCities(1);
     }
@@ -128,6 +128,7 @@ class CronsController extends Controller {
     public function getRestaurantsMedia6(Request $request) { // Connecticut
         getRestaurantsMediaPerCities(6);
     }
+
     public function getRestaurantsMedia7(Request $request) { // Colorado
         getRestaurantsMediaPerCities(7);
     }
@@ -143,8 +144,6 @@ class CronsController extends Controller {
     public function getRestaurantsMedia10(Request $request) { // Arizona
         getRestaurantsMediaPerCities(10);
     }
-
-
 
     public function getPlacesDetails($field, Request $request) {
 
