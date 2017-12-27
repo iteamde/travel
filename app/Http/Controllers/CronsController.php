@@ -61,7 +61,7 @@ class CronsController extends Controller {
 
             $provider_id = basename($file);
             echo (string) $provider_id . "<br />";
-            $p = \App\Models\Place\Place::where('provider_id', $provider_id)->update(['media_done' => 0]);
+            $p = \App\Models\Place\Place::where('provider_id', $provider_id)->update(['media_done' => NULL]);
         }
     }
 
