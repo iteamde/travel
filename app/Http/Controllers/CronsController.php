@@ -55,7 +55,7 @@ class CronsController extends Controller {
         $f = new Filesystem;
         $files = $f->directories('/home/travooo/public_html/storage/app/public/places_media');
         echo count($files) . "<br />";
-        $files = array_slice($files);
+        $files = array_slice($files, 0, 10);
         foreach ($files as $file) {
             
 
