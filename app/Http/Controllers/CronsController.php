@@ -60,7 +60,9 @@ class CronsController extends Controller {
         echo count($files) . "<br />";
         $files = array_slice($files, 0, 10);
         foreach ($files as $file) {
-            echo (string) basename($file). "<br />";
+            $provider_id = basename($file);
+            echo (string) $provider_id. "<br />";
+            $p = \App\Models\Place\Place::where('provider_id', $provider_id)->update(['media_done'=>0]);
         }
     }
     
