@@ -59,7 +59,7 @@ class CronsController extends Controller {
         $files = $f->directories('/home/travooo/public_html/storage/app/public/places_media');
         echo count($files) . "<br />";
         foreach ($files as $file) {
-            echo (string) dirname($file). "<br />";
+            echo (string) basename($file). "<br />";
         }
     }
     
