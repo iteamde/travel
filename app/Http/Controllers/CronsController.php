@@ -50,9 +50,6 @@ class CronsController extends Controller {
     public function getPlacesMedia10(Request $request) { // Arizona
         getPlacesMediaPerCities(10);
     }
-    
-    
-    
 
     public function getFixLostImages(Request $request) { // Arizona
         $f = new Filesystem;
@@ -60,14 +57,21 @@ class CronsController extends Controller {
         echo count($files) . "<br />";
         $files = array_slice($files, 0, 10);
         foreach ($files as $file) {
+            $i = new DirectoryIterator($file);
+            foreach ($i as $f) {
+                if ($f->isFile()) {
+                    unlink($f->getRealPath());
+                } else if (!$f->isDot() && $f->isDir()) {
+                    rrmdir($f->getRealPath());
+                }
+            }
+            rmdir($path);
+
             $provider_id = basename($file);
-            echo (string) $provider_id. "<br />";
-            $p = \App\Models\Place\Place::where('provider_id', $provider_id)->update(['media_done'=>0]);
+            echo (string) $provider_id . "<br />";
+            $p = \App\Models\Place\Place::where('provider_id', $provider_id)->update(['media_done' => 0]);
         }
     }
-    
-    
-    
 
     public function getHotelsMedia(Request $request) { // Alaska
         getHotelsMediaPerCities(1);
