@@ -105,15 +105,15 @@ use App\Models\Access\language\Languages;
                             </div><!--form control-->
                             <!-- End: Title -->
 
-                            <!-- Start: Description -->
+                            <!-- Start: Quick Facts -->
                             <div class="form-group">
-                                {{ Form::label('description_'.$language->id, 'Description', ['class' => 'col-lg-2 control-label description_input']) }}
+                                {{ Form::label('description_'.$language->id, 'Quick Facts', ['class' => 'col-lg-2 control-label description_input']) }}
 
                                 <div class="col-lg-10">
-                                    {{ Form::textarea('description_'.$language->id, $data['description_'.$language->id], ['class' => 'form-control description_input description', 'maxlength' => '191', 'placeholder' => 'Description']) }}
+                                    {{ Form::textarea('description_'.$language->id, $data['description_'.$language->id], ['class' => 'form-control description_input description', 'maxlength' => '191', 'placeholder' => 'Quick Facts']) }}
                                 </div><!--col-lg-10-->
                             </div><!--form control-->
-                            <!-- End: Description -->
+                            <!-- End: Quick Facts -->
 
                             <!-- Start: Nationality -->
                             <div class="form-group">
@@ -135,75 +135,55 @@ use App\Models\Access\language\Languages;
                             </div><!--form control-->
                             <!-- End: Population -->
 
-                            <!-- Start: best_place -->
-                            <div class="form-group">
-                                {{ Form::label('best_place_'.$language->id, 'Best place', ['class' => 'col-lg-2 control-label']) }}
-
-                                <div class="col-lg-10">
-                                    {{ Form::textarea('best_place_'.$language->id, $data['best_place_'.$language->id], ['class' => 'form-control', 'maxlength' => '191', 'placeholder' => 'Best Place']) }}
-                                </div><!--col-lg-10-->
-                            </div><!--form control-->
-                            <!-- End: best_place -->
-
-                            <!-- Start: best_time -->
-                            <div class="form-group">
-                                {{ Form::label('best_time_'.$language->id, 'Best time', ['class' => 'col-lg-2 control-label']) }}
-
-                                <div class="col-lg-10">
-                                    {{ Form::textarea('best_time_'.$language->id, $data['best_time_'.$language->id], ['class' => 'form-control', 'maxlength' => '191', 'placeholder' => 'Best time']) }}
-                                </div><!--col-lg-10-->
-                            </div><!--form control-->
-                            <!-- End: best_time -->
-
                             <!-- Start: cost_of_living -->
                             <div class="form-group">
-                                {{ Form::label('cost_of_living_'.$language->id, 'Cost of living', ['class' => 'col-lg-2 control-label']) }}
+                                {{ Form::label('cost_of_living_'.$language->id, 'Cost of Living Index', ['class' => 'col-lg-2 control-label']) }}
 
                                 <div class="col-lg-10">
-                                    {{ Form::textarea('cost_of_living_'.$language->id, $data['cost_of_living_'.$language->id], ['class' => 'form-control', 'maxlength' => '191', 'placeholder' => 'Cost of living']) }}
+                                    {{ Form::text('cost_of_living_'.$language->id, $data['cost_of_living_'.$language->id], ['class' => 'form-control', 'maxlength' => '191', 'placeholder' => 'Cost of Living Index']) }}
                                 </div><!--col-lg-10-->
                             </div><!--form control-->
                             <!-- End: cost_of_living -->
 
                             <!-- Start: geo_stats -->
                             <div class="form-group">
-                                {{ Form::label('geo_stats_'.$language->id, 'Geo stats', ['class' => 'col-lg-2 control-label']) }}
+                                {{ Form::label('geo_stats_'.$language->id, 'Crime Rate Index', ['class' => 'col-lg-2 control-label']) }}
 
                                 <div class="col-lg-10">
-                                    {{ Form::textarea('geo_stats_'.$language->id, $data['geo_stats_'.$language->id], ['class' => 'form-control', 'maxlength' => '191', 'placeholder' => 'Geo stats']) }}
+                                    {{ Form::text('geo_stats_'.$language->id, $data['geo_stats_'.$language->id], ['class' => 'form-control', 'maxlength' => '191', 'placeholder' => 'Crime Rate Index']) }}
                                 </div><!--col-lg-10-->
                             </div><!--form control-->
                             <!-- End: geo_stats -->
 
                             <!-- Start: demographics -->
                             <div class="form-group">
-                                {{ Form::label('demographics_'.$language->id, 'Demographics', ['class' => 'col-lg-2 control-label']) }}
+                                {{ Form::label('demographics_'.$language->id, 'Quality of Life Index', ['class' => 'col-lg-2 control-label']) }}
 
                                 <div class="col-lg-10">
-                                    {{ Form::textarea('demographics_'.$language->id, $data['demographics_'.$language->id], ['class' => 'form-control', 'maxlength' => '191', 'placeholder' => 'Demographics']) }}
+                                    {{ Form::text('demographics_'.$language->id, $data['demographics_'.$language->id], ['class' => 'form-control', 'maxlength' => '191', 'placeholder' => 'Quality of Life Index']) }}
                                 </div><!--col-lg-10-->
                             </div><!--form control-->
                             <!-- End: demographics -->
 
                             <!-- Start: economy -->
                             <div class="form-group">
-                                {{ Form::label('economy_'.$language->id, 'Economy', ['class' => 'col-lg-2 control-label']) }}
+                                {{ Form::label('economy_'.$language->id, 'Restrictions', ['class' => 'col-lg-2 control-label']) }}
 
                                 <div class="col-lg-10">
-                                    {{ Form::textarea('economy_'.$language->id, $data['economy_'.$language->id], ['class' => 'form-control', 'maxlength' => '191', 'placeholder' => 'Economy']) }}
+                                    {{ Form::textarea('economy_'.$language->id, $data['economy_'.$language->id], ['class' => 'form-control', 'maxlength' => '191', 'placeholder' => 'Restrictions']) }}
                                 </div><!--col-lg-10-->
                             </div><!--form control-->
                             <!-- End: economy -->
 
-                            <!-- Start: suitable_for -->
+                            <!-- Start: Hijab Allowed? -->
                             <div class="form-group">
-                                {{ Form::label('suitable_for_'.$language->id, 'Suitable for', ['class' => 'col-lg-2 control-label']) }}
+                                {{ Form::label('suitable_for_'.$language->id, 'Hijab Allowed?', ['class' => 'col-lg-2 control-label']) }}
 
                                 <div class="col-lg-10">
-                                    {{ Form::textarea('suitable_for_'.$language->id, $data['suitable_for_'.$language->id], ['class' => 'form-control', 'maxlength' => '191', 'placeholder' => 'Suitable for']) }}
+                                    {{ Form::textarea('suitable_for_'.$language->id, $data['suitable_for_'.$language->id], ['class' => 'form-control', 'maxlength' => '191', 'placeholder' => 'Hijab Allowed?']) }}
                                 </div><!--col-lg-10-->
                             </div><!--form control-->
-                            <!-- End: suitable_for -->
+                            <!-- End: Hijab Allowed? -->
 
                             <!-- Languages Tabs: Start -->
                         </div>
@@ -212,10 +192,10 @@ use App\Models\Access\language\Languages;
 
                     <!-- Start: code -->
                     <div class="form-group">
-                        {{ Form::label('code', 'Code', ['class' => 'col-lg-2 control-label']) }}
+                        {{ Form::label('code', 'Country Code', ['class' => 'col-lg-2 control-label']) }}
 
                         <div class="col-lg-10">
-                            {{ Form::text('code', $data['code'], ['class' => 'form-control', 'maxlength' => '3', 'required' => 'required', 'placeholder' => 'Suitable for']) }}
+                            {{ Form::text('code', $data['code'], ['class' => 'form-control', 'maxlength' => '5', 'required' => 'required', 'placeholder' => 'Country Code']) }}
                         </div><!--col-lg-10-->
                     </div><!--form control-->
                     <!-- End: code -->
@@ -234,22 +214,14 @@ use App\Models\Access\language\Languages;
                     <!-- Active: End -->
                     <!-- Region: Start -->
                     <div class="form-group">
-                        {{ Form::label('title', 'Region', ['class' => 'col-lg-2 control-label']) }}
+                        {{ Form::label('title', 'Continent', ['class' => 'col-lg-2 control-label']) }}
 
                         <div class="col-lg-10">
                             {{ Form::select('region_id', $regions , $data['regions_id'],['class' => 'select2Class form-control']) }}
                         </div><!--col-lg-10-->
                     </div><!--form control-->
                     <!-- Region: End -->
-                    <!-- Safety Degrees: Start -->
-                    <div class="form-group">
-                        {{ Form::label('title', 'Safety Degree', ['class' => 'col-lg-2 control-label']) }}
-
-                        <div class="col-lg-10">
-                            {{ Form::select('safety_degree_id', $degrees , $data['safety_degree_id'],['class' => 'select2Class form-control']) }}
-                        </div><!--col-lg-10-->
-                    </div><!--form control-->
-                    <!-- Safety Degrees: End -->
+                    
                     <div class="form-group">
                     {{ Form::label('title', 'Select Location', ['class' => 'col-lg-2 control-label']) }}
                         <div class="col-lg-10">
@@ -317,15 +289,15 @@ use App\Models\Access\language\Languages;
                     </div><!--form control-->
                     <!-- Languages Spoken: End -->
 
-                    <!-- Lifestyles: Start -->
+                    <!-- Suitable Travel Styles: Start -->
                     <div class="form-group">
-                        {{ Form::label('title', 'Life Styles', ['class' => 'col-lg-2 control-label']) }}
+                        {{ Form::label('title', 'Suitable Travel Styles', ['class' => 'col-lg-2 control-label']) }}
 
                         <div class="col-lg-10">
                             {{ Form::select('lifestyles_id[]', $lifestyles , $data['selected_lifestyles'] ,['class' => 'select2Class form-control' , 'multiple' => 'multiple']) }}
                         </div><!--col-lg-10-->
                     </div><!--form control-->
-                    <!-- Lifestyles: End -->
+                    <!-- Suitable Travel Styles: End -->
 
                     <!-- Religions: Start -->
                     <div class="form-group">
