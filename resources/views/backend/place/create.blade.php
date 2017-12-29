@@ -103,15 +103,15 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
                             </div><!--form control-->
                             <!-- End: Title -->
 
-                            <!-- Start: Description -->
+                            <!-- Start: Quick Facts -->
                             <div class="form-group">
-                                {{ Form::label('description_'.$language->id, 'Description', ['class' => 'col-lg-2 control-label description_input']) }}
+                                {{ Form::label('description_'.$language->id, 'Quick Facts', ['class' => 'col-lg-2 control-label description_input']) }}
 
                                 <div class="col-lg-10">
-                                    {{ Form::textarea('description_'.$language->id, null, ['class' => 'form-control description_input description required', 'required' => 'required', 'placeholder' => 'Description']) }}
+                                    {{ Form::textarea('description_'.$language->id, null, ['class' => 'form-control description_input description required', 'required' => 'required', 'placeholder' => 'Quick Facts']) }}
                                 </div><!--col-lg-10-->
                             </div><!--form control-->
-                            <!-- End: Description -->
+                            <!-- End: Quick Facts -->
 
                             <!-- Start: Address -->
                             <div class="form-group">
@@ -133,85 +133,25 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
                             </div><!--form control-->
                             <!-- End: Phone -->
 
-                            <!-- Start: High Lights -->
+                            <!-- Start: Working Hours -->
                             <div class="form-group">
-                                {{ Form::label('highlights_'.$language->id, 'High Lights', ['class' => 'col-lg-2 control-label']) }}
+                                {{ Form::label('working_days_'.$language->id, 'Working Hours', ['class' => 'col-lg-2 control-label']) }}
 
                                 <div class="col-lg-10">
-                                    {{ Form::textarea('highlights_'.$language->id, null, ['class' => 'form-control required', 'maxlength' => '191', 'required' => 'required', 'placeholder' => 'High Lights']) }}
+                                    {{ Form::textarea('working_days_'.$language->id, null, ['class' => 'form-control required', 'maxlength' => '191', 'required' => 'required', 'placeholder' => 'Working Hours']) }}
                                 </div><!--col-lg-10-->
                             </div><!--form control-->
-                            <!-- End: High Lights -->
+                            <!-- End: Working Hours -->
 
-                            <!-- Start: Working Days -->
+                            <!-- Start: Best Time to Visit -->
                             <div class="form-group">
-                                {{ Form::label('working_days_'.$language->id, 'Best time', ['class' => 'col-lg-2 control-label']) }}
+                                {{ Form::label('when_to_go_'.$language->id, 'Best Time to Visit', ['class' => 'col-lg-2 control-label']) }}
 
                                 <div class="col-lg-10">
-                                    {{ Form::textarea('working_days_'.$language->id, null, ['class' => 'form-control required', 'maxlength' => '191', 'required' => 'required', 'placeholder' => 'Working Days']) }}
+                                    {{ Form::textarea('when_to_go_'.$language->id, null, ['class' => 'form-control required', 'maxlength' => '191', 'required' => 'required', 'placeholder' => 'Best Time to Visit']) }}
                                 </div><!--col-lg-10-->
                             </div><!--form control-->
-                            <!-- End: Working Days -->
-
-                            <!-- Start: Working Times -->
-                            <div class="form-group">
-                                {{ Form::label('working_times_'.$language->id, 'Working Times', ['class' => 'col-lg-2 control-label']) }}
-
-                                <div class="col-lg-10">
-                                    {{ Form::textarea('working_times_'.$language->id, null, ['class' => 'form-control required', 'maxlength' => '191', 'required' => 'required', 'placeholder' => 'Working Times']) }}
-                                </div><!--col-lg-10-->
-                            </div><!--form control-->
-                            <!-- End: Working Times -->
-
-                            <!-- Start: How To Go -->
-                            <div class="form-group">
-                                {{ Form::label('how_to_go_'.$language->id, 'How To Go', ['class' => 'col-lg-2 control-label']) }}
-
-                                <div class="col-lg-10">
-                                    {{ Form::textarea('how_to_go_'.$language->id, null, ['class' => 'form-control required', 'maxlength' => '191', 'required' => 'required', 'placeholder' => 'How To Go']) }}
-                                </div><!--col-lg-10-->
-                            </div><!--form control-->
-                            <!-- End: How To Go -->
-
-                            <!-- Start: When To Go -->
-                            <div class="form-group">
-                                {{ Form::label('when_to_go_'.$language->id, 'When To Go', ['class' => 'col-lg-2 control-label']) }}
-
-                                <div class="col-lg-10">
-                                    {{ Form::textarea('when_to_go_'.$language->id, null, ['class' => 'form-control required', 'maxlength' => '191', 'required' => 'required', 'placeholder' => 'When To Go']) }}
-                                </div><!--col-lg-10-->
-                            </div><!--form control-->
-                            <!-- End: When To Go -->
-
-                            <!-- Start: Num Activities -->
-                            <div class="form-group">
-                                {{ Form::label('num_activities_'.$language->id, 'No. of Activities', ['class' => 'col-lg-2 control-label']) }}
-
-                                <div class="col-lg-10">
-                                    {{ Form::input('number','num_activities_'.$language->id, null , ['class' => 'form-control required', 'required' => 'required', 'placeholder' => 'No. of Activities']) }}
-                                </div><!--col-lg-10-->
-                            </div><!--form control-->
-                            <!-- End: Num Activities -->
-
-                            <!-- Start: Popularity -->
-                            <div class="form-group">
-                                {{ Form::label('popularity_'.$language->id, 'Popularity', ['class' => 'col-lg-2 control-label']) }}
-
-                                <div class="col-lg-10">
-                                    {{ Form::text('popularity_'.$language->id, null, ['class' => 'form-control required', 'maxlength' => '191', 'required' => 'required', 'placeholder' => 'Popularity']) }}
-                                </div><!--col-lg-10-->
-                            </div><!--form control-->
-                            <!-- End: Popularity -->
-
-                            <!-- Start: Conditions -->
-                            <div class="form-group">
-                                {{ Form::label('conditions_'.$language->id, 'Conditions', ['class' => 'col-lg-2 control-label']) }}
-
-                                <div class="col-lg-10">
-                                    {{ Form::textarea('conditions_'.$language->id, null, ['class' => 'form-control required', 'maxlength' => '191', 'required' => 'required', 'placeholder' => 'Conditions']) }}
-                                </div><!--col-lg-10-->
-                            </div><!--form control-->
-                            <!-- End: Popularity -->
+                            <!-- End: Best Time to Visit -->
 
                             <!-- Start: Price Level -->
                             <div class="form-group">
@@ -223,26 +163,15 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
                             </div><!--form control-->
                             <!-- End: Price Level -->
 
-                            <!-- Start: No. of Checkins -->
+                            <!-- Start: Website -->
                             <div class="form-group">
-                                {{ Form::label('num_checkins'.$language->id, 'No. of Checkins', ['class' => 'col-lg-2 control-label']) }}
+                                {{ Form::label('history_'.$language->id, 'Website', ['class' => 'col-lg-2 control-label']) }}
 
                                 <div class="col-lg-10">
-                                    {{ Form::input('number','num_checkins_'.$language->id, null , ['class' => 'form-control required', 'required' => 'required', 'placeholder' => 'No. of Checkins']) }}
+                                    {{ Form::textarea('history_'.$language->id, null, ['class' => 'form-control required', 'maxlength' => '191', 'required' => 'required', 'placeholder' => 'Website']) }}
                                 </div><!--col-lg-10-->
                             </div><!--form control-->
-                            <!-- End: No. of Checkins -->
-
-
-                            <!-- Start: History -->
-                            <div class="form-group">
-                                {{ Form::label('history_'.$language->id, 'History', ['class' => 'col-lg-2 control-label']) }}
-
-                                <div class="col-lg-10">
-                                    {{ Form::textarea('history_'.$language->id, null, ['class' => 'form-control required', 'maxlength' => '191', 'required' => 'required', 'placeholder' => 'History']) }}
-                                </div><!--col-lg-10-->
-                            </div><!--form control-->
-                            <!-- End: History -->
+                            <!-- End: Website -->
 
                             <!-- Languages Tabs: Start -->
                         </div>

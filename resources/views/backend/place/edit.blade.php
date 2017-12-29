@@ -113,10 +113,10 @@ use App\Models\Access\language\Languages;
 
                 <!-- Start: Description -->
                 <div class="form-group">
-                    {{ Form::label('description_'.$language->id, 'Description', ['class' => 'col-lg-2 control-label description_input']) }}
+                    {{ Form::label('description_'.$language->id, 'Quick Facts', ['class' => 'col-lg-2 control-label description_input']) }}
 
                     <div class="col-lg-10">
-                        {{ Form::textarea('description_'.$language->id, $data['description_'.$language->id], ['class' => 'form-control description_input description', 'placeholder' => 'Description']) }}
+                        {{ Form::textarea('description_'.$language->id, $data['description_'.$language->id], ['class' => 'form-control description_input description', 'placeholder' => 'Quick Facts']) }}
                     </div><!--col-lg-10-->
                 </div><!--form control-->
                 <!-- End: Description -->
@@ -141,85 +141,25 @@ use App\Models\Access\language\Languages;
                 </div><!--form control-->
                 <!-- End: Phone -->
 
-                <!-- Start: High Lights -->
+                <!-- Start: Working Hours -->
                 <div class="form-group">
-                    {{ Form::label('highlights_'.$language->id, 'High Lights', ['class' => 'col-lg-2 control-label']) }}
+                    {{ Form::label('working_days_'.$language->id, 'Working Hours', ['class' => 'col-lg-2 control-label']) }}
 
                     <div class="col-lg-10">
-                        {{ Form::textarea('highlights_'.$language->id, $data['highlights_'.$language->id], ['class' => 'form-control', 'maxlength' => '191', 'placeholder' => 'High Lights']) }}
+                        {{ Form::textarea('working_days_'.$language->id, $data['working_days_'.$language->id], ['class' => 'form-control', 'maxlength' => '191', 'placeholder' => 'Working Hours']) }}
                     </div><!--col-lg-10-->
                 </div><!--form control-->
-                <!-- End: High Lights -->
-
-                <!-- Start: Working Days -->
-                <div class="form-group">
-                    {{ Form::label('working_days_'.$language->id, 'Best time', ['class' => 'col-lg-2 control-label']) }}
-
-                    <div class="col-lg-10">
-                        {{ Form::textarea('working_days_'.$language->id, $data['working_days_'.$language->id], ['class' => 'form-control', 'maxlength' => '191', 'placeholder' => 'Working Days']) }}
-                    </div><!--col-lg-10-->
-                </div><!--form control-->
-                <!-- End: Working Days -->
-
-                <!-- Start: Working Times -->
-                <div class="form-group">
-                    {{ Form::label('working_times_'.$language->id, 'Working Times', ['class' => 'col-lg-2 control-label']) }}
-
-                    <div class="col-lg-10">
-                        {{ Form::textarea('working_times_'.$language->id, $data['working_times_'.$language->id], ['class' => 'form-control', 'maxlength' => '191', 'placeholder' => 'Working Times']) }}
-                    </div><!--col-lg-10-->
-                </div><!--form control-->
-                <!-- End: Working Times -->
-
-                <!-- Start: How To Go -->
-                <div class="form-group">
-                    {{ Form::label('how_to_go_'.$language->id, 'How To Go', ['class' => 'col-lg-2 control-label']) }}
-
-                    <div class="col-lg-10">
-                        {{ Form::textarea('how_to_go_'.$language->id, $data['how_to_go_'.$language->id], ['class' => 'form-control', 'maxlength' => '191', 'placeholder' => 'How To Go']) }}
-                    </div><!--col-lg-10-->
-                </div><!--form control-->
-                <!-- End: How To Go -->
+                <!-- End: Working Hours -->
 
                 <!-- Start: When To Go -->
                 <div class="form-group">
-                    {{ Form::label('when_to_go_'.$language->id, 'When To Go', ['class' => 'col-lg-2 control-label']) }}
+                    {{ Form::label('when_to_go_'.$language->id, 'Best Time to Visit', ['class' => 'col-lg-2 control-label']) }}
 
                     <div class="col-lg-10">
-                        {{ Form::textarea('when_to_go_'.$language->id, $data['when_to_go_'.$language->id], ['class' => 'form-control', 'maxlength' => '191', 'placeholder' => 'When To Go']) }}
+                        {{ Form::textarea('when_to_go_'.$language->id, $data['when_to_go_'.$language->id], ['class' => 'form-control', 'maxlength' => '191', 'placeholder' => 'Best Time to Visit']) }}
                     </div><!--col-lg-10-->
                 </div><!--form control-->
                 <!-- End: When To Go -->
-
-                <!-- Start: Num Activities -->
-                <div class="form-group">
-                    {{ Form::label('num_activities_'.$language->id, 'No. of Activities', ['class' => 'col-lg-2 control-label']) }}
-
-                    <div class="col-lg-10">
-                        {{ Form::input('number','num_activities_'.$language->id, $data['num_activities_'.$language->id], ['class' => 'form-control', 'placeholder' => 'No. of Activities']) }}
-                    </div><!--col-lg-10-->
-                </div><!--form control-->
-                <!-- End: Num Activities -->
-
-                <!-- Start: Popularity -->
-                <div class="form-group">
-                    {{ Form::label('popularity_'.$language->id, 'Popularity', ['class' => 'col-lg-2 control-label']) }}
-
-                    <div class="col-lg-10">
-                        {{ Form::text('popularity_'.$language->id, $data['popularity_'.$language->id], ['class' => 'form-control', 'maxlength' => '191', 'placeholder' => 'Popularity']) }}
-                    </div><!--col-lg-10-->
-                </div><!--form control-->
-                <!-- End: Popularity -->
-
-                <!-- Start: Conditions -->
-                <div class="form-group">
-                    {{ Form::label('conditions_'.$language->id, 'Conditions', ['class' => 'col-lg-2 control-label']) }}
-
-                    <div class="col-lg-10">
-                        {{ Form::textarea('conditions_'.$language->id, $data['conditions_'.$language->id], ['class' => 'form-control', 'maxlength' => '191', 'placeholder' => 'Conditions']) }}
-                    </div><!--col-lg-10-->
-                </div><!--form control-->
-                <!-- End: Popularity -->
 
                 <!-- Start: Price Level -->
                 <div class="form-group">
@@ -232,24 +172,12 @@ use App\Models\Access\language\Languages;
                 </div><!--form control-->
                 <!-- End: Price Level -->
 
-                <!-- Start: No. of Checkins -->
+                <!-- Start: Website -->
                 <div class="form-group">
-                    {{ Form::label('num_checkins'.$language->id, 'No. of Checkins', ['class' => 'col-lg-2 control-label']) }}
+                    {{ Form::label('history_'.$language->id, 'Website', ['class' => 'col-lg-2 control-label']) }}
 
                     <div class="col-lg-10">
-                        {{ Form::input('number','num_checkins_'.$language->id, $data['num_checkins_'.$language->id], ['class' => 'form-control', 'placeholder' => 'No. of Checkins']) }}
-
-                    </div><!--col-lg-10-->
-                </div><!--form control-->
-                <!-- End: No. of Checkins -->
-
-
-                <!-- Start: History -->
-                <div class="form-group">
-                    {{ Form::label('history_'.$language->id, 'History', ['class' => 'col-lg-2 control-label']) }}
-
-                    <div class="col-lg-10">
-                        {{ Form::textarea('history_'.$language->id, $data['history_'.$language->id ], ['class' => 'form-control', 'maxlength' => '191', 'placeholder' => 'History']) }}
+                        {{ Form::textarea('history_'.$language->id, $data['history_'.$language->id ], ['class' => 'form-control', 'maxlength' => '191', 'placeholder' => 'Website']) }}
                     </div><!--col-lg-10-->
                 </div><!--form control-->
                 <!-- End: History -->
