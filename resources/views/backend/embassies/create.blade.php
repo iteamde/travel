@@ -102,19 +102,80 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
                             </div><!--form control-->
                             <!-- End: Title -->
 
-                            <!-- Start: Description -->
+                            <!-- Start: Quick Facts -->
                             <div class="form-group">
-                                {{ Form::label('description_'.$language->id, 'Description', ['class' => 'col-lg-2 control-label description_input']) }}
+                                {{ Form::label('description_'.$language->id, 'Quick Facts', ['class' => 'col-lg-2 control-label description_input']) }}
 
                                 <div class="col-lg-10">
-                                    {{ Form::textarea('description_'.$language->id, null, ['class' => 'form-control description_input description required', 'required' => 'required', 'placeholder' => 'Description']) }}
+                                    {{ Form::textarea('description_'.$language->id, null, ['class' => 'form-control description_input description required', 'required' => 'required', 'placeholder' => 'Quick Facts']) }}
                                 </div><!--col-lg-10-->
                             </div><!--form control-->
-                            <!-- End: Description -->
+                            <!-- End: Quick Facts -->
+
+                            <!-- Start: Address -->
+                            <div class="form-group">
+                                {{ Form::label('address_'.$language->id, 'Address', ['class' => 'col-lg-2 control-label']) }}
+
+                                <div class="col-lg-10">
+                                    {{ Form::textarea('address_'.$language->id, null, ['class' => 'form-control required', 'required' => 'required', 'placeholder' => 'Address']) }}
+                                </div><!--col-lg-10-->
+                            </div><!--form control-->
+                            <!-- End: Address -->
+
+                            <!-- Start: Phone -->
+                            <div class="form-group">
+                                {{ Form::label('phone_'.$language->id, 'Phone', ['class' => 'col-lg-2 control-label']) }}
+
+                                <div class="col-lg-10">
+                                    {{ Form::text('phone_'.$language->id, null, ['class' => 'form-control required', 'maxlength' => '191', 'required' => 'required', 'placeholder' => 'Phone']) }}
+                                </div><!--col-lg-10-->
+                            </div><!--form control-->
+                            <!-- End: Phone -->
+
+                            <!-- Start: Working Hours -->
+                            <div class="form-group">
+                                {{ Form::label('working_days_'.$language->id, 'Working Hours', ['class' => 'col-lg-2 control-label']) }}
+
+                                <div class="col-lg-10">
+                                    {{ Form::textarea('working_days_'.$language->id, null, ['class' => 'form-control required', 'maxlength' => '191', 'required' => 'required', 'placeholder' => 'Working Hours']) }}
+                                </div><!--col-lg-10-->
+                            </div><!--form control-->
+                            <!-- End: Working Hours -->
+
+                            <!-- Start: Best Time to Visit -->
+                            <div class="form-group">
+                                {{ Form::label('when_to_go_'.$language->id, 'Best Time to Visit', ['class' => 'col-lg-2 control-label']) }}
+
+                                <div class="col-lg-10">
+                                    {{ Form::textarea('when_to_go_'.$language->id, null, ['class' => 'form-control required', 'maxlength' => '191', 'required' => 'required', 'placeholder' => 'Best Time to Visit']) }}
+                                </div><!--col-lg-10-->
+                            </div><!--form control-->
+                            <!-- End: Best Time to Visit -->
+
+                            <!-- Start: Price Level -->
+                            <div class="form-group">
+                                {{ Form::label('price_level_'.$language->id, 'Price Level', ['class' => 'col-lg-2 control-label']) }}
+
+                                <div class="col-lg-10">
+                                     {{ Form::input('number','price_level_'.$language->id, null , ['class' => 'form-control required', 'required' => 'required', 'placeholder' => 'Price Level']) }}
+                                </div><!--col-lg-10-->
+                            </div><!--form control-->
+                            <!-- End: Price Level -->
+
+                            <!-- Start: Website -->
+                            <div class="form-group">
+                                {{ Form::label('history_'.$language->id, 'Website', ['class' => 'col-lg-2 control-label']) }}
+
+                                <div class="col-lg-10">
+                                    {{ Form::textarea('history_'.$language->id, null, ['class' => 'form-control required', 'maxlength' => '191', 'required' => 'required', 'placeholder' => 'Website']) }}
+                                </div><!--col-lg-10-->
+                            </div><!--form control-
                             <!-- Languages Tabs: Start -->
                         </div>
                     @endforeach
                     </div>
+
+
                     
                     <!-- Active: Start -->
                     <div class="form-group">
@@ -135,6 +196,26 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
                         </div><!--col-lg-10-->
                     </div><!--form control-->
                     <!-- Country: End -->
+
+                     <!-- Cities: Start -->
+                    <div class="form-group">
+                        {{ Form::label('title', 'Cities', ['class' => 'col-lg-2 control-label']) }}
+
+                        <div class="col-lg-10">
+                            {{ Form::select('cities_id', $cities , null,['class' => 'select2Class form-control']) }}
+                        </div><!--col-lg-10-->
+                    </div><!--form control-->
+                    <!-- Cities: End -->
+
+                    <!-- Medias: Start -->
+                    <div class="form-group">
+                        {{ Form::label('title', 'Medias', ['class' => 'col-lg-2 control-label']) }}
+
+                        <div class="col-lg-10">
+                            {{ Form::select('medias_id[]', $medias , null,['class' => 'select2Class form-control' , 'multiple' => 'multiple']) }}
+                        </div><!--col-lg-10-->
+                    </div><!--form control-->
+                    <!-- Medias: End -->
         
                     <div class="form-group">
                     {{ Form::label('title', 'Select Location', ['class' => 'col-lg-2 control-label']) }}
@@ -152,6 +233,16 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
                             {{ Form::text('lat_lng_show', null, ['class' => 'form-control disabled', 'id' => 'lat-lng-input_show', 'required' => 'required', 'placeholder' => 'Lat,Lng' , 'disabled' => 'disabled']) }}
                         </div>
                     </div>
+
+                    <!-- Images: Start -->
+                    <div class="form-group">
+                        {{ Form::label('title', 'Images', ['class' => 'col-lg-2 control-label']) }}
+
+                        <div class="col-lg-10">
+                        {{ Form::file('file_name',[ 'name' => 'pictures[]', 'multiple' => 'multiple' ]) }}
+                        </div><!--col-lg-10-->
+                    </div><!--form control-->
+                    <!-- Images: End -->
                 @endif
                 <!-- Languages Tabs: End -->
             </div>

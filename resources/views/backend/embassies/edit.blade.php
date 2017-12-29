@@ -102,13 +102,74 @@ use App\Models\Access\language\Languages;
 
                             <!-- Start: Description -->
                             <div class="form-group">
-                                {{ Form::label('description_'.$language->id, 'Description', ['class' => 'col-lg-2 control-label description_input']) }}
+                                {{ Form::label('description_'.$language->id, 'Quick Facts', ['class' => 'col-lg-2 control-label description_input']) }}
 
                                 <div class="col-lg-10">
-                                    {{ Form::textarea('description_'.$language->id, $data['description_'.$language->id], ['class' => 'form-control description_input description required', 'maxlength' => '191', 'required' => 'required', 'placeholder' => 'Description']) }}
+                                    {{ Form::textarea('description_'.$language->id, $data['description_'.$language->id], ['class' => 'form-control description_input description', 'placeholder' => 'Quick Facts']) }}
                                 </div><!--col-lg-10-->
                             </div><!--form control-->
                             <!-- End: Description -->
+
+                            <!-- Start: Address -->
+                            <div class="form-group">
+                                {{ Form::label('address_'.$language->id, 'Address', ['class' => 'col-lg-2 control-label']) }}
+
+                                <div class="col-lg-10">
+                                    {{ Form::textarea('address_'.$language->id, $data['address_'.$language->id], ['class' => 'form-control', 'placeholder' => 'Address']) }}
+                                </div><!--col-lg-10-->
+                            </div><!--form control-->
+                            <!-- End: Address -->
+
+                            <!-- Start: Phone -->
+                            <div class="form-group">
+                                {{ Form::label('phone_'.$language->id, 'Phone', ['class' => 'col-lg-2 control-label']) }}
+
+                                <div class="col-lg-10">
+                                    {{ Form::text('phone_'.$language->id, $data['phone_'.$language->id], ['class' => 'form-control', 'maxlength' => '191', 'placeholder' => 'Phone']) }}
+                                </div><!--col-lg-10-->
+                            </div><!--form control-->
+                            <!-- End: Phone -->
+
+                            <!-- Start: Working Hours -->
+                            <div class="form-group">
+                                {{ Form::label('working_days_'.$language->id, 'Working Hours', ['class' => 'col-lg-2 control-label']) }}
+
+                                <div class="col-lg-10">
+                                    {{ Form::textarea('working_days_'.$language->id, $data['working_days_'.$language->id], ['class' => 'form-control', 'maxlength' => '191', 'placeholder' => 'Working Hours']) }}
+                                </div><!--col-lg-10-->
+                            </div><!--form control-->
+                            <!-- End: Working Hours -->
+
+                            <!-- Start: When To Go -->
+                            <div class="form-group">
+                                {{ Form::label('when_to_go_'.$language->id, 'Best Time to Visit', ['class' => 'col-lg-2 control-label']) }}
+
+                                <div class="col-lg-10">
+                                    {{ Form::textarea('when_to_go_'.$language->id, $data['when_to_go_'.$language->id], ['class' => 'form-control', 'maxlength' => '191', 'placeholder' => 'Best Time to Visit']) }}
+                                </div><!--col-lg-10-->
+                            </div><!--form control-->
+                            <!-- End: When To Go -->
+
+                            <!-- Start: Price Level -->
+                            <div class="form-group">
+                                {{ Form::label('price_level_'.$language->id, 'Price Level', ['class' => 'col-lg-2 control-label']) }}
+
+                                <div class="col-lg-10">
+                                    {{ Form::input('number','price_level_'.$language->id, $data['price_level_'.$language->id], ['class' => 'form-control', 'placeholder' => 'Price Level']) }}
+
+                                </div><!--col-lg-10-->
+                            </div><!--form control-->
+                            <!-- End: Price Level -->
+
+                            <!-- Start: Website -->
+                            <div class="form-group">
+                                {{ Form::label('history_'.$language->id, 'Website', ['class' => 'col-lg-2 control-label']) }}
+
+                                <div class="col-lg-10">
+                                    {{ Form::textarea('history_'.$language->id, $data['history_'.$language->id ], ['class' => 'form-control', 'maxlength' => '191', 'placeholder' => 'Website']) }}
+                                </div><!--col-lg-10-->
+                            </div><!--form control-->
+                            <!-- End: History -->
                         <!-- Languages Tabs: Start -->
                         </div>
                     @endforeach
@@ -136,6 +197,15 @@ use App\Models\Access\language\Languages;
                         </div><!--col-lg-10-->
                     </div><!--form control-->
                     <!-- Countries: End -->   
+                     <!-- Cities: Start -->
+                    <div class="form-group">
+                        {{ Form::label('title', 'Cities', ['class' => 'col-lg-2 control-label']) }}
+
+                        <div class="col-lg-10">
+                            {{ Form::select('cities_id', $cities , $data['cities_id'],['class' => 'select2Class form-control']) }}
+                        </div><!--col-lg-10-->
+                    </div><!--form control-->
+                    <!-- Cities: End -->
 
                     <div class="form-group">
                     {{ Form::label('title', 'Select Location', ['class' => 'col-lg-2 control-label']) }}

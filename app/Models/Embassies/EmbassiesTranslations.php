@@ -23,5 +23,5 @@ class EmbassiesTranslations extends Model
      *
      * @var array
      */
-    protected $fillable = ['embassies_id', 'languages_id', 'title', 'description'];
+    protected $fillable = ['embassies_id', 'languages_id', 'title', 'description', 'population', 'best_place', 'best_time', 'cost_of_living', 'geo_stats', 'demographics', 'economy', 'suitable_for', 'user_rating', 'num_cities'];
 }

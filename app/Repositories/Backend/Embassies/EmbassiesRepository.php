@@ -12,6 +12,11 @@ use App\Exceptions\GeneralException;
 use App\Repositories\BaseRepository;
 use Illuminate\Database\Eloquent\Model;
 use App\Repositories\Backend\Access\Role\RoleRepository;
+use App\Models\Embassies\EmbassiesMedias;
+use App\Models\ActivityMedia\Media;
+use App\Models\ActivityMedia\MediaTranslations;
+
+use App\Helpers\UrlGenerator;
 
 /**
  * Class EmbassiesRepository.
@@ -105,14 +110,64 @@ class EmbassiesRepository extends BaseRepository
     {
         $model                  = new Embassies;
         $model->countries_id    = $extra['country_id'];
+        $model->cities_id  = $extra['cities_id'];
         $model->active          = $extra['active'];
         $model->lat             = $extra['lat'];
         $model->lng             = $extra['lng'];
+        $model->safety_degrees_id = $extra['safety_degrees_id'];
+        $model->provider_id = 0;
 
         DB::transaction(function () use ($model, $input, $extra) {
             $check = 1;
             
             if ($model->save()) {
+
+                if(!empty($extra['files'])){
+
+                    $url = UrlGenerator::GetUploadsUrl();
+                    $i = 0;
+                    foreach ($extra['files'] as $key => $file) {
+                        $extension = $file->extension();
+
+                        if(self::validateUpload($extension)){
+                            $new_file_name = time() . $i++ . '_embassy.' . $file->extension();
+                            $new_path = '/uploads/medias/embassies/' . $model->id . '/';
+                            $file->storeAs( $new_path , $new_file_name);
+
+                            $media = new Media;
+                            $media->url = $url . 'medias/embassies/' . $model->id . '/' . $new_file_name;
+                            $media->type = Media::TYPE_IMAGE;
+                            $media->save();
+
+                            $languages = Languages::all();
+
+                            if(!empty($languages)){
+                                foreach ($languages as $key => $value) {
+                                    $media_trans = new MediaTranslations;
+                                    $media_trans->medias_id = $media->id;
+                                    $media_trans->languages_id = $value->id;
+                                    $media_trans->title = $new_file_name;
+                                    $media_trans->description = "Image";
+                                    $media_trans->save();
+                                }
+                            }
+
+                            $embassies_media = new EmbassiesMedias;
+                            $embassies_media->embassies_id = $model->id;
+                            $embassies_media->medias_id = $media->id;
+                            $embassies_media->save();
+                        }
+                    }
+                }
+
+                if(!empty($extra['medias'])){
+                    foreach ($extra['medias'] as $key => $value) {
+                       $EmbassyMedias = new EmbassiesMedias;
+                       $EmbassyMedias->embassies_id = $model->id;
+                       $EmbassyMedias->medias_id = $value;
+                       $EmbassyMedias->save();
+                    }
+                }
 
                 /* Store Different Translation of $this Embassies */
                 foreach ($input as $key => $value) {
@@ -121,6 +176,21 @@ class EmbassiesRepository extends BaseRepository
                     $trans->languages_id = $key;
                     $trans->title        = $value['title_'.$key];
                     $trans->description  = $value['description_'.$key];
+
+                    $trans->address         = $value['address_'.$key];
+                    $trans->phone           = $value['phone_'.$key];
+                    $trans->highlights      = $value['highlights_'.$key];
+                    $trans->working_days    = $value['working_days_'.$key];
+                    $trans->working_times   = $value['working_times_'.$key];
+                    $trans->how_to_go       = $value['how_to_go_'.$key];
+                    $trans->when_to_go      = $value['when_to_go_'.$key];
+                    $trans->num_activities  = $value['num_activities_'.$key];
+                    $trans->popularity      = $value['popularity_'.$key];
+
+                    $trans->conditions      = $value['conditions_'.$key];
+                    $trans->price_level     = $value['price_level_'.$key];
+                    $trans->num_checkins    = $value['num_checkins_'.$key];
+                    $trans->history         = $value['history_'.$key];
                     
                     if(!$trans->save()) {
                         $check = 0;
@@ -145,9 +215,12 @@ class EmbassiesRepository extends BaseRepository
         $model                  = Embassies::findOrFail(['id' => $id]);
         $model                  = $model[0];
         $model->countries_id    = $extra['country_id'];
+        $model->cities_id  = $extra['cities_id'];
         $model->active          = $extra['active'];
         $model->lat             = $extra['lat'];
         $model->lng             = $extra['lng'];
+        $model->safety_degrees_id = $extra['safety_degrees_id'];
+        $model->provider_id = 0;
         
         /* Delete Previous EmbassiesTranslations */
         $prev = EmbassiesTranslations::where(['embassies_id' => $id])->get();
@@ -162,6 +235,53 @@ class EmbassiesRepository extends BaseRepository
             
             if ($model->save()) {
 
+                if(!empty($extra['files'])){
+
+                    $url = UrlGenerator::GetUploadsUrl();
+                    $i = 0;
+                    foreach ($extra['files'] as $key => $file) {
+                        $extension = $file->extension();
+
+                        if(self::validateUpload($extension)){
+                            $new_file_name = time() . $i++ . '_place.' . $file->extension();
+                            $new_path = '/uploads/medias/embassies/' . $model->id . '/';
+                            $file->storeAs( $new_path , $new_file_name);
+
+                            $media = new Media;
+                            $media->url = $url . 'medias/embassies/' . $model->id . '/' . $new_file_name;
+                            $media->type = Media::TYPE_IMAGE;
+                            $media->save();
+
+                            $languages = Languages::all();
+
+                            if(!empty($languages)){
+                                foreach ($languages as $key => $value) {
+                                    $media_trans = new MediaTranslations;
+                                    $media_trans->medias_id = $media->id;
+                                    $media_trans->languages_id = $value->id;
+                                    $media_trans->title = $new_file_name;
+                                    $media_trans->description = "Image";
+                                    $media_trans->save();
+                                }
+                            }
+
+                            $embassies_media = new EmbassiesMedias;
+                            $embassies_media->embassies_id = $model->id;
+                            $embassies_media->medias_id = $media->id;
+                            $embassies_media->save();
+                        }
+                    }
+                }
+
+                if(!empty($extra['medias'])){
+                    foreach ($extra['medias'] as $key => $value) {
+                       $$EmbassyMedias = new EmbassiesMedias;
+                       $EmbassyMedias->embassies_id = $model->id;
+                       $EmbassyMedias->medias_id = $value;
+                       $EmbassyMedias->save();
+                    }
+                }
+
                 /* Store New Translations For $this Embassies */
                 foreach ($input as $key => $value) {
                     $trans = new EmbassiesTranslations;
@@ -169,6 +289,20 @@ class EmbassiesRepository extends BaseRepository
                     $trans->languages_id = $key;
                     $trans->title        = $value['title_'.$key];
                     $trans->description  = $value['description_'.$key];
+                    $trans->address         = $value['address_'.$key];
+                    $trans->phone           = $value['phone_'.$key];
+                    $trans->highlights      = $value['highlights_'.$key];
+                    $trans->working_days    = $value['working_days_'.$key];
+                    $trans->working_times   = $value['working_times_'.$key];
+                    $trans->how_to_go       = $value['how_to_go_'.$key];
+                    $trans->when_to_go      = $value['when_to_go_'.$key];
+                    $trans->num_activities  = $value['num_activities_'.$key];
+                    $trans->popularity      = $value['popularity_'.$key];
+
+                    $trans->conditions      = $value['conditions_'.$key];
+                    $trans->price_level     = $value['price_level_'.$key];
+                    $trans->num_checkins    = $value['num_checkins_'.$key];
+                    $trans->history         = $value['history_'.$key];
             
                     if(!$trans->save()) {
                         $check = 0;
@@ -183,4 +317,25 @@ class EmbassiesRepository extends BaseRepository
             throw new GeneralException('Unexpected Error Occured!');
         });
     }
+
+    public static function validateUpload($extension) {
+
+        $extension = strtolower($extension);
+
+        switch($extension){
+            case 'jpeg':
+                return true;
+            case 'jpg':
+                return true;
+                break;
+            case 'png':
+                return true;
+                break;
+            case 'gif':
+                return true;
+                break;
+            default:
+                return false;
+        }
+    }   
 }

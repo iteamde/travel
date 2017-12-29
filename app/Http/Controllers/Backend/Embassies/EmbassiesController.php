@@ -14,6 +14,9 @@ use App\Http\Requests\Backend\Embassies\ManageEmbassiesRequest;
 use App\Http\Requests\Backend\Embassies\StoreEmbassiesRequest;
 use App\Repositories\Backend\Embassies\EmbassiesRepository;
 use App\Models\Country\Countries;
+use App\Models\ActivityMedia\Media;
+use App\Models\SafetyDegree\SafetyDegree;
+use App\Models\PlaceTypes\PlaceTypes;
 
 class EmbassiesController extends Controller
 {
@@ -52,8 +55,30 @@ class EmbassiesController extends Controller
             }
         }
 
+        /* Get All Cities */
+        $cities = Cities::where(['active' => 1])->get();
+        $cities_arr = [];
+
+        foreach ($cities as $key => $value) {
+            if (isset($value->transsingle) && !empty($value->transsingle)) {
+                $cities_arr[$value->id] = $value->transsingle->title;
+            }
+        }
+
+
+        /* Get All Medias */
+        $medias = Media::where(['type' => null])->get();
+        $medias_arr = [];
+
+        foreach ($medias as $key => $value) {
+            if (isset($value->transsingle) && !empty($value->transsingle)) {
+                $medias_arr[$value->id] = $value->transsingle->title;
+            }
+        }
         return view('backend.embassies.create',[
             'countries' => $countries_arr,
+            'cities' => $cities_arr,
+            'medias' => $medias_arr,
         ]);
     }
 
@@ -64,11 +89,27 @@ class EmbassiesController extends Controller
      */
     public function store(StoreEmbassiesRequest $request)
     {
+       
         $data = [];
 
         foreach ($this->languages as $key => $language) {
             $data[$language->id]['title_'.$language->id] = $request->input('title_'.$language->id);
             $data[$language->id]['description_'.$language->id] = $request->input('description_'.$language->id);
+            // added by Shaheer //
+            $data[$language->id]['address_' . $language->id] = $request->input('address_' . $language->id);
+            $data[$language->id]['phone_' . $language->id] = $request->input('phone_' . $language->id);
+            $data[$language->id]['highlights_' . $language->id] = $request->input('highlights_' . $language->id);
+            $data[$language->id]['working_days_' . $language->id] = $request->input('working_days_' . $language->id);
+            $data[$language->id]['working_times_' . $language->id] = $request->input('working_times_' . $language->id);
+            $data[$language->id]['how_to_go_' . $language->id] = $request->input('how_to_go_' . $language->id);
+            $data[$language->id]['when_to_go_' . $language->id] = $request->input('when_to_go_' . $language->id);
+            $data[$language->id]['num_activities_' . $language->id] = $request->input('num_activities_' . $language->id);
+            $data[$language->id]['popularity_' . $language->id] = $request->input('popularity_' . $language->id);
+            $data[$language->id]['conditions_' . $language->id] = $request->input('conditions_' . $language->id);
+            $data[$language->id]['price_level_' . $language->id] = $request->input('price_level_' . $language->id);
+            $data[$language->id]['num_checkins_' . $language->id] = $request->input('num_checkins_' . $language->id);
+            $data[$language->id]['history_' . $language->id] = $request->input('history_' . $language->id);
+
         }
 
         $location = explode(',',$request->input('lat_lng') );
@@ -81,12 +122,37 @@ class EmbassiesController extends Controller
             $active = 1;
         }
 
+        $safety_degrees_id = null;
+        $degrees = SafetyDegree::get();
+
+        $place_type_ids = null;
+        $types = PlaceTypes::get();
+
+        if (!empty($types[0])) {
+            $place_type_ids = $types[0]->id;
+        }
+
+        if (!empty($degrees[0])) {
+            $safety_degrees_id = $degrees[0]->id;
+        }
+
+        $files = null;
+        if ($request->hasFile('pictures')) {
+            $files = $request->file('pictures');
+        }
+        // echo "<pre>";
+        // print_r($data);
+        // exit();
+
         /* Send All Relations and Common fields Through $extra array */
         $extra = [
             'active' => $active,
             'country_id' =>  $request->input('country_id'),
+            'cities_id' => $request->input('cities_id'),
             'lat' => $location[0],
             'lng' => $location[1],
+            'safety_degrees_id' => $safety_degrees_id,
+            'files' => $files
         ];
 
         $this->embassies->create($data, $extra);
@@ -125,7 +191,8 @@ class EmbassiesController extends Controller
         foreach ($this->languages as $key => $language) {
             $model = EmbassiesTranslations::where([
                 'languages_id' => $language->id,
-                'embassies_id'   => $id
+                'embassies_id'   => $id,
+
             ])->get();
 
             /* If Translation For Current Language Is Empty, Put Null in All The Fields */
@@ -133,15 +200,46 @@ class EmbassiesController extends Controller
 
                 $data['title_'.$language->id]           = $model[0]->title;
                 $data['description_'.$language->id]     = $model[0]->description;
+                $data['address_' . $language->id] = $model[0]->address;
+                $data['phone_' . $language->id] = $model[0]->phone;
+                $data['highlights_' . $language->id] = $model[0]->highlights;
+                $data['working_days_' . $language->id] = $model[0]->working_days;
+                $data['working_times_' . $language->id] = $model[0]->working_times;
+                $data['how_to_go_' . $language->id] = $model[0]->how_to_go;
+                $data['when_to_go_' . $language->id] = $model[0]->when_to_go;
+                $data['num_activities_' . $language->id] = $model[0]->num_activities;
+                $data['popularity_' . $language->id] = $model[0]->popularity;
+                $data['conditions_' . $language->id] = $model[0]->conditions;
+                $data['price_level_' . $language->id] = $model[0]->price_level;
+                $data['num_checkins_' . $language->id] = $model[0]->num_checkins;
+                $data['history_' . $language->id] = $model[0]->history;
             }else{
                 $data['title_'.$language->id]           = null;
                 $data['description_'.$language->id]     = null;
+                $data['address_' . $language->id] = null;
+                $data['phone_' . $language->id] = null;
+                $data['highlights_' . $language->id] = null;
+                $data['working_days_' . $language->id] = null;
+                $data['working_times_' . $language->id] = null;
+                $data['how_to_go_' . $language->id] = null;
+                $data['when_to_go_' . $language->id] = null;
+                $data['num_activities_' . $language->id] = null;
+                $data['popularity_' . $language->id] = null;
+                $data['conditions_' . $language->id] = null;
+                $data['price_level_' . $language->id] = null;
+                $data['num_checkins_' . $language->id] = null;
+                $data['history_' . $language->id] = null;
             }
         }
 
         $data['lat_lng'] = $embassies['lat'] . ',' . $embassies['lng'];
         $data['active'] = $embassies['active'];
         $data['country_id'] = $embassies['countries_id'];
+
+        $data['cities_id'] = $embassies['cities_id'];
+        $data['place_types_ids'] = $embassies['place_type_ids'];
+        $data['safety_degrees_id'] = $embassies['safety_degrees_id'];
+
 
         $countries = Countries::where(['active' => 1])->get();
         $countries_arr = [];
@@ -152,11 +250,56 @@ class EmbassiesController extends Controller
             }
         }
 
+        /* Get All Cities */
+        $cities = Cities::where(['active' => 1])->get();
+        $cities_arr = [];
+
+        foreach ($cities as $key => $value) {
+            if (isset($value->transsingle) && !empty($value->transsingle)) {
+                $cities_arr[$value->id] = $value->transsingle->title;
+            }
+        }
+
+
+        /* Get All safety Degrees */
+        $degrees = SafetyDegree::get();
+        $degrees_arr = [];
+
+        foreach ($degrees as $key => $value) {
+            if (isset($value->transsingle) && !empty($value->transsingle)) {
+                $degrees_arr[$value->id] = $value->transsingle->title;
+            }
+        }
+
+        /* Get All Selected Medias */
+        $selected_medias = $embassies->medias;
+        $selected_medias_arr = [];
+        $images_arr = [];
+        $featured_media = 0;
+
+        foreach ($selected_medias as $key => $value) {
+            $value = $value->media;
+            // if(isset($value->transsingle) && !empty($value->transsingle)){
+            if ($value->featured == 1)
+                $data['featured_media'] = $value->id;
+            array_push($images_arr, [
+                'id' => $value->id,
+                'featured' => $value->featured,
+                'url' => asset(Storage::url($value->url))
+            ]);
+        }
+
+        $data['selected_medias'] = $selected_medias_arr;
+        $data['images'] = $images_arr;
+
         return view('backend.embassies.edit')
             ->withLanguages($this->languages)
             ->withEmbassies($embassies)
             ->withEmbassiesid($id)
             ->withCountries($countries_arr)
+            ->withDegrees($degrees_arr)
+            ->withCities($cities_arr)
+            ->withImages($images_arr)
             ->withData($data);
     }
 
@@ -175,6 +318,19 @@ class EmbassiesController extends Controller
         foreach ($this->languages as $key => $language) {
             $data[$language->id]['title_'.$language->id] = $request->input('title_'.$language->id);
             $data[$language->id]['description_'.$language->id] = $request->input('description_'.$language->id);
+            $data[$language->id]['address_' . $language->id] = $request->input('address_' . $language->id);
+            $data[$language->id]['phone_' . $language->id] = $request->input('phone_' . $language->id);
+            $data[$language->id]['highlights_' . $language->id] = $request->input('highlights_' . $language->id);
+            $data[$language->id]['working_days_' . $language->id] = $request->input('working_days_' . $language->id);
+            $data[$language->id]['working_times_' . $language->id] = $request->input('working_times_' . $language->id);
+            $data[$language->id]['how_to_go_' . $language->id] = $request->input('how_to_go_' . $language->id);
+            $data[$language->id]['when_to_go_' . $language->id] = $request->input('when_to_go_' . $language->id);
+            $data[$language->id]['num_activities_' . $language->id] = $request->input('num_activities_' . $language->id);
+            $data[$language->id]['popularity_' . $language->id] = $request->input('popularity_' . $language->id);
+            $data[$language->id]['conditions_' . $language->id] = $request->input('conditions_' . $language->id);
+            $data[$language->id]['price_level_' . $language->id] = $request->input('price_level_' . $language->id);
+            $data[$language->id]['num_checkins_' . $language->id] = $request->input('num_checkins_' . $language->id);
+            $data[$language->id]['history_' . $language->id] = $request->input('history_' . $language->id);
         }
 
         $location = explode( ',' , $request->input('lat_lng') );
@@ -187,12 +343,22 @@ class EmbassiesController extends Controller
             $active = 1;
         }
 
+        $files = null;
+        if ($request->hasFile('pictures')) {
+            $files = $request->file('pictures');
+        }
+
         /* Send All Relation and Common Fields Through $extra Array */
         $extra = [
             'active' => $active,
             'country_id' =>  $request->input('country_id'),
+            'cities_id' => $request->input('cities_id'),
             'lat' => $location[0],
             'lng' => $location[1],
+            'medias' => $request->input('medias_id'),
+            'safety_degrees_id' => $request->input('safety_degrees_id'),
+            'files' => $files,
+            'delete-images' => $request->input('delete-images'),
         ];
 
         $this->embassies->update($id , $embassies, $data , $extra);
