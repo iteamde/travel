@@ -42,7 +42,7 @@
                             <td>{{ $country_translation->title }}</td>
                         </tr>
                         <tr>
-                            <th>Description <small>({{ $country_translation->translanguage->title }})</small></th>
+                            <th>Quick Facts <small>({{ $country_translation->translanguage->title }})</small></th>
                             <td class="description"><p><?=$country_translation->description?></p></td>
                         </tr>
                         <tr>
@@ -54,31 +54,23 @@
                             <td class="description"><p><?=$country_translation->population?></p></td>
                         </tr>
                         <tr>
-                            <th>Best Place <small>({{ $country_translation->translanguage->title }})</small></th>
-                            <td class="description"><p><?=$country_translation->best_place?></p></td>
-                        </tr>
-                        <tr>
-                            <th>Best Time <small>({{ $country_translation->translanguage->title }})</small></th>
-                            <td class="description"><p><?=$country_translation->best_time?></p></td>
-                        </tr>
-                        <tr>
-                            <th>Cost of living <small>({{ $country_translation->translanguage->title }})</small></th>
+                            <th>Cost of Living Index <small>({{ $country_translation->translanguage->title }})</small></th>
                             <td class="description"><p><?=$country_translation->cost_of_living?></p></td>
                         </tr>
                         <tr>
-                            <th>Geo Stats <small>({{ $country_translation->translanguage->title }})</small></th>
+                            <th>Crime Rate Index <small>({{ $country_translation->translanguage->title }})</small></th>
                             <td class="description"><p><?=$country_translation->geo_stats?></p></td>
                         </tr>
                         <tr>
-                            <th>Demographics <small>({{ $country_translation->translanguage->title }})</small></th>
+                            <th>Quality of Life Index <small>({{ $country_translation->translanguage->title }})</small></th>
                             <td class="description"><p><?=$country_translation->demographics?></p></td>
                         </tr>
                         <tr>
-                            <th>Economy <small>({{ $country_translation->translanguage->title }})</small></th>
+                            <th>Restrictions <small>({{ $country_translation->translanguage->title }})</small></th>
                             <td class="description"><p><?=$country_translation->economy?></p></td>
                         </tr>
                         <tr>
-                            <th>Suitable For <small>({{ $country_translation->translanguage->title }})</small></th>
+                            <th>Hijab Allowed? <small>({{ $country_translation->translanguage->title }})</small></th>
                             <td class="description"><p><?=$country_translation->suitable_for?></p></td>
                         </tr>
                     @endforeach
@@ -86,16 +78,12 @@
                          <th> <h3 style="color:#0A8F27">Common Fields</h3></th><td></td>   
                     </tr>
                     <tr>
-                        <th>Code </th>
+                        <th>Country Code </th>
                         <td> <p><?=$country->code?></p> </td>
                     </tr>
                     <tr>
-                        <th>Region </th>
+                        <th>Continent </th>
                         <td> <p><?=$region->title?></p> </td>
-                    </tr>
-                    <tr>
-                        <th>Safety Degree </th>
-                        <td> <p><?=$degree->title?></p> </td>
                     </tr>
                     <tr>
                         <th>Active </th>
@@ -204,13 +192,13 @@
                     @endforeach
                     <!-- End: Languages Spoken -->
 
-                    <!-- Start: Life Styles -->
+                    <!-- Start: Suitable Travel Styles -->
                     <tr>
-                         <th> <h3 style="color:#0A8F27">Life Styles</h3></th><td></td>   
+                         <th> <h3 style="color:#0A8F27">Suitable Travel Styles</h3></th><td></td>   
                     </tr>
                     @if(empty($lifestyles))
                       <tr>
-                          <th> <p>No Life Styles Added.</p> </th><td></td>
+                          <th> <p>No Suitable Travel Styles.</p> </th><td></td>
                       </tr>
                     @endif
                     @foreach($lifestyles as $key => $lifestyle)
@@ -218,7 +206,7 @@
                           <th> <p><?=$lifestyle?></p> </th><td></td>
                       </tr>
                     @endforeach
-                    <!-- End: Life Styles -->
+                    <!-- End: Suitable Travel Styles -->
 
                     <!-- Start: Religions -->
                     <tr>
