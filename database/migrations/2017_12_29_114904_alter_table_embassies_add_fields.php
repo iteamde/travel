@@ -14,15 +14,15 @@ class AlterTableEmbassiesAddFields extends Migration
     public function up()
     {
         Schema::table('activity_log', function(Blueprint $table) {
-            $sql = "ALTER TABLE `embassies`   
-                      CREATE TABLE `embassies_media`(  
-                      `id` INT(11),
-                      `embassies_id` INT(11),
-                      `medias_id` INT(11),
-                      FOREIGN KEY (`embassies_id`) REFERENCES `embassies`(`id`) ON DELETE CASCADE,
-                      FOREIGN KEY (`medias_id`) REFERENCES `medias`(`id`) ON DELETE CASCADE
-                    ) ENGINE=INNODB CHARSET=utf8 COLLATE=utf8_general_ci;";
-            DB::connection()->getPdo()->exec($sql);
+            // $sql = "ALTER TABLE `embassies`   
+            //           CREATE TABLE `embassies_media`(  
+            //           `id` INT(11),
+            //           `embassies_id` INT(11),
+            //           `medias_id` INT(11),
+            //           FOREIGN KEY (`embassies_id`) REFERENCES `embassies`(`id`) ON DELETE CASCADE,
+            //           FOREIGN KEY (`medias_id`) REFERENCES `medias`(`id`) ON DELETE CASCADE
+            //         ) ENGINE=INNODB CHARSET=utf8 COLLATE=utf8_general_ci;";
+            // DB::connection()->getPdo()->exec($sql);
         });
     }
 

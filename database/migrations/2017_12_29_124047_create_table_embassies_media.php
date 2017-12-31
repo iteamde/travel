@@ -15,9 +15,9 @@ class CreateTableEmbassiesMedia extends Migration
     {
         Schema::table('activity_log', function(Blueprint $table) {
             $sql = "CREATE TABLE `embassies_media`(  
-                  `id` INT(11),
-                  `embassies_id` INT(11),
-                  `medias_id` INT(11),
+                  `id` int(11),
+                  `embassies_id` int(11),
+                  `medias_id` int(11),
                   FOREIGN KEY (`embassies_id`) REFERENCES `embassies`(`id`) ON DELETE CASCADE,
                   FOREIGN KEY (`medias_id`) REFERENCES `medias`(`id`) ON DELETE CASCADE
                 ) ENGINE=INNODB CHARSET=utf8 COLLATE=utf8_general_ci;";

@@ -98,16 +98,16 @@ class EmbassiesController extends Controller
             // added by Shaheer //
             $data[$language->id]['address_' . $language->id] = $request->input('address_' . $language->id);
             $data[$language->id]['phone_' . $language->id] = $request->input('phone_' . $language->id);
-            $data[$language->id]['highlights_' . $language->id] = $request->input('highlights_' . $language->id);
+            // $data[$language->id]['highlights_' . $language->id] = $request->input('highlights_' . $language->id);
             $data[$language->id]['working_days_' . $language->id] = $request->input('working_days_' . $language->id);
-            $data[$language->id]['working_times_' . $language->id] = $request->input('working_times_' . $language->id);
-            $data[$language->id]['how_to_go_' . $language->id] = $request->input('how_to_go_' . $language->id);
+            // $data[$language->id]['working_times_' . $language->id] = $request->input('working_times_' . $language->id);
+            // $data[$language->id]['how_to_go_' . $language->id] = $request->input('how_to_go_' . $language->id);
             $data[$language->id]['when_to_go_' . $language->id] = $request->input('when_to_go_' . $language->id);
-            $data[$language->id]['num_activities_' . $language->id] = $request->input('num_activities_' . $language->id);
-            $data[$language->id]['popularity_' . $language->id] = $request->input('popularity_' . $language->id);
-            $data[$language->id]['conditions_' . $language->id] = $request->input('conditions_' . $language->id);
+            // $data[$language->id]['num_activities_' . $language->id] = $request->input('num_activities_' . $language->id);
+            // $data[$language->id]['popularity_' . $language->id] = $request->input('popularity_' . $language->id);
+            // $data[$language->id]['conditions_' . $language->id] = $request->input('conditions_' . $language->id);
             $data[$language->id]['price_level_' . $language->id] = $request->input('price_level_' . $language->id);
-            $data[$language->id]['num_checkins_' . $language->id] = $request->input('num_checkins_' . $language->id);
+            // $data[$language->id]['num_checkins_' . $language->id] = $request->input('num_checkins_' . $language->id);
             $data[$language->id]['history_' . $language->id] = $request->input('history_' . $language->id);
 
         }
@@ -151,7 +151,7 @@ class EmbassiesController extends Controller
             'cities_id' => $request->input('cities_id'),
             'lat' => $location[0],
             'lng' => $location[1],
-            'safety_degrees_id' => $safety_degrees_id,
+            // 'safety_degrees_id' => $safety_degrees_id,
             'files' => $files
         ];
 
@@ -320,16 +320,16 @@ class EmbassiesController extends Controller
             $data[$language->id]['description_'.$language->id] = $request->input('description_'.$language->id);
             $data[$language->id]['address_' . $language->id] = $request->input('address_' . $language->id);
             $data[$language->id]['phone_' . $language->id] = $request->input('phone_' . $language->id);
-            $data[$language->id]['highlights_' . $language->id] = $request->input('highlights_' . $language->id);
+            // $data[$language->id]['highlights_' . $language->id] = $request->input('highlights_' . $language->id);
             $data[$language->id]['working_days_' . $language->id] = $request->input('working_days_' . $language->id);
-            $data[$language->id]['working_times_' . $language->id] = $request->input('working_times_' . $language->id);
-            $data[$language->id]['how_to_go_' . $language->id] = $request->input('how_to_go_' . $language->id);
+            // $data[$language->id]['working_times_' . $language->id] = $request->input('working_times_' . $language->id);
+            // $data[$language->id]['how_to_go_' . $language->id] = $request->input('how_to_go_' . $language->id);
             $data[$language->id]['when_to_go_' . $language->id] = $request->input('when_to_go_' . $language->id);
-            $data[$language->id]['num_activities_' . $language->id] = $request->input('num_activities_' . $language->id);
-            $data[$language->id]['popularity_' . $language->id] = $request->input('popularity_' . $language->id);
-            $data[$language->id]['conditions_' . $language->id] = $request->input('conditions_' . $language->id);
+            // $data[$language->id]['num_activities_' . $language->id] = $request->input('num_activities_' . $language->id);
+            // $data[$language->id]['popularity_' . $language->id] = $request->input('popularity_' . $language->id);
+            // $data[$language->id]['conditions_' . $language->id] = $request->input('conditions_' . $language->id);
             $data[$language->id]['price_level_' . $language->id] = $request->input('price_level_' . $language->id);
-            $data[$language->id]['num_checkins_' . $language->id] = $request->input('num_checkins_' . $language->id);
+            // $data[$language->id]['num_checkins_' . $language->id] = $request->input('num_checkins_' . $language->id);
             $data[$language->id]['history_' . $language->id] = $request->input('history_' . $language->id);
         }
 
@@ -356,7 +356,7 @@ class EmbassiesController extends Controller
             'lat' => $location[0],
             'lng' => $location[1],
             'medias' => $request->input('medias_id'),
-            'safety_degrees_id' => $request->input('safety_degrees_id'),
+            // 'safety_degrees_id' => $request->input('safety_degrees_id'),
             'files' => $files,
             'delete-images' => $request->input('delete-images'),
         ];
