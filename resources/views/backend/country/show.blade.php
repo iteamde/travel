@@ -198,7 +198,7 @@
                     </tr>
                     @if(empty($lifestyles))
                       <tr>
-                          <th> <p>No Suitable Travel Styles.</p> </th><td></td>
+                          <th> <p>No Suitable Travel Styles Added</p> </th><td></td>
                       </tr>
                     @endif
                     @foreach($lifestyles as $key => $lifestyle)
