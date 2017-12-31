@@ -43,7 +43,7 @@
                             <td>{{ $place_translation->title }}</td>
                         </tr>
                         <tr>
-                            <th>Description <small>({{ $place_translation->translanguage->title }})</small></th>
+                            <th>Quick Facts <small>({{ $place_translation->translanguage->title }})</small></th>
                             <td class="description"><p><?=$place_translation->description?></p></td>
                         </tr>
                         <tr>
@@ -55,47 +55,19 @@
                             <td class="description"><p><?=$place_translation->phone?></p></td>
                         </tr>
                         <tr>
-                            <th>Highlights <small>({{ $place_translation->translanguage->title }})</small></th>
-                            <td class="description"><p><?=$place_translation->highlights?></p></td>
-                        </tr>
-                        <tr>
                             <th>Working Days <small>({{ $place_translation->translanguage->title }})</small></th>
                             <td class="description"><p><?=$place_translation->working_days?></p></td>
                         </tr>
                         <tr>
-                            <th>Working Times <small>({{ $place_translation->translanguage->title }})</small></th>
-                            <td class="description"><p><?=$place_translation->working_times?></p></td>
-                        </tr>
-                        <tr>
-                            <th>How To Go <small>({{ $place_translation->translanguage->title }})</small></th>
-                            <td class="description"><p><?=$place_translation->how_to_go?></p></td>
-                        </tr>
-                        <tr>
-                            <th>When To Go <small>({{ $place_translation->translanguage->title }})</small></th>
+                            <th>Best Time to Visit <small>({{ $place_translation->translanguage->title }})</small></th>
                             <td class="description"><p><?=$place_translation->when_to_go?></p></td>
-                        </tr>
-                        <tr>
-                            <th>No. of Activities <small>({{ $place_translation->translanguage->title }})</small></th>
-                            <td class="description"><p><?=$place_translation->num_activities ?></p></td>
-                        </tr>
-                        <tr>
-                            <th>Popularity <small>({{ $place_translation->translanguage->title }})</small></th>
-                            <td class="description"><p><?=$place_translation->popularity?></p></td>
-                        </tr>
-                        <tr>
-                            <th>Conditions <small>({{ $place_translation->translanguage->title }})</small></th>
-                            <td class="description"><p><?=$place_translation->conditions ?></p></td>
                         </tr>
                         <tr>
                             <th>Price Level <small>({{ $place_translation->translanguage->title }})</small></th>
                             <td class="description"><p><?=$place_translation->price_level ?></p></td>
                         </tr>
                         <tr>
-                            <th>No. of Checkins <small>({{ $place_translation->translanguage->title }})</small></th>
-                            <td class="description"><p><?=$place_translation->num_checkins ?></p></td>
-                        </tr>
-                        <tr>
-                            <th>History <small>({{ $place_translation->translanguage->title }})</small></th>
+                            <th>Website <small>({{ $place_translation->translanguage->title }})</small></th>
                             <td class="description"><p><?=$place_translation->history ?></p></td>
                         </tr>
                     @endforeach
