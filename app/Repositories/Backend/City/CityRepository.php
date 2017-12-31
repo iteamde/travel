@@ -121,7 +121,7 @@ class CityRepository extends BaseRepository
         $model->code        = $extra['code'];
         $model->lat         = $extra['lat'];
         $model->lng         = $extra['lng'];
-        $model->safety_degree_id = $extra['safety_degree_id'];
+        // $model->safety_degree_id = $extra['safety_degree_id'];
         $model->level_of_living_id = $extra['level_of_living_id'];
 
         DB::transaction(function () use ($model, $input, $extra) {
@@ -253,13 +253,13 @@ class CityRepository extends BaseRepository
                     $trans->languages_id = $key;
                     $trans->title        = $value['title_'.$key];
                     $trans->description  = $value['description_'.$key];
-                    $trans->best_place   = $value['best_place_'.$key];
+                    // $trans->best_place   = $value['best_place_'.$key];
                     $trans->best_time    = $value['best_time_'.$key];
                     $trans->cost_of_living = $value['cost_of_living_'.$key];
                     $trans->geo_stats    = $value['geo_stats_'.$key];
                     $trans->demographics = $value['demographics_'.$key];
-                    $trans->economy      = $value['economy_'.$key];
-                    $trans->suitable_for      = $value['suitable_for_'.$key];
+                    // $trans->economy      = $value['economy_'.$key];
+                    // $trans->suitable_for      = $value['suitable_for_'.$key];
 
                     if(!$trans->save()) {
                         $check = 0;
@@ -289,7 +289,7 @@ class CityRepository extends BaseRepository
         $model->code        = $extra['code'];
         $model->lat         = $extra['lat'];
         $model->lng         = $extra['lng'];
-        $model->safety_degree_id = $extra['safety_degree_id'];
+        // $model->safety_degree_id = $extra['safety_degree_id'];
 
         /* Delete Previous CitiesTranslations */
         $prev = CitiesTranslations::where(['cities_id' => $id])->get();
@@ -524,13 +524,13 @@ class CityRepository extends BaseRepository
                     $trans->languages_id    = $key;
                     $trans->title           = $value['title_'.$key];
                     $trans->description     = $value['description_'.$key];
-                    $trans->best_place      = $value['best_place_'.$key];
+                    // $trans->best_place      = $value['best_place_'.$key];
                     $trans->best_time       = $value['best_time_'.$key];
                     $trans->cost_of_living  = $value['cost_of_living_'.$key];
                     $trans->geo_stats       = $value['geo_stats_'.$key];
                     $trans->demographics    = $value['demographics_'.$key];
-                    $trans->economy         = $value['economy_'.$key];
-                    $trans->suitable_for    = $value['suitable_for_'.$key];
+                    // $trans->economy         = $value['economy_'.$key];
+                    // $trans->suitable_for    = $value['suitable_for_'.$key];
 
                     if(!$trans->save()) {
                         $check = 0;

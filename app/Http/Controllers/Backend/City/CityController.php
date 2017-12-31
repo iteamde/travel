@@ -162,12 +162,12 @@ class CityController extends Controller
             $data[$language->id]['title_'.$language->id] = $request->input('title_'.$language->id);
             $data[$language->id]['description_'.$language->id] = $request->input('description_'.$language->id) ? $request->input('description_'.$language->id) : '';
             $data[$language->id]['best_time_'.$language->id] = $request->input('best_time_'.$language->id) ? $request->input('best_time_'.$language->id) : '';
-            $data[$language->id]['best_place_'.$language->id] = $request->input('best_place_'.$language->id) ? $request->input('best_place_'.$language->id) : '';
+            // $data[$language->id]['best_place_'.$language->id] = $request->input('best_place_'.$language->id) ? $request->input('best_place_'.$language->id) : '';
             $data[$language->id]['cost_of_living_'.$language->id] = $request->input('cost_of_living_'.$language->id) ? $request->input('cost_of_living_'.$language->id) : '';
             $data[$language->id]['geo_stats_'.$language->id] = $request->input('geo_stats_'.$language->id) ? $request->input('geo_stats_'.$language->id) : '';
             $data[$language->id]['demographics_'.$language->id] = $request->input('demographics_'.$language->id) ? $request->input('demographics_'.$language->id) : '';
-            $data[$language->id]['suitable_for_'.$language->id] = $request->input('suitable_for_'.$language->id) ? $request->input('suitable_for_'.$language->id) : '';
-            $data[$language->id]['economy_'.$language->id] = $request->input('economy_'.$language->id) ? $request->input('economy_'.$language->id) : '';
+            // $data[$language->id]['suitable_for_'.$language->id] = $request->input('suitable_for_'.$language->id) ? $request->input('suitable_for_'.$language->id) : '';
+            // $data[$language->id]['economy_'.$language->id] = $request->input('economy_'.$language->id) ? $request->input('economy_'.$language->id) : '';
         }
 
         $location = explode(',',$request->input('lat_lng') );
@@ -209,7 +209,7 @@ class CityController extends Controller
             'lifestyles'  => $request->input('lifestyles_id') ? $request->input('lifestyles_id') : '',
             //'medias'  => $request->input('medias_id') ? $request->input('medias_id') : '',
             'religions'  => $request->input('religions_id') ? $request->input('religions_id') : '',
-            'safety_degree_id' => $request->input('safety_degree_id') ? $request->input('safety_degree_id') : '',
+            // 'safety_degree_id' => $request->input('safety_degree_id') ? $request->input('safety_degree_id') : '',
             'level_of_living_id' => $request->input('level_of_living_id') ? $request->input('level_of_living_id') : 0,
             'files' => $files,
         ];
@@ -492,12 +492,12 @@ class CityController extends Controller
             $data[$language->id]['title_'.$language->id] = $request->input('title_'.$language->id);
             $data[$language->id]['description_'.$language->id] = $request->input('description_'.$language->id);
             $data[$language->id]['best_time_'.$language->id] = $request->input('best_time_'.$language->id);
-            $data[$language->id]['best_place_'.$language->id] = $request->input('best_place_'.$language->id);
+            // $data[$language->id]['best_place_'.$language->id] = $request->input('best_place_'.$language->id);
             $data[$language->id]['cost_of_living_'.$language->id] = $request->input('cost_of_living_'.$language->id);
             $data[$language->id]['geo_stats_'.$language->id] = $request->input('geo_stats_'.$language->id);
             $data[$language->id]['demographics_'.$language->id] = $request->input('demographics_'.$language->id);
-            $data[$language->id]['suitable_for_'.$language->id] = $request->input('suitable_for_'.$language->id);
-            $data[$language->id]['economy_'.$language->id] = $request->input('economy_'.$language->id);
+            // $data[$language->id]['suitable_for_'.$language->id] = $request->input('suitable_for_'.$language->id);
+            // $data[$language->id]['economy_'.$language->id] = $request->input('economy_'.$language->id);
         }
 
         $location = explode(',',$request->input('lat_lng') );
@@ -538,7 +538,7 @@ class CityController extends Controller
             'languages_spoken' => $request->input('languages_spoken_id'),
             'medias' => $request->input('medias_id'),
             'religions'  => $request->input('religions_id'),
-            'safety_degree_id' => $request->input('safety_degree_id'),
+            // 'safety_degree_id' => $request->input('safety_degree_id'),
             'files'             => $files,
             'delete-images'     => $request->input('delete-images'),
         ];
