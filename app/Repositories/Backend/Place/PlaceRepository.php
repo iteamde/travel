@@ -139,7 +139,7 @@ class PlaceRepository extends BaseRepository
         $model->active      = $extra['active'];
         $model->lat         = $extra['lat'];
         $model->lng         = $extra['lng'];
-        $model->safety_degrees_id = $extra['safety_degrees_id'];
+        // $model->safety_degrees_id = $extra['safety_degrees_id'];
         $model->provider_id = 0;
 
         DB::transaction(function () use ($model, $input, $extra) {
@@ -202,17 +202,16 @@ class PlaceRepository extends BaseRepository
                     $trans->description     = $value['description_'.$key];
                     $trans->address         = $value['address_'.$key];
                     $trans->phone           = $value['phone_'.$key];
-                    $trans->highlights      = $value['highlights_'.$key];
+                    // $trans->highlights      = $value['highlights_'.$key];
                     $trans->working_days    = $value['working_days_'.$key];
-                    $trans->working_times   = $value['working_times_'.$key];
-                    $trans->how_to_go       = $value['how_to_go_'.$key];
+                    // $trans->working_times   = $value['working_times_'.$key];
+                    // $trans->how_to_go       = $value['how_to_go_'.$key];
                     $trans->when_to_go      = $value['when_to_go_'.$key];
-                    $trans->num_activities  = $value['num_activities_'.$key];
-                    $trans->popularity      = $value['popularity_'.$key];
-
-                    $trans->conditions      = $value['conditions_'.$key];
+                    // $trans->num_activities  = $value['num_activities_'.$key];
+                    // $trans->popularity      = $value['popularity_'.$key];
+                    // $trans->conditions      = $value['conditions_'.$key];
                     $trans->price_level     = $value['price_level_'.$key];
-                    $trans->num_checkins    = $value['num_checkins_'.$key];
+                    // $trans->num_checkins    = $value['num_checkins_'.$key];
                     $trans->history         = $value['history_'.$key];
 
                     if(!$trans->save()) {
@@ -243,7 +242,7 @@ class PlaceRepository extends BaseRepository
         $model->active      = $extra['active'];
         $model->lat         = $extra['lat'];
         $model->lng         = $extra['lng'];
-        $model->safety_degrees_id = $extra['safety_degrees_id'];
+        // $model->safety_degrees_id = $extra['safety_degrees_id'];
 
         $prev = PlaceTranslations::where(['places_id' => $id])->get();
         if(!empty($prev)){
@@ -351,16 +350,16 @@ class PlaceRepository extends BaseRepository
                     $trans->description     = $value['description_'.$key];
                     $trans->address         = $value['address_'.$key];
                     $trans->phone           = $value['phone_'.$key];
-                    $trans->highlights      = $value['highlights_'.$key];
+                    // $trans->highlights      = $value['highlights_'.$key];
                     $trans->working_days    = $value['working_days_'.$key];
-                    $trans->working_times   = $value['working_times_'.$key];
-                    $trans->how_to_go       = $value['how_to_go_'.$key];
+                    // $trans->working_times   = $value['working_times_'.$key];
+                    // $trans->how_to_go       = $value['how_to_go_'.$key];
                     $trans->when_to_go      = $value['when_to_go_'.$key];
-                    $trans->num_activities  = $value['num_activities_'.$key];
-                    $trans->popularity      = $value['popularity_'.$key];
-                    $trans->conditions      = $value['conditions_'.$key];
+                    // $trans->num_activities  = $value['num_activities_'.$key];
+                    // $trans->popularity      = $value['popularity_'.$key];
+                    // $trans->conditions      = $value['conditions_'.$key];
                     $trans->price_level     = $value['price_level_'.$key];
-                    $trans->num_checkins    = $value['num_checkins_'.$key];
+                    // $trans->num_checkins    = $value['num_checkins_'.$key];
                     $trans->history         = $value['history_'.$key];
 
                     if(!$trans->save()) {
