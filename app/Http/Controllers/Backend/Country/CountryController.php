@@ -171,8 +171,8 @@ class CountryController extends Controller
             $data[$language->id]['description_'.$language->id] = $request->input('description_'.$language->id);
             $data[$language->id]['nationality_'.$language->id] = $request->input('nationality_'.$language->id);
             $data[$language->id]['population_'.$language->id] = $request->input('population_'.$language->id);
-            $data[$language->id]['best_time_'.$language->id] = $request->input('best_time_'.$language->id);
-            $data[$language->id]['best_place_'.$language->id] = $request->input('best_place_'.$language->id);
+            // $data[$language->id]['best_time_'.$language->id] = $request->input('best_time_'.$language->id);
+            // $data[$language->id]['best_place_'.$language->id] = $request->input('best_place_'.$language->id);
             $data[$language->id]['cost_of_living_'.$language->id] = $request->input('cost_of_living_'.$language->id);
             $data[$language->id]['geo_stats_'.$language->id] = $request->input('geo_stats_'.$language->id);
             $data[$language->id]['demographics_'.$language->id] = $request->input('demographics_'.$language->id);
@@ -211,7 +211,7 @@ class CountryController extends Controller
             'lifestyles' => $request->input('lifestyles_id'),
             //'medias' => $request->input('medias_id'),
             'religions' => $request->input('religions_id'),
-            'safety_degree_id' => $request->input('safety_degree_id'),
+            // 'safety_degree_id' => $request->input('safety_degree_id'),
             'files' => $files
         ];
 
@@ -562,8 +562,8 @@ class CountryController extends Controller
             $data[$language->id]['description_'.$language->id] = $request->input('description_'.$language->id);
             $data[$language->id]['nationality_'.$language->id] = $request->input('nationality_'.$language->id);
             $data[$language->id]['population_'.$language->id] = $request->input('population_'.$language->id);
-            $data[$language->id]['best_time_'.$language->id] = $request->input('best_time_'.$language->id);
-            $data[$language->id]['best_place_'.$language->id] = $request->input('best_place_'.$language->id);
+            // $data[$language->id]['best_time_'.$language->id] = $request->input('best_time_'.$language->id);
+            // $data[$language->id]['best_place_'.$language->id] = $request->input('best_place_'.$language->id);
             $data[$language->id]['cost_of_living_'.$language->id] = $request->input('cost_of_living_'.$language->id);
             $data[$language->id]['geo_stats_'.$language->id] = $request->input('geo_stats_'.$language->id);
             $data[$language->id]['demographics_'.$language->id] = $request->input('demographics_'.$language->id);
@@ -601,7 +601,7 @@ class CountryController extends Controller
             'lifestyles'        => $request->input('lifestyles_id'),
             'medias'            => $request->input('medias_id'),
             'religions'         => $request->input('religions_id'),
-            'safety_degree_id'  => $request->input('safety_degree_id'),
+            // 'safety_degree_id'  => $request->input('safety_degree_id'),
             'files'             => $files,
             'delete-images'     => $request->input('delete-images'),
         ];

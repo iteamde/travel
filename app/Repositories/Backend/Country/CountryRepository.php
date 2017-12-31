@@ -123,7 +123,7 @@ class CountryRepository extends BaseRepository
         $model->code        = $extra['code'];
         $model->lat         = $extra['lat'];
         $model->lng         = $extra['lng'];
-        $model->safety_degree_id = $extra['safety_degree_id'];
+        // $model->safety_degree_id = $extra['safety_degree_id'];
 
         DB::transaction(function () use ($model, $input, $extra) {
             $check = 1;
@@ -267,8 +267,8 @@ class CountryRepository extends BaseRepository
                     $trans->description  = $value['description_'.$key];
                     $trans->nationality  = $value['nationality_'.$key];
                     $trans->population   = $value['population_'.$key];
-                    $trans->best_place   = $value['best_place_'.$key];
-                    $trans->best_time    = $value['best_time_'.$key];
+                    // $trans->best_place   = $value['best_place_'.$key];
+                    // $trans->best_time    = $value['best_time_'.$key];
                     $trans->cost_of_living = $value['cost_of_living_'.$key];
                     $trans->geo_stats    = $value['geo_stats_'.$key];
                     $trans->demographics = $value['demographics_'.$key];
@@ -302,7 +302,7 @@ class CountryRepository extends BaseRepository
         $model->code        = $extra['code'];
         $model->lat         = $extra['lat'];
         $model->lng         = $extra['lng'];
-        $model->safety_degree_id = $extra['safety_degree_id'];
+        // $model->safety_degree_id = $extra['safety_degree_id'];
 
         /* Delete Previous CountriesTranslations */
         $prev = CountriesTranslations::where(['countries_id' => $id])->get();
@@ -562,8 +562,8 @@ class CountryRepository extends BaseRepository
                     $trans->description  = $value['description_'.$key];
                     $trans->nationality  = $value['nationality_'.$key];
                     $trans->population   = $value['population_'.$key];
-                    $trans->best_place   = $value['best_place_'.$key];
-                    $trans->best_time    = $value['best_time_'.$key];
+                    // $trans->best_place   = $value['best_place_'.$key];
+                    // $trans->best_time    = $value['best_time_'.$key];
                     $trans->cost_of_living = $value['cost_of_living_'.$key];
                     $trans->geo_stats    = $value['geo_stats_'.$key];
                     $trans->demographics = $value['demographics_'.$key];
