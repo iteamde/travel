@@ -274,10 +274,6 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
     {{ Form::close() }}
 @endsection
 
-<?php 
-print_r('here');
-exit;
-?>
 @section('after-scripts')
     {{ Html::script('js/backend/access/users/script.js') }}
     <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.3/summernote.js"></script>
