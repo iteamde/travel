@@ -53,7 +53,7 @@ class HotelsController extends Controller
      *
      * @return mixed
      */
-    public function create(ManageHotelsRequest $request)
+    public function create()//ManageHotelsRequest $request)
     {
         print_r('here');
         exit;
