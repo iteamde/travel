@@ -26,6 +26,9 @@ Route::group([
         Route::get('hotels/return_search_history', 'HotelsController@return_search_history')
                 ->name('hotels.searchhistory');
 
+
+        Route::get('hotels/create-test', 'HotelsController@create')->name('hotels.test');
+        
         /*
          * Hotels CRUD
          */
