@@ -92,15 +92,15 @@ class HotelsController extends Controller
         // }
 
         /* Get All Medias */
-        $medias = Media::all();
+        // $medias = Media::all();
         $medias_arr = [];
 
-        foreach ($medias as $key => $value) {
-            /* If Translation Exists, Get Title */
-            if(isset($value->transsingle) && !empty($value->transsingle)){
-                $medias_arr[$value->id] = $value->transsingle->title;
-            }
-        }
+        // foreach ($medias as $key => $value) {
+        //     /* If Translation Exists, Get Title */
+        //     if(isset($value->transsingle) && !empty($value->transsingle)){
+        //         $medias_arr[$value->id] = $value->transsingle->title;
+        //     }
+        // }
 
         return view('backend.hotels.create',[
             'countries' => $countries_arr,
