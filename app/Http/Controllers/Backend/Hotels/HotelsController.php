@@ -55,7 +55,8 @@ class HotelsController extends Controller
      */
     public function create(ManageHotelsRequest $request)
     {
-
+        print_r('here');
+        exit;
         /* Get All Active Countries For Dropdown */
         $countries = Countries::where(['active' => 1])->get();
         $countries_arr = [];
@@ -99,7 +100,7 @@ class HotelsController extends Controller
                 $medias_arr[$value->id] = $value->transsingle->title;
             }
         }
-        
+
         return view('backend.hotels.create',[
             'countries' => $countries_arr,
             'cities' => $cities_arr,
