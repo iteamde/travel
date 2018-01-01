@@ -53,63 +53,60 @@ class HotelsController extends Controller
      *
      * @return mixed
      */
-    public function create()//ManageHotelsRequest $request)
+    public function create(ManageHotelsRequest $request)
     {
-        print_r('here');
+        print_r('yellow');
         exit;
-        // set_time_limit(0);
-        // print_r('here');
-        // exit;
         /* Get All Active Countries For Dropdown */
-        // $countries = Countries::where(['active' => 1])->get();
-        // $countries_arr = [];
+        $countries = Countries::where(['active' => 1])->get();
+        $countries_arr = [];
 
-        // foreach ($countries as $key => $value) {
-        //     /* If Translation Exists, Get Title */
-        //     if(isset($value->transsingle) && !empty($value->transsingle)){
-        //         $countries_arr[$value->id] = $value->transsingle->title;
-        //     }
-        // }
+        foreach ($countries as $key => $value) {
+            /* If Translation Exists, Get Title */
+            if(isset($value->transsingle) && !empty($value->transsingle)){
+                $countries_arr[$value->id] = $value->transsingle->title;
+            }
+        }
 
         /* Get All Active Cities For Dropdown */
-        // $cities = Cities::where(['active' => 1])->get();
-        // $cities_arr = [];
+        $cities = Cities::where(['active' => 1])->get();
+        $cities_arr = [];
 
-        // foreach ($cities as $key => $value) {
-        //     /* If Translation Exists, Get Title */
-        //     if(isset($value->transsingle) && !empty($value->transsingle)){
-        //         $cities_arr[$value->id] = $value->transsingle->title;
-        //     }
-        // }
+        foreach ($cities as $key => $value) {
+            /* If Translation Exists, Get Title */
+            if(isset($value->transsingle) && !empty($value->transsingle)){
+                $cities_arr[$value->id] = $value->transsingle->title;
+            }
+        }
 
         /* Get All Places For Dropdown */
-        // $places = Place::all();
-        // $places_arr = [];
+        $places = Place::all();
+        $places_arr = [];
 
-        // foreach ($places as $key => $value) {
-        //     /* If Translation Exists, Get Title */
-        //     if(isset($value->transsingle) && !empty($value->transsingle)){
-        //         $places_arr[$value->id] = $value->transsingle->title;
-        //     }
-        // }
+        foreach ($places as $key => $value) {
+            /* If Translation Exists, Get Title */
+            if(isset($value->transsingle) && !empty($value->transsingle)){
+                $places_arr[$value->id] = $value->transsingle->title;
+            }
+        }
 
         /* Get All Medias */
-        // $medias = Media::all();
-        // $medias_arr = [];
+        $medias = Media::all();
+        $medias_arr = [];
 
-        // foreach ($medias as $key => $value) {
-        //     /* If Translation Exists, Get Title */
-        //     if(isset($value->transsingle) && !empty($value->transsingle)){
-        //         $medias_arr[$value->id] = $value->transsingle->title;
-        //     }
-        // }
+        foreach ($medias as $key => $value) {
+            /* If Translation Exists, Get Title */
+            if(isset($value->transsingle) && !empty($value->transsingle)){
+                $medias_arr[$value->id] = $value->transsingle->title;
+            }
+        }
 
-        // return view('backend.hotels.create',[
-        //     'countries' => $countries_arr,
-        //     'cities' => $cities_arr,
-        //     'places' => $places_arr,
-        //     'medias' => $medias_arr
-        // ]);
+        return view('backend.hotels.create',[
+            'countries' => $countries_arr,
+            'cities' => $cities_arr,
+            'places' => $places_arr,
+            'medias' => $medias_arr
+        ]);
     }
 
     /**
