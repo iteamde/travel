@@ -404,7 +404,3 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
     </script>
     <!-- Error Alert Script : End -->
 @endsection
-<?php 
-print_r('here');
-exit;
-?>
