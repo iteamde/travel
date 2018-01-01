@@ -99,8 +99,7 @@ class HotelsController extends Controller
                 $medias_arr[$value->id] = $value->transsingle->title;
             }
         }
-        print_r('here');
-        exit;
+        
         return view('backend.hotels.create',[
             'countries' => $countries_arr,
             'cities' => $cities_arr,

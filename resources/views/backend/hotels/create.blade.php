@@ -52,7 +52,10 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
 
     <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.3/summernote.css" rel="stylesheet">
 @endsection
-
+<?php 
+print_r('here');
+exit;
+?>
 @section('content')
     {{ Form::open([
             'id'     => 'hotels_form',
