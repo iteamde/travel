@@ -59,37 +59,37 @@ class HotelsController extends Controller
         // print_r('here');
         // exit;
         /* Get All Active Countries For Dropdown */
-        $countries = Countries::where(['active' => 1])->get();
+        // $countries = Countries::where(['active' => 1])->get();
         $countries_arr = [];
 
-        foreach ($countries as $key => $value) {
-            /* If Translation Exists, Get Title */
-            if(isset($value->transsingle) && !empty($value->transsingle)){
-                $countries_arr[$value->id] = $value->transsingle->title;
-            }
-        }
+        // foreach ($countries as $key => $value) {
+        //     /* If Translation Exists, Get Title */
+        //     if(isset($value->transsingle) && !empty($value->transsingle)){
+        //         $countries_arr[$value->id] = $value->transsingle->title;
+        //     }
+        // }
 
         /* Get All Active Cities For Dropdown */
-        $cities = Cities::where(['active' => 1])->get();
+        // $cities = Cities::where(['active' => 1])->get();
         $cities_arr = [];
 
-        foreach ($cities as $key => $value) {
-            /* If Translation Exists, Get Title */
-            if(isset($value->transsingle) && !empty($value->transsingle)){
-                $cities_arr[$value->id] = $value->transsingle->title;
-            }
-        }
+        // foreach ($cities as $key => $value) {
+        //     /* If Translation Exists, Get Title */
+        //     if(isset($value->transsingle) && !empty($value->transsingle)){
+        //         $cities_arr[$value->id] = $value->transsingle->title;
+        //     }
+        // }
 
         /* Get All Places For Dropdown */
-        $places = Place::all();
+        // $places = Place::all();
         $places_arr = [];
 
-        foreach ($places as $key => $value) {
-            /* If Translation Exists, Get Title */
-            if(isset($value->transsingle) && !empty($value->transsingle)){
-                $places_arr[$value->id] = $value->transsingle->title;
-            }
-        }
+        // foreach ($places as $key => $value) {
+        //     /* If Translation Exists, Get Title */
+        //     if(isset($value->transsingle) && !empty($value->transsingle)){
+        //         $places_arr[$value->id] = $value->transsingle->title;
+        //     }
+        // }
 
         /* Get All Medias */
         $medias = Media::all();
