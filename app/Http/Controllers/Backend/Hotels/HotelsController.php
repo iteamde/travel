@@ -55,12 +55,14 @@ class HotelsController extends Controller
      */
     public function create(ManageHotelsRequest $request)
     {
-        set_time_limit(0);
+        print_r('here');
+        exit;
+        // set_time_limit(0);
         // print_r('here');
         // exit;
         /* Get All Active Countries For Dropdown */
         // $countries = Countries::where(['active' => 1])->get();
-        $countries_arr = [];
+        // $countries_arr = [];
 
         // foreach ($countries as $key => $value) {
         //     /* If Translation Exists, Get Title */
@@ -71,7 +73,7 @@ class HotelsController extends Controller
 
         /* Get All Active Cities For Dropdown */
         // $cities = Cities::where(['active' => 1])->get();
-        $cities_arr = [];
+        // $cities_arr = [];
 
         // foreach ($cities as $key => $value) {
         //     /* If Translation Exists, Get Title */
@@ -82,7 +84,7 @@ class HotelsController extends Controller
 
         /* Get All Places For Dropdown */
         // $places = Place::all();
-        $places_arr = [];
+        // $places_arr = [];
 
         // foreach ($places as $key => $value) {
         //     /* If Translation Exists, Get Title */
@@ -93,7 +95,7 @@ class HotelsController extends Controller
 
         /* Get All Medias */
         // $medias = Media::all();
-        $medias_arr = [];
+        // $medias_arr = [];
 
         // foreach ($medias as $key => $value) {
         //     /* If Translation Exists, Get Title */
@@ -102,12 +104,12 @@ class HotelsController extends Controller
         //     }
         // }
 
-        return view('backend.hotels.create',[
-            'countries' => $countries_arr,
-            'cities' => $cities_arr,
-            'places' => $places_arr,
-            'medias' => $medias_arr
-        ]);
+        // return view('backend.hotels.create',[
+        //     'countries' => $countries_arr,
+        //     'cities' => $cities_arr,
+        //     'places' => $places_arr,
+        //     'medias' => $medias_arr
+        // ]);
     }
 
     /**
