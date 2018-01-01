@@ -297,7 +297,7 @@ class EmbassiesRepository extends BaseRepository
                     // $trans->how_to_go       = $value['how_to_go_'.$key];
                     $trans->when_to_go      = $value['when_to_go_'.$key];
                     // $trans->num_activities  = $value['num_activities_'.$key];
-                    $trans->popularity      = $value['popularity_'.$key];
+                    // $trans->popularity      = $value['popularity_'.$key];
 
                     // $trans->conditions      = $value['conditions_'.$key];
                     $trans->price_level     = $value['price_level_'.$key];
