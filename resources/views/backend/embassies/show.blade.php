@@ -42,8 +42,33 @@
                             <td>{{ $embassies_translation->title }}</td>
                         </tr>
                         <tr>
-                            <th>Description <small>({{ $embassies_translation->translanguage->title }})</small></th>
+                            <th>Quick Facts <small>({{ $embassies_translation->translanguage->title }})</small></th>
                             <td class="description"><p><?=$embassies_translation->description?></p></td>
+                        </tr>
+                        <!-- -->
+                        <tr>
+                            <th>Address <small>({{ $embassies_translation->translanguage->title }})</small></th>
+                            <td class="description"><p><?=$embassies_translation->address ?></p></td>
+                        </tr>
+                        <tr>
+                            <th>Phone <small>({{ $embassies_translation->translanguage->title }})</small></th>
+                            <td class="description"><p><?=$embassies_translation->phone?></p></td>
+                        </tr>
+                        <tr>
+                            <th>Working Days <small>({{ $embassies_translation->translanguage->title }})</small></th>
+                            <td class="description"><p><?= $embassies_translation->working_days?></p></td>
+                        </tr>
+                        <tr>
+                            <th>Best Time to Visit <small>({{ $embassies_translation->translanguage->title }})</small></th>
+                            <td class="description"><p><?= $embassies_translation->when_to_go?></p></td>
+                        </tr>
+                        <tr>
+                            <th>Price Level <small>({{ $embassies_translation->translanguage->title }})</small></th>
+                            <td class="description"><p><?= $embassies_translation->price_level ?></p></td>
+                        </tr>
+                        <tr>
+                            <th>Website <small>({{ $embassies_translation->translanguage->title }})</small></th>
+                            <td class="description"><p><?= $embassies_translation->history ?></p></td>
                         </tr>
                     @endforeach
                     <tr>
