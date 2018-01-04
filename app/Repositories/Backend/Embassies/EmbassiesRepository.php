@@ -99,6 +99,9 @@ class EmbassiesRepository extends BaseRepository
                 config('embassies.embassies_table').'.place_type',
             ]);
 
+        echo '<pre>';
+        print_r($dataTableQuery);
+        exit;
         // active() is a scope on the UserScope trait
         return $dataTableQuery;
     }

@@ -40,30 +40,30 @@ class EmbassiesTableController extends Controller
     public function __invoke()
     {
         return Datatables::of($this->embassies->getForDataTable())
-            // ->addColumn('',function(){
-            //     return null;
-            // })
-            // ->addColumn('address',function($embassies){
-            //     $place = Place::find($embassies->places_id);
-            //     if(!empty($place)){
-            //         if(!empty($place->transsingle)){
-            //             return $place->transsingle->address;
-            //         }
-            //     }
-            //     return null;
-            // })
-            // ->addColumn('city_title',function($embassies){
-            //     $temp = Cities::find($embassies->cities_id);
-            //     if(!empty($temp)){
-            //         if(!empty($temp->transsingle)){
-            //             return $temp->transsingle->title;
-            //         }
-            //     }
-            //     return null;
-            // })
-            // ->addColumn('place_id_title',function($embassies){
-            //     return $embassies->place_type;
-            // })
+            ->addColumn('',function(){
+                return null;
+            })
+            ->addColumn('address',function($embassies){
+                $place = Place::find($embassies->places_id);
+                if(!empty($place)){
+                    if(!empty($place->transsingle)){
+                        return $place->transsingle->address;
+                    }
+                }
+                return null;
+            })
+            ->addColumn('city_title',function($embassies){
+                $temp = Cities::find($embassies->cities_id);
+                if(!empty($temp)){
+                    if(!empty($temp->transsingle)){
+                        return $temp->transsingle->title;
+                    }
+                }
+                return null;
+            })
+            ->addColumn('place_id_title',function($embassies){
+                return $embassies->place_type;
+            })
             ->addColumn('action', function ($embassies) {
                 return $embassies->action_buttons;
             })
