@@ -39,6 +39,8 @@ class EmbassiesTableController extends Controller
      */
     public function __invoke()
     {
+        print_r('here');
+        exit;
         return Datatables::of($this->embassies->getForDataTable())
             ->addColumn('',function(){
                 return null;
