@@ -56,49 +56,51 @@ class HotelsController extends Controller
     public function create(ManageHotelsRequest $request)
     {
         /* Get All Active Countries For Dropdown */
-        $countries = Countries::where(['active' => 1])->get();
-        $countries_arr = [];
+        // $countries = Countries::where(['active' => 1])->get();
+        // $countries_arr = [];
 
-        foreach ($countries as $key => $value) {
-            /* If Translation Exists, Get Title */
-            if(isset($value->transsingle) && !empty($value->transsingle)){
-                $countries_arr[$value->id] = $value->transsingle->title;
-            }
-        }
+        // foreach ($countries as $key => $value) {
+        //     /* If Translation Exists, Get Title */
+        //     if(isset($value->transsingle) && !empty($value->transsingle)){
+        //         $countries_arr[$value->id] = $value->transsingle->title;
+        //     }
+        // }
 
-        /* Get All Active Cities For Dropdown */
-        $cities = Cities::where(['active' => 1])->get();
-        $cities_arr = [];
+        // /* Get All Active Cities For Dropdown */
+        // $cities = Cities::where(['active' => 1])->get();
+        // $cities_arr = [];
 
-        foreach ($cities as $key => $value) {
-            /* If Translation Exists, Get Title */
-            if(isset($value->transsingle) && !empty($value->transsingle)){
-                $cities_arr[$value->id] = $value->transsingle->title;
-            }
-        }
+        // foreach ($cities as $key => $value) {
+        //     /* If Translation Exists, Get Title */
+        //     if(isset($value->transsingle) && !empty($value->transsingle)){
+        //         $cities_arr[$value->id] = $value->transsingle->title;
+        //     }
+        // }
 
-        /* Get All Places For Dropdown */
-        $places = Place::all();
-        $places_arr = [];
+        // /* Get All Places For Dropdown */
+        // $places = Place::all();
+        // $places_arr = [];
 
-        foreach ($places as $key => $value) {
-            /* If Translation Exists, Get Title */
-            if(isset($value->transsingle) && !empty($value->transsingle)){
-                $places_arr[$value->id] = $value->transsingle->title;
-            }
-        }
+        // foreach ($places as $key => $value) {
+        //     /* If Translation Exists, Get Title */
+        //     if(isset($value->transsingle) && !empty($value->transsingle)){
+        //         $places_arr[$value->id] = $value->transsingle->title;
+        //     }
+        // }
 
-        /* Get All Medias */
-        $medias = Media::all();
-        $medias_arr = [];
+        // /* Get All Medias */
+        // $medias = Media::all();
+        // $medias_arr = [];
 
-        foreach ($medias as $key => $value) {
-            /* If Translation Exists, Get Title */
-            if(isset($value->transsingle) && !empty($value->transsingle)){
-                $medias_arr[$value->id] = $value->transsingle->title;
-            }
-        }
+        // foreach ($medias as $key => $value) {
+        //     /* If Translation Exists, Get Title */
+        //     if(isset($value->transsingle) && !empty($value->transsingle)){
+        //         $medias_arr[$value->id] = $value->transsingle->title;
+        //     }
+        // }
 
+        print_r('here');
+        exit;
         return view('backend.hotels.create',[
             'countries' => $countries_arr,
             'cities' => $cities_arr,
@@ -118,16 +120,16 @@ class HotelsController extends Controller
 
         foreach ($this->languages as $key => $language) {
             /* Get All Fields From Post Request */
-            $data[$language->id]['title_'.$language->id] = $request->input('title_'.$language->id);
-            $data[$language->id]['description_'.$language->id] = $request->input('description_'.$language->id);
-            $data[$language->id]['address_'.$language->id] = $request->input('address_'.$language->id);
-            $data[$language->id]['working_days_'.$language->id] = $request->input('working_days_'.$language->id);
-            $data[$language->id]['working_times_'.$language->id] = $request->input('working_times_'.$language->id);
-            $data[$language->id]['how_to_go_'.$language->id] = $request->input('how_to_go_'.$language->id);
-            $data[$language->id]['when_to_go_'.$language->id] = $request->input('when_to_go_'.$language->id);
+            $data[$language->id]['title_'.$language->id]          = $request->input('title_'.$language->id);
+            $data[$language->id]['description_'.$language->id]    = $request->input('description_'.$language->id);
+            $data[$language->id]['address_'.$language->id]        = $request->input('address_'.$language->id);
+            $data[$language->id]['working_days_'.$language->id]   = $request->input('working_days_'.$language->id);
+            $data[$language->id]['working_times_'.$language->id]  = $request->input('working_times_'.$language->id);
+            $data[$language->id]['how_to_go_'.$language->id]      = $request->input('how_to_go_'.$language->id);
+            $data[$language->id]['when_to_go_'.$language->id]     = $request->input('when_to_go_'.$language->id);
             $data[$language->id]['num_activities_'.$language->id] = $request->input('num_activities_'.$language->id);
-            $data[$language->id]['popularity_'.$language->id] = $request->input('popularity_'.$language->id);
-            $data[$language->id]['conditions_'.$language->id] = $request->input('conditions_'.$language->id);
+            $data[$language->id]['popularity_'.$language->id]     = $request->input('popularity_'.$language->id);
+            $data[$language->id]['conditions_'.$language->id]     = $request->input('conditions_'.$language->id);
         }
 
         /* Seperate Latitude and Longitude */
@@ -143,13 +145,13 @@ class HotelsController extends Controller
 
         /* Send All Relation and Common Fields Through $extra Array */
         $extra = [
-            'active' => $active,
-            'country_id' =>  $request->input('country_id'),
-            'city_id' =>  $request->input('city_id'),
-            'place_id' => $request->input('place_id'),
-            'medias' => $request->input('medias_id'),
-            'lat' => $location[0],
-            'lng' => $location[1],
+            'active'     => $active,
+            'country_id' => $request->input('country_id'),
+            'city_id'    => $request->input('city_id'),
+            'place_id'   => $request->input('place_id'),
+            'medias'     => $request->input('medias_id'),
+            'lat'        => $location[0],
+            'lng'        => $location[1],
         ];
 
         $this->hotels->create($data, $extra);
