@@ -88,7 +88,7 @@ class EmbassiesRepository extends BaseRepository
          * be able to differentiate what buttons to show for each row.
          */
         echo '<pre>';
-        print_r($dataTableQuery);
+        print_r('here');
         exit;
         $dataTableQuery = $this->query()
             // ->with('roles')
