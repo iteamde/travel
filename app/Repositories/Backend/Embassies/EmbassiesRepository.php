@@ -87,6 +87,9 @@ class EmbassiesRepository extends BaseRepository
          * Note: You must return deleted_at or the User getActionButtonsAttribute won't
          * be able to differentiate what buttons to show for each row.
          */
+        echo '<pre>';
+        print_r($dataTableQuery);
+        exit;
         $dataTableQuery = $this->query()
             // ->with('roles')
             ->with('transsingle')
@@ -99,9 +102,6 @@ class EmbassiesRepository extends BaseRepository
                 config('embassies.embassies_table').'.place_type',
             ]);
 
-        echo '<pre>';
-        print_r($dataTableQuery);
-        exit;
         // active() is a scope on the UserScope trait
         return $dataTableQuery;
     }
