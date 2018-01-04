@@ -3,7 +3,7 @@
 namespace App\Models\Embassies;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Embassies\traits\Relationship\EmbassiesRelationship;
+use App\Models\Embassies\traits\Relationship\EmbassiesRelationship2;
 use App\Models\Embassies\traits\Attribute\EmbassiesAttribute;
 
 class Embassies extends Model
@@ -17,7 +17,7 @@ class Embassies extends Model
      */
     protected $table = 'embassies';
     
-    use EmbassiesRelationship,
+    use EmbassiesRelationship2,
         EmbassiesAttribute;
 
     public $timestamps = false;
