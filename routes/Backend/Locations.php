@@ -151,7 +151,7 @@ Route::group([
         /*
          * Place CRUD
          */
-        Route::resource('place', 'HotelsController');
+        Route::resource('place', 'PlaceController');
 
         /*
          * Deleted Specific Place
