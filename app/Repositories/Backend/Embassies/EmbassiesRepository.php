@@ -87,10 +87,6 @@ class EmbassiesRepository extends BaseRepository
          * Note: You must return deleted_at or the User getActionButtonsAttribute won't
          * be able to differentiate what buttons to show for each row.
          */
-        $records = Embassies::offset(0)->limit(10)->get();
-        echo '<pre>';
-        print_r($records);
-        exit;
         $dataTableQuery = $this->query()
             // ->with('roles')
             ->with('transsingle')
