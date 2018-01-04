@@ -3,7 +3,7 @@
 namespace App\Models\Embassies;
 
 use Illuminate\Database\Eloquent\Model;
-// use App\Models\Embassies\Traits\Relationship\EmbassiesRelationship;
+use App\Models\Embassies\Traits\Relationship\EmbassiesRelationship;
 use App\Models\Embassies\Traits\Attribute\EmbassiesAttribute;
 
 class Embassies extends Model
