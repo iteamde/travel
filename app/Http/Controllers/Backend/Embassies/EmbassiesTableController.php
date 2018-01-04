@@ -67,6 +67,32 @@ class EmbassiesTableController extends Controller
             ->addColumn('action', function ($embassies) {
                 return $embassies->action_buttons;
             })
+            ->addColumn('media_done_new', function ($embassies) {
+                $medias = $embassies->medias;
+                $flag = false;
+                if(!empty($medias)){
+                    foreach ($medias as $key => $value) {
+                        if(!empty($value->media)){
+                            if($value->media->featured == 1 || $value->media->featured == '1'){
+                                $flag = true;
+                                $embassies->media_done = 1;
+                                $embassies->save();
+                                return 'Yes';
+                            }
+                        }
+                    }
+                }
+
+                if($embassies->media_done . '' == '1'){
+                    return 'Yes';
+                }else{
+                    return 'No';
+                }
+            })
+            ->addColumn('media_count', function ($embassies) {
+                $medias = $embassies->medias;
+                return count($medias);
+            })
             ->withTrashed()
             ->make(true);
     }
