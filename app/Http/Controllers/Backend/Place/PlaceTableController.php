@@ -88,7 +88,7 @@ class PlaceTableController extends Controller
                     }
                 }
 
-                if($place->media_done.'' == '1'){
+                if($place->media_done . '' == '1'){
                     return 'Yes';
                 }else{
                     return 'No';
