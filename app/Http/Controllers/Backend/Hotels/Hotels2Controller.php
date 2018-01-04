@@ -28,7 +28,7 @@ use App\Models\City\Cities;
 use App\Models\Place\Place;
 use App\Models\ActivityMedia\Media;
 
-class HotelsController extends Controller
+class Hotels2Controller extends Controller
 {
     protected $hotels;
 
