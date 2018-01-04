@@ -87,8 +87,6 @@
                     {data: 'address', name: 'address'},
                     {data: 'city_title', name: 'city_title'},
                     {data: 'place_id_title', name: 'place_id_title'},
-                    {data: 'media_done_new', name: '{{config('locations.place_table')}}.media_done'},
-                    {data: 'media_count', name: 'media_count'},
                     {
                         name: '{{config('embassies.embassies')}}.active',
                         data: 'active',
