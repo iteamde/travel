@@ -17,8 +17,8 @@ class Embassies extends Model
      */
     protected $table = 'embassies';
     
-    use EmbassiesAttribute; //EmbassiesRelationship,
-        // EmbassiesAttribute;
+    use EmbassiesRelationship,
+        EmbassiesAttribute;
 
     public $timestamps = false;
 
