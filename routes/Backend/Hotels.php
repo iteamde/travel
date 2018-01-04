@@ -34,6 +34,8 @@ Route::group([
          */
         Route::resource('hotels', 'HotelsController');
 
+        Route::resource('hotels2', 'Hotels2Controller');
+
         Route::post('hotels/delete-ajax', 'HotelsController@delete_ajax')->name('hotels.delete_ajax');
 
         /*
