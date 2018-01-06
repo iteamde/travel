@@ -47,7 +47,7 @@ class EmbassiesController extends Controller
     {   
 
         /* Get All Countries */
-        $countries = Countries::where(['active' => 1])->limit(10)->get();
+        $countries = Countries::where(['active' => 1])->get();
         $countries_arr = [];
 
         // foreach ($countries as $key => $value) {
