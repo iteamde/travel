@@ -57,7 +57,7 @@ class EmbassiesController extends Controller
         }
 
         echo '<pre>';
-        print_r($countries);
+        print_r($countries_arr);
         exit;
 
         /* Get All Cities */
