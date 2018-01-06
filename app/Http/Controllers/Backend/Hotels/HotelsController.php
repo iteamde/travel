@@ -262,6 +262,8 @@ class HotelsController extends Controller
             }
         }
 
+        print_r('here');
+        exit;
         /* Get Selected Medias */
         $selected_medias = $hotel->medias;
         $selected_medias_arr = [];
@@ -284,8 +286,6 @@ class HotelsController extends Controller
         //          $medias_arr[$value->id] = $value->transsingle->title;
         //     }
         // }
-        print_r('here');
-        exit;
 
         return view('backend.hotels.edit')
             ->withLanguages($this->languages)
