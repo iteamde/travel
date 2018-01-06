@@ -45,8 +45,7 @@ class EmbassiesController extends Controller
      */
     public function create(ManageEmbassiesRequest $request)
     {   
-        print_r('here');
-        exit;
+
         /* Get All Countries */
         $countries = Countries::where(['active' => 1])->get();
         $countries_arr = [];
@@ -77,6 +76,10 @@ class EmbassiesController extends Controller
                 $medias_arr[$value->id] = $value->transsingle->title;
             }
         }
+
+        print_r('here');
+        exit;
+        
         return view('backend.embassies.create',[
             'countries' => $countries_arr,
             'cities' => $cities_arr,
