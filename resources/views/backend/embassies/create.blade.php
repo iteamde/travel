@@ -419,7 +419,7 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
                     delay: 250,
                      data: function (params) {
                         var country_id = '';
-                        country_id = $('#country-dropdown-custom').val();   
+                        // country_id = $('#country-dropdown-custom').val();   
                         var query = {
                             q: params.term,
                             type: 'public',
