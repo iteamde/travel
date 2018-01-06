@@ -1,0 +1,74 @@
+<!-- Modal -->
+
+<div class="modal fade" id="signUp" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  	<div class="modal-dialog sign-up-style" role="document">
+    	<div class="modal-content">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+			<div class="modal-body">
+				<div class="top-layer">
+					<a href="#" class="logo-wrap">
+						<img src="./assets/image/main-logo.png" alt="">
+					</a>
+					<h4 class="title">Login to your account</h4>
+					<!-- <p class="sub-ttl">and write a text here</p> -->
+					<p class="sub-ttl error-message" *ngFor="let msg of errors">{{ msg }}</p>
+				</div>
+
+
+				<form class="login-form" name="loginForm" [formGroup]="loginForm" (ngSubmit)="login()" novalidate>
+					<div class="form-group" [ngClass]="setClassEmail()">
+						<!-- <label for="username">Username</label> -->
+						<input class="form-control" type="email" name="email" formControlName="email" placeholder="Email address" autofocus aria-describedby="emailHelp" />
+						<!-- <input type="email" class="form-control" name="username" [(ngModel)]="model.username" #username="ngModel" required aria-describedby="emailHelp" placeholder="Email address"/> -->
+						<!-- <div *ngIf="f.submitted && !username.valid" class="help-block">Email is required</div> -->
+						<div class="form-control-feedback" *ngIf="email.errors && (email.dirty || email.touched)">
+							<p>{{ emailMsg }}</p>
+						</div>
+					</div>
+					
+					<div class="form-group" [ngClass]="setClassPassword()">
+						<!-- <label for="password">Password</label> -->
+						<input class="form-control" type="password" name="password" formControlName="password" placeholder="Password" aria-describedby="pass" />
+						<!-- <input type="password" class="form-control" name="password" [(ngModel)]="model.password" #password="ngModel" required aria-describedby="pass" placeholder="Password"/> -->
+						<!-- <div *ngIf="f.submitted && !password.valid" class="help-block">Password is required</div> -->
+						<div class="form-control-feedback" *ngIf="password.errors && (password.dirty || password.touched)">
+							<p>{{ passwordMsg }}</p>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<a href="#" class="forget-password-link">Forget your password?</a>
+					</div>
+					
+					<div class="form-group">
+						<button class="btn btn-primary" type="submit" [disabled]="!loginForm.valid || loading">{{ loginBtnText }}</button>
+						<!-- <button [disabled]="loading" class="btn btn-primary">{{ loginBtnText }}</button> -->
+						<!-- <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" /> -->
+						<!-- <a [routerLink]="['/register']" class="btn btn-link">Register</a> -->
+					</div>
+					<div class="form-group">
+						<p class="simple-txt">Or</p>
+					</div>
+					<div class="form-group">
+						<button type="button" class="btn btn-primary">
+							<i class="fa fa-facebook side-icon"></i>
+							Continue with Facebook
+						</button>
+					</div>
+					<div class="form-group">
+						<button type="button" class="btn btn-info">
+							<i class="fa fa-twitter side-icon"></i>
+							Continue with Twitter
+						</button>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<p class="foot-txt">You are not a member yet?</p>
+				<button type="button" class="btn btn-grey" (click)="openSignup()">Sign Up</button>
+			</div>
+    	</div>
+  	</div>
+</div>

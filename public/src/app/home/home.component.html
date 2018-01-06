@@ -1,0 +1,40 @@
+<div class="main-wrapper">
+
+	<app-header></app-header>
+
+	<div class="content-wrap">
+		<!-- left outside menu -->
+
+		<button class="btn btn-mobile-side sidebar-toggler" id="sidebarToggler">
+			<i class="trav-cog"></i>
+		</button>
+		<button class="btn btn-mobile-side left-outside-btn" id="filterToggler">
+			<i class="trav-filter"></i>
+		</button>
+
+		<div class="container-fluid">
+
+			<!-- LEFT SIDEBAR -->
+			<app-left-side-bar></app-left-side-bar>
+
+			<div class="custom-row">
+
+				<!-- MAIN-CONTENT -->
+				<div class="main-content-layer">
+
+					<!-- CREATE NEW POST -->
+					<app-create-post></app-create-post>
+
+					<!-- POSTS TIMELINE -->
+					<app-posts></app-posts>
+				</div>
+
+				<!-- RIGHT SIDEBAR -->
+				<div class="sidebar-layer" id="sidebarLayer">
+					<app-right-side-bar></app-right-side-bar>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</div>

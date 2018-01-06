@@ -1,0 +1,167 @@
+@font-face {
+  font-family: 'travooo';
+  src:  url('../fonts/travooo.eot?l4b8fz');
+  src:  url('../fonts/travooo.eot?l4b8fz#iefix') format('embedded-opentype'),
+    url('../fonts/travooo.ttf?l4b8fz') format('truetype'),
+    url('../fonts/travooo.woff?l4b8fz') format('woff'),
+    url('../fonts/travooo.svg?l4b8fz#travooo') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^="trav-"], [class*=" trav-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'travooo' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.trav-heart-icon:before {
+  content: "\e90d";
+}
+.trav-caret-down:before {
+  content: "\e929";
+}
+.trav-bars:before {
+  content: "\e923";
+}
+.trav-angle-down:before {
+  content: "\e924";
+}
+.trav-angle-left:before {
+  content: "\e925";
+}
+.trav-angle-right:before {
+  content: "\e926";
+}
+.trav-angle-up:before {
+  content: "\e927";
+}
+.trav-camera:before {
+  content: "\e928";
+}
+.trav-open-video-in-window:before {
+  content: "\e900";
+}
+.trav-about-city-icon:before {
+  content: "\e901";
+}
+.trav-average-flight-price-icon:before {
+  content: "\e902";
+}
+.trav-budget-icon:before {
+  content: "\e903";
+}
+.trav-car-icon:before {
+  content: "\e904";
+}
+.trav-clock-icon:before {
+  content: "\e905";
+}
+.trav-comment-icon:before {
+  content: "\e906";
+}
+.trav-distance-icon:before {
+  content: "\e907";
+}
+.trav-emergency-number-icon:before {
+  content: "\e908";
+}
+.trav-event-icon:before {
+  content: "\e909";
+}
+.trav-event-program-icon:before {
+  content: "\e90a";
+}
+.trav-flag-icon:before {
+  content: "\e90b";
+}
+.trav-gallery-icon:before {
+  content: "\e90c";
+}
+.trav-home-icon:before {
+  content: "\e90e";
+}
+.trav-map-marker-icon:before {
+  content: "\e90f";
+}
+.trav-national-holiday-icon:before {
+  content: "\e910";
+}
+.trav-ok-icon:before {
+  content: "\e911";
+}
+.trav-plane-icon:before {
+  content: "\e912";
+}
+.trav-public-event-icon:before {
+  content: "\e913";
+}
+.trav-safety-icon:before {
+  content: "\e914";
+}
+.trav-search-icon:before {
+  content: "\e915";
+}
+.trav-set-location-icon:before {
+  content: "\e916";
+}
+.trav-share-icon:before {
+  content: "\e917";
+}
+.trav-socket-plugin-icon:before {
+  content: "\e918";
+}
+.trav-story-icon:before {
+  content: "\e919";
+}
+.trav-talk-icon:before {
+  content: "\e91a";
+}
+.trav-travel-mates-icon:before {
+  content: "\e91b";
+}
+.trav-trending-destination-icon:before {
+  content: "\e91c";
+}
+.trav-trending-icon:before {
+  content: "\e91d";
+}
+.trav-trip-plans-icon:before {
+  content: "\e91e";
+}
+.trav-user-plus-icon:before {
+  content: "\e91f";
+}
+.trav-view-plan-icon:before {
+  content: "\e920";
+}
+.trav-visa-requirement-icon:before {
+  content: "\e921";
+}
+.trav-weather-icon:before {
+  content: "\e922";
+}
+.trav-map:before {
+  content: "\e94b";
+}
+.trav-map-o:before {
+  content: "\e94c";
+}
+.trav-cog:before {
+  content: "\e994";
+}
+.trav-tree:before {
+  content: "\e9bc";
+}
+.trav-filter:before {
+  content: "\ea5b";
+}
