@@ -50,39 +50,32 @@ class EmbassiesController extends Controller
         $countries = Countries::where(['active' => 1])->get();
         $countries_arr = [];
 
-        // foreach ($countries as $key => $value) {
-        //     if(isset($value->transsingle) && !empty($value->transsingle)){
-        //         $countries_arr[$value->id] = $value->transsingle->title;
-        //     }
-        // }
-
-        echo '<pre>';
-        print_r($countries);
-        exit;
+        foreach ($countries as $key => $value) {
+            if(isset($value->transsingle) && !empty($value->transsingle)){
+                $countries_arr[$value->id] = $value->transsingle->title;
+            }
+        }
 
         /* Get All Cities */
-        // $cities = Cities::where(['active' => 1])->get();
-        // $cities_arr = [];
+        $cities = Cities::where(['active' => 1])->get();
+        $cities_arr = [];
 
-        // foreach ($cities as $key => $value) {
-        //     if (isset($value->transsingle) && !empty($value->transsingle)) {
-        //         $cities_arr[$value->id] = $value->transsingle->title;
-        //     }
-        // }
+        foreach ($cities as $key => $value) {
+            if (isset($value->transsingle) && !empty($value->transsingle)) {
+                $cities_arr[$value->id] = $value->transsingle->title;
+            }
+        }
 
 
         /* Get All Medias */
-        // $medias = Media::where(['type' => null])->get();
-        // $medias_arr = [];
+        $medias = Media::where(['type' => null])->get();
+        $medias_arr = [];
 
-        // foreach ($medias as $key => $value) {
-        //     if (isset($value->transsingle) && !empty($value->transsingle)) {
-        //         $medias_arr[$value->id] = $value->transsingle->title;
-        //     }
-        // }
-
-        print_r('here');
-        exit;
+        foreach ($medias as $key => $value) {
+            if (isset($value->transsingle) && !empty($value->transsingle)) {
+                $medias_arr[$value->id] = $value->transsingle->title;
+            }
+        }
 
         return view('backend.embassies.create',[
             'countries' => $countries_arr,
