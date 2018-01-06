@@ -833,4 +833,66 @@ class CityController extends Controller
 
         AdminLogs::create(['item_type' => 'cities', 'item_id' => $id, 'action' => 'delete', 'time' => time(), 'admin_id' => Auth::user()->id]);
     }
+
+    /* THIS FUNCTION RETURNS ALL ACTIVE CITIES IN THE SYSTEM */
+    public function AllActiveCities(ManageCityRequest $request){
+
+
+        $post = $request->input();
+        
+        $q = null;
+        if(isset($post['q'])){
+            $q = $post['q'];
+        }
+
+        $country_id = null;
+        if(isset($post['country_id'])){
+            $country_id = $post['country_id'];
+        }
+
+        $cities = null;
+
+        /* Get All Cities */
+        if(empty($q)){
+            $cities = Cities::where(['active' => 1]);
+            if(!empty($country_id)){
+                $cities = $cities->where(['countries_id' => $country_id]);
+            }
+            $cities = $cities->get();
+        }else{
+
+            $cities = Cities::leftJoin('cities_trans', function($join){
+                $join->on('cities_trans.cities_id', '=', 'cities.id');
+            })->where('cities_trans.title', 'LIKE', '%'.$q.'%')->where(['active' => 1]);
+
+            if(!empty($country_id)){
+                $cities = $cities->where(['cities.countries_id' => $country_id]);
+            }
+
+            $cities = $cities->get();
+        }
+
+        $cities_arr = [];
+
+        foreach ($cities as $key => $value) {
+            if(empty($q)){
+                if(!empty($value->transsingle)){
+                    $cities_arr[$value->id] = $value->transsingle->title;
+                }
+            }else{
+                if(!empty($value->title)){
+                    $cities_arr[$value->id] = $value->title;
+                }
+            }
+        }
+        
+        $json = [];
+        if(!empty($cities_arr)){
+            foreach ($cities_arr as $key => $value) {
+                    $json[] = ['id' => $key, 'text' => $value];
+            }
+        }
+        echo json_encode($json);
+        exit;
+    }
 }
