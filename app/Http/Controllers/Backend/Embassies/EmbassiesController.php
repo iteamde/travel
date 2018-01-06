@@ -47,35 +47,35 @@ class EmbassiesController extends Controller
     {   
 
         /* Get All Countries */
-        $countries = Countries::where(['active' => 1])->get();
-        $countries_arr = [];
+        // $countries = Countries::where(['active' => 1])->get();
+        // $countries_arr = [];
 
-        foreach ($countries as $key => $value) {
-            if(isset($value->transsingle) && !empty($value->transsingle)){
-                $countries_arr[$value->id] = $value->transsingle->title;
-            }
-        }
+        // foreach ($countries as $key => $value) {
+        //     if(isset($value->transsingle) && !empty($value->transsingle)){
+        //         $countries_arr[$value->id] = $value->transsingle->title;
+        //     }
+        // }
 
         /* Get All Cities */
-        $cities = Cities::where(['active' => 1])->get();
-        $cities_arr = [];
+        // $cities = Cities::where(['active' => 1])->get();
+        // $cities_arr = [];
 
-        foreach ($cities as $key => $value) {
-            if (isset($value->transsingle) && !empty($value->transsingle)) {
-                $cities_arr[$value->id] = $value->transsingle->title;
-            }
-        }
+        // foreach ($cities as $key => $value) {
+        //     if (isset($value->transsingle) && !empty($value->transsingle)) {
+        //         $cities_arr[$value->id] = $value->transsingle->title;
+        //     }
+        // }
 
 
         /* Get All Medias */
-        $medias = Media::where(['type' => null])->get();
-        $medias_arr = [];
+        // $medias = Media::where(['type' => null])->get();
+        // $medias_arr = [];
 
-        foreach ($medias as $key => $value) {
-            if (isset($value->transsingle) && !empty($value->transsingle)) {
-                $medias_arr[$value->id] = $value->transsingle->title;
-            }
-        }
+        // foreach ($medias as $key => $value) {
+        //     if (isset($value->transsingle) && !empty($value->transsingle)) {
+        //         $medias_arr[$value->id] = $value->transsingle->title;
+        //     }
+        // }
 
         print_r('here');
         exit;
