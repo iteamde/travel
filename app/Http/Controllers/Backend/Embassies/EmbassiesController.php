@@ -50,14 +50,14 @@ class EmbassiesController extends Controller
         $countries = Countries::where(['active' => 1])->limit(10)->get();
         $countries_arr = [];
 
-        foreach ($countries as $key => $value) {
-            if(isset($value->transsingle) && !empty($value->transsingle)){
-                $countries_arr[$value->id] = $value->transsingle->title;
-            }
-        }
+        // foreach ($countries as $key => $value) {
+        //     if(isset($value->transsingle) && !empty($value->transsingle)){
+        //         $countries_arr[$value->id] = $value->transsingle->title;
+        //     }
+        // }
 
         echo '<pre>';
-        print_r($countries_arr);
+        print_r($countries);
         exit;
 
         /* Get All Cities */
