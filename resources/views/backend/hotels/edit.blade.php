@@ -203,7 +203,7 @@ use App\Models\Access\language\Languages;
                         {{ Form::label('title', 'Country', ['class' => 'col-lg-2 control-label']) }}
 
                         <div class="col-lg-10">
-                            {{ Form::select('country_id', $countries , $data['country_id'],['class' => 'select2Class form-control']) }}
+                            {{ Form::select('country_id', $countries , $data['country_id'],['class' => 'select2Class form-control','id' => 'country-dropdown-custom']) }}
                         </div><!--col-lg-10-->
                     </div><!--form control-->
                     <!-- Countries: End -->
@@ -213,7 +213,7 @@ use App\Models\Access\language\Languages;
                         {{ Form::label('title', 'Cities', ['class' => 'col-lg-2 control-label']) }}
 
                         <div class="col-lg-10">
-                            {{ Form::select('city_id', $cities , $data['city_id'],['class' => 'select2Class form-control']) }}
+                            {{ Form::select('city_id', $cities , $data['city_id'],['class' => 'select2Class form-control','id' => 'city-dropdown-custom']) }}
                         </div><!--col-lg-10-->
                     </div><!--form control-->
                     <!-- Cities: End -->
@@ -223,7 +223,7 @@ use App\Models\Access\language\Languages;
                         {{ Form::label('title', 'Places', ['class' => 'col-lg-2 control-label']) }}
 
                         <div class="col-lg-10">
-                            {{ Form::select('place_id', $places , $data['place_id'],['class' => 'select2Class form-control']) }}
+                            {{ Form::select('place_id', $places , $data['place_id'],['class' => 'select2Class form-control','id' => 'place-dropdown-custom']) }}
                         </div><!--col-lg-10-->
                     </div><!--form control-->
                     <!-- Place: End -->
@@ -233,7 +233,7 @@ use App\Models\Access\language\Languages;
                         {{ Form::label('medias', 'Medias', ['class' => 'col-lg-2 control-label']) }}
 
                         <div class="col-lg-10">
-                            {{ Form::select('medias_id[]', $medias , $data['selected_medias'],['class' => 'select2Class form-control' , 'multiple' => 'multiple']) }}
+                            {{ Form::select('medias_id[]', $medias , $data['selected_medias'],['class' => 'select2Class form-control' , 'multiple' => 'multiple','id' => 'media-dropdown-custom']) }}
                         </div><!--col-lg-10-->
                     </div><!--form control-->
                     <!-- Medias : End -->
@@ -420,4 +420,82 @@ use App\Models\Access\language\Languages;
         });
     </script>
     <!-- Error Alert Script : End -->
+    <script type="text/javascript">
+        $('#country-dropdown-custom').select2({
+            width:'100%',
+            placeholder: 'Select Country',
+            ajax: {
+            url: '{{ route("admin.location.country.get_active_countries") }}',
+                    type: 'post',
+                    dataType: 'json',
+                    delay: 250,
+                    processResults: function (data) {
+                    return {
+                        results: data
+                    };
+                    },
+                    cache: true
+            }
+            });
+        $('#city-dropdown-custom').select2({
+            width:'100%',
+            placeholder: 'Search City',
+                    ajax: {
+            url: '{{ route("admin.location.city.get_active_countries") }}',
+                    dataType: 'json',
+                    type: 'post',
+                    delay: 250,
+                     data: function (params) {
+                        var country_id = '';
+                        // country_id = $('#country-dropdown-custom').val();   
+                        var query = {
+                            q: params.term,
+                            type: 'public',
+                            country_id : country_id
+                        };
+
+                        // Query parameters will be ?search=[term]&type=public
+                        return query;
+                    },
+                    processResults: function (data) {
+                    return {
+                    results: data
+                    };
+                    },
+                    cache: true
+            }
+            });
+        $('#media-dropdown-custom').select2({
+            width:'100%',
+            placeholder: 'Select Media',
+                    ajax: {
+            url: '{{ route("admin.activitymedia.media.get_active_medias") }}',
+                    dataType: 'json',
+                    type: 'post',
+                    delay: 250,
+                    processResults: function (data) {
+                    return {
+                    results: data
+                    };
+                    },
+                    cache: true
+            }
+            });
+        $('#place-dropdown-custom').select2({
+            width:'100%',
+            placeholder: 'Select Place',
+                    ajax: {
+            url: '{{ route("admin.location.place.get_active_places") }}',
+                    dataType: 'json',
+                    type: 'post',
+                    delay: 250,
+                    processResults: function (data) {
+                    return {
+                    results: data
+                    };
+                    },
+                    cache: true
+            }
+            });
+    </script>
 @endsection

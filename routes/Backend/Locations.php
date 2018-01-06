@@ -173,6 +173,8 @@ Route::group([
 
         Route::post('place/delete-ajax', 'PlaceController@delete_ajax')->name('place.delete_ajax');
 
+        Route::post('place/get-active-places', 'PlaceController@AllActivePlaces')->name('place.get_active_places');
+
     });
 
 });
