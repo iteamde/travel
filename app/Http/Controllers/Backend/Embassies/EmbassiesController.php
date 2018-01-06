@@ -44,7 +44,9 @@ class EmbassiesController extends Controller
      * @return mixed
      */
     public function create(ManageEmbassiesRequest $request)
-    {
+    {   
+        print_r('here');
+        exit;
         /* Get All Countries */
         $countries = Countries::where(['active' => 1])->get();
         $countries_arr = [];
