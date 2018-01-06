@@ -242,7 +242,8 @@ class HotelsController extends Controller
                 $countries_arr[$value->id] = $value->transsingle->title;
             }
         }
-
+        print_r('here');
+        exit;
         /* Get Active Cities For Dropdown */
         $cities = Cities::where(['active' => 1,'id' => $hotel['cities_id']])->get();
         $cities_arr = [];
