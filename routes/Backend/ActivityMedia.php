@@ -27,5 +27,7 @@ Route::group([
         Route::group(['prefix' => 'activitymedia/{deletedActivityMedia}'], function () {
             Route::delete('delete', 'ActivityMediaController@delete')->name('activitymedia.delete');     
         });
+
+        Route::post('media/get-active-medias', 'ActivityMediaController@AllActiveMedia')->name('media.get_active_medias');
     });
 }); 

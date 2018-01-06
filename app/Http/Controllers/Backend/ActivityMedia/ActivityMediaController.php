@@ -166,4 +166,43 @@ class ActivityMediaController extends Controller
             ->withMedia($activitymedia)
             ->withMediatrans($activitymediaTrans);
     }
+
+    /* THIS FUNCTION RETURNS ALL MEDIAS IN THE SYSTEM */
+    public function AllActiveMedia(ManageActivityMediaRequest $request){
+
+        $post = $request->input();
+
+        $q = null;
+        if(isset($post['q'])){
+            $q = $post['q'];
+        }
+
+        /* Get All Medias */
+        if(empty($q)){
+            $medias = Media::where(['type' => null])->get();
+        }else{
+            $medias = Media::leftJoin('medias_trans', function($join){
+                $join->on('medias_trans.medias_id', '=', 'medias.id');
+            })->where('medias_trans.title', 'LIKE', '%'.$q.'%')->where(['type' => null])->get();
+        }
+
+        $medias_arr = [];
+
+        foreach ($medias as $key => $value) {
+            if(empty($q)){
+                $medias_arr[$value->id] = $value->transsingle->title;
+            }else{
+                $medias_arr[$value->id] = $value->title;
+            }
+        }
+        
+        $json = [];
+        if(!empty($medias_arr)){
+            foreach ($medias_arr as $key => $value) {
+                    $json[] = ['id' => $key, 'text' => $value];
+            }
+        }
+        echo json_encode($json);
+        exit;
+    }
 }

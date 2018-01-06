@@ -212,7 +212,7 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
                         {{ Form::label('title', 'Medias', ['class' => 'col-lg-2 control-label']) }}
 
                         <div class="col-lg-10">
-                            {{ Form::select('medias_id[]', $medias , null,['class' => 'select2Class form-control' , 'multiple' => 'multiple']) }}
+                            {{ Form::select('medias_id[]', [] , null,['class' => 'select2Class form-control' , 'multiple' => 'multiple','id' => 'media-dropdown-custom']) }}
                         </div><!--col-lg-10-->
                     </div><!--form control-->
                     <!-- Medias: End -->
@@ -429,6 +429,22 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
                         // Query parameters will be ?search=[term]&type=public
                         return query;
                     },
+                    processResults: function (data) {
+                    return {
+                    results: data
+                    };
+                    },
+                    cache: true
+            }
+            });
+        $('#media-dropdown-custom').select2({
+            width:'100%',
+            placeholder: 'Select Media',
+                    ajax: {
+            url: '{{ route("admin.activitymedia.media.get_active_medias") }}',
+                    dataType: 'json',
+                    type: 'post',
+                    delay: 250,
                     processResults: function (data) {
                     return {
                     results: data

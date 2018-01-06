@@ -68,19 +68,19 @@ class EmbassiesController extends Controller
 
 
         /* Get All Medias */
-        $medias = Media::where(['type' => null])->get();
-        $medias_arr = [];
+        // $medias = Media::where(['type' => null])->get();
+        // $medias_arr = [];
 
-        foreach ($medias as $key => $value) {
-            if (isset($value->transsingle) && !empty($value->transsingle)) {
-                $medias_arr[$value->id] = $value->transsingle->title;
-            }
-        }
+        // foreach ($medias as $key => $value) {
+        //     if (isset($value->transsingle) && !empty($value->transsingle)) {
+        //         $medias_arr[$value->id] = $value->transsingle->title;
+        //     }
+        // }
 
         return view('backend.embassies.create',[
             // 'countries' => $countries_arr,
             // 'cities' => $cities_arr,
-            'medias' => $medias_arr,
+            // 'medias' => $medias_arr,
         ]);
     }
 
