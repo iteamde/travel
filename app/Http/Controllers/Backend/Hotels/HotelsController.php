@@ -252,6 +252,8 @@ class HotelsController extends Controller
             }
         }
 
+        print_r('here');
+        exit;
         /* Get Places For Dropdown */
         $places = Place::where(['active' => 1,'id' => $hotel['places_id']])->get();
         $places_arr = [];
@@ -262,8 +264,6 @@ class HotelsController extends Controller
             }
         }
 
-        print_r('here');
-        exit;
         /* Get Selected Medias */
         $selected_medias = $hotel->medias;
         $selected_medias_arr = [];
