@@ -47,14 +47,18 @@ class EmbassiesController extends Controller
     {   
 
         /* Get All Countries */
-        // $countries = Countries::where(['active' => 1])->get();
-        // $countries_arr = [];
+        $countries = Countries::where(['active' => 1])->get();
+        $countries_arr = [];
 
-        // foreach ($countries as $key => $value) {
-        //     if(isset($value->transsingle) && !empty($value->transsingle)){
-        //         $countries_arr[$value->id] = $value->transsingle->title;
-        //     }
-        // }
+        foreach ($countries as $key => $value) {
+            if(isset($value->transsingle) && !empty($value->transsingle)){
+                $countries_arr[$value->id] = $value->transsingle->title;
+            }
+        }
+
+        echo '<pre>';
+        print_r($countries);
+        exit;
 
         /* Get All Cities */
         // $cities = Cities::where(['active' => 1])->get();
@@ -79,7 +83,7 @@ class EmbassiesController extends Controller
 
         print_r('here');
         exit;
-        
+
         return view('backend.embassies.create',[
             'countries' => $countries_arr,
             'cities' => $cities_arr,
