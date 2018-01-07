@@ -728,4 +728,45 @@ class PlaceController extends Controller {
         AdminLogs::create(['item_type' => 'places', 'item_id' => $id, 'action' => 'delete', 'time' => time(), 'admin_id' => Auth::user()->id]);
     }
 
+    /* THIS FUNCTION RETURNS ALL ACTIVE PLACES IN THE SYSTEM */
+    public function AllActivePlaces(ManagePlaceRequest $request){
+
+        $post = $request->input();
+
+        $q = null;
+        if(isset($post['q'])){
+            $q = $post['q'];
+        }
+
+        $places = null;
+
+        /* Get All Places */
+        if(empty($q)){
+            $places = Place::where(['active' => 1])->get();
+        }else{
+            $places = Place::select(['places.id as pId','places_trans.title as pTitle'])->leftJoin('places_trans', function($join){
+                $join->on('places_trans.places_id', '=', 'places.id');
+            })->where('places_trans.title', 'LIKE', '%'.$q.'%')->where(['active' => 1])->get();
+        }
+
+        $places_arr = [];
+
+        foreach ($places as $key => $value) {
+            if(empty($q)){
+                $places_arr[$value->id] = $value->transsingle->title;
+            }else{
+                $places_arr[$value->pId] = $value->pTitle;
+            }
+        }
+        
+        $json = [];
+        if(!empty($places_arr)){
+            foreach ($places_arr as $key => $value) {
+                    $json[] = ['id' => $key, 'text' => $value];
+            }
+        }
+        echo json_encode($json);
+        exit;
+    }
+
 }

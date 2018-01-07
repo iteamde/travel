@@ -56,54 +56,54 @@ class HotelsController extends Controller
     public function create(ManageHotelsRequest $request)
     {
         /* Get All Active Countries For Dropdown */
-        $countries = Countries::where(['active' => 1])->get();
-        $countries_arr = [];
+        // $countries = Countries::where(['active' => 1])->get();
+        // $countries_arr = [];
 
-        foreach ($countries as $key => $value) {
-            /* If Translation Exists, Get Title */
-            if(isset($value->transsingle) && !empty($value->transsingle)){
-                $countries_arr[$value->id] = $value->transsingle->title;
-            }
-        }
+        // foreach ($countries as $key => $value) {
+        //     /* If Translation Exists, Get Title */
+        //     if(isset($value->transsingle) && !empty($value->transsingle)){
+        //         $countries_arr[$value->id] = $value->transsingle->title;
+        //     }
+        // }
 
         /* Get All Active Cities For Dropdown */
-        $cities = Cities::where(['active' => 1])->get();
-        $cities_arr = [];
+        // $cities = Cities::where(['active' => 1])->get();
+        // $cities_arr = [];
 
-        foreach ($cities as $key => $value) {
-            /* If Translation Exists, Get Title */
-            if(isset($value->transsingle) && !empty($value->transsingle)){
-                $cities_arr[$value->id] = $value->transsingle->title;
-            }
-        }
+        // foreach ($cities as $key => $value) {
+        //     /* If Translation Exists, Get Title */
+        //     if(isset($value->transsingle) && !empty($value->transsingle)){
+        //         $cities_arr[$value->id] = $value->transsingle->title;
+        //     }
+        // }
 
         /* Get All Places For Dropdown */
-        $places = Place::all();
-        $places_arr = [];
+        // $places = Place::all();
+        // $places_arr = [];
 
-        foreach ($places as $key => $value) {
-            /* If Translation Exists, Get Title */
-            if(isset($value->transsingle) && !empty($value->transsingle)){
-                $places_arr[$value->id] = $value->transsingle->title;
-            }
-        }
+        // foreach ($places as $key => $value) {
+        //     /* If Translation Exists, Get Title */
+        //     if(isset($value->transsingle) && !empty($value->transsingle)){
+        //         $places_arr[$value->id] = $value->transsingle->title;
+        //     }
+        // }
 
         /* Get All Medias */
-        $medias = Media::all();
-        $medias_arr = [];
+        // $medias = Media::all();
+        // $medias_arr = [];
 
-        foreach ($medias as $key => $value) {
-            /* If Translation Exists, Get Title */
-            if(isset($value->transsingle) && !empty($value->transsingle)){
-                $medias_arr[$value->id] = $value->transsingle->title;
-            }
-        }
+        // foreach ($medias as $key => $value) {
+        //     /* If Translation Exists, Get Title */
+        //     if(isset($value->transsingle) && !empty($value->transsingle)){
+        //         $medias_arr[$value->id] = $value->transsingle->title;
+        //     }
+        // }
 
         return view('backend.hotels.create',[
-            'countries' => $countries_arr,
-            'cities' => $cities_arr,
-            'places' => $places_arr,
-            'medias' => $medias_arr
+            // 'countries' => $countries_arr,
+            // 'cities' => $cities_arr,
+            // 'places' => $places_arr,
+            // 'medias' => $medias_arr
         ]);
     }
 
@@ -227,14 +227,14 @@ class HotelsController extends Controller
             }
         }
 
-        $data['lat_lng'] = $hotel['lat'] . ',' . $hotel['lng'];
+        $data['lat_lng']    = $hotel['lat'] . ',' . $hotel['lng'];
         $data['country_id'] = $hotel['countries_id'];
-        $data['city_id'] = $hotel['cities_id'];
-        $data['place_id'] = $hotel['places_id'];
-        $data['active'] = $hotel['active'];
+        $data['city_id']    = $hotel['cities_id'];
+        $data['place_id']   = $hotel['places_id'];
+        $data['active']     = $hotel['active'];
 
         /* Get Active Countries For Dropdown */
-        $countries = Countries::where(['active' => 1])->get();
+        $countries = Countries::where(['active' => 1,'id' => $hotel['countries_id']])->get();
         $countries_arr = [];
 
         foreach ($countries as $key => $value) {
@@ -242,9 +242,8 @@ class HotelsController extends Controller
                 $countries_arr[$value->id] = $value->transsingle->title;
             }
         }
-
         /* Get Active Cities For Dropdown */
-        $cities = Cities::where(['active' => 1])->get();
+        $cities = Cities::where(['active' => 1,'id' => $hotel['cities_id']])->get();
         $cities_arr = [];
 
         foreach ($cities as $key => $value) {
@@ -253,8 +252,9 @@ class HotelsController extends Controller
             }
         }
 
+
         /* Get Places For Dropdown */
-        $places = Place::all();
+        $places = Place::where(['active' => 1,'id' => $hotel['places_id']])->get();
         $places_arr = [];
 
         foreach ($places as $key => $value) {
@@ -266,9 +266,11 @@ class HotelsController extends Controller
         /* Get Selected Medias */
         $selected_medias = $hotel->medias;
         $selected_medias_arr = [];
+        $medias_arr = [];
 
         if(!empty($selected_medias)){
             foreach ($selected_medias as $key => $value) {
+                $medias_arr[$value->media->id] = $value->media->transsingle->title;
                 array_push($selected_medias_arr,$value->media->id);
             }
         }
@@ -276,14 +278,13 @@ class HotelsController extends Controller
         $data['selected_medias'] = $selected_medias_arr;
 
         /* Get Medias For Dropdown */
-        $medias = Media::all();
-        $medias_arr = [];
+        // $medias = Media::all();
 
-        foreach ($medias as $key => $value) {
-            if(isset($value->transsingle) && !empty($value->transsingle)){
-                $medias_arr[$value->id] = $value->transsingle->title;
-            }
-        }
+        // foreach ($medias as $key => $value) {
+        //     if(isset($value->transsingle) && !empty($value->transsingle)){
+        //          $medias_arr[$value->id] = $value->transsingle->title;
+        //     }
+        // }
 
         return view('backend.hotels.edit')
             ->withLanguages($this->languages)
