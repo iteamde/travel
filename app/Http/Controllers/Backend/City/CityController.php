@@ -42,7 +42,9 @@ class CityController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index(ManageCityRequest $request)
-    {
+    {   
+        print_r(Cities::all()->count());
+        exit;
         return view('backend.city.index');
     }
 
