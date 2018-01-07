@@ -242,7 +242,7 @@ class EmbassiesController extends Controller
         $data['safety_degrees_id'] = $embassies['safety_degrees_id'];
 
 
-        $countries = Countries::where(['active' => 1])->get();
+        $countries = Countries::where(['active' => 1,'id' => $embassies['countries_id']])->get();
         $countries_arr = [];
 
         foreach ($countries as $key => $value) {
@@ -252,7 +252,7 @@ class EmbassiesController extends Controller
         }
 
         /* Get All Cities */
-        $cities = Cities::where(['active' => 1])->get();
+        $cities = Cities::where(['active' => 1,'id' => $embassies['cities_id']])->get();
         $cities_arr = [];
 
         foreach ($cities as $key => $value) {
