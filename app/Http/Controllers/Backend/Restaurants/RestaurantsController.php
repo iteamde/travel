@@ -48,50 +48,50 @@ class RestaurantsController extends Controller
     public function create(ManageRestaurantsRequest $request)
     {
         /* Get All Countries */
-        $countries = Countries::where(['active' => Countries::ACTIVE])->get();
-        $countries_arr = [];
+        // $countries = Countries::where(['active' => Countries::ACTIVE])->get();
+        // $countries_arr = [];
 
-        foreach ($countries as $key => $value) {
-            if(isset($value->transsingle) && !empty($value->transsingle)){
-                $countries_arr[$value->id] = $value->transsingle->title;
-            }
-        }
+        // foreach ($countries as $key => $value) {
+        //     if(isset($value->transsingle) && !empty($value->transsingle)){
+        //         $countries_arr[$value->id] = $value->transsingle->title;
+        //     }
+        // }
 
         /* Get All Cities */
-        $cities = Cities::where([ 'active' => 1 ])->get();
-        $cities_arr = [];
+        // $cities = Cities::where([ 'active' => 1 ])->get();
+        // $cities_arr = [];
 
-        foreach ($cities as $key => $value) {
-            if(isset($value->transsingle) && !empty($value->transsingle)){
-                $cities_arr[$value->id] = $value->transsingle->title;
-            }
-        }
+        // foreach ($cities as $key => $value) {
+        //     if(isset($value->transsingle) && !empty($value->transsingle)){
+        //         $cities_arr[$value->id] = $value->transsingle->title;
+        //     }
+        // }
 
         /* Get All Places */
-        $places = Place::get();
-        $places_arr = [];
+        // $places = Place::get();
+        // $places_arr = [];
 
-        foreach ($places as $key => $value) {
-            if(isset($value->transsingle) && !empty($value->transsingle)){
-                $places_arr[$value->id] = $value->transsingle->title;
-            }
-        }
+        // foreach ($places as $key => $value) {
+        //     if(isset($value->transsingle) && !empty($value->transsingle)){
+        //         $places_arr[$value->id] = $value->transsingle->title;
+        //     }
+        // }
 
         /* Get All Medias */
-        $medias = Media::get();
-        $medias_arr = [];
+        // $medias = Media::get();
+        // $medias_arr = [];
 
-        foreach ($medias as $key => $value) {
-            if(isset($value->transsingle) && !empty($value->transsingle)){
-                $medias_arr[$value->id] = $value->transsingle->title;
-            }
-        }
+        // foreach ($medias as $key => $value) {
+        //     if(isset($value->transsingle) && !empty($value->transsingle)){
+        //         $medias_arr[$value->id] = $value->transsingle->title;
+        //     }
+        // }
 
         return view('backend.restaurants.create',[
-            'countries' => $countries_arr,
-            'cities'    => $cities_arr,
-            'places'    => $places_arr,
-            'medias'    => $medias_arr,
+            // 'countries' => $countries_arr,
+            // 'cities'    => $cities_arr,
+            // 'places'    => $places_arr,
+            // 'medias'    => $medias_arr,
         ]);
     }
 
