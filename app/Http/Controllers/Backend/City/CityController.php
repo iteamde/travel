@@ -43,8 +43,6 @@ class CityController extends Controller
      */
     public function index(ManageCityRequest $request)
     {   
-        print_r(Cities::all()->count());
-        exit;
         return view('backend.city.index');
     }
 
