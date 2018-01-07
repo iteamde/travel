@@ -890,4 +890,45 @@ class CountryController extends Controller
 
         AdminLogs::create(['item_type' => 'countries', 'item_id' => $id, 'action' => 'delete', 'time' => time(), 'admin_id' => Auth::user()->id]);
     }
+
+    /* THIS FUNCTION RETURNS ALL ACTIVE COUNTRIES IN THE SYSTEM */
+    public function AllActiveCountries(ManageCountryRequest $request){
+
+        $post = $request->input();
+
+        $q = null;
+        if(isset($post['q'])){
+            $q = $post['q'];
+        }
+
+        $countries = null;
+
+        /* Get All Countries */
+        if(empty($q)){
+            $countries = Countries::where(['active' => 1])->get();
+        }else{
+            $countries = Countries::select(['countries.id as cId','countries_trans.title as cTitle'])->leftJoin('countries_trans', function($join){
+                $join->on('countries_trans.countries_id', '=', 'countries.id');
+            })->where('countries_trans.title', 'LIKE', '%'.$q.'%')->where(['active' => 1])->get();
+        }
+
+        $countries_arr = [];
+
+        foreach ($countries as $key => $value) {
+            if(empty($q)){
+                $countries_arr[$value->id] = $value->transsingle->title;
+            }else{
+                $countries_arr[$value->cId] = $value->cTitle;
+            }
+        }
+        
+        $json = [];
+        if(!empty($countries_arr)){
+            foreach ($countries_arr as $key => $value) {
+                    $json[] = ['id' => $key, 'text' => $value];
+            }
+        }
+        echo json_encode($json);
+        exit;
+    }
 }

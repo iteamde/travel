@@ -46,39 +46,40 @@ class EmbassiesController extends Controller
     public function create(ManageEmbassiesRequest $request)
     {
         /* Get All Countries */
-        $countries = Countries::where(['active' => 1])->get();
-        $countries_arr = [];
+        // $countries = Countries::where(['active' => 1])->get();
+        // $countries_arr = [];
 
-        foreach ($countries as $key => $value) {
-            if(isset($value->transsingle) && !empty($value->transsingle)){
-                $countries_arr[$value->id] = $value->transsingle->title;
-            }
-        }
+        // foreach ($countries as $key => $value) {
+        //     if(isset($value->transsingle) && !empty($value->transsingle)){
+        //         $countries_arr[$value->id] = $value->transsingle->title;
+        //     }
+        // }
 
         /* Get All Cities */
-        $cities = Cities::where(['active' => 1])->get();
-        $cities_arr = [];
+        // $cities = Cities::where(['active' => 1])->get();
+        // $cities_arr = [];
 
-        foreach ($cities as $key => $value) {
-            if (isset($value->transsingle) && !empty($value->transsingle)) {
-                $cities_arr[$value->id] = $value->transsingle->title;
-            }
-        }
+        // foreach ($cities as $key => $value) {
+        //     if (isset($value->transsingle) && !empty($value->transsingle)) {
+        //         $cities_arr[$value->id] = $value->transsingle->title;
+        //     }
+        // }
 
 
         /* Get All Medias */
-        $medias = Media::where(['type' => null])->get();
-        $medias_arr = [];
+        // $medias = Media::where(['type' => null])->get();
+        // $medias_arr = [];
 
-        foreach ($medias as $key => $value) {
-            if (isset($value->transsingle) && !empty($value->transsingle)) {
-                $medias_arr[$value->id] = $value->transsingle->title;
-            }
-        }
+        // foreach ($medias as $key => $value) {
+        //     if (isset($value->transsingle) && !empty($value->transsingle)) {
+        //         $medias_arr[$value->id] = $value->transsingle->title;
+        //     }
+        // }
+        
         return view('backend.embassies.create',[
-            'countries' => $countries_arr,
-            'cities' => $cities_arr,
-            'medias' => $medias_arr,
+            // 'countries' => $countries_arr,
+            // 'cities' => $cities_arr,
+            // 'medias' => $medias_arr,
         ]);
     }
 
@@ -89,7 +90,7 @@ class EmbassiesController extends Controller
      */
     public function store(StoreEmbassiesRequest $request)
     {
-       
+        
         $data = [];
 
         foreach ($this->languages as $key => $language) {

@@ -23,6 +23,8 @@ Route::group([
         Route::resource('country', 'CountryController');
 
         Route::post('country/delete-ajax', 'CountryController@delete_ajax')->name('country.delete_ajax');
+        
+        Route::post('country/get-active-countries', 'CountryController@AllActiveCountries')->name('country.get_active_countries');        
 
         /*
          * Deleted Specific Country
@@ -103,6 +105,8 @@ Route::group([
         Route::group(['prefix' => 'city/{city}'], function () {
             Route::get('mark/{status}', 'CityController@mark')->name('city.mark')->where(['status' => '[1,2]']);
         });
+
+        Route::post('city/get-active-cities', 'CityController@AllActiveCities')->name('city.get_active_countries');
     });
 
     /*
@@ -168,6 +172,8 @@ Route::group([
         });
 
         Route::post('place/delete-ajax', 'PlaceController@delete_ajax')->name('place.delete_ajax');
+
+        Route::post('place/get-active-places', 'PlaceController@AllActivePlaces')->name('place.get_active_places');
 
     });
 
