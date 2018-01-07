@@ -201,7 +201,7 @@ class RestaurantsController extends Controller
         $data['places_id']      = $restaurants['places_id'];
 
         /* Find All Active Countries */
-        $countries = Countries::where(['active' => Countries::ACTIVE ])->get();
+        $countries = Countries::where(['active' => Countries::ACTIVE,'id' => $restaurants['countries_id']])->get();
         $countries_arr = [];
         /* Get Title Id Pair For Each Model */
         foreach ($countries as $key => $value) {
@@ -211,7 +211,7 @@ class RestaurantsController extends Controller
         }
 
         /* Get All Cities */
-        $cities = Cities::where(['active' => 1])->get();
+        $cities = Cities::where(['active' => 1,'id' => $restaurants['cities_id']])->get();
         $cities_arr = [];
         /* Get Title Id Pair For Each Model */
         foreach ($cities as $key => $value) {
@@ -221,7 +221,7 @@ class RestaurantsController extends Controller
         }
 
         /* Get All Places */
-        $places = Place::where(['active' => 1])->get();
+        $places = Place::where(['active' => 1,'id' => $restaurants['places_id']])->get();
         $places_arr = [];
         /* Get Title Id Pair For Each Model */
         foreach ($places as $key => $value) {
@@ -233,9 +233,13 @@ class RestaurantsController extends Controller
         /* Get Selected Medias */
         $selected_medias = $restaurants->medias;
         $selected_medias_arr = [];
+        $medias_arr = [];
 
         if(!empty($selected_medias)){
             foreach ($selected_medias as $key => $value) {
+                if(!empty($value->media) && !empty($value->media->transsingle)){
+                    $medias_arr[$value->medias_id] = $value->media->transsingle->title;
+                }
                 array_push( $selected_medias_arr , $value->medias_id );
             }
         }
@@ -243,14 +247,14 @@ class RestaurantsController extends Controller
         $data['selected_medias'] = $selected_medias_arr;
 
         /* Get All Medias For Dropdown */
-        $medias = Media::get();
-        $medias_arr = [];
+        // $medias = Media::get();
+        // $medias_arr = [];
         /* Get Title Id Pair For Each Model */
-        foreach ($medias as $key => $value) {
-            if(isset($value->transsingle) && !empty($value->transsingle)){
-                $medias_arr[$value->id] = $value->transsingle->title;
-            }
-        }
+        // foreach ($medias as $key => $value) {
+        //     if(isset($value->transsingle) && !empty($value->transsingle)){
+        //         $medias_arr[$value->id] = $value->transsingle->title;
+        //     }
+        // }
 
         return view('backend.restaurants.edit')
             ->withLanguages($this->languages)
