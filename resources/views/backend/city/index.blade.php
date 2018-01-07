@@ -131,7 +131,12 @@
                                     cache: true
                             }
                     });
-                }
+                    var itr = 1;
+                    $('#cities-table tbody tr').each(function(){
+                        $(this).find('td:nth-child(2)').html(itr);
+                        itr++;
+                    });
+                }//Init complete end
             });
 
             /* FILTER BASED ON COUNTRIES */     
