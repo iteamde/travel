@@ -114,13 +114,13 @@ class CityRepository extends BaseRepository
      */
     public function create($input , $extra)
     {
-        $model = new Cities;
-        $model->countries_id= $extra['countries_id'];
-        $model->active      = $extra['active'];
-        $model->is_capital  = $extra['is_capital'];
-        $model->code        = $extra['code'];
-        $model->lat         = $extra['lat'];
-        $model->lng         = $extra['lng'];
+        $model                  = new Cities;
+        $model->countries_id    = $extra['countries_id'];
+        $model->active          = $extra['active'];
+        $model->is_capital      = $extra['is_capital'];
+        $model->code            = $extra['code'];
+        $model->lat             = $extra['lat'];
+        $model->lng             = $extra['lng'];
         // $model->safety_degree_id = $extra['safety_degree_id'];
         $model->level_of_living_id = $extra['level_of_living_id'];
 
