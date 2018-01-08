@@ -23,6 +23,11 @@
                     url: '/users',
                     templateUrl: '../views/userView.html',
                     controller: 'UserController as user'
+                })
+                .state('home', {
+                    url: '/home',
+                    templateUrl: '../views/homeView.html',
+                    controller: 'HomeController as user'
                 });
         });
 })();

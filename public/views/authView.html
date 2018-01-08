@@ -1,5 +1,5 @@
 <!-- public/views/authView.html -->
-
+<!-- 
 <div class="col-sm-4 col-sm-offset-4">
     <div class="well">
         <h3>Login</h3>
@@ -14,3 +14,228 @@
         </form>
     </div>
 </div>
+-->
+
+
+<div class="main-wrapper login-layer">
+	<!-- Button trigger modal -->
+	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#signUp">
+		Launch signup
+	</button>
+	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createAccount1">
+		Launch createAccount step1
+	</button>
+	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createAccount2">
+		Launch createAccount step2
+	</button>
+	<button type="button" class="btn btn-primary" ng-click="auth.openHome()">
+		Home
+	</button>
+</div>
+<!-- <footer class="footer"></footer> -->
+
+
+<!-- Login Modal -->
+<div class="modal fade" id="signUp" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog sign-up-style" role="document">
+		<div class="modal-content">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+			<div class="modal-body">
+				<div class="top-layer">
+					<a href="#" class="logo-wrap">
+						<img src="./frontend_assets/image/main-logo.png" alt="">
+					</a>
+					<h4 class="title">Login to your account</h4>
+					<p class="sub-ttl">and write a text here</p>
+					<p class="sub-ttl error-message">The password is incorrect!</p>
+				</div>
+				<form class="login-form">
+					<div class="form-group">
+						<input type="email" class="form-control" ng-model="auth.email" aria-describedby="emailHelp" placeholder="Email address">
+						<!-- <input type="email" class="form-control" id="emailAddress" aria-describedby="emailHelp" placeholder="Email address"> -->
+					</div>
+					<!-- <div class="form-group">
+						<input type="password" class="form-control" id="password" aria-describedby="pass" placeholder="Password">
+					</div> -->
+					<div class="form-group has-danger">
+						<input type="password" class="form-control" ng-model="auth.password" aria-describedby="pass" placeholder="Password">
+						<!-- <input type="password" class="form-control" id="password" aria-describedby="pass" placeholder="Password"> -->
+					</div>
+					<div class="form-group">
+						<a href="#" class="forget-password-link">Forget your password?</a>
+					</div>
+					<div class="form-group">
+						<button type="button" class="btn btn-primary" ng-click="auth.login()">Submit</button>
+						<!-- <button type="button" class="btn btn-success">Log In</button> -->
+					</div>
+					<div class="form-group">
+						<p class="simple-txt">Or</p>
+					</div>
+					<div class="form-group">
+						<button type="button" class="btn btn-primary">
+							<i class="fa fa-facebook side-icon"></i>
+							Continue with Facebook</button>
+					</div>
+					<div class="form-group">
+						<button type="button" class="btn btn-info">
+							<i class="fa fa-twitter side-icon"></i>
+							Continue with Twitter</button>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<p class="foot-txt">You are not a member yet?</p>
+				<button type="button" class="btn btn-grey" ng-click="auth.openSignup()">Sign Up</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Signup Modal Step 1 -->
+<div class="modal fade" id="createAccount1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog sign-up-style" role="document">
+		<div class="modal-content">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+			<div class="modal-body body-create">
+				<div class="top-layer">
+					<a href="#" class="logo-wrap">
+						<img src="./frontend_assets/image/main-logo.png" alt="">
+					</a>
+					<h4 class="title">Create a free account</h4>
+					<!-- <p class="sub-ttl">and write a text here</p> -->
+					<!-- <p class="sub-ttl error-message">Your password is too weak</p> -->
+					<p class="sub-ttl error-message">Please fill the required fields</p>
+				</div>
+				<form class="login-form">
+					<div class="step-1">
+						<div class="form-group">
+							<input type="email" class="form-control" ng-model="auth.signupEmail" aria-describedby="emailHelp" placeholder="Email address">
+							<!-- <input type="email" class="form-control" id="emailAddress" aria-describedby="emailHelp" placeholder="Email address"> -->
+						</div>
+						<div class="form-group has-danger">
+							<input type="password" class="form-control" ng-model="auth.signupPassword" aria-describedby="pass" placeholder="Password">
+							<!-- <input type="password" class="form-control" id="password" aria-describedby="pass" placeholder="Password"> -->
+						</div>
+						<div class="form-margin"></div>
+						<div class="form-group">
+							<button type="button" class="btn btn-success" ng-click="auth.continueSignup()">Continue</button>
+						</div>
+						<div class="form-group">
+							<p class="simple-txt">Or</p>
+						</div>
+						<div class="form-group">
+							<button type="button" class="btn btn-primary">
+								<i class="fa fa-facebook side-icon"></i>
+								Continue with Facebook</button>
+						</div>
+						<div class="form-group">
+							<button type="button" class="btn btn-info">
+								<i class="fa fa-twitter side-icon"></i>
+								Continue with Twitter</button>
+						</div>
+					</div>
+					<div class="form-group bottom-txt-group">
+						<p class="bottom-txt">Creating an account means you're okay with</p>
+						<ul class="link-list">
+							<li>
+								<b>Travooo's</b>
+							</li>
+							<li>
+								<a href="#"> Terms of Service,</a>
+							</li>
+							<li>
+								<a href="#"> Privacy Policy</a>
+							</li>
+						</ul>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<p class="foot-txt">Already a member?</p>
+				<button type="button" class="btn btn-grey" ng-click="auth.openLogin('createAccount1')">Log In</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Signup Modal Step 2 -->
+<div class="modal fade" id="createAccount2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog sign-up-style" role="document">
+		<div class="modal-content">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+			<div class="modal-body body-create">
+				<div class="top-layer">
+					<a href="#" class="logo-wrap">
+						<img src="./frontend_assets/image/main-logo.png" alt="">
+					</a>
+					<h4 class="title">Create a free account</h4>
+					<!-- <p class="sub-ttl">and write a text here</p> -->
+					<!-- <p class="sub-ttl error-message">Your password is too weak</p> -->
+					<p class="sub-ttl error-message">Please fill the required fields</p>
+				</div>
+				<form class="login-form">
+					<div class="step-2">
+						<div class="form-group">
+							<p class="email-field">emailhere@gmail.com</p>
+						</div>
+						<div class="form-group flex-custom has-danger">
+							<input type="text" class="form-control flex-input" ng-model="auth.signupFullName" aria-describedby="full name" placeholder="Full Name">
+							<!-- <input type="text" class="form-control flex-input" id="fullName" aria-describedby="full name" placeholder="Full Name"> -->
+							<select class="custom-select" id="ageSelect" ng-model="auth.signupAge">
+								<option selected>Age</option>
+								<option value="1">26</option>
+								<option value="2">27</option>
+								<option value="3">28</option>
+							</select>
+						</div>
+						<div class="form-check flex-custom">
+							<div class="custom-check-label">
+								<input type="radio" class="custom-check-input" name="gender" id="male" value="male" ng-model="auth.signupGender">
+								<label for="male">Male</label>
+							</div>
+							<div class="custom-check-label">
+								<input type="radio" class="custom-check-input" name="gender" id="female" value="female" ng-model="auth.signupGender">
+								<label for="female">Female</label>
+							</div>
+						</div>
+						<div class="form-group">
+							<button type="button" class="btn btn-info" ng-click="auth.signup()">Sign Up</button>
+						</div>
+						<div class="form-group">
+							<button type="button" class="btn btn-transp">
+								<i class="fa fa-angle-left"></i>
+								<span>Back</span>
+							</button>
+						</div>
+					</div>
+					<div class="form-group bottom-txt-group">
+						<p class="bottom-txt">Creating an account means you're okay with</p>
+						<ul class="link-list">
+							<li>
+								<b>Travooo's</b>
+							</li>
+							<li>
+								<a href="#"> Terms of Service,</a>
+							</li>
+							<li>
+								<a href="#"> Privacy Policy</a>
+							</li>
+						</ul>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<p class="foot-txt">Already a member?</p>
+				<button type="button" class="btn btn-grey" ng-click="auth.openLogin('createAccount2')">Log In</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script src="frontend_assets/js/script.js"></script>
