@@ -71,7 +71,7 @@ class ApiUser extends User {
         }
 
         /* "gender" validation */
-        if (!isset($post['gender']) || empty($post['gender'])) {
+        if (!isset($post['gender']) || ( empty($post['gender']) && $post['gender'] != 0 ) ) {
             array_push($error, 'Gender not provided.');
         } else {
             $message = 'Gender can only contain following values (' . Self::GENDER_MALE . '-Male, ' . Self::GENDER_FEMALE . '-Female, ' . Self::GENDER_UNSPECIFIED . '-Unspecified).';
