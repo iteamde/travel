@@ -7,7 +7,9 @@
         .config(function($stateProvider, $urlRouterProvider, $authProvider) {
             // Satellizer configuration that specifies which API
             // route the JWT should be retrieved from
-            $authProvider.loginUrl = '/api/authenticate';
+            $authProvider.loginUrl = '/travo/public/api/authenticate';
+            $authProvider.signupUrl = '/travo/public/api/users/create';
+            // $authProvider.loginUrl = '/travo/public/api/users/login';
 
             // Redirect to the auth state if any other states
             // are requested other than users
@@ -16,17 +18,17 @@
             $stateProvider
                 .state('auth', {
                     url: '/auth',
-                    templateUrl: '../views/authView.html',
+                    templateUrl: '../public/views/authView.html',
                     controller: 'AuthController as auth'
                 })
                 .state('users', {
                     url: '/users',
-                    templateUrl: '../views/userView.html',
+                    templateUrl: '../public/views/userView.html',
                     controller: 'UserController as user'
                 })
                 .state('home', {
                     url: '/home',
-                    templateUrl: '../views/homeView.html',
+                    templateUrl: '../public/views/homeView.html',
                     controller: 'HomeController as user'
                 });
         });

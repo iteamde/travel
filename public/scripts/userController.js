@@ -21,7 +21,7 @@
             // on the Laravel side and will return the list of users
             
             $http.get('api/authenticate').then(function (users) {
-                vm.users = users;
+                vm.users = users.data;
             }, function (error) {
                 vm.error = error;
             });
