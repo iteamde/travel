@@ -18,17 +18,17 @@
             $stateProvider
                 .state('auth', {
                     url: '/auth',
-                    templateUrl: 'views/authView.html',
+                    templateUrl: '../public/views/authView.html',
                     controller: 'AuthController as auth'
                 })
                 .state('users', {
                     url: '/users',
-                    templateUrl: 'views/userView.html',
+                    templateUrl: '../public/views/userView.html',
                     controller: 'UserController as user'
                 })
                 .state('home', {
                     url: '/home',
-                    templateUrl: 'views/homeView.html',
+                    templateUrl: '../public/views/homeView.html',
                     controller: 'HomeController as user'
                 });
         });
