@@ -189,12 +189,12 @@ class ApiUser extends User {
             $activation_model->token = Self::generateRandomString(10) . time() . Self::generateRandomString(12);
             $activation_model->save();
 
-            $ac = new ActivityLog;
-            $ac->users_id = $model->id;
-            $ac->type = 'registeration';
-            $ac->action = 'new';
-            $ac->time = date('Y-m-d H:i:s', time());
-            $ac->save();
+            // $ac = new ActivityLog;
+            // $ac->users_id = $model->id;
+            // $ac->type = 'registeration';
+            // $ac->action = 'new';
+            // $ac->time = date('Y-m-d H:i:s', time());
+            // $ac->save();
 
             $model->sendActivationMessage();
             return [
