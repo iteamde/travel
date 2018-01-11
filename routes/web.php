@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
  */
 
 Route::get('/', function () {
-    return view('frontend.index');
+    // return view('frontend.index');
+    return File::get(public_path() . '/myapp/index.html');
 });
 
 // Switch between the included languages
