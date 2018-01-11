@@ -41,12 +41,12 @@ export class LoginComponent implements OnInit {
 
     ngOnInit() {
 
-		// if (this.authenticationService.login) {
-		// 	this.router.navigate(['/']);
-		//   }
-
-        // reset login status
-        this.authenticationService.logout();
+		// reset login status
+		this.authenticationService.logout();
+		
+		if (this.authenticationService.isLoggedIn()) {
+			this.router.navigate(['/home']);
+		}
 
         // get return url from route parameters or default to '/home'
 		this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/home';
@@ -96,10 +96,22 @@ export class LoginComponent implements OnInit {
 		this.authenticationService.login(this.email.value, this.password.value)
 		.subscribe(
 			data => {
-				this.router.navigate([this.returnUrl]);
+				console.log("Data:"+data);
+				var response = data.data;
+				console.log("Response:"+response);
+
+				if(data.status)
+				{
+					this.router.navigate([this.returnUrl]);
+				}
+				else
+				{
+					this.errors.push(response.message);
+					this.toggleLogin(true);
+				}
 			},
 			error => {
-				this.errors.push("Email or password is incorrect!");
+				console.log(error);
 				//this.alertService.error(error);
 				this.toggleLogin(true);
 			}

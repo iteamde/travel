@@ -16,7 +16,6 @@
 					<p class="sub-ttl error-message" *ngFor="let msg of errors">{{ msg }}</p>
 				</div>
 
-
 				<form class="login-form" name="loginForm" [formGroup]="loginForm" (ngSubmit)="login()" novalidate>
 					<div class="form-group" [ngClass]="setClassEmail()">
 						<!-- <label for="username">Username</label> -->

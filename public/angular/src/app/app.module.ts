@@ -5,7 +5,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 // used to create fake backend
-import { fakeBackendProvider } from '../_helpers/index';
+//import { fakeBackendProvider } from '../_helpers/index';
 import { AlertComponent } from '../_directives/index';
 import { AuthGuard } from '../_guards/index';
 import { JwtInterceptor } from '../_helpers/index';
@@ -57,7 +57,7 @@ import { CreatePostComponent } from './create-post/create-post.component';
         },
 
         // provider used to create fake backend
-        fakeBackendProvider
+        //fakeBackendProvider
     ],
     bootstrap: [AppComponent]
 })
