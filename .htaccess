@@ -1,0 +1,8 @@
+AddDefaultCharset utf-8
+
+Options +FollowSymLinks
+IndexIgnore */*
+RewriteEngine on
+
+# Make the admin accessible via url: http://site/admin.
+RewriteRule ^public public/myapp/index.html
