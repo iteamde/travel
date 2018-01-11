@@ -28,9 +28,6 @@
 	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createAccount2">
 		Launch createAccount step2
 	</button>
-	<button type="button" class="btn btn-primary" ng-click="auth.openHome()">
-		Home
-	</button>
 </div>
 <!-- <footer class="footer"></footer> -->
 
@@ -108,16 +105,35 @@
 					<h4 class="title">Create a free account</h4>
 					<!-- <p class="sub-ttl">and write a text here</p> -->
 					<!-- <p class="sub-ttl error-message">Your password is too weak</p> -->
-					<p class="sub-ttl error-message">Please fill the required fields</p>
+					<p class="sub-ttl error-message"><b>Please fill the required fields</b></p>
+					<br>
+					<div ng-if="auth.signupErrors">
+						<p class="sub-ttl error-message" ng-repeat="error in auth.signupErrors">
+							{{error}}
+						</p>
+					</div>
 				</div>
 				<form class="login-form">
 					<div class="step-1">
-						<div class="form-group">
-							<input type="email" class="form-control" ng-model="auth.signupEmail" aria-describedby="emailHelp" placeholder="Email address">
+						<div class="form-group has-danger">
+							<input type="text" class="form-control" id="signupUsername" name="signupUsername" ng-model="auth.signupUsername" aria-describedby="username" placeholder="Username">
+							<!-- <input type="email" class="form-control" id="emailAddress" aria-describedby="emailHelp" placeholder="Email address"> -->
+							<div ng-if="auth.errors.signupUsername">
+								<p class="sub-ttl error-message">
+									{{auth.errors.signupUsername}}
+								</p>
+							</div>
+						</div>
+						<div class="form-group has-danger">
+							<input type="email" class="form-control" id="signupEmail" name="signupEmail" ng-model="auth.signupEmail" aria-describedby="emailHelp" placeholder="Email address">
 							<!-- <input type="email" class="form-control" id="emailAddress" aria-describedby="emailHelp" placeholder="Email address"> -->
 						</div>
 						<div class="form-group has-danger">
-							<input type="password" class="form-control" ng-model="auth.signupPassword" aria-describedby="pass" placeholder="Password">
+							<input type="password" class="form-control" id="signupPassword" name="signupPassword" ng-model="auth.signupPassword" aria-describedby="pass" placeholder="Password">
+							<!-- <input type="password" class="form-control" id="password" aria-describedby="pass" placeholder="Password"> -->
+						</div>
+						<div class="form-group has-danger">
+							<input type="password" class="form-control" id="signupCPassword" name="signupCPassword" ng-model="auth.signupCPassword" aria-describedby="confirmPass" placeholder="Confirm Password">
 							<!-- <input type="password" class="form-control" id="password" aria-describedby="pass" placeholder="Password"> -->
 						</div>
 						<div class="form-margin"></div>
@@ -177,15 +193,21 @@
 					<h4 class="title">Create a free account</h4>
 					<!-- <p class="sub-ttl">and write a text here</p> -->
 					<!-- <p class="sub-ttl error-message">Your password is too weak</p> -->
-					<p class="sub-ttl error-message">Please fill the required fields</p>
+					<p class="sub-ttl error-message"><b>Please fill the required fields</b></p>
+					<br>
+					<div ng-if="auth.signupErrors">
+						<p class="sub-ttl error-message" ng-repeat="error in auth.signupErrors">
+							{{error}}
+						</p>
+					</div>
 				</div>
 				<form class="login-form">
 					<div class="step-2">
-						<div class="form-group">
+						<!-- <div class="form-group">
 							<p class="email-field">emailhere@gmail.com</p>
-						</div>
+						</div> -->
 						<div class="form-group flex-custom has-danger">
-							<input type="text" class="form-control flex-input" ng-model="auth.signupFullName" aria-describedby="full name" placeholder="Full Name">
+							<input type="text" class="form-control flex-input" id="signupFullName" name="signupFullName" ng-model="auth.signupFullName" aria-describedby="full name" placeholder="Full Name">
 							<!-- <input type="text" class="form-control flex-input" id="fullName" aria-describedby="full name" placeholder="Full Name"> -->
 							<select class="custom-select" id="ageSelect" ng-model="auth.signupAge">
 								<option selected>Age</option>
@@ -194,13 +216,13 @@
 								<option value="3">28</option>
 							</select>
 						</div>
-						<div class="form-check flex-custom">
+						<div class="form-check flex-custom has-danger">
 							<div class="custom-check-label">
-								<input type="radio" class="custom-check-input" name="gender" id="male" value="male" ng-model="auth.signupGender">
+								<input type="radio" class="custom-check-input" name="gender" id="male" value="0" ng-model="auth.signupGender">
 								<label for="male">Male</label>
 							</div>
 							<div class="custom-check-label">
-								<input type="radio" class="custom-check-input" name="gender" id="female" value="female" ng-model="auth.signupGender">
+								<input type="radio" class="custom-check-input" name="gender" id="female" value="1" ng-model="auth.signupGender">
 								<label for="female">Female</label>
 							</div>
 						</div>
@@ -208,7 +230,7 @@
 							<button type="button" class="btn btn-info" ng-click="auth.signup()">Sign Up</button>
 						</div>
 						<div class="form-group">
-							<button type="button" class="btn btn-transp">
+							<button type="button" class="btn btn-transp" ng-click="auth.backToSignup()">
 								<i class="fa fa-angle-left"></i>
 								<span>Back</span>
 							</button>

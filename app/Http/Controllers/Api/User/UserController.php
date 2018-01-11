@@ -34,9 +34,12 @@ class UserController extends Controller
         // $this->roles = $roles;
     }
 
-    /*
-    *   Create New User.
-    */
+    /**
+	 * This is the short description [and should be unique as anchor tags link to this in navigation menu]
+	 *
+	 * This can be an optional longer description of your API call, used within the documentation.
+	 *
+	 */
     public function create(Request $request){
 
         $post = $request->input();
