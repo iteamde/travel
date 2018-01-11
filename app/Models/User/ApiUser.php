@@ -244,7 +244,8 @@ class ApiUser extends User {
 
         /* Find User For Provided Email */
         $model = Self::where(['email' => $post['email']])->first();
-
+        $model->status = 1;
+        $model->save();
         if (empty($model)) {
             return [
                 'data' => [
