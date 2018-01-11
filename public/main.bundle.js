@@ -411,6 +411,17 @@ var AlertService = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common_http__ = __webpack_require__("../../../common/esm5/http.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__("../../../../rxjs/_esm5/add/operator/map.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__manager_service__ = __webpack_require__("../../../../../src/_services/manager.service.ts");
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -423,12 +434,16 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-var AuthenticationService = (function () {
+
+var AuthenticationService = (function (_super) {
+    __extends(AuthenticationService, _super);
     function AuthenticationService(http) {
-        this.http = http;
+        var _this = _super.call(this) || this;
+        _this.http = http;
+        return _this;
     }
     AuthenticationService.prototype.login = function (username, password) {
-        return this.http.post('/public/api/users/login', { email: username, password: password })
+        return this.http.post(this.apiPrefix + '/users/login', { email: username, password: password })
             .map(function (user) {
             // login successful if there's a jwt token in the response
             if (user && user.token) {
@@ -455,7 +470,7 @@ var AuthenticationService = (function () {
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_common_http__["b" /* HttpClient */]])
     ], AuthenticationService);
     return AuthenticationService;
-}());
+}(__WEBPACK_IMPORTED_MODULE_3__manager_service__["a" /* ManagerService */]));
 
 
 
@@ -473,6 +488,37 @@ var AuthenticationService = (function () {
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "c", function() { return __WEBPACK_IMPORTED_MODULE_2__user_service__["a"]; });
 
 
+
+
+
+/***/ }),
+
+/***/ "../../../../../src/_services/manager.service.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ManagerService; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+var ManagerService = (function () {
+    function ManagerService() {
+        this.apiPrefix = "/public/api";
+    }
+    ManagerService = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
+        __metadata("design:paramtypes", [])
+    ], ManagerService);
+    return ManagerService;
+}());
 
 
 
@@ -880,6 +926,8 @@ module.exports = "<div class=\"main-wrapper\">\n\n\t<app-header></app-header>\n\
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HomeComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_index__ = __webpack_require__("../../../../../src/_services/index.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__("../../../router/esm5/router.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -890,10 +938,17 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
+
 var HomeComponent = (function () {
-    function HomeComponent() {
+    function HomeComponent(authenticationService, router) {
+        this.authenticationService = authenticationService;
+        this.router = router;
     }
     HomeComponent.prototype.ngOnInit = function () {
+        if (!this.authenticationService.isLoggedIn()) {
+            //this.router.navigate(['/']);
+        }
     };
     HomeComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
@@ -901,7 +956,8 @@ var HomeComponent = (function () {
             template: __webpack_require__("../../../../../src/app/home/home.component.html"),
             styles: [__webpack_require__("../../../../../src/app/home/home.component.css")]
         }),
-        __metadata("design:paramtypes", [])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__services_index__["b" /* AuthenticationService */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_router__["c" /* Router */]])
     ], HomeComponent);
     return HomeComponent;
 }());
@@ -1040,9 +1096,9 @@ var LoginComponent = (function () {
     }
     LoginComponent.prototype.ngOnInit = function () {
         // reset login status
-        this.authenticationService.logout();
+        // this.authenticationService.logout();
         if (this.authenticationService.isLoggedIn()) {
-            this.router.navigate(['/home']);
+            // this.router.navigate(['/home']);
         }
         // get return url from route parameters or default to '/home'
         this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/home';
@@ -1084,7 +1140,15 @@ var LoginComponent = (function () {
             var response = data.data;
             console.log("Response:" + response);
             if (data.status) {
-                _this.router.navigate([_this.returnUrl]);
+                // close login modal and open homepage
+                $('#signUp').modal("hide");
+                $.blockUI({ message: '<h4> Loading...  Please wait! </h4>' });
+                // If login is successful, redirect to the home state
+                var t = _this;
+                setTimeout(function () {
+                    $.unblockUI();
+                    t.router.navigate([t.returnUrl]);
+                }, 1000);
             }
             else {
                 _this.errors.push(response.message);
@@ -1128,7 +1192,7 @@ var LoginComponent = (function () {
 /***/ "../../../../../src/app/main/main.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"main-wrapper login-layer\">\n  <!-- Button trigger modal -->\n  <button type=\"button\" class=\"btn btn-primary\" data-toggle=\"modal\" data-target=\"#signUp\">\n    Launch signup\n  </button>\n  <button type=\"button\" class=\"btn btn-primary\" data-toggle=\"modal\" data-target=\"#createAccount1\">\n    Launch createAccount step1\n  </button>\n  <button type=\"button\" class=\"btn btn-primary\" data-toggle=\"modal\" data-target=\"#createAccount2\">\n    Launch createAccount step2\n  </button>\n\n  <a class=\"btn btn-primary\" routerLink=\"home\">\n    Home\n  </a>\n</div>\n<!-- <footer class=\"footer\"></footer> -->\n\n<app-login></app-login>\n\n<app-signup></app-signup>"
+module.exports = "<div class=\"main-wrapper login-layer\">\n  <!-- Button trigger modal -->\n  <button type=\"button\" class=\"btn btn-primary\" data-toggle=\"modal\" data-target=\"#signUp\">\n    Launch signup\n  </button>\n  <button type=\"button\" class=\"btn btn-primary\" data-toggle=\"modal\" data-target=\"#createAccount1\">\n    Launch createAccount step1\n  </button>\n  <button type=\"button\" class=\"btn btn-primary\" data-toggle=\"modal\" data-target=\"#createAccount2\">\n    Launch createAccount step2\n  </button>\n</div>\n<!-- <footer class=\"footer\"></footer> -->\n\n<app-login></app-login>\n\n<app-signup></app-signup>"
 
 /***/ }),
 

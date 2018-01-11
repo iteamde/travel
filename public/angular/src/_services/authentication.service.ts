@@ -3,13 +3,16 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map'
 import { retry } from 'rxjs/operator/retry';
+import { ManagerService } from './manager.service';
 
 @Injectable()
-export class AuthenticationService {
-    constructor(private http: HttpClient) { }
+export class AuthenticationService extends ManagerService{
+    constructor(private http: HttpClient) {
+        super();
+     }
 
     login(username: string, password: string) {
-        return this.http.post<any>('/public/api/users/login', { email: username, password: password })
+        return this.http.post<any>(this.apiPrefix+'/users/login', { email: username, password: password })
             .map(user => {
                 // login successful if there's a jwt token in the response
                 if (user && user.token) {

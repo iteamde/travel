@@ -42,10 +42,10 @@ export class LoginComponent implements OnInit {
     ngOnInit() {
 
 		// reset login status
-		this.authenticationService.logout();
+		// this.authenticationService.logout();
 		
 		if (this.authenticationService.isLoggedIn()) {
-			this.router.navigate(['/home']);
+			// this.router.navigate(['/home']);
 		}
 
         // get return url from route parameters or default to '/home'
@@ -102,7 +102,16 @@ export class LoginComponent implements OnInit {
 
 				if(data.status)
 				{
-					this.router.navigate([this.returnUrl]);
+					// close login modal and open homepage
+					$('#signUp').modal("hide");
+					$.blockUI({ message: '<h4> Loading...  Please wait! </h4>' });
+	
+					// If login is successful, redirect to the home state
+					var t = this;
+					setTimeout(function() {
+						$.unblockUI();
+						t.router.navigate([t.returnUrl]);
+					}, 1000);
 				}
 				else
 				{
