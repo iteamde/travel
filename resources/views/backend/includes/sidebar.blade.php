@@ -211,7 +211,7 @@
 
             @role(1)
             <!-- Interests Manager -->
-            <li class="{{ active_class(Active::checkUriPattern('admin/interest/interest*')) }} treeview">
+            <li class="{{ active_class(Active::checkUriPattern('admin/interest/interest*')) }} treeview" style="display:none;">
                 <a href="#">
                     <i class="fa fa-users"></i>
                      <!-- <span>{{ trans('menus.backend.language.title') }}</span> -->
@@ -413,7 +413,7 @@
             </li>
 
             <!-- Accommodations Manager -->
-            <li class="{{ active_class(Active::checkUriPattern('admin/accommodations/accommodations*')) }} treeview">
+            <li class="{{ active_class(Active::checkUriPattern('admin/accommodations/accommodations*')) }} treeview" style="display:none;">
                 <a href="#">
                     <i class="fa fa-users"></i>
                      <!-- <span>{{ trans('menus.backend.language.title') }}</span> -->
@@ -433,7 +433,7 @@
             </li>
 
             <!-- Age Ranges Manager -->
-            <li class="{{ active_class(Active::checkUriPattern('admin/ageranges/ageranges*')) }} treeview">
+            <li class="{{ active_class(Active::checkUriPattern('admin/ageranges/ageranges*')) }} treeview" style="display:none;">
                 <a href="#">
                     <i class="fa fa-users"></i>
                      <!-- <span>{{ trans('menus.backend.language.title') }}</span> -->
