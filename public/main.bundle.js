@@ -1232,7 +1232,7 @@ var LoginComponent = (function () {
 /***/ "../../../../../src/app/main/main.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"main-wrapper login-layer\">\n  <!-- Button trigger modal -->\n  <button type=\"button\" class=\"btn btn-primary\" data-toggle=\"modal\" data-target=\"#signUp\">\n    Launch signup\n  </button>\n  <button type=\"button\" class=\"btn btn-primary\" data-toggle=\"modal\" data-target=\"#createAccount1\">\n    Launch createAccount step1\n  </button>\n  <button type=\"button\" class=\"btn btn-primary\" data-toggle=\"modal\" data-target=\"#createAccount2\">\n    Launch createAccount step2\n  </button>\n</div>\n<!-- <footer class=\"footer\"></footer> -->\n\n<app-login></app-login>\n\n<app-signup></app-signup>"
+module.exports = "<div class=\"main-wrapper login-layer\">\n  <!-- Button trigger modal -->\n  <button type=\"button\" class=\"btn btn-primary\" data-toggle=\"modal\" data-target=\"#signUp\">\n    Login\n  </button>\n  <button type=\"button\" class=\"btn btn-primary\" data-toggle=\"modal\" data-target=\"#createAccount1\">\n    Register\n  </button>\n  <!-- <button type=\"button\" class=\"btn btn-primary\" data-toggle=\"modal\" data-target=\"#createAccount2\">\n    Launch createAccount step2\n  </button> -->\n</div>\n<!-- <footer class=\"footer\"></footer> -->\n\n<app-login></app-login>\n\n<app-signup></app-signup>"
 
 /***/ }),
 
