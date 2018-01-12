@@ -1,29 +1,38 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 
+import { Http, Headers, RequestOptions, Response } from '@angular/http';
+import { Observable } from 'rxjs';
+import 'rxjs/add/operator/map'
+
+import { AuthenticationService } from '../_services/authentication.service';
 import { User } from '../_models/user.model';
+import { ManagerService } from './manager.service';
 
 @Injectable()
-export class UserService {
-    constructor(private http: HttpClient) { }
-
-    getAll() {
-        return this.http.get<User[]>('/api/users');
-    }
-
-    getById(id: number) {
-        return this.http.get('/api/users/' + id);
+export class UserService extends ManagerService{
+    constructor(
+        private http: Http,
+        private authenticationService: AuthenticationService) {
+            super();
     }
 
     create(user: User) {
-        return this.http.post('/api/users', user);
+        // add authorization header with jwt token
+        let headers = new Headers({ 'Authorization': 'Bearer ' + "as" });
+        let options = new RequestOptions({ body: user, headers: headers });
+
+        // get users from api
+        return this.http.post(this.apiPrefix+'/users/create', user)
+            .map((response: Response) => response.json());
     }
 
-    update(user: User) {
-        return this.http.put('/api/users/' + user.id, user);
-    }
+    getUsers(): Observable<User[]> {
+        // add authorization header with jwt token
+        let headers = new Headers({ 'Authorization': 'Bearer ' + "" });
+        let options = new RequestOptions({ headers: headers });
 
-    delete(id: number) {
-        return this.http.delete('/api/users/' + id);
+        // get users from api
+        return this.http.get('/api/users', options)
+            .map((response: Response) => response.json());
     }
 }

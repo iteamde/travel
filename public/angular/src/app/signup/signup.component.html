@@ -1,133 +1,179 @@
 <!-- create an account -->
 <div class="modal fade" id="createAccount1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog sign-up-style" role="document">
-    <div class="modal-content">
-      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-      <div class="modal-body body-create">
-        <div class="top-layer">
-          <a href="#" class="logo-wrap">
-            <img src="./assets/image/main-logo.png" alt="">
-          </a>
-          <h4 class="title">Create a free account</h4>
-          <!-- <p class="sub-ttl">and write a text here</p> -->
-          <!-- <p class="sub-ttl error-message">Your password is too weak</p> -->
-          <p class="sub-ttl error-message">Please fill the required fields</p>
-        </div>
-        <form class="login-form">
-          <div class="step-1">
-            <div class="form-group">
-              <input type="email" class="form-control" id="emailAddress" aria-describedby="emailHelp" placeholder="Email address">
-            </div>
-            <div class="form-group has-danger">
-              <input type="password" class="form-control" id="password" aria-describedby="pass" placeholder="Password">
-            </div>
-            <div class="form-margin"></div>
-            <div class="form-group">
-              <button type="button" class="btn btn-success" (click)="continueSignup()">Continue</button>
-            </div>
-            <div class="form-group">
-              <p class="simple-txt">Or</p>
-            </div>
-            <div class="form-group">
-              <button type="button" class="btn btn-primary">
-                <i class="fa fa-facebook side-icon"></i>
-                Continue with Facebook</button>
-            </div>
-            <div class="form-group">
-              <button type="button" class="btn btn-info">
-                <i class="fa fa-twitter side-icon"></i>
-                Continue with Twitter</button>
-            </div>
-          </div>
-          <div class="form-group bottom-txt-group">
-            <p class="bottom-txt">Creating an account means you're okay with</p>
-            <ul class="link-list">
-              <li><b>Travooo's</b></li>
-              <li>
-                <a href="#"> Terms of Service,</a>
-              </li>
-              <li>
-                <a href="#"> Privacy Policy</a>
-              </li>
-            </ul>
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <p class="foot-txt">Already a member?</p>
-        <button type="button" class="btn btn-grey" (click)="openLogin('createAccount1')">Log In</button>
-      </div>
-    </div>
-  </div>
+	<div class="modal-dialog sign-up-style" role="document">
+		<div class="modal-content">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+			<div class="modal-body body-create">
+				<div class="top-layer">
+					<a href="#" class="logo-wrap">
+						<img src="./assets/image/main-logo.png" alt="">
+					</a>
+					<h4 class="title">Create a free account</h4>
+					<!-- <p class="sub-ttl">and write a text here</p> -->
+					<!-- <p class="sub-ttl error-message">Your password is too weak</p> -->
+					<!-- <p class="sub-ttl error-message">Please fill the required fields</p> -->
+					<p class="sub-ttl error-message" *ngFor="let msg of errors">{{ msg }}</p>
+				</div>
+				<form class="login-form" name="signupForm" [formGroup]="signupForm" (ngSubmit)="continueSignup()" novalidate>
+					<div class="step-1">
+						
+						<div class="form-group" [ngClass]="validate('email')">
+							<input class="form-control" type="email" name="email" formControlName="email" placeholder="Email address" aria-describedby="emailHelp" />
+							<!-- <input type="email" class="form-control" name="username" [(ngModel)]="model.username" #username="ngModel" required aria-describedby="emailHelp" placeholder="Email address"/> -->
+							<!-- <div *ngIf="f.submitted && !username.valid" class="help-block">Email is required</div> -->
+							<div class="form-control-feedback" *ngIf="signupErrors.email">
+								<p>{{ signupErrors.email }}</p>
+							</div>
+						</div>
+
+						<div class="form-group" [ngClass]="validate('username')">
+							<input class="form-control" type="text" name="username" formControlName="username" placeholder="Username" aria-describedby="username" />
+							<div class="form-control-feedback" *ngIf="signupErrors.username">
+								<p>{{ signupErrors.username }}</p>
+							</div>
+						</div>
+						
+						<div class="form-group" [ngClass]="validate('password')">
+							<input class="form-control" type="password" name="password" formControlName="password" placeholder="Password" aria-describedby="pass" />
+							<div class="form-control-feedback" *ngIf="signupErrors.password">
+								<p>{{ signupErrors.password }}</p>
+							</div>
+						</div>
+
+						<div class="form-group" [ngClass]="validate('cpassword')">
+							<input class="form-control" type="password" name="cpassword" formControlName="cpassword" placeholder="Confirm Password" aria-describedby="cpass" />
+							<div class="form-control-feedback" *ngIf="signupErrors.cpassword">
+								<p>{{ signupErrors.cpassword }}</p>
+							</div>
+						</div>
+
+						<div class="form-margin"></div>
+						<div class="form-group">
+							<button type="submit" class="btn btn-success">Continue</button>
+						</div>
+						<div class="form-group">
+							<p class="simple-txt">Or</p>
+						</div>
+						<div class="form-group">
+							<button type="button" class="btn btn-primary">
+								<i class="fa fa-facebook side-icon"></i>
+								Continue with Facebook
+							</button>
+						</div>
+						<div class="form-group">
+							<button type="button" class="btn btn-info">
+								<i class="fa fa-twitter side-icon"></i>
+								Continue with Twitter
+							</button>
+						</div>
+					</div>
+					<div class="form-group bottom-txt-group">
+						<p class="bottom-txt">Creating an account means you're okay with</p>
+						<ul class="link-list">
+							<li>
+								<b>Travooo's</b>
+							</li>
+							<li>
+								<a href="#"> Terms of Service,</a>
+							</li>
+							<li>
+								<a href="#"> Privacy Policy</a>
+							</li>
+						</ul>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<p class="foot-txt">Already a member?</p>
+				<button type="button" class="btn btn-grey" (click)="openLogin('createAccount1')">Log In</button>
+			</div>
+		</div>
+	</div>
 </div>
 
 <div class="modal fade" id="createAccount2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog sign-up-style" role="document">
-    <div class="modal-content">
-      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-      <div class="modal-body body-create">
-        <div class="top-layer">
-          <a href="#" class="logo-wrap">
-            <img src="./assets/image/main-logo.png" alt="">
-          </a>
-          <h4 class="title">Create a free account</h4>
-          <!-- <p class="sub-ttl">and write a text here</p> -->
-          <!-- <p class="sub-ttl error-message">Your password is too weak</p> -->
-          <p class="sub-ttl error-message">Please fill the required fields</p>
-        </div>
-        <form class="login-form">
-          <div class="step-2">
-            <div class="form-group">
-              <p class="email-field">emailhere@gmail.com</p>
-            </div>
-            <div class="form-group flex-custom has-danger">
-              <input type="text" class="form-control flex-input" id="fullName" aria-describedby="full name" placeholder="Full Name">
-              <select class="custom-select" id="ageSelect">
-                <option selected>Age</option>
-                <option value="1">26</option>
-                <option value="2">27</option>
-                <option value="3">28</option>
-              </select>
-            </div>
-            <div class="form-check flex-custom">
-              <div class="custom-check-label">
-                <input type="radio" class="custom-check-input" name="gender" id="male" value="male">
-                <label for="male">Male</label>
-              </div>
-              <div class="custom-check-label">
-                <input type="radio" class="custom-check-input" name="gender" id="female" value="female">
-                <label for="female">Female</label>
-              </div>
-            </div>
-            <div class="form-group">
-              <button type="button" class="btn btn-info">Sign Up</button>
-            </div>
-            <div class="form-group">
-              <button type="button" class="btn btn-transp"><i class="fa fa-angle-left"></i> <span>Back</span></button>
-            </div>
-          </div>
-          <div class="form-group bottom-txt-group">
-            <p class="bottom-txt">Creating an account means you're okay with</p>
-            <ul class="link-list">
-              <li><b>Travooo's</b></li>
-              <li>
-                <a href="#"> Terms of Service,</a>
-              </li>
-              <li>
-                <a href="#"> Privacy Policy</a>
-              </li>
-            </ul>
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <p class="foot-txt">Already a member?</p>
-        <button type="button" class="btn btn-grey" (click)="openLogin('createAccount2')">Log In</button>
-      </div>
-    </div>
-  </div>
+	<div class="modal-dialog sign-up-style" role="document">
+		<div class="modal-content">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+			<div class="modal-body body-create">
+				<div class="top-layer">
+					<a href="#" class="logo-wrap">
+						<img src="./assets/image/main-logo.png" alt="">
+					</a>
+					<h4 class="title">Create a free account</h4>
+					<!-- <p class="sub-ttl">and write a text here</p> -->
+					<!-- <p class="sub-ttl error-message">Your password is too weak</p> -->
+					<!-- <p class="sub-ttl error-message">Please fill the required fields</p> -->
+					<p class="sub-ttl error-message" *ngFor="let msg of errors">{{ msg }}</p>
+				</div>
+				<form class="login-form" name="signupForm" [formGroup]="signupForm" (ngSubmit)="signup()" novalidate>
+					<div class="step-2">
+						<!-- <div class="form-group">
+							<p class="email-field">emailhere@gmail.com</p>
+						</div> -->
+						<div class="form-group flex-custom">
+							<div class="flex-input" [ngClass]="validate('name')">
+								<input class="form-control" type="text" name="name" formControlName="name" placeholder="Full Name" aria-describedby="full name" />
+								<div class="form-control-feedback" *ngIf="signupErrors.name">
+									<p>{{ signupErrors.name }}</p>
+								</div>
+							</div>
+							<div class="form-group" [ngClass]="validate('age')">
+								<select class="custom-select" id="age" formControlName="age">
+									<option [selected]="age">Age</option>
+									<option value="1">26</option>
+									<option value="2">27</option>
+									<option value="3">28</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-check flex-custom" [ngClass]="validate('gender')">
+							<div class="custom-check-label">
+								<input type="radio" class="custom-check-input" name="gender" id="male" formControlName="gender" value="0">
+								<label for="male">Male</label>
+							</div>
+							<div class="custom-check-label">
+								<input type="radio" class="custom-check-input" name="gender" id="female" formControlName="gender" value="1">
+								<label for="female">Female</label>
+							</div>
+							<div class="form-control-feedback" *ngIf="signupErrors.gender">
+								<p>{{ signupErrors.gender }}</p>
+							</div>
+						</div>
+						<div class="form-group">
+							<button type="submit" class="btn btn-info" [disabled]="!signupForm.valid || loading">{{ signupBtnText }}</button>
+						</div>
+						<div class="form-group">
+							<button type="button" class="btn btn-transp" (click)="backToSignup()">
+								<i class="fa fa-angle-left"></i>
+								<span>Back</span>
+							</button>
+						</div>
+					</div>
+					<div class="form-group bottom-txt-group">
+						<p class="bottom-txt">Creating an account means you're okay with</p>
+						<ul class="link-list">
+							<li>
+								<b>Travooo's</b>
+							</li>
+							<li>
+								<a href="#"> Terms of Service,</a>
+							</li>
+							<li>
+								<a href="#"> Privacy Policy</a>
+							</li>
+						</ul>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<p class="foot-txt">Already a member?</p>
+				<button type="button" class="btn btn-grey" (click)="openLogin('createAccount2')">Log In</button>
+			</div>
+		</div>
+	</div>
 </div>
