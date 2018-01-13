@@ -463,6 +463,57 @@ class CountryRepository extends BaseRepository
                     }
                 }
 
+                /* UPLOAD COVER IMAGE*/
+                if(!empty($extra['cover_image'])){
+
+                    // $model->cover->delete();
+
+                    $url = UrlGenerator::GetUploadsUrl();
+
+                    $file = $extra['cover_image'];
+                    $extension = $file->extension();
+
+                    if(self::validateUpload($extension)){
+                        $new_file_name = time() . time() . '_country.' . $file->extension();
+                        $new_path = '/uploads/medias/countries/' . $model->id . '/';
+                        $file->storeAs( $new_path , $new_file_name);
+                        
+                        $media = new Media;
+                        $media->url = $url . 'medias/countries/' . $model->id . '/' . $new_file_name;
+                        $media->type = Media::TYPE_IMAGE;
+                        $media->save();
+                        
+                        $languages = Languages::all();
+
+                        if(!empty($languages)){
+                            foreach ($languages as $key => $value) {
+                                $media_trans = new MediaTranslations;
+                                $media_trans->medias_id = $media->id;
+                                $media_trans->languages_id = $value->id;
+                                $media_trans->title = $new_file_name;
+                                $media_trans->description = "Image";
+                                $media_trans->save();
+                            }
+                        }
+
+                        $model->cover_media_id = $media->id;
+                        $model->save();
+
+                        $country_media = new CountriesMedias;
+                        $country_media->countries_id = $model->id;
+                        $country_media->medias_id    = $media->id;
+                        $country_media->save();
+                    }
+                }elseif(!empty($extra['media_cover_image'])){
+                    $model->cover_media_id = $extra['media_cover_image'];
+                    $model->save();
+                }
+
+                if($extra['remove-cover-image'] == 1){
+                    $model->cover_media_id = null;
+                    $model->save();
+                }
+
                 /* ADD Religions IN CountriesReligions */  
                 if(!empty($extra['religions'])){
                     foreach ($extra['religions'] as $key => $value) {
@@ -556,19 +607,19 @@ class CountryRepository extends BaseRepository
                 /* Store New Translations For $this Country */
                 foreach ($input as $key => $value) {
                     $trans = new CountriesTranslations;
-                    $trans->countries_id = $model->id;
-                    $trans->languages_id = $key;
-                    $trans->title        = $value['title_'.$key];
-                    $trans->description  = $value['description_'.$key];
-                    $trans->nationality  = $value['nationality_'.$key];
-                    $trans->population   = $value['population_'.$key];
+                    $trans->countries_id    = $model->id;
+                    $trans->languages_id    = $key;
+                    $trans->title           = $value['title_'.$key];
+                    $trans->description     = $value['description_'.$key];
+                    $trans->nationality     = $value['nationality_'.$key];
+                    $trans->population      = $value['population_'.$key];
                     // $trans->best_place   = $value['best_place_'.$key];
                     // $trans->best_time    = $value['best_time_'.$key];
-                    $trans->cost_of_living = $value['cost_of_living_'.$key];
-                    $trans->geo_stats    = $value['geo_stats_'.$key];
-                    $trans->demographics = $value['demographics_'.$key];
-                    $trans->economy      = $value['economy_'.$key];
-                    $trans->suitable_for      = $value['suitable_for_'.$key];
+                    $trans->cost_of_living  = $value['cost_of_living_'.$key];
+                    $trans->geo_stats       = $value['geo_stats_'.$key];
+                    $trans->demographics    = $value['demographics_'.$key];
+                    $trans->economy         = $value['economy_'.$key];
+                    $trans->suitable_for    = $value['suitable_for_'.$key];
 
                     if(!$trans->save()) {
                         $check = 0;

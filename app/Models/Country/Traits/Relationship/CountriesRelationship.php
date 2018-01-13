@@ -6,6 +6,7 @@ use App\Models\System\Session;
 use App\Models\Access\User\SocialLogin;
 use App\Models\Regions\Regions;
 use App\Models\SafetyDegree\SafetyDegree;
+use App\Models\ActivityMedia\Media;
 
 /**
  * Class UserRelationship.
@@ -168,5 +169,16 @@ trait CountriesRelationship
     {
         // return $this->belongsToMany(config('access.regions'), config('access.regions_trans'), 'id', 'regions_id');
         return $this->hasMany(config('locations.country_religions_trans'), 'countries_id');
+    }
+
+    /**
+     * One-to-One relations with Medias.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToOne
+     */
+    public function cover()
+    {
+        // return $this->belongsToMany(config('access.regions'), config('access.regions_trans'), 'id', 'regions_id');
+        return $this->hasOne( Media::class, 'id', 'cover_media_id');
     }
 }

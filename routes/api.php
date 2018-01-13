@@ -43,7 +43,7 @@ Route::group(['prefix' => 'api'], function () {
         'prefix' => 'users',
         'as' => 'user.',
         'namespace' => 'User',
-            ], function () {
+        ], function () {
 
         /*
          * All User Related Api's Routes Will Be Defined Here

@@ -487,9 +487,10 @@ class CountryController extends Controller
                     if($media->type != Media::TYPE_IMAGE){
                         array_push($selected_medias_arr,$media->id);
                     }else{
+                        $media->url = str_replace('storage.travooo.com', 'https://localhost/travoo-api/storage/uploads',$media->url);
                         array_push($selected_images,[
-                            'id' => $media->id,
-                            'url' => $media->url
+                            'id'    => $media->id,
+                            'url'   => $media->url
                         ]);
                     }
                 }
@@ -524,6 +525,13 @@ class CountryController extends Controller
             }
         }
 
+        /* Get Cover Image Of Country */
+        $cover = null;
+        if(!empty($country->cover)){
+            $cover = $country->cover;
+            $cover->url = str_replace('storage.travooo.com', 'https://localhost/travoo-api/storage/uploads', $cover->url);
+        }
+
         return view('backend.country.edit')
             ->withLanguages($this->languages)
             ->withCountry($country)
@@ -540,7 +548,8 @@ class CountryController extends Controller
             ->withLifestyles($lifestyles_arr)
             //->withMedias($medias_arr)
             ->withImages($selected_images)
-            ->withReligions($religions_arr);
+            ->withReligions($religions_arr)
+            ->withCover($cover);
     }
 
     /**
@@ -550,10 +559,8 @@ class CountryController extends Controller
      * @return mixed
      */
     public function update($id, ManageCountryRequest $request)
-    {
+    {   
         $country = Countries::findOrFail(['id' => $id]);
-
-        $data = [];
 
         $data = [];
 
@@ -586,6 +593,11 @@ class CountryController extends Controller
             $files = $request->file('pictures');
         }
 
+        $cover_image = null;
+        if($request->hasFile('cover_image')){
+            $cover_image = $request->file('cover_image');
+        }         
+
         $extra = [
             'active'            => $active,
             'region_id'         => $request->input('region_id'),
@@ -603,6 +615,9 @@ class CountryController extends Controller
             'religions'         => $request->input('religions_id'),
             // 'safety_degree_id'  => $request->input('safety_degree_id'),
             'files'             => $files,
+            'cover_image'       => $cover_image,
+            'media_cover_image' => $request->input('media-cover-image'),
+            'remove-cover-image'=> $request->input('remove-cover-image'),
             'delete-images'     => $request->input('delete-images'),
         ];
 
