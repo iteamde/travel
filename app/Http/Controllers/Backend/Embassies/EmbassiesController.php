@@ -17,6 +17,7 @@ use App\Models\Country\Countries;
 use App\Models\ActivityMedia\Media;
 use App\Models\SafetyDegree\SafetyDegree;
 use App\Models\PlaceTypes\PlaceTypes;
+use Illuminate\Support\Facades\Storage;
 
 class EmbassiesController extends Controller
 {
@@ -144,6 +145,11 @@ class EmbassiesController extends Controller
         // print_r($data);
         // exit();
 
+        $cover = null;
+        if($request->hasFile('cover_image')){
+            $cover = $request->file('cover_image');
+        }
+
         /* Send All Relations and Common fields Through $extra array */
         $extra = [
             'active' => $active,
@@ -152,7 +158,8 @@ class EmbassiesController extends Controller
             'lat' => $location[0],
             'lng' => $location[1],
             // 'safety_degrees_id' => $safety_degrees_id,
-            'files' => $files
+            'files' => $files,
+            'cover_image' => $cover
         ];
 
         $this->embassies->create($data, $extra);
@@ -292,6 +299,13 @@ class EmbassiesController extends Controller
         $data['selected_medias'] = $selected_medias_arr;
         $data['images'] = $images_arr;
 
+        /* Get Cover Image Of Country */
+        $cover = null;
+        if(!empty($embassies->cover)){
+            $cover = $embassies->cover;
+            $cover->url = str_replace('storage.travooo.com', 'https://localhost/travoo-api/storage/uploads', $cover->url);
+        }
+
         return view('backend.embassies.edit')
             ->withLanguages($this->languages)
             ->withEmbassies($embassies)
@@ -300,7 +314,8 @@ class EmbassiesController extends Controller
             ->withDegrees($degrees_arr)
             ->withCities($cities_arr)
             ->withImages($images_arr)
-            ->withData($data);
+            ->withData($data)
+            ->withCover($cover);
     }
 
     /**
@@ -347,18 +362,26 @@ class EmbassiesController extends Controller
         if ($request->hasFile('pictures')) {
             $files = $request->file('pictures');
         }
+        
+        $cover_image = null;
+        if($request->hasFile('cover_image')){
+            $cover_image = $request->file('cover_image');
+        }
 
         /* Send All Relation and Common Fields Through $extra Array */
         $extra = [
-            'active' => $active,
-            'country_id' =>  $request->input('country_id'),
-            'cities_id' => $request->input('cities_id'),
-            'lat' => $location[0],
-            'lng' => $location[1],
-            'medias' => $request->input('medias_id'),
+            'active'            => $active,
+            'country_id'        => $request->input('country_id'),
+            'cities_id'         => $request->input('cities_id'),
+            'lat'               => $location[0],
+            'lng'               => $location[1],
+            'medias'            => $request->input('medias_id'),
             // 'safety_degrees_id' => $request->input('safety_degrees_id'),
-            'files' => $files,
-            'delete-images' => $request->input('delete-images'),
+            'files'             => $files,
+            'cover_image'       => $cover_image,
+            'media_cover_image' => $request->input('media-cover-image'),
+            'remove-cover-image'=> $request->input('remove-cover-image'),
+            'delete-images'     => $request->input('delete-images'),
         ];
 
         $this->embassies->update($id , $embassies, $data , $extra);

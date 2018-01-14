@@ -8,6 +8,7 @@ use App\Models\Regions\Regions;
 use App\Models\SafetyDegree\SafetyDegree;
 use App\Models\Country\Countries;
 use App\Models\Embassies\EmbassiesMedias;
+use App\Models\ActivityMedia\Media;
 
 /**
  * Class EmbassiesRelationship.
@@ -68,5 +69,16 @@ trait EmbassiesRelationship2
     public function medias()
     {
         return $this->hasMany(EmbassiesMedias::class , 'embassies_id' , 'id');
+    }
+
+    /**
+     * One-to-One relations with Medias.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToOne
+     */
+    public function cover()
+    {
+        // return $this->belongsToMany(config('access.regions'), config('access.regions_trans'), 'id', 'regions_id');
+        return $this->hasOne( Media::class, 'id', 'cover_media_id');
     }
 }

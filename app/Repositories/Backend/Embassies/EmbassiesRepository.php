@@ -15,6 +15,7 @@ use App\Repositories\Backend\Access\Role\RoleRepository;
 use App\Models\Embassies\EmbassiesMedias;
 use App\Models\ActivityMedia\Media;
 use App\Models\ActivityMedia\MediaTranslations;
+use App\Models\Access\language\Languages;
 
 use App\Helpers\UrlGenerator;
 
@@ -158,6 +159,52 @@ class EmbassiesRepository extends BaseRepository
                             $embassies_media->save();
                         }
                     }
+                }//Files end
+
+                /* UPLOAD COVER IMAGE*/
+                if(!empty($extra['cover_image'])){
+
+                    // $model->cover->delete();
+
+                    $url = UrlGenerator::GetUploadsUrl();
+
+                    $file = $extra['cover_image'];
+                    $extension = $file->extension();
+
+                    if(self::validateUpload($extension)){
+                        $new_file_name = time() . time() . '_embassy.' . $file->extension();
+                        $new_path = '/uploads/medias/embassies/' . $model->id . '/';
+                        $file->storeAs( $new_path , $new_file_name);
+                        
+                        $media = new Media;
+                        $media->url = $url . 'medias/embassies/' . $model->id . '/' . $new_file_name;
+                        $media->type = Media::TYPE_IMAGE;
+                        $media->save();
+                        
+                        $languages = Languages::all();
+
+                        if(!empty($languages)){
+                            foreach ($languages as $key => $value) {
+                                $media_trans = new MediaTranslations;
+                                $media_trans->medias_id = $media->id;
+                                $media_trans->languages_id = $value->id;
+                                $media_trans->title = $new_file_name;
+                                $media_trans->description = "Image";
+                                $media_trans->save();
+                            }
+                        }
+
+                        $model->cover_media_id = $media->id;
+                        $model->save();
+
+                        $embassies_media = new EmbassiesMedias;
+                        $embassies_media->embassies_id = $model->id;
+                        $embassies_media->medias_id = $media->id;
+                        $embassies_media->save();
+                    }
+                }elseif(!empty($extra['media_cover_image'])){
+                    $model->cover_media_id = $extra['media_cover_image'];
+                    $model->save();
                 }
 
                 if(!empty($extra['medias'])){
@@ -271,6 +318,57 @@ class EmbassiesRepository extends BaseRepository
                             $embassies_media->save();
                         }
                     }
+                }//Files end
+
+                /* UPLOAD COVER IMAGE*/
+                if(!empty($extra['cover_image'])){
+
+                    // $model->cover->delete();
+
+                    $url = UrlGenerator::GetUploadsUrl();
+
+                    $file = $extra['cover_image'];
+                    $extension = $file->extension();
+
+                    if(self::validateUpload($extension)){
+                        $new_file_name = time() . time() . '_embassy.' . $file->extension();
+                        $new_path = '/uploads/medias/embassies/' . $model->id . '/';
+                        $file->storeAs( $new_path , $new_file_name);
+                        
+                        $media = new Media;
+                        $media->url = $url . 'medias/embassies/' . $model->id . '/' . $new_file_name;
+                        $media->type = Media::TYPE_IMAGE;
+                        $media->save();
+                        
+                        $languages = Languages::all();
+
+                        if(!empty($languages)){
+                            foreach ($languages as $key => $value) {
+                                $media_trans = new MediaTranslations;
+                                $media_trans->medias_id = $media->id;
+                                $media_trans->languages_id = $value->id;
+                                $media_trans->title = $new_file_name;
+                                $media_trans->description = "Image";
+                                $media_trans->save();
+                            }
+                        }
+
+                        $model->cover_media_id = $media->id;
+                        $model->save();
+
+                        $EmbassyMedias = new EmbassiesMedias;
+                        $EmbassyMedias->embassies_id = $model->id;
+                        $EmbassyMedias->medias_id    = $media->id;
+                        $EmbassyMedias->save();
+                    }
+                }elseif(!empty($extra['media_cover_image'])){
+                    $model->cover_media_id = $extra['media_cover_image'];
+                    $model->save();
+                }
+
+                if($extra['remove-cover-image'] == 1){
+                    $model->cover_media_id = null;
+                    $model->save();
                 }
 
                 if(!empty($extra['medias'])){
