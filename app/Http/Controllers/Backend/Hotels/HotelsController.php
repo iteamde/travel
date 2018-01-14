@@ -141,15 +141,21 @@ class HotelsController extends Controller
             $active = 1;
         }
 
+        $cover = null;
+        if($request->hasFile('cover_image')){
+            $cover = $request->file('cover_image');
+        }
+
         /* Send All Relation and Common Fields Through $extra Array */
         $extra = [
-            'active'     => $active,
-            'country_id' => $request->input('country_id'),
-            'city_id'    => $request->input('city_id'),
-            'place_id'   => $request->input('place_id'),
-            'medias'     => $request->input('medias_id'),
-            'lat'        => $location[0],
-            'lng'        => $location[1],
+            'active'        => $active,
+            'country_id'    => $request->input('country_id'),
+            'city_id'       => $request->input('city_id'),
+            'place_id'      => $request->input('place_id'),
+            'medias'        => $request->input('medias_id'),
+            'lat'           => $location[0],
+            'lng'           => $location[1],
+            'cover_image'   => $cover
         ];
 
         $this->hotels->create($data, $extra);
@@ -285,6 +291,13 @@ class HotelsController extends Controller
             }
         }
 
+        /* Get Cover Image Of Country */
+        $cover = null;
+        if(!empty($hotel->cover)){
+            $cover = $hotel->cover;
+            $cover->url = str_replace('storage.travooo.com', 'https://localhost/travoo-api/storage/uploads', $cover->url);
+        }
+
         return view('backend.hotels.edit')
             ->withLanguages($this->languages)
             ->withHotel($hotel)
@@ -293,7 +306,8 @@ class HotelsController extends Controller
             ->withCountries($countries_arr)
             ->withCities($cities_arr)
             ->withPlaces($places_arr)
-            ->withMedias($medias_arr);
+            ->withMedias($medias_arr)
+            ->withCover($cover);
     }
 
     /**
@@ -330,15 +344,23 @@ class HotelsController extends Controller
             $active = 1;
         }
 
+        $cover_image = null;
+        if($request->hasFile('cover_image')){
+            $cover_image = $request->file('cover_image');
+        }
+
         /* Send All Relation and Extra Fields Through $extra Array */
         $extra = [
-            'active' => $active,
-            'country_id' =>  $request->input('country_id'),
-            'city_id' =>  $request->input('city_id'),
-            'place_id' => $request->input('place_id'),
-            'lat' => $location[0],
-            'lng' => $location[1],
-            'medias' => $request->input('medias_id')
+            'active'            => $active,
+            'country_id'        =>  $request->input('country_id'),
+            'city_id'           =>  $request->input('city_id'),
+            'place_id'          => $request->input('place_id'),
+            'lat'               => $location[0],
+            'lng'               => $location[1],
+            'medias'            => $request->input('medias_id'),
+            'cover_image'       => $cover_image,
+            'media_cover_image' => $request->input('media-cover-image'),
+            'remove-cover-image'=> $request->input('remove-cover-image'), 
         ];
 
         $this->hotels->update($id , $hotel, $data , $extra);

@@ -152,14 +152,14 @@ class EmbassiesController extends Controller
 
         /* Send All Relations and Common fields Through $extra array */
         $extra = [
-            'active' => $active,
-            'country_id' =>  $request->input('country_id'),
-            'cities_id' => $request->input('cities_id'),
-            'lat' => $location[0],
-            'lng' => $location[1],
+            'active'        => $active,
+            'country_id'    =>  $request->input('country_id'),
+            'cities_id'     => $request->input('cities_id'),
+            'lat'           => $location[0],
+            'lng'           => $location[1],
             // 'safety_degrees_id' => $safety_degrees_id,
-            'files' => $files,
-            'cover_image' => $cover
+            'files'         => $files,
+            'cover_image'   => $cover
         ];
 
         $this->embassies->create($data, $extra);
@@ -362,7 +362,7 @@ class EmbassiesController extends Controller
         if ($request->hasFile('pictures')) {
             $files = $request->file('pictures');
         }
-        
+
         $cover_image = null;
         if($request->hasFile('cover_image')){
             $cover_image = $request->file('cover_image');

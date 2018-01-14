@@ -9,6 +9,7 @@ use App\Models\SafetyDegree\SafetyDegree;
 use App\Models\Country\Countries;
 use App\Models\City\Cities;
 use App\Models\Place\Place;
+use App\Models\ActivityMedia\Media;
 
 /**
  * Class HotelsRelationship.
@@ -68,5 +69,16 @@ trait HotelsRelationship
     public function medias()
     {
         return $this->hasMany(config('hotels.hotels_medias') , 'hotels_id');
+    }
+
+    /**
+     * One-to-One relations with Medias.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToOne
+     */
+    public function cover()
+    {
+        // return $this->belongsToMany(config('access.regions'), config('access.regions_trans'), 'id', 'regions_id');
+        return $this->hasOne( Media::class, 'id', 'cover_media_id');
     }
 }

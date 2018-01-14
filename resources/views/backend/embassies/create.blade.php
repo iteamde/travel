@@ -519,5 +519,4 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
             display: none;
         }
     </style>
-
 @endsection
