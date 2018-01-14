@@ -10,6 +10,8 @@ use App\Models\Country\Countries;
 use App\Models\City\Cities;
 use App\Models\PlaceTypes\PlaceTypes;
 use App\Models\Place\PlaceMedias;
+use App\Models\ActivityMedia\Media;
+
 
 /**
  * Class PlaceRelationship.
@@ -97,5 +99,16 @@ trait PlaceRelationship
     public function medias()
     {
         return $this->hasMany(PlaceMedias::class , 'places_id' , 'id');
+    }
+
+    /**
+     * One-to-One relations with Medias.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToOne
+     */
+    public function cover()
+    {
+        // return $this->belongsToMany(config('access.regions'), config('access.regions_trans'), 'id', 'regions_id');
+        return $this->hasOne( Media::class, 'id', 'cover_media_id');
     }
 }

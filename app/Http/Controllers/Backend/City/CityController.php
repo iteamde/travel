@@ -193,6 +193,11 @@ class CityController extends Controller
             $files = $request->file('pictures');
         }
 
+        $cover = null;
+        if($request->hasFile('cover_image')){
+            $cover = $request->file('cover_image');
+        }
+
         /* Pass All Relation and Common Fields Through $extra Array */
         $extra = [
             'active' => $active,
@@ -212,6 +217,7 @@ class CityController extends Controller
             // 'safety_degree_id' => $request->input('safety_degree_id') ? $request->input('safety_degree_id') : '',
             'level_of_living_id' => $request->input('level_of_living_id') ? $request->input('level_of_living_id') : 0,
             'files' => $files,
+            'cover_image' => $cover
         ];
 
         $this->cities->create($data, $extra);
@@ -422,6 +428,7 @@ class CityController extends Controller
             if($media->type != Media::TYPE_IMAGE){
                 array_push($selected_medias_arr,$value->medias->id);
             }else{
+                $media->url = str_replace('storage.travooo.com', 'https://localhost/travoo-api/storage/uploads', $media->url);
                 array_push($selected_images,[
                     'id' => $media->id,
                     'url' => $media->url
@@ -456,6 +463,13 @@ class CityController extends Controller
             }
         }
 
+        /* Get Cover Image Of City */
+        $cover = null;
+        if(!empty($cities->cover)){
+            $cover = $cities->cover;
+            $cover->url = str_replace('storage.travooo.com', 'https://localhost/travoo-api/storage/uploads', $cover->url);
+        }
+
         return view('backend.city.edit')
             ->withLanguages($this->languages)
             ->withCity($cities)
@@ -471,7 +485,8 @@ class CityController extends Controller
             ->withLifestyles($lifestyles_arr)
             ->withReligions($religion_arr)
             //->withMedias($medias_arr)
-            ->withImages($selected_images);
+            ->withImages($selected_images)
+            ->withCover($cover);
     }
 
     /**
@@ -523,6 +538,16 @@ class CityController extends Controller
             $files = $request->file('pictures');
         }
 
+        $cover = null;
+        if($request->hasFile('cover_image')){
+            $cover = $request->file('cover_image');
+        }
+
+        $cover_image = null;
+        if($request->hasFile('cover_image')){
+            $cover_image = $request->file('cover_image');
+        }
+
         $extra = [
             'active' => $active,
             'is_capital' => $is_capital,
@@ -540,6 +565,9 @@ class CityController extends Controller
             'religions'  => $request->input('religions_id'),
             // 'safety_degree_id' => $request->input('safety_degree_id'),
             'files'             => $files,
+            'cover_image'       => $cover_image,
+            'media_cover_image' => $request->input('media-cover-image'),
+            'remove-cover-image'=> $request->input('remove-cover-image'),
             'delete-images'     => $request->input('delete-images'),
         ];
 

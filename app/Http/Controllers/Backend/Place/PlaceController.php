@@ -137,6 +137,11 @@ class PlaceController extends Controller {
             $safety_degrees_id = $degrees[0]->id;
         }
 
+        $cover = null;
+        if($request->hasFile('cover_image')){
+            $cover = $request->file('cover_image');
+        }
+
         /* Send All Relation and Common Fields Through $extra Array */
         $extra = [
             'active' => $active,
@@ -147,7 +152,8 @@ class PlaceController extends Controller {
             'lng' => $location[1],
             'medias' => $request->input('medias_id'),
             // 'safety_degrees_id' => $safety_degrees_id,
-            'files' => $files
+            'files' => $files,
+            'cover_image' => $cover
         ];
 
         $this->places->create($data, $extra);
@@ -295,6 +301,7 @@ class PlaceController extends Controller {
             // if(isset($value->transsingle) && !empty($value->transsingle)){
             if ($value->featured == 1)
                 $data['featured_media'] = $value->id;
+            
             array_push($images_arr, [
                 'id' => $value->id,
                 'featured' => $value->featured,
@@ -305,17 +312,24 @@ class PlaceController extends Controller {
         $data['selected_medias'] = $selected_medias_arr;
         $data['images'] = $images_arr;
 
+        /* Get Cover Image Of Place */
+        $cover = null;
+        if(!empty($place->cover)){
+            $cover = $place->cover;
+            $cover->url = str_replace('storage.travooo.com', 'https://localhost/travoo-api/storage/uploads', $cover->url);
+        }
 
         return view('backend.place.edit', $data)
-                        ->withLanguages($this->languages)
-                        ->withPlace($place)
-                        ->withPlaceid($id)
-                        ->withData($data)
-                        ->withCountries($countries_arr)
-                        ->withDegrees($degrees_arr)
-                        ->withCities($cities_arr)
-                        ->withPlace_types($places_types_arr)
-                        ->withImages($images_arr);
+            ->withLanguages($this->languages)
+            ->withPlace($place)
+            ->withPlaceid($id)
+            ->withData($data)
+            ->withCountries($countries_arr)
+            ->withDegrees($degrees_arr)
+            ->withCities($cities_arr)
+            ->withPlace_types($places_types_arr)
+            ->withImages($images_arr)
+            ->withCover($cover);
         //->withMedias($medias_arr);
     }
 
@@ -378,6 +392,11 @@ class PlaceController extends Controller {
             $files = $request->file('pictures');
         }
 
+        $cover_image = null;
+        if($request->hasFile('cover_image')){
+            $cover_image = $request->file('cover_image');
+        }
+
         /* Send All Relation and Common fields through $extra Array */
         $extra = [
             'active' => $active,
@@ -389,6 +408,8 @@ class PlaceController extends Controller {
             'lng' => $location[1],
             // 'safety_degrees_id' => $request->input('safety_degrees_id'),
             'files' => $files,
+            'cover_image' => $cover_image,
+            'remove-cover-image'=> $request->input('remove-cover-image'),
             'delete-images' => $request->input('delete-images'),
         ];
 

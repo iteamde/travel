@@ -185,6 +185,55 @@ class PlaceRepository extends BaseRepository
                     }
                 }
 
+                // echo '<pre>';
+                // print_r($extra['cover_image']);
+                // exit;
+                /* UPLOAD COVER IMAGE*/
+                if(!empty($extra['cover_image'])){
+
+                    // $model->cover->delete();
+
+                    $url = UrlGenerator::GetUploadsUrl();
+
+                    $file = $extra['cover_image'];
+                    $extension = $file->extension();
+
+                    if(self::validateUpload($extension)){
+                        $new_file_name = time() . time() . '_places.' . $file->extension();
+                        $new_path = '/uploads/medias/places/' . $model->id . '/';
+                        $file->storeAs( $new_path , $new_file_name);
+                        
+                        $media = new Media;
+                        $media->url = $url . 'medias/places/' . $model->id . '/' . $new_file_name;
+                        $media->type = Media::TYPE_IMAGE;
+                        $media->save();
+                        
+                        $languages = Languages::all();
+
+                        if(!empty($languages)){
+                            foreach ($languages as $key => $value) {
+                                $media_trans = new MediaTranslations;
+                                $media_trans->medias_id = $media->id;
+                                $media_trans->languages_id = $value->id;
+                                $media_trans->title = $new_file_name;
+                                $media_trans->description = "Image";
+                                $media_trans->save();
+                            }
+                        }
+
+                        $model->cover_media_id = $media->id;
+                        $model->save();
+
+                        $place_media = new PlaceMedias;
+                        $place_media->places_id    = $model->id;
+                        $place_media->medias_id    = $media->id;
+                        $place_media->save();
+                    }
+                }elseif(!empty($extra['media_cover_image'])){
+                    $model->cover_media_id = $extra['media_cover_image'];
+                    $model->save();
+                }
+
                 if(!empty($extra['medias'])){
                     foreach ($extra['medias'] as $key => $value) {
                        $PlaceMedias = new PlaceMedias;
@@ -331,6 +380,57 @@ class PlaceRepository extends BaseRepository
                             $place_media->save();
                         }
                     }
+                }
+
+                /* UPLOAD COVER IMAGE*/
+                if(!empty($extra['cover_image'])){
+
+                    // $model->cover->delete();
+
+                    $url = UrlGenerator::GetUploadsUrl();
+
+                    $file = $extra['cover_image'];
+                    $extension = $file->extension();
+
+                    if(self::validateUpload($extension)){
+                        $new_file_name = time() . time() . '_place.' . $file->extension();
+                        $new_path = '/uploads/medias/places/' . $model->id . '/';
+                        $file->storeAs( $new_path , $new_file_name);
+                        
+                        $media = new Media;
+                        $media->url = $url . 'medias/places/' . $model->id . '/' . $new_file_name;
+                        $media->type = Media::TYPE_IMAGE;
+                        $media->save();
+                        
+                        $languages = Languages::all();
+
+                        if(!empty($languages)){
+                            foreach ($languages as $key => $value) {
+                                $media_trans = new MediaTranslations;
+                                $media_trans->medias_id = $media->id;
+                                $media_trans->languages_id = $value->id;
+                                $media_trans->title = $new_file_name;
+                                $media_trans->description = "Image";
+                                $media_trans->save();
+                            }
+                        }
+
+                        $model->cover_media_id = $media->id;
+                        $model->save();
+
+                        $place_media = new PlaceMedias;
+                        $place_media->places_id  = $model->id;
+                        $place_media->medias_id  = $media->id;
+                        $place_media->save();
+                    }
+                }elseif(!empty($extra['media_cover_image'])){
+                    $model->cover_media_id = $extra['media_cover_image'];
+                    $model->save();
+                }
+
+                if($extra['remove-cover-image'] == 1){
+                    $model->cover_media_id = null;
+                    $model->save();
                 }
 
                 if(!empty($extra['medias'])){

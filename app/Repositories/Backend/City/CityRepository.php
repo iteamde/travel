@@ -167,6 +167,52 @@ class CityRepository extends BaseRepository
                     }
                 }
 
+                /* UPLOAD COVER IMAGE*/
+                if(!empty($extra['cover_image'])){
+
+                    // $model->cover->delete();
+
+                    $url = UrlGenerator::GetUploadsUrl();
+
+                    $file = $extra['cover_image'];
+                    $extension = $file->extension();
+
+                    if(self::validateUpload($extension)){
+                        $new_file_name = time() . time() . '_cities.' . $file->extension();
+                        $new_path = '/uploads/medias/cities/' . $model->id . '/';
+                        $file->storeAs( $new_path , $new_file_name);
+                        
+                        $media = new Media;
+                        $media->url = $url . 'medias/cities/' . $model->id . '/' . $new_file_name;
+                        $media->type = Media::TYPE_IMAGE;
+                        $media->save();
+                        
+                        $languages = Languages::all();
+
+                        if(!empty($languages)){
+                            foreach ($languages as $key => $value) {
+                                $media_trans = new MediaTranslations;
+                                $media_trans->medias_id = $media->id;
+                                $media_trans->languages_id = $value->id;
+                                $media_trans->title = $new_file_name;
+                                $media_trans->description = "Image";
+                                $media_trans->save();
+                            }
+                        }
+
+                        $model->cover_media_id = $media->id;
+                        $model->save();
+
+                        $cities_media = new CitiesMedias;
+                        $cities_media->cities_id    = $model->id;
+                        $cities_media->medias_id    = $media->id;
+                        $cities_media->save();
+                    }
+                }elseif(!empty($extra['media_cover_image'])){
+                    $model->cover_media_id = $extra['media_cover_image'];
+                    $model->save();
+                }
+
                 /* Entry in CityMedias table */
                 if(!empty($extra['medias'])){
                     foreach ($extra['medias'] as $key => $value) {
@@ -435,6 +481,57 @@ class CityRepository extends BaseRepository
                             $cities_media->save();
                         }
                     }
+                }
+
+                /* UPLOAD COVER IMAGE*/
+                if(!empty($extra['cover_image'])){
+
+                    // $model->cover->delete();
+
+                    $url = UrlGenerator::GetUploadsUrl();
+
+                    $file = $extra['cover_image'];
+                    $extension = $file->extension();
+
+                    if(self::validateUpload($extension)){
+                        $new_file_name = time() . time() . '_city.' . $file->extension();
+                        $new_path = '/uploads/medias/cities/' . $model->id . '/';
+                        $file->storeAs( $new_path , $new_file_name);
+                        
+                        $media = new Media;
+                        $media->url = $url . 'medias/cities/' . $model->id . '/' . $new_file_name;
+                        $media->type = Media::TYPE_IMAGE;
+                        $media->save();
+                        
+                        $languages = Languages::all();
+
+                        if(!empty($languages)){
+                            foreach ($languages as $key => $value) {
+                                $media_trans = new MediaTranslations;
+                                $media_trans->medias_id = $media->id;
+                                $media_trans->languages_id = $value->id;
+                                $media_trans->title = $new_file_name;
+                                $media_trans->description = "Image";
+                                $media_trans->save();
+                            }
+                        }
+
+                        $model->cover_media_id = $media->id;
+                        $model->save();
+
+                        $city_media = new CitiesMedias;
+                        $city_media->cities_id  = $model->id;
+                        $city_media->medias_id  = $media->id;
+                        $city_media->save();
+                    }
+                }elseif(!empty($extra['media_cover_image'])){
+                    $model->cover_media_id = $extra['media_cover_image'];
+                    $model->save();
+                }
+
+                if($extra['remove-cover-image'] == 1){
+                    $model->cover_media_id = null;
+                    $model->save();
                 }
 
                 /* Entry in CityMedias table */

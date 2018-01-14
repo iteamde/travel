@@ -6,6 +6,7 @@ use App\Models\System\Session;
 use App\Models\Access\User\SocialLogin;
 use App\Models\Country\Countries;
 use App\Models\SafetyDegree\SafetyDegree;
+use App\Models\ActivityMedia\Media;
 
 /**
  * Class CityRelationship.
@@ -157,5 +158,16 @@ trait CityRelationship
     public function sessions()
     {
         return $this->hasMany(Session::class);
+    }
+
+    /**
+     * One-to-One relations with Medias.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToOne
+     */
+    public function cover()
+    {
+        // return $this->belongsToMany(config('access.regions'), config('access.regions_trans'), 'id', 'regions_id');
+        return $this->hasOne( Media::class, 'id', 'cover_media_id');
     }
 }
