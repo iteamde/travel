@@ -370,14 +370,14 @@ use App\Models\Access\language\Languages;
                                     <div style="padding-left: 20px;padding-top: 22px" id="cover-message"><p>No Cover Image Added.</p></div>
                                     <div class="col-md-2" style="">
                                         <!-- Cover delete Icon -->
-                                        <i id="delete-cover" class="zoom-effect-icon fa fa-times image-hide" data-toggle="tooltip" title="Remove Cover Image" data-id="<?= $image['id'] ?>" aria-hidden="true" style="color:red;position: relative;top:20px;left:85px;" state="1" start-check="1"></i>
+                                        <i id="delete-cover" class="zoom-effect-icon fa fa-times image-hide" data-toggle="tooltip" title="Remove Cover Image" data-id="<?= $cover['id'] ?>" aria-hidden="true" style="color:red;position: relative;top:20px;left:85px;" state="1" start-check="1"></i>
                                         <img class="image-hide" id="cover-preview" src="" style="width:100px;height:100px;"/>
                                     </div>
                                 @else
                                     <div style="padding-left: 20px;padding-top: 22px;display:none;" id="cover-message"><p>No Cover Image Added.</p></div>
                                     <div class="col-md-2" style="">
                                         <!-- Cover delete Icon -->
-                                        <i id="delete-cover" class="zoom-effect-icon fa fa-times" data-toggle="tooltip" title="Remove Cover Image" data-id="<?= $image['id'] ?>" aria-hidden="true" style="color:red;position: relative;top:20px;left:85px;" state="1" start-check="2"></i>
+                                        <i id="delete-cover" class="zoom-effect-icon fa fa-times" data-toggle="tooltip" title="Remove Cover Image" data-id="<?= $cover['id'] ?>" aria-hidden="true" style="color:red;position: relative;top:20px;left:85px;" state="1" start-check="2"></i>
                                         <img id="cover-preview" src="<?= $cover['url'] ?>" style="width:100px;height:100px;"/>
                                     </div>
                                 @endif

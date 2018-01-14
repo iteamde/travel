@@ -165,7 +165,7 @@ class CountryController extends Controller
     public function store(StoreCountryRequest $request)
     {
         $data = [];
-
+        
         foreach ($this->languages as $key => $language) {
             $data[$language->id]['title_'.$language->id] = $request->input('title_'.$language->id);
             $data[$language->id]['description_'.$language->id] = $request->input('description_'.$language->id);
@@ -195,6 +195,11 @@ class CountryController extends Controller
             $files = $request->file('pictures');
         }
 
+        $cover = null;
+        if($request->hasFile('cover_image')){
+            $cover = $request->file('cover_image');
+        }
+        
         /* Send All Relations and Common Fields Through $extra array */
         $extra = [
             'active' => $active,
@@ -212,7 +217,8 @@ class CountryController extends Controller
             //'medias' => $request->input('medias_id'),
             'religions' => $request->input('religions_id'),
             // 'safety_degree_id' => $request->input('safety_degree_id'),
-            'files' => $files
+            'files' => $files,
+            'cover_image' => $cover
         ];
 
         $this->countries->create($data, $extra);
