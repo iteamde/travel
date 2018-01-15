@@ -459,7 +459,7 @@ class ApiUser extends User {
         foreach ($countries as $key => $value) {
             
             $model = new UsersFavourites;
-            $model->user_id = $post['user_id'];
+            $model->users_id = $post['user_id'];
             $model->fav_type = 'country';
             $model->fav_id = $value['id'];
             $model->save();
