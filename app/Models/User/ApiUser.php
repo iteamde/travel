@@ -412,13 +412,13 @@ class ApiUser extends User {
         if(!isset($post['countries']) || empty($post['countries'])){
             $error[] = 'Countries not provided.';
         }else{
-            $countries = json_decode($post['countries']);
+            // $countries = json_decode($post['countries']);
 
-            if (json_last_error() === JSON_ERROR_NONE) {
+            // if (json_last_error() === JSON_ERROR_NONE) {
 
-                if(empty($countries)){
-                    $error[] = 'No country provided in JSON object.';
-                }else{
+                // if(empty($countries)){
+                    // $error[] = 'No country provided in JSON object.';
+                // }else{
                     if(!isset($countries[0]['id'])){
                         $error[] = 'Countries id not provided in JSON object.';
                     }else{
@@ -429,11 +429,11 @@ class ApiUser extends User {
                             }
                         }
                     }
-                }
+                // }
 
-            }else{
-                $error[] = 'Please send valid JSON objects in "countries" key';
-            }
+            // }else{
+            //     $error[] = 'Please send valid JSON objects in "countries" key';
+            // }
         }
 
         if(empty($error)){

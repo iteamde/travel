@@ -96,6 +96,15 @@ class UserController extends Controller
     public function createStep3(Request $request){
 
         $post = $request->input();
+        $post = json_decode($post);
+
+        if (json_last_error() === JSON_ERROR_NONE) {
+            return [
+                'success' => false,
+                'code'    => 200,
+                'data'    => 'Invalid JSON payload provided.'
+            ];
+        }
 
         $response = User::validateStep3Signup($post);
 
