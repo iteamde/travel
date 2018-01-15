@@ -126,6 +126,11 @@ class RestaurantsController extends Controller
             $active = Cities::ACTIVE;
         }
 
+        $cover = null;
+        if($request->hasFile('cover_image')){
+            $cover = $request->file('cover_image');
+        }
+
         /* Pass All Relations Through $extra Array */
         $extra = [
             'active'        => $active,
@@ -136,6 +141,7 @@ class RestaurantsController extends Controller
             'lng'           => $location[1],
             'places'        => $request->input('places_id'),
             'medias'        => $request->input('medias_id'),
+            'cover_image'   => $cover
         ];
 
         $this->restaurants->create($data, $extra);
@@ -252,6 +258,13 @@ class RestaurantsController extends Controller
             }
         }
 
+        /* Get Cover Image Of Country */
+        $cover = null;
+        if(!empty($restaurants->cover)){
+            $cover = $restaurants->cover;
+            $cover->url = str_replace('storage.travooo.com', 'https://localhost/travoo-api/storage/uploads', $cover->url);
+        }
+
         return view('backend.restaurants.edit')
             ->withLanguages($this->languages)
             ->withRestaurant($restaurants)
@@ -260,7 +273,8 @@ class RestaurantsController extends Controller
             ->withCities($cities_arr)
             ->withPlaces($places_arr)
             ->withMedias($medias_arr)
-            ->withData($data);
+            ->withData($data)
+            ->withCover($cover);
     }
 
     /**
@@ -297,6 +311,11 @@ class RestaurantsController extends Controller
             $active = Cities::ACTIVE;
         }
 
+        $cover_image = null;
+        if($request->hasFile('cover_image')){
+            $cover_image = $request->file('cover_image');
+        }    
+
         /* Pass All Relations Through $extra Array */
         $extra = [
             'active'        => $active,
@@ -306,6 +325,9 @@ class RestaurantsController extends Controller
             'medias'        => $request->input('medias_id'),
             'lat'           => $location[0],
             'lng'           => $location[1],
+            'cover_image'       => $cover_image,
+            'media_cover_image' => $request->input('media-cover-image'),
+            'remove-cover-image'=> $request->input('remove-cover-image'),
         ];
 
 
