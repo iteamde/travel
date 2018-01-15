@@ -165,6 +165,143 @@ class ApiUser extends User {
         }
     }
 
+    public static function validateStep1Signup($post){
+
+        $error = [];
+
+        /* "username" validation */
+        if (!isset($post['username']) || empty($post['username'])) {
+            // \App::abort(400 , 'Username cannot be empty');
+            array_push($error, 'Username not provided.');
+        } else {
+
+            /* Check Length Of Name Argument And Ensure It Is Between ( 8 - 32 ) characters */
+            if (strlen($post['username']) < 8 || strlen($post['username']) > 32) {
+                array_push($error, 'Length of username should be between (8-32) characters.');
+            }
+
+            if (!preg_match('/^[a-zA-Z0-9 ]+$/', $post['username'])) {
+                array_push($error, 'Name can only contain alphanumeric characters.');
+            }
+
+            /* Check If User Exists For The "username" */
+            $user = Self::where(['username' => $post['username']])->first();
+
+            if (!empty($user)) {
+                array_push($error, 'Username already taken.');
+            }
+        }
+
+
+        /* "email" validation */
+        if (!isset($post['email']) || empty($post['email'])) {
+            array_push($error, 'Email not provided.');
+        } else {
+            /* Check If Provided Email Argument Is In Email Format */
+            if (!filter_var($post['email'], FILTER_VALIDATE_EMAIL)) {
+                array_push($error, "'" . $post['email'] . "' is not a valid email address.");
+            }
+
+            /* Check If User For Provided Email Exists */
+            $model = Self::where(['email' => $post['email']])->first();
+
+            if (!empty($model)) {
+                array_push($error, 'Email already taken.');
+            }
+        }
+
+        /* "password" validation */
+        if (!isset($post['password']) || empty($post['password'])) {
+            array_push($error, 'Password not provided.');
+        } else {
+            /* Check If Provided Password Matches The Required Format */
+            if (!preg_match('/^[a-zA-Z0-9._]+$/', $post['password'])) {
+                array_push($error, 'Password can only contain alphanumeric characters.');
+            }
+            /* Check If Provided Password Length Is Between ( 6-20 ) characters */
+            if (strlen($post['password']) < 6 || strlen($post['password']) > 20) {
+                array_push($error, 'Length of password should be between (6-20) characters.');
+            }
+        }
+
+        /* "password_confirmation" validation */
+        if (!isset($post['password_confirmation']) || empty($post['password_confirmation'])) {
+            array_push($error, 'Confirm password not provided.');
+        } else {
+
+            /* Check If Confirm Password Length Is Between ( 6-20 ) characters */
+            if (strlen($post['password_confirmation']) < 6 || strlen($post['password_confirmation']) > 20) {
+                array_push($error, 'Length of confirm password should be between (6-20) characters.');
+            }
+
+            /* Check If Password Confirmation Matches The Required Format */
+            if (!preg_match('/^[a-zA-Z0-9._]+$/', $post['password_confirmation'])) {
+                array_push($error, 'Confirm password can only contain alphanumeric characters.');
+            }
+        }
+
+        if (isset($post['password_confirmation']) && isset($post['password'])) {
+            /* Check If "Password Confirmation" matches "Password" Argument */
+            if ($post['password_confirmation'] != $post['password']) {
+                array_push($error, 'Password and confirm password do not match.');
+            }
+        }
+
+        if (empty($error)) {
+            return false;
+        } else {
+            return [
+                'data' => [
+                    'error' => 400,
+                    'message' => $error,
+                ],
+                'success' => false
+            ];
+        }
+    }
+
+    public static function createUserStep1($post){
+        
+        /* New Api User */
+        $model = new Self;                
+        
+        /* Load Values In Model */
+        $model->username = $post['username'];
+        $model->email = $post['email'];
+        $model->password = sha1($post['password']);
+        $model->status = Self::STATUS_INACTIVE;
+
+        if($model->save()){
+
+            $activation_model = new Activation;
+            $activation_model->user_id = $model->id;
+            $activation_model->token = Self::generateRandomString(10) . time() . Self::generateRandomString(12);
+            $activation_model->save();
+
+            // $ac = new ActivityLog;
+            // $ac->users_id = $model->id;
+            // $ac->type = 'registeration';
+            // $ac->action = 'new';
+            // $ac->time = date('Y-m-d H:i:s', time());
+            // $ac->save();
+
+            $model->sendActivationMessage();
+            return [
+                'success' => true,
+                'data' => $model->id // RETURN USER ID
+            ];
+        }else{
+            //IF USER NOT SAVED
+            return [
+                'data' => [
+                    'error' => 400,
+                    'message' => 'Error saving user in DB.',
+                ],
+                'success' => false
+            ];
+        }
+    }
+
     public static function createUser($post) {
 
         /* New Api User */

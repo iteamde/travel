@@ -49,7 +49,7 @@ Route::group(['prefix' => 'api'], function () {
          * All User Related Api's Routes Will Be Defined Here
          */
         /* Sign Up/Create New User Api */
-        Route::post('/create', 'UserController@create');
+        Route::post('/create', 'UserController@createStep1');
         /* Login Api */
         Route::post('/login', 'UserController@login');
         /* Logout Api */
