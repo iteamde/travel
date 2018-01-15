@@ -420,7 +420,7 @@ class ApiUser extends User {
             //         $error[] = 'No country provided in JSON object.';
             //     }else{
                     $countries = $post['countries'];
-                     
+
                     if(!isset($countries[0]['id'])){
                         $error[] = 'Countries id not provided in JSON object.';
                     }else{
@@ -452,7 +452,9 @@ class ApiUser extends User {
 
     public static function createUserStep3($post){
         
-        $countries = json_decode($post['countries']);
+        // $countries = json_decode($post['countries']);
+
+        $countries = $post['countries'];
 
         foreach ($countries as $key => $value) {
             
