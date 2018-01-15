@@ -52,6 +52,8 @@ Route::group(['prefix' => 'api'], function () {
         Route::post('/create', 'UserController@createStep1');
         /* Sign Up/Create New User Api - 2 */
         Route::post('/create/step2', 'UserController@createStep2');
+        /* Sign Up/Create New User Api - 3 */
+        Route::post('set/fav_countries', 'UserController@createStep3');
         /* Login Api */
         Route::post('/login', 'UserController@login');
         /* Logout Api */

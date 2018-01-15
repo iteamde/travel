@@ -18,6 +18,7 @@ use App\Models\User\UsersFavourites;
 use Illuminate\Support\Facades\Storage;
 use App\Models\ActivityLog\ActivityLog;
 use App\Helpers\UrlGenerator;
+use App\Models\Country\ApiCountry;
 
 /**
  * Class ApiUser.
@@ -392,6 +393,79 @@ class ApiUser extends User {
                 'data'    => 'Error saving data in DB.'
             ];
         }
+    }
+
+    public static function validateStep3Signup($post){
+
+        $error = [];
+
+        /* User id not provided */
+        if(!isset($post['user_id']) || empty($post['user_id'])){
+            $error[] = 'User id not provided.';
+        }else{
+            $user = Self::where(['id' => $post['user_id']])->first();
+            if(empty($user)){
+                $error[] = 'Wrong user id provided.';
+            }
+        }
+
+        if(!isset($post['countries']) || empty($post['countries'])){
+            $error[] = 'Countries not provided.';
+        }else{
+            $countries = json_decode($post['countries']);
+
+            if (json_last_error() === JSON_ERROR_NONE) {
+
+                if(empty($countries)){
+                    $error[] = 'No country provided in JSON object.';
+                }else{
+                    if(!isset($countries[0]['id'])){
+                        $error[] = 'Countries id not provided in JSON object.';
+                    }else{
+                        foreach ($countries as $key => $value) {
+                            $country = ApiCountry::where(['id' => $value['id']])->first();
+                            if(empty($country)){
+                                $error[] = 'Country not found with id "'.$value['id'].'"';
+                            }
+                        }
+                    }
+                }
+
+            }else{
+                $error[] = 'Please send valid JSON objects in "countries" key';
+            }
+        }
+
+        if(empty($error)){
+            return false;
+        }else{
+            return [
+                'success' => false,
+                'code'    => 400,
+                'data'    => $error 
+            ];
+        }
+
+    }
+
+    public static function createUserStep3($post){
+        
+        $countries = json_decode($post['countries']);
+
+        foreach ($countries as $key => $value) {
+            
+            $model = new UsersFavourites;
+            $model->user_id = $post['user_id'];
+            $model->fav_type = 'country';
+            $model->fav_id = $value['id'];
+            $model->save();
+        }
+
+        return [
+            'success' => true,
+            'code'    => 200,
+            'data'    => [] 
+        ];
     }
 
     public static function createUser($post) {

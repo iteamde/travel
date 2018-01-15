@@ -93,6 +93,23 @@ class UserController extends Controller
         }
     }
 
+    public function createStep3(Request $request){
+
+        $post = $request->input();
+
+        $response = User::validateStep3Signup($post);
+
+        if(!empty($response)){
+            return $response;
+        }
+
+        $response = User::createUserStep3($post);
+
+        if(!empty($response)){
+            return $response;
+        }
+    }
+
     /*
     *   Validate User And Create New Session If Not Exists.
     */
