@@ -304,7 +304,7 @@ class ApiUser extends User {
                 'user' => $model->getArrayResponse(),
                 'session_token' => $session->id,
             ],
-            'status' => true
+            'success' => true
         ];
     }
 
