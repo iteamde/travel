@@ -382,7 +382,7 @@ class ApiUser extends User {
 
             return [
                 'success' => true,
-                'data'    => $model->getArrayResponse()
+                'data'    => $model->getArrayResponse(),
                 'code'    => 200
             ];
         }else{
