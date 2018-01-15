@@ -217,11 +217,11 @@ class RestaurantsRepository extends BaseRepository
         $model = Restaurants::findOrFail(['id' => $id]);
         $model = $model[0];
         $model->countries_id  = $extra['countries_id'];
-        $model->active      = $extra['active'];
-        $model->lat         = $extra['lat'];
-        $model->lng         = $extra['lng'];
-        $model->cities_id = $extra['cities_id'];
-        $model->places_id = $extra['places_id'];
+        $model->active        = $extra['active'];
+        $model->lat           = $extra['lat'];
+        $model->lng           = $extra['lng'];
+        $model->cities_id     = $extra['cities_id'];
+        $model->places_id     = $extra['places_id'];
 
         /* Delete Previous RestaurantsTranslations */
         $prev = RestaurantsTranslations::where(['restaurants_id' => $id])->get();

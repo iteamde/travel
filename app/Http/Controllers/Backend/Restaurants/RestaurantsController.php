@@ -318,13 +318,13 @@ class RestaurantsController extends Controller
 
         /* Pass All Relations Through $extra Array */
         $extra = [
-            'active'        => $active,
-            'countries_id'  => $request->input('countries_id'),
-            'cities_id'     => $request->input('cities_id'),
-            'places_id'     => $request->input('places_id'),
-            'medias'        => $request->input('medias_id'),
-            'lat'           => $location[0],
-            'lng'           => $location[1],
+            'active'            => $active,
+            'countries_id'      => $request->input('countries_id'),
+            'cities_id'         => $request->input('cities_id'),
+            'places_id'         => $request->input('places_id'),
+            'medias'            => $request->input('medias_id'),
+            'lat'               => $location[0],
+            'lng'               => $location[1],
             'cover_image'       => $cover_image,
             'media_cover_image' => $request->input('media-cover-image'),
             'remove-cover-image'=> $request->input('remove-cover-image'),

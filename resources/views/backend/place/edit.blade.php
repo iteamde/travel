@@ -245,6 +245,17 @@ use App\Models\Access\language\Languages;
                 {{ Form::text('lat_lng_show', $data['lat_lng'], ['class' => 'form-control disabled', 'id' => 'lat-lng-input_show', 'required' => 'required', 'placeholder' => 'Lat,Lng' , 'disabled' => 'disabled']) }}
             </div>
         </div>
+
+        <!-- Images: Start -->
+        <div class="form-group">
+            {{ Form::label('title', 'Images', ['class' => 'col-lg-2 control-label']) }}
+
+            <div class="col-lg-10">
+            {{ Form::file('file_name',[ 'name' => 'pictures[]', 'multiple' => 'multiple' ]) }}
+            </div><!--col-lg-10-->
+        </div><!--form control-->
+        <!-- Images: End -->
+                    
         <!-- Images: Start -->
         <input type="hidden" id="delete-images" name="delete-images" value="" />
         <!-- Images: End -->
