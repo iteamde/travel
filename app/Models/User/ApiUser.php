@@ -272,20 +272,6 @@ class ApiUser extends User {
         $model->status = Self::STATUS_INACTIVE;
 
         if($model->save()){
-
-            $activation_model = new Activation;
-            $activation_model->user_id = $model->id;
-            $activation_model->token = Self::generateRandomString(10) . time() . Self::generateRandomString(12);
-            $activation_model->save();
-
-            // $ac = new ActivityLog;
-            // $ac->users_id = $model->id;
-            // $ac->type = 'registeration';
-            // $ac->action = 'new';
-            // $ac->time = date('Y-m-d H:i:s', time());
-            // $ac->save();
-
-            $model->sendActivationMessage();
             return [
                 'success' => true,
                 'data' => $model->id // RETURN USER ID
@@ -298,6 +284,112 @@ class ApiUser extends User {
                     'message' => 'Error saving user in DB.',
                 ],
                 'success' => false
+            ];
+        }
+    }
+
+    public static function validateStep2Signup($post){
+
+        $error = [];
+
+        if(!isset($post['user_id']) || empty($post['user_id'])){
+            $error[] = 'User id not provided.';
+        }else{
+            $user = Self::where(['id' => $post['user_id']])->first();
+            if(empty($user)){
+                $error[] = 'User not found.';
+            }
+        }
+
+        /* "name" validation */
+        if (!isset($post['name']) || empty($post['name'])) {
+            $error[] =  'Name not provided.';
+        } else {
+            /* Check Length Of Name Argument And Ensure It Is Between ( 8 - 32 ) characters */
+            if (strlen($post['name']) < 8 || strlen($post['name']) > 32) {
+                $error[] = 'Length of name should be between (8-32) characters.';
+            }
+
+            if (!preg_match('/^[a-zA-Z0-9 ]+$/', $post['name'])) {
+                $error[] = 'Name can only contain alphanumeric characters.';
+            }
+        }
+
+        /* "gender" validation */
+        if (!isset($post['gender']) || ( empty($post['gender']) && $post['gender'] != 0 ) ) {
+            $error[] = 'Gender not provided.';
+        } else {
+            $message = 'Gender can only contain following values (' . Self::GENDER_MALE . '-Male, ' . Self::GENDER_FEMALE . '-Female, ' . Self::GENDER_UNSPECIFIED . '-Unspecified).';
+
+            /* Check If Provided Gender Is An Integer */
+            if (!preg_match('/^[0-9]+$/', $post['gender'])) {
+
+                $error[] = $message;
+            } else {
+
+                if ($post['gender'] != Self::GENDER_MALE && $post['gender'] != Self::GENDER_FEMALE && $post['gender'] != Self::GENDER_UNSPECIFIED) {
+
+                    $error[] = $message;
+                }
+            }
+        }
+
+         /* "gender" validation */
+        if (!isset($post['age']) ||  empty($post['age'])) {
+            $error[] = 'Age not provided.';
+        } else {
+            /* Check If Provided Age Is An Integer */
+            if (!preg_match('/^[0-9]+$/', $post['age'])) {
+
+                $error[] = 'Age must be integer.';
+            }
+        }
+
+        if(!empty($error)){
+            return [
+                'success' => false,
+                'data'    => $error,
+                'code'    => 400
+            ];
+        }else{
+            return false;
+        }
+    }
+
+    public static function createUserStep2($post){
+
+        $model = Self::where(['id' => $post['user_id']])->first();
+
+        $model->name    = $post['name'];
+        $model->gender  = $post['gender'];
+        $model->age     = $post['age'];
+        $model->status  = Self::STATUS_INACTIVE;
+
+        if($model->save()){
+            $activation_model = new Activation;
+            $activation_model->user_id = $model->id;
+            $activation_model->token = Self::generateRandomString(10) . time() . Self::generateRandomString(12);
+            $activation_model->save();
+
+            // $ac = new ActivityLog;
+            // $ac->users_id = $model->id;
+            // $ac->type = 'registeration';
+            // $ac->action = 'new';
+            // $ac->time = date('Y-m-d H:i:s', time());
+            // $ac->save();
+
+            $model->sendActivationMessage();    
+
+            return [
+                'success' => true,
+                'data'    => $model->getArrayResponse()
+                'code'    => 200
+            ];
+        }else{
+            return [
+                'success' => false,
+                'code'    => 400,
+                'data'    => 'Error saving data in DB.'
             ];
         }
     }
