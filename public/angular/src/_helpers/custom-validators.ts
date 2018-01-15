@@ -3,7 +3,7 @@ import { AbstractControl } from "@angular/forms/src/model";
 
 export function ConfirmPasswordValidator(pass: AbstractControl): ValidatorFn {
     return (control: AbstractControl): {[key: string]: any} => {
-        const forbidden = control.value != pass.value;
-        return forbidden ? {'ConfirmPassword': {value: control.value}} : null;
+        const confirmation = control.value != pass.value;
+        return confirmation ? {'ConfirmPassword': {value: control.value}} : null;
     };
 }

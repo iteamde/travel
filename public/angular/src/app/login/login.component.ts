@@ -4,6 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { AlertService, AuthenticationService } from '../../_services/index';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
 
 declare var jquery:any;
 declare var $ :any;
@@ -37,15 +38,17 @@ export class LoginComponent implements OnInit {
         private router: Router,
         private authenticationService: AuthenticationService,
 		private alertService: AlertService,
-		private formBuilder: FormBuilder) { }
+		private formBuilder: FormBuilder,
+		private titleService: Title ) { }
 
     ngOnInit() {
+		this.titleService.setTitle( "Travoo - Login" );
 
 		// reset login status
-		// this.authenticationService.logout();
+		this.authenticationService.logout();
 		
 		if (this.authenticationService.isLoggedIn()) {
-			// this.router.navigate(['/home']);
+			this.router.navigate(['/home']);
 		}
 
         // get return url from route parameters or default to '/home'
@@ -59,6 +62,7 @@ export class LoginComponent implements OnInit {
 
     openSignup()
     {
+		this.titleService.setTitle( "Travoo - Signup" );
       	$('#signUp').modal("hide");
       	$('#createAccount1').modal("show");
 	}
@@ -93,38 +97,25 @@ export class LoginComponent implements OnInit {
         this.errors = [];
 		
 		this.toggleLogin(false);
-		this.authenticationService.login(this.email.value, this.password.value)
-		.subscribe(
-			data => {
-				console.log(data);
-				var response = data.data;
-				console.log(response);
 
-				if(data.status)
-				{
-					// close login modal and open homepage
-					$('#signUp').modal("hide");
-					$.blockUI({ message: '<h4> Loading...  Please wait! </h4>' });
-	
-					// If login is successful, redirect to the home state
-					var t = this;
-					setTimeout(function() {
-						$.unblockUI();
-						t.router.navigate([t.returnUrl]);
-					}, 1000);
-				}
-				else
-				{
-					this.errors.push(response.message);
-					this.toggleLogin(true);
-				}
-			},
-			error => {
-				console.log(error);
-				//this.alertService.error(error);
+		this.authenticationService.login(this.email.value, this.password.value)
+		.subscribe(result => {
+			if (result === true) {
+				// close login modal and open homepage
+				$('#signUp').modal("hide");
+				$.blockUI({ message: '<h4> Loading...  Please wait! </h4>' });
+
+				// If login is successful, redirect to the home state
+				var t = this;
+				setTimeout(function() {
+					$.unblockUI();
+					t.router.navigate([t.returnUrl]);
+				}, 1000);
+			} else {
+				this.errors.push(result);
 				this.toggleLogin(true);
 			}
-		);
+		});
     }
 
     toggleLogin(state){

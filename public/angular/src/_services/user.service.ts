@@ -26,6 +26,16 @@ export class UserService extends ManagerService{
             .map((response: Response) => response.json());
     }
 
+    createStep2(user: User) {
+        // add authorization header with jwt token
+        let headers = new Headers({ 'Authorization': 'Bearer ' + "as" });
+        let options = new RequestOptions({ body: user, headers: headers });
+
+        // get users from api
+        return this.http.post(this.apiPrefix+'/users/create/step2', user)
+            .map((response: Response) => response.json());
+    }
+
     getUsers(): Observable<User[]> {
         // add authorization header with jwt token
         let headers = new Headers({ 'Authorization': 'Bearer ' + "" });

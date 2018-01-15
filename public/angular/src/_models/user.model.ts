@@ -7,5 +7,9 @@ export class User {
     name: string;
     age: number;
     gender: number;
+    status: number;
+    mobile_number: string;
+    address: string;
+    nationality: string;
   }
   

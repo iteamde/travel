@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
+
+declare var jquery:any;
+declare var $ :any;
 
 @Component({
   selector: 'app-main',
@@ -7,9 +11,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MainComponent implements OnInit {
 
-  constructor() { }
-
+  constructor(private titleService: Title) { }
+  
   ngOnInit() {
+    this.titleService.setTitle( "Travoo" );
+    $.getScript('assets/js/script.js');
   }
 
 }
