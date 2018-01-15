@@ -419,6 +419,8 @@ class ApiUser extends User {
             //     if(empty($countries)){
             //         $error[] = 'No country provided in JSON object.';
             //     }else{
+                    $countries = $post['countries'];
+                     
                     if(!isset($countries[0]['id'])){
                         $error[] = 'Countries id not provided in JSON object.';
                     }else{
