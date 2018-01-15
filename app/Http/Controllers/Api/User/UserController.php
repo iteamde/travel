@@ -96,6 +96,9 @@ class UserController extends Controller
     public function createStep3(Request $request){
 
         $post = $request->input();
+        echo '<pre>';
+        print_r($request->input());
+        exit;
         $post = json_decode($post);
 
         if (json_last_error() === JSON_ERROR_NONE) {
