@@ -66,13 +66,13 @@ class CountryController extends Controller {
             $limit = $post['limit'];
         }
 
+        $countries = Country::join('countries_trans', 'countries.id', '=', 'countries_trans.countries_id')->where(['active' => 1,'languages_id' => $language]);
+
         if(!empty($query)){
-            $countries = Country::join('countries_trans', 'countries.id', '=', 'countries_trans.countries_id')->where(['active' => 1,'languages_id' => $language])->where('title', 'REGEXP', $query);
-        }else{
-            $countries = Country::join('countries_trans', 'countries.id', '=', 'countries_trans.countries_id')->where(['active' => 1,'languages_id' => $language]);
+            $countries = $countries->where('title', 'REGEXP', $query);
         }
 
-        $countries = $countries->offset($offset)->limit($limit);
+        $countries = $countries->orderBy('title', 'asc')->offset($offset)->limit($limit);
         $countries =  $countries->get();
 
         $countries_arr = [];
