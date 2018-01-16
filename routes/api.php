@@ -202,5 +202,7 @@ Route::group(['prefix' => 'api'], function () {
         Route::get('/', 'CountryController@show_country');
         /* Get All Countries */
         Route::post('/search', 'CountryController@get_countries');
+        /* Get All Country Places */
+        Route::post('/places', 'CountryController@get_places');
     });
 });

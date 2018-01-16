@@ -19,7 +19,7 @@ class CountryController extends Controller {
         // Apply the jwt.auth middleware to all methods in this controller
         // except for the authenticate method. We don't want to prevent
         // the user from retrieving their token if they don't already have it
-        $this->middleware('jwt.auth', ['except' => ['authenticate','get_countries']]);
+        $this->middleware('jwt.auth', ['except' => ['authenticate','get_countries','get_places']]);
     }
 
     public function show_country(Request $request) {
@@ -88,6 +88,21 @@ class CountryController extends Controller {
             'code'    => 200,
             'data'    => $countries
         ];
+    }
+
+    public function get_places(Request $request){
+
+        $post = $request->input();
+
+        $response = Country::validateCountry($post);
+
+        if(!empty($response)){
+            return $response;
+        }
+
+        $response = Country::getPlaces($post);
+
+        return $response;
     }
 
 }
