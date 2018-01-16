@@ -19,32 +19,31 @@ class CountryController extends Controller {
         // Apply the jwt.auth middleware to all methods in this controller
         // except for the authenticate method. We don't want to prevent
         // the user from retrieving their token if they don't already have it
-        $this->middleware('jwt.auth', ['except' => ['authenticate']]);
+        // $this->middleware('jwt.auth', ['except' => ['authenticate']]);
     }
 
     public function show_country(Request $request) {
         
         $country_id = $request->get('country_id');
-        $response = Country::show_country($country_id);
+        $response   = Country::show_country($country_id);
 
         return $response;
     }
 
     public function get_countries(Request $request){
 
-         echo '<pre>';
-        print_r($request->input());
-        exit;
+        $query     = $request->input('query');
+        $countries = null;
 
-        $countries = Country::where(['active' => 1])->get();
-
+        if(!empty($query)){
+            $countries = Country::join('countries_trans', 'countries.id', '=', 'countries_trans.countries_id')->where(['active' => 1])->where('title', 'REGEXP', $query)->get();
+        }else{
+            $countries = Country::join('countries_trans', 'countries.id', '=', 'countries_trans.countries_id')->where(['active' => 1])->get();
+        }
         $countries_arr = [];
 
         foreach ($countries as $key => $value) {
-            $countries_arr[] = [
-                'id'    => $value->id,
-                'name'  => $value->transsingle->name 
-            ];   
+            $countries_arr[] = $value->getResponse();   
         }
 
         return [

@@ -112,4 +112,28 @@ class ApiCountry extends Countries
 
         return $response;
     }
+
+    public function getResponse(){
+
+        $title = '';
+        $cover_image = '';
+
+        if(!empty($this->title)){
+            $title = $this->title;
+        }
+
+        if(!empty($this->cover)){
+            $cover_image = $this->cover->url;
+        }
+
+        return [
+            'id'            => $this->id,
+            'active'        => $this->active,
+            'lat'           => $this->lat,
+            'lng'           => $this->lng,
+            'code'          => $this->code,
+            'cover_image'   => $cover_image,
+            'name'          => $title 
+        ];
+    }
 }
