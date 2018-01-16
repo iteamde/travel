@@ -158,8 +158,8 @@ class CronsController extends Controller {
 
         foreach ($places_missing_details AS $pmd) {
             if (time() % 4 == 0) {
-                $json = file_get_contents('http://db.travooo.com/public/places/details/go/' . $pmd->provider_id);
-                echo 'http://db.travooo.com/public/places/details/go/' . $pmd->provider_id . ' ';
+                $json = file_get_contents('http://db.travooodev.com/public/places/details/go/' . $pmd->provider_id);
+                echo 'http://db.travooodev.com/public/places/details/go/' . $pmd->provider_id . ' ';
             } elseif (time() % 4 == 1) {
                 $json = file_get_contents('http://db.travooodev.com/public/places/details/go/' . $pmd->provider_id);
                 echo 'http://db.travooodev.com/public/places/details/go/' . $pmd->provider_id . ' ';
@@ -197,8 +197,8 @@ class CronsController extends Controller {
 
         foreach ($places_missing_details AS $pmd) {
             if (time() % 4 == 0) {
-                $json = file_get_contents('http://db.travooo.com/public/embassies/details/go/' . $pmd->provider_id);
-                echo 'http://db.travooo.com/public/embassies/details/go/' . $pmd->provider_id . ' ';
+                $json = file_get_contents('http://db.travooodev.com/public/embassies/details/go/' . $pmd->provider_id);
+                echo 'http://db.travooodev.com/public/embassies/details/go/' . $pmd->provider_id . ' ';
             } elseif (time() % 4 == 1) {
                 $json = file_get_contents('http://db.travooodev.com/public/embassies/details/go/' . $pmd->provider_id);
                 echo 'http://db.travooodev.com/public/embassies/details/go/' . $pmd->provider_id . ' ';
@@ -237,8 +237,8 @@ class CronsController extends Controller {
 
         foreach ($places_missing_details AS $pmd) {
             if (time() % 4 == 0) {
-                $json = file_get_contents('http://db.travooo.com/public/hotels/details/go/' . $pmd->provider_id);
-                echo 'http://db.travooo.com/public/hotels/details/go/' . $pmd->provider_id . ' ';
+                $json = file_get_contents('http://db.travooodev.com/public/hotels/details/go/' . $pmd->provider_id);
+                echo 'http://db.travooodev.com/public/hotels/details/go/' . $pmd->provider_id . ' ';
             } elseif (time() % 4 == 1) {
                 $json = file_get_contents('http://db.travooodev.com/public/hotels/details/go/' . $pmd->provider_id);
                 echo 'http://db.travooodev.com/public/hotels/details/go/' . $pmd->provider_id . ' ';
@@ -277,8 +277,8 @@ class CronsController extends Controller {
 
         foreach ($places_missing_details AS $pmd) {
             if (time() % 4 == 0) {
-                $json = file_get_contents('http://db.travooo.com/public/restaurants/details/go/' . $pmd->provider_id);
-                echo 'http://db.travooo.com/public/restaurants/details/go/' . $pmd->provider_id . ' ';
+                $json = file_get_contents('http://db.travooodev.com/public/restaurants/details/go/' . $pmd->provider_id);
+                echo 'http://db.travooodev.com/public/restaurants/details/go/' . $pmd->provider_id . ' ';
             } elseif (time() % 4 == 1) {
                 $json = file_get_contents('http://db.travooodev.com/public/restaurants/details/go/' . $pmd->provider_id);
                 echo 'http://db.travooodev.com/public/restaurants/details/go/' . $pmd->provider_id . ' ';
