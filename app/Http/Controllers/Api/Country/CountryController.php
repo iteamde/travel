@@ -42,10 +42,18 @@ class CountryController extends Controller {
         $offset = 0;
         $limit  = 20;
         
+        if(!isset($post['language_id']) || empty($post['language_id'])){
+            return [
+                'success' => false,
+                'code'    => 400,
+                'data'    => 'Language id not provided.'
+            ];
+        }
+
         if(isset($post['language_id']) && !empty($post['language_id'])){
             $language = $post['language_id'];
         }
-        
+
         if(isset($post['query']) && !empty($post['query'])){
             $query = $post['query'];
         }
