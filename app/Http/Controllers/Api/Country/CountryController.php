@@ -45,7 +45,7 @@ class CountryController extends Controller {
         if(isset($post['language_id']) && !empty($post['language_id'])){
             $language = $post['language_id'];
         }
-
+        
         if(isset($post['query']) && !empty($post['query'])){
             $query = $post['query'];
         }
