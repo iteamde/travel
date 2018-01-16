@@ -181,7 +181,7 @@ class ApiCountry extends Countries
         }
 
         return [
-            'id'            => $this->id,
+            'id'            => $this->cId,
             'active'        => $this->active,
             'lat'           => $this->lat,
             'lng'           => $this->lng,

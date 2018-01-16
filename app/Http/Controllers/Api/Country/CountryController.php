@@ -66,7 +66,9 @@ class CountryController extends Controller {
             $limit = $post['limit'];
         }
 
-        $countries = Country::join('countries_trans', 'countries.id', '=', 'countries_trans.countries_id')->where(['active' => 1,'languages_id' => $language]);
+        $countries = Country::select('countries.id as cId','countries.*','countries_trans.*');
+
+        $countries = $countries->join('countries_trans', 'countries.id', '=', 'countries_trans.countries_id')->where(['active' => 1,'languages_id' => $language]);
 
         if(!empty($query)){
             $countries = $countries->where('title', 'REGEXP', $query);
@@ -74,7 +76,7 @@ class CountryController extends Controller {
 
         $countries = $countries->orderBy('title', 'asc')->offset($offset)->limit($limit);
         $countries =  $countries->get();
-
+        
         $countries_arr = [];
 
         foreach ($countries as $key => $value) {
