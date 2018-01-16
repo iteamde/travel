@@ -29,10 +29,9 @@ class ApiPlace extends Place
 
         if(!empty($flag_media)){
             $photo = $flag_media->url;
-        }else{
+        }else if(!empty($first_media)){
             $photo = $first_media->url;
         }
-
 
         if(!empty($this->transsingle)){
             $title = $this->transsingle->title;
