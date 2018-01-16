@@ -1,16 +1,57 @@
 <div class="main-wrapper login-layer">
-  <!-- Button trigger modal -->
-  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#signUp">
-    Login
-  </button>
-  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createAccount1">
-    Register
-  </button>
-  <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createAccount2">
-    Launch createAccount step2
-  </button> -->
+	<header class="main-header step-header">
+		<!-- use class .step-header for set header above of modal-backgrop layer -->
+		<div class="container">
+			<nav class="navbar navbar-toggleable-md navbar-light bg-faded">
+				<!-- <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#mainMenuLayer" aria-controls="mainMenuLayer" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button> -->
+				<a class="navbar-brand" href="#">
+					<img src="./assets/image/main-small-logo.png" alt="">
+				</a>
+
+				<!--<div class="collapse navbar-collapse" id="mainMenuLayer">
+					<div class="progress-wrapper">
+					<div class="progress-point">Start</div>
+					<div class="progress">
+					<div class="progress-bar" role="progressbar" aria-valuenow="1" aria-valuemin="0" aria-valuemax="100"></div><!-- you can use aria-valuenow arrt for add step -->
+					<!-- </div>
+					<div class="progress-point">Finish</div>
+				</div>
+				</div> -->
+
+				<div class="progress-block">
+					<div class="progress-wrapper">
+						<div class="progress-point">Start</div>
+						<div class="progress">
+							<div class="progress-bar" role="progressbar" aria-valuenow="1" aria-valuemin="0" aria-valuemax="100"></div>
+							<!-- you can use aria-valuenow arrt for add step -->
+						</div>
+						<div class="progress-point">Finish</div>
+					</div>
+				</div>
+			</nav>
+
+			<!-- <div class="header-inner">
+          <h1 class="logo-wrap">
+            <a href="#" class="logo">
+              <img src="./assets/image/main-small-logo.png" alt="">
+            </a>
+          </h1>
+          <div class="col">
+          </div>
+        </div> -->
+		</div>
+	</header>
+
+	<!-- Button trigger modal -->
+	<button type="button" class="btn btn-primary" (click)="openLogin()">
+		Login
+	</button>
+	<button type="button" class="btn btn-primary" (click)="openSignup()">
+		Register
+	</button>
 </div>
-<!-- <footer class="footer"></footer> -->
 
 <app-login></app-login>
 

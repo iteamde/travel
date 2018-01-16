@@ -5,6 +5,7 @@ namespace App\Models\Country;
 use App\Models\Country\Countries;
 use App\Models\User\ApiUser as User;
 use App\Models\System\Session;
+use App\Models\Place\ApiPlace as Place;
 
 /* Api Country Model */
 class ApiCountry extends Countries
@@ -111,6 +112,59 @@ class ApiCountry extends Countries
         }
 
         return $response;
+    }
+
+    public static function validateCountry($post){
+
+        $error = [];
+
+        if(!isset($post['country_id']) || empty($post['country_id'])){
+            $error[] = 'Country id not provided.';
+        }else{
+            $country = Self::all();
+            print_r($country);
+            exit;
+            if(empty($country)){
+                $error[] = 'Wrong country id provided.';
+            }
+        }
+
+        if(empty($error)){
+            return false;
+        }else{
+            return [
+                'success' => false,
+                'code'    => 400,
+                'data'    => $error
+            ];
+        }
+    }
+
+    public static function getPlaces($post){
+
+        $country_id = $post['country_id'];
+
+        $places = Place::where(['countries_id' => $country_id,'active' => 1])->get();
+
+        $places_arr = [];
+
+        if(!empty($places)){
+            foreach ($places as $key => $value) {
+                $places_arr[] = $value->getResponse();
+            }
+        }
+
+        if(empty($places_arr)){
+            $places = "";
+        }else{
+            $places = json_encode($places_arr);
+        }
+
+        return [
+            'success' => true,
+            'code'    => 200,
+            'data'    => $places
+        ];
     }
 
     public function getResponse(){

@@ -1,0 +1,39 @@
+<!-- Modal -->
+<div class="modal fade signUpStep" id="signUpStep3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+	<div class="modal-dialog sign-up-step" role="document">
+		<div class="modal-content">
+			<div class="modal-body">
+				<div class="title-layer">
+					<h3 class="step-ttl">Select at least 5 favorite
+						<span>countries or cities</span>
+					</h3>
+					<div class="step-info">
+						Step 1
+						<span>of 6</span>
+					</div>
+				</div>
+				<div class="search-block-wrap">
+					<div class="search-block">
+						<a class="search-btn" href="#">
+							<i class="fa fa-search"></i>
+						</a>
+						<input type="text" class="" placeholder="Country or city...">
+					</div>
+				</div>
+				<div class="check-block-wrap">
+					<div *ngFor="let country of countries">
+						<div class="check-block" [style.background-image]="'url('+(country.cover_image == '') ?  'http://placehold.it/181x181' : country.cover_image +')'" [class.checked-block]="selected.indexOf(country.id)>=0" (click)="select(country.id)">
+							<div class="check-ttl">
+								<h4>{{country.name}} </h4>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-grey">Select 3 More</button>
+				<p class="sub-info">(Next Step: Favorite Places)</p>
+			</div>
+		</div>
+	</div>
+</div>

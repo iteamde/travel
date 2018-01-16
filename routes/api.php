@@ -54,6 +54,8 @@ Route::group(['prefix' => 'api'], function () {
         Route::post('/create/step2', 'UserController@createStep2');
         /* Sign Up/Create New User Api - 3 */
         Route::post('set/fav_countries', 'UserController@createStep3');
+        /* Sign Up/Create New User Api - 4 */
+        Route::post('set/fav_places', 'UserController@createStep4');
         /* Login Api */
         Route::post('/login', 'UserController@login');
         /* Logout Api */
@@ -200,5 +202,7 @@ Route::group(['prefix' => 'api'], function () {
         Route::get('/', 'CountryController@show_country');
         /* Get All Countries */
         Route::post('/search', 'CountryController@get_countries');
+        /* Get All Country Places */
+        Route::post('/places', 'CountryController@get_places');
     });
 });

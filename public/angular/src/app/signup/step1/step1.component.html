@@ -1,0 +1,94 @@
+<!-- create an account -->
+<div class="modal fade signUpStep" id="signUpStep1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog sign-up-style" role="document">
+		<div class="modal-content">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+			<div class="modal-body body-create">
+				<div class="top-layer">
+					<a href="#" class="logo-wrap">
+						<img src="./assets/image/main-logo.png" alt="">
+					</a>
+					<h4 class="title">Create a free account</h4>
+					<!-- <p class="sub-ttl">and write a text here</p> -->
+					<!-- <p class="sub-ttl error-message">Your password is too weak</p> -->
+					<!-- <p class="sub-ttl error-message">Please fill the required fields</p> -->
+					<p class="sub-ttl error-message" *ngFor="let msg of errors">{{ msg }}</p>
+				</div>
+				<form class="login-form" name="signupForm1" [formGroup]="signupForm1" (ngSubmit)="continueStep1()" novalidate>
+					<div class="step-1">
+						
+						<div class="form-group" [ngClass]="validate('email')">
+							<input class="form-control" type="email" name="email" formControlName="email" placeholder="Email address" aria-describedby="emailHelp" />
+							<!-- <input type="email" class="form-control" name="username" [(ngModel)]="model.username" #username="ngModel" required aria-describedby="emailHelp" placeholder="Email address"/> -->
+							<!-- <div *ngIf="f.submitted && !username.valid" class="help-block">Email is required</div> -->
+							<div class="form-control-feedback" *ngIf="signupErrors.email">
+								<p>{{ signupErrors.email }}</p>
+							</div>
+						</div>
+
+						<div class="form-group" [ngClass]="validate('username')">
+							<input class="form-control" type="text" name="username" formControlName="username" placeholder="Username" aria-describedby="username" />
+							<div class="form-control-feedback" *ngIf="signupErrors.username">
+								<p>{{ signupErrors.username }}</p>
+							</div>
+						</div>
+						
+						<div class="form-group" [ngClass]="validate('password')">
+							<input class="form-control" type="password" name="password" formControlName="password" placeholder="Password" aria-describedby="pass" />
+							<div class="form-control-feedback" *ngIf="signupErrors.password">
+								<p>{{ signupErrors.password }}</p>
+							</div>
+						</div>
+
+						<div class="form-group" [ngClass]="validate('cpassword')">
+							<input class="form-control" type="password" name="cpassword" formControlName="cpassword" placeholder="Confirm Password" aria-describedby="cpass" />
+							<div class="form-control-feedback" *ngIf="signupErrors.cpassword">
+								<p>{{ signupErrors.cpassword }}</p>
+							</div>
+						</div>
+
+						<div class="form-margin"></div>
+						<div class="form-group">
+							<button type="submit" class="btn btn-success" [disabled]="!signupForm1.valid || loading">{{ signupContinueBtnText }}</button>
+						</div>
+						<div class="form-group">
+							<p class="simple-txt">Or</p>
+						</div>
+						<div class="form-group">
+							<button type="button" class="btn btn-primary">
+								<i class="fa fa-facebook side-icon"></i>
+								Continue with Facebook
+							</button>
+						</div>
+						<div class="form-group">
+							<button type="button" class="btn btn-info">
+								<i class="fa fa-twitter side-icon"></i>
+								Continue with Twitter
+							</button>
+						</div>
+					</div>
+					<div class="form-group bottom-txt-group">
+						<p class="bottom-txt">Creating an account means you're okay with</p>
+						<ul class="link-list">
+							<li>
+								<b>Travooo's</b>
+							</li>
+							<li>
+								<a href="#"> Terms of Service,</a>
+							</li>
+							<li>
+								<a href="#"> Privacy Policy</a>
+							</li>
+						</ul>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<p class="foot-txt">Already a member?</p>
+				<button type="button" class="btn btn-grey" (click)="openLogin()">Log In</button>
+			</div>
+		</div>
+	</div>
+</div>
