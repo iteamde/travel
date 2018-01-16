@@ -33,12 +33,13 @@ class ApiPlace extends Place
             $photo = $first_media->url;
         }
 
-        if(!empty($this->transsingle)){
-            $title = $this->transsingle->title;
+        if(!empty($this->title)){
+            // $title = $this->transsingle->title;
+            $title = $this->title;
         }
 
         return  [
-            'id'           => $this->id,
+            'id'           => $this->pId,
             'name'         => $title,
             'cover_image'  => $photo 
         ];

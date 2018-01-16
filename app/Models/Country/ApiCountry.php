@@ -143,6 +143,8 @@ class ApiCountry extends Countries
 
         $limit  = 20;
         $offset = 0;
+        $query  = null;
+        $language = 1;
 
         $country_id = $post['country_id'];
 
@@ -154,8 +156,27 @@ class ApiCountry extends Countries
             $limit = $post['limit'];
         }
 
-        $places = Place::where(['countries_id' => $country_id,'active' => 1])->offset($offset)->limit($limit)
-            ->orderby('id','asc')->get();
+        if(isset($post['language_id']) && !empty($post['language_id'])){
+            $language = $post['language_id'];
+        }
+
+        if(isset($post['query']) && !empty($post['query'])){
+            $query = $post['query'];
+        }
+
+        $places = Place::select('places.id as pId','places.*','places_trans.*');
+
+        $places = $places->join('places_trans','places.id','=','places_trans.places_id')
+            ->where(['countries_id' => $country_id,'active' => 1,'languages_id' => $language]);
+
+        if(!empty($query)){
+            $places = $places->where('title','REGEXP',$query);
+        }
+        
+        $places = $places->offset($offset)
+            ->limit($limit)
+            ->orderby('places.id','asc')
+            ->get();
 
         $places_arr = [];
         
