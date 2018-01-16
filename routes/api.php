@@ -191,12 +191,14 @@ Route::group(['prefix' => 'api'], function () {
      * Country Manager
      */
     Route::group([
-        'prefix' => 'country',
-        'as' => 'country.',
+        'prefix' => 'countries',
+        'as' => 'countries.',
         'namespace' => 'Country',
             ], function () {
 
         /* Show Country */
         Route::get('/', 'CountryController@show_country');
+        /* Get All Countries */
+        Route::post('/search', 'CountryController@get_countries');
     });
 });

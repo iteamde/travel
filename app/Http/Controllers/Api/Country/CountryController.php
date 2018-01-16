@@ -23,11 +23,35 @@ class CountryController extends Controller {
     }
 
     public function show_country(Request $request) {
-
+        
         $country_id = $request->get('country_id');
         $response = Country::show_country($country_id);
 
         return $response;
+    }
+
+    public function get_countries(Request $request){
+
+         echo '<pre>';
+        print_r($request->input());
+        exit;
+
+        $countries = Country::where(['active' => 1])->get();
+
+        $countries_arr = [];
+
+        foreach ($countries as $key => $value) {
+            $countries_arr[] = [
+                'id'    => $value->id,
+                'name'  => $value->transsingle->name 
+            ];   
+        }
+
+        return [
+            'success' => true,
+            'code'    => 200,
+            'data'    => $countries_arr
+        ];
     }
 
 }
