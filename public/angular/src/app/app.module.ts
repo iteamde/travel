@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -11,7 +12,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AlertComponent } from '../_directives/index';
 import { AuthGuard } from '../_guards/index';
 import { JwtInterceptor } from '../_helpers/index';
-import { AlertService, AuthenticationService, UserService } from '../_services/index';
+import { AlertService, AuthenticationService, UserService, CountriesService } from '../_services/index';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -24,6 +25,9 @@ import { SideFooterComponent } from './side-footer/side-footer.component';
 import { RightSideBarComponent } from './right-side-bar/right-side-bar.component';
 import { PostsComponent } from './posts/posts.component';
 import { CreatePostComponent } from './create-post/create-post.component';
+import { Step1Component } from './signup/step1/step1.component';
+import { Step2Component } from './signup/step2/step2.component';
+import { Step3Component } from './signup/step3/step3.component';
 
 @NgModule({
     imports: [
@@ -32,7 +36,8 @@ import { CreatePostComponent } from './create-post/create-post.component';
       FormsModule,
       HttpClientModule,
       HttpModule,
-      ReactiveFormsModule
+      ReactiveFormsModule,
+      InfiniteScrollModule
     ],
     declarations: [
       AppComponent,
@@ -46,7 +51,10 @@ import { CreatePostComponent } from './create-post/create-post.component';
       SideFooterComponent,
       RightSideBarComponent,
       PostsComponent,
-      CreatePostComponent
+      CreatePostComponent,
+      Step1Component,
+      Step2Component,
+      Step3Component
     ],
     providers: [
         AuthGuard,
@@ -58,6 +66,7 @@ import { CreatePostComponent } from './create-post/create-post.component';
             useClass: JwtInterceptor,
             multi: true
         },
+        CountriesService,
 
         // provider used to create fake backend
         //fakeBackendProvider

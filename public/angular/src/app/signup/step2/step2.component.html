@@ -1,0 +1,85 @@
+
+<div class="modal fade signUpStep" id="signUpStep2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog sign-up-style" role="document">
+		<div class="modal-content">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+			<div class="modal-body body-create">
+				<div class="top-layer">
+					<a href="#" class="logo-wrap">
+						<img src="./assets/image/main-logo.png" alt="">
+					</a>
+					<h4 class="title">Create a free account</h4>
+					<!-- <p class="sub-ttl">and write a text here</p> -->
+					<!-- <p class="sub-ttl error-message">Your password is too weak</p> -->
+					<!-- <p class="sub-ttl error-message">Please fill the required fields</p> -->
+					<p class="sub-ttl error-message" *ngFor="let msg of errors">{{ msg }}</p>
+				</div>
+				<form class="login-form" name="signupForm2" [formGroup]="signupForm2" (ngSubmit)="continueStep2()" novalidate>
+					<div class="step-2">
+						<!-- <div class="form-group">
+							<p class="email-field">emailhere@gmail.com</p>
+						</div> -->
+						<div class="form-group flex-custom">
+							<div class="flex-input" [ngClass]="validate('name')">
+								<input class="form-control" type="text" name="name" formControlName="name" placeholder="Full Name" aria-describedby="full name" />
+								<div class="form-control-feedback" *ngIf="signupErrors.name">
+									<p>{{ signupErrors.name }}</p>
+								</div>
+							</div>
+							<div class="form-group" [ngClass]="validate('age')">
+								<select class="custom-select" id="age" formControlName="age">
+									<option [selected]="age">Age</option>
+									<option value="1">26</option>
+									<option value="2">27</option>
+									<option value="3">28</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-check flex-custom" [ngClass]="validate('gender')">
+							<div class="custom-check-label">
+								<input type="radio" class="custom-check-input" name="gender" id="male" formControlName="gender" value="0">
+								<label for="male">Male</label>
+							</div>
+							<div class="custom-check-label">
+								<input type="radio" class="custom-check-input" name="gender" id="female" formControlName="gender" value="1">
+								<label for="female">Female</label>
+							</div>
+							<div class="form-control-feedback" *ngIf="signupErrors.gender">
+								<p>{{ signupErrors.gender }}</p>
+							</div>
+						</div>
+						<div class="form-group">
+							<button type="submit" class="btn btn-info" [disabled]="!signupForm2.valid || loading">{{ signupBtnText }}</button>
+						</div>
+						<div class="form-group">
+							<button type="button" class="btn btn-transp" (click)="backToSignup()">
+								<i class="fa fa-angle-left"></i>
+								<span>Back</span>
+							</button>
+						</div>
+					</div>
+					<div class="form-group bottom-txt-group">
+						<p class="bottom-txt">Creating an account means you're okay with</p>
+						<ul class="link-list">
+							<li>
+								<b>Travooo's</b>
+							</li>
+							<li>
+								<a href="#"> Terms of Service,</a>
+							</li>
+							<li>
+								<a href="#"> Privacy Policy</a>
+							</li>
+						</ul>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<p class="foot-txt">Already a member?</p>
+				<button type="button" class="btn btn-grey" (click)="openLogin()">Log In</button>
+			</div>
+		</div>
+	</div>
+</div>
