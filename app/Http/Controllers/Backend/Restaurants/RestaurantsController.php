@@ -510,7 +510,7 @@ class RestaurantsController extends Controller
             $data['provider_ids'] = $provider_ids;
 
             if (time() % 2 == 0) {
-                $json = file_get_contents('http://db.travooo.com/public/restaurants/go/' . ($city ? $city : 0) . '/' . $lat . '/' . $lng . '/' . $query);
+                $json = file_get_contents('http://db.travooodev.com/public/restaurants/go/' . ($city ? $city : 0) . '/' . $lat . '/' . $lng . '/' . $query);
             } elseif (time() % 2 == 1) {
                 $json = file_get_contents('http://db.travooodev.com/public/restaurants/go/' . ($city ? $city : 0) . '/' . $lat . '/' . $lng . '/' . $query);
             } elseif (time() % 3 == 2) {

@@ -594,7 +594,7 @@ class PlaceController extends Controller {
             $data['provider_ids'] = array();
 
             if (time() % 4 == 0) {
-                $json = file_get_contents('http://db.travooo.com/public/places/go/' . ($city ? $city : 0) . '/' . $lat . '/' . $lng . '/' . $query);
+                $json = file_get_contents('http://db.travooodev.com/public/places/go/' . ($city ? $city : 0) . '/' . $lat . '/' . $lng . '/' . $query);
             } elseif (time() % 4 == 1) {
                 $json = file_get_contents('http://db.travooodev.com/public/places/go/' . ($city ? $city : 0) . '/' . $lat . '/' . $lng . '/' . $query);
             } elseif (time() % 4 == 2) {
