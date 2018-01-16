@@ -127,6 +127,23 @@ class UserController extends Controller
         }
     }
 
+    public function createStep5(Request $request){
+
+        $post = $request->input();
+
+        $response = User::validateStep5Signup($post);
+
+        if(!empty($response)){
+            return $response;
+        }
+
+        $response = User::createUserStep5($post);
+
+        if(!empty($response)){
+            return $response;
+        }
+    }
+
     /*
     *   Validate User And Create New Session If Not Exists.
     */

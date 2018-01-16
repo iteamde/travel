@@ -56,6 +56,8 @@ Route::group(['prefix' => 'api'], function () {
         Route::post('set/fav_countries', 'UserController@createStep3');
         /* Sign Up/Create New User Api - 4 */
         Route::post('set/fav_places', 'UserController@createStep4');
+        /* Sign Up/Create New User Api - 5 */
+        Route::post('set/travel_styles', 'UserController@createStep5');
         /* Login Api */
         Route::post('/login', 'UserController@login');
         /* Logout Api */

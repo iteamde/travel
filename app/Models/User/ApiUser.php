@@ -15,6 +15,7 @@ use App\Models\User\UsersPrivacySettings;
 use App\Models\User\UsersNotificationSettings;
 use App\Models\User\UsersFriendRequests;
 use App\Models\User\UsersFavourites;
+use App\Models\User\UsersTravelStyles;
 use Illuminate\Support\Facades\Storage;
 use App\Models\ActivityLog\ActivityLog;
 use App\Helpers\UrlGenerator;
@@ -527,6 +528,66 @@ class ApiUser extends User {
             'code'    => 200,
             'data'    => [] 
         ];
+    }
+
+    public static function validateStep5Signup($post){
+
+        $error = [];
+
+        /* User id not provided */
+        if(!isset($post['user_id']) || empty($post['user_id'])){
+            $error[] = 'User id not provided.';
+        }else{
+            $user = User::where(['id' => $post['user_id']])->first();
+           
+            if(empty($user)){
+                $error[] = 'Wrong user id provided.';
+            }
+        }
+
+        if(!isset($post['travel_styles']) || empty($post['travel_styles'])){
+                $error[] = 'Travel styles not provided.';
+        }else{
+            $travel_styles = $post['travel_styles'];
+
+            if(!isset($travel_styles[0]['id']) || empty($travel_styles[0]['id'])){
+                $error[]   = '"id" not provided in "travel_styles" object.';
+            }
+        }
+
+        if(empty($error)){
+            return false;
+        }else{
+            return [
+                'succes' => false,
+                'code'   => 200,
+                'data'   => $error
+            ];
+        }
+    }
+
+    public static function createUserStep5($post){
+
+        $travel_styles = $post['travel_styles'];
+
+        foreach ($travel_styles as $key => $value) {
+            
+            $model = UsersTravelStyles::where(['users_id' => $post['user_id'],'conf_lifestyles_id' => $value['id']])->first();
+            
+            if(empty($model)){
+                $model                      = new UsersTravelStyles;
+                $model->users_id            = $post['user_id'];
+                $model->conf_lifestyles_id  = $value['id'];
+                $model->save();
+            }
+        }
+
+        return [
+            'success' => true,
+            'code'    => 200,
+            'data'    => "Life styles added." 
+        ];
+
     }
 
     public static function createUser($post) {
