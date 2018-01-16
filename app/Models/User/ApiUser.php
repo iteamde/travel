@@ -472,6 +472,63 @@ class ApiUser extends User {
         ];
     }
 
+
+    public static function validateStep4Signup($post){
+
+        $error = [];
+
+        /* User id not provided */
+        if(!isset($post['user_id']) || empty($post['user_id'])){
+            $error[] = 'User id not provided.';
+        }else{
+            $user = User::where(['id' => $post['user_id']])->first();
+           
+            if(empty($user)){
+                $error[] = 'Wrong user id provided.';
+            }
+        }
+
+        if(!isset($post['places']) || empty($post['places'])){
+                $error[] = 'Places not provided.';
+        }else{
+            $places = $post['places'];
+
+            if(!isset($places[0]['id']) || empty($places[0]['id'])){
+                $error[]   = '"id" not provided in places object.';
+            }
+        }
+
+        if(empty($error)){
+            return false;
+        }else{
+            return [
+                'succes' => false,
+                'code'   => 200,
+                'data'   => $error
+            ];
+        }
+    }
+
+    public static function createUserStep4($post){
+
+        $places = $post['places'];
+
+        foreach ($places as $key => $value) {
+            
+            $model = new UsersFavourites;
+            $model->users_id = $post['user_id'];
+            $model->fav_type = 'place';
+            $model->fav_id = $value['id'];
+            $model->save();
+        }
+
+        return [
+            'success' => true,
+            'code'    => 200,
+            'data'    => [] 
+        ];
+    }
+
     public static function createUser($post) {
 
         /* New Api User */
