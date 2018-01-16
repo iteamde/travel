@@ -36,9 +36,15 @@ class CountryController extends Controller {
 
         $query     = null;
         $countries = null;
+        $language  = 1; 
+
 
         $offset = 0;
         $limit  = 20;
+        
+        if(isset($post['language_id']) && !empty($post['language_id'])){
+            $language = $post['language_id'];
+        }
 
         if(isset($post['query']) && !empty($post['query'])){
             $query = $post['query'];
@@ -53,9 +59,9 @@ class CountryController extends Controller {
         }
 
         if(!empty($query)){
-            $countries = Country::join('countries_trans', 'countries.id', '=', 'countries_trans.countries_id')->where(['active' => 1])->where('title', 'REGEXP', $query);
+            $countries = Country::join('countries_trans', 'countries.id', '=', 'countries_trans.countries_id')->where(['active' => 1,'languages_id' => $language])->where('title', 'REGEXP', $query);
         }else{
-            $countries = Country::join('countries_trans', 'countries.id', '=', 'countries_trans.countries_id')->where(['active' => 1]);
+            $countries = Country::join('countries_trans', 'countries.id', '=', 'countries_trans.countries_id')->where(['active' => 1,'languages_id' => $language]);
         }
 
         $countries = $countries->offset($offset)->limit($limit);
