@@ -81,11 +81,12 @@ class CountryController extends Controller {
             $countries_arr[] = $value->getResponse();   
         }
 
-        return [
+        echo json_encode([
             'success' => true,
             'code'    => 200,
             'data'    => $countries_arr
-        ];
+        ]);
+        exit;
     }
 
 }
