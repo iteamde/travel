@@ -121,7 +121,7 @@ class ApiCountry extends Countries
         if(!isset($post['country_id']) || empty($post['country_id'])){
             $error[] = 'Country id not provided.';
         }else{
-            $country = Self::where(['id' => $post['country_id'],'active' => 1])->first();
+            $country = Self::where(['id' => $post['country_id']])->first();
             print_r($country);
             exit;
             if(empty($country)){
