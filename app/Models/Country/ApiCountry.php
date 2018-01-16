@@ -141,12 +141,24 @@ class ApiCountry extends Countries
 
     public static function getPlaces($post){
 
+        $limit  = 20;
+        $offset = 0;
+
         $country_id = $post['country_id'];
 
-        $places = Place::where(['countries_id' => $country_id,'active' => 1])->get();
+        if(isset($post['offset']) && !empty($post['offset'])){
+            $offset = $post['offset'];
+        }
+
+        if(isset($post['limit']) && !empty($post['limit'])){
+            $limit = $post['limit'];
+        }
+
+        $places = Place::where(['countries_id' => $country_id,'active' => 1])->offset($offset)->limit($limit)->get();
 
         $places_arr = [];
-
+        
+        
         if(!empty($places)){
             foreach ($places as $key => $value) {
                 $places_arr[] = $value->getResponse();
