@@ -154,7 +154,8 @@ class ApiCountry extends Countries
             $limit = $post['limit'];
         }
 
-        $places = Place::where(['countries_id' => $country_id,'active' => 1])->offset($offset)->limit($limit)->get();
+        $places = Place::where(['countries_id' => $country_id,'active' => 1])->offset($offset)->limit($limit)
+            ->orderby('id','asc')->get();
 
         $places_arr = [];
         
