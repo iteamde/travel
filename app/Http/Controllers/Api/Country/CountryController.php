@@ -19,7 +19,7 @@ class CountryController extends Controller {
         // Apply the jwt.auth middleware to all methods in this controller
         // except for the authenticate method. We don't want to prevent
         // the user from retrieving their token if they don't already have it
-        // $this->middleware('jwt.auth', ['except' => ['authenticate']]);
+        $this->middleware('jwt.auth', ['except' => ['authenticate','get_countries']]);
     }
 
     public function show_country(Request $request) {
@@ -32,14 +32,35 @@ class CountryController extends Controller {
 
     public function get_countries(Request $request){
 
-        $query     = $request->input('query');
+        $post = $request->input();
+
+        $query     = null;
         $countries = null;
 
-        if(!empty($query)){
-            $countries = Country::join('countries_trans', 'countries.id', '=', 'countries_trans.countries_id')->where(['active' => 1])->where('title', 'REGEXP', $query)->get();
-        }else{
-            $countries = Country::join('countries_trans', 'countries.id', '=', 'countries_trans.countries_id')->where(['active' => 1])->get();
+        $offset = 0;
+        $limit  = 20;
+
+        if(isset($post['query']) && !empty($post['query'])){
+            $query = $post['query'];
         }
+
+        if(isset($post['offset']) && !empty($post['offset'])){
+            $offset = $post['offset'];
+        }
+
+        if(isset($post['limit']) && !empty($post['limit'])){
+            $limit = $post['limit'];
+        }
+
+        if(!empty($query)){
+            $countries = Country::join('countries_trans', 'countries.id', '=', 'countries_trans.countries_id')->where(['active' => 1])->where('title', 'REGEXP', $query);
+        }else{
+            $countries = Country::join('countries_trans', 'countries.id', '=', 'countries_trans.countries_id')->where(['active' => 1]);
+        }
+
+        $countries = $countries->offset($offset)->limit($limit);
+        $countries =  $countries->get();
+
         $countries_arr = [];
 
         foreach ($countries as $key => $value) {
