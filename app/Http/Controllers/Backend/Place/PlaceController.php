@@ -64,7 +64,6 @@ class PlaceController extends Controller {
             }
         }
 
-
         /* Get All Medias */
         $medias = Media::where(['type' => null])->get();
         $medias_arr = [];

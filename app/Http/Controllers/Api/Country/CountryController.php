@@ -93,7 +93,7 @@ class CountryController extends Controller {
     }
 
     public function get_places(Request $request){
-
+        
         $post = $request->input();
 
         $response = Country::validateCountry($post);

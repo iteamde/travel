@@ -207,4 +207,17 @@ Route::group(['prefix' => 'api'], function () {
         /* Get All Country Places */
         Route::post('/places', 'CountryController@get_places');
     });
+
+    /*
+     * Place Manager
+     */
+    Route::group([
+        'prefix' => 'places',
+        'as' => 'places.',
+        'namespace' => 'Place',
+            ], function () {
+
+        /* Get All Countries */
+        Route::post('/search', 'PlaceController@get_places');
+    });
 });

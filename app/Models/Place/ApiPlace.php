@@ -59,9 +59,9 @@ class ApiPlace extends Place
         }
 
         return  [
-            'id'           => $this->pId,
-            'name'         => $title,
-            'cover_image'  => $photo,
+            'id'                => $this->pId,
+            'name'              => $title,
+            'cover_image'       => $photo,
             'city_country_name' => $countryCityPair 
         ];
     }
