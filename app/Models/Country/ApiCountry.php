@@ -121,9 +121,8 @@ class ApiCountry extends Countries
         if(!isset($post['country_id']) || empty($post['country_id'])){
             $error[] = 'Country id not provided.';
         }else{
-            $country = Self::all();
-            print_r($country);
-            exit;
+            $country = Self::where(['id' => $post['country_id'],'active' => 1])->first();
+
             if(empty($country)){
                 $error[] = 'Wrong country id provided.';
             }
@@ -142,12 +141,46 @@ class ApiCountry extends Countries
 
     public static function getPlaces($post){
 
+        $limit  = 20;
+        $offset = 0;
+        $query  = null;
+        $language = 1;
+
         $country_id = $post['country_id'];
 
-        $places = Place::where(['countries_id' => $country_id,'active' => 1])->get();
+        if(isset($post['offset']) && !empty($post['offset'])){
+            $offset = $post['offset'];
+        }
+
+        if(isset($post['limit']) && !empty($post['limit'])){
+            $limit = $post['limit'];
+        }
+
+        if(isset($post['language_id']) && !empty($post['language_id'])){
+            $language = $post['language_id'];
+        }
+
+        if(isset($post['query']) && !empty($post['query'])){
+            $query = $post['query'];
+        }
+
+        $places = Place::select('places.id as pId','places.*','places_trans.*');
+
+        $places = $places->join('places_trans','places.id','=','places_trans.places_id')
+            ->where(['countries_id' => $country_id,'active' => 1,'languages_id' => $language]);
+
+        if(!empty($query)){
+            $places = $places->where('title','REGEXP',$query);
+        }
+        
+        $places = $places->offset($offset)
+            ->limit($limit)
+            ->orderby('places.id','asc')
+            ->get();
 
         $places_arr = [];
-
+        
+        
         if(!empty($places)){
             foreach ($places as $key => $value) {
                 $places_arr[] = $value->getResponse();
@@ -181,7 +214,7 @@ class ApiCountry extends Countries
         }
 
         return [
-            'id'            => $this->id,
+            'id'            => $this->cId,
             'active'        => $this->active,
             'lat'           => $this->lat,
             'lng'           => $this->lng,

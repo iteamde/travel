@@ -15,6 +15,8 @@ class ApiPlace extends Place
         $medias      = $this->medias;
         $flag_media  = null;
         $first_media = null;
+        $cityname    = null;
+        $countryname = null;
 
         if(!empty($medias)){
             foreach ($medias as $key => $value) {
@@ -29,19 +31,38 @@ class ApiPlace extends Place
 
         if(!empty($flag_media)){
             $photo = $flag_media->url;
-        }else{
+        }else if(!empty($first_media)){
             $photo = $first_media->url;
         }
 
+        if(!empty($this->title)){
+            // $title = $this->transsingle->title;
+            $title = $this->title;
+        }
 
-        if(!empty($this->transsingle)){
-            $title = $this->transsingle->title;
+        if( !empty($this->city) && !empty($this->city->transsingle) ){
+           $cityname = $this->city->transsingle->title;
+        }
+
+        if(!empty($this->country) && !empty($this->country->transsingle)){
+           $countryname = $this->country->transsingle->title;
+        }
+
+        $countryCityPair = '';
+
+        if(!empty($cityname) && !empty($countryname)){
+            $countryCityPair = $cityname . ',' . $countryname;
+        }else{
+            if(!empty($countryname)){
+                $countryCityPair = $countryname;
+            }
         }
 
         return  [
-            'id'           => $this->id,
-            'name'         => $title,
-            'cover_image'  => $photo 
+            'id'                => $this->pId,
+            'name'              => $title,
+            'cover_image'       => $photo,
+            'city_country_name' => $countryCityPair 
         ];
     }
 }
