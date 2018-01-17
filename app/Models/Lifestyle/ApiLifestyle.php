@@ -12,7 +12,8 @@ class ApiLifestyle extends Lifestyle
 
         return  [
             'id'                => $this->lId,
-            'name'              => $title 
+            'name'              => $title,
+            'cover_image' 		=> ''
         ];
     }
 }
