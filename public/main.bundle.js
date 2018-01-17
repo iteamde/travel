@@ -1578,7 +1578,7 @@ var MainComponent = (function () {
     };
     MainComponent.prototype.openSignup = function () {
         $('.step-header').show();
-        $('#signUpStep5').modal('show');
+        $('#signUpStep1').modal('show');
     };
     MainComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
