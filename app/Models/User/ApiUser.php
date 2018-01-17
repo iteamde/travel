@@ -3387,18 +3387,15 @@ class ApiUser extends User {
         /* If Code == null */
         if ($code) {
             $response = [
-                'data' => [
-                    'error' => $code,
-                    'message' => $message,
-                ],
-                'status' => $status
+                'data'    => $message,
+                'code'    => $code,
+                'success' => $status
             ];
         } else {
             $response = [
-                'data' => [
-                    'message' => $message,
-                ],
-                'status' => $status
+                'data'    =>  $message,
+                'code'    => 200,
+                'success' => $status
             ];
         }
 
