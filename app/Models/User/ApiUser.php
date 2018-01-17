@@ -891,14 +891,20 @@ class ApiUser extends User {
             if ($user->status == Self::STATUS_INACTIVE) {
                 /* Activate User And Save */
                 $user->status = Self::STATUS_ACTIVE;
-                $user->save();
+
+                if(! ($user->save()) ){
+                    return [
+                        'success' => false,
+                        'data' => 'Error saving data in DB.',
+                        'code' => 400
+                    ];
+                }
             }
 
             return [
-                'status' => true,
-                'data' => [
-                    'message' => 'Account Activated Successfully'
-                ]
+                'success' => true,
+                'data' => 'Account Activated Successfully',
+                'code' => 200
             ];
         }
     }
