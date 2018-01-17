@@ -217,7 +217,20 @@ Route::group(['prefix' => 'api'], function () {
         'namespace' => 'Place',
             ], function () {
 
-        /* Get All Countries */
+        /* Get All Places */
         Route::post('/search', 'PlaceController@get_places');
+    });
+
+    /*
+     * Lifestyle Manager
+     */
+    Route::group([
+        'prefix' => 'travelstyles',
+        'as' => 'travelstyles.',
+        'namespace' => 'LifeStyle',
+            ], function () {
+
+        /* Get All Lifestyles */
+        Route::post('/search', 'LifeStyleController@get_lifestyles');
     });
 });
