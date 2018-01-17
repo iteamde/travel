@@ -83,6 +83,622 @@ function toComment(sourceMap) {
 
 /***/ }),
 
+/***/ "../../../../ngx-infinite-scroll/modules/ngx-infinite-scroll.es5.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* unused harmony export InfiniteScrollDirective */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return InfiniteScrollModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_add_observable_fromEvent__ = __webpack_require__("../../../../rxjs/_esm5/add/observable/fromEvent.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_observable_of__ = __webpack_require__("../../../../rxjs/_esm5/add/observable/of.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_filter__ = __webpack_require__("../../../../rxjs/_esm5/add/operator/filter.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_mergeMap__ = __webpack_require__("../../../../rxjs/_esm5/add/operator/mergeMap.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map__ = __webpack_require__("../../../../rxjs/_esm5/add/operator/map.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_do__ = __webpack_require__("../../../../rxjs/_esm5/add/operator/do.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs_add_operator_sampleTime__ = __webpack_require__("../../../../rxjs/_esm5/add/operator/sampleTime.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_rxjs_Observable__ = __webpack_require__("../../../../rxjs/_esm5/Observable.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_rxjs_observable_of__ = __webpack_require__("../../../../rxjs/_esm5/observable/of.js");
+
+
+
+
+
+
+
+
+
+
+/**
+ * @param {?} selector
+ * @param {?} scrollWindow
+ * @param {?} defaultElement
+ * @param {?} fromRoot
+ * @return {?}
+ */
+function resolveContainerElement(selector, scrollWindow, defaultElement, fromRoot) {
+    var /** @type {?} */ hasWindow = window && !!window.document && window.document.documentElement;
+    var /** @type {?} */ container = hasWindow && scrollWindow ? window : defaultElement;
+    if (selector) {
+        var /** @type {?} */ containerIsString = selector && hasWindow && typeof selector === 'string';
+        container = containerIsString
+            ? findElement(selector, defaultElement.nativeElement, fromRoot)
+            : selector;
+        if (!container) {
+            throw new Error('ngx-infinite-scroll {resolveContainerElement()}: selector for');
+        }
+    }
+    return container;
+}
+/**
+ * @param {?} selector
+ * @param {?} customRoot
+ * @param {?} fromRoot
+ * @return {?}
+ */
+function findElement(selector, customRoot, fromRoot) {
+    var /** @type {?} */ rootEl = fromRoot ? window.document : customRoot;
+    return rootEl.querySelector(selector);
+}
+/**
+ * @param {?} prop
+ * @return {?}
+ */
+function inputPropChanged(prop) {
+    return prop && !prop.firstChange;
+}
+/**
+ * @return {?}
+ */
+function hasWindowDefined() {
+    return typeof window !== 'undefined';
+}
+var AxisResolver = (function () {
+    /**
+     * @param {?=} vertical
+     */
+    function AxisResolver(vertical) {
+        if (vertical === void 0) { vertical = true; }
+        this.vertical = vertical;
+    }
+    /**
+     * @return {?}
+     */
+    AxisResolver.prototype.clientHeightKey = function () { return this.vertical ? 'clientHeight' : 'clientWidth'; };
+    /**
+     * @return {?}
+     */
+    AxisResolver.prototype.offsetHeightKey = function () { return this.vertical ? 'offsetHeight' : 'offsetWidth'; };
+    /**
+     * @return {?}
+     */
+    AxisResolver.prototype.scrollHeightKey = function () { return this.vertical ? 'scrollHeight' : 'scrollWidth'; };
+    /**
+     * @return {?}
+     */
+    AxisResolver.prototype.pageYOffsetKey = function () { return this.vertical ? 'pageYOffset' : 'pageXOffset'; };
+    /**
+     * @return {?}
+     */
+    AxisResolver.prototype.offsetTopKey = function () { return this.vertical ? 'offsetTop' : 'offsetLeft'; };
+    /**
+     * @return {?}
+     */
+    AxisResolver.prototype.scrollTopKey = function () { return this.vertical ? 'scrollTop' : 'scrollLeft'; };
+    /**
+     * @return {?}
+     */
+    AxisResolver.prototype.topKey = function () { return this.vertical ? 'top' : 'left'; };
+    return AxisResolver;
+}());
+/**
+ * @param {?} alwaysCallback
+ * @param {?} shouldFireScrollEvent
+ * @param {?} isTriggeredCurrentTotal
+ * @return {?}
+ */
+function shouldTriggerEvents(alwaysCallback, shouldFireScrollEvent, isTriggeredCurrentTotal) {
+    return (alwaysCallback || shouldFireScrollEvent) && !isTriggeredCurrentTotal;
+}
+/**
+ * @param {?} __0
+ * @return {?}
+ */
+function createResolver(_a) {
+    var windowElement = _a.windowElement, axis = _a.axis;
+    return createResolverWithContainer({ axis: axis, isWindow: isElementWindow(windowElement) }, windowElement);
+}
+/**
+ * @param {?} resolver
+ * @param {?} windowElement
+ * @return {?}
+ */
+function createResolverWithContainer(resolver, windowElement) {
+    var /** @type {?} */ container = resolver.isWindow || (windowElement && !windowElement.nativeElement)
+        ? windowElement
+        : windowElement.nativeElement;
+    return Object.assign({}, resolver, { container: container });
+}
+/**
+ * @param {?} windowElement
+ * @return {?}
+ */
+function isElementWindow(windowElement) {
+    var /** @type {?} */ isWindow = ['Window', 'global'].some(function (obj) { return Object.prototype.toString.call(windowElement).includes(obj); });
+    return isWindow;
+}
+/**
+ * @param {?} isContainerWindow
+ * @param {?} windowElement
+ * @return {?}
+ */
+function getDocumentElement(isContainerWindow, windowElement) {
+    return isContainerWindow ? windowElement.document.documentElement : null;
+}
+/**
+ * @param {?} element
+ * @param {?} resolver
+ * @return {?}
+ */
+function calculatePoints(element, resolver) {
+    var /** @type {?} */ height = extractHeightForElement(resolver);
+    return resolver.isWindow
+        ? calculatePointsForWindow(height, element, resolver)
+        : calculatePointsForElement(height, element, resolver);
+}
+/**
+ * @param {?} height
+ * @param {?} element
+ * @param {?} resolver
+ * @return {?}
+ */
+function calculatePointsForWindow(height, element, resolver) {
+    var axis = resolver.axis, container = resolver.container, isWindow = resolver.isWindow;
+    var _a = extractHeightPropKeys(axis), offsetHeightKey = _a.offsetHeightKey, clientHeightKey = _a.clientHeightKey;
+    // scrolled until now / current y point
+    var /** @type {?} */ scrolled = height +
+        getElementPageYOffset(getDocumentElement(isWindow, container), axis, isWindow);
+    // total height / most bottom y point
+    var /** @type {?} */ nativeElementHeight = getElementHeight(element.nativeElement, isWindow, offsetHeightKey, clientHeightKey);
+    var /** @type {?} */ totalToScroll = getElementOffsetTop(element.nativeElement, axis, isWindow) +
+        nativeElementHeight;
+    return { height: height, scrolled: scrolled, totalToScroll: totalToScroll };
+}
+/**
+ * @param {?} height
+ * @param {?} element
+ * @param {?} resolver
+ * @return {?}
+ */
+function calculatePointsForElement(height, element, resolver) {
+    var axis = resolver.axis, container = resolver.container;
+    // perhaps use container.offsetTop instead of 'scrollTop'
+    var /** @type {?} */ scrolled = container[axis.scrollTopKey()];
+    var /** @type {?} */ totalToScroll = container[axis.scrollHeightKey()];
+    return { height: height, scrolled: scrolled, totalToScroll: totalToScroll };
+}
+/**
+ * @param {?} axis
+ * @return {?}
+ */
+function extractHeightPropKeys(axis) {
+    return {
+        offsetHeightKey: axis.offsetHeightKey(),
+        clientHeightKey: axis.clientHeightKey()
+    };
+}
+/**
+ * @param {?} __0
+ * @return {?}
+ */
+function extractHeightForElement(_a) {
+    var container = _a.container, isWindow = _a.isWindow, axis = _a.axis;
+    var _b = extractHeightPropKeys(axis), offsetHeightKey = _b.offsetHeightKey, clientHeightKey = _b.clientHeightKey;
+    return getElementHeight(container, isWindow, offsetHeightKey, clientHeightKey);
+}
+/**
+ * @param {?} elem
+ * @param {?} isWindow
+ * @param {?} offsetHeightKey
+ * @param {?} clientHeightKey
+ * @return {?}
+ */
+function getElementHeight(elem, isWindow, offsetHeightKey, clientHeightKey) {
+    if (isNaN(elem[offsetHeightKey])) {
+        return getDocumentElement(isWindow, elem)[clientHeightKey];
+    }
+    else {
+        return elem[offsetHeightKey];
+    }
+}
+/**
+ * @param {?} elem
+ * @param {?} axis
+ * @param {?} isWindow
+ * @return {?}
+ */
+function getElementOffsetTop(elem, axis, isWindow) {
+    var /** @type {?} */ topKey = axis.topKey();
+    // elem = elem.nativeElement;
+    if (!elem.getBoundingClientRect) {
+        // || elem.css('none')) {
+        return;
+    }
+    return (elem.getBoundingClientRect()[topKey] +
+        getElementPageYOffset(elem, axis, isWindow));
+}
+/**
+ * @param {?} elem
+ * @param {?} axis
+ * @param {?} isWindow
+ * @return {?}
+ */
+function getElementPageYOffset(elem, axis, isWindow) {
+    var /** @type {?} */ pageYOffset = axis.pageYOffsetKey();
+    var /** @type {?} */ scrollTop = axis.scrollTopKey();
+    var /** @type {?} */ offsetTop = axis.offsetTopKey();
+    if (isNaN(window[pageYOffset])) {
+        return getDocumentElement(isWindow, elem)[scrollTop];
+    }
+    else if (elem.ownerDocument) {
+        return elem.ownerDocument.defaultView[pageYOffset];
+    }
+    else {
+        return elem[offsetTop];
+    }
+}
+/**
+ * @param {?} container
+ * @param {?} distance
+ * @param {?} scrollingDown
+ * @return {?}
+ */
+function shouldFireScrollEvent(container, distance, scrollingDown) {
+    var /** @type {?} */ remaining;
+    var /** @type {?} */ containerBreakpoint;
+    var /** @type {?} */ scrolledUntilNow = container.height + container.scrolled;
+    if (scrollingDown) {
+        remaining = (container.totalToScroll - scrolledUntilNow) / container.totalToScroll;
+        containerBreakpoint = distance.down / 10;
+    }
+    else {
+        remaining = scrolledUntilNow / container.totalToScroll;
+        containerBreakpoint = distance.up / 10;
+    }
+    var /** @type {?} */ shouldFireEvent = remaining <= containerBreakpoint;
+    return shouldFireEvent;
+}
+/**
+ * @param {?} lastScrollPosition
+ * @param {?} container
+ * @return {?}
+ */
+function isScrollingDownwards(lastScrollPosition, container) {
+    return lastScrollPosition < container.scrolled;
+}
+/**
+ * @param {?} lastScrollPosition
+ * @param {?} container
+ * @param {?} distance
+ * @return {?}
+ */
+function getScrollStats(lastScrollPosition, container, distance) {
+    var /** @type {?} */ scrollDown = isScrollingDownwards(lastScrollPosition, container);
+    return {
+        fire: shouldFireScrollEvent(container, distance, scrollDown),
+        scrollDown: scrollDown
+    };
+}
+/**
+ * @param {?} position
+ * @param {?} scrollState
+ * @return {?}
+ */
+function updateScrollPosition(position, scrollState) {
+    return (scrollState.lastScrollPosition = position);
+}
+/**
+ * @param {?} totalToScroll
+ * @param {?} scrollState
+ * @return {?}
+ */
+function updateTotalToScroll(totalToScroll, scrollState) {
+    if (scrollState.lastTotalToScroll !== totalToScroll) {
+        scrollState.lastTotalToScroll = scrollState.totalToScroll;
+        scrollState.totalToScroll = totalToScroll;
+    }
+}
+/**
+ * @param {?} scrollState
+ * @return {?}
+ */
+/**
+ * @param {?} scroll
+ * @param {?} scrollState
+ * @param {?} triggered
+ * @param {?} isScrollingDown
+ * @return {?}
+ */
+function updateTriggeredFlag(scroll, scrollState, triggered, isScrollingDown) {
+    if (isScrollingDown) {
+        scrollState.triggered.down = scroll;
+    }
+    else {
+        scrollState.triggered.up = scroll;
+    }
+}
+/**
+ * @param {?} totalToScroll
+ * @param {?} scrollState
+ * @param {?} isScrollingDown
+ * @return {?}
+ */
+function isTriggeredScroll(totalToScroll, scrollState, isScrollingDown) {
+    return isScrollingDown
+        ? scrollState.triggered.down === totalToScroll
+        : scrollState.triggered.up === totalToScroll;
+}
+/**
+ * @param {?} scrollState
+ * @param {?} scrolledUntilNow
+ * @param {?} totalToScroll
+ * @return {?}
+ */
+function updateScrollState(scrollState, scrolledUntilNow, totalToScroll) {
+    updateScrollPosition(scrolledUntilNow, scrollState);
+    updateTotalToScroll(totalToScroll, scrollState);
+    // const isSameTotal = isSameTotalToScroll(scrollState);
+    // if (!isSameTotal) {
+    //   updateTriggeredFlag(scrollState, false, isScrollingDown);
+    // }
+}
+/**
+ * @param {?} config
+ * @return {?}
+ */
+function createScroller(config) {
+    var scrollContainer = config.scrollContainer, scrollWindow = config.scrollWindow, element = config.element, fromRoot = config.fromRoot;
+    var /** @type {?} */ resolver = createResolver({
+        axis: new AxisResolver(!config.horizontal),
+        windowElement: resolveContainerElement(scrollContainer, scrollWindow, element, fromRoot)
+    });
+    var startWithTotal = calculatePoints(element, resolver).totalToScroll;
+    var /** @type {?} */ scrollState = {
+        lastScrollPosition: 0,
+        lastTotalToScroll: 0,
+        totalToScroll: startWithTotal,
+        triggered: {
+            down: 0,
+            up: 0
+        }
+    };
+    var /** @type {?} */ options = {
+        container: resolver.container,
+        throttle: config.throttle
+    };
+    var /** @type {?} */ distance = {
+        up: config.upDistance,
+        down: config.downDistance
+    };
+    return attachScrollEvent(options)
+        .mergeMap(function (ev) { return Object(__WEBPACK_IMPORTED_MODULE_9_rxjs_observable_of__["a" /* of */])(calculatePoints(element, resolver)); })
+        .map(function (positionStats) { return toInfiniteScrollParams(scrollState.lastScrollPosition, positionStats, distance); })
+        .do(function (_a) {
+        var stats = _a.stats, scrollDown = _a.scrollDown;
+        return updateScrollState(scrollState, stats.scrolled, stats.totalToScroll);
+    })
+        .filter(function (_a) {
+        var fire = _a.fire, scrollDown = _a.scrollDown, totalToScroll = _a.stats.totalToScroll;
+        return shouldTriggerEvents(fire, config.alwaysCallback, isTriggeredScroll(totalToScroll, scrollState, scrollDown));
+    })
+        .do(function (_a) {
+        var scrollDown = _a.scrollDown, totalToScroll = _a.stats.totalToScroll;
+        updateTriggeredFlag(totalToScroll, scrollState, true, scrollDown);
+    })
+        .map(toInfiniteScrollAction);
+}
+/**
+ * @param {?} options
+ * @return {?}
+ */
+function attachScrollEvent(options) {
+    return __WEBPACK_IMPORTED_MODULE_8_rxjs_Observable__["a" /* Observable */]
+        .fromEvent(options.container, 'scroll')
+        .sampleTime(options.throttle);
+}
+/**
+ * @param {?} lastScrollPosition
+ * @param {?} stats
+ * @param {?} distance
+ * @return {?}
+ */
+function toInfiniteScrollParams(lastScrollPosition, stats, distance) {
+    var _a = getScrollStats(lastScrollPosition, stats, distance), scrollDown = _a.scrollDown, fire = _a.fire;
+    return {
+        scrollDown: scrollDown,
+        fire: fire,
+        stats: stats
+    };
+}
+var InfiniteScrollActions = {
+    DOWN: '[NGX_ISE] DOWN',
+    UP: '[NGX_ISE] UP'
+};
+/**
+ * @param {?} response
+ * @return {?}
+ */
+function toInfiniteScrollAction(response) {
+    var scrollDown = response.scrollDown, currentScrollPosition = response.stats.scrolled;
+    return {
+        type: scrollDown ? InfiniteScrollActions.DOWN : InfiniteScrollActions.UP,
+        payload: {
+            currentScrollPosition: currentScrollPosition
+        }
+    };
+}
+var InfiniteScrollDirective = (function () {
+    /**
+     * @param {?} element
+     * @param {?} zone
+     */
+    function InfiniteScrollDirective(element, zone) {
+        this.element = element;
+        this.zone = zone;
+        this.scrolled = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["v" /* EventEmitter */]();
+        this.scrolledUp = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["v" /* EventEmitter */]();
+        this.infiniteScrollDistance = 2;
+        this.infiniteScrollUpDistance = 1.5;
+        this.infiniteScrollThrottle = 300;
+        this.infiniteScrollDisabled = false;
+        this.infiniteScrollContainer = null;
+        this.scrollWindow = true;
+        this.immediateCheck = false;
+        this.horizontal = false;
+        this.alwaysCallback = false;
+        this.fromRoot = false;
+    }
+    /**
+     * @return {?}
+     */
+    InfiniteScrollDirective.prototype.ngAfterViewInit = function () {
+        if (!this.infiniteScrollDisabled) {
+            this.setup();
+        }
+    };
+    /**
+     * @param {?} __0
+     * @return {?}
+     */
+    InfiniteScrollDirective.prototype.ngOnChanges = function (_a) {
+        var infiniteScrollContainer = _a.infiniteScrollContainer, infiniteScrollDisabled = _a.infiniteScrollDisabled, infiniteScrollDistance = _a.infiniteScrollDistance;
+        var /** @type {?} */ containerChanged = inputPropChanged(infiniteScrollContainer);
+        var /** @type {?} */ disabledChanged = inputPropChanged(infiniteScrollDisabled);
+        var /** @type {?} */ distanceChanged = inputPropChanged(infiniteScrollDistance);
+        var /** @type {?} */ shouldSetup = (!disabledChanged && !this.infiniteScrollDisabled) ||
+            (disabledChanged && !infiniteScrollDisabled.currentValue) || distanceChanged;
+        if (containerChanged || disabledChanged || distanceChanged) {
+            this.destroyScroller();
+            if (shouldSetup) {
+                this.setup();
+            }
+        }
+    };
+    /**
+     * @return {?}
+     */
+    InfiniteScrollDirective.prototype.setup = function () {
+        var _this = this;
+        if (hasWindowDefined()) {
+            this.zone.runOutsideAngular(function () {
+                _this.disposeScroller = createScroller({
+                    fromRoot: _this.fromRoot,
+                    alwaysCallback: _this.alwaysCallback,
+                    disable: _this.infiniteScrollDisabled,
+                    downDistance: _this.infiniteScrollDistance,
+                    element: _this.element,
+                    horizontal: _this.horizontal,
+                    scrollContainer: _this.infiniteScrollContainer,
+                    scrollWindow: _this.scrollWindow,
+                    throttle: _this.infiniteScrollThrottle,
+                    upDistance: _this.infiniteScrollUpDistance
+                }).subscribe(function (payload) { return _this.zone.run(function () { return _this.handleOnScroll(payload); }); });
+            });
+        }
+    };
+    /**
+     * @param {?} __0
+     * @return {?}
+     */
+    InfiniteScrollDirective.prototype.handleOnScroll = function (_a) {
+        var type = _a.type, payload = _a.payload;
+        switch (type) {
+            case InfiniteScrollActions.DOWN:
+                return this.scrolled.emit(payload);
+            case InfiniteScrollActions.UP:
+                return this.scrolledUp.emit(payload);
+            default:
+                return;
+        }
+    };
+    /**
+     * @return {?}
+     */
+    InfiniteScrollDirective.prototype.ngOnDestroy = function () {
+        this.destroyScroller();
+    };
+    /**
+     * @return {?}
+     */
+    InfiniteScrollDirective.prototype.destroyScroller = function () {
+        if (this.disposeScroller) {
+            this.disposeScroller.unsubscribe();
+        }
+    };
+    return InfiniteScrollDirective;
+}());
+InfiniteScrollDirective.decorators = [
+    { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["s" /* Directive */], args: [{
+                selector: '[infiniteScroll], [infinite-scroll], [data-infinite-scroll]'
+            },] },
+];
+/**
+ * @nocollapse
+ */
+InfiniteScrollDirective.ctorParameters = function () { return [
+    { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["t" /* ElementRef */], },
+    { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["N" /* NgZone */], },
+]; };
+InfiniteScrollDirective.propDecorators = {
+    'scrolled': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["P" /* Output */] },],
+    'scrolledUp': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["P" /* Output */] },],
+    'infiniteScrollDistance': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["D" /* Input */] },],
+    'infiniteScrollUpDistance': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["D" /* Input */] },],
+    'infiniteScrollThrottle': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["D" /* Input */] },],
+    'infiniteScrollDisabled': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["D" /* Input */] },],
+    'infiniteScrollContainer': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["D" /* Input */] },],
+    'scrollWindow': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["D" /* Input */] },],
+    'immediateCheck': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["D" /* Input */] },],
+    'horizontal': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["D" /* Input */] },],
+    'alwaysCallback': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["D" /* Input */] },],
+    'fromRoot': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["D" /* Input */] },],
+};
+var InfiniteScrollModule = (function () {
+    function InfiniteScrollModule() {
+    }
+    return InfiniteScrollModule;
+}());
+InfiniteScrollModule.decorators = [
+    { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["I" /* NgModule */], args: [{
+                declarations: [InfiniteScrollDirective],
+                exports: [InfiniteScrollDirective],
+                imports: [],
+                providers: []
+            },] },
+];
+/**
+ * @nocollapse
+ */
+InfiniteScrollModule.ctorParameters = function () { return []; };
+/**
+ * Angular library starter.
+ * Build an Angular library compatible with AoT compilation & Tree shaking.
+ * Written by Roberto Simonetti.
+ * MIT license.
+ * https://github.com/robisim74/angular-library-starter
+ */
+/**
+ * Entry point for all public APIs of the package.
+ */
+/**
+ * Generated bundle index. Do not edit.
+ */
+
+//# sourceMappingURL=ngx-infinite-scroll.es5.js.map
+
+
+/***/ }),
+
 /***/ "../../../../rxjs/_esm5/BehaviorSubject.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -1483,6 +2099,21 @@ function flattenUnsubscriptionErrors(errors) {
 
 /***/ }),
 
+/***/ "../../../../rxjs/_esm5/add/observable/fromEvent.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Observable__ = __webpack_require__("../../../../rxjs/_esm5/Observable.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__observable_fromEvent__ = __webpack_require__("../../../../rxjs/_esm5/observable/fromEvent.js");
+/** PURE_IMPORTS_START .._.._Observable,.._.._observable_fromEvent PURE_IMPORTS_END */
+
+
+__WEBPACK_IMPORTED_MODULE_0__Observable__["a" /* Observable */].fromEvent = __WEBPACK_IMPORTED_MODULE_1__observable_fromEvent__["a" /* fromEvent */];
+//# sourceMappingURL=fromEvent.js.map 
+
+
+/***/ }),
+
 /***/ "../../../../rxjs/_esm5/add/observable/of.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -1543,6 +2174,37 @@ __WEBPACK_IMPORTED_MODULE_0__Observable__["a" /* Observable */].prototype.demate
 
 /***/ }),
 
+/***/ "../../../../rxjs/_esm5/add/operator/do.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Observable__ = __webpack_require__("../../../../rxjs/_esm5/Observable.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__operator_do__ = __webpack_require__("../../../../rxjs/_esm5/operator/do.js");
+/** PURE_IMPORTS_START .._.._Observable,.._.._operator_do PURE_IMPORTS_END */
+
+
+__WEBPACK_IMPORTED_MODULE_0__Observable__["a" /* Observable */].prototype.do = __WEBPACK_IMPORTED_MODULE_1__operator_do__["a" /* _do */];
+__WEBPACK_IMPORTED_MODULE_0__Observable__["a" /* Observable */].prototype._do = __WEBPACK_IMPORTED_MODULE_1__operator_do__["a" /* _do */];
+//# sourceMappingURL=do.js.map 
+
+
+/***/ }),
+
+/***/ "../../../../rxjs/_esm5/add/operator/filter.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Observable__ = __webpack_require__("../../../../rxjs/_esm5/Observable.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__operator_filter__ = __webpack_require__("../../../../rxjs/_esm5/operator/filter.js");
+/** PURE_IMPORTS_START .._.._Observable,.._.._operator_filter PURE_IMPORTS_END */
+
+
+__WEBPACK_IMPORTED_MODULE_0__Observable__["a" /* Observable */].prototype.filter = __WEBPACK_IMPORTED_MODULE_1__operator_filter__["a" /* filter */];
+//# sourceMappingURL=filter.js.map 
+
+
+/***/ }),
+
 /***/ "../../../../rxjs/_esm5/add/operator/map.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -1585,6 +2247,21 @@ __WEBPACK_IMPORTED_MODULE_0__Observable__["a" /* Observable */].prototype.materi
 __WEBPACK_IMPORTED_MODULE_0__Observable__["a" /* Observable */].prototype.mergeMap = __WEBPACK_IMPORTED_MODULE_1__operator_mergeMap__["a" /* mergeMap */];
 __WEBPACK_IMPORTED_MODULE_0__Observable__["a" /* Observable */].prototype.flatMap = __WEBPACK_IMPORTED_MODULE_1__operator_mergeMap__["a" /* mergeMap */];
 //# sourceMappingURL=mergeMap.js.map 
+
+
+/***/ }),
+
+/***/ "../../../../rxjs/_esm5/add/operator/sampleTime.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Observable__ = __webpack_require__("../../../../rxjs/_esm5/Observable.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__operator_sampleTime__ = __webpack_require__("../../../../rxjs/_esm5/operator/sampleTime.js");
+/** PURE_IMPORTS_START .._.._Observable,.._.._operator_sampleTime PURE_IMPORTS_END */
+
+
+__WEBPACK_IMPORTED_MODULE_0__Observable__["a" /* Observable */].prototype.sampleTime = __WEBPACK_IMPORTED_MODULE_1__operator_sampleTime__["a" /* sampleTime */];
+//# sourceMappingURL=sampleTime.js.map 
 
 
 /***/ }),
@@ -2397,6 +3074,237 @@ var ForkJoinSubscriber = /*@__PURE__*/ (/*@__PURE__*/ function (_super) {
 
 /***/ }),
 
+/***/ "../../../../rxjs/_esm5/observable/FromEventObservable.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return FromEventObservable; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Observable__ = __webpack_require__("../../../../rxjs/_esm5/Observable.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__util_tryCatch__ = __webpack_require__("../../../../rxjs/_esm5/util/tryCatch.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__util_isFunction__ = __webpack_require__("../../../../rxjs/_esm5/util/isFunction.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__util_errorObject__ = __webpack_require__("../../../../rxjs/_esm5/util/errorObject.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Subscription__ = __webpack_require__("../../../../rxjs/_esm5/Subscription.js");
+/** PURE_IMPORTS_START .._Observable,.._util_tryCatch,.._util_isFunction,.._util_errorObject,.._Subscription PURE_IMPORTS_END */
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b)
+        if (b.hasOwnProperty(p))
+            d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+
+
+
+
+
+var toString = Object.prototype.toString;
+function isNodeStyleEventEmitter(sourceObj) {
+    return !!sourceObj && typeof sourceObj.addListener === 'function' && typeof sourceObj.removeListener === 'function';
+}
+function isJQueryStyleEventEmitter(sourceObj) {
+    return !!sourceObj && typeof sourceObj.on === 'function' && typeof sourceObj.off === 'function';
+}
+function isNodeList(sourceObj) {
+    return !!sourceObj && toString.call(sourceObj) === '[object NodeList]';
+}
+function isHTMLCollection(sourceObj) {
+    return !!sourceObj && toString.call(sourceObj) === '[object HTMLCollection]';
+}
+function isEventTarget(sourceObj) {
+    return !!sourceObj && typeof sourceObj.addEventListener === 'function' && typeof sourceObj.removeEventListener === 'function';
+}
+/**
+ * We need this JSDoc comment for affecting ESDoc.
+ * @extends {Ignored}
+ * @hide true
+ */
+var FromEventObservable = /*@__PURE__*/ (/*@__PURE__*/ function (_super) {
+    __extends(FromEventObservable, _super);
+    function FromEventObservable(sourceObj, eventName, selector, options) {
+        _super.call(this);
+        this.sourceObj = sourceObj;
+        this.eventName = eventName;
+        this.selector = selector;
+        this.options = options;
+    }
+    /* tslint:enable:max-line-length */
+    /**
+     * Creates an Observable that emits events of a specific type coming from the
+     * given event target.
+     *
+     * <span class="informal">Creates an Observable from DOM events, or Node.js
+     * EventEmitter events or others.</span>
+     *
+     * <img src="./img/fromEvent.png" width="100%">
+     *
+     * `fromEvent` accepts as a first argument event target, which is an object with methods
+     * for registering event handler functions. As a second argument it takes string that indicates
+     * type of event we want to listen for. `fromEvent` supports selected types of event targets,
+     * which are described in detail below. If your event target does not match any of the ones listed,
+     * you should use {@link fromEventPattern}, which can be used on arbitrary APIs.
+     * When it comes to APIs supported by `fromEvent`, their methods for adding and removing event
+     * handler functions have different names, but they all accept a string describing event type
+     * and function itself, which will be called whenever said event happens.
+     *
+     * Every time resulting Observable is subscribed, event handler function will be registered
+     * to event target on given event type. When that event fires, value
+     * passed as a first argument to registered function will be emitted by output Observable.
+     * When Observable is unsubscribed, function will be unregistered from event target.
+     *
+     * Note that if event target calls registered function with more than one argument, second
+     * and following arguments will not appear in resulting stream. In order to get access to them,
+     * you can pass to `fromEvent` optional project function, which will be called with all arguments
+     * passed to event handler. Output Observable will then emit value returned by project function,
+     * instead of the usual value.
+     *
+     * Remember that event targets listed below are checked via duck typing. It means that
+     * no matter what kind of object you have and no matter what environment you work in,
+     * you can safely use `fromEvent` on that object if it exposes described methods (provided
+     * of course they behave as was described above). So for example if Node.js library exposes
+     * event target which has the same method names as DOM EventTarget, `fromEvent` is still
+     * a good choice.
+     *
+     * If the API you use is more callback then event handler oriented (subscribed
+     * callback function fires only once and thus there is no need to manually
+     * unregister it), you should use {@link bindCallback} or {@link bindNodeCallback}
+     * instead.
+     *
+     * `fromEvent` supports following types of event targets:
+     *
+     * **DOM EventTarget**
+     *
+     * This is an object with `addEventListener` and `removeEventListener` methods.
+     *
+     * In the browser, `addEventListener` accepts - apart from event type string and event
+     * handler function arguments - optional third parameter, which is either an object or boolean,
+     * both used for additional configuration how and when passed function will be called. When
+     * `fromEvent` is used with event target of that type, you can provide this values
+     * as third parameter as well.
+     *
+     * **Node.js EventEmitter**
+     *
+     * An object with `addListener` and `removeListener` methods.
+     *
+     * **JQuery-style event target**
+     *
+     * An object with `on` and `off` methods
+     *
+     * **DOM NodeList**
+     *
+     * List of DOM Nodes, returned for example by `document.querySelectorAll` or `Node.childNodes`.
+     *
+     * Although this collection is not event target in itself, `fromEvent` will iterate over all Nodes
+     * it contains and install event handler function in every of them. When returned Observable
+     * is unsubscribed, function will be removed from all Nodes.
+     *
+     * **DOM HtmlCollection**
+     *
+     * Just as in case of NodeList it is a collection of DOM nodes. Here as well event handler function is
+     * installed and removed in each of elements.
+     *
+     *
+     * @example <caption>Emits clicks happening on the DOM document</caption>
+     * var clicks = Rx.Observable.fromEvent(document, 'click');
+     * clicks.subscribe(x => console.log(x));
+     *
+     * // Results in:
+     * // MouseEvent object logged to console every time a click
+     * // occurs on the document.
+     *
+     *
+     * @example <caption>Use addEventListener with capture option</caption>
+     * var clicksInDocument = Rx.Observable.fromEvent(document, 'click', true); // note optional configuration parameter
+     *                                                                          // which will be passed to addEventListener
+     * var clicksInDiv = Rx.Observable.fromEvent(someDivInDocument, 'click');
+     *
+     * clicksInDocument.subscribe(() => console.log('document'));
+     * clicksInDiv.subscribe(() => console.log('div'));
+     *
+     * // By default events bubble UP in DOM tree, so normally
+     * // when we would click on div in document
+     * // "div" would be logged first and then "document".
+     * // Since we specified optional `capture` option, document
+     * // will catch event when it goes DOWN DOM tree, so console
+     * // will log "document" and then "div".
+     *
+     * @see {@link bindCallback}
+     * @see {@link bindNodeCallback}
+     * @see {@link fromEventPattern}
+     *
+     * @param {EventTargetLike} target The DOM EventTarget, Node.js
+     * EventEmitter, JQuery-like event target, NodeList or HTMLCollection to attach the event handler to.
+     * @param {string} eventName The event name of interest, being emitted by the
+     * `target`.
+     * @param {EventListenerOptions} [options] Options to pass through to addEventListener
+     * @param {SelectorMethodSignature<T>} [selector] An optional function to
+     * post-process results. It takes the arguments from the event handler and
+     * should return a single value.
+     * @return {Observable<T>}
+     * @static true
+     * @name fromEvent
+     * @owner Observable
+     */
+    FromEventObservable.create = function (target, eventName, options, selector) {
+        if (Object(__WEBPACK_IMPORTED_MODULE_2__util_isFunction__["a" /* isFunction */])(options)) {
+            selector = options;
+            options = undefined;
+        }
+        return new FromEventObservable(target, eventName, selector, options);
+    };
+    FromEventObservable.setupSubscription = function (sourceObj, eventName, handler, subscriber, options) {
+        var unsubscribe;
+        if (isNodeList(sourceObj) || isHTMLCollection(sourceObj)) {
+            for (var i = 0, len = sourceObj.length; i < len; i++) {
+                FromEventObservable.setupSubscription(sourceObj[i], eventName, handler, subscriber, options);
+            }
+        }
+        else if (isEventTarget(sourceObj)) {
+            var source_1 = sourceObj;
+            sourceObj.addEventListener(eventName, handler, options);
+            unsubscribe = function () { return source_1.removeEventListener(eventName, handler); };
+        }
+        else if (isJQueryStyleEventEmitter(sourceObj)) {
+            var source_2 = sourceObj;
+            sourceObj.on(eventName, handler);
+            unsubscribe = function () { return source_2.off(eventName, handler); };
+        }
+        else if (isNodeStyleEventEmitter(sourceObj)) {
+            var source_3 = sourceObj;
+            sourceObj.addListener(eventName, handler);
+            unsubscribe = function () { return source_3.removeListener(eventName, handler); };
+        }
+        else {
+            throw new TypeError('Invalid event target');
+        }
+        subscriber.add(new __WEBPACK_IMPORTED_MODULE_4__Subscription__["a" /* Subscription */](unsubscribe));
+    };
+    FromEventObservable.prototype._subscribe = function (subscriber) {
+        var sourceObj = this.sourceObj;
+        var eventName = this.eventName;
+        var options = this.options;
+        var selector = this.selector;
+        var handler = selector ? function () {
+            var args = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                args[_i - 0] = arguments[_i];
+            }
+            var result = Object(__WEBPACK_IMPORTED_MODULE_1__util_tryCatch__["a" /* tryCatch */])(selector).apply(void 0, args);
+            if (result === __WEBPACK_IMPORTED_MODULE_3__util_errorObject__["a" /* errorObject */]) {
+                subscriber.error(__WEBPACK_IMPORTED_MODULE_3__util_errorObject__["a" /* errorObject */].e);
+            }
+            else {
+                subscriber.next(result);
+            }
+        } : function (e) { return subscriber.next(e); };
+        FromEventObservable.setupSubscription(sourceObj, eventName, handler, subscriber, options);
+    };
+    return FromEventObservable;
+}(__WEBPACK_IMPORTED_MODULE_0__Observable__["a" /* Observable */]));
+//# sourceMappingURL=FromEventObservable.js.map 
+
+
+/***/ }),
+
 /***/ "../../../../rxjs/_esm5/observable/FromObservable.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -2954,6 +3862,20 @@ var from = __WEBPACK_IMPORTED_MODULE_0__FromObservable__["a" /* FromObservable *
 
 /***/ }),
 
+/***/ "../../../../rxjs/_esm5/observable/fromEvent.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return fromEvent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__FromEventObservable__ = __webpack_require__("../../../../rxjs/_esm5/observable/FromEventObservable.js");
+/** PURE_IMPORTS_START ._FromEventObservable PURE_IMPORTS_END */
+
+var fromEvent = __WEBPACK_IMPORTED_MODULE_0__FromEventObservable__["a" /* FromEventObservable */].create;
+//# sourceMappingURL=fromEvent.js.map 
+
+
+/***/ }),
+
 /***/ "../../../../rxjs/_esm5/observable/fromPromise.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -3426,6 +4348,66 @@ function dematerialize() {
     return Object(__WEBPACK_IMPORTED_MODULE_0__operators_dematerialize__["a" /* dematerialize */])()(this);
 }
 //# sourceMappingURL=dematerialize.js.map 
+
+
+/***/ }),
+
+/***/ "../../../../rxjs/_esm5/operator/do.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = _do;
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__operators_tap__ = __webpack_require__("../../../../rxjs/_esm5/operators/tap.js");
+/** PURE_IMPORTS_START .._operators_tap PURE_IMPORTS_END */
+
+/* tslint:enable:max-line-length */
+/**
+ * Perform a side effect for every emission on the source Observable, but return
+ * an Observable that is identical to the source.
+ *
+ * <span class="informal">Intercepts each emission on the source and runs a
+ * function, but returns an output which is identical to the source as long as errors don't occur.</span>
+ *
+ * <img src="./img/do.png" width="100%">
+ *
+ * Returns a mirrored Observable of the source Observable, but modified so that
+ * the provided Observer is called to perform a side effect for every value,
+ * error, and completion emitted by the source. Any errors that are thrown in
+ * the aforementioned Observer or handlers are safely sent down the error path
+ * of the output Observable.
+ *
+ * This operator is useful for debugging your Observables for the correct values
+ * or performing other side effects.
+ *
+ * Note: this is different to a `subscribe` on the Observable. If the Observable
+ * returned by `do` is not subscribed, the side effects specified by the
+ * Observer will never happen. `do` therefore simply spies on existing
+ * execution, it does not trigger an execution to happen like `subscribe` does.
+ *
+ * @example <caption>Map every click to the clientX position of that click, while also logging the click event</caption>
+ * var clicks = Rx.Observable.fromEvent(document, 'click');
+ * var positions = clicks
+ *   .do(ev => console.log(ev))
+ *   .map(ev => ev.clientX);
+ * positions.subscribe(x => console.log(x));
+ *
+ * @see {@link map}
+ * @see {@link subscribe}
+ *
+ * @param {Observer|function} [nextOrObserver] A normal Observer object or a
+ * callback for `next`.
+ * @param {function} [error] Callback for errors in the source.
+ * @param {function} [complete] Callback for the completion of the source.
+ * @return {Observable} An Observable identical to the source, but runs the
+ * specified Observer or callback(s) for each item.
+ * @method do
+ * @name do
+ * @owner Observable
+ */
+function _do(nextOrObserver, error, complete) {
+    return Object(__WEBPACK_IMPORTED_MODULE_0__operators_tap__["a" /* tap */])(nextOrObserver, error, complete)(this);
+}
+//# sourceMappingURL=do.js.map 
 
 
 /***/ }),
@@ -3930,6 +4912,63 @@ function reduce(accumulator, seed) {
     return Object(__WEBPACK_IMPORTED_MODULE_0__operators_reduce__["a" /* reduce */])(accumulator)(this);
 }
 //# sourceMappingURL=reduce.js.map 
+
+
+/***/ }),
+
+/***/ "../../../../rxjs/_esm5/operator/sampleTime.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = sampleTime;
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__scheduler_async__ = __webpack_require__("../../../../rxjs/_esm5/scheduler/async.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__operators_sampleTime__ = __webpack_require__("../../../../rxjs/_esm5/operators/sampleTime.js");
+/** PURE_IMPORTS_START .._scheduler_async,.._operators_sampleTime PURE_IMPORTS_END */
+
+
+/**
+ * Emits the most recently emitted value from the source Observable within
+ * periodic time intervals.
+ *
+ * <span class="informal">Samples the source Observable at periodic time
+ * intervals, emitting what it samples.</span>
+ *
+ * <img src="./img/sampleTime.png" width="100%">
+ *
+ * `sampleTime` periodically looks at the source Observable and emits whichever
+ * value it has most recently emitted since the previous sampling, unless the
+ * source has not emitted anything since the previous sampling. The sampling
+ * happens periodically in time every `period` milliseconds (or the time unit
+ * defined by the optional `scheduler` argument). The sampling starts as soon as
+ * the output Observable is subscribed.
+ *
+ * @example <caption>Every second, emit the most recent click at most once</caption>
+ * var clicks = Rx.Observable.fromEvent(document, 'click');
+ * var result = clicks.sampleTime(1000);
+ * result.subscribe(x => console.log(x));
+ *
+ * @see {@link auditTime}
+ * @see {@link debounceTime}
+ * @see {@link delay}
+ * @see {@link sample}
+ * @see {@link throttleTime}
+ *
+ * @param {number} period The sampling period expressed in milliseconds or the
+ * time unit determined internally by the optional `scheduler`.
+ * @param {Scheduler} [scheduler=async] The {@link IScheduler} to use for
+ * managing the timers that handle the sampling.
+ * @return {Observable<T>} An Observable that emits the results of sampling the
+ * values emitted by the source Observable at the specified time interval.
+ * @method sampleTime
+ * @owner Observable
+ */
+function sampleTime(period, scheduler) {
+    if (scheduler === void 0) {
+        scheduler = __WEBPACK_IMPORTED_MODULE_0__scheduler_async__["a" /* async */];
+    }
+    return Object(__WEBPACK_IMPORTED_MODULE_1__operators_sampleTime__["a" /* sampleTime */])(period, scheduler)(this);
+}
+//# sourceMappingURL=sampleTime.js.map 
 
 
 /***/ }),
@@ -5887,6 +6926,111 @@ var RefCountSubscriber = /*@__PURE__*/ (/*@__PURE__*/ function (_super) {
 
 /***/ }),
 
+/***/ "../../../../rxjs/_esm5/operators/sampleTime.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = sampleTime;
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Subscriber__ = __webpack_require__("../../../../rxjs/_esm5/Subscriber.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__scheduler_async__ = __webpack_require__("../../../../rxjs/_esm5/scheduler/async.js");
+/** PURE_IMPORTS_START .._Subscriber,.._scheduler_async PURE_IMPORTS_END */
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b)
+        if (b.hasOwnProperty(p))
+            d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+
+
+/**
+ * Emits the most recently emitted value from the source Observable within
+ * periodic time intervals.
+ *
+ * <span class="informal">Samples the source Observable at periodic time
+ * intervals, emitting what it samples.</span>
+ *
+ * <img src="./img/sampleTime.png" width="100%">
+ *
+ * `sampleTime` periodically looks at the source Observable and emits whichever
+ * value it has most recently emitted since the previous sampling, unless the
+ * source has not emitted anything since the previous sampling. The sampling
+ * happens periodically in time every `period` milliseconds (or the time unit
+ * defined by the optional `scheduler` argument). The sampling starts as soon as
+ * the output Observable is subscribed.
+ *
+ * @example <caption>Every second, emit the most recent click at most once</caption>
+ * var clicks = Rx.Observable.fromEvent(document, 'click');
+ * var result = clicks.sampleTime(1000);
+ * result.subscribe(x => console.log(x));
+ *
+ * @see {@link auditTime}
+ * @see {@link debounceTime}
+ * @see {@link delay}
+ * @see {@link sample}
+ * @see {@link throttleTime}
+ *
+ * @param {number} period The sampling period expressed in milliseconds or the
+ * time unit determined internally by the optional `scheduler`.
+ * @param {Scheduler} [scheduler=async] The {@link IScheduler} to use for
+ * managing the timers that handle the sampling.
+ * @return {Observable<T>} An Observable that emits the results of sampling the
+ * values emitted by the source Observable at the specified time interval.
+ * @method sampleTime
+ * @owner Observable
+ */
+function sampleTime(period, scheduler) {
+    if (scheduler === void 0) {
+        scheduler = __WEBPACK_IMPORTED_MODULE_1__scheduler_async__["a" /* async */];
+    }
+    return function (source) { return source.lift(new SampleTimeOperator(period, scheduler)); };
+}
+var SampleTimeOperator = /*@__PURE__*/ (/*@__PURE__*/ function () {
+    function SampleTimeOperator(period, scheduler) {
+        this.period = period;
+        this.scheduler = scheduler;
+    }
+    SampleTimeOperator.prototype.call = function (subscriber, source) {
+        return source.subscribe(new SampleTimeSubscriber(subscriber, this.period, this.scheduler));
+    };
+    return SampleTimeOperator;
+}());
+/**
+ * We need this JSDoc comment for affecting ESDoc.
+ * @ignore
+ * @extends {Ignored}
+ */
+var SampleTimeSubscriber = /*@__PURE__*/ (/*@__PURE__*/ function (_super) {
+    __extends(SampleTimeSubscriber, _super);
+    function SampleTimeSubscriber(destination, period, scheduler) {
+        _super.call(this, destination);
+        this.period = period;
+        this.scheduler = scheduler;
+        this.hasValue = false;
+        this.add(scheduler.schedule(dispatchNotification, period, { subscriber: this, period: period }));
+    }
+    SampleTimeSubscriber.prototype._next = function (value) {
+        this.lastValue = value;
+        this.hasValue = true;
+    };
+    SampleTimeSubscriber.prototype.notifyNext = function () {
+        if (this.hasValue) {
+            this.hasValue = false;
+            this.destination.next(this.lastValue);
+        }
+    };
+    return SampleTimeSubscriber;
+}(__WEBPACK_IMPORTED_MODULE_0__Subscriber__["a" /* Subscriber */]));
+function dispatchNotification(state) {
+    var subscriber = state.subscriber, period = state.period;
+    subscriber.notifyNext();
+    this.schedule(state, period);
+}
+//# sourceMappingURL=sampleTime.js.map 
+
+
+/***/ }),
+
 /***/ "../../../../rxjs/_esm5/operators/scan.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -6175,6 +7319,130 @@ var TakeLastSubscriber = /*@__PURE__*/ (/*@__PURE__*/ function (_super) {
     return TakeLastSubscriber;
 }(__WEBPACK_IMPORTED_MODULE_0__Subscriber__["a" /* Subscriber */]));
 //# sourceMappingURL=takeLast.js.map 
+
+
+/***/ }),
+
+/***/ "../../../../rxjs/_esm5/operators/tap.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = tap;
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Subscriber__ = __webpack_require__("../../../../rxjs/_esm5/Subscriber.js");
+/** PURE_IMPORTS_START .._Subscriber PURE_IMPORTS_END */
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b)
+        if (b.hasOwnProperty(p))
+            d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+
+/* tslint:enable:max-line-length */
+/**
+ * Perform a side effect for every emission on the source Observable, but return
+ * an Observable that is identical to the source.
+ *
+ * <span class="informal">Intercepts each emission on the source and runs a
+ * function, but returns an output which is identical to the source as long as errors don't occur.</span>
+ *
+ * <img src="./img/do.png" width="100%">
+ *
+ * Returns a mirrored Observable of the source Observable, but modified so that
+ * the provided Observer is called to perform a side effect for every value,
+ * error, and completion emitted by the source. Any errors that are thrown in
+ * the aforementioned Observer or handlers are safely sent down the error path
+ * of the output Observable.
+ *
+ * This operator is useful for debugging your Observables for the correct values
+ * or performing other side effects.
+ *
+ * Note: this is different to a `subscribe` on the Observable. If the Observable
+ * returned by `do` is not subscribed, the side effects specified by the
+ * Observer will never happen. `do` therefore simply spies on existing
+ * execution, it does not trigger an execution to happen like `subscribe` does.
+ *
+ * @example <caption>Map every click to the clientX position of that click, while also logging the click event</caption>
+ * var clicks = Rx.Observable.fromEvent(document, 'click');
+ * var positions = clicks
+ *   .do(ev => console.log(ev))
+ *   .map(ev => ev.clientX);
+ * positions.subscribe(x => console.log(x));
+ *
+ * @see {@link map}
+ * @see {@link subscribe}
+ *
+ * @param {Observer|function} [nextOrObserver] A normal Observer object or a
+ * callback for `next`.
+ * @param {function} [error] Callback for errors in the source.
+ * @param {function} [complete] Callback for the completion of the source.
+ * @return {Observable} An Observable identical to the source, but runs the
+ * specified Observer or callback(s) for each item.
+ * @name tap
+ */
+function tap(nextOrObserver, error, complete) {
+    return function tapOperatorFunction(source) {
+        return source.lift(new DoOperator(nextOrObserver, error, complete));
+    };
+}
+var DoOperator = /*@__PURE__*/ (/*@__PURE__*/ function () {
+    function DoOperator(nextOrObserver, error, complete) {
+        this.nextOrObserver = nextOrObserver;
+        this.error = error;
+        this.complete = complete;
+    }
+    DoOperator.prototype.call = function (subscriber, source) {
+        return source.subscribe(new DoSubscriber(subscriber, this.nextOrObserver, this.error, this.complete));
+    };
+    return DoOperator;
+}());
+/**
+ * We need this JSDoc comment for affecting ESDoc.
+ * @ignore
+ * @extends {Ignored}
+ */
+var DoSubscriber = /*@__PURE__*/ (/*@__PURE__*/ function (_super) {
+    __extends(DoSubscriber, _super);
+    function DoSubscriber(destination, nextOrObserver, error, complete) {
+        _super.call(this, destination);
+        var safeSubscriber = new __WEBPACK_IMPORTED_MODULE_0__Subscriber__["a" /* Subscriber */](nextOrObserver, error, complete);
+        safeSubscriber.syncErrorThrowable = true;
+        this.add(safeSubscriber);
+        this.safeSubscriber = safeSubscriber;
+    }
+    DoSubscriber.prototype._next = function (value) {
+        var safeSubscriber = this.safeSubscriber;
+        safeSubscriber.next(value);
+        if (safeSubscriber.syncErrorThrown) {
+            this.destination.error(safeSubscriber.syncErrorValue);
+        }
+        else {
+            this.destination.next(value);
+        }
+    };
+    DoSubscriber.prototype._error = function (err) {
+        var safeSubscriber = this.safeSubscriber;
+        safeSubscriber.error(err);
+        if (safeSubscriber.syncErrorThrown) {
+            this.destination.error(safeSubscriber.syncErrorValue);
+        }
+        else {
+            this.destination.error(err);
+        }
+    };
+    DoSubscriber.prototype._complete = function () {
+        var safeSubscriber = this.safeSubscriber;
+        safeSubscriber.complete();
+        if (safeSubscriber.syncErrorThrown) {
+            this.destination.error(safeSubscriber.syncErrorValue);
+        }
+        else {
+            this.destination.complete();
+        }
+    };
+    return DoSubscriber;
+}(__WEBPACK_IMPORTED_MODULE_0__Subscriber__["a" /* Subscriber */]));
+//# sourceMappingURL=tap.js.map 
 
 
 /***/ }),

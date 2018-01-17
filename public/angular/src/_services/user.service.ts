@@ -16,7 +16,8 @@ export class UserService extends ManagerService{
             super();
     }
 
-    create(user: User) {
+    // signup
+    signupStep1(user: User) {
         // add authorization header with jwt token
         let headers = new Headers({ 'Authorization': 'Bearer ' + "as" });
         let options = new RequestOptions({ body: user, headers: headers });
@@ -26,13 +27,47 @@ export class UserService extends ManagerService{
             .map((response: Response) => response.json());
     }
 
-    createStep2(user: User) {
+    // save user profile info
+    signupStep2(user: User) {
         // add authorization header with jwt token
         let headers = new Headers({ 'Authorization': 'Bearer ' + "as" });
         let options = new RequestOptions({ body: user, headers: headers });
 
         // get users from api
         return this.http.post(this.apiPrefix+'/users/create/step2', user)
+            .map((response: Response) => response.json());
+    }
+
+    // save user selected countries
+    signupStep3(data) {
+        // add authorization header with jwt token
+        let headers = new Headers({ 'Authorization': 'Bearer ' + "as" });
+        let options = new RequestOptions({ body: data, headers: headers });
+
+        // get users from api
+        return this.http.post(this.apiPrefix+'/users/set/fav_countries', data)
+            .map((response: Response) => response.json());
+    }
+
+    // save user selected places
+    signupStep4(data) {
+        // add authorization header with jwt token
+        let headers = new Headers({ 'Authorization': 'Bearer ' + "as" });
+        let options = new RequestOptions({ body: data, headers: headers });
+
+        // get users from api
+        return this.http.post(this.apiPrefix+'/users/set/fav_places', data)
+            .map((response: Response) => response.json());
+    }
+
+    // save user selected styles
+    signupStep5(data) {
+        // add authorization header with jwt token
+        let headers = new Headers({ 'Authorization': 'Bearer ' + "as" });
+        let options = new RequestOptions({ body: data, headers: headers });
+
+        // get users from api
+        return this.http.post(this.apiPrefix+'/users/set/travel_styles', data)
             .map((response: Response) => response.json());
     }
 

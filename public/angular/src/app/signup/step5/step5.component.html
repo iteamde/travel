@@ -1,0 +1,43 @@
+<!-- Modal -->
+<div class="modal fade signUpStep" id="signUpStep5" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
+ data-backdrop="static" data-keyboard="false">
+	<div class="modal-dialog sign-up-step" role="document">
+		<div class="modal-content">
+			<div class="modal-body">
+				<div class="title-layer">
+					<h3 class="step-ttl">Select your preferred
+						<span>travel styles</span>
+					</h3>
+					<div class="step-info">
+						Step 3
+						<span>of 6</span>
+					</div>
+				</div>
+
+				<div class="search-block-wrap">
+					<div class="search-block">
+						<a class="search-btn" href="#">
+							<i class="fa fa-search"></i>
+						</a>
+						<input type="text" name="searchQuery" [(ngModel)]="searchQuery" placeholder="Travel style..." (input)="search()" />
+					</div>
+				</div>
+
+				<div class="check-block-wrap" id="select_styles">
+					<div *ngFor="let style of styles">
+						<div class="check-block" [style.background-image]="'url('+ getCoverImage(style.cover_image) +')'" [class.checked-block]="selected.indexOf(style.id)>=0"
+						 (click)="select(style.id)">
+							<div class="check-ttl">
+								<h4>{{ style.name }} </h4>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-grey" [disabled]="5 - this.selected.length || loading" (click)="continueStep5()">{{ continueBtnText }}</button>
+				<p class="sub-info">(Next Step: Favorite Activities)</p>
+			</div>
+		</div>
+	</div>
+</div>

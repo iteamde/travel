@@ -13,10 +13,6 @@ $(document).ready(function(){
 	$('#createAccount2').on('shown.bs.modal', function () {
 		$('input[name=name]').focus();
   });
-  
-  $('.signUpStep').on('hidden.bs.modal', function () {
-		$('.step-header').hide();
-	});
 	
   $('#createPostTxt').on('keyup', function(){
     let inputVal = $(this).val();

@@ -522,6 +522,68 @@ var AuthenticationService = (function (_super) {
 
 /***/ }),
 
+/***/ "../../../../../src/_services/countries.service.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CountriesService; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__("../../../http/esm5/http.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__("../../../../rxjs/_esm5/add/operator/map.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_authentication_service__ = __webpack_require__("../../../../../src/_services/authentication.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__manager_service__ = __webpack_require__("../../../../../src/_services/manager.service.ts");
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+var CountriesService = (function (_super) {
+    __extends(CountriesService, _super);
+    function CountriesService(http, authenticationService) {
+        var _this = _super.call(this) || this;
+        _this.http = http;
+        _this.authenticationService = authenticationService;
+        return _this;
+    }
+    CountriesService.prototype.loadMore = function (data) {
+        // add authorization header with jwt token
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({ 'Authorization': 'Bearer ' + "as" });
+        var options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ body: data, headers: headers });
+        // get users from api
+        return this.http.post(this.apiPrefix + '/countries/search', data)
+            .map(function (response) { return response.json(); });
+    };
+    CountriesService = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */],
+            __WEBPACK_IMPORTED_MODULE_3__services_authentication_service__["a" /* AuthenticationService */]])
+    ], CountriesService);
+    return CountriesService;
+}(__WEBPACK_IMPORTED_MODULE_4__manager_service__["a" /* ManagerService */]));
+
+
+
+/***/ }),
+
 /***/ "../../../../../src/_services/index.ts":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -531,7 +593,16 @@ var AuthenticationService = (function (_super) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__authentication_service__ = __webpack_require__("../../../../../src/_services/authentication.service.ts");
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_1__authentication_service__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__user_service__ = __webpack_require__("../../../../../src/_services/user.service.ts");
-/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "c", function() { return __WEBPACK_IMPORTED_MODULE_2__user_service__["a"]; });
+/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "f", function() { return __WEBPACK_IMPORTED_MODULE_2__user_service__["a"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__countries_service__ = __webpack_require__("../../../../../src/_services/countries.service.ts");
+/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "c", function() { return __WEBPACK_IMPORTED_MODULE_3__countries_service__["a"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__places_service__ = __webpack_require__("../../../../../src/_services/places.service.ts");
+/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "d", function() { return __WEBPACK_IMPORTED_MODULE_4__places_service__["a"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__travel_styles_service__ = __webpack_require__("../../../../../src/_services/travel-styles.service.ts");
+/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "e", function() { return __WEBPACK_IMPORTED_MODULE_5__travel_styles_service__["a"]; });
+
+
+
 
 
 
@@ -557,7 +628,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 var ManagerService = (function () {
     function ManagerService() {
-        this.apiPrefix = "/public/api";
+        this.apiPrefix = "/travo/public/api";
     }
     ManagerService = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
@@ -565,6 +636,130 @@ var ManagerService = (function () {
     ], ManagerService);
     return ManagerService;
 }());
+
+
+
+/***/ }),
+
+/***/ "../../../../../src/_services/places.service.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PlacesService; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__("../../../http/esm5/http.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__("../../../../rxjs/_esm5/add/operator/map.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_authentication_service__ = __webpack_require__("../../../../../src/_services/authentication.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__manager_service__ = __webpack_require__("../../../../../src/_services/manager.service.ts");
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+var PlacesService = (function (_super) {
+    __extends(PlacesService, _super);
+    function PlacesService(http, authenticationService) {
+        var _this = _super.call(this) || this;
+        _this.http = http;
+        _this.authenticationService = authenticationService;
+        return _this;
+    }
+    PlacesService.prototype.loadMore = function (data) {
+        // add authorization header with jwt token
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({ 'Authorization': 'Bearer ' + "as" });
+        var options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ body: data, headers: headers });
+        // get users from api
+        return this.http.post(this.apiPrefix + '/places/search', data)
+            .map(function (response) { return response.json(); });
+    };
+    PlacesService = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */],
+            __WEBPACK_IMPORTED_MODULE_3__services_authentication_service__["a" /* AuthenticationService */]])
+    ], PlacesService);
+    return PlacesService;
+}(__WEBPACK_IMPORTED_MODULE_4__manager_service__["a" /* ManagerService */]));
+
+
+
+/***/ }),
+
+/***/ "../../../../../src/_services/travel-styles.service.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TravelStylesService; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__("../../../http/esm5/http.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__("../../../../rxjs/_esm5/add/operator/map.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_authentication_service__ = __webpack_require__("../../../../../src/_services/authentication.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__manager_service__ = __webpack_require__("../../../../../src/_services/manager.service.ts");
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+var TravelStylesService = (function (_super) {
+    __extends(TravelStylesService, _super);
+    function TravelStylesService(http, authenticationService) {
+        var _this = _super.call(this) || this;
+        _this.http = http;
+        _this.authenticationService = authenticationService;
+        return _this;
+    }
+    TravelStylesService.prototype.loadMore = function (data) {
+        // add authorization header with jwt token
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({ 'Authorization': 'Bearer ' + "as" });
+        var options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ body: data, headers: headers });
+        // get users from api
+        return this.http.post(this.apiPrefix + '/travelstyles/search', data)
+            .map(function (response) { return response.json(); });
+    };
+    TravelStylesService = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */],
+            __WEBPACK_IMPORTED_MODULE_3__services_authentication_service__["a" /* AuthenticationService */]])
+    ], TravelStylesService);
+    return TravelStylesService;
+}(__WEBPACK_IMPORTED_MODULE_4__manager_service__["a" /* ManagerService */]));
 
 
 
@@ -612,7 +807,8 @@ var UserService = (function (_super) {
         _this.authenticationService = authenticationService;
         return _this;
     }
-    UserService.prototype.create = function (user) {
+    // signup
+    UserService.prototype.signupStep1 = function (user) {
         // add authorization header with jwt token
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({ 'Authorization': 'Bearer ' + "as" });
         var options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ body: user, headers: headers });
@@ -620,12 +816,40 @@ var UserService = (function (_super) {
         return this.http.post(this.apiPrefix + '/users/create', user)
             .map(function (response) { return response.json(); });
     };
-    UserService.prototype.createStep2 = function (user) {
+    // save user profile info
+    UserService.prototype.signupStep2 = function (user) {
         // add authorization header with jwt token
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({ 'Authorization': 'Bearer ' + "as" });
         var options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ body: user, headers: headers });
         // get users from api
         return this.http.post(this.apiPrefix + '/users/create/step2', user)
+            .map(function (response) { return response.json(); });
+    };
+    // save user selected countries
+    UserService.prototype.signupStep3 = function (data) {
+        // add authorization header with jwt token
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({ 'Authorization': 'Bearer ' + "as" });
+        var options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ body: data, headers: headers });
+        // get users from api
+        return this.http.post(this.apiPrefix + '/users/set/fav_countries', data)
+            .map(function (response) { return response.json(); });
+    };
+    // save user selected places
+    UserService.prototype.signupStep4 = function (data) {
+        // add authorization header with jwt token
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({ 'Authorization': 'Bearer ' + "as" });
+        var options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ body: data, headers: headers });
+        // get users from api
+        return this.http.post(this.apiPrefix + '/users/set/fav_places', data)
+            .map(function (response) { return response.json(); });
+    };
+    // save user selected styles
+    UserService.prototype.signupStep5 = function (data) {
+        // add authorization header with jwt token
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({ 'Authorization': 'Bearer ' + "as" });
+        var options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ body: data, headers: headers });
+        // get users from api
+        return this.http.post(this.apiPrefix + '/users/set/travel_styles', data)
             .map(function (response) { return response.json(); });
     };
     UserService.prototype.getUsers = function () {
@@ -764,28 +988,35 @@ var AppComponent = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__("../../../forms/esm5/forms.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_common_http__ = __webpack_require__("../../../common/esm5/http.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_http__ = __webpack_require__("../../../http/esm5/http.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_routing_module__ = __webpack_require__("../../../../../src/app/app-routing.module.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__directives_index__ = __webpack_require__("../../../../../src/_directives/index.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__guards_index__ = __webpack_require__("../../../../../src/_guards/index.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__helpers_index__ = __webpack_require__("../../../../../src/_helpers/index.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__services_index__ = __webpack_require__("../../../../../src/_services/index.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__app_component__ = __webpack_require__("../../../../../src/app/app.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__login_login_component__ = __webpack_require__("../../../../../src/app/login/login.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__main_main_component__ = __webpack_require__("../../../../../src/app/main/main.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__signup_signup_component__ = __webpack_require__("../../../../../src/app/signup/signup.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__home_home_component__ = __webpack_require__("../../../../../src/app/home/home.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__header_header_component__ = __webpack_require__("../../../../../src/app/header/header.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__left_side_bar_left_side_bar_component__ = __webpack_require__("../../../../../src/app/left-side-bar/left-side-bar.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__side_footer_side_footer_component__ = __webpack_require__("../../../../../src/app/side-footer/side-footer.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__right_side_bar_right_side_bar_component__ = __webpack_require__("../../../../../src/app/right-side-bar/right-side-bar.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__posts_posts_component__ = __webpack_require__("../../../../../src/app/posts/posts.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__create_post_create_post_component__ = __webpack_require__("../../../../../src/app/create-post/create-post.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ngx_infinite_scroll__ = __webpack_require__("../../../../ngx-infinite-scroll/modules/ngx-infinite-scroll.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__app_routing_module__ = __webpack_require__("../../../../../src/app/app-routing.module.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__directives_index__ = __webpack_require__("../../../../../src/_directives/index.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__guards_index__ = __webpack_require__("../../../../../src/_guards/index.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__helpers_index__ = __webpack_require__("../../../../../src/_helpers/index.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__services_index__ = __webpack_require__("../../../../../src/_services/index.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__app_component__ = __webpack_require__("../../../../../src/app/app.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__login_login_component__ = __webpack_require__("../../../../../src/app/login/login.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__main_main_component__ = __webpack_require__("../../../../../src/app/main/main.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__signup_signup_component__ = __webpack_require__("../../../../../src/app/signup/signup.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__home_home_component__ = __webpack_require__("../../../../../src/app/home/home.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__header_header_component__ = __webpack_require__("../../../../../src/app/header/header.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__left_side_bar_left_side_bar_component__ = __webpack_require__("../../../../../src/app/left-side-bar/left-side-bar.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__side_footer_side_footer_component__ = __webpack_require__("../../../../../src/app/side-footer/side-footer.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__right_side_bar_right_side_bar_component__ = __webpack_require__("../../../../../src/app/right-side-bar/right-side-bar.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__posts_posts_component__ = __webpack_require__("../../../../../src/app/posts/posts.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__create_post_create_post_component__ = __webpack_require__("../../../../../src/app/create-post/create-post.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__signup_step1_step1_component__ = __webpack_require__("../../../../../src/app/signup/step1/step1.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__signup_step2_step2_component__ = __webpack_require__("../../../../../src/app/signup/step2/step2.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__signup_step3_step3_component__ = __webpack_require__("../../../../../src/app/signup/step3/step3.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__signup_step4_step4_component__ = __webpack_require__("../../../../../src/app/signup/step4/step4.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__signup_step5_step5_component__ = __webpack_require__("../../../../../src/app/signup/step5/step5.component.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -809,6 +1040,11 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
+
+
+
+
+
 var AppModule = (function () {
     function AppModule() {
     }
@@ -816,38 +1052,49 @@ var AppModule = (function () {
         Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["I" /* NgModule */])({
             imports: [
                 __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
-                __WEBPACK_IMPORTED_MODULE_5__app_routing_module__["a" /* AppRoutingModule */],
+                __WEBPACK_IMPORTED_MODULE_6__app_routing_module__["a" /* AppRoutingModule */],
                 __WEBPACK_IMPORTED_MODULE_2__angular_forms__["c" /* FormsModule */],
                 __WEBPACK_IMPORTED_MODULE_3__angular_common_http__["b" /* HttpClientModule */],
                 __WEBPACK_IMPORTED_MODULE_4__angular_http__["c" /* HttpModule */],
-                __WEBPACK_IMPORTED_MODULE_2__angular_forms__["d" /* ReactiveFormsModule */]
+                __WEBPACK_IMPORTED_MODULE_2__angular_forms__["d" /* ReactiveFormsModule */],
+                __WEBPACK_IMPORTED_MODULE_5_ngx_infinite_scroll__["a" /* InfiniteScrollModule */]
             ],
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_10__app_component__["a" /* AppComponent */],
-                __WEBPACK_IMPORTED_MODULE_11__login_login_component__["a" /* LoginComponent */],
-                __WEBPACK_IMPORTED_MODULE_12__main_main_component__["a" /* MainComponent */],
-                __WEBPACK_IMPORTED_MODULE_13__signup_signup_component__["a" /* SignupComponent */],
-                __WEBPACK_IMPORTED_MODULE_6__directives_index__["a" /* AlertComponent */],
-                __WEBPACK_IMPORTED_MODULE_14__home_home_component__["a" /* HomeComponent */],
-                __WEBPACK_IMPORTED_MODULE_15__header_header_component__["a" /* HeaderComponent */],
-                __WEBPACK_IMPORTED_MODULE_16__left_side_bar_left_side_bar_component__["a" /* LeftSideBarComponent */],
-                __WEBPACK_IMPORTED_MODULE_17__side_footer_side_footer_component__["a" /* SideFooterComponent */],
-                __WEBPACK_IMPORTED_MODULE_18__right_side_bar_right_side_bar_component__["a" /* RightSideBarComponent */],
-                __WEBPACK_IMPORTED_MODULE_19__posts_posts_component__["a" /* PostsComponent */],
-                __WEBPACK_IMPORTED_MODULE_20__create_post_create_post_component__["a" /* CreatePostComponent */]
+                __WEBPACK_IMPORTED_MODULE_11__app_component__["a" /* AppComponent */],
+                __WEBPACK_IMPORTED_MODULE_12__login_login_component__["a" /* LoginComponent */],
+                __WEBPACK_IMPORTED_MODULE_13__main_main_component__["a" /* MainComponent */],
+                __WEBPACK_IMPORTED_MODULE_14__signup_signup_component__["a" /* SignupComponent */],
+                __WEBPACK_IMPORTED_MODULE_7__directives_index__["a" /* AlertComponent */],
+                __WEBPACK_IMPORTED_MODULE_15__home_home_component__["a" /* HomeComponent */],
+                __WEBPACK_IMPORTED_MODULE_16__header_header_component__["a" /* HeaderComponent */],
+                __WEBPACK_IMPORTED_MODULE_17__left_side_bar_left_side_bar_component__["a" /* LeftSideBarComponent */],
+                __WEBPACK_IMPORTED_MODULE_18__side_footer_side_footer_component__["a" /* SideFooterComponent */],
+                __WEBPACK_IMPORTED_MODULE_19__right_side_bar_right_side_bar_component__["a" /* RightSideBarComponent */],
+                __WEBPACK_IMPORTED_MODULE_20__posts_posts_component__["a" /* PostsComponent */],
+                __WEBPACK_IMPORTED_MODULE_21__create_post_create_post_component__["a" /* CreatePostComponent */],
+                __WEBPACK_IMPORTED_MODULE_22__signup_step1_step1_component__["a" /* Step1Component */],
+                __WEBPACK_IMPORTED_MODULE_23__signup_step2_step2_component__["a" /* Step2Component */],
+                __WEBPACK_IMPORTED_MODULE_24__signup_step3_step3_component__["a" /* Step3Component */],
+                __WEBPACK_IMPORTED_MODULE_25__signup_step4_step4_component__["a" /* Step4Component */],
+                __WEBPACK_IMPORTED_MODULE_26__signup_step5_step5_component__["a" /* Step5Component */]
             ],
             providers: [
-                __WEBPACK_IMPORTED_MODULE_7__guards_index__["a" /* AuthGuard */],
-                __WEBPACK_IMPORTED_MODULE_9__services_index__["a" /* AlertService */],
-                __WEBPACK_IMPORTED_MODULE_9__services_index__["b" /* AuthenticationService */],
-                __WEBPACK_IMPORTED_MODULE_9__services_index__["c" /* UserService */],
+                __WEBPACK_IMPORTED_MODULE_8__guards_index__["a" /* AuthGuard */],
+                __WEBPACK_IMPORTED_MODULE_10__services_index__["a" /* AlertService */],
+                __WEBPACK_IMPORTED_MODULE_10__services_index__["b" /* AuthenticationService */],
+                __WEBPACK_IMPORTED_MODULE_10__services_index__["f" /* UserService */],
                 {
                     provide: __WEBPACK_IMPORTED_MODULE_3__angular_common_http__["a" /* HTTP_INTERCEPTORS */],
-                    useClass: __WEBPACK_IMPORTED_MODULE_8__helpers_index__["a" /* JwtInterceptor */],
+                    useClass: __WEBPACK_IMPORTED_MODULE_9__helpers_index__["a" /* JwtInterceptor */],
                     multi: true
                 },
+                __WEBPACK_IMPORTED_MODULE_10__services_index__["c" /* CountriesService */],
+                __WEBPACK_IMPORTED_MODULE_10__services_index__["d" /* PlacesService */],
+                __WEBPACK_IMPORTED_MODULE_10__services_index__["e" /* TravelStylesService */]
+                // provider used to create fake backend
+                //fakeBackendProvider
             ],
-            bootstrap: [__WEBPACK_IMPORTED_MODULE_10__app_component__["a" /* AppComponent */]]
+            bootstrap: [__WEBPACK_IMPORTED_MODULE_11__app_component__["a" /* AppComponent */]]
         })
     ], AppModule);
     return AppModule;
@@ -1117,7 +1364,7 @@ var LeftSideBarComponent = (function () {
 /***/ "../../../../../src/app/login/login.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<!-- Modal -->\n\n<div class=\"modal fade\" id=\"signUp\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\">\n  \t<div class=\"modal-dialog sign-up-style\" role=\"document\">\n    \t<div class=\"modal-content\">\n\t\t\t<button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\n\t\t\t\t<span aria-hidden=\"true\">&times;</span>\n\t\t\t</button>\n\t\t\t<div class=\"modal-body\">\n\t\t\t\t<div class=\"top-layer\">\n\t\t\t\t\t<a href=\"#\" class=\"logo-wrap\">\n\t\t\t\t\t\t<img src=\"./assets/image/main-logo.png\" alt=\"\">\n\t\t\t\t\t</a>\n\t\t\t\t\t<h4 class=\"title\">Login to your account</h4>\n\t\t\t\t\t<!-- <p class=\"sub-ttl\">and write a text here</p> -->\n\t\t\t\t\t<p class=\"sub-ttl error-message\" *ngFor=\"let msg of errors\">{{ msg }}</p>\n\t\t\t\t</div>\n\n\t\t\t\t<form class=\"login-form\" name=\"loginForm\" [formGroup]=\"loginForm\" (ngSubmit)=\"login()\" novalidate>\n\t\t\t\t\t<div class=\"form-group\" [ngClass]=\"setClassEmail()\">\n\t\t\t\t\t\t<!-- <label for=\"username\">Username</label> -->\n\t\t\t\t\t\t<input class=\"form-control\" type=\"email\" name=\"email\" formControlName=\"email\" placeholder=\"Email address\" aria-describedby=\"emailHelp\" />\n\t\t\t\t\t\t<!-- <input type=\"email\" class=\"form-control\" name=\"username\" [(ngModel)]=\"model.username\" #username=\"ngModel\" required aria-describedby=\"emailHelp\" placeholder=\"Email address\"/> -->\n\t\t\t\t\t\t<!-- <div *ngIf=\"f.submitted && !username.valid\" class=\"help-block\">Email is required</div> -->\n\t\t\t\t\t\t<div class=\"form-control-feedback\" *ngIf=\"email.errors && (email.dirty || email.touched)\">\n\t\t\t\t\t\t\t<p>{{ emailMsg }}</p>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t\n\t\t\t\t\t<div class=\"form-group\" [ngClass]=\"setClassPassword()\">\n\t\t\t\t\t\t<!-- <label for=\"password\">Password</label> -->\n\t\t\t\t\t\t<input class=\"form-control\" type=\"password\" name=\"password\" formControlName=\"password\" placeholder=\"Password\" aria-describedby=\"pass\" />\n\t\t\t\t\t\t<!-- <input type=\"password\" class=\"form-control\" name=\"password\" [(ngModel)]=\"model.password\" #password=\"ngModel\" required aria-describedby=\"pass\" placeholder=\"Password\"/> -->\n\t\t\t\t\t\t<!-- <div *ngIf=\"f.submitted && !password.valid\" class=\"help-block\">Password is required</div> -->\n\t\t\t\t\t\t<div class=\"form-control-feedback\" *ngIf=\"password.errors && (password.dirty || password.touched)\">\n\t\t\t\t\t\t\t<p>{{ passwordMsg }}</p>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t\n\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t<a href=\"#\" class=\"forget-password-link\">Forget your password?</a>\n\t\t\t\t\t</div>\n\t\t\t\t\t\n\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t<button class=\"btn btn-primary\" type=\"submit\" [disabled]=\"!loginForm.valid || loading\">{{ loginBtnText }}</button>\n\t\t\t\t\t\t<!-- <button [disabled]=\"loading\" class=\"btn btn-primary\">{{ loginBtnText }}</button> -->\n\t\t\t\t\t\t<!-- <img *ngIf=\"loading\" src=\"data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==\" /> -->\n\t\t\t\t\t\t<!-- <a [routerLink]=\"['/register']\" class=\"btn btn-link\">Register</a> -->\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t<p class=\"simple-txt\">Or</p>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t<button type=\"button\" class=\"btn btn-primary\">\n\t\t\t\t\t\t\t<i class=\"fa fa-facebook side-icon\"></i>\n\t\t\t\t\t\t\tContinue with Facebook\n\t\t\t\t\t\t</button>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t<button type=\"button\" class=\"btn btn-info\">\n\t\t\t\t\t\t\t<i class=\"fa fa-twitter side-icon\"></i>\n\t\t\t\t\t\t\tContinue with Twitter\n\t\t\t\t\t\t</button>\n\t\t\t\t\t</div>\n\t\t\t\t</form>\n\t\t\t</div>\n\t\t\t<div class=\"modal-footer\">\n\t\t\t\t<p class=\"foot-txt\">You are not a member yet?</p>\n\t\t\t\t<button type=\"button\" class=\"btn btn-grey\" (click)=\"openSignup()\">Sign Up</button>\n\t\t\t</div>\n    \t</div>\n  \t</div>\n</div>"
+module.exports = "<!-- Modal -->\n\n<div class=\"modal fade\" id=\"logIn\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\">\n  \t<div class=\"modal-dialog sign-up-style\" role=\"document\">\n    \t<div class=\"modal-content\">\n\t\t\t<button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\n\t\t\t\t<span aria-hidden=\"true\">&times;</span>\n\t\t\t</button>\n\t\t\t<div class=\"modal-body\">\n\t\t\t\t<div class=\"top-layer\">\n\t\t\t\t\t<a href=\"#\" class=\"logo-wrap\">\n\t\t\t\t\t\t<img src=\"./assets/image/main-logo.png\" alt=\"\">\n\t\t\t\t\t</a>\n\t\t\t\t\t<h4 class=\"title\">Login to your account</h4>\n\t\t\t\t\t<!-- <p class=\"sub-ttl\">and write a text here</p> -->\n\t\t\t\t\t<p class=\"sub-ttl error-message\" *ngFor=\"let msg of errors\">{{ msg }}</p>\n\t\t\t\t</div>\n\n\t\t\t\t<form class=\"login-form\" name=\"loginForm\" [formGroup]=\"loginForm\" (ngSubmit)=\"login()\" novalidate>\n\t\t\t\t\t<div class=\"form-group\" [ngClass]=\"setClassEmail()\">\n\t\t\t\t\t\t<!-- <label for=\"username\">Username</label> -->\n\t\t\t\t\t\t<input class=\"form-control\" type=\"email\" name=\"email\" formControlName=\"email\" placeholder=\"Email address\" aria-describedby=\"emailHelp\" />\n\t\t\t\t\t\t<!-- <input type=\"email\" class=\"form-control\" name=\"username\" [(ngModel)]=\"model.username\" #username=\"ngModel\" required aria-describedby=\"emailHelp\" placeholder=\"Email address\"/> -->\n\t\t\t\t\t\t<!-- <div *ngIf=\"f.submitted && !username.valid\" class=\"help-block\">Email is required</div> -->\n\t\t\t\t\t\t<div class=\"form-control-feedback\" *ngIf=\"email.errors && (email.dirty || email.touched)\">\n\t\t\t\t\t\t\t<p>{{ emailMsg }}</p>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t\n\t\t\t\t\t<div class=\"form-group\" [ngClass]=\"setClassPassword()\">\n\t\t\t\t\t\t<!-- <label for=\"password\">Password</label> -->\n\t\t\t\t\t\t<input class=\"form-control\" type=\"password\" name=\"password\" formControlName=\"password\" placeholder=\"Password\" aria-describedby=\"pass\" />\n\t\t\t\t\t\t<!-- <input type=\"password\" class=\"form-control\" name=\"password\" [(ngModel)]=\"model.password\" #password=\"ngModel\" required aria-describedby=\"pass\" placeholder=\"Password\"/> -->\n\t\t\t\t\t\t<!-- <div *ngIf=\"f.submitted && !password.valid\" class=\"help-block\">Password is required</div> -->\n\t\t\t\t\t\t<div class=\"form-control-feedback\" *ngIf=\"password.errors && (password.dirty || password.touched)\">\n\t\t\t\t\t\t\t<p>{{ passwordMsg }}</p>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t\n\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t<a href=\"#\" class=\"forget-password-link\">Forget your password?</a>\n\t\t\t\t\t</div>\n\t\t\t\t\t\n\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t<button class=\"btn btn-primary\" type=\"submit\" [disabled]=\"!loginForm.valid || loading\">{{ loginBtnText }}</button>\n\t\t\t\t\t\t<!-- <button [disabled]=\"loading\" class=\"btn btn-primary\">{{ loginBtnText }}</button> -->\n\t\t\t\t\t\t<!-- <img *ngIf=\"loading\" src=\"data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==\" /> -->\n\t\t\t\t\t\t<!-- <a [routerLink]=\"['/register']\" class=\"btn btn-link\">Register</a> -->\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t<p class=\"simple-txt\">Or</p>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t<button type=\"button\" class=\"btn btn-primary\">\n\t\t\t\t\t\t\t<i class=\"fa fa-facebook side-icon\"></i>\n\t\t\t\t\t\t\tContinue with Facebook\n\t\t\t\t\t\t</button>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t<button type=\"button\" class=\"btn btn-info\">\n\t\t\t\t\t\t\t<i class=\"fa fa-twitter side-icon\"></i>\n\t\t\t\t\t\t\tContinue with Twitter\n\t\t\t\t\t\t</button>\n\t\t\t\t\t</div>\n\t\t\t\t</form>\n\t\t\t</div>\n\t\t\t<div class=\"modal-footer\">\n\t\t\t\t<p class=\"foot-txt\">You are not a member yet?</p>\n\t\t\t\t<button type=\"button\" class=\"btn btn-grey\" (click)=\"openSignup()\">Sign Up</button>\n\t\t\t</div>\n    \t</div>\n  \t</div>\n</div>"
 
 /***/ }),
 
@@ -1278,7 +1525,7 @@ var LoginComponent = (function () {
 /***/ "../../../../../src/app/main/main.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"main-wrapper login-layer\">\n  <!-- Button trigger modal -->\n  <button type=\"button\" class=\"btn btn-primary\" data-toggle=\"modal\" data-target=\"#signUp\">\n    Login\n  </button>\n  <button type=\"button\" class=\"btn btn-primary\" data-toggle=\"modal\" data-target=\"#createAccount1\">\n    Register\n  </button>\n  <!-- <button type=\"button\" class=\"btn btn-primary\" data-toggle=\"modal\" data-target=\"#createAccount2\">\n    Launch createAccount step2\n  </button> -->\n</div>\n<!-- <footer class=\"footer\"></footer> -->\n\n<app-login></app-login>\n\n<app-signup></app-signup>"
+module.exports = "<div class=\"main-wrapper login-layer\">\n\t<header class=\"main-header step-header\">\n\t\t<!-- use class .step-header for set header above of modal-backgrop layer -->\n\t\t<div class=\"container\">\n\t\t\t<nav class=\"navbar navbar-toggleable-md navbar-light bg-faded\">\n\t\t\t\t<!-- <button class=\"navbar-toggler navbar-toggler-right\" type=\"button\" data-toggle=\"collapse\" data-target=\"#mainMenuLayer\" aria-controls=\"mainMenuLayer\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">\n            <span class=\"navbar-toggler-icon\"></span>\n          </button> -->\n\t\t\t\t<a class=\"navbar-brand\" href=\"#\">\n\t\t\t\t\t<img src=\"./assets/image/main-small-logo.png\" alt=\"\">\n\t\t\t\t</a>\n\n\t\t\t\t<!--<div class=\"collapse navbar-collapse\" id=\"mainMenuLayer\">\n\t\t\t\t\t<div class=\"progress-wrapper\">\n\t\t\t\t\t<div class=\"progress-point\">Start</div>\n\t\t\t\t\t<div class=\"progress\">\n\t\t\t\t\t<div class=\"progress-bar\" role=\"progressbar\" aria-valuenow=\"1\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div><!-- you can use aria-valuenow arrt for add step -->\n\t\t\t\t\t<!-- </div>\n\t\t\t\t\t<div class=\"progress-point\">Finish</div>\n\t\t\t\t</div>\n\t\t\t\t</div> -->\n\n\t\t\t\t<div class=\"progress-block\">\n\t\t\t\t\t<div class=\"progress-wrapper\">\n\t\t\t\t\t\t<div class=\"progress-point\">Start</div>\n\t\t\t\t\t\t<div class=\"progress\">\n\t\t\t\t\t\t\t<div class=\"progress-bar\" role=\"progressbar\" aria-valuenow=\"1\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div>\n\t\t\t\t\t\t\t<!-- you can use aria-valuenow arrt for add step -->\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"progress-point\">Finish</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</nav>\n\n\t\t\t<!-- <div class=\"header-inner\">\n          <h1 class=\"logo-wrap\">\n            <a href=\"#\" class=\"logo\">\n              <img src=\"./assets/image/main-small-logo.png\" alt=\"\">\n            </a>\n          </h1>\n          <div class=\"col\">\n          </div>\n        </div> -->\n\t\t</div>\n\t</header>\n\n\t<!-- Button trigger modal -->\n\t<button type=\"button\" class=\"btn btn-primary\" (click)=\"openLogin()\">\n\t\tLogin\n\t</button>\n\t<button type=\"button\" class=\"btn btn-primary\" (click)=\"openSignup()\">\n\t\tRegister\n\t</button>\n</div>\n\n<app-login></app-login>\n\n<app-signup></app-signup>"
 
 /***/ }),
 
@@ -1323,8 +1570,15 @@ var MainComponent = (function () {
         this.titleService = titleService;
     }
     MainComponent.prototype.ngOnInit = function () {
-        this.titleService.setTitle("Travoo");
+        this.titleService.setTitle("Travooo");
         $.getScript('assets/js/script.js');
+    };
+    MainComponent.prototype.openLogin = function () {
+        $('#logIn').modal('show');
+    };
+    MainComponent.prototype.openSignup = function () {
+        $('.step-header').show();
+        $('#signUpStep5').modal('show');
     };
     MainComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
@@ -1527,7 +1781,7 @@ var SideFooterComponent = (function () {
 /***/ "../../../../../src/app/signup/signup.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<!-- create an account -->\n<div class=\"modal fade\" id=\"createAccount1\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\">\n\t<div class=\"modal-dialog sign-up-style\" role=\"document\">\n\t\t<div class=\"modal-content\">\n\t\t\t<button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\n\t\t\t\t<span aria-hidden=\"true\">&times;</span>\n\t\t\t</button>\n\t\t\t<div class=\"modal-body body-create\">\n\t\t\t\t<div class=\"top-layer\">\n\t\t\t\t\t<a href=\"#\" class=\"logo-wrap\">\n\t\t\t\t\t\t<img src=\"./assets/image/main-logo.png\" alt=\"\">\n\t\t\t\t\t</a>\n\t\t\t\t\t<h4 class=\"title\">Create a free account</h4>\n\t\t\t\t\t<!-- <p class=\"sub-ttl\">and write a text here</p> -->\n\t\t\t\t\t<!-- <p class=\"sub-ttl error-message\">Your password is too weak</p> -->\n\t\t\t\t\t<!-- <p class=\"sub-ttl error-message\">Please fill the required fields</p> -->\n\t\t\t\t\t<p class=\"sub-ttl error-message\" *ngFor=\"let msg of errors\">{{ msg }}</p>\n\t\t\t\t</div>\n\t\t\t\t<form class=\"login-form\" name=\"signupForm1\" [formGroup]=\"signupForm1\" (ngSubmit)=\"continueStep1()\" novalidate>\n\t\t\t\t\t<div class=\"step-1\">\n\t\t\t\t\t\t\n\t\t\t\t\t\t<div class=\"form-group\" [ngClass]=\"validate('email')\">\n\t\t\t\t\t\t\t<input class=\"form-control\" type=\"email\" name=\"email\" formControlName=\"email\" placeholder=\"Email address\" aria-describedby=\"emailHelp\" />\n\t\t\t\t\t\t\t<!-- <input type=\"email\" class=\"form-control\" name=\"username\" [(ngModel)]=\"model.username\" #username=\"ngModel\" required aria-describedby=\"emailHelp\" placeholder=\"Email address\"/> -->\n\t\t\t\t\t\t\t<!-- <div *ngIf=\"f.submitted && !username.valid\" class=\"help-block\">Email is required</div> -->\n\t\t\t\t\t\t\t<div class=\"form-control-feedback\" *ngIf=\"signupErrors.email\">\n\t\t\t\t\t\t\t\t<p>{{ signupErrors.email }}</p>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\n\t\t\t\t\t\t<div class=\"form-group\" [ngClass]=\"validate('username')\">\n\t\t\t\t\t\t\t<input class=\"form-control\" type=\"text\" name=\"username\" formControlName=\"username\" placeholder=\"Username\" aria-describedby=\"username\" />\n\t\t\t\t\t\t\t<div class=\"form-control-feedback\" *ngIf=\"signupErrors.username\">\n\t\t\t\t\t\t\t\t<p>{{ signupErrors.username }}</p>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\n\t\t\t\t\t\t<div class=\"form-group\" [ngClass]=\"validate('password')\">\n\t\t\t\t\t\t\t<input class=\"form-control\" type=\"password\" name=\"password\" formControlName=\"password\" placeholder=\"Password\" aria-describedby=\"pass\" />\n\t\t\t\t\t\t\t<div class=\"form-control-feedback\" *ngIf=\"signupErrors.password\">\n\t\t\t\t\t\t\t\t<p>{{ signupErrors.password }}</p>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\n\t\t\t\t\t\t<div class=\"form-group\" [ngClass]=\"validate('cpassword')\">\n\t\t\t\t\t\t\t<input class=\"form-control\" type=\"password\" name=\"cpassword\" formControlName=\"cpassword\" placeholder=\"Confirm Password\" aria-describedby=\"cpass\" />\n\t\t\t\t\t\t\t<div class=\"form-control-feedback\" *ngIf=\"signupErrors.cpassword\">\n\t\t\t\t\t\t\t\t<p>{{ signupErrors.cpassword }}</p>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\n\t\t\t\t\t\t<div class=\"form-margin\"></div>\n\t\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t\t<button type=\"submit\" class=\"btn btn-success\" [disabled]=\"!signupForm1.valid || loading\">{{ signupContinueBtnText }}</button>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t\t<p class=\"simple-txt\">Or</p>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t\t<button type=\"button\" class=\"btn btn-primary\">\n\t\t\t\t\t\t\t\t<i class=\"fa fa-facebook side-icon\"></i>\n\t\t\t\t\t\t\t\tContinue with Facebook\n\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t\t<button type=\"button\" class=\"btn btn-info\">\n\t\t\t\t\t\t\t\t<i class=\"fa fa-twitter side-icon\"></i>\n\t\t\t\t\t\t\t\tContinue with Twitter\n\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"form-group bottom-txt-group\">\n\t\t\t\t\t\t<p class=\"bottom-txt\">Creating an account means you're okay with</p>\n\t\t\t\t\t\t<ul class=\"link-list\">\n\t\t\t\t\t\t\t<li>\n\t\t\t\t\t\t\t\t<b>Travooo's</b>\n\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t\t<li>\n\t\t\t\t\t\t\t\t<a href=\"#\"> Terms of Service,</a>\n\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t\t<li>\n\t\t\t\t\t\t\t\t<a href=\"#\"> Privacy Policy</a>\n\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t</ul>\n\t\t\t\t\t</div>\n\t\t\t\t</form>\n\t\t\t</div>\n\t\t\t<div class=\"modal-footer\">\n\t\t\t\t<p class=\"foot-txt\">Already a member?</p>\n\t\t\t\t<button type=\"button\" class=\"btn btn-grey\" (click)=\"openLogin()\">Log In</button>\n\t\t\t</div>\n\t\t</div>\n\t</div>\n</div>\n\n<div class=\"modal fade\" id=\"createAccount2\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\">\n\t<div class=\"modal-dialog sign-up-style\" role=\"document\">\n\t\t<div class=\"modal-content\">\n\t\t\t<button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\n\t\t\t\t<span aria-hidden=\"true\">&times;</span>\n\t\t\t</button>\n\t\t\t<div class=\"modal-body body-create\">\n\t\t\t\t<div class=\"top-layer\">\n\t\t\t\t\t<a href=\"#\" class=\"logo-wrap\">\n\t\t\t\t\t\t<img src=\"./assets/image/main-logo.png\" alt=\"\">\n\t\t\t\t\t</a>\n\t\t\t\t\t<h4 class=\"title\">Create a free account</h4>\n\t\t\t\t\t<!-- <p class=\"sub-ttl\">and write a text here</p> -->\n\t\t\t\t\t<!-- <p class=\"sub-ttl error-message\">Your password is too weak</p> -->\n\t\t\t\t\t<!-- <p class=\"sub-ttl error-message\">Please fill the required fields</p> -->\n\t\t\t\t\t<p class=\"sub-ttl error-message\" *ngFor=\"let msg of errors\">{{ msg }}</p>\n\t\t\t\t</div>\n\t\t\t\t<form class=\"login-form\" name=\"signupForm2\" [formGroup]=\"signupForm2\" (ngSubmit)=\"continueStep2()\" novalidate>\n\t\t\t\t\t<div class=\"step-2\">\n\t\t\t\t\t\t<!-- <div class=\"form-group\">\n\t\t\t\t\t\t\t<p class=\"email-field\">emailhere@gmail.com</p>\n\t\t\t\t\t\t</div> -->\n\t\t\t\t\t\t<div class=\"form-group flex-custom\">\n\t\t\t\t\t\t\t<div class=\"flex-input\" [ngClass]=\"validate('name')\">\n\t\t\t\t\t\t\t\t<input class=\"form-control\" type=\"text\" name=\"name\" formControlName=\"name\" placeholder=\"Full Name\" aria-describedby=\"full name\" />\n\t\t\t\t\t\t\t\t<div class=\"form-control-feedback\" *ngIf=\"signupErrors.name\">\n\t\t\t\t\t\t\t\t\t<p>{{ signupErrors.name }}</p>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"form-group\" [ngClass]=\"validate('age')\">\n\t\t\t\t\t\t\t\t<select class=\"custom-select\" id=\"age\" formControlName=\"age\">\n\t\t\t\t\t\t\t\t\t<option [selected]=\"age\">Age</option>\n\t\t\t\t\t\t\t\t\t<option value=\"1\">26</option>\n\t\t\t\t\t\t\t\t\t<option value=\"2\">27</option>\n\t\t\t\t\t\t\t\t\t<option value=\"3\">28</option>\n\t\t\t\t\t\t\t\t</select>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"form-check flex-custom\" [ngClass]=\"validate('gender')\">\n\t\t\t\t\t\t\t<div class=\"custom-check-label\">\n\t\t\t\t\t\t\t\t<input type=\"radio\" class=\"custom-check-input\" name=\"gender\" id=\"male\" formControlName=\"gender\" value=\"0\">\n\t\t\t\t\t\t\t\t<label for=\"male\">Male</label>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"custom-check-label\">\n\t\t\t\t\t\t\t\t<input type=\"radio\" class=\"custom-check-input\" name=\"gender\" id=\"female\" formControlName=\"gender\" value=\"1\">\n\t\t\t\t\t\t\t\t<label for=\"female\">Female</label>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"form-control-feedback\" *ngIf=\"signupErrors.gender\">\n\t\t\t\t\t\t\t\t<p>{{ signupErrors.gender }}</p>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t\t<button type=\"submit\" class=\"btn btn-info\" [disabled]=\"!signupForm2.valid || loading\">{{ signupBtnText }}</button>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t\t<button type=\"button\" class=\"btn btn-transp\" (click)=\"backToSignup()\">\n\t\t\t\t\t\t\t\t<i class=\"fa fa-angle-left\"></i>\n\t\t\t\t\t\t\t\t<span>Back</span>\n\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"form-group bottom-txt-group\">\n\t\t\t\t\t\t<p class=\"bottom-txt\">Creating an account means you're okay with</p>\n\t\t\t\t\t\t<ul class=\"link-list\">\n\t\t\t\t\t\t\t<li>\n\t\t\t\t\t\t\t\t<b>Travooo's</b>\n\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t\t<li>\n\t\t\t\t\t\t\t\t<a href=\"#\"> Terms of Service,</a>\n\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t\t<li>\n\t\t\t\t\t\t\t\t<a href=\"#\"> Privacy Policy</a>\n\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t</ul>\n\t\t\t\t\t</div>\n\t\t\t\t</form>\n\t\t\t</div>\n\t\t\t<div class=\"modal-footer\">\n\t\t\t\t<p class=\"foot-txt\">Already a member?</p>\n\t\t\t\t<button type=\"button\" class=\"btn btn-grey\" (click)=\"openLogin()\">Log In</button>\n\t\t\t</div>\n\t\t</div>\n\t</div>\n</div>"
+module.exports = "<app-signup-step1></app-signup-step1>\n<app-signup-step2></app-signup-step2>\n<app-signup-step3></app-signup-step3>\n<app-signup-step4></app-signup-step4>\n<app-signup-step5></app-signup-step5>"
 
 /***/ }),
 
@@ -1558,6 +1812,86 @@ module.exports = module.exports.toString();
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("../../../router/esm5/router.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_index__ = __webpack_require__("../../../../../src/_services/index.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_forms__ = __webpack_require__("../../../forms/esm5/forms.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_platform_browser___ = __webpack_require__("../../../platform-browser/esm5/platform-browser.js");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+var SignupComponent = (function () {
+    function SignupComponent(route, router, userService, alertService, formBuilder, titleService) {
+        this.route = route;
+        this.router = router;
+        this.userService = userService;
+        this.alertService = alertService;
+        this.formBuilder = formBuilder;
+        this.titleService = titleService;
+    }
+    SignupComponent.prototype.ngOnInit = function () {
+    };
+    SignupComponent = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+            selector: 'app-signup',
+            template: __webpack_require__("../../../../../src/app/signup/signup.component.html"),
+            styles: [__webpack_require__("../../../../../src/app/signup/signup.component.scss")]
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */],
+            __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* Router */],
+            __WEBPACK_IMPORTED_MODULE_2__services_index__["f" /* UserService */],
+            __WEBPACK_IMPORTED_MODULE_2__services_index__["a" /* AlertService */],
+            __WEBPACK_IMPORTED_MODULE_3__angular_forms__["a" /* FormBuilder */],
+            __WEBPACK_IMPORTED_MODULE_4__angular_platform_browser___["b" /* Title */]])
+    ], SignupComponent);
+    return SignupComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "../../../../../src/app/signup/step1/step1.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<!-- create an account -->\n<div class=\"modal fade signUpStep\" id=\"signUpStep1\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\">\n\t<div class=\"modal-dialog sign-up-style\" role=\"document\">\n\t\t<div class=\"modal-content\">\n\t\t\t<button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\n\t\t\t\t<span aria-hidden=\"true\">&times;</span>\n\t\t\t</button>\n\t\t\t<div class=\"modal-body\">\n\t\t\t\t<div class=\"top-layer\">\n\t\t\t\t\t<a href=\"#\" class=\"logo-wrap\">\n\t\t\t\t\t\t<img src=\"./assets/image/main-logo.png\" alt=\"\">\n\t\t\t\t\t</a>\n\t\t\t\t\t<h4 class=\"title\">Create a free account</h4>\n\t\t\t\t\t<!-- <p class=\"sub-ttl\">and write a text here</p> -->\n\t\t\t\t\t<!-- <p class=\"sub-ttl error-message\">Your password is too weak</p> -->\n\t\t\t\t\t<!-- <p class=\"sub-ttl error-message\">Please fill the required fields</p> -->\n\t\t\t\t\t<p class=\"sub-ttl error-message\" *ngFor=\"let msg of errors\">{{ msg }}</p>\n\t\t\t\t</div>\n\t\t\t\t<form class=\"login-form\" name=\"signupForm1\" [formGroup]=\"signupForm1\" (ngSubmit)=\"continueStep1()\" novalidate>\n\t\t\t\t\t<div class=\"step-1\">\n\t\t\t\t\t\t\n\t\t\t\t\t\t<div class=\"form-group\" [ngClass]=\"validate('email')\">\n\t\t\t\t\t\t\t<input class=\"form-control\" type=\"email\" name=\"email\" formControlName=\"email\" placeholder=\"Email address\" aria-describedby=\"emailHelp\" />\n\t\t\t\t\t\t\t<!-- <input type=\"email\" class=\"form-control\" name=\"username\" [(ngModel)]=\"model.username\" #username=\"ngModel\" required aria-describedby=\"emailHelp\" placeholder=\"Email address\"/> -->\n\t\t\t\t\t\t\t<!-- <div *ngIf=\"f.submitted && !username.valid\" class=\"help-block\">Email is required</div> -->\n\t\t\t\t\t\t\t<div class=\"form-control-feedback\" *ngIf=\"signupErrors.email\">\n\t\t\t\t\t\t\t\t<p>{{ signupErrors.email }}</p>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\n\t\t\t\t\t\t<div class=\"form-group\" [ngClass]=\"validate('username')\">\n\t\t\t\t\t\t\t<input class=\"form-control\" type=\"text\" name=\"username\" formControlName=\"username\" placeholder=\"Username\" aria-describedby=\"username\" />\n\t\t\t\t\t\t\t<div class=\"form-control-feedback\" *ngIf=\"signupErrors.username\">\n\t\t\t\t\t\t\t\t<p>{{ signupErrors.username }}</p>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\n\t\t\t\t\t\t<div class=\"form-group\" [ngClass]=\"validate('password')\">\n\t\t\t\t\t\t\t<input class=\"form-control\" type=\"password\" name=\"password\" formControlName=\"password\" placeholder=\"Password\" aria-describedby=\"pass\" />\n\t\t\t\t\t\t\t<div class=\"form-control-feedback\" *ngIf=\"signupErrors.password\">\n\t\t\t\t\t\t\t\t<p>{{ signupErrors.password }}</p>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\n\t\t\t\t\t\t<div class=\"form-group\" [ngClass]=\"validate('cpassword')\">\n\t\t\t\t\t\t\t<input class=\"form-control\" type=\"password\" name=\"cpassword\" formControlName=\"cpassword\" placeholder=\"Confirm Password\" aria-describedby=\"cpass\" />\n\t\t\t\t\t\t\t<div class=\"form-control-feedback\" *ngIf=\"signupErrors.cpassword\">\n\t\t\t\t\t\t\t\t<p>{{ signupErrors.cpassword }}</p>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\n\t\t\t\t\t\t<div class=\"form-margin\"></div>\n\t\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t\t<button type=\"submit\" class=\"btn btn-success\" [disabled]=\"!signupForm1.valid || loading\">{{ signupContinueBtnText }}</button>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t\t<p class=\"simple-txt\">Or</p>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t\t<button type=\"button\" class=\"btn btn-primary\">\n\t\t\t\t\t\t\t\t<i class=\"fa fa-facebook side-icon\"></i>\n\t\t\t\t\t\t\t\tContinue with Facebook\n\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t\t<button type=\"button\" class=\"btn btn-info\">\n\t\t\t\t\t\t\t\t<i class=\"fa fa-twitter side-icon\"></i>\n\t\t\t\t\t\t\t\tContinue with Twitter\n\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"form-group bottom-txt-group\">\n\t\t\t\t\t\t<p class=\"bottom-txt\">Creating an account means you're okay with</p>\n\t\t\t\t\t\t<ul class=\"link-list\">\n\t\t\t\t\t\t\t<li>\n\t\t\t\t\t\t\t\t<b>Travooo's</b>\n\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t\t<li>\n\t\t\t\t\t\t\t\t<a href=\"#\"> Terms of Service,</a>\n\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t\t<li>\n\t\t\t\t\t\t\t\t<a href=\"#\"> Privacy Policy</a>\n\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t</ul>\n\t\t\t\t\t</div>\n\t\t\t\t</form>\n\t\t\t</div>\n\t\t\t<div class=\"modal-footer\">\n\t\t\t\t<p class=\"foot-txt\">Already a member?</p>\n\t\t\t\t<button type=\"button\" class=\"btn btn-grey\" (click)=\"openLogin()\">Log In</button>\n\t\t\t</div>\n\t\t</div>\n\t</div>\n</div>\n"
+
+/***/ }),
+
+/***/ "../../../../../src/app/signup/step1/step1.component.scss":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/signup/step1/step1.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Step1Component; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("../../../router/esm5/router.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_index__ = __webpack_require__("../../../../../src/_services/index.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_forms__ = __webpack_require__("../../../forms/esm5/forms.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__helpers_custom_validators__ = __webpack_require__("../../../../../src/_helpers/custom-validators.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__angular_platform_browser___ = __webpack_require__("../../../platform-browser/esm5/platform-browser.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -1575,8 +1909,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-var SignupComponent = (function () {
-    function SignupComponent(route, router, userService, alertService, formBuilder, titleService) {
+var Step1Component = (function () {
+    function Step1Component(route, router, userService, alertService, formBuilder, titleService) {
         this.route = route;
         this.router = router;
         this.userService = userService;
@@ -1585,7 +1919,6 @@ var SignupComponent = (function () {
         this.titleService = titleService;
         this.loading = false;
         this.signupContinueBtnText = "Continue";
-        this.signupBtnText = "Sign Up";
         this.email = new __WEBPACK_IMPORTED_MODULE_3__angular_forms__["b" /* FormControl */]('', [
             __WEBPACK_IMPORTED_MODULE_3__angular_forms__["e" /* Validators */].required,
             __WEBPACK_IMPORTED_MODULE_3__angular_forms__["e" /* Validators */].email
@@ -1600,45 +1933,27 @@ var SignupComponent = (function () {
             __WEBPACK_IMPORTED_MODULE_3__angular_forms__["e" /* Validators */].required,
             Object(__WEBPACK_IMPORTED_MODULE_4__helpers_custom_validators__["a" /* ConfirmPasswordValidator */])(this.password)
         ]);
-        this.name = new __WEBPACK_IMPORTED_MODULE_3__angular_forms__["b" /* FormControl */]('', [
-            __WEBPACK_IMPORTED_MODULE_3__angular_forms__["e" /* Validators */].required
-        ]);
-        this.age = new __WEBPACK_IMPORTED_MODULE_3__angular_forms__["b" /* FormControl */]('', []);
-        this.gender = new __WEBPACK_IMPORTED_MODULE_3__angular_forms__["b" /* FormControl */]('', [
-            __WEBPACK_IMPORTED_MODULE_3__angular_forms__["e" /* Validators */].required
-        ]);
         this.errors = [];
     }
-    SignupComponent.prototype.ngOnInit = function () {
+    Step1Component.prototype.ngOnInit = function () {
         var step1 = {
             username: this.username,
             email: this.email,
             password: this.password,
             cpassword: this.cpassword
         };
-        var step2 = {
-            name: this.name,
-            age: this.age,
-            gender: this.gender
-        };
         this.signupForm1 = this.formBuilder.group(step1);
-        this.signupForm2 = this.formBuilder.group(step2);
         this.signupErrors = {};
     };
-    SignupComponent.prototype.openLogin = function () {
+    Step1Component.prototype.openLogin = function () {
         this.titleService.setTitle("Travoo - Login");
         // close signup modals and open login model
-        $('#createAccount1').modal("hide");
-        $('#createAccount2').modal("hide");
-        $('#signUp').modal("show");
+        $('.signUpStep').modal("hide");
+        $('#logIn').modal("show");
     };
-    SignupComponent.prototype.backToSignup = function () {
-        //$('#createAccount2').modal("hide");
-        //$('#createAccount1').modal("show");
-    };
-    SignupComponent.prototype.validate = function (name) {
+    Step1Component.prototype.validate = function (name) {
         this.signupErrors[name] = '';
-        var control = this.signupForm1.get(name) || this.signupForm2.get(name);
+        var control = this.signupForm1.get(name);
         if ((!control.pristine || control.touched) && !control.valid) {
             if (control.errors.required) {
                 this.signupErrors[name] = "This field is required.";
@@ -1652,46 +1967,165 @@ var SignupComponent = (function () {
             return 'has-danger';
         }
     };
-    SignupComponent.prototype.continueStep1 = function () {
+    Step1Component.prototype.continueStep1 = function () {
         var _this = this;
         this.errors = [];
-        this.signupContinueBtnText = "Signing up ...";
-        this.loading = true;
+        this.toggleSignupStep1(false);
         var user = {};
         user.username = this.username.value;
         user.email = this.email.value;
         user.password = this.password.value;
         user.password_confirmation = this.cpassword.value;
         if (this.email.valid && this.username.valid && this.password.valid && this.cpassword.valid) {
-            this.userService.create(user)
+            this.userService.signupStep1(user)
                 .subscribe(function (data) {
                 //console.log(data);
                 if (data.success) {
                     var id = data.data;
                     //console.log(id);
                     localStorage.setItem('signupId', id);
-                    _this.signupContinueBtnText = "Continue";
-                    _this.loading = false;
-                    $('#createAccount1').modal("hide");
-                    $('#createAccount2').modal("show");
+                    _this.toggleSignupStep1(true);
+                    // continue to step 2
+                    $('#signUpStep1').modal("hide");
+                    $('#signUpStep2').modal("show");
                 }
                 else {
                     _this.errors = data.data.message;
-                    _this.signupContinueBtnText = "Continue";
-                    _this.loading = false;
+                    _this.toggleSignupStep1(true);
                 }
             }, function (error) {
                 console.log(error);
-                //this.alertService.error(error);
-                _this.signupContinueBtnText = "Continue";
-                _this.loading = false;
+                _this.toggleSignupStep1(true);
             });
         }
         else {
             this.errors.push("Please fill all fields with valid values first.");
         }
     };
-    SignupComponent.prototype.continueStep2 = function () {
+    Step1Component.prototype.toggleSignupStep1 = function (state) {
+        if (state) {
+            this.signupContinueBtnText = "Continue";
+            this.loading = false;
+        }
+        else {
+            this.signupContinueBtnText = "Signing Up ...";
+            this.loading = true;
+        }
+    };
+    Step1Component = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+            selector: 'app-signup-step1',
+            template: __webpack_require__("../../../../../src/app/signup/step1/step1.component.html"),
+            styles: [__webpack_require__("../../../../../src/app/signup/step1/step1.component.scss")]
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */],
+            __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* Router */],
+            __WEBPACK_IMPORTED_MODULE_2__services_index__["f" /* UserService */],
+            __WEBPACK_IMPORTED_MODULE_2__services_index__["a" /* AlertService */],
+            __WEBPACK_IMPORTED_MODULE_3__angular_forms__["a" /* FormBuilder */],
+            __WEBPACK_IMPORTED_MODULE_5__angular_platform_browser___["b" /* Title */]])
+    ], Step1Component);
+    return Step1Component;
+}());
+
+
+
+/***/ }),
+
+/***/ "../../../../../src/app/signup/step2/step2.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "\n<div class=\"modal fade signUpStep\" id=\"signUpStep2\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\" data-backdrop=\"static\" data-keyboard=\"false\">\n\t<div class=\"modal-dialog sign-up-style\" role=\"document\">\n\t\t<div class=\"modal-content\">\n\t\t\t<button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\n\t\t\t\t<span aria-hidden=\"true\">&times;</span>\n\t\t\t</button>\n\t\t\t<div class=\"modal-body body-create\">\n\t\t\t\t<div class=\"top-layer\">\n\t\t\t\t\t<a href=\"#\" class=\"logo-wrap\">\n\t\t\t\t\t\t<img src=\"./assets/image/main-logo.png\" alt=\"\">\n\t\t\t\t\t</a>\n\t\t\t\t\t<h4 class=\"title\">Create a free account</h4>\n\t\t\t\t\t<!-- <p class=\"sub-ttl\">and write a text here</p> -->\n\t\t\t\t\t<!-- <p class=\"sub-ttl error-message\">Your password is too weak</p> -->\n\t\t\t\t\t<!-- <p class=\"sub-ttl error-message\">Please fill the required fields</p> -->\n\t\t\t\t\t<p class=\"sub-ttl error-message\" *ngFor=\"let msg of errors\">{{ msg }}</p>\n\t\t\t\t</div>\n\t\t\t\t<form class=\"login-form\" name=\"signupForm2\" [formGroup]=\"signupForm2\" (ngSubmit)=\"continueStep2()\" novalidate>\n\t\t\t\t\t<div class=\"step-2\">\n\t\t\t\t\t\t<!-- <div class=\"form-group\">\n\t\t\t\t\t\t\t<p class=\"email-field\">emailhere@gmail.com</p>\n\t\t\t\t\t\t</div> -->\n\t\t\t\t\t\t<div class=\"form-group flex-custom\">\n\t\t\t\t\t\t\t<div class=\"flex-input\" [ngClass]=\"validate('name')\">\n\t\t\t\t\t\t\t\t<input class=\"form-control\" type=\"text\" name=\"name\" formControlName=\"name\" placeholder=\"Full Name\" aria-describedby=\"full name\" />\n\t\t\t\t\t\t\t\t<div class=\"form-control-feedback\" *ngIf=\"signupErrors.name\">\n\t\t\t\t\t\t\t\t\t<p>{{ signupErrors.name }}</p>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"form-group\" [ngClass]=\"validate('age')\">\n\t\t\t\t\t\t\t\t<select class=\"custom-select\" id=\"age\" formControlName=\"age\">\n\t\t\t\t\t\t\t\t\t<option [selected]=\"age\">Age</option>\n\t\t\t\t\t\t\t\t\t<option value=\"1\">26</option>\n\t\t\t\t\t\t\t\t\t<option value=\"2\">27</option>\n\t\t\t\t\t\t\t\t\t<option value=\"3\">28</option>\n\t\t\t\t\t\t\t\t</select>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"form-check flex-custom\" [ngClass]=\"validate('gender')\">\n\t\t\t\t\t\t\t<div class=\"custom-check-label\">\n\t\t\t\t\t\t\t\t<input type=\"radio\" class=\"custom-check-input\" name=\"gender\" id=\"male\" formControlName=\"gender\" value=\"0\">\n\t\t\t\t\t\t\t\t<label for=\"male\">Male</label>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"custom-check-label\">\n\t\t\t\t\t\t\t\t<input type=\"radio\" class=\"custom-check-input\" name=\"gender\" id=\"female\" formControlName=\"gender\" value=\"1\">\n\t\t\t\t\t\t\t\t<label for=\"female\">Female</label>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"form-control-feedback\" *ngIf=\"signupErrors.gender\">\n\t\t\t\t\t\t\t\t<p>{{ signupErrors.gender }}</p>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t\t<button type=\"submit\" class=\"btn btn-info\" [disabled]=\"!signupForm2.valid || loading\">{{ signupBtnText }}</button>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t\t<button type=\"button\" class=\"btn btn-transp\" (click)=\"backToSignup()\">\n\t\t\t\t\t\t\t\t<i class=\"fa fa-angle-left\"></i>\n\t\t\t\t\t\t\t\t<span>Back</span>\n\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"form-group bottom-txt-group\">\n\t\t\t\t\t\t<p class=\"bottom-txt\">Creating an account means you're okay with</p>\n\t\t\t\t\t\t<ul class=\"link-list\">\n\t\t\t\t\t\t\t<li>\n\t\t\t\t\t\t\t\t<b>Travooo's</b>\n\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t\t<li>\n\t\t\t\t\t\t\t\t<a href=\"#\"> Terms of Service,</a>\n\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t\t<li>\n\t\t\t\t\t\t\t\t<a href=\"#\"> Privacy Policy</a>\n\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t</ul>\n\t\t\t\t\t</div>\n\t\t\t\t</form>\n\t\t\t</div>\n\t\t\t<div class=\"modal-footer\">\n\t\t\t\t<p class=\"foot-txt\">Already a member?</p>\n\t\t\t\t<button type=\"button\" class=\"btn btn-grey\" (click)=\"openLogin()\">Log In</button>\n\t\t\t</div>\n\t\t</div>\n\t</div>\n</div>"
+
+/***/ }),
+
+/***/ "../../../../../src/app/signup/step2/step2.component.scss":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/signup/step2/step2.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Step2Component; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("../../../router/esm5/router.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_index__ = __webpack_require__("../../../../../src/_services/index.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_forms__ = __webpack_require__("../../../forms/esm5/forms.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_platform_browser___ = __webpack_require__("../../../platform-browser/esm5/platform-browser.js");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+var Step2Component = (function () {
+    function Step2Component(route, router, userService, alertService, formBuilder, titleService) {
+        this.route = route;
+        this.router = router;
+        this.userService = userService;
+        this.alertService = alertService;
+        this.formBuilder = formBuilder;
+        this.titleService = titleService;
+        this.loading = false;
+        this.signupBtnText = "Sign Up";
+        this.name = new __WEBPACK_IMPORTED_MODULE_3__angular_forms__["b" /* FormControl */]('', [
+            __WEBPACK_IMPORTED_MODULE_3__angular_forms__["e" /* Validators */].required
+        ]);
+        this.age = new __WEBPACK_IMPORTED_MODULE_3__angular_forms__["b" /* FormControl */]('', []);
+        this.gender = new __WEBPACK_IMPORTED_MODULE_3__angular_forms__["b" /* FormControl */]('', [
+            __WEBPACK_IMPORTED_MODULE_3__angular_forms__["e" /* Validators */].required
+        ]);
+        this.errors = [];
+    }
+    Step2Component.prototype.ngOnInit = function () {
+        var step2 = {
+            name: this.name,
+            age: this.age,
+            gender: this.gender
+        };
+        this.signupForm2 = this.formBuilder.group(step2);
+        this.signupErrors = {};
+    };
+    Step2Component.prototype.validate = function (name) {
+        this.signupErrors[name] = '';
+        var control = this.signupForm2.get(name);
+        if ((!control.pristine || control.touched) && !control.valid) {
+            if (control.errors.required) {
+                this.signupErrors[name] = "This field is required.";
+            }
+            else if (control.errors.email) {
+                this.signupErrors[name] = "This Email is not valid.";
+            }
+            else if (control.errors.ConfirmPassword) {
+                this.signupErrors[name] = "Password must be repeated exactly.";
+            }
+            return 'has-danger';
+        }
+    };
+    Step2Component.prototype.continueStep2 = function () {
         var _this = this;
         this.errors = [];
         this.toggleSignup(false);
@@ -1700,14 +2134,16 @@ var SignupComponent = (function () {
         user.name = this.name.value;
         user.age = this.age.value;
         user.gender = this.gender.value;
-        this.userService.createStep2(user)
+        this.userService.signupStep2(user)
             .subscribe(function (data) {
             //console.log(data);
             if (data.success) {
                 var response = data.data;
                 //console.log(response);
-                // close signup modals and open login model
-                _this.openLogin();
+                _this.toggleSignup(true);
+                // continue to step 3
+                $('#signUpStep2').modal("hide");
+                $('#signUpStep3').modal("show");
             }
             else {
                 _this.errors = data.data.message;
@@ -1719,30 +2155,579 @@ var SignupComponent = (function () {
             _this.toggleSignup(true);
         });
     };
-    SignupComponent.prototype.toggleSignup = function (state) {
+    Step2Component.prototype.toggleSignup = function (state) {
         if (state) {
             this.signupBtnText = "Sign Up";
             this.loading = false;
         }
         else {
-            this.signupBtnText = "Signing Up ...";
+            this.signupBtnText = "Saving ...";
             this.loading = true;
         }
     };
-    SignupComponent = __decorate([
+    Step2Component = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-            selector: 'app-signup',
-            template: __webpack_require__("../../../../../src/app/signup/signup.component.html"),
-            styles: [__webpack_require__("../../../../../src/app/signup/signup.component.scss")]
+            selector: 'app-signup-step2',
+            template: __webpack_require__("../../../../../src/app/signup/step2/step2.component.html"),
+            styles: [__webpack_require__("../../../../../src/app/signup/step2/step2.component.scss")]
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */],
             __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* Router */],
-            __WEBPACK_IMPORTED_MODULE_2__services_index__["c" /* UserService */],
+            __WEBPACK_IMPORTED_MODULE_2__services_index__["f" /* UserService */],
             __WEBPACK_IMPORTED_MODULE_2__services_index__["a" /* AlertService */],
             __WEBPACK_IMPORTED_MODULE_3__angular_forms__["a" /* FormBuilder */],
-            __WEBPACK_IMPORTED_MODULE_5__angular_platform_browser___["b" /* Title */]])
-    ], SignupComponent);
-    return SignupComponent;
+            __WEBPACK_IMPORTED_MODULE_4__angular_platform_browser___["b" /* Title */]])
+    ], Step2Component);
+    return Step2Component;
+}());
+
+
+
+/***/ }),
+
+/***/ "../../../../../src/app/signup/step3/step3.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<!-- Modal -->\n<div class=\"modal fade signUpStep\" id=\"signUpStep3\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\" data-backdrop=\"static\" data-keyboard=\"false\">\n\t<div class=\"modal-dialog sign-up-step\" role=\"document\">\n\t\t<div class=\"modal-content\">\n\t\t\t<div class=\"modal-body\">\n\t\t\t\t<div class=\"title-layer\">\n\t\t\t\t\t<h3 class=\"step-ttl\">Select at least 5 favorite\n\t\t\t\t\t\t<span>countries or cities</span>\n\t\t\t\t\t</h3>\n\t\t\t\t\t<div class=\"step-info\">\n\t\t\t\t\t\tStep 1\n\t\t\t\t\t\t<span>of 6</span>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"search-block-wrap\">\n\t\t\t\t\t<div class=\"search-block\">\n\t\t\t\t\t\t<a class=\"search-btn\" href=\"#\">\n\t\t\t\t\t\t\t<i class=\"fa fa-search\"></i>\n\t\t\t\t\t\t</a>\n\t\t\t\t\t\t<input type=\"text\" name=\"searchQuery\" [(ngModel)]=\"searchQuery\" placeholder=\"Country ...\" (input)=\"search()\"/>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"check-block-wrap\" id=\"select_countries\">\n\t\t\t\t\t<div *ngFor=\"let country of countries\">\n\t\t\t\t\t\t<div class=\"check-block\" [style.background-image]=\"'url('+ getCoverImage(country.cover_image) +')'\" [class.checked-block]=\"selected.indexOf(country.id)>=0\" (click)=\"select(country.id)\">\n\t\t\t\t\t\t\t<div class=\"check-ttl\">\n\t\t\t\t\t\t\t\t<h4>{{ country.name }} </h4>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"modal-footer\">\n\t\t\t\t<button type=\"button\" class=\"btn btn-grey\" [disabled]=\"5 - this.selected.length > 0 || loading\" (click)=\"continueStep3()\">{{ continueBtnText }}</button>\n\t\t\t\t<p class=\"sub-info\">(Next Step: Favorite Places)</p>\n\t\t\t</div>\n\t\t</div>\n\t</div>\n</div>"
+
+/***/ }),
+
+/***/ "../../../../../src/app/signup/step3/step3.component.scss":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/signup/step3/step3.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Step3Component; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_index__ = __webpack_require__("../../../../../src/_services/index.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var Step3Component = (function () {
+    function Step3Component(countriesService, userService) {
+        this.countriesService = countriesService;
+        this.userService = userService;
+        this.defaultCoverImage = "http://placehold.it/181x181";
+        this.continueBtnText = "Select 5 More";
+        this.loading = false;
+        this.countries = [];
+        this.selected = [];
+        this.searchQuery = "";
+        this.limit = 20;
+        this.offset = 0;
+        this.language_id = 1;
+    }
+    Step3Component.prototype.ngOnInit = function () {
+        this.selected = [];
+        this.countries = [];
+        this.loadMore();
+        // initialize mCustomScrollbar plugin
+        var t = this;
+        $("#select_countries").mCustomScrollbar({
+            callbacks: {
+                onTotalScroll: function () { t.loadMore(); }
+            }
+        });
+    };
+    Step3Component.prototype.select = function (id) {
+        if (this.selected.indexOf(id) >= 0) {
+            var index = this.selected.indexOf(id);
+            if (index !== -1) {
+                this.selected.splice(index, 1);
+            }
+        }
+        else {
+            this.selected.push(id);
+        }
+        if (this.selected.length < 5) {
+            this.continueBtnText = "Select " + (5 - this.selected.length) + " More";
+        }
+        else {
+            this.continueBtnText = "Continue";
+        }
+        // console.log(this.selected);
+    };
+    Step3Component.prototype.getCoverImage = function (cover_image) {
+        if (cover_image == "") {
+            return this.defaultCoverImage;
+        }
+        return cover_image;
+    };
+    Step3Component.prototype.search = function () {
+        if (this.searchQuery.length % 3 == 0) {
+            this.offset = 0;
+            this.loadMore();
+        }
+    };
+    Step3Component.prototype.loadMore = function () {
+        var _this = this;
+        var data1 = {
+            query: this.searchQuery,
+            limit: this.limit,
+            offset: this.offset,
+            language_id: this.language_id
+        };
+        this.countriesService.loadMore(data1)
+            .subscribe(function (data) {
+            //console.log(data);
+            if (data.success) {
+                if (data.data != "") {
+                    _this.countries = JSON.parse(data.data);
+                }
+                else {
+                    _this.countries = [];
+                }
+                _this.offset = _this.offset = _this.countries.length;
+                // console.log(this.countries);
+            }
+            else {
+                // api error
+            }
+        }, function (error) {
+            console.log(error);
+        });
+    };
+    Step3Component.prototype.continueStep3 = function () {
+        var _this = this;
+        this.toggleSignup(false);
+        var arr = $.map(this.selected, function (n, i) {
+            return { id: n };
+        });
+        var user = {};
+        user.user_id = localStorage.getItem('signupId');
+        user.countries = arr;
+        this.userService.signupStep3(user)
+            .subscribe(function (data) {
+            //console.log(data);
+            if (data.success) {
+                var response = data.data;
+                //console.log(response);
+                _this.toggleSignup(true);
+                // continue to step 4
+                $('#signUpStep3').modal("hide");
+                $('#signUpStep4').modal("show");
+            }
+            else {
+                _this.toggleSignup(true);
+            }
+        }, function (error) {
+            console.log(error);
+            //this.alertService.error(error);
+            _this.toggleSignup(true);
+        });
+    };
+    Step3Component.prototype.toggleSignup = function (state) {
+        if (state) {
+            this.continueBtnText = "Continue";
+            this.loading = false;
+        }
+        else {
+            this.continueBtnText = "Saving ...";
+            this.loading = true;
+        }
+    };
+    Step3Component = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+            selector: 'app-signup-step3',
+            template: __webpack_require__("../../../../../src/app/signup/step3/step3.component.html"),
+            styles: [__webpack_require__("../../../../../src/app/signup/step3/step3.component.scss")]
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__services_index__["c" /* CountriesService */],
+            __WEBPACK_IMPORTED_MODULE_1__services_index__["f" /* UserService */]])
+    ], Step3Component);
+    return Step3Component;
+}());
+
+
+
+/***/ }),
+
+/***/ "../../../../../src/app/signup/step4/step4.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<!-- Modal -->\n<div class=\"modal fade signUpStep\" id=\"signUpStep4\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\"\n data-backdrop=\"static\" data-keyboard=\"false\">\n\t<div class=\"modal-dialog sign-up-step\" role=\"document\">\n\t\t<div class=\"modal-content\">\n\t\t\t<div class=\"modal-body\">\n\t\t\t\t<div class=\"title-layer\">\n\t\t\t\t\t<h3 class=\"step-ttl\">Select 3\n\t\t\t\t\t\t<span>favorite places</span> around the world</h3>\n\t\t\t\t\t<div class=\"step-info\">\n\t\t\t\t\t\tStep 2\n\t\t\t\t\t\t<span>of 6</span>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t\t\n\t\t\t\t<div class=\"search-block-wrap\">\n\t\t\t\t\t<div class=\"search-block\">\n\t\t\t\t\t\t<a class=\"search-btn\" href=\"#\">\n\t\t\t\t\t\t\t<i class=\"fa fa-search\"></i>\n\t\t\t\t\t\t</a>\n\t\t\t\t\t\t<input type=\"text\" name=\"searchQuery\" [(ngModel)]=\"searchQuery\" placeholder=\"Place name...\" (input)=\"search()\" />\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\n\t\t\t\t<div class=\"check-block-wrap\"  id=\"select_places\">\n\t\t\t\t\t<div *ngFor=\"let place of places\">\n\t\t\t\t\t\t<div class=\"check-block\" [style.background-image]=\"'url('+ getCoverImage(place.cover_image) +')'\" [class.checked-block]=\"selected.indexOf(place.id)>=0\"\n\t\t\t\t\t\t (click)=\"select(place.id)\">\n\t\t\t\t\t\t\t<div class=\"check-ttl\">\n\t\t\t\t\t\t\t\t<h4>{{ place.name }} </h4>\n\t\t\t\t\t\t\t\t<p>{{ place.city_country_name }}</p>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"modal-footer\">\n\t\t\t\t<button type=\"button\" class=\"btn btn-grey\" [disabled]=\"5 - this.selected.length > 0 || loading\" (click)=\"continueStep4()\">{{ continueBtnText }}</button>\n\t\t\t\t<p class=\"sub-info\">(Next Step: Favorite Travel Styles)</p>\n\t\t\t</div>\n\t\t</div>\n\t</div>\n</div>"
+
+/***/ }),
+
+/***/ "../../../../../src/app/signup/step4/step4.component.scss":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/signup/step4/step4.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Step4Component; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_index__ = __webpack_require__("../../../../../src/_services/index.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var Step4Component = (function () {
+    function Step4Component(placesService, userService) {
+        this.placesService = placesService;
+        this.userService = userService;
+        this.defaultCoverImage = "http://placehold.it/181x181";
+        this.continueBtnText = "Select 5 More";
+        this.loading = false;
+        this.places = [];
+        this.selected = [1, 6, 9];
+        this.searchQuery = "";
+        this.limit = 20;
+        this.offset = 0;
+        this.language_id = 1;
+    }
+    Step4Component.prototype.ngOnInit = function () {
+        this.selected = [];
+        this.places = [];
+        this.loadMore();
+        // initialize mCustomScrollbar plugin
+        var t = this;
+        $("#select_places").mCustomScrollbar({
+            callbacks: {
+                onTotalScroll: function () { t.loadMore(); }
+            }
+        });
+    };
+    Step4Component.prototype.select = function (id) {
+        if (this.selected.indexOf(id) >= 0) {
+            var index = this.selected.indexOf(id);
+            if (index !== -1) {
+                this.selected.splice(index, 1);
+            }
+        }
+        else {
+            this.selected.push(id);
+        }
+        if (this.selected.length < 5) {
+            this.continueBtnText = "Select " + (5 - this.selected.length) + " More";
+        }
+        else {
+            this.continueBtnText = "Continue";
+        }
+        //console.log(this.selected);
+    };
+    Step4Component.prototype.getCoverImage = function (cover_image) {
+        if (cover_image == "") {
+            return this.defaultCoverImage;
+        }
+        return cover_image;
+    };
+    Step4Component.prototype.search = function () {
+        if (this.searchQuery.length % 3 == 0) {
+            this.offset = 0;
+            this.loadMore();
+        }
+    };
+    Step4Component.prototype.loadMore = function () {
+        var _this = this;
+        var data1 = {
+            query: this.searchQuery,
+            limit: this.limit,
+            offset: this.offset,
+            language_id: this.language_id,
+        };
+        this.placesService.loadMore(data1)
+            .subscribe(function (data) {
+            //console.log(data);
+            if (data.success) {
+                _this.places = data.data;
+                _this.offset = _this.offset = _this.places.length;
+                // console.log(this.places);
+            }
+            else {
+                // api error
+            }
+        }, function (error) {
+            console.log(error);
+        });
+    };
+    Step4Component.prototype.continueStep4 = function () {
+        var _this = this;
+        this.toggleSignup(false);
+        var arr = $.map(this.selected, function (n, i) {
+            return { id: n };
+        });
+        var user = {};
+        user.user_id = localStorage.getItem('signupId');
+        user.places = arr;
+        this.userService.signupStep4(user)
+            .subscribe(function (data) {
+            //console.log(data);
+            if (data.success) {
+                var response = data.data;
+                //console.log(response);
+                _this.toggleSignup(true);
+                // continue to step 5
+                $('#signUpStep4').modal("hide");
+                $('#signUpStep5').modal("show");
+            }
+            else {
+                _this.toggleSignup(true);
+            }
+        }, function (error) {
+            console.log(error);
+            //this.alertService.error(error);
+            _this.toggleSignup(true);
+        });
+    };
+    Step4Component.prototype.toggleSignup = function (state) {
+        if (state) {
+            this.continueBtnText = "Continue";
+            this.loading = false;
+        }
+        else {
+            this.continueBtnText = "Saving ...";
+            this.loading = true;
+        }
+    };
+    Step4Component = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+            selector: 'app-signup-step4',
+            template: __webpack_require__("../../../../../src/app/signup/step4/step4.component.html"),
+            styles: [__webpack_require__("../../../../../src/app/signup/step4/step4.component.scss")]
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__services_index__["d" /* PlacesService */],
+            __WEBPACK_IMPORTED_MODULE_1__services_index__["f" /* UserService */]])
+    ], Step4Component);
+    return Step4Component;
+}());
+
+
+
+/***/ }),
+
+/***/ "../../../../../src/app/signup/step5/step5.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<!-- Modal -->\n<div class=\"modal fade signUpStep\" id=\"signUpStep5\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\"\n data-backdrop=\"static\" data-keyboard=\"false\">\n\t<div class=\"modal-dialog sign-up-step\" role=\"document\">\n\t\t<div class=\"modal-content\">\n\t\t\t<div class=\"modal-body\">\n\t\t\t\t<div class=\"title-layer\">\n\t\t\t\t\t<h3 class=\"step-ttl\">Select your preferred\n\t\t\t\t\t\t<span>travel styles</span>\n\t\t\t\t\t</h3>\n\t\t\t\t\t<div class=\"step-info\">\n\t\t\t\t\t\tStep 3\n\t\t\t\t\t\t<span>of 6</span>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\n\t\t\t\t<div class=\"search-block-wrap\">\n\t\t\t\t\t<div class=\"search-block\">\n\t\t\t\t\t\t<a class=\"search-btn\" href=\"#\">\n\t\t\t\t\t\t\t<i class=\"fa fa-search\"></i>\n\t\t\t\t\t\t</a>\n\t\t\t\t\t\t<input type=\"text\" name=\"searchQuery\" [(ngModel)]=\"searchQuery\" placeholder=\"Travel style...\" (input)=\"search()\" />\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\n\t\t\t\t<div class=\"check-block-wrap\" id=\"select_styles\">\n\t\t\t\t\t<div *ngFor=\"let style of styles\">\n\t\t\t\t\t\t<div class=\"check-block\" [style.background-image]=\"'url('+ getCoverImage(style.cover_image) +')'\" [class.checked-block]=\"selected.indexOf(style.id)>=0\"\n\t\t\t\t\t\t (click)=\"select(style.id)\">\n\t\t\t\t\t\t\t<div class=\"check-ttl\">\n\t\t\t\t\t\t\t\t<h4>{{ style.name }} </h4>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"modal-footer\">\n\t\t\t\t<button type=\"button\" class=\"btn btn-grey\" [disabled]=\"5 - this.selected.length || loading\" (click)=\"continueStep5()\">{{ continueBtnText }}</button>\n\t\t\t\t<p class=\"sub-info\">(Next Step: Favorite Activities)</p>\n\t\t\t</div>\n\t\t</div>\n\t</div>\n</div>"
+
+/***/ }),
+
+/***/ "../../../../../src/app/signup/step5/step5.component.scss":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/signup/step5/step5.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Step5Component; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_index__ = __webpack_require__("../../../../../src/_services/index.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var Step5Component = (function () {
+    function Step5Component(stylesService, userService) {
+        this.stylesService = stylesService;
+        this.userService = userService;
+        this.defaultCoverImage = "http://placehold.it/181x181";
+        this.continueBtnText = "Select 5 More";
+        this.loading = false;
+        this.styles = [];
+        this.selected = [1, 6, 9];
+        this.searchQuery = "";
+        this.limit = 20;
+        this.offset = 0;
+        this.language_id = 1;
+    }
+    Step5Component.prototype.ngOnInit = function () {
+        this.selected = [];
+        this.styles = [
+            { id: "1", name: "Adventurous", cover_image: "http://placehold.it/181x181" },
+            { id: "2", name: "Holiday-themed", cover_image: "http://placehold.it/181x181" },
+            { id: "3", name: "Spiritual", cover_image: "http://placehold.it/181x181" },
+            { id: "4", name: "Solo Travel", cover_image: "http://placehold.it/181x181" },
+            { id: "5", name: "Event-based", cover_image: "http://placehold.it/181x181" },
+            { id: "6", name: "Group Travel", cover_image: "http://placehold.it/181x181" },
+            { id: "7", name: "Nightlife", cover_image: "http://placehold.it/181x181" },
+            { id: "8", name: "Long Tours", cover_image: "http://placehold.it/181x181" },
+            { id: "9", name: "Group Travel", cover_image: "http://placehold.it/181x181" },
+            { id: "10", name: "Nightlife", cover_image: "http://placehold.it/181x181" },
+            { id: "11", name: "Long Tours", cover_image: "http://placehold.it/181x181" }
+        ];
+        this.loadMore();
+        // initialize mCustomScrollbar plugin
+        var t = this;
+        $("#select_styles").mCustomScrollbar({
+            callbacks: {
+                onTotalScroll: function () { }
+            }
+        });
+    };
+    Step5Component.prototype.select = function (id) {
+        if (this.selected.indexOf(id) >= 0) {
+            var index = this.selected.indexOf(id);
+            if (index !== -1) {
+                this.selected.splice(index, 1);
+            }
+        }
+        else {
+            this.selected.push(id);
+        }
+        if (this.selected.length < 5) {
+            this.continueBtnText = "Select " + (5 - this.selected.length) + " More";
+        }
+        else {
+            this.continueBtnText = "Continue";
+        }
+        //console.log(this.selected);
+    };
+    Step5Component.prototype.getCoverImage = function (cover_image) {
+        if (cover_image == undefined || cover_image == "") {
+            return this.defaultCoverImage;
+        }
+        return cover_image;
+    };
+    Step5Component.prototype.search = function () {
+        if (this.searchQuery.length % 3 == 0) {
+            this.offset = 0;
+            this.loadMore();
+        }
+    };
+    Step5Component.prototype.loadMore = function () {
+        var _this = this;
+        var data1 = {
+            query: this.searchQuery,
+            limit: this.limit,
+            offset: this.offset,
+            language_id: this.language_id,
+            country_id: 1,
+        };
+        this.stylesService.loadMore(data1)
+            .subscribe(function (data) {
+            //console.log(data);
+            if (data.success) {
+                _this.styles = data.data;
+                _this.offset = _this.offset = _this.styles.length;
+                // console.log(this.styles);
+            }
+            else {
+                // api error
+            }
+        }, function (error) {
+            console.log(error);
+        });
+    };
+    Step5Component.prototype.continueStep5 = function () {
+        var _this = this;
+        this.toggleSignup(false);
+        var arr = $.map(this.selected, function (n, i) {
+            return { id: n };
+        });
+        var user = {};
+        user.user_id = localStorage.getItem('signupId');
+        user.travel_styles = arr;
+        this.userService.signupStep5(user)
+            .subscribe(function (data) {
+            //console.log(data);
+            if (data.success) {
+                var response = data.data;
+                //console.log(response);
+                _this.toggleSignup(true);
+                // continue to step 5
+                $('#signUpStep5').modal("hide");
+                $('#signUpStep6').modal("show");
+            }
+            else {
+                _this.toggleSignup(true);
+            }
+        }, function (error) {
+            console.log(error);
+            //this.alertService.error(error);
+            _this.toggleSignup(true);
+        });
+    };
+    Step5Component.prototype.toggleSignup = function (state) {
+        if (state) {
+            this.continueBtnText = "Continue";
+            this.loading = false;
+        }
+        else {
+            this.continueBtnText = "Saving ...";
+            this.loading = true;
+        }
+    };
+    Step5Component = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+            selector: 'app-signup-step5',
+            template: __webpack_require__("../../../../../src/app/signup/step5/step5.component.html"),
+            styles: [__webpack_require__("../../../../../src/app/signup/step5/step5.component.scss")]
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__services_index__["e" /* TravelStylesService */],
+            __WEBPACK_IMPORTED_MODULE_1__services_index__["f" /* UserService */]])
+    ], Step5Component);
+    return Step5Component;
 }());
 
 

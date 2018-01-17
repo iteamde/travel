@@ -96,7 +96,7 @@ export class Step1Component implements OnInit {
 
 		if (this.email.valid && this.username.valid && this.password.valid && this.cpassword.valid) {
 
-			this.userService.create(user)
+			this.userService.signupStep1(user)
 				.subscribe(
 				data => {
 

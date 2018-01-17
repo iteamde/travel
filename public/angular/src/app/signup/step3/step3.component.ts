@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CountriesService } from '../../../_services/index';
+import { UserService, CountriesService } from '../../../_services/index';
 
 declare var jquery: any;
 declare var $: any;
@@ -10,12 +10,25 @@ declare var $: any;
 	styleUrls: ['./step3.component.scss']
 })
 export class Step3Component implements OnInit {
+	defaultCoverImage: string = "http://placehold.it/181x181";
+	continueBtnText: string = "Select 5 More";
+	loading = false;
+	searchQuery: string;
+	limit: number;
+	offset: number;
+	language_id: number;
 	countries = [];
-	selected = [1, 6, 9];
+	selected = [];
 
 	constructor(
-		private countriesService: CountriesService
-	) { }
+		private countriesService: CountriesService,
+		private userService: UserService
+	) { 
+		this.searchQuery = "";
+		this.limit = 20;
+		this.offset = 0;
+		this.language_id = 1;
+	}
 
 	ngOnInit() {
 
@@ -38,7 +51,7 @@ export class Step3Component implements OnInit {
 
 		// initialize mCustomScrollbar plugin
 		var t = this;
-		$(".check-block-wrap").mCustomScrollbar({
+		$("#select_countries").mCustomScrollbar({
 			callbacks: {
 				onTotalScroll: function () { t.loadMore(); }
 			}
@@ -47,40 +60,66 @@ export class Step3Component implements OnInit {
 
 	select(id) {
 		if (this.selected.indexOf(id) >= 0) {
-			this.remove(this.selected, id);
+			const index = this.selected.indexOf(id);
+
+			if (index !== -1) {
+				this.selected.splice(index, 1);
+			}
 		}
 		else {
 			this.selected.push(id);
 		}
 
-		console.log(this.selected);
+		if(this.selected.length < 5)
+		{
+			this.continueBtnText = "Select "+ (5 - this.selected.length) +" More";
+		}
+		else{
+			this.continueBtnText = "Continue";
+		}
+		// console.log(this.selected);
 	}
 
-	remove(array, element) {
-		const index = array.indexOf(element);
+	getCoverImage(cover_image) {
+		if(cover_image == "")
+		{
+			return this.defaultCoverImage;
+		}
+		return cover_image;
+	}
 
-		if (index !== -1) {
-			array.splice(index, 1);
+	search(){
+		if(this.searchQuery.length % 3 == 0)
+		{
+			this.offset = 0;
+			this.loadMore();
 		}
 	}
 
 	loadMore(){
 		var data1 = {
-			query: "",
-			limit:20,
-			offset:0,
-			language_id: 1
+			query: this.searchQuery,
+			limit: this.limit,
+			offset: this.offset,
+			language_id: this.language_id
 		};
 
 		this.countriesService.loadMore(data1)
 		.subscribe(
 			data => {
-
 				//console.log(data);
 
 				if (data.success) {
-					this.countries = JSON.parse(data.data);
-					console.log(this.countries);
+
+					if(data.data != ""){
+						this.countries = JSON.parse(data.data);
+					}
+					else{
+						this.countries = [];
+					}
+
+					this.offset = this.offset = this.countries.length;
+					// console.log(this.countries);
 				}
 				else {
 					// api error
@@ -90,5 +129,53 @@ export class Step3Component implements OnInit {
 				console.log(error);
 			}
 		);
+	}
+
+	continueStep3() {
+		this.toggleSignup(false);
+
+		var arr = $.map( this.selected, function( n, i ) {
+			return {id: n}
+		});
+
+		var user: any = {};
+		user.user_id = localStorage.getItem('signupId');
+		user.countries = arr;
+
+		this.userService.signupStep3(user)
+			.subscribe(
+			data => {
+				//console.log(data);
+
+				if (data.success) {
+					var response = data.data;
+					//console.log(response);
+					this.toggleSignup(true);
+
+					// continue to step 4
+					$('#signUpStep3').modal("hide");
+					$('#signUpStep4').modal("show");
+				}
+				else {
+					this.toggleSignup(true);
+				}
+			},
+			error => {
+				console.log(error);
+				//this.alertService.error(error);
+				this.toggleSignup(true);
+			}
+		);
+	}
+
+	toggleSignup(state) {
+		if (state) {
+			this.continueBtnText = "Continue";
+			this.loading = false;
+		}
+		else {
+			this.continueBtnText = "Saving ...";
+			this.loading = true;
+		}
 	}
 }

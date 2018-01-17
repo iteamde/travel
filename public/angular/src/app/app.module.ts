@@ -12,7 +12,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AlertComponent } from '../_directives/index';
 import { AuthGuard } from '../_guards/index';
 import { JwtInterceptor } from '../_helpers/index';
-import { AlertService, AuthenticationService, UserService, CountriesService } from '../_services/index';
+import { AlertService, AuthenticationService, UserService, CountriesService, PlacesService , TravelStylesService} from '../_services/index';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -28,6 +28,8 @@ import { CreatePostComponent } from './create-post/create-post.component';
 import { Step1Component } from './signup/step1/step1.component';
 import { Step2Component } from './signup/step2/step2.component';
 import { Step3Component } from './signup/step3/step3.component';
+import { Step4Component } from './signup/step4/step4.component';
+import { Step5Component } from './signup/step5/step5.component';
 
 @NgModule({
     imports: [
@@ -54,7 +56,9 @@ import { Step3Component } from './signup/step3/step3.component';
       CreatePostComponent,
       Step1Component,
       Step2Component,
-      Step3Component
+      Step3Component,
+      Step4Component,
+      Step5Component
     ],
     providers: [
         AuthGuard,
@@ -67,6 +71,8 @@ import { Step3Component } from './signup/step3/step3.component';
             multi: true
         },
         CountriesService,
+        PlacesService,
+        TravelStylesService
 
         // provider used to create fake backend
         //fakeBackendProvider

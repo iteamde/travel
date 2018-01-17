@@ -17,21 +17,21 @@
 						<a class="search-btn" href="#">
 							<i class="fa fa-search"></i>
 						</a>
-						<input type="text" class="" placeholder="Country or city...">
+						<input type="text" name="searchQuery" [(ngModel)]="searchQuery" placeholder="Country ..." (input)="search()"/>
 					</div>
 				</div>
-				<div class="check-block-wrap">
+				<div class="check-block-wrap" id="select_countries">
 					<div *ngFor="let country of countries">
-						<div class="check-block" [style.background-image]="'url('+(country.cover_image == '') ?  'http://placehold.it/181x181' : country.cover_image +')'" [class.checked-block]="selected.indexOf(country.id)>=0" (click)="select(country.id)">
+						<div class="check-block" [style.background-image]="'url('+ getCoverImage(country.cover_image) +')'" [class.checked-block]="selected.indexOf(country.id)>=0" (click)="select(country.id)">
 							<div class="check-ttl">
-								<h4>{{country.name}} </h4>
+								<h4>{{ country.name }} </h4>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-grey">Select 3 More</button>
+				<button type="button" class="btn btn-grey" [disabled]="5 - this.selected.length > 0 || loading" (click)="continueStep3()">{{ continueBtnText }}</button>
 				<p class="sub-info">(Next Step: Favorite Places)</p>
 			</div>
 		</div>

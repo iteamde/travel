@@ -1,0 +1,43 @@
+<!-- Modal -->
+<div class="modal fade signUpStep" id="signUpStep4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
+ data-backdrop="static" data-keyboard="false">
+	<div class="modal-dialog sign-up-step" role="document">
+		<div class="modal-content">
+			<div class="modal-body">
+				<div class="title-layer">
+					<h3 class="step-ttl">Select 3
+						<span>favorite places</span> around the world</h3>
+					<div class="step-info">
+						Step 2
+						<span>of 6</span>
+					</div>
+				</div>
+				
+				<div class="search-block-wrap">
+					<div class="search-block">
+						<a class="search-btn" href="#">
+							<i class="fa fa-search"></i>
+						</a>
+						<input type="text" name="searchQuery" [(ngModel)]="searchQuery" placeholder="Place name..." (input)="search()" />
+					</div>
+				</div>
+
+				<div class="check-block-wrap"  id="select_places">
+					<div *ngFor="let place of places">
+						<div class="check-block" [style.background-image]="'url('+ getCoverImage(place.cover_image) +')'" [class.checked-block]="selected.indexOf(place.id)>=0"
+						 (click)="select(place.id)">
+							<div class="check-ttl">
+								<h4>{{ place.name }} </h4>
+								<p>{{ place.city_country_name }}</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-grey" [disabled]="5 - this.selected.length > 0 || loading" (click)="continueStep4()">{{ continueBtnText }}</button>
+				<p class="sub-info">(Next Step: Favorite Travel Styles)</p>
+			</div>
+		</div>
+	</div>
+</div>

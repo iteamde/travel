@@ -24,7 +24,7 @@ export class MainComponent implements OnInit {
 
 	openSignup() {
 		$('.step-header').show();
-		$('#signUpStep3').modal('show');
+		$('#signUpStep5').modal('show');
 	}
 
 }

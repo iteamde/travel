@@ -81,7 +81,7 @@ export class Step2Component implements OnInit {
 		user.age = this.age.value;
 		user.gender = this.gender.value;
 
-		this.userService.createStep2(user)
+		this.userService.signupStep2(user)
 			.subscribe(
 			data => {
 				//console.log(data);
@@ -114,7 +114,7 @@ export class Step2Component implements OnInit {
 			this.loading = false;
 		}
 		else {
-			this.signupBtnText = "Signing Up ...";
+			this.signupBtnText = "Saving ...";
 			this.loading = true;
 		}
 	}
