@@ -11,9 +11,9 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 
 /**
- * Class Api/LifeStyleController.
+ * Class Api/LifestyleController.
  */
-class LifeStyleController extends Controller {
+class LifestyleController extends Controller {
 
     public function __construct() {
         // Apply the jwt.auth middleware to all methods in this controller

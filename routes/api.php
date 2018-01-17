@@ -231,6 +231,6 @@ Route::group(['prefix' => 'api'], function () {
             ], function () {
 
         /* Get All Lifestyles */
-        Route::post('/search', 'LifeStyleController@get_lifestyles');
+        Route::post('/search', 'LifestyleController@get_lifestyles');
     });
 });
