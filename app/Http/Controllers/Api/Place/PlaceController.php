@@ -58,7 +58,7 @@ class PlaceController extends Controller {
             $limit = $post['limit'];
         }
 
-        $places = Place::select('places.id as pId','places.*','places_trans.*');
+        $places = Place::select('places.id as pId','places_trans.title');
 
         $places = $places->join('places_trans', 'places.id', '=', 'places_trans.places_id')->where(['active' => 1,'languages_id' => $language]);
 
