@@ -628,7 +628,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 var ManagerService = (function () {
     function ManagerService() {
-        this.apiPrefix = "/travo/public/api";
+        this.apiPrefix = "/public/api";
     }
     ManagerService = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
