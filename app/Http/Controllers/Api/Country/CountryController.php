@@ -75,7 +75,7 @@ class CountryController extends Controller {
         }
 
         $countries = $countries->orderBy('title', 'asc')->offset($offset)->limit($limit);
-        $countries =  $countries->get();
+        $countries = $countries->get();
         
         $countries_arr = [];
 
