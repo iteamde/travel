@@ -183,7 +183,7 @@ class ApiUser extends User {
             }
 
             if (!preg_match('/^[a-zA-Z0-9 ]+$/', $post['username'])) {
-                array_push($error, 'Name can only contain alphanumeric characters.');
+                array_push($error, 'Username can only contain alphanumeric characters.');
             }
 
             /* Check If User Exists For The "username" */
