@@ -83,8 +83,9 @@ class CountryController extends Controller {
             $countries_arr[] = $value->getResponse();   
         }
 
-        $countries = json_encode($countries_arr);
-
+        // $countries = json_encode($countries_arr);
+        $countries = $countries_arr;
+        
         return [
             'success' => true,
             'code'    => 200,
