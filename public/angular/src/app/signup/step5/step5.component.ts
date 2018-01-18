@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertService, UserService, TravelStylesService } from '../../../_services/index';
+import { MainComponent } from '../../main/main.component';
 
 declare var jquery: any;
 declare var $: any;
@@ -23,7 +24,8 @@ export class Step5Component implements OnInit {
 
 	constructor(
 		private stylesService: TravelStylesService,
-		private userService: UserService
+		private userService: UserService,
+		private mainC: MainComponent
 	) {
 		this.searchQuery = "";
 		this.limit = 20;
@@ -35,17 +37,17 @@ export class Step5Component implements OnInit {
 
 		this.selected = [];
 		this.styles = [
-			{ id: "1", name: "Adventurous", cover_image: "http://placehold.it/181x181" },
-			{ id: "2", name: "Holiday-themed", cover_image: "http://placehold.it/181x181" },
-			{ id: "3", name: "Spiritual", cover_image: "http://placehold.it/181x181" },
-			{ id: "4", name: "Solo Travel", cover_image: "http://placehold.it/181x181" },
-			{ id: "5", name: "Event-based", cover_image: "http://placehold.it/181x181" },
-			{ id: "6", name: "Group Travel", cover_image: "http://placehold.it/181x181" },
-			{ id: "7", name: "Nightlife", cover_image: "http://placehold.it/181x181" },
-			{ id: "8", name: "Long Tours", cover_image: "http://placehold.it/181x181" },
-			{ id: "9", name: "Group Travel", cover_image: "http://placehold.it/181x181" },
-			{ id: "10", name: "Nightlife", cover_image: "http://placehold.it/181x181" },
-			{ id: "11", name: "Long Tours", cover_image: "http://placehold.it/181x181" }
+			// { id: "1", name: "Adventurous", cover_image: "http://placehold.it/181x181" },
+			// { id: "2", name: "Holiday-themed", cover_image: "http://placehold.it/181x181" },
+			// { id: "3", name: "Spiritual", cover_image: "http://placehold.it/181x181" },
+			// { id: "4", name: "Solo Travel", cover_image: "http://placehold.it/181x181" },
+			// { id: "5", name: "Event-based", cover_image: "http://placehold.it/181x181" },
+			// { id: "6", name: "Group Travel", cover_image: "http://placehold.it/181x181" },
+			// { id: "7", name: "Nightlife", cover_image: "http://placehold.it/181x181" },
+			// { id: "8", name: "Long Tours", cover_image: "http://placehold.it/181x181" },
+			// { id: "9", name: "Group Travel", cover_image: "http://placehold.it/181x181" },
+			// { id: "10", name: "Nightlife", cover_image: "http://placehold.it/181x181" },
+			// { id: "11", name: "Long Tours", cover_image: "http://placehold.it/181x181" }
 		];
 
 		this.loadMore();
@@ -54,7 +56,7 @@ export class Step5Component implements OnInit {
 		var t = this;
 		$("#select_styles").mCustomScrollbar({
 			callbacks: {
-				onTotalScroll: function () { /*t.loadMore();*/ }
+				onTotalScroll: function () { t.loadMore(); }
 			}
 		});
 	}
@@ -90,11 +92,11 @@ export class Step5Component implements OnInit {
 	search() {
 		if (this.searchQuery.length % 3 == 0) {
 			this.offset = 0;
-			this.loadMore();
+			this.loadMore(true);
 		}
 	}
 
-	loadMore() {
+	loadMore(replace = false) {
 		var data1 = {
 			query: this.searchQuery,
 			limit: this.limit,
@@ -110,7 +112,11 @@ export class Step5Component implements OnInit {
 
 				if (data.success) {
 
-					this.styles = data.data;
+					if(replace) {
+						this.styles = data.data;
+					} else {
+						this.styles = this.styles.concat(data.data);
+					}
 
 					this.offset = this.offset = this.styles.length;
 					// console.log(this.styles);
@@ -146,9 +152,8 @@ export class Step5Component implements OnInit {
 					//console.log(response);
 					this.toggleSignup(true);
 
-					// continue to step 5
-					$('#signUpStep5').modal("hide");
-					$('#signUpStep6').modal("show");
+					// continue to step 6
+					this.mainC.openSignup(6);
 				}
 				else {
 					this.toggleSignup(true);

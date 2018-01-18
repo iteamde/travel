@@ -628,7 +628,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 var ManagerService = (function () {
     function ManagerService() {
-        this.apiPrefix = "/public/api";
+        this.apiPrefix = "http://localhost/travo/public/api";
     }
     ManagerService = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
@@ -1010,6 +1010,7 @@ var AppComponent = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__signup_step3_step3_component__ = __webpack_require__("../../../../../src/app/signup/step3/step3.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__signup_step4_step4_component__ = __webpack_require__("../../../../../src/app/signup/step4/step4.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__signup_step5_step5_component__ = __webpack_require__("../../../../../src/app/signup/step5/step5.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__forgot_password_forgot_password_component__ = __webpack_require__("../../../../../src/app/forgot-password/forgot-password.component.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1025,6 +1026,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 // used to create fake backend
 //import { fakeBackendProvider } from '../_helpers/index';
+
 
 
 
@@ -1076,7 +1078,8 @@ var AppModule = (function () {
                 __WEBPACK_IMPORTED_MODULE_23__signup_step2_step2_component__["a" /* Step2Component */],
                 __WEBPACK_IMPORTED_MODULE_24__signup_step3_step3_component__["a" /* Step3Component */],
                 __WEBPACK_IMPORTED_MODULE_25__signup_step4_step4_component__["a" /* Step4Component */],
-                __WEBPACK_IMPORTED_MODULE_26__signup_step5_step5_component__["a" /* Step5Component */]
+                __WEBPACK_IMPORTED_MODULE_26__signup_step5_step5_component__["a" /* Step5Component */],
+                __WEBPACK_IMPORTED_MODULE_27__forgot_password_forgot_password_component__["a" /* ForgotPasswordComponent */]
             ],
             providers: [
                 __WEBPACK_IMPORTED_MODULE_8__guards_index__["a" /* AuthGuard */],
@@ -1159,6 +1162,67 @@ var CreatePostComponent = (function () {
         __metadata("design:paramtypes", [])
     ], CreatePostComponent);
     return CreatePostComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "../../../../../src/app/forgot-password/forgot-password.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<!-- Modal -->\n<div class=\"modal fade\" id=\"forgot_password\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\">\n\t<div class=\"modal-dialog sign-up-style\" role=\"document\">\n\t\t<div class=\"modal-content\">\n\t\t\t<button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\n\t\t\t\t<span aria-hidden=\"true\">&times;</span>\n\t\t\t</button>\n\t\t\t<div class=\"modal-body\">\n\t\t\t\t<div class=\"top-layer\">\n\t\t\t\t\t<a href=\"#\" class=\"logo-wrap\">\n\t\t\t\t\t\t<img src=\"./assets/image/main-logo.png\" alt=\"\">\n\t\t\t\t\t</a>\n\t\t\t\t\t<h4 class=\"title\">Forgot Password</h4>\n\t\t\t\t\t<p class=\"sub-ttl\">Please enter your email to send you password reset</p>\n\t\t\t\t\t<p class=\"sub-ttl error-message\">The email is incorrect!</p>\n\t\t\t\t</div>\n\t\t\t\t<form class=\"login-form\">\n\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t<input type=\"email\" class=\"form-control\" id=\"emailAddress\" aria-describedby=\"emailHelp\" placeholder=\"Email address\">\n\t\t\t\t\t</div>\n\n\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t<button type=\"button\" class=\"btn btn-success\">Reset Password</button>\n\t\t\t\t\t</div>\n\n\t\t\t\t</form>\n\t\t\t</div>\n\t\t\t<div class=\"modal-footer\">\n\t\t\t\t<p class=\"foot-txt\">You are not a member yet?</p>\n\t\t\t\t<button type=\"button\" class=\"btn btn-grey\">Sign Up</button>\n\t\t\t</div>\n\t\t</div>\n\t</div>\n</div>\n\n<!-- create an account -->\n<div class=\"modal fade\" id=\"reset_password\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\">\n\t<div class=\"modal-dialog sign-up-style\" role=\"document\">\n\t\t<div class=\"modal-content\">\n\t\t\t<button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\n\t\t\t\t<span aria-hidden=\"true\">&times;</span>\n\t\t\t</button>\n\t\t\t<div class=\"modal-body body-create\">\n\t\t\t\t<div class=\"top-layer\">\n\t\t\t\t\t<a href=\"#\" class=\"logo-wrap\">\n\t\t\t\t\t\t<img src=\"./assets/image/main-logo.png\" alt=\"\">\n\t\t\t\t\t</a>\n\t\t\t\t\t<h4 class=\"title\">Forgot Password</h4>\n\t\t\t\t\t<p class=\"sub-ttl\">Please enter a new password</p>\n\t\t\t\t\t<!-- <p class=\"sub-ttl error-message\">Your password is too weak</p> -->\n\t\t\t\t\t<p class=\"sub-ttl error-message\">Please fill the required fields</p>\n\t\t\t\t</div>\n\t\t\t\t<form class=\"login-form\">\n\t\t\t\t\t<div class=\"step-1\">\n\t\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t\t<input type=\"password\" class=\"form-control\" id=\"emailAddress\" aria-describedby=\"emailHelp\" placeholder=\"New password\">\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"form-group has-danger\">\n\t\t\t\t\t\t\t<input type=\"password\" class=\"form-control\" id=\"password\" aria-describedby=\"pass\" placeholder=\"New password confirmation\">\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"form-margin\"></div>\n\t\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t\t<button type=\"button\" class=\"btn btn-success\">Update password</button>\n\t\t\t\t\t\t</div>\n\n\t\t\t\t\t</div>\n\n\t\t\t\t</form>\n\t\t\t</div>\n\t\t\t<div class=\"modal-footer\">\n\t\t\t\t<p class=\"foot-txt\">You are not a member yet?</p>\n\t\t\t\t<button type=\"button\" class=\"btn btn-grey\">Sign Up</button>\n\t\t\t</div>\n\t\t</div>\n\t</div>\n</div>\n\n<div class=\"modal fade\" id=\"reset_success\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\">\n\t<div class=\"modal-dialog sign-up-style\" role=\"document\">\n\t\t<div class=\"modal-content\">\n\t\t\t<button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\n\t\t\t\t<span aria-hidden=\"true\">&times;</span>\n\t\t\t</button>\n\t\t\t<div class=\"modal-body body-create\">\n\t\t\t\t<div class=\"top-layer\">\n\t\t\t\t\t<a href=\"#\" class=\"logo-wrap\">\n\t\t\t\t\t\t<img src=\"./assets/image/main-logo.png\" alt=\"\">\n\t\t\t\t\t</a>\n\t\t\t\t\t<h4 class=\"title\">Forgot Password</h4>\n\t\t\t\t\t<!-- <p class=\"sub-ttl\">and write a text here</p> -->\n\t\t\t\t\t<!-- <p class=\"sub-ttl error-message\">Your password is too weak</p> -->\n\t\t\t\t</div>\n\t\t\t\t<form class=\"login-form\">\n\t\t\t\t\t<div class=\"step-2\">\n\t\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t\t<p class=\"email-field\">Your password was reset successfully!</p>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</form>\n\t\t\t</div>\n\t\t\t<div class=\"modal-footer\">\n\t\t\t\t<button type=\"button\" class=\"btn btn-grey\">Got to Log In</button>\n\t\t\t</div>\n\t\t</div>\n\t</div>\n</div>"
+
+/***/ }),
+
+/***/ "../../../../../src/app/forgot-password/forgot-password.component.scss":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/forgot-password/forgot-password.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ForgotPasswordComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+var ForgotPasswordComponent = (function () {
+    function ForgotPasswordComponent() {
+    }
+    ForgotPasswordComponent.prototype.ngOnInit = function () {
+    };
+    ForgotPasswordComponent = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+            selector: 'app-forgot-password',
+            template: __webpack_require__("../../../../../src/app/forgot-password/forgot-password.component.html"),
+            styles: [__webpack_require__("../../../../../src/app/forgot-password/forgot-password.component.scss")]
+        }),
+        __metadata("design:paramtypes", [])
+    ], ForgotPasswordComponent);
+    return ForgotPasswordComponent;
 }());
 
 
@@ -1396,6 +1460,7 @@ module.exports = module.exports.toString();
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_index__ = __webpack_require__("../../../../../src/_services/index.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_forms__ = __webpack_require__("../../../forms/esm5/forms.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_platform_browser__ = __webpack_require__("../../../platform-browser/esm5/platform-browser.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__main_main_component__ = __webpack_require__("../../../../../src/app/main/main.component.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1410,14 +1475,16 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var LoginComponent = (function () {
-    function LoginComponent(route, router, authenticationService, alertService, formBuilder, titleService) {
+    function LoginComponent(route, router, authenticationService, alertService, formBuilder, titleService, mianC) {
         this.route = route;
         this.router = router;
         this.authenticationService = authenticationService;
         this.alertService = alertService;
         this.formBuilder = formBuilder;
         this.titleService = titleService;
+        this.mianC = mianC;
         this.loading = false;
         this.loginBtnText = "Login";
         this.errors = [];
@@ -1432,7 +1499,6 @@ var LoginComponent = (function () {
         ]);
     }
     LoginComponent.prototype.ngOnInit = function () {
-        this.titleService.setTitle("Travoo - Login");
         // reset login status
         this.authenticationService.logout();
         if (this.authenticationService.isLoggedIn()) {
@@ -1446,9 +1512,7 @@ var LoginComponent = (function () {
         });
     };
     LoginComponent.prototype.openSignup = function () {
-        this.titleService.setTitle("Travoo - Signup");
-        $('#signUp').modal("hide");
-        $('#createAccount1').modal("show");
+        this.mianC.openSignup(1);
     };
     LoginComponent.prototype.setClassEmail = function () {
         if ((!this.email.pristine || this.email.touched) && !this.email.valid) {
@@ -1513,7 +1577,8 @@ var LoginComponent = (function () {
             __WEBPACK_IMPORTED_MODULE_2__services_index__["b" /* AuthenticationService */],
             __WEBPACK_IMPORTED_MODULE_2__services_index__["a" /* AlertService */],
             __WEBPACK_IMPORTED_MODULE_3__angular_forms__["a" /* FormBuilder */],
-            __WEBPACK_IMPORTED_MODULE_4__angular_platform_browser__["b" /* Title */]])
+            __WEBPACK_IMPORTED_MODULE_4__angular_platform_browser__["b" /* Title */],
+            __WEBPACK_IMPORTED_MODULE_5__main_main_component__["a" /* MainComponent */]])
     ], LoginComponent);
     return LoginComponent;
 }());
@@ -1525,7 +1590,7 @@ var LoginComponent = (function () {
 /***/ "../../../../../src/app/main/main.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"main-wrapper login-layer\">\n\t<header class=\"main-header step-header\">\n\t\t<!-- use class .step-header for set header above of modal-backgrop layer -->\n\t\t<div class=\"container\">\n\t\t\t<nav class=\"navbar navbar-toggleable-md navbar-light bg-faded\">\n\t\t\t\t<!-- <button class=\"navbar-toggler navbar-toggler-right\" type=\"button\" data-toggle=\"collapse\" data-target=\"#mainMenuLayer\" aria-controls=\"mainMenuLayer\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">\n            <span class=\"navbar-toggler-icon\"></span>\n          </button> -->\n\t\t\t\t<a class=\"navbar-brand\" href=\"#\">\n\t\t\t\t\t<img src=\"./assets/image/main-small-logo.png\" alt=\"\">\n\t\t\t\t</a>\n\n\t\t\t\t<!--<div class=\"collapse navbar-collapse\" id=\"mainMenuLayer\">\n\t\t\t\t\t<div class=\"progress-wrapper\">\n\t\t\t\t\t<div class=\"progress-point\">Start</div>\n\t\t\t\t\t<div class=\"progress\">\n\t\t\t\t\t<div class=\"progress-bar\" role=\"progressbar\" aria-valuenow=\"1\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div><!-- you can use aria-valuenow arrt for add step -->\n\t\t\t\t\t<!-- </div>\n\t\t\t\t\t<div class=\"progress-point\">Finish</div>\n\t\t\t\t</div>\n\t\t\t\t</div> -->\n\n\t\t\t\t<div class=\"progress-block\">\n\t\t\t\t\t<div class=\"progress-wrapper\">\n\t\t\t\t\t\t<div class=\"progress-point\">Start</div>\n\t\t\t\t\t\t<div class=\"progress\">\n\t\t\t\t\t\t\t<div class=\"progress-bar\" role=\"progressbar\" aria-valuenow=\"1\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div>\n\t\t\t\t\t\t\t<!-- you can use aria-valuenow arrt for add step -->\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"progress-point\">Finish</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</nav>\n\n\t\t\t<!-- <div class=\"header-inner\">\n          <h1 class=\"logo-wrap\">\n            <a href=\"#\" class=\"logo\">\n              <img src=\"./assets/image/main-small-logo.png\" alt=\"\">\n            </a>\n          </h1>\n          <div class=\"col\">\n          </div>\n        </div> -->\n\t\t</div>\n\t</header>\n\n\t<!-- Button trigger modal -->\n\t<button type=\"button\" class=\"btn btn-primary\" (click)=\"openLogin()\">\n\t\tLogin\n\t</button>\n\t<button type=\"button\" class=\"btn btn-primary\" (click)=\"openSignup()\">\n\t\tRegister\n\t</button>\n</div>\n\n<app-login></app-login>\n\n<app-signup></app-signup>"
+module.exports = "<div class=\"main-wrapper login-layer\">\n\t<header class=\"main-header step-header\">\n\t\t<!-- use class .step-header for set header above of modal-backgrop layer -->\n\t\t<div class=\"container\">\n\t\t\t<nav class=\"navbar navbar-toggleable-md navbar-light bg-faded\">\n\t\t\t\t<!-- <button class=\"navbar-toggler navbar-toggler-right\" type=\"button\" data-toggle=\"collapse\" data-target=\"#mainMenuLayer\" aria-controls=\"mainMenuLayer\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">\n            <span class=\"navbar-toggler-icon\"></span>\n          </button> -->\n\t\t\t\t<a class=\"navbar-brand\" href=\"#\">\n\t\t\t\t\t<img src=\"./assets/image/main-small-logo.png\" alt=\"\">\n\t\t\t\t</a>\n\n\t\t\t\t<!--<div class=\"collapse navbar-collapse\" id=\"mainMenuLayer\">\n\t\t\t\t\t<div class=\"progress-wrapper\">\n\t\t\t\t\t<div class=\"progress-point\">Start</div>\n\t\t\t\t\t<div class=\"progress\">\n\t\t\t\t\t<div class=\"progress-bar\" role=\"progressbar\" aria-valuenow=\"1\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div><!-- you can use aria-valuenow arrt for add step -->\n\t\t\t\t\t<!-- </div>\n\t\t\t\t\t<div class=\"progress-point\">Finish</div>\n\t\t\t\t</div>\n\t\t\t\t</div> -->\n\n\t\t\t\t<div class=\"progress-block signUpProgress\" style=\"display:none;\">\n\t\t\t\t\t<div class=\"progress-wrapper\">\n\t\t\t\t\t\t<div class=\"progress-point\">Start</div>\n\t\t\t\t\t\t<div class=\"progress\">\n\t\t\t\t\t\t\t<div class=\"progress-bar\" role=\"progressbar\" [attr.aria-valuenow]=\"signupStepCount\" aria-valuemin=\"0\" aria-valuemax=\"100\" [style.width]=\"progressWidth\"></div>\n\t\t\t\t\t\t\t<!-- you can use aria-valuenow arrt for add step -->\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"progress-point\">Finish</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</nav>\n\n\t\t\t<!-- <div class=\"header-inner\">\n          <h1 class=\"logo-wrap\">\n            <a href=\"#\" class=\"logo\">\n              <img src=\"./assets/image/main-small-logo.png\" alt=\"\">\n            </a>\n          </h1>\n          <div class=\"col\">\n          </div>\n        </div> -->\n\t\t</div>\n\t</header>\n\n\t<!-- Button trigger modal -->\n\t<button type=\"button\" class=\"btn btn-primary\" (click)=\"openLogin()\">\n\t\tLogin\n\t</button>\n\t<button type=\"button\" class=\"btn btn-primary\" (click)=\"openSignup(1)\">\n\t\tRegister\n\t</button>\n</div>\n\n<app-login></app-login>\n\n<app-signup></app-signup>"
 
 /***/ }),
 
@@ -1568,17 +1633,38 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var MainComponent = (function () {
     function MainComponent(titleService) {
         this.titleService = titleService;
+        this.signupSteps = 8;
+        this.signupStepCount = 0;
+        this.progressWidth = "0%";
     }
     MainComponent.prototype.ngOnInit = function () {
         this.titleService.setTitle("Travooo");
         $.getScript('assets/js/script.js');
     };
-    MainComponent.prototype.openLogin = function () {
-        $('#logIn').modal('show');
+    MainComponent.prototype.closeExistingSignups = function () {
+        $(".modal").each(function (index) {
+            if ($(this).hasClass('show')) {
+                $(this).modal('hide');
+            }
+        });
     };
-    MainComponent.prototype.openSignup = function () {
-        $('.step-header').show();
-        $('#signUpStep1').modal('show');
+    MainComponent.prototype.openLogin = function () {
+        this.titleService.setTitle("Travoo - Login");
+        $('.signUpProgress').hide();
+        // close all other modals and open login model
+        this.closeExistingSignups();
+        $('#logIn').modal("show");
+        this.signupStepCount = 0;
+    };
+    MainComponent.prototype.openSignup = function (stepNum) {
+        //stepNum = 5;
+        this.titleService.setTitle("Travoo - Signup");
+        // close all other modals and open login model
+        this.closeExistingSignups();
+        $('.signUpProgress').show();
+        $('#signUpStep' + stepNum).modal('show');
+        this.signupStepCount = stepNum;
+        this.progressWidth = (this.signupStepCount / this.signupSteps) * 100 + "%";
     };
     MainComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
@@ -1894,6 +1980,7 @@ module.exports = module.exports.toString();
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_forms__ = __webpack_require__("../../../forms/esm5/forms.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__helpers_custom_validators__ = __webpack_require__("../../../../../src/_helpers/custom-validators.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__angular_platform_browser___ = __webpack_require__("../../../platform-browser/esm5/platform-browser.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__main_main_component__ = __webpack_require__("../../../../../src/app/main/main.component.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1909,14 +1996,16 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var Step1Component = (function () {
-    function Step1Component(route, router, userService, alertService, formBuilder, titleService) {
+    function Step1Component(route, router, userService, alertService, formBuilder, titleService, mainC) {
         this.route = route;
         this.router = router;
         this.userService = userService;
         this.alertService = alertService;
         this.formBuilder = formBuilder;
         this.titleService = titleService;
+        this.mainC = mainC;
         this.loading = false;
         this.signupContinueBtnText = "Continue";
         this.email = new __WEBPACK_IMPORTED_MODULE_3__angular_forms__["b" /* FormControl */]('', [
@@ -1946,10 +2035,7 @@ var Step1Component = (function () {
         this.signupErrors = {};
     };
     Step1Component.prototype.openLogin = function () {
-        this.titleService.setTitle("Travoo - Login");
-        // close signup modals and open login model
-        $('.signUpStep').modal("hide");
-        $('#logIn').modal("show");
+        this.mainC.openLogin();
     };
     Step1Component.prototype.validate = function (name) {
         this.signupErrors[name] = '';
@@ -1970,7 +2056,7 @@ var Step1Component = (function () {
     Step1Component.prototype.continueStep1 = function () {
         var _this = this;
         this.errors = [];
-        this.toggleSignupStep1(false);
+        this.toggleSignup(false);
         var user = {};
         user.username = this.username.value;
         user.email = this.email.value;
@@ -1984,25 +2070,24 @@ var Step1Component = (function () {
                     var id = data.data;
                     //console.log(id);
                     localStorage.setItem('signupId', id);
-                    _this.toggleSignupStep1(true);
+                    _this.toggleSignup(true);
                     // continue to step 2
-                    $('#signUpStep1').modal("hide");
-                    $('#signUpStep2').modal("show");
+                    _this.mainC.openSignup(2);
                 }
                 else {
                     _this.errors = data.data.message;
-                    _this.toggleSignupStep1(true);
+                    _this.toggleSignup(true);
                 }
             }, function (error) {
                 console.log(error);
-                _this.toggleSignupStep1(true);
+                _this.toggleSignup(true);
             });
         }
         else {
-            this.errors.push("Please fill all fields with valid values first.");
+            this.errors.push("Please fill all required fields with valid values first.");
         }
     };
-    Step1Component.prototype.toggleSignupStep1 = function (state) {
+    Step1Component.prototype.toggleSignup = function (state) {
         if (state) {
             this.signupContinueBtnText = "Continue";
             this.loading = false;
@@ -2023,7 +2108,8 @@ var Step1Component = (function () {
             __WEBPACK_IMPORTED_MODULE_2__services_index__["f" /* UserService */],
             __WEBPACK_IMPORTED_MODULE_2__services_index__["a" /* AlertService */],
             __WEBPACK_IMPORTED_MODULE_3__angular_forms__["a" /* FormBuilder */],
-            __WEBPACK_IMPORTED_MODULE_5__angular_platform_browser___["b" /* Title */]])
+            __WEBPACK_IMPORTED_MODULE_5__angular_platform_browser___["b" /* Title */],
+            __WEBPACK_IMPORTED_MODULE_6__main_main_component__["a" /* MainComponent */]])
     ], Step1Component);
     return Step1Component;
 }());
@@ -2067,6 +2153,7 @@ module.exports = module.exports.toString();
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_index__ = __webpack_require__("../../../../../src/_services/index.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_forms__ = __webpack_require__("../../../forms/esm5/forms.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_platform_browser___ = __webpack_require__("../../../platform-browser/esm5/platform-browser.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__main_main_component__ = __webpack_require__("../../../../../src/app/main/main.component.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2081,14 +2168,16 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var Step2Component = (function () {
-    function Step2Component(route, router, userService, alertService, formBuilder, titleService) {
+    function Step2Component(route, router, userService, alertService, formBuilder, titleService, mainC) {
         this.route = route;
         this.router = router;
         this.userService = userService;
         this.alertService = alertService;
         this.formBuilder = formBuilder;
         this.titleService = titleService;
+        this.mainC = mainC;
         this.loading = false;
         this.signupBtnText = "Sign Up";
         this.name = new __WEBPACK_IMPORTED_MODULE_3__angular_forms__["b" /* FormControl */]('', [
@@ -2142,8 +2231,7 @@ var Step2Component = (function () {
                 //console.log(response);
                 _this.toggleSignup(true);
                 // continue to step 3
-                $('#signUpStep2').modal("hide");
-                $('#signUpStep3').modal("show");
+                _this.mainC.openSignup(3);
             }
             else {
                 _this.errors = data.data.message;
@@ -2176,7 +2264,8 @@ var Step2Component = (function () {
             __WEBPACK_IMPORTED_MODULE_2__services_index__["f" /* UserService */],
             __WEBPACK_IMPORTED_MODULE_2__services_index__["a" /* AlertService */],
             __WEBPACK_IMPORTED_MODULE_3__angular_forms__["a" /* FormBuilder */],
-            __WEBPACK_IMPORTED_MODULE_4__angular_platform_browser___["b" /* Title */]])
+            __WEBPACK_IMPORTED_MODULE_4__angular_platform_browser___["b" /* Title */],
+            __WEBPACK_IMPORTED_MODULE_5__main_main_component__["a" /* MainComponent */]])
     ], Step2Component);
     return Step2Component;
 }());
@@ -2188,7 +2277,7 @@ var Step2Component = (function () {
 /***/ "../../../../../src/app/signup/step3/step3.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<!-- Modal -->\n<div class=\"modal fade signUpStep\" id=\"signUpStep3\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\" data-backdrop=\"static\" data-keyboard=\"false\">\n\t<div class=\"modal-dialog sign-up-step\" role=\"document\">\n\t\t<div class=\"modal-content\">\n\t\t\t<div class=\"modal-body\">\n\t\t\t\t<div class=\"title-layer\">\n\t\t\t\t\t<h3 class=\"step-ttl\">Select at least 5 favorite\n\t\t\t\t\t\t<span>countries or cities</span>\n\t\t\t\t\t</h3>\n\t\t\t\t\t<div class=\"step-info\">\n\t\t\t\t\t\tStep 1\n\t\t\t\t\t\t<span>of 6</span>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"search-block-wrap\">\n\t\t\t\t\t<div class=\"search-block\">\n\t\t\t\t\t\t<a class=\"search-btn\" href=\"#\">\n\t\t\t\t\t\t\t<i class=\"fa fa-search\"></i>\n\t\t\t\t\t\t</a>\n\t\t\t\t\t\t<input type=\"text\" name=\"searchQuery\" [(ngModel)]=\"searchQuery\" placeholder=\"Country ...\" (input)=\"search()\"/>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"check-block-wrap\" id=\"select_countries\">\n\t\t\t\t\t<div *ngFor=\"let country of countries\">\n\t\t\t\t\t\t<div class=\"check-block\" [style.background-image]=\"'url('+ getCoverImage(country.cover_image) +')'\" [class.checked-block]=\"selected.indexOf(country.id)>=0\" (click)=\"select(country.id)\">\n\t\t\t\t\t\t\t<div class=\"check-ttl\">\n\t\t\t\t\t\t\t\t<h4>{{ country.name }} </h4>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"modal-footer\">\n\t\t\t\t<button type=\"button\" class=\"btn btn-grey\" [disabled]=\"5 - this.selected.length > 0 || loading\" (click)=\"continueStep3()\">{{ continueBtnText }}</button>\n\t\t\t\t<p class=\"sub-info\">(Next Step: Favorite Places)</p>\n\t\t\t</div>\n\t\t</div>\n\t</div>\n</div>"
+module.exports = "<!-- Modal -->\n<div class=\"modal fade signUpStep\" id=\"signUpStep3\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\" data-backdrop=\"static\" data-keyboard=\"false\">\n\t<div class=\"modal-dialog sign-up-step\" role=\"document\">\n\t\t<div class=\"modal-content\">\n\t\t\t<div class=\"modal-body\">\n\t\t\t\t<div class=\"title-layer\">\n\t\t\t\t\t<h3 class=\"step-ttl\">Select at least 5 favorite\n\t\t\t\t\t\t<span>countries or cities</span>\n\t\t\t\t\t</h3>\n\t\t\t\t\t<div class=\"step-info\">\n\t\t\t\t\t\tStep 3\n\t\t\t\t\t\t<span>of {{ mainC.signupSteps }}</span>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"search-block-wrap\">\n\t\t\t\t\t<div class=\"search-block\">\n\t\t\t\t\t\t<a class=\"search-btn\" href=\"#\">\n\t\t\t\t\t\t\t<i class=\"fa fa-search\"></i>\n\t\t\t\t\t\t</a>\n\t\t\t\t\t\t<input type=\"text\" name=\"searchQuery\" [(ngModel)]=\"searchQuery\" placeholder=\"Country ...\" (input)=\"search()\"/>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"check-block-wrap\" id=\"select_countries\">\n\t\t\t\t\t<div *ngFor=\"let country of countries\">\n\t\t\t\t\t\t<div class=\"check-block\" [style.background-image]=\"'url('+ getCoverImage(country.cover_image) +')'\" [class.checked-block]=\"selected.indexOf(country.id)>=0\" (click)=\"select(country.id)\">\n\t\t\t\t\t\t\t<div class=\"check-ttl\">\n\t\t\t\t\t\t\t\t<h4>{{ country.name }} </h4>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\n\t\t\t\t\t<div class=\"col-md-12\" style=\"height: 50px; width: 100%; text-align:center\">\n\t\t\t\t\t\t<img src=\"data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==\" />\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"modal-footer\">\n\t\t\t\t<button type=\"button\" class=\"btn btn-grey\" [disabled]=\"5 - this.selected.length > 0 || loading\" (click)=\"continueStep3()\">{{ continueBtnText }}</button>\n\t\t\t\t<p class=\"sub-info\">(Next Step: Favorite Places)</p>\n\t\t\t</div>\n\t\t</div>\n\t</div>\n</div>"
 
 /***/ }),
 
@@ -2217,6 +2306,7 @@ module.exports = module.exports.toString();
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Step3Component; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_index__ = __webpack_require__("../../../../../src/_services/index.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__main_main_component__ = __webpack_require__("../../../../../src/app/main/main.component.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2228,10 +2318,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
+
 var Step3Component = (function () {
-    function Step3Component(countriesService, userService) {
+    function Step3Component(countriesService, userService, mainC) {
         this.countriesService = countriesService;
         this.userService = userService;
+        this.mainC = mainC;
         this.defaultCoverImage = "http://placehold.it/181x181";
         this.continueBtnText = "Select 5 More";
         this.loading = false;
@@ -2281,11 +2373,12 @@ var Step3Component = (function () {
     Step3Component.prototype.search = function () {
         if (this.searchQuery.length % 3 == 0) {
             this.offset = 0;
-            this.loadMore();
+            this.loadMore(true);
         }
     };
-    Step3Component.prototype.loadMore = function () {
+    Step3Component.prototype.loadMore = function (replace) {
         var _this = this;
+        if (replace === void 0) { replace = false; }
         var data1 = {
             query: this.searchQuery,
             limit: this.limit,
@@ -2296,11 +2389,11 @@ var Step3Component = (function () {
             .subscribe(function (data) {
             //console.log(data);
             if (data.success) {
-                if (data.data != "") {
-                    _this.countries = JSON.parse(data.data);
+                if (replace) {
+                    _this.countries = data.data;
                 }
                 else {
-                    _this.countries = [];
+                    _this.countries = _this.countries.concat(data.data);
                 }
                 _this.offset = _this.offset = _this.countries.length;
                 // console.log(this.countries);
@@ -2329,8 +2422,7 @@ var Step3Component = (function () {
                 //console.log(response);
                 _this.toggleSignup(true);
                 // continue to step 4
-                $('#signUpStep3').modal("hide");
-                $('#signUpStep4').modal("show");
+                _this.mainC.openSignup(4);
             }
             else {
                 _this.toggleSignup(true);
@@ -2358,7 +2450,8 @@ var Step3Component = (function () {
             styles: [__webpack_require__("../../../../../src/app/signup/step3/step3.component.scss")]
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__services_index__["c" /* CountriesService */],
-            __WEBPACK_IMPORTED_MODULE_1__services_index__["f" /* UserService */]])
+            __WEBPACK_IMPORTED_MODULE_1__services_index__["f" /* UserService */],
+            __WEBPACK_IMPORTED_MODULE_2__main_main_component__["a" /* MainComponent */]])
     ], Step3Component);
     return Step3Component;
 }());
@@ -2370,7 +2463,7 @@ var Step3Component = (function () {
 /***/ "../../../../../src/app/signup/step4/step4.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<!-- Modal -->\n<div class=\"modal fade signUpStep\" id=\"signUpStep4\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\"\n data-backdrop=\"static\" data-keyboard=\"false\">\n\t<div class=\"modal-dialog sign-up-step\" role=\"document\">\n\t\t<div class=\"modal-content\">\n\t\t\t<div class=\"modal-body\">\n\t\t\t\t<div class=\"title-layer\">\n\t\t\t\t\t<h3 class=\"step-ttl\">Select 3\n\t\t\t\t\t\t<span>favorite places</span> around the world</h3>\n\t\t\t\t\t<div class=\"step-info\">\n\t\t\t\t\t\tStep 2\n\t\t\t\t\t\t<span>of 6</span>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t\t\n\t\t\t\t<div class=\"search-block-wrap\">\n\t\t\t\t\t<div class=\"search-block\">\n\t\t\t\t\t\t<a class=\"search-btn\" href=\"#\">\n\t\t\t\t\t\t\t<i class=\"fa fa-search\"></i>\n\t\t\t\t\t\t</a>\n\t\t\t\t\t\t<input type=\"text\" name=\"searchQuery\" [(ngModel)]=\"searchQuery\" placeholder=\"Place name...\" (input)=\"search()\" />\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\n\t\t\t\t<div class=\"check-block-wrap\"  id=\"select_places\">\n\t\t\t\t\t<div *ngFor=\"let place of places\">\n\t\t\t\t\t\t<div class=\"check-block\" [style.background-image]=\"'url('+ getCoverImage(place.cover_image) +')'\" [class.checked-block]=\"selected.indexOf(place.id)>=0\"\n\t\t\t\t\t\t (click)=\"select(place.id)\">\n\t\t\t\t\t\t\t<div class=\"check-ttl\">\n\t\t\t\t\t\t\t\t<h4>{{ place.name }} </h4>\n\t\t\t\t\t\t\t\t<p>{{ place.city_country_name }}</p>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"modal-footer\">\n\t\t\t\t<button type=\"button\" class=\"btn btn-grey\" [disabled]=\"5 - this.selected.length > 0 || loading\" (click)=\"continueStep4()\">{{ continueBtnText }}</button>\n\t\t\t\t<p class=\"sub-info\">(Next Step: Favorite Travel Styles)</p>\n\t\t\t</div>\n\t\t</div>\n\t</div>\n</div>"
+module.exports = "<!-- Modal -->\n<div class=\"modal fade signUpStep\" id=\"signUpStep4\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\"\n data-backdrop=\"static\" data-keyboard=\"false\">\n\t<div class=\"modal-dialog sign-up-step\" role=\"document\">\n\t\t<div class=\"modal-content\">\n\t\t\t<div class=\"modal-body\">\n\t\t\t\t<div class=\"title-layer\">\n\t\t\t\t\t<h3 class=\"step-ttl\">Select 3\n\t\t\t\t\t\t<span>favorite places</span> around the world</h3>\n\t\t\t\t\t<div class=\"step-info\">\n\t\t\t\t\t\tStep 4\n\t\t\t\t\t\t<span>of {{ mainC.signupSteps }}</span>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t\t\n\t\t\t\t<div class=\"search-block-wrap\">\n\t\t\t\t\t<div class=\"search-block\">\n\t\t\t\t\t\t<a class=\"search-btn\" href=\"#\">\n\t\t\t\t\t\t\t<i class=\"fa fa-search\"></i>\n\t\t\t\t\t\t</a>\n\t\t\t\t\t\t<input type=\"text\" name=\"searchQuery\" [(ngModel)]=\"searchQuery\" placeholder=\"Place name...\" (input)=\"search()\" />\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\n\t\t\t\t<div class=\"check-block-wrap\"  id=\"select_places\">\n\t\t\t\t\t<div *ngFor=\"let place of places\">\n\t\t\t\t\t\t<div class=\"check-block\" [style.background-image]=\"'url('+ getCoverImage(place.cover_image) +')'\" [class.checked-block]=\"selected.indexOf(place.id)>=0\"\n\t\t\t\t\t\t (click)=\"select(place.id)\">\n\t\t\t\t\t\t\t<div class=\"check-ttl\">\n\t\t\t\t\t\t\t\t<h4>{{ place.name }} </h4>\n\t\t\t\t\t\t\t\t<p>{{ place.city_country_name }}</p>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\n\t\t\t\t\t<div class=\"col-md-12\" style=\"height: 50px; width: 100%; text-align:center\">\n\t\t\t\t\t\t<img src=\"data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==\" />\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"modal-footer\">\n\t\t\t\t<button type=\"button\" class=\"btn btn-grey\" [disabled]=\"5 - this.selected.length > 0 || loading\" (click)=\"continueStep4()\">{{ continueBtnText }}</button>\n\t\t\t\t<p class=\"sub-info\">(Next Step: Favorite Travel Styles)</p>\n\t\t\t</div>\n\t\t</div>\n\t</div>\n</div>"
 
 /***/ }),
 
@@ -2399,6 +2492,7 @@ module.exports = module.exports.toString();
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Step4Component; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_index__ = __webpack_require__("../../../../../src/_services/index.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__main_main_component__ = __webpack_require__("../../../../../src/app/main/main.component.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2410,10 +2504,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
+
 var Step4Component = (function () {
-    function Step4Component(placesService, userService) {
+    function Step4Component(placesService, userService, mainC) {
         this.placesService = placesService;
         this.userService = userService;
+        this.mainC = mainC;
         this.defaultCoverImage = "http://placehold.it/181x181";
         this.continueBtnText = "Select 5 More";
         this.loading = false;
@@ -2463,11 +2559,12 @@ var Step4Component = (function () {
     Step4Component.prototype.search = function () {
         if (this.searchQuery.length % 3 == 0) {
             this.offset = 0;
-            this.loadMore();
+            this.loadMore(true);
         }
     };
-    Step4Component.prototype.loadMore = function () {
+    Step4Component.prototype.loadMore = function (replace) {
         var _this = this;
+        if (replace === void 0) { replace = false; }
         var data1 = {
             query: this.searchQuery,
             limit: this.limit,
@@ -2478,7 +2575,12 @@ var Step4Component = (function () {
             .subscribe(function (data) {
             //console.log(data);
             if (data.success) {
-                _this.places = data.data;
+                if (replace) {
+                    _this.places = data.data;
+                }
+                else {
+                    _this.places = _this.places.concat(data.data);
+                }
                 _this.offset = _this.offset = _this.places.length;
                 // console.log(this.places);
             }
@@ -2506,8 +2608,7 @@ var Step4Component = (function () {
                 //console.log(response);
                 _this.toggleSignup(true);
                 // continue to step 5
-                $('#signUpStep4').modal("hide");
-                $('#signUpStep5').modal("show");
+                _this.mainC.openSignup(5);
             }
             else {
                 _this.toggleSignup(true);
@@ -2535,7 +2636,8 @@ var Step4Component = (function () {
             styles: [__webpack_require__("../../../../../src/app/signup/step4/step4.component.scss")]
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__services_index__["d" /* PlacesService */],
-            __WEBPACK_IMPORTED_MODULE_1__services_index__["f" /* UserService */]])
+            __WEBPACK_IMPORTED_MODULE_1__services_index__["f" /* UserService */],
+            __WEBPACK_IMPORTED_MODULE_2__main_main_component__["a" /* MainComponent */]])
     ], Step4Component);
     return Step4Component;
 }());
@@ -2547,7 +2649,7 @@ var Step4Component = (function () {
 /***/ "../../../../../src/app/signup/step5/step5.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<!-- Modal -->\n<div class=\"modal fade signUpStep\" id=\"signUpStep5\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\"\n data-backdrop=\"static\" data-keyboard=\"false\">\n\t<div class=\"modal-dialog sign-up-step\" role=\"document\">\n\t\t<div class=\"modal-content\">\n\t\t\t<div class=\"modal-body\">\n\t\t\t\t<div class=\"title-layer\">\n\t\t\t\t\t<h3 class=\"step-ttl\">Select your preferred\n\t\t\t\t\t\t<span>travel styles</span>\n\t\t\t\t\t</h3>\n\t\t\t\t\t<div class=\"step-info\">\n\t\t\t\t\t\tStep 3\n\t\t\t\t\t\t<span>of 6</span>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\n\t\t\t\t<div class=\"search-block-wrap\">\n\t\t\t\t\t<div class=\"search-block\">\n\t\t\t\t\t\t<a class=\"search-btn\" href=\"#\">\n\t\t\t\t\t\t\t<i class=\"fa fa-search\"></i>\n\t\t\t\t\t\t</a>\n\t\t\t\t\t\t<input type=\"text\" name=\"searchQuery\" [(ngModel)]=\"searchQuery\" placeholder=\"Travel style...\" (input)=\"search()\" />\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\n\t\t\t\t<div class=\"check-block-wrap\" id=\"select_styles\">\n\t\t\t\t\t<div *ngFor=\"let style of styles\">\n\t\t\t\t\t\t<div class=\"check-block\" [style.background-image]=\"'url('+ getCoverImage(style.cover_image) +')'\" [class.checked-block]=\"selected.indexOf(style.id)>=0\"\n\t\t\t\t\t\t (click)=\"select(style.id)\">\n\t\t\t\t\t\t\t<div class=\"check-ttl\">\n\t\t\t\t\t\t\t\t<h4>{{ style.name }} </h4>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"modal-footer\">\n\t\t\t\t<button type=\"button\" class=\"btn btn-grey\" [disabled]=\"5 - this.selected.length || loading\" (click)=\"continueStep5()\">{{ continueBtnText }}</button>\n\t\t\t\t<p class=\"sub-info\">(Next Step: Favorite Activities)</p>\n\t\t\t</div>\n\t\t</div>\n\t</div>\n</div>"
+module.exports = "<!-- Modal -->\n<div class=\"modal fade signUpStep\" id=\"signUpStep5\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\"\n data-backdrop=\"static\" data-keyboard=\"false\">\n\t<div class=\"modal-dialog sign-up-step\" role=\"document\">\n\t\t<div class=\"modal-content\">\n\t\t\t<div class=\"modal-body\">\n\t\t\t\t<div class=\"title-layer\">\n\t\t\t\t\t<h3 class=\"step-ttl\">Select your preferred\n\t\t\t\t\t\t<span>travel styles</span>\n\t\t\t\t\t</h3>\n\t\t\t\t\t<div class=\"step-info\">\n\t\t\t\t\t\tStep 5\n\t\t\t\t\t\t<span>of {{ mainC.signupSteps }}</span>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\n\t\t\t\t<div class=\"search-block-wrap\">\n\t\t\t\t\t<div class=\"search-block\">\n\t\t\t\t\t\t<a class=\"search-btn\" href=\"#\">\n\t\t\t\t\t\t\t<i class=\"fa fa-search\"></i>\n\t\t\t\t\t\t</a>\n\t\t\t\t\t\t<input type=\"text\" name=\"searchQuery\" [(ngModel)]=\"searchQuery\" placeholder=\"Travel style...\" (input)=\"search()\" />\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\n\t\t\t\t<div class=\"check-block-wrap\" id=\"select_styles\">\n\t\t\t\t\t<div *ngFor=\"let style of styles\">\n\t\t\t\t\t\t<div class=\"check-block\" [style.background-image]=\"'url('+ getCoverImage(style.cover_image) +')'\" [class.checked-block]=\"selected.indexOf(style.id)>=0\"\n\t\t\t\t\t\t (click)=\"select(style.id)\">\n\t\t\t\t\t\t\t<div class=\"check-ttl\">\n\t\t\t\t\t\t\t\t<h4>{{ style.name }} </h4>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\n\t\t\t\t\t<div class=\"col-md-12\" style=\"height: 50px; width: 100%; text-align:center\">\n\t\t\t\t\t\t\t<img src=\"data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==\" />\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"modal-footer\">\n\t\t\t\t<button type=\"button\" class=\"btn btn-grey\" [disabled]=\"5 - this.selected.length || loading\" (click)=\"continueStep5()\">{{ continueBtnText }}</button>\n\t\t\t\t<p class=\"sub-info\">(Next Step: Favorite Activities)</p>\n\t\t\t</div>\n\t\t</div>\n\t</div>\n</div>"
 
 /***/ }),
 
@@ -2576,6 +2678,7 @@ module.exports = module.exports.toString();
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Step5Component; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_index__ = __webpack_require__("../../../../../src/_services/index.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__main_main_component__ = __webpack_require__("../../../../../src/app/main/main.component.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2587,10 +2690,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
+
 var Step5Component = (function () {
-    function Step5Component(stylesService, userService) {
+    function Step5Component(stylesService, userService, mainC) {
         this.stylesService = stylesService;
         this.userService = userService;
+        this.mainC = mainC;
         this.defaultCoverImage = "http://placehold.it/181x181";
         this.continueBtnText = "Select 5 More";
         this.loading = false;
@@ -2603,25 +2708,13 @@ var Step5Component = (function () {
     }
     Step5Component.prototype.ngOnInit = function () {
         this.selected = [];
-        this.styles = [
-            { id: "1", name: "Adventurous", cover_image: "http://placehold.it/181x181" },
-            { id: "2", name: "Holiday-themed", cover_image: "http://placehold.it/181x181" },
-            { id: "3", name: "Spiritual", cover_image: "http://placehold.it/181x181" },
-            { id: "4", name: "Solo Travel", cover_image: "http://placehold.it/181x181" },
-            { id: "5", name: "Event-based", cover_image: "http://placehold.it/181x181" },
-            { id: "6", name: "Group Travel", cover_image: "http://placehold.it/181x181" },
-            { id: "7", name: "Nightlife", cover_image: "http://placehold.it/181x181" },
-            { id: "8", name: "Long Tours", cover_image: "http://placehold.it/181x181" },
-            { id: "9", name: "Group Travel", cover_image: "http://placehold.it/181x181" },
-            { id: "10", name: "Nightlife", cover_image: "http://placehold.it/181x181" },
-            { id: "11", name: "Long Tours", cover_image: "http://placehold.it/181x181" }
-        ];
+        this.styles = [];
         this.loadMore();
         // initialize mCustomScrollbar plugin
         var t = this;
         $("#select_styles").mCustomScrollbar({
             callbacks: {
-                onTotalScroll: function () { }
+                onTotalScroll: function () { t.loadMore(); }
             }
         });
     };
@@ -2652,11 +2745,12 @@ var Step5Component = (function () {
     Step5Component.prototype.search = function () {
         if (this.searchQuery.length % 3 == 0) {
             this.offset = 0;
-            this.loadMore();
+            this.loadMore(true);
         }
     };
-    Step5Component.prototype.loadMore = function () {
+    Step5Component.prototype.loadMore = function (replace) {
         var _this = this;
+        if (replace === void 0) { replace = false; }
         var data1 = {
             query: this.searchQuery,
             limit: this.limit,
@@ -2668,7 +2762,12 @@ var Step5Component = (function () {
             .subscribe(function (data) {
             //console.log(data);
             if (data.success) {
-                _this.styles = data.data;
+                if (replace) {
+                    _this.styles = data.data;
+                }
+                else {
+                    _this.styles = _this.styles.concat(data.data);
+                }
                 _this.offset = _this.offset = _this.styles.length;
                 // console.log(this.styles);
             }
@@ -2695,9 +2794,8 @@ var Step5Component = (function () {
                 var response = data.data;
                 //console.log(response);
                 _this.toggleSignup(true);
-                // continue to step 5
-                $('#signUpStep5').modal("hide");
-                $('#signUpStep6').modal("show");
+                // continue to step 6
+                _this.mainC.openSignup(6);
             }
             else {
                 _this.toggleSignup(true);
@@ -2725,7 +2823,8 @@ var Step5Component = (function () {
             styles: [__webpack_require__("../../../../../src/app/signup/step5/step5.component.scss")]
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__services_index__["e" /* TravelStylesService */],
-            __WEBPACK_IMPORTED_MODULE_1__services_index__["f" /* UserService */]])
+            __WEBPACK_IMPORTED_MODULE_1__services_index__["f" /* UserService */],
+            __WEBPACK_IMPORTED_MODULE_2__main_main_component__["a" /* MainComponent */]])
     ], Step5Component);
     return Step5Component;
 }());

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertService, UserService, PlacesService } from '../../../_services/index';
+import { MainComponent } from '../../main/main.component';
 
 declare var jquery: any;
 declare var $: any;
@@ -23,7 +24,8 @@ export class Step4Component implements OnInit {
 
 	constructor(
 		private placesService: PlacesService,
-		private userService: UserService
+		private userService: UserService,
+		private mainC: MainComponent
 	) {
 		this.searchQuery = "";
 		this.limit = 20;
@@ -90,11 +92,11 @@ export class Step4Component implements OnInit {
 	search() {
 		if (this.searchQuery.length % 3 == 0) {
 			this.offset = 0;
-			this.loadMore();
+			this.loadMore(true);
 		}
 	}
 
-	loadMore() {
+	loadMore(replace = false) {
 		var data1 = {
 			query: this.searchQuery,
 			limit: this.limit,
@@ -108,8 +110,11 @@ export class Step4Component implements OnInit {
 				//console.log(data);
 
 				if (data.success) {
-
-					this.places = data.data;
+					if(replace) {
+						this.places = data.data;
+					} else {
+						this.places = this.places.concat(data.data);
+					}
 
 					this.offset = this.offset = this.places.length;
 					// console.log(this.places);
@@ -146,8 +151,7 @@ export class Step4Component implements OnInit {
 					this.toggleSignup(true);
 
 					// continue to step 5
-					$('#signUpStep4').modal("hide");
-					$('#signUpStep5').modal("show");
+					this.mainC.openSignup(5);
 				}
 				else {
 					this.toggleSignup(true);

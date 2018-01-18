@@ -7,6 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ConfirmPasswordValidator } from '../../../_helpers/custom-validators';
 import { User } from '../../../_models/user.model';
 import { Title } from '@angular/platform-browser/';
+import { MainComponent } from '../../main/main.component';
 
 declare var jquery: any;
 declare var $: any;
@@ -46,7 +47,8 @@ export class Step1Component implements OnInit {
 		private userService: UserService,
 		private alertService: AlertService,
 		private formBuilder: FormBuilder,
-		private titleService: Title) { }
+		private titleService: Title,
+		private mainC: MainComponent) { }
 
 	ngOnInit() {
 		var step1 = {
@@ -61,10 +63,7 @@ export class Step1Component implements OnInit {
 	}
 
 	openLogin() {
-		this.titleService.setTitle("Travoo - Login");
-		// close signup modals and open login model
-		$('.signUpStep').modal("hide");
-		$('#logIn').modal("show");
+		this.mainC.openLogin();
 	}
 
 	validate(name: string) {
@@ -86,7 +85,7 @@ export class Step1Component implements OnInit {
 
 	continueStep1() {
 		this.errors = [];
-		this.toggleSignupStep1(false);
+		this.toggleSignup(false);
 
 		var user: any = {};
 		user.username = this.username.value;
@@ -97,9 +96,8 @@ export class Step1Component implements OnInit {
 		if (this.email.valid && this.username.valid && this.password.valid && this.cpassword.valid) {
 
 			this.userService.signupStep1(user)
-				.subscribe(
+			.subscribe(
 				data => {
-
 					//console.log(data);
 
 					if (data.success) {
@@ -107,29 +105,28 @@ export class Step1Component implements OnInit {
 						//console.log(id);
 
 						localStorage.setItem('signupId', id);
-						this.toggleSignupStep1(true);
+						this.toggleSignup(true);
 
 						// continue to step 2
-						$('#signUpStep1').modal("hide");
-						$('#signUpStep2').modal("show");
+						this.mainC.openSignup(2);
 					}
 					else {
 						this.errors = data.data.message;
-						this.toggleSignupStep1(true);
+						this.toggleSignup(true);
 					}
 				},
 				error => {
 					console.log(error);
-					this.toggleSignupStep1(true);
+					this.toggleSignup(true);
 				}
-				);
+			);
 		}
 		else {
-			this.errors.push("Please fill all fields with valid values first.")
+			this.errors.push("Please fill all required fields with valid values first.")
 		}
 	}
 
-	toggleSignupStep1(state) {
+	toggleSignup(state) {
 		if (state) {
 			this.signupContinueBtnText = "Continue";
 			this.loading = false;

@@ -7,6 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ConfirmPasswordValidator } from '../../../_helpers/custom-validators';
 import { User } from '../../../_models/user.model';
 import { Title } from '@angular/platform-browser/';
+import { MainComponent } from '../../main/main.component';
 
 declare var jquery: any;
 declare var $: any;
@@ -40,7 +41,8 @@ export class Step2Component implements OnInit {
 		private userService: UserService,
 		private alertService: AlertService,
 		private formBuilder: FormBuilder,
-		private titleService: Title
+		private titleService: Title,
+		private mainC: MainComponent
 	) { }
 
 	ngOnInit() {
@@ -92,8 +94,7 @@ export class Step2Component implements OnInit {
 					this.toggleSignup(true);
 
 					// continue to step 3
-					$('#signUpStep2').modal("hide");
-					$('#signUpStep3').modal("show");
+					this.mainC.openSignup(3);
 				}
 				else {
 					this.errors = data.data.message;

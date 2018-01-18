@@ -1,7 +1,5 @@
 $(document).ready(function(){
   
-  $('.step-header').hide();
-
 	$('#logIn').on('shown.bs.modal', function () {
 		$('input[name=email]').focus();
 	});
@@ -10,7 +8,7 @@ $(document).ready(function(){
 		$('input[name=email]').focus();
 	});
 
-	$('#createAccount2').on('shown.bs.modal', function () {
+	$('#signUpStep3').on('shown.bs.modal', function () {
 		$('input[name=name]').focus();
   });
 	

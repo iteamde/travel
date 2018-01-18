@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService, CountriesService } from '../../../_services/index';
+import { MainComponent } from '../../main/main.component';
 
 declare var jquery: any;
 declare var $: any;
@@ -22,7 +23,8 @@ export class Step3Component implements OnInit {
 
 	constructor(
 		private countriesService: CountriesService,
-		private userService: UserService
+		private userService: UserService,
+		private mainC: MainComponent
 	) { 
 		this.searchQuery = "";
 		this.limit = 20;
@@ -92,11 +94,11 @@ export class Step3Component implements OnInit {
 		if(this.searchQuery.length % 3 == 0)
 		{
 			this.offset = 0;
-			this.loadMore();
+			this.loadMore(true);
 		}
 	}
 
-	loadMore(){
+	loadMore(replace = false){
 		var data1 = {
 			query: this.searchQuery,
 			limit: this.limit,
@@ -111,13 +113,12 @@ export class Step3Component implements OnInit {
 
 				if (data.success) {
 
-					if(data.data != ""){
-						this.countries = JSON.parse(data.data);
+					if(replace) {
+						this.countries = data.data;
+					} else {
+						this.countries = this.countries.concat(data.data);
 					}
-					else{
-						this.countries = [];
-					}
-
+					
 					this.offset = this.offset = this.countries.length;
 					// console.log(this.countries);
 				}
@@ -153,8 +154,7 @@ export class Step3Component implements OnInit {
 					this.toggleSignup(true);
 
 					// continue to step 4
-					$('#signUpStep3').modal("hide");
-					$('#signUpStep4').modal("show");
+					this.mainC.openSignup(4);
 				}
 				else {
 					this.toggleSignup(true);

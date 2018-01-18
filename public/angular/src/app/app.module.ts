@@ -30,6 +30,7 @@ import { Step2Component } from './signup/step2/step2.component';
 import { Step3Component } from './signup/step3/step3.component';
 import { Step4Component } from './signup/step4/step4.component';
 import { Step5Component } from './signup/step5/step5.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 
 @NgModule({
     imports: [
@@ -58,7 +59,8 @@ import { Step5Component } from './signup/step5/step5.component';
       Step2Component,
       Step3Component,
       Step4Component,
-      Step5Component
+      Step5Component,
+      ForgotPasswordComponent
     ],
     providers: [
         AuthGuard,
