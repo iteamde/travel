@@ -763,6 +763,13 @@ class CityController extends Controller
             }
         }
 
+        /* Get Cover Image Of Country */
+        $cover = null;
+        if(!empty($city->cover)){
+            $cover      = $city->cover;
+            // $cover->url = str_replace('storage.travooo.com', 'https://localhost/travoo-api/storage/uploads', $cover->url);
+        }
+
         return view('backend.city.show')
             ->withCity($city)
             ->withCitytrans($cityTrans)
@@ -776,7 +783,8 @@ class CityController extends Controller
             ->withMedias($medias_arr)
             ->withImages($images_arr)
             ->withEmergencynumbers($emergency_numbers_arr)
-            ->withReligions($religions_arr);
+            ->withReligions($religions_arr)
+            ->withCover($cover);
     }
 
     /**

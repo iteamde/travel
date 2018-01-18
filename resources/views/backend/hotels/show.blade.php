@@ -118,17 +118,42 @@
                       </tr>
                     @endforeach
                     <!-- End: Medias -->
-
                     <tr>
-                         <th> <h3 style="color:#0A8F27">Location</h3></th><td></td>   
+                         <th> <h3 style="color:#0A8F27">Images</h3></th><td></td>   
                     </tr>
-                    <tr>
-                        <th>Latitude , Longitude</th>
-                        <td> <p><?=$hotel->lat?> , <?=$hotel->lng?></p> </td>
-                    </tr>
-                    
-                </table>
-                <!-- Map will be created in the "map" div -->
+                  </table>
+                    <div class="row">
+                        @if(empty($images))
+                            <div style="padding-left: 20px;"><p>No Images Added.</p></div>
+                        @endif
+                        @foreach($images as $key => $image)
+                            <div class="col-md-2" style="margin-right: 20px;margin-top:10px;">  
+                                <a href="<?=$image?>"><img src="<?=$image?>" style="width:170px;height:150px;"/>
+                                </a>
+                            </div>
+                        @endforeach
+                    </div>
+                    <!-- End: Medias -->
+                    <!-- Cover Image Section - Start -->
+                    <div class="row">
+                        <h3 style="color:#0A8F27;padding-left: 26px;">Cover Image</h3>
+                        @if(empty($cover))
+                            <div style="padding-left: 20px;">No Cover Image Added.</div>
+                        @else
+                            <div style="padding-top: 10px;padding-left: 20px;"><img src="{{$cover['url']}}" style="width: 170px;height:150px;" /></div>
+                        @endif
+                    </div>
+                    <!-- Cover Image Section - End -->
+                    <table class="table table-striped table-hover">
+                      <tr>
+                           <th> <h3 style="color:#0A8F27">Location</h3></th><td></td>   
+                      </tr>
+                      <tr>
+                          <th>Latitude , Longitude</th>
+                          <td> <p><?=$hotel->lat?> , <?=$hotel->lng?></p> </td>
+                      </tr>
+                    </table>
+                    <!-- Map will be created in the "map" div -->
                 <div id="map"></div>
                 <!-- Map div end -->
 

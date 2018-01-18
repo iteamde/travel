@@ -256,7 +256,17 @@
                         </div>
                     @endforeach
                 </div>
-                    <!-- End: Medias -->
+                <!-- End: Medias -->
+                <!-- Cover Image Section - Start -->
+                <div class="row">
+                    <h3 style="color:#0A8F27;padding-left: 26px;">Cover Image</h3>
+                    @if(empty($cover))
+                        <div style="padding-left: 20px;">No Cover Image Added.</div>
+                    @else
+                        <div style="padding-top: 10px;padding-left: 20px;"><img src="{{$cover['url']}}" style="width: 170px;height:150px;" /></div>
+                    @endif
+                </div>
+                <!-- Cover Image Section - End -->
                 <table class="table table-striped table-hover">
                     <tr>
                          <th> <h3 style="color:#0A8F27">Location</h3></th><td></td>   

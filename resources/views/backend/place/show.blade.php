@@ -125,6 +125,20 @@
                     @endforeach
                 </div>
                 <!-- End: Images -->
+                <!-- Cover Image Section - Start -->
+                <table class="table table-striped table-hover" style="margin-top: 20px;">
+                    <tr>
+                        <th><h3 style="color:#0A8F27;">Cover Image</h3></th><td></td>
+                    </tr>
+                </table>
+                <div class="row" style="margin-bottom: 10px;margin-bottom: 20px;">
+                    @if(empty($cover))
+                        <div style="padding-left: 20px;">No Cover Image Added.</div>
+                    @else
+                        <div style="padding-top: 10px;padding-left: 20px;"><img src="{{$cover['url']}}" style="width: 170px;height:150px;" /></div>
+                    @endif
+                </div>
+                <!-- Cover Image Section - End -->
                 <table class="table table-striped table-hover">
                     <tr>
                          <th> <h3 style="color:#0A8F27">Location</h3></th><td></td>

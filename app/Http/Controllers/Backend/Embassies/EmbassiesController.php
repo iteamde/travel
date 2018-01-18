@@ -289,21 +289,23 @@ class EmbassiesController extends Controller
             // if(isset($value->transsingle) && !empty($value->transsingle)){
             if ($value->featured == 1)
                 $data['featured_media'] = $value->id;
+
+            // $value->url = str_replace('storage.travooo.com', 'https://localhost/travoo-api/storage/uploads', $value->url);
             array_push($images_arr, [
-                'id' => $value->id,
-                'featured' => $value->featured,
-                'url' => asset(Storage::url($value->url))
+                'id'        => $value->id,
+                'featured'  => $value->featured,
+                'url'       => $value->url//asset(Storage::url($value->url))
             ]);
         }
 
         $data['selected_medias'] = $selected_medias_arr;
-        $data['images'] = $images_arr;
+        $data['images']          = $images_arr;
 
         /* Get Cover Image Of Country */
         $cover = null;
         if(!empty($embassies->cover)){
             $cover = $embassies->cover;
-            $cover->url = str_replace('storage.travooo.com', 'https://localhost/travoo-api/storage/uploads', $cover->url);
+            // $cover->url = str_replace('storage.travooo.com', 'https://localhost/travoo-api/storage/uploads', $cover->url);
         }
 
         return view('backend.embassies.edit')

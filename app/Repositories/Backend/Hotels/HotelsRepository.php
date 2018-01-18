@@ -121,6 +121,43 @@ class HotelsRepository extends BaseRepository
             
             if ($model->save()) {
 
+                if(!empty($extra['files'])){
+                    $url = UrlGenerator::GetUploadsUrl();
+                    $i = 0;
+                    foreach ($extra['files'] as $key => $file) {
+                        $extension = $file->extension();
+
+                        if(self::validateUpload($extension)){
+                            $new_file_name = time() . $i++ . '_hotels.' . $file->extension();
+                            $new_path = '/uploads/medias/hotels/' . $model->id . '/';
+                            $file->storeAs( $new_path , $new_file_name);
+
+                            $media = new Media;
+                            $media->url  = $url . 'medias/hotels/' . $model->id . '/' . $new_file_name;
+                            $media->type = Media::TYPE_IMAGE;
+                            $media->save();
+
+                            $languages = Languages::all();
+
+                            if(!empty($languages)){
+                                foreach ($languages as $key => $value) {
+                                    $media_trans = new MediaTranslations;
+                                    $media_trans->medias_id = $media->id;
+                                    $media_trans->languages_id = $value->id;
+                                    $media_trans->title = $new_file_name;
+                                    $media_trans->description = "Image";
+                                    $media_trans->save();
+                                }
+                            }
+
+                            $hotels_media = new HotelsMedias;
+                            $hotels_media->hotels_id = $model->id;
+                            $hotels_media->medias_id = $media->id;
+                            $hotels_media->save();
+                        }
+                    }
+                }//Files end
+
                 /* UPLOAD COVER IMAGE*/
                 if(!empty($extra['cover_image'])){
 
@@ -213,11 +250,11 @@ class HotelsRepository extends BaseRepository
         $model = Hotels::findOrFail(['id' => $id]);
         $model = $model[0];
         $model->countries_id  = $extra['country_id'];
-        $model->cities_id  = $extra['city_id'];
-        $model->places_id  = $extra['place_id'];
-        $model->active      = $extra['active'];
-        $model->lat         = $extra['lat'];
-        $model->lng         = $extra['lng'];
+        $model->cities_id     = $extra['city_id'];
+        $model->places_id     = $extra['place_id'];
+        $model->active        = $extra['active'];
+        $model->lat           = $extra['lat'];
+        $model->lng           = $extra['lng'];
         
         /* Delete Previous Translations */
         $prev = HotelsTranslations::where(['hotels_id' => $id])->get();
@@ -239,6 +276,43 @@ class HotelsRepository extends BaseRepository
             $check = 1;
             
             if ($model->save()) {
+
+                if(!empty($extra['files'])){
+                    $url = UrlGenerator::GetUploadsUrl();
+                    $i = 0;
+                    foreach ($extra['files'] as $key => $file) {
+                        $extension = $file->extension();
+
+                        if(self::validateUpload($extension)){
+                            $new_file_name = time() . $i++ . '_hotels.' . $file->extension();
+                            $new_path = '/uploads/medias/hotels/' . $model->id . '/';
+                            $file->storeAs( $new_path , $new_file_name);
+
+                            $media = new Media;
+                            $media->url  = $url . 'medias/hotels/' . $model->id . '/' . $new_file_name;
+                            $media->type = Media::TYPE_IMAGE;
+                            $media->save();
+
+                            $languages = Languages::all();
+
+                            if(!empty($languages)){
+                                foreach ($languages as $key => $value) {
+                                    $media_trans                = new MediaTranslations;
+                                    $media_trans->medias_id     = $media->id;
+                                    $media_trans->languages_id  = $value->id;
+                                    $media_trans->title         = $new_file_name;
+                                    $media_trans->description   = "Image";
+                                    $media_trans->save();
+                                }
+                            }
+
+                            $hotels_media = new HotelsMedias;
+                            $hotels_media->hotels_id = $model->id;
+                            $hotels_media->medias_id = $media->id;
+                            $hotels_media->save();
+                        }
+                    }
+                }//Files end
 
                 /* UPLOAD COVER IMAGE*/
                 if(!empty($extra['cover_image'])){

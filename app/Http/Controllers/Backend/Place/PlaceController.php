@@ -467,15 +467,23 @@ class PlaceController extends Controller {
             }
         }
 
+        /* Get Cover Image Of Country */
+        $cover = null;
+        if(!empty($place->cover)){
+            $cover      = $place->cover;
+            // $cover->url = str_replace('storage.travooo.com', 'https://localhost/travoo-api/storage/uploads', $cover->url);
+        }
+
         return view('backend.place.show')
-                        ->withPlace($place)
-                        ->withPlacetrans($placeTrans)
-                        ->withCountry($country)
-                        ->withCity($city)
-                        ->withType($type)
-                        ->withDegree($safety_degree)
-                        ->withImages($image_urls)
-                        ->withMedias($selected_medias_arr);
+            ->withPlace($place)
+            ->withPlacetrans($placeTrans)
+            ->withCountry($country)
+            ->withCity($city)
+            ->withType($type)
+            ->withDegree($safety_degree)
+            ->withImages($image_urls)
+            ->withMedias($selected_medias_arr)
+            ->withCover($cover);
     }
 
     /**

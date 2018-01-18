@@ -229,7 +229,44 @@ use App\Models\Access\language\Languages;
 
                             {{ Form::text('lat_lng_show', $data['lat_lng'], ['class' => 'form-control disabled', 'id' => 'lat-lng-input_show', 'required' => 'required', 'placeholder' => 'Lat,Lng' , 'disabled' => 'disabled']) }}
                         </div>
+                    </div>
+
+                    <!-- Upload new images - Start -->
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-2" style="margin-right: 0px;margin-left: 20px;text-align: right;">
+                                {{ Form::label('title', 'Upload New Images', ['class' => 'col-md-2 control-label', 'style' => 'margin-left: 55px;']) }}
+                            </div>
+                            <div class="col-md-8" style="padding-top: 22px">
+                            {{ Form::file('file_name',[ 'name' => 'pictures[]', 'multiple' => 'multiple' ]) }}
+                            </div><!--col-lg-10-->
+                        </div>
+                    </div>
+                    <!-- Upload new images - End  -->
+                    <!-- Show uploaded images - Start -->
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-2" style="margin-right: 0px;margin-left: 20px;text-align: right;">
+                                {{ Form::label('title', 'Uploaded Images', ['class' => 'col-md-2 control-label', 'style' => 'margin-left: 55px;']) }}
+                            </div>
+                            <div class="col-md-8">
+                                @if(empty($images))
+                                    <div style="padding-left: 20px;"><p>No Images Added.</p></div>
+                                @endif
+                                @foreach( $images as $image)
+                                    <div class="col-md-2" style="">
+                                        <!-- Delete Icon -->
+                                        <i class="zoom-effect-icon fa fa-times delete-image" data-toggle="tooltip" title="Delete Image" data-id="<?= $image['id'] ?>" aria-hidden="true" style="color:red;position: relative;top:20px;left:85px;" ></i>
+                                        <!-- Cover Image Icon -->
+                                        <i class="zoom-effect-icon fa fa-camera-retro add-cover" data-toggle="tooltip" title="Select as cover" data-id="<?= $image['id'] ?>" data-url="<?= $image['url'] ?>" aria-hidden="true" style="color: #f1822b;position: relative;top:40px;left:69px;" ></i>
+
+                                        <img src="<?= $image['url'] ?>" style="width:100px;height:100px;"/>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
                     </div>                 
+                    <!-- Show uploaded images - End -->
                     <!-- Cover photo upload field - Start -->
                     <div class="form-group">
                         <div class="row">

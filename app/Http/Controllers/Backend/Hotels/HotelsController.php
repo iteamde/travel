@@ -141,6 +141,11 @@ class HotelsController extends Controller
             $active = 1;
         }
 
+        $files = null;
+        if ($request->hasFile('pictures')) {
+            $files = $request->file('pictures');
+        }
+
         $cover = null;
         if($request->hasFile('cover_image')){
             $cover = $request->file('cover_image');
@@ -155,6 +160,7 @@ class HotelsController extends Controller
             'medias'        => $request->input('medias_id'),
             'lat'           => $location[0],
             'lng'           => $location[1],
+            'files'         => $files,
             'cover_image'   => $cover
         ];
 
@@ -291,6 +297,27 @@ class HotelsController extends Controller
             }
         }
 
+         /* Get All Selected Medias */
+        $selected_medias = $hotel->medias;
+        $selected_medias_arr = [];
+        $images_arr = [];
+        $featured_media = 0;
+        
+        foreach ($selected_medias as $key => $value) {
+            $value = $value->media;
+            // if(isset($value->transsingle) && !empty($value->transsingle)){
+            if ($value->featured == 1)
+                $data['featured_media'] = $value->id;
+            if($value->type == 1){
+                $value->url = str_replace('storage.travooo.com', 'https://localhost/travoo-api/storage/uploads', $value->url);
+                array_push($images_arr, [
+                    'id'        => $value->id,
+                    'featured'  => $value->featured,
+                    'url'       => $value->url//asset(Storage::url($value->url))
+                ]);
+            }
+        }
+
         /* Get Cover Image Of Country */
         $cover = null;
         if(!empty($hotel->cover)){
@@ -307,6 +334,7 @@ class HotelsController extends Controller
             ->withCities($cities_arr)
             ->withPlaces($places_arr)
             ->withMedias($medias_arr)
+            ->withImages($images_arr)
             ->withCover($cover);
     }
 
@@ -344,6 +372,11 @@ class HotelsController extends Controller
             $active = 1;
         }
 
+        $files = null;
+        if ($request->hasFile('pictures')) {
+            $files = $request->file('pictures');
+        }
+
         $cover_image = null;
         if($request->hasFile('cover_image')){
             $cover_image = $request->file('cover_image');
@@ -352,12 +385,13 @@ class HotelsController extends Controller
         /* Send All Relation and Extra Fields Through $extra Array */
         $extra = [
             'active'            => $active,
-            'country_id'        =>  $request->input('country_id'),
-            'city_id'           =>  $request->input('city_id'),
+            'country_id'        => $request->input('country_id'),
+            'city_id'           => $request->input('city_id'),
             'place_id'          => $request->input('place_id'),
             'lat'               => $location[0],
             'lng'               => $location[1],
             'medias'            => $request->input('medias_id'),
+            'files'             => $files,
             'cover_image'       => $cover_image,
             'media_cover_image' => $request->input('media-cover-image'),
             'remove-cover-image'=> $request->input('remove-cover-image'), 
@@ -407,12 +441,36 @@ class HotelsController extends Controller
             }
         }
 
+        /* Get Selected Medias */
+        $medias = $country->medias;
+        $image_urls = [];
+        $medias_arr_2 = [];
+
+        if(!empty($medias)){
+            foreach ($medias as $key => $value) {
+                $media = $value->media;
+
+                if(!empty($media)){
+                    if($media->type != Media::TYPE_IMAGE){
+                        $media = $media->transsingle;
+
+                        if(!empty($media)){
+                            array_push($medias_arr_2,$media->title);
+                        }
+                    }else{
+                        array_push($image_urls,$media->url);
+                    }
+                }
+            }
+        }
+
         return view('backend.hotels.show')
             ->withHotel($hotel)
             ->withHoteltrans($hotelTrans)
             ->withCountry($country)
             ->withCity($city)
             ->withPlace($place)
+            ->withImages($image_urls)
             ->withMedias($medias_arr);
     }
 
