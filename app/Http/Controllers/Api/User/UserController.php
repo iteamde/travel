@@ -189,9 +189,16 @@ class UserController extends Controller
     /*
     *   Reset "password" Of Session Token's User With The "new_assword".
     */
-    public function reset($token, $new_password, $confirm_password){
+    public function reset(Request $request){
 
-        $response = User::changePassword($token, $new_password, $confirm_password);
+        $post = $request->input();
+
+        $token            = $post['token'];
+        $new_password     = $post['newpassword'];
+        $confirm_password = $post['newpassword_confirmation'];
+        $email            = $post['email'];
+
+        $response = User::changePassword($token, $new_password, $confirm_password,$email);
 
         return $response;
     }

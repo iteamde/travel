@@ -69,7 +69,7 @@ Route::group(['prefix' => 'api'], function () {
         /* Get User Information Api */
         Route::get('/info/{user_id}/{session_token}', 'UserController@information');
         /* Reset Password Api */
-        Route::get('/reset/{token}/{new_password}/{confirm_password}', 'UserController@reset');
+        Route::post('/reset', 'UserController@reset');
         /* Change Fullname Api */
         Route::post('/fullname', 'UserController@update_fullname');
         /* Update Mobile Number Api */
