@@ -196,9 +196,8 @@ class UserController extends Controller
         $token            = $request->input('token');
         $new_password     = $request->input('newpassword');
         $confirm_password = $request->input('newpassword_confirmation');
-        $email            = $request->input('email');
 
-        $response = User::changePassword($token, $new_password, $confirm_password,$email);
+        $response = User::changePassword($token, $new_password, $confirm_password);
 
         return $response;
     }

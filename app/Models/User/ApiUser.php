@@ -811,24 +811,9 @@ class ApiUser extends User {
 
     /* Change Password Of Provided "$token" with "$new_password" after matching with "$confirm_password" and validating */
 
-    public static function changePassword($token, $new_password, $confirm_password, $email) {
+    public static function changePassword($token, $new_password, $confirm_password) {
 
-        if (!isset($email) || empty($email)) {
-            return Self::generateErrorMessage(false, 400, 'Email not provided.');
-        }
-
-        /* Check If Provided Email Matches The Email Format */
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            return Self::generateErrorMessage(false, 400, "'" . $email . "' is not a valid email address.");
-        }
-
-        $model = Self::where([ 'email' => $email])->first();
-
-        if (empty($model)) {
-            return Self::generateErrorMessage(false, 400, 'Email Doesn\'t Exists.');
-        }
-
-        $user = User::where([ 'password_reset_token' => $token, 'email' => $email])->first();
+        $user = User::where([ 'password_reset_token' => $token])->first();
 
         /* If User Not Found For Provided Password Reset Token, Send Error */
         if (empty($user)) {
