@@ -800,11 +800,12 @@ class ApiUser extends User {
         $model->sendPasswordResetEmail();
 
         return [
+            'success' => true,
             'data' => [
                 'message' => 'An email with password reset link is sent to your email account.',
                 'token'   => $model->password_reset_token
             ],
-            'status' => true
+            'code'  => 200
         ];
     }
 
@@ -880,10 +881,11 @@ class ApiUser extends User {
         }
 
         return [
-            'status' => true,
+            'success' => true,
             'data' => [
                 'message' => 'Password reset successfull.'
-            ]
+            ],
+            'code' => 200,
         ];
     }
 
@@ -3403,7 +3405,7 @@ class ApiUser extends User {
         /* If Code == null */
         if ($code) {
             $response = [
-                'data'    => $message,
+                'data'    => [ 'message' => [$message]],
                 'code'    => $code,
                 'success' => $status
             ];
