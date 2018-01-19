@@ -72,6 +72,10 @@ export class LoginComponent implements OnInit {
 		this.mainC.openSignup(1);
 	}
 
+	openForgotPassword(){
+		this.mainC.openForgotPassword();
+	}
+
 	setClassEmail() {
 		if ((!this.email.pristine || this.email.touched) && !this.email.valid) {
 			if (this.email.errors.required) {

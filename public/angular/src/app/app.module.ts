@@ -31,6 +31,7 @@ import { Step3Component } from './signup/step3/step3.component';
 import { Step4Component } from './signup/step4/step4.component';
 import { Step5Component } from './signup/step5/step5.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 @NgModule({
     imports: [
@@ -60,7 +61,8 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
       Step3Component,
       Step4Component,
       Step5Component,
-      ForgotPasswordComponent
+      ForgotPasswordComponent,
+      ResetPasswordComponent
     ],
     providers: [
         AuthGuard,

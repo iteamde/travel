@@ -1,34 +1,41 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 
 import { AuthenticationService } from '../../_services/index';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ConfirmPasswordValidator } from '../../_helpers/custom-validators';
 import { User } from '../../_models/user.model';
 import { Title } from '@angular/platform-browser/';
 import { MainComponent } from '../main/main.component';
+import { Subscription } from 'rxjs/Subscription';
 
 declare var jquery: any;
 declare var $: any;
 
 @Component({
-	selector: 'app-forgot-password',
-	templateUrl: './forgot-password.component.html',
-	styleUrls: ['./forgot-password.component.scss']
+	selector: 'app-reset-password',
+	templateUrl: './reset-password.component.html',
+	styleUrls: ['./reset-password.component.scss']
 })
-export class ForgotPasswordComponent implements OnInit {
+export class ResetPasswordComponent implements OnInit {
 
+	token: string;
 	loading = false;
-	submitBtnText: string = "Reset Password";
-	forgotPasswordForm: FormGroup;
+	submitBtnText: string = "Update Password";
+	resetPasswordForm: FormGroup;
 
-	email = new FormControl('', [
+	password = new FormControl('', [
+		Validators.required
+	]);
+	cpassword = new FormControl('', [
 		Validators.required,
-		Validators.email
+		ConfirmPasswordValidator(this.password)
 	]);
 
 	errors = [];
-	formErrors = { email: "" };
+	formErrors = { password: "", cpassword: "" };
+	private sub: Subscription;
 
 	constructor(
 		private route: ActivatedRoute,
@@ -39,16 +46,29 @@ export class ForgotPasswordComponent implements OnInit {
 		private mainC: MainComponent) { }
 
 	ngOnInit() {
+
+		// XLiBnE90YMuZedwo7zZA15163700355V5n7Sx8GwzHJsTpLMK7
+		
+		// assign the subscription to a variable so we can unsubscribe to prevent memory leaks
+		this.sub = this.route.queryParams.subscribe((params: Params) => {
+			this.token = params['token'];
+		});
+
 		var credentials = {
-			email: this.email
+			password: this.password,
+			cpassword: this.cpassword
 		};
 
-		this.forgotPasswordForm = this.formBuilder.group(credentials);
+		this.resetPasswordForm = this.formBuilder.group(credentials);
 		var t = this;
-		$('#forgot_password').modal("show");
-		$('#forgot_password').on('hidden.bs.modal', function (e) {
+		$('#reset_password').modal("show");
+		$('#reset_password').on('hidden.bs.modal', function (e) {
 			t.closeForgotPassword();
 		});
+	}
+
+	ngOnDestroy() {
+		this.sub.unsubscribe();
 	}
 
 	closeForgotPassword() {
@@ -59,9 +79,13 @@ export class ForgotPasswordComponent implements OnInit {
 		this.mainC.openSignup(1);
 	}
 
+	openLogin() {
+		this.mainC.openLogin();
+	}
+
 	validate(name: string) {
 		this.formErrors[name] = '';
-		var control = this.forgotPasswordForm.get(name);
+		var control = this.resetPasswordForm.get(name);
 		if ((!control.pristine || control.touched) && !control.valid) {
 			if (control.errors.required) {
 				this.formErrors[name] = "This field is required.";
@@ -77,20 +101,16 @@ export class ForgotPasswordComponent implements OnInit {
 		this.errors = [];
 		this.toggleBtnState(false);
 
-		if (this.email.valid) {
+		if (this.password.valid && this.cpassword.valid) {
 
-			this.authenticationService.forgotPassword(this.email.value)
+			this.authenticationService.resetPassword(this.token, this.password.value, this.cpassword.value)
 				.subscribe(
 				data => {
 					//console.log(data);
 
 					if (data.success) {
-						var message = data.data.message;
-						//console.log(message);
-
-						alert(message);
-						this.toggleBtnState(true);
-						this.mainC.closeAll();
+						$('#reset_password').modal('hide');
+						$('#reset_success').modal('show');
 					}
 					else {
 						this.errors = data.data.message;
@@ -104,18 +124,19 @@ export class ForgotPasswordComponent implements OnInit {
 				);
 		}
 		else {
-			this.errors.push("Please provide valid email first.");
+			this.errors.push("Please fill all required fields with valid values first.");
 		}
 	}
 
 	toggleBtnState(state) {
 		if (state) {
-			this.submitBtnText = "Reset Password";
+			this.submitBtnText = "Update Password";
 			this.loading = false;
 		}
 		else {
-			this.submitBtnText = "Submitting ...";
+			this.submitBtnText = "Updating ...";
 			this.loading = true;
 		}
 	}
+
 }

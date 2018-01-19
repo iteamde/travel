@@ -61,6 +61,16 @@ export class AuthenticationService extends ManagerService{
             });
     }
 
+    forgotPassword(email: string) {
+        return this.http.post(this.apiPrefix+'/users/forgot', { email: email })
+            .map((response: Response) => response.json());
+    }
+
+    resetPassword(token: string, pass: string, cpass:string) {
+        return this.http.post(this.apiPrefix+'/users/reset', { token: token, newpassword: pass, newpassword_confirmation: cpass })
+            .map((response: Response) => response.json());
+    }
+
     logout(): void {
         // clear token remove user from local storage to log user out
         this.token = null;

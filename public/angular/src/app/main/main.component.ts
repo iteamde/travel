@@ -26,15 +26,6 @@ export class MainComponent implements OnInit {
 		$.getScript('assets/js/script.js');
 	}
 
-	closeExistingSignups(){
-		$( ".modal" ).each(function( index ) {
-			if($(this).hasClass('show'))
-			{
-				$(this).modal('hide');
-			}
-		});
-	}
-
 	closeAll() {
 		this.titleService.setTitle("Travoo");
 		$('.signUpProgress').hide();
@@ -52,7 +43,7 @@ export class MainComponent implements OnInit {
 		this.router.navigate(['/login']);
 	}
 
-	openSignup(stepNum) {
+	openSignup(stepNum = 1) {
 		this.titleService.setTitle("Travoo - Signup");
 		$('.signUpProgress').show();
 		$('.modal-backdrop').remove();
@@ -66,5 +57,11 @@ export class MainComponent implements OnInit {
 		{
 			this.router.navigate(['/signup/step'+stepNum]);
 		}
+	}
+
+	openForgotPassword() {
+		this.titleService.setTitle("Travoo - Reset Password");
+		$('.modal-backdrop').remove();
+		this.router.navigate(['/forgot-password']);
 	}
 }

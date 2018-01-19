@@ -499,6 +499,14 @@ var AuthenticationService = (function (_super) {
             }
         });
     };
+    AuthenticationService.prototype.forgotPassword = function (email) {
+        return this.http.post(this.apiPrefix + '/users/forgot', { email: email })
+            .map(function (response) { return response.json(); });
+    };
+    AuthenticationService.prototype.resetPassword = function (token, pass, cpass) {
+        return this.http.post(this.apiPrefix + '/users/reset', { token: token, newpassword: pass, newpassword_confirmation: cpass })
+            .map(function (response) { return response.json(); });
+    };
     AuthenticationService.prototype.logout = function () {
         // clear token remove user from local storage to log user out
         this.token = null;
@@ -882,6 +890,15 @@ var UserService = (function (_super) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__guards_index__ = __webpack_require__("../../../../../src/_guards/index.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__home_home_component__ = __webpack_require__("../../../../../src/app/home/home.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__main_main_component__ = __webpack_require__("../../../../../src/app/main/main.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__login_login_component__ = __webpack_require__("../../../../../src/app/login/login.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__signup_step1_step1_component__ = __webpack_require__("../../../../../src/app/signup/step1/step1.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__signup_signup_component__ = __webpack_require__("../../../../../src/app/signup/signup.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__signup_step2_step2_component__ = __webpack_require__("../../../../../src/app/signup/step2/step2.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__signup_step3_step3_component__ = __webpack_require__("../../../../../src/app/signup/step3/step3.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__signup_step4_step4_component__ = __webpack_require__("../../../../../src/app/signup/step4/step4.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__signup_step5_step5_component__ = __webpack_require__("../../../../../src/app/signup/step5/step5.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__forgot_password_forgot_password_component__ = __webpack_require__("../../../../../src/app/forgot-password/forgot-password.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__reset_password_reset_password_component__ = __webpack_require__("../../../../../src/app/reset-password/reset-password.component.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -893,10 +910,33 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
+
+
+
+
+
+
+
+
+
 var routes = [
     {
-        path: '',
-        component: __WEBPACK_IMPORTED_MODULE_4__main_main_component__["a" /* MainComponent */]
+        path: '', component: __WEBPACK_IMPORTED_MODULE_4__main_main_component__["a" /* MainComponent */],
+        children: [
+            { path: 'login', component: __WEBPACK_IMPORTED_MODULE_5__login_login_component__["a" /* LoginComponent */] },
+            { path: 'signup', component: __WEBPACK_IMPORTED_MODULE_7__signup_signup_component__["a" /* SignupComponent */],
+                children: [
+                    { path: '', component: __WEBPACK_IMPORTED_MODULE_6__signup_step1_step1_component__["a" /* Step1Component */] },
+                    { path: 'step1', component: __WEBPACK_IMPORTED_MODULE_6__signup_step1_step1_component__["a" /* Step1Component */] },
+                    { path: 'step2', component: __WEBPACK_IMPORTED_MODULE_8__signup_step2_step2_component__["a" /* Step2Component */] },
+                    { path: 'step3', component: __WEBPACK_IMPORTED_MODULE_9__signup_step3_step3_component__["a" /* Step3Component */] },
+                    { path: 'step4', component: __WEBPACK_IMPORTED_MODULE_10__signup_step4_step4_component__["a" /* Step4Component */] },
+                    { path: 'step5', component: __WEBPACK_IMPORTED_MODULE_11__signup_step5_step5_component__["a" /* Step5Component */] }
+                ]
+            },
+            { path: 'forgot-password', component: __WEBPACK_IMPORTED_MODULE_12__forgot_password_forgot_password_component__["a" /* ForgotPasswordComponent */] },
+            { path: 'reset-password', component: __WEBPACK_IMPORTED_MODULE_13__reset_password_reset_password_component__["a" /* ResetPasswordComponent */] },
+        ]
     },
     {
         path: 'home',
@@ -1011,6 +1051,7 @@ var AppComponent = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__signup_step4_step4_component__ = __webpack_require__("../../../../../src/app/signup/step4/step4.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__signup_step5_step5_component__ = __webpack_require__("../../../../../src/app/signup/step5/step5.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__forgot_password_forgot_password_component__ = __webpack_require__("../../../../../src/app/forgot-password/forgot-password.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__reset_password_reset_password_component__ = __webpack_require__("../../../../../src/app/reset-password/reset-password.component.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1026,6 +1067,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 // used to create fake backend
 //import { fakeBackendProvider } from '../_helpers/index';
+
 
 
 
@@ -1079,7 +1121,8 @@ var AppModule = (function () {
                 __WEBPACK_IMPORTED_MODULE_24__signup_step3_step3_component__["a" /* Step3Component */],
                 __WEBPACK_IMPORTED_MODULE_25__signup_step4_step4_component__["a" /* Step4Component */],
                 __WEBPACK_IMPORTED_MODULE_26__signup_step5_step5_component__["a" /* Step5Component */],
-                __WEBPACK_IMPORTED_MODULE_27__forgot_password_forgot_password_component__["a" /* ForgotPasswordComponent */]
+                __WEBPACK_IMPORTED_MODULE_27__forgot_password_forgot_password_component__["a" /* ForgotPasswordComponent */],
+                __WEBPACK_IMPORTED_MODULE_28__reset_password_reset_password_component__["a" /* ResetPasswordComponent */]
             ],
             providers: [
                 __WEBPACK_IMPORTED_MODULE_8__guards_index__["a" /* AuthGuard */],
@@ -1171,7 +1214,7 @@ var CreatePostComponent = (function () {
 /***/ "../../../../../src/app/forgot-password/forgot-password.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<!-- Modal -->\n<div class=\"modal fade\" id=\"forgot_password\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\">\n\t<div class=\"modal-dialog sign-up-style\" role=\"document\">\n\t\t<div class=\"modal-content\">\n\t\t\t<button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\n\t\t\t\t<span aria-hidden=\"true\">&times;</span>\n\t\t\t</button>\n\t\t\t<div class=\"modal-body\">\n\t\t\t\t<div class=\"top-layer\">\n\t\t\t\t\t<a href=\"#\" class=\"logo-wrap\">\n\t\t\t\t\t\t<img src=\"./assets/image/main-logo.png\" alt=\"\">\n\t\t\t\t\t</a>\n\t\t\t\t\t<h4 class=\"title\">Forgot Password</h4>\n\t\t\t\t\t<p class=\"sub-ttl\">Please enter your email to send you password reset</p>\n\t\t\t\t\t<p class=\"sub-ttl error-message\">The email is incorrect!</p>\n\t\t\t\t</div>\n\t\t\t\t<form class=\"login-form\">\n\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t<input type=\"email\" class=\"form-control\" id=\"emailAddress\" aria-describedby=\"emailHelp\" placeholder=\"Email address\">\n\t\t\t\t\t</div>\n\n\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t<button type=\"button\" class=\"btn btn-success\">Reset Password</button>\n\t\t\t\t\t</div>\n\n\t\t\t\t</form>\n\t\t\t</div>\n\t\t\t<div class=\"modal-footer\">\n\t\t\t\t<p class=\"foot-txt\">You are not a member yet?</p>\n\t\t\t\t<button type=\"button\" class=\"btn btn-grey\">Sign Up</button>\n\t\t\t</div>\n\t\t</div>\n\t</div>\n</div>\n\n<!-- create an account -->\n<div class=\"modal fade\" id=\"reset_password\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\">\n\t<div class=\"modal-dialog sign-up-style\" role=\"document\">\n\t\t<div class=\"modal-content\">\n\t\t\t<button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\n\t\t\t\t<span aria-hidden=\"true\">&times;</span>\n\t\t\t</button>\n\t\t\t<div class=\"modal-body body-create\">\n\t\t\t\t<div class=\"top-layer\">\n\t\t\t\t\t<a href=\"#\" class=\"logo-wrap\">\n\t\t\t\t\t\t<img src=\"./assets/image/main-logo.png\" alt=\"\">\n\t\t\t\t\t</a>\n\t\t\t\t\t<h4 class=\"title\">Forgot Password</h4>\n\t\t\t\t\t<p class=\"sub-ttl\">Please enter a new password</p>\n\t\t\t\t\t<!-- <p class=\"sub-ttl error-message\">Your password is too weak</p> -->\n\t\t\t\t\t<p class=\"sub-ttl error-message\">Please fill the required fields</p>\n\t\t\t\t</div>\n\t\t\t\t<form class=\"login-form\">\n\t\t\t\t\t<div class=\"step-1\">\n\t\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t\t<input type=\"password\" class=\"form-control\" id=\"emailAddress\" aria-describedby=\"emailHelp\" placeholder=\"New password\">\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"form-group has-danger\">\n\t\t\t\t\t\t\t<input type=\"password\" class=\"form-control\" id=\"password\" aria-describedby=\"pass\" placeholder=\"New password confirmation\">\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"form-margin\"></div>\n\t\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t\t<button type=\"button\" class=\"btn btn-success\">Update password</button>\n\t\t\t\t\t\t</div>\n\n\t\t\t\t\t</div>\n\n\t\t\t\t</form>\n\t\t\t</div>\n\t\t\t<div class=\"modal-footer\">\n\t\t\t\t<p class=\"foot-txt\">You are not a member yet?</p>\n\t\t\t\t<button type=\"button\" class=\"btn btn-grey\">Sign Up</button>\n\t\t\t</div>\n\t\t</div>\n\t</div>\n</div>\n\n<div class=\"modal fade\" id=\"reset_success\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\">\n\t<div class=\"modal-dialog sign-up-style\" role=\"document\">\n\t\t<div class=\"modal-content\">\n\t\t\t<button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\n\t\t\t\t<span aria-hidden=\"true\">&times;</span>\n\t\t\t</button>\n\t\t\t<div class=\"modal-body body-create\">\n\t\t\t\t<div class=\"top-layer\">\n\t\t\t\t\t<a href=\"#\" class=\"logo-wrap\">\n\t\t\t\t\t\t<img src=\"./assets/image/main-logo.png\" alt=\"\">\n\t\t\t\t\t</a>\n\t\t\t\t\t<h4 class=\"title\">Forgot Password</h4>\n\t\t\t\t\t<!-- <p class=\"sub-ttl\">and write a text here</p> -->\n\t\t\t\t\t<!-- <p class=\"sub-ttl error-message\">Your password is too weak</p> -->\n\t\t\t\t</div>\n\t\t\t\t<form class=\"login-form\">\n\t\t\t\t\t<div class=\"step-2\">\n\t\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t\t<p class=\"email-field\">Your password was reset successfully!</p>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</form>\n\t\t\t</div>\n\t\t\t<div class=\"modal-footer\">\n\t\t\t\t<button type=\"button\" class=\"btn btn-grey\">Got to Log In</button>\n\t\t\t</div>\n\t\t</div>\n\t</div>\n</div>"
+module.exports = "<!-- Modal -->\n<div class=\"modal fade\" id=\"forgot_password\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\">\n\t<div class=\"modal-dialog sign-up-style\" role=\"document\">\n\t\t<div class=\"modal-content\">\n\t\t\t<button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\n\t\t\t\t<span aria-hidden=\"true\">&times;</span>\n\t\t\t</button>\n\t\t\t<div class=\"modal-body\">\n\t\t\t\t<div class=\"top-layer\">\n\t\t\t\t\t<a href=\"#\" class=\"logo-wrap\">\n\t\t\t\t\t\t<img src=\"./assets/image/main-logo.png\" alt=\"\">\n\t\t\t\t\t</a>\n\t\t\t\t\t<h4 class=\"title\">Forgot Password</h4>\n\t\t\t\t\t<p class=\"sub-ttl\">Please enter your email to request password reset.</p>\n\t\t\t\t\t<p class=\"sub-ttl error-message\" *ngFor=\"let msg of errors\">{{ msg }}</p>\n\t\t\t\t</div>\n\t\t\t\t<form class=\"login-form\" name=\"forgotPasswordForm\" [formGroup]=\"forgotPasswordForm\" (ngSubmit)=\"submit()\" novalidate>\n\n\t\t\t\t\t<div class=\"form-group\" [ngClass]=\"validate('email')\">\n\t\t\t\t\t\t<input class=\"form-control\" type=\"email\" name=\"email\" formControlName=\"email\" placeholder=\"Email address\" aria-describedby=\"emailHelp\" />\n\t\t\t\t\t\t<div class=\"form-control-feedback\" *ngIf=\"formErrors.email\">\n\t\t\t\t\t\t\t<p>{{ formErrors.email }}</p>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\n\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t<button type=\"submit\" class=\"btn btn-success\" [disabled]=\"!forgotPasswordForm.valid || loading\">{{ submitBtnText }}</button>\n\t\t\t\t\t</div>\n\n\t\t\t\t</form>\n\t\t\t</div>\n\t\t\t<div class=\"modal-footer\">\n\t\t\t\t<p class=\"foot-txt\">You are not a member yet?</p>\n\t\t\t\t<button type=\"button\" class=\"btn btn-grey\" (click)=\"openSignup()\">Sign Up</button>\n\t\t\t</div>\n\t\t</div>\n\t</div>\n</div>"
 
 /***/ }),
 
@@ -1199,6 +1242,11 @@ module.exports = module.exports.toString();
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ForgotPasswordComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("../../../router/esm5/router.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_index__ = __webpack_require__("../../../../../src/_services/index.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_forms__ = __webpack_require__("../../../forms/esm5/forms.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_platform_browser___ = __webpack_require__("../../../platform-browser/esm5/platform-browser.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__main_main_component__ = __webpack_require__("../../../../../src/app/main/main.component.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1209,10 +1257,95 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
+
+
+
+
 var ForgotPasswordComponent = (function () {
-    function ForgotPasswordComponent() {
+    function ForgotPasswordComponent(route, router, authenticationService, formBuilder, titleService, mainC) {
+        this.route = route;
+        this.router = router;
+        this.authenticationService = authenticationService;
+        this.formBuilder = formBuilder;
+        this.titleService = titleService;
+        this.mainC = mainC;
+        this.loading = false;
+        this.submitBtnText = "Reset Password";
+        this.email = new __WEBPACK_IMPORTED_MODULE_3__angular_forms__["b" /* FormControl */]('', [
+            __WEBPACK_IMPORTED_MODULE_3__angular_forms__["e" /* Validators */].required,
+            __WEBPACK_IMPORTED_MODULE_3__angular_forms__["e" /* Validators */].email
+        ]);
+        this.errors = [];
+        this.formErrors = { email: "" };
     }
     ForgotPasswordComponent.prototype.ngOnInit = function () {
+        var credentials = {
+            email: this.email
+        };
+        this.forgotPasswordForm = this.formBuilder.group(credentials);
+        var t = this;
+        $('#forgot_password').modal("show");
+        $('#forgot_password').on('hidden.bs.modal', function (e) {
+            t.closeForgotPassword();
+        });
+    };
+    ForgotPasswordComponent.prototype.closeForgotPassword = function () {
+        this.mainC.closeAll();
+    };
+    ForgotPasswordComponent.prototype.openSignup = function () {
+        this.mainC.openSignup(1);
+    };
+    ForgotPasswordComponent.prototype.validate = function (name) {
+        this.formErrors[name] = '';
+        var control = this.forgotPasswordForm.get(name);
+        if ((!control.pristine || control.touched) && !control.valid) {
+            if (control.errors.required) {
+                this.formErrors[name] = "This field is required.";
+            }
+            else if (control.errors.email) {
+                this.formErrors[name] = "This Email is not valid.";
+            }
+            return 'has-danger';
+        }
+    };
+    ForgotPasswordComponent.prototype.submit = function () {
+        var _this = this;
+        this.errors = [];
+        this.toggleBtnState(false);
+        if (this.email.valid) {
+            this.authenticationService.forgotPassword(this.email.value)
+                .subscribe(function (data) {
+                //console.log(data);
+                if (data.success) {
+                    var message = data.data.message;
+                    //console.log(message);
+                    alert(message);
+                    _this.toggleBtnState(true);
+                    _this.mainC.closeAll();
+                }
+                else {
+                    _this.errors = data.data.message;
+                    _this.toggleBtnState(true);
+                }
+            }, function (error) {
+                console.log(error);
+                _this.toggleBtnState(true);
+            });
+        }
+        else {
+            this.errors.push("Please provide valid email first.");
+        }
+    };
+    ForgotPasswordComponent.prototype.toggleBtnState = function (state) {
+        if (state) {
+            this.submitBtnText = "Reset Password";
+            this.loading = false;
+        }
+        else {
+            this.submitBtnText = "Submitting ...";
+            this.loading = true;
+        }
     };
     ForgotPasswordComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
@@ -1220,7 +1353,12 @@ var ForgotPasswordComponent = (function () {
             template: __webpack_require__("../../../../../src/app/forgot-password/forgot-password.component.html"),
             styles: [__webpack_require__("../../../../../src/app/forgot-password/forgot-password.component.scss")]
         }),
-        __metadata("design:paramtypes", [])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */],
+            __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* Router */],
+            __WEBPACK_IMPORTED_MODULE_2__services_index__["b" /* AuthenticationService */],
+            __WEBPACK_IMPORTED_MODULE_3__angular_forms__["a" /* FormBuilder */],
+            __WEBPACK_IMPORTED_MODULE_4__angular_platform_browser___["b" /* Title */],
+            __WEBPACK_IMPORTED_MODULE_5__main_main_component__["a" /* MainComponent */]])
     ], ForgotPasswordComponent);
     return ForgotPasswordComponent;
 }());
@@ -1428,7 +1566,7 @@ var LeftSideBarComponent = (function () {
 /***/ "../../../../../src/app/login/login.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<!-- Modal -->\n\n<div class=\"modal fade\" id=\"logIn\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\">\n  \t<div class=\"modal-dialog sign-up-style\" role=\"document\">\n    \t<div class=\"modal-content\">\n\t\t\t<button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\n\t\t\t\t<span aria-hidden=\"true\">&times;</span>\n\t\t\t</button>\n\t\t\t<div class=\"modal-body\">\n\t\t\t\t<div class=\"top-layer\">\n\t\t\t\t\t<a href=\"#\" class=\"logo-wrap\">\n\t\t\t\t\t\t<img src=\"./assets/image/main-logo.png\" alt=\"\">\n\t\t\t\t\t</a>\n\t\t\t\t\t<h4 class=\"title\">Login to your account</h4>\n\t\t\t\t\t<!-- <p class=\"sub-ttl\">and write a text here</p> -->\n\t\t\t\t\t<p class=\"sub-ttl error-message\" *ngFor=\"let msg of errors\">{{ msg }}</p>\n\t\t\t\t</div>\n\n\t\t\t\t<form class=\"login-form\" name=\"loginForm\" [formGroup]=\"loginForm\" (ngSubmit)=\"login()\" novalidate>\n\t\t\t\t\t<div class=\"form-group\" [ngClass]=\"setClassEmail()\">\n\t\t\t\t\t\t<!-- <label for=\"username\">Username</label> -->\n\t\t\t\t\t\t<input class=\"form-control\" type=\"email\" name=\"email\" formControlName=\"email\" placeholder=\"Email address\" aria-describedby=\"emailHelp\" />\n\t\t\t\t\t\t<!-- <input type=\"email\" class=\"form-control\" name=\"username\" [(ngModel)]=\"model.username\" #username=\"ngModel\" required aria-describedby=\"emailHelp\" placeholder=\"Email address\"/> -->\n\t\t\t\t\t\t<!-- <div *ngIf=\"f.submitted && !username.valid\" class=\"help-block\">Email is required</div> -->\n\t\t\t\t\t\t<div class=\"form-control-feedback\" *ngIf=\"email.errors && (email.dirty || email.touched)\">\n\t\t\t\t\t\t\t<p>{{ emailMsg }}</p>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t\n\t\t\t\t\t<div class=\"form-group\" [ngClass]=\"setClassPassword()\">\n\t\t\t\t\t\t<!-- <label for=\"password\">Password</label> -->\n\t\t\t\t\t\t<input class=\"form-control\" type=\"password\" name=\"password\" formControlName=\"password\" placeholder=\"Password\" aria-describedby=\"pass\" />\n\t\t\t\t\t\t<!-- <input type=\"password\" class=\"form-control\" name=\"password\" [(ngModel)]=\"model.password\" #password=\"ngModel\" required aria-describedby=\"pass\" placeholder=\"Password\"/> -->\n\t\t\t\t\t\t<!-- <div *ngIf=\"f.submitted && !password.valid\" class=\"help-block\">Password is required</div> -->\n\t\t\t\t\t\t<div class=\"form-control-feedback\" *ngIf=\"password.errors && (password.dirty || password.touched)\">\n\t\t\t\t\t\t\t<p>{{ passwordMsg }}</p>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t\n\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t<a href=\"#\" class=\"forget-password-link\">Forget your password?</a>\n\t\t\t\t\t</div>\n\t\t\t\t\t\n\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t<button class=\"btn btn-primary\" type=\"submit\" [disabled]=\"!loginForm.valid || loading\">{{ loginBtnText }}</button>\n\t\t\t\t\t\t<!-- <button [disabled]=\"loading\" class=\"btn btn-primary\">{{ loginBtnText }}</button> -->\n\t\t\t\t\t\t<!-- <img *ngIf=\"loading\" src=\"data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==\" /> -->\n\t\t\t\t\t\t<!-- <a [routerLink]=\"['/register']\" class=\"btn btn-link\">Register</a> -->\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t<p class=\"simple-txt\">Or</p>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t<button type=\"button\" class=\"btn btn-primary\">\n\t\t\t\t\t\t\t<i class=\"fa fa-facebook side-icon\"></i>\n\t\t\t\t\t\t\tContinue with Facebook\n\t\t\t\t\t\t</button>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t<button type=\"button\" class=\"btn btn-info\">\n\t\t\t\t\t\t\t<i class=\"fa fa-twitter side-icon\"></i>\n\t\t\t\t\t\t\tContinue with Twitter\n\t\t\t\t\t\t</button>\n\t\t\t\t\t</div>\n\t\t\t\t</form>\n\t\t\t</div>\n\t\t\t<div class=\"modal-footer\">\n\t\t\t\t<p class=\"foot-txt\">You are not a member yet?</p>\n\t\t\t\t<button type=\"button\" class=\"btn btn-grey\" (click)=\"openSignup()\">Sign Up</button>\n\t\t\t</div>\n    \t</div>\n  \t</div>\n</div>"
+module.exports = "<!-- Modal -->\n\n<div class=\"modal fade\" id=\"logIn\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\">\n  \t<div class=\"modal-dialog sign-up-style\" role=\"document\">\n    \t<div class=\"modal-content\">\n\t\t\t<button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\n\t\t\t\t<span aria-hidden=\"true\">&times;</span>\n\t\t\t</button>\n\t\t\t<div class=\"modal-body\">\n\t\t\t\t<div class=\"top-layer\">\n\t\t\t\t\t<a href=\"#\" class=\"logo-wrap\">\n\t\t\t\t\t\t<img src=\"./assets/image/main-logo.png\" alt=\"\">\n\t\t\t\t\t</a>\n\t\t\t\t\t<h4 class=\"title\">Login to your account</h4>\n\t\t\t\t\t<!-- <p class=\"sub-ttl\">and write a text here</p> -->\n\t\t\t\t\t<p class=\"sub-ttl error-message\" *ngFor=\"let msg of errors\">{{ msg }}</p>\n\t\t\t\t</div>\n\n\t\t\t\t<form class=\"login-form\" name=\"loginForm\" [formGroup]=\"loginForm\" (ngSubmit)=\"login()\" novalidate>\n\t\t\t\t\t<div class=\"form-group\" [ngClass]=\"setClassEmail()\">\n\t\t\t\t\t\t<!-- <label for=\"username\">Username</label> -->\n\t\t\t\t\t\t<input class=\"form-control\" type=\"email\" name=\"email\" formControlName=\"email\" placeholder=\"Email address\" aria-describedby=\"emailHelp\" />\n\t\t\t\t\t\t<!-- <input type=\"email\" class=\"form-control\" name=\"username\" [(ngModel)]=\"model.username\" #username=\"ngModel\" required aria-describedby=\"emailHelp\" placeholder=\"Email address\"/> -->\n\t\t\t\t\t\t<!-- <div *ngIf=\"f.submitted && !username.valid\" class=\"help-block\">Email is required</div> -->\n\t\t\t\t\t\t<div class=\"form-control-feedback\" *ngIf=\"email.errors && (email.dirty || email.touched)\">\n\t\t\t\t\t\t\t<p>{{ emailMsg }}</p>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t\n\t\t\t\t\t<div class=\"form-group\" [ngClass]=\"setClassPassword()\">\n\t\t\t\t\t\t<!-- <label for=\"password\">Password</label> -->\n\t\t\t\t\t\t<input class=\"form-control\" type=\"password\" name=\"password\" formControlName=\"password\" placeholder=\"Password\" aria-describedby=\"pass\" />\n\t\t\t\t\t\t<!-- <input type=\"password\" class=\"form-control\" name=\"password\" [(ngModel)]=\"model.password\" #password=\"ngModel\" required aria-describedby=\"pass\" placeholder=\"Password\"/> -->\n\t\t\t\t\t\t<!-- <div *ngIf=\"f.submitted && !password.valid\" class=\"help-block\">Password is required</div> -->\n\t\t\t\t\t\t<div class=\"form-control-feedback\" *ngIf=\"password.errors && (password.dirty || password.touched)\">\n\t\t\t\t\t\t\t<p>{{ passwordMsg }}</p>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t\n\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t<a class=\"forget-password-link\" (click)=\"openForgotPassword()\">Forget your password?</a>\n\t\t\t\t\t</div>\n\t\t\t\t\t\n\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t<button class=\"btn btn-primary\" type=\"submit\" [disabled]=\"!loginForm.valid || loading\">{{ loginBtnText }}</button>\n\t\t\t\t\t\t<!-- <button [disabled]=\"loading\" class=\"btn btn-primary\">{{ loginBtnText }}</button> -->\n\t\t\t\t\t\t<!-- <img *ngIf=\"loading\" src=\"data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==\" /> -->\n\t\t\t\t\t\t<!-- <a [routerLink]=\"['/register']\" class=\"btn btn-link\">Register</a> -->\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t<p class=\"simple-txt\">Or</p>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t<button type=\"button\" class=\"btn btn-primary\">\n\t\t\t\t\t\t\t<i class=\"fa fa-facebook side-icon\"></i>\n\t\t\t\t\t\t\tContinue with Facebook\n\t\t\t\t\t\t</button>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t<button type=\"button\" class=\"btn btn-info\">\n\t\t\t\t\t\t\t<i class=\"fa fa-twitter side-icon\"></i>\n\t\t\t\t\t\t\tContinue with Twitter\n\t\t\t\t\t\t</button>\n\t\t\t\t\t</div>\n\t\t\t\t</form>\n\t\t\t</div>\n\t\t\t<div class=\"modal-footer\">\n\t\t\t\t<p class=\"foot-txt\">You are not a member yet?</p>\n\t\t\t\t<button type=\"button\" class=\"btn btn-grey\" (click)=\"openSignup()\">Sign Up</button>\n\t\t\t</div>\n    \t</div>\n  \t</div>\n</div>"
 
 /***/ }),
 
@@ -1477,14 +1615,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 var LoginComponent = (function () {
-    function LoginComponent(route, router, authenticationService, alertService, formBuilder, titleService, mianC) {
+    function LoginComponent(route, router, authenticationService, formBuilder, titleService, mainC) {
         this.route = route;
         this.router = router;
         this.authenticationService = authenticationService;
-        this.alertService = alertService;
         this.formBuilder = formBuilder;
         this.titleService = titleService;
-        this.mianC = mianC;
+        this.mainC = mainC;
         this.loading = false;
         this.loginBtnText = "Login";
         this.errors = [];
@@ -1500,7 +1637,7 @@ var LoginComponent = (function () {
     }
     LoginComponent.prototype.ngOnInit = function () {
         // reset login status
-        this.authenticationService.logout();
+        // this.authenticationService.logout();
         if (this.authenticationService.isLoggedIn()) {
             this.router.navigate(['/home']);
         }
@@ -1510,9 +1647,20 @@ var LoginComponent = (function () {
             email: this.email,
             password: this.password
         });
+        var t = this;
+        $('#logIn').modal("show");
+        $('#logIn').on('hidden.bs.modal', function (e) {
+            t.closeLogin();
+        });
+    };
+    LoginComponent.prototype.closeLogin = function () {
+        this.mainC.closeAll();
     };
     LoginComponent.prototype.openSignup = function () {
-        this.mianC.openSignup(1);
+        this.mainC.openSignup(1);
+    };
+    LoginComponent.prototype.openForgotPassword = function () {
+        this.mainC.openForgotPassword();
     };
     LoginComponent.prototype.setClassEmail = function () {
         if ((!this.email.pristine || this.email.touched) && !this.email.valid) {
@@ -1575,7 +1723,6 @@ var LoginComponent = (function () {
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */],
             __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* Router */],
             __WEBPACK_IMPORTED_MODULE_2__services_index__["b" /* AuthenticationService */],
-            __WEBPACK_IMPORTED_MODULE_2__services_index__["a" /* AlertService */],
             __WEBPACK_IMPORTED_MODULE_3__angular_forms__["a" /* FormBuilder */],
             __WEBPACK_IMPORTED_MODULE_4__angular_platform_browser__["b" /* Title */],
             __WEBPACK_IMPORTED_MODULE_5__main_main_component__["a" /* MainComponent */]])
@@ -1590,7 +1737,7 @@ var LoginComponent = (function () {
 /***/ "../../../../../src/app/main/main.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"main-wrapper login-layer\">\n\t<header class=\"main-header step-header\">\n\t\t<!-- use class .step-header for set header above of modal-backgrop layer -->\n\t\t<div class=\"container\">\n\t\t\t<nav class=\"navbar navbar-toggleable-md navbar-light bg-faded\">\n\t\t\t\t<!-- <button class=\"navbar-toggler navbar-toggler-right\" type=\"button\" data-toggle=\"collapse\" data-target=\"#mainMenuLayer\" aria-controls=\"mainMenuLayer\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">\n            <span class=\"navbar-toggler-icon\"></span>\n          </button> -->\n\t\t\t\t<a class=\"navbar-brand\" href=\"#\">\n\t\t\t\t\t<img src=\"./assets/image/main-small-logo.png\" alt=\"\">\n\t\t\t\t</a>\n\n\t\t\t\t<!--<div class=\"collapse navbar-collapse\" id=\"mainMenuLayer\">\n\t\t\t\t\t<div class=\"progress-wrapper\">\n\t\t\t\t\t<div class=\"progress-point\">Start</div>\n\t\t\t\t\t<div class=\"progress\">\n\t\t\t\t\t<div class=\"progress-bar\" role=\"progressbar\" aria-valuenow=\"1\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div><!-- you can use aria-valuenow arrt for add step -->\n\t\t\t\t\t<!-- </div>\n\t\t\t\t\t<div class=\"progress-point\">Finish</div>\n\t\t\t\t</div>\n\t\t\t\t</div> -->\n\n\t\t\t\t<div class=\"progress-block signUpProgress\" style=\"display:none;\">\n\t\t\t\t\t<div class=\"progress-wrapper\">\n\t\t\t\t\t\t<div class=\"progress-point\">Start</div>\n\t\t\t\t\t\t<div class=\"progress\">\n\t\t\t\t\t\t\t<div class=\"progress-bar\" role=\"progressbar\" [attr.aria-valuenow]=\"signupStepCount\" aria-valuemin=\"0\" aria-valuemax=\"100\" [style.width]=\"progressWidth\"></div>\n\t\t\t\t\t\t\t<!-- you can use aria-valuenow arrt for add step -->\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"progress-point\">Finish</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</nav>\n\n\t\t\t<!-- <div class=\"header-inner\">\n          <h1 class=\"logo-wrap\">\n            <a href=\"#\" class=\"logo\">\n              <img src=\"./assets/image/main-small-logo.png\" alt=\"\">\n            </a>\n          </h1>\n          <div class=\"col\">\n          </div>\n        </div> -->\n\t\t</div>\n\t</header>\n\n\t<!-- Button trigger modal -->\n\t<button type=\"button\" class=\"btn btn-primary\" (click)=\"openLogin()\">\n\t\tLogin\n\t</button>\n\t<button type=\"button\" class=\"btn btn-primary\" (click)=\"openSignup(1)\">\n\t\tRegister\n\t</button>\n</div>\n\n<app-login></app-login>\n\n<app-signup></app-signup>"
+module.exports = "<div class=\"main-wrapper login-layer\">\n\t<header class=\"main-header step-header\">\n\t\t<!-- use class .step-header for set header above of modal-backgrop layer -->\n\t\t<div class=\"container\">\n\t\t\t<nav class=\"navbar navbar-toggleable-md navbar-light bg-faded\">\n\t\t\t\t<!-- <button class=\"navbar-toggler navbar-toggler-right\" type=\"button\" data-toggle=\"collapse\" data-target=\"#mainMenuLayer\" aria-controls=\"mainMenuLayer\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">\n            <span class=\"navbar-toggler-icon\"></span>\n          </button> -->\n\t\t\t\t<a class=\"navbar-brand\" href=\"#\">\n\t\t\t\t\t<img src=\"./assets/image/main-small-logo.png\" alt=\"\">\n\t\t\t\t</a>\n\n\t\t\t\t<!--<div class=\"collapse navbar-collapse\" id=\"mainMenuLayer\">\n\t\t\t\t\t<div class=\"progress-wrapper\">\n\t\t\t\t\t<div class=\"progress-point\">Start</div>\n\t\t\t\t\t<div class=\"progress\">\n\t\t\t\t\t<div class=\"progress-bar\" role=\"progressbar\" aria-valuenow=\"1\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div><!-- you can use aria-valuenow arrt for add step -->\n\t\t\t\t\t<!-- </div>\n\t\t\t\t\t<div class=\"progress-point\">Finish</div>\n\t\t\t\t</div>\n\t\t\t\t</div> -->\n\n\t\t\t\t<div class=\"progress-block signUpProgress\" style=\"display:none;\">\n\t\t\t\t\t<div class=\"progress-wrapper\">\n\t\t\t\t\t\t<div class=\"progress-point\">Start</div>\n\t\t\t\t\t\t<div class=\"progress\">\n\t\t\t\t\t\t\t<div class=\"progress-bar\" role=\"progressbar\" [attr.aria-valuenow]=\"signupStepCount\" aria-valuemin=\"0\" aria-valuemax=\"100\" [style.width]=\"progressWidth\"></div>\n\t\t\t\t\t\t\t<!-- you can use aria-valuenow arrt for add step -->\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"progress-point\">Finish</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</nav>\n\n\t\t\t<!-- <div class=\"header-inner\">\n          <h1 class=\"logo-wrap\">\n            <a href=\"#\" class=\"logo\">\n              <img src=\"./assets/image/main-small-logo.png\" alt=\"\">\n            </a>\n          </h1>\n          <div class=\"col\">\n          </div>\n        </div> -->\n\t\t</div>\n\t</header>\n\n\t<!-- Button trigger modal -->\n\t<button type=\"button\" class=\"btn btn-primary\" (click)=\"openLogin()\">\n\t\tLogin\n\t</button>\n\t<button type=\"button\" class=\"btn btn-primary\" (click)=\"openSignup(1)\">\n\t\tRegister\n\t</button>\n</div>\n\n<router-outlet></router-outlet>"
 
 /***/ }),
 
@@ -1619,6 +1766,7 @@ module.exports = module.exports.toString();
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MainComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser__ = __webpack_require__("../../../platform-browser/esm5/platform-browser.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__("../../../router/esm5/router.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1630,8 +1778,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
+
 var MainComponent = (function () {
-    function MainComponent(titleService) {
+    function MainComponent(route, router, titleService) {
+        this.route = route;
+        this.router = router;
         this.titleService = titleService;
         this.signupSteps = 8;
         this.signupStepCount = 0;
@@ -1641,30 +1792,39 @@ var MainComponent = (function () {
         this.titleService.setTitle("Travooo");
         $.getScript('assets/js/script.js');
     };
-    MainComponent.prototype.closeExistingSignups = function () {
-        $(".modal").each(function (index) {
-            if ($(this).hasClass('show')) {
-                $(this).modal('hide');
-            }
-        });
+    MainComponent.prototype.closeAll = function () {
+        this.titleService.setTitle("Travoo");
+        $('.signUpProgress').hide();
+        $('.modal-backdrop').remove();
+        $('body').removeClass('modal-open');
+        this.signupStepCount = 0;
+        this.router.navigate(['/']);
     };
     MainComponent.prototype.openLogin = function () {
         this.titleService.setTitle("Travoo - Login");
         $('.signUpProgress').hide();
-        // close all other modals and open login model
-        this.closeExistingSignups();
-        $('#logIn').modal("show");
+        $('.modal-backdrop').remove();
         this.signupStepCount = 0;
+        this.router.navigate(['/login']);
     };
     MainComponent.prototype.openSignup = function (stepNum) {
-        //stepNum = 5;
+        if (stepNum === void 0) { stepNum = 1; }
         this.titleService.setTitle("Travoo - Signup");
-        // close all other modals and open login model
-        this.closeExistingSignups();
         $('.signUpProgress').show();
-        $('#signUpStep' + stepNum).modal('show');
+        $('.modal-backdrop').remove();
         this.signupStepCount = stepNum;
         this.progressWidth = (this.signupStepCount / this.signupSteps) * 100 + "%";
+        if (stepNum == 1) {
+            this.router.navigate(['/signup']);
+        }
+        else {
+            this.router.navigate(['/signup/step' + stepNum]);
+        }
+    };
+    MainComponent.prototype.openForgotPassword = function () {
+        this.titleService.setTitle("Travoo - Reset Password");
+        $('.modal-backdrop').remove();
+        this.router.navigate(['/forgot-password']);
     };
     MainComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
@@ -1672,7 +1832,9 @@ var MainComponent = (function () {
             template: __webpack_require__("../../../../../src/app/main/main.component.html"),
             styles: [__webpack_require__("../../../../../src/app/main/main.component.scss")]
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_platform_browser__["b" /* Title */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* ActivatedRoute */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_router__["c" /* Router */],
+            __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser__["b" /* Title */]])
     ], MainComponent);
     return MainComponent;
 }());
@@ -1736,6 +1898,177 @@ var PostsComponent = (function () {
         __metadata("design:paramtypes", [])
     ], PostsComponent);
     return PostsComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "../../../../../src/app/reset-password/reset-password.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<!-- create an account -->\n<div class=\"modal fade\" id=\"reset_password\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\" data-backdrop=\"static\" data-keyboard=\"false\">\n\t<div class=\"modal-dialog sign-up-style\" role=\"document\">\n\t\t<div class=\"modal-content\">\n\t\t\t<!-- <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\n\t\t\t\t<span aria-hidden=\"true\">&times;</span>\n\t\t\t</button> -->\n\t\t\t<div class=\"modal-body body-create\">\n\t\t\t\t<div class=\"top-layer\">\n\t\t\t\t\t<a href=\"#\" class=\"logo-wrap\">\n\t\t\t\t\t\t<img src=\"./assets/image/main-logo.png\" alt=\"\">\n\t\t\t\t\t</a>\n\t\t\t\t\t<h4 class=\"title\">Forgot Password</h4>\n\t\t\t\t\t<p class=\"sub-ttl\">Please choose a new password.</p>\n\t\t\t\t\t<p class=\"sub-ttl error-message\" *ngFor=\"let msg of errors\">{{ msg }}</p>\n\t\t\t\t</div>\n\n\t\t\t\t<form class=\"login-form\" name=\"resetPasswordForm\" [formGroup]=\"resetPasswordForm\" (ngSubmit)=\"submit()\" novalidate>\n\t\t\t\t\t<div class=\"step-1\">\n\t\t\t\t\t\t<div class=\"form-group\" [ngClass]=\"validate('password')\">\n\t\t\t\t\t\t\t<input class=\"form-control\" type=\"password\" name=\"password\" formControlName=\"password\" placeholder=\"Password\" aria-describedby=\"pass\" />\n\t\t\t\t\t\t\t<div class=\"form-control-feedback\" *ngIf=\"formErrors.password\">\n\t\t\t\t\t\t\t\t<p>{{ formErrors.password }}</p>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\n\t\t\t\t\t\t<div class=\"form-group\" [ngClass]=\"validate('cpassword')\">\n\t\t\t\t\t\t\t<input class=\"form-control\" type=\"password\" name=\"cpassword\" formControlName=\"cpassword\" placeholder=\"Confirm New Password\" aria-describedby=\"cpass\" />\n\t\t\t\t\t\t\t<div class=\"form-control-feedback\" *ngIf=\"formErrors.cpassword\">\n\t\t\t\t\t\t\t\t<p>{{ formErrors.cpassword }}</p>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\n\t\t\t\t\t\t<div class=\"form-margin\"></div>\n\t\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t\t<button type=\"submit\" class=\"btn btn-success\" [disabled]=\"!resetPasswordForm.valid || loading\">{{ submitBtnText }}</button>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</form>\n\t\t\t</div>\n\t\t\t<div class=\"modal-footer\">\n\t\t\t\t<p class=\"foot-txt\">You are not a member yet?</p>\n\t\t\t\t<button type=\"button\" class=\"btn btn-grey\" (click)=\"openSignup()\">Sign Up</button>\n\t\t\t</div>\n\t\t</div>\n\t</div>\n</div>\n\n<div class=\"modal fade\" id=\"reset_success\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\" data-backdrop=\"static\" data-keyboard=\"false\">\n\t<div class=\"modal-dialog sign-up-style\" role=\"document\">\n\t\t<div class=\"modal-content\">\n\t\t\t<button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\n\t\t\t\t<span aria-hidden=\"true\">&times;</span>\n\t\t\t</button>\n\t\t\t<div class=\"modal-body body-create\">\n\t\t\t\t<div class=\"top-layer\">\n\t\t\t\t\t<a href=\"#\" class=\"logo-wrap\">\n\t\t\t\t\t\t<img src=\"./assets/image/main-logo.png\" alt=\"\">\n\t\t\t\t\t</a>\n\t\t\t\t\t<h4 class=\"title\">Forgot Password</h4>\n\t\t\t\t\t<!-- <p class=\"sub-ttl\">and write a text here</p> -->\n\t\t\t\t\t<!-- <p class=\"sub-ttl error-message\">Your password is too weak</p> -->\n\t\t\t\t</div>\n\t\t\t\t<form class=\"login-form\">\n\t\t\t\t\t<div class=\"step-2\">\n\t\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t\t<p class=\"email-field\">Your password was reset successfully!</p>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</form>\n\t\t\t</div>\n\t\t\t<div class=\"modal-footer\">\n\t\t\t\t<button type=\"button\" class=\"btn btn-grey\" (click)=\"openLogin()\">Got to Log In</button>\n\t\t\t</div>\n\t\t</div>\n\t</div>\n</div>"
+
+/***/ }),
+
+/***/ "../../../../../src/app/reset-password/reset-password.component.scss":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/reset-password/reset-password.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ResetPasswordComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("../../../router/esm5/router.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_index__ = __webpack_require__("../../../../../src/_services/index.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_forms__ = __webpack_require__("../../../forms/esm5/forms.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__helpers_custom_validators__ = __webpack_require__("../../../../../src/_helpers/custom-validators.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__angular_platform_browser___ = __webpack_require__("../../../platform-browser/esm5/platform-browser.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__main_main_component__ = __webpack_require__("../../../../../src/app/main/main.component.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+
+var ResetPasswordComponent = (function () {
+    function ResetPasswordComponent(route, router, authenticationService, formBuilder, titleService, mainC) {
+        this.route = route;
+        this.router = router;
+        this.authenticationService = authenticationService;
+        this.formBuilder = formBuilder;
+        this.titleService = titleService;
+        this.mainC = mainC;
+        this.loading = false;
+        this.submitBtnText = "Update Password";
+        this.password = new __WEBPACK_IMPORTED_MODULE_3__angular_forms__["b" /* FormControl */]('', [
+            __WEBPACK_IMPORTED_MODULE_3__angular_forms__["e" /* Validators */].required
+        ]);
+        this.cpassword = new __WEBPACK_IMPORTED_MODULE_3__angular_forms__["b" /* FormControl */]('', [
+            __WEBPACK_IMPORTED_MODULE_3__angular_forms__["e" /* Validators */].required,
+            Object(__WEBPACK_IMPORTED_MODULE_4__helpers_custom_validators__["a" /* ConfirmPasswordValidator */])(this.password)
+        ]);
+        this.errors = [];
+        this.formErrors = { password: "", cpassword: "" };
+    }
+    ResetPasswordComponent.prototype.ngOnInit = function () {
+        // XLiBnE90YMuZedwo7zZA15163700355V5n7Sx8GwzHJsTpLMK7
+        var _this = this;
+        // assign the subscription to a variable so we can unsubscribe to prevent memory leaks
+        this.sub = this.route.queryParams.subscribe(function (params) {
+            _this.token = params['token'];
+        });
+        var credentials = {
+            password: this.password,
+            cpassword: this.cpassword
+        };
+        this.resetPasswordForm = this.formBuilder.group(credentials);
+        var t = this;
+        $('#reset_password').modal("show");
+        $('#reset_password').on('hidden.bs.modal', function (e) {
+            t.closeForgotPassword();
+        });
+    };
+    ResetPasswordComponent.prototype.ngOnDestroy = function () {
+        this.sub.unsubscribe();
+    };
+    ResetPasswordComponent.prototype.closeForgotPassword = function () {
+        this.mainC.closeAll();
+    };
+    ResetPasswordComponent.prototype.openSignup = function () {
+        this.mainC.openSignup(1);
+    };
+    ResetPasswordComponent.prototype.openLogin = function () {
+        this.mainC.openLogin();
+    };
+    ResetPasswordComponent.prototype.validate = function (name) {
+        this.formErrors[name] = '';
+        var control = this.resetPasswordForm.get(name);
+        if ((!control.pristine || control.touched) && !control.valid) {
+            if (control.errors.required) {
+                this.formErrors[name] = "This field is required.";
+            }
+            else if (control.errors.email) {
+                this.formErrors[name] = "This Email is not valid.";
+            }
+            return 'has-danger';
+        }
+    };
+    ResetPasswordComponent.prototype.submit = function () {
+        var _this = this;
+        this.errors = [];
+        this.toggleBtnState(false);
+        if (this.password.valid && this.cpassword.valid) {
+            this.authenticationService.resetPassword(this.token, this.password.value, this.cpassword.value)
+                .subscribe(function (data) {
+                //console.log(data);
+                if (data.success) {
+                    $('#reset_password').modal('hide');
+                    $('#reset_success').modal('show');
+                }
+                else {
+                    _this.errors = data.data.message;
+                    _this.toggleBtnState(true);
+                }
+            }, function (error) {
+                console.log(error);
+                _this.toggleBtnState(true);
+            });
+        }
+        else {
+            this.errors.push("Please fill all required fields with valid values first.");
+        }
+    };
+    ResetPasswordComponent.prototype.toggleBtnState = function (state) {
+        if (state) {
+            this.submitBtnText = "Update Password";
+            this.loading = false;
+        }
+        else {
+            this.submitBtnText = "Updating ...";
+            this.loading = true;
+        }
+    };
+    ResetPasswordComponent = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+            selector: 'app-reset-password',
+            template: __webpack_require__("../../../../../src/app/reset-password/reset-password.component.html"),
+            styles: [__webpack_require__("../../../../../src/app/reset-password/reset-password.component.scss")]
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */],
+            __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* Router */],
+            __WEBPACK_IMPORTED_MODULE_2__services_index__["b" /* AuthenticationService */],
+            __WEBPACK_IMPORTED_MODULE_3__angular_forms__["a" /* FormBuilder */],
+            __WEBPACK_IMPORTED_MODULE_5__angular_platform_browser___["b" /* Title */],
+            __WEBPACK_IMPORTED_MODULE_6__main_main_component__["a" /* MainComponent */]])
+    ], ResetPasswordComponent);
+    return ResetPasswordComponent;
 }());
 
 
@@ -1867,7 +2200,7 @@ var SideFooterComponent = (function () {
 /***/ "../../../../../src/app/signup/signup.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<app-signup-step1></app-signup-step1>\n<app-signup-step2></app-signup-step2>\n<app-signup-step3></app-signup-step3>\n<app-signup-step4></app-signup-step4>\n<app-signup-step5></app-signup-step5>"
+module.exports = "<router-outlet></router-outlet>"
 
 /***/ }),
 
@@ -1998,11 +2331,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 var Step1Component = (function () {
-    function Step1Component(route, router, userService, alertService, formBuilder, titleService, mainC) {
+    function Step1Component(route, router, userService, formBuilder, titleService, mainC) {
         this.route = route;
         this.router = router;
         this.userService = userService;
-        this.alertService = alertService;
         this.formBuilder = formBuilder;
         this.titleService = titleService;
         this.mainC = mainC;
@@ -2023,6 +2355,7 @@ var Step1Component = (function () {
             Object(__WEBPACK_IMPORTED_MODULE_4__helpers_custom_validators__["a" /* ConfirmPasswordValidator */])(this.password)
         ]);
         this.errors = [];
+        this.signupErrors = { username: "", email: "", password: "", cpassword: "" };
     }
     Step1Component.prototype.ngOnInit = function () {
         var step1 = {
@@ -2032,7 +2365,14 @@ var Step1Component = (function () {
             cpassword: this.cpassword
         };
         this.signupForm1 = this.formBuilder.group(step1);
-        this.signupErrors = {};
+        var t = this;
+        $('#signUpStep1').modal("show");
+        $('#signUpStep1').on('hidden.bs.modal', function (e) {
+            t.closeSignup();
+        });
+    };
+    Step1Component.prototype.closeSignup = function () {
+        this.mainC.closeAll();
     };
     Step1Component.prototype.openLogin = function () {
         this.mainC.openLogin();
@@ -2106,7 +2446,6 @@ var Step1Component = (function () {
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */],
             __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* Router */],
             __WEBPACK_IMPORTED_MODULE_2__services_index__["f" /* UserService */],
-            __WEBPACK_IMPORTED_MODULE_2__services_index__["a" /* AlertService */],
             __WEBPACK_IMPORTED_MODULE_3__angular_forms__["a" /* FormBuilder */],
             __WEBPACK_IMPORTED_MODULE_5__angular_platform_browser___["b" /* Title */],
             __WEBPACK_IMPORTED_MODULE_6__main_main_component__["a" /* MainComponent */]])
@@ -2121,7 +2460,7 @@ var Step1Component = (function () {
 /***/ "../../../../../src/app/signup/step2/step2.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "\n<div class=\"modal fade signUpStep\" id=\"signUpStep2\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\" data-backdrop=\"static\" data-keyboard=\"false\">\n\t<div class=\"modal-dialog sign-up-style\" role=\"document\">\n\t\t<div class=\"modal-content\">\n\t\t\t<button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\n\t\t\t\t<span aria-hidden=\"true\">&times;</span>\n\t\t\t</button>\n\t\t\t<div class=\"modal-body body-create\">\n\t\t\t\t<div class=\"top-layer\">\n\t\t\t\t\t<a href=\"#\" class=\"logo-wrap\">\n\t\t\t\t\t\t<img src=\"./assets/image/main-logo.png\" alt=\"\">\n\t\t\t\t\t</a>\n\t\t\t\t\t<h4 class=\"title\">Create a free account</h4>\n\t\t\t\t\t<!-- <p class=\"sub-ttl\">and write a text here</p> -->\n\t\t\t\t\t<!-- <p class=\"sub-ttl error-message\">Your password is too weak</p> -->\n\t\t\t\t\t<!-- <p class=\"sub-ttl error-message\">Please fill the required fields</p> -->\n\t\t\t\t\t<p class=\"sub-ttl error-message\" *ngFor=\"let msg of errors\">{{ msg }}</p>\n\t\t\t\t</div>\n\t\t\t\t<form class=\"login-form\" name=\"signupForm2\" [formGroup]=\"signupForm2\" (ngSubmit)=\"continueStep2()\" novalidate>\n\t\t\t\t\t<div class=\"step-2\">\n\t\t\t\t\t\t<!-- <div class=\"form-group\">\n\t\t\t\t\t\t\t<p class=\"email-field\">emailhere@gmail.com</p>\n\t\t\t\t\t\t</div> -->\n\t\t\t\t\t\t<div class=\"form-group flex-custom\">\n\t\t\t\t\t\t\t<div class=\"flex-input\" [ngClass]=\"validate('name')\">\n\t\t\t\t\t\t\t\t<input class=\"form-control\" type=\"text\" name=\"name\" formControlName=\"name\" placeholder=\"Full Name\" aria-describedby=\"full name\" />\n\t\t\t\t\t\t\t\t<div class=\"form-control-feedback\" *ngIf=\"signupErrors.name\">\n\t\t\t\t\t\t\t\t\t<p>{{ signupErrors.name }}</p>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"form-group\" [ngClass]=\"validate('age')\">\n\t\t\t\t\t\t\t\t<select class=\"custom-select\" id=\"age\" formControlName=\"age\">\n\t\t\t\t\t\t\t\t\t<option [selected]=\"age\">Age</option>\n\t\t\t\t\t\t\t\t\t<option value=\"1\">26</option>\n\t\t\t\t\t\t\t\t\t<option value=\"2\">27</option>\n\t\t\t\t\t\t\t\t\t<option value=\"3\">28</option>\n\t\t\t\t\t\t\t\t</select>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"form-check flex-custom\" [ngClass]=\"validate('gender')\">\n\t\t\t\t\t\t\t<div class=\"custom-check-label\">\n\t\t\t\t\t\t\t\t<input type=\"radio\" class=\"custom-check-input\" name=\"gender\" id=\"male\" formControlName=\"gender\" value=\"0\">\n\t\t\t\t\t\t\t\t<label for=\"male\">Male</label>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"custom-check-label\">\n\t\t\t\t\t\t\t\t<input type=\"radio\" class=\"custom-check-input\" name=\"gender\" id=\"female\" formControlName=\"gender\" value=\"1\">\n\t\t\t\t\t\t\t\t<label for=\"female\">Female</label>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"form-control-feedback\" *ngIf=\"signupErrors.gender\">\n\t\t\t\t\t\t\t\t<p>{{ signupErrors.gender }}</p>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t\t<button type=\"submit\" class=\"btn btn-info\" [disabled]=\"!signupForm2.valid || loading\">{{ signupBtnText }}</button>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t\t<button type=\"button\" class=\"btn btn-transp\" (click)=\"backToSignup()\">\n\t\t\t\t\t\t\t\t<i class=\"fa fa-angle-left\"></i>\n\t\t\t\t\t\t\t\t<span>Back</span>\n\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"form-group bottom-txt-group\">\n\t\t\t\t\t\t<p class=\"bottom-txt\">Creating an account means you're okay with</p>\n\t\t\t\t\t\t<ul class=\"link-list\">\n\t\t\t\t\t\t\t<li>\n\t\t\t\t\t\t\t\t<b>Travooo's</b>\n\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t\t<li>\n\t\t\t\t\t\t\t\t<a href=\"#\"> Terms of Service,</a>\n\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t\t<li>\n\t\t\t\t\t\t\t\t<a href=\"#\"> Privacy Policy</a>\n\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t</ul>\n\t\t\t\t\t</div>\n\t\t\t\t</form>\n\t\t\t</div>\n\t\t\t<div class=\"modal-footer\">\n\t\t\t\t<p class=\"foot-txt\">Already a member?</p>\n\t\t\t\t<button type=\"button\" class=\"btn btn-grey\" (click)=\"openLogin()\">Log In</button>\n\t\t\t</div>\n\t\t</div>\n\t</div>\n</div>"
+module.exports = "\n<div class=\"modal fade signUpStep\" id=\"signUpStep2\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\" data-backdrop=\"static\" data-keyboard=\"false\">\n\t<div class=\"modal-dialog sign-up-style\" role=\"document\">\n\t\t<div class=\"modal-content\">\n\t\t\t<button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\n\t\t\t\t<span aria-hidden=\"true\">&times;</span>\n\t\t\t</button>\n\t\t\t<div class=\"modal-body body-create\">\n\t\t\t\t<div class=\"top-layer\">\n\t\t\t\t\t<a href=\"#\" class=\"logo-wrap\">\n\t\t\t\t\t\t<img src=\"./assets/image/main-logo.png\" alt=\"\">\n\t\t\t\t\t</a>\n\t\t\t\t\t<h4 class=\"title\">Create a free account</h4>\n\t\t\t\t\t<!-- <p class=\"sub-ttl\">and write a text here</p> -->\n\t\t\t\t\t<!-- <p class=\"sub-ttl error-message\">Your password is too weak</p> -->\n\t\t\t\t\t<!-- <p class=\"sub-ttl error-message\">Please fill the required fields</p> -->\n\t\t\t\t\t<p class=\"sub-ttl error-message\" *ngFor=\"let msg of errors\">{{ msg }}</p>\n\t\t\t\t</div>\n\t\t\t\t<form class=\"login-form\" name=\"signupForm2\" [formGroup]=\"signupForm2\" (ngSubmit)=\"continueStep2()\" novalidate>\n\t\t\t\t\t<div class=\"step-2\">\n\t\t\t\t\t\t<!-- <div class=\"form-group\">\n\t\t\t\t\t\t\t<p class=\"email-field\">emailhere@gmail.com</p>\n\t\t\t\t\t\t</div> -->\n\t\t\t\t\t\t<div class=\"form-group flex-custom\">\n\t\t\t\t\t\t\t<div class=\"flex-input\" [ngClass]=\"validate('name')\">\n\t\t\t\t\t\t\t\t<input class=\"form-control\" type=\"text\" name=\"name\" formControlName=\"name\" placeholder=\"Full Name\" aria-describedby=\"full name\" />\n\t\t\t\t\t\t\t\t<div class=\"form-control-feedback\" *ngIf=\"signupErrors.name\">\n\t\t\t\t\t\t\t\t\t<p>{{ signupErrors.name }}</p>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"form-group\" [ngClass]=\"validate('age')\">\n\t\t\t\t\t\t\t\t<select class=\"custom-select\" id=\"age\" formControlName=\"age\">\n\t\t\t\t\t\t\t\t\t<option [selected]=\"age\">Age</option>\n\t\t\t\t\t\t\t\t\t<option value=\"1\">26</option>\n\t\t\t\t\t\t\t\t\t<option value=\"2\">27</option>\n\t\t\t\t\t\t\t\t\t<option value=\"3\">28</option>\n\t\t\t\t\t\t\t\t</select>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"form-check flex-custom\" [ngClass]=\"validate('gender')\">\n\t\t\t\t\t\t\t<div class=\"custom-check-label\">\n\t\t\t\t\t\t\t\t<input type=\"radio\" class=\"custom-check-input\" name=\"gender\" id=\"male\" formControlName=\"gender\" value=\"0\">\n\t\t\t\t\t\t\t\t<label for=\"male\">Male</label>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"custom-check-label\">\n\t\t\t\t\t\t\t\t<input type=\"radio\" class=\"custom-check-input\" name=\"gender\" id=\"female\" formControlName=\"gender\" value=\"1\">\n\t\t\t\t\t\t\t\t<label for=\"female\">Female</label>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"form-control-feedback\" *ngIf=\"signupErrors.gender\">\n\t\t\t\t\t\t\t\t<p>{{ signupErrors.gender }}</p>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t\t<button type=\"submit\" class=\"btn btn-info\" [disabled]=\"!signupForm2.valid || loading\">{{ signupBtnText }}</button>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t\t<button type=\"button\" class=\"btn btn-transp\">\n\t\t\t\t\t\t\t\t<i class=\"fa fa-angle-left\"></i>\n\t\t\t\t\t\t\t\t<span>Back</span>\n\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"form-group bottom-txt-group\">\n\t\t\t\t\t\t<p class=\"bottom-txt\">Creating an account means you're okay with</p>\n\t\t\t\t\t\t<ul class=\"link-list\">\n\t\t\t\t\t\t\t<li>\n\t\t\t\t\t\t\t\t<b>Travooo's</b>\n\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t\t<li>\n\t\t\t\t\t\t\t\t<a href=\"#\"> Terms of Service,</a>\n\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t\t<li>\n\t\t\t\t\t\t\t\t<a href=\"#\"> Privacy Policy</a>\n\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t</ul>\n\t\t\t\t\t</div>\n\t\t\t\t</form>\n\t\t\t</div>\n\t\t\t<div class=\"modal-footer\">\n\t\t\t\t<p class=\"foot-txt\">Already a member?</p>\n\t\t\t\t<button type=\"button\" class=\"btn btn-grey\" (click)=\"openLogin()\">Log In</button>\n\t\t\t</div>\n\t\t</div>\n\t</div>\n</div>"
 
 /***/ }),
 
@@ -2170,11 +2509,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 var Step2Component = (function () {
-    function Step2Component(route, router, userService, alertService, formBuilder, titleService, mainC) {
+    function Step2Component(route, router, userService, formBuilder, titleService, mainC) {
         this.route = route;
         this.router = router;
         this.userService = userService;
-        this.alertService = alertService;
         this.formBuilder = formBuilder;
         this.titleService = titleService;
         this.mainC = mainC;
@@ -2188,6 +2526,7 @@ var Step2Component = (function () {
             __WEBPACK_IMPORTED_MODULE_3__angular_forms__["e" /* Validators */].required
         ]);
         this.errors = [];
+        this.signupErrors = { name: "", age: "", gender: "" };
     }
     Step2Component.prototype.ngOnInit = function () {
         var step2 = {
@@ -2196,7 +2535,10 @@ var Step2Component = (function () {
             gender: this.gender
         };
         this.signupForm2 = this.formBuilder.group(step2);
-        this.signupErrors = {};
+        $('#signUpStep2').modal("show");
+    };
+    Step2Component.prototype.openLogin = function () {
+        this.mainC.openLogin();
     };
     Step2Component.prototype.validate = function (name) {
         this.signupErrors[name] = '';
@@ -2239,7 +2581,6 @@ var Step2Component = (function () {
             }
         }, function (error) {
             console.log(error);
-            //this.alertService.error(error);
             _this.toggleSignup(true);
         });
     };
@@ -2262,7 +2603,6 @@ var Step2Component = (function () {
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */],
             __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* Router */],
             __WEBPACK_IMPORTED_MODULE_2__services_index__["f" /* UserService */],
-            __WEBPACK_IMPORTED_MODULE_2__services_index__["a" /* AlertService */],
             __WEBPACK_IMPORTED_MODULE_3__angular_forms__["a" /* FormBuilder */],
             __WEBPACK_IMPORTED_MODULE_4__angular_platform_browser___["b" /* Title */],
             __WEBPACK_IMPORTED_MODULE_5__main_main_component__["a" /* MainComponent */]])
@@ -2277,7 +2617,7 @@ var Step2Component = (function () {
 /***/ "../../../../../src/app/signup/step3/step3.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<!-- Modal -->\n<div class=\"modal fade signUpStep\" id=\"signUpStep3\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\" data-backdrop=\"static\" data-keyboard=\"false\">\n\t<div class=\"modal-dialog sign-up-step\" role=\"document\">\n\t\t<div class=\"modal-content\">\n\t\t\t<div class=\"modal-body\">\n\t\t\t\t<div class=\"title-layer\">\n\t\t\t\t\t<h3 class=\"step-ttl\">Select at least 5 favorite\n\t\t\t\t\t\t<span>countries or cities</span>\n\t\t\t\t\t</h3>\n\t\t\t\t\t<div class=\"step-info\">\n\t\t\t\t\t\tStep 3\n\t\t\t\t\t\t<span>of {{ mainC.signupSteps }}</span>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"search-block-wrap\">\n\t\t\t\t\t<div class=\"search-block\">\n\t\t\t\t\t\t<a class=\"search-btn\" href=\"#\">\n\t\t\t\t\t\t\t<i class=\"fa fa-search\"></i>\n\t\t\t\t\t\t</a>\n\t\t\t\t\t\t<input type=\"text\" name=\"searchQuery\" [(ngModel)]=\"searchQuery\" placeholder=\"Country ...\" (input)=\"search()\"/>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"check-block-wrap\" id=\"select_countries\">\n\t\t\t\t\t<div *ngFor=\"let country of countries\">\n\t\t\t\t\t\t<div class=\"check-block\" [style.background-image]=\"'url('+ getCoverImage(country.cover_image) +')'\" [class.checked-block]=\"selected.indexOf(country.id)>=0\" (click)=\"select(country.id)\">\n\t\t\t\t\t\t\t<div class=\"check-ttl\">\n\t\t\t\t\t\t\t\t<h4>{{ country.name }} </h4>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\n\t\t\t\t\t<div class=\"col-md-12\" style=\"height: 50px; width: 100%; text-align:center\">\n\t\t\t\t\t\t<img src=\"data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==\" />\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"modal-footer\">\n\t\t\t\t<button type=\"button\" class=\"btn btn-grey\" [disabled]=\"5 - this.selected.length > 0 || loading\" (click)=\"continueStep3()\">{{ continueBtnText }}</button>\n\t\t\t\t<p class=\"sub-info\">(Next Step: Favorite Places)</p>\n\t\t\t</div>\n\t\t</div>\n\t</div>\n</div>"
+module.exports = "<!-- Modal -->\n<div class=\"modal fade signUpStep\" id=\"signUpStep3\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\" data-backdrop=\"static\" data-keyboard=\"false\">\n\t<div class=\"modal-dialog sign-up-step\" role=\"document\">\n\t\t<div class=\"modal-content\">\n\t\t\t<div class=\"modal-body\">\n\t\t\t\t<div class=\"title-layer\">\n\t\t\t\t\t<h3 class=\"step-ttl\">Select at least 5 favorite\n\t\t\t\t\t\t<span>countries or cities</span>\n\t\t\t\t\t</h3>\n\t\t\t\t\t<div class=\"step-info\">\n\t\t\t\t\t\tStep 3\n\t\t\t\t\t\t<span>of {{ this.signupSteps }}</span>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"search-block-wrap\">\n\t\t\t\t\t<div class=\"search-block\">\n\t\t\t\t\t\t<a class=\"search-btn\" href=\"#\">\n\t\t\t\t\t\t\t<i class=\"fa fa-search\"></i>\n\t\t\t\t\t\t</a>\n\t\t\t\t\t\t<input type=\"text\" name=\"searchQuery\" [(ngModel)]=\"searchQuery\" placeholder=\"Country ...\" (input)=\"search()\"/>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"check-block-wrap\" id=\"select_countries\">\n\t\t\t\t\t<div *ngFor=\"let country of countries\">\n\t\t\t\t\t\t<div class=\"check-block\" [style.background-image]=\"'url('+ getCoverImage(country.cover_image) +')'\" [class.checked-block]=\"selected.indexOf(country.id)>=0\" (click)=\"select(country.id)\">\n\t\t\t\t\t\t\t<div class=\"check-ttl\">\n\t\t\t\t\t\t\t\t<h4>{{ country.name }} </h4>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\n\t\t\t\t\t<div class=\"col-md-12\" style=\"height: 50px; width: 100%; text-align:center\">\n\t\t\t\t\t\t<img src=\"data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==\" />\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"modal-footer\">\n\t\t\t\t<button type=\"button\" class=\"btn btn-grey\" [disabled]=\"5 - this.selected.length > 0 || loading\" (click)=\"continueStep3()\">{{ continueBtnText }}</button>\n\t\t\t\t<p class=\"sub-info\">(Next Step: Favorite Places)</p>\n\t\t\t</div>\n\t\t</div>\n\t</div>\n</div>"
 
 /***/ }),
 
@@ -2326,6 +2666,7 @@ var Step3Component = (function () {
         this.mainC = mainC;
         this.defaultCoverImage = "http://placehold.it/181x181";
         this.continueBtnText = "Select 5 More";
+        this.signupSteps = 0;
         this.loading = false;
         this.countries = [];
         this.selected = [];
@@ -2333,10 +2674,12 @@ var Step3Component = (function () {
         this.limit = 20;
         this.offset = 0;
         this.language_id = 1;
+        this.signupSteps = mainC.signupSteps;
     }
     Step3Component.prototype.ngOnInit = function () {
         this.selected = [];
         this.countries = [];
+        $('#signUpStep3').modal("show");
         this.loadMore();
         // initialize mCustomScrollbar plugin
         var t = this;
@@ -2463,7 +2806,7 @@ var Step3Component = (function () {
 /***/ "../../../../../src/app/signup/step4/step4.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<!-- Modal -->\n<div class=\"modal fade signUpStep\" id=\"signUpStep4\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\"\n data-backdrop=\"static\" data-keyboard=\"false\">\n\t<div class=\"modal-dialog sign-up-step\" role=\"document\">\n\t\t<div class=\"modal-content\">\n\t\t\t<div class=\"modal-body\">\n\t\t\t\t<div class=\"title-layer\">\n\t\t\t\t\t<h3 class=\"step-ttl\">Select 3\n\t\t\t\t\t\t<span>favorite places</span> around the world</h3>\n\t\t\t\t\t<div class=\"step-info\">\n\t\t\t\t\t\tStep 4\n\t\t\t\t\t\t<span>of {{ mainC.signupSteps }}</span>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t\t\n\t\t\t\t<div class=\"search-block-wrap\">\n\t\t\t\t\t<div class=\"search-block\">\n\t\t\t\t\t\t<a class=\"search-btn\" href=\"#\">\n\t\t\t\t\t\t\t<i class=\"fa fa-search\"></i>\n\t\t\t\t\t\t</a>\n\t\t\t\t\t\t<input type=\"text\" name=\"searchQuery\" [(ngModel)]=\"searchQuery\" placeholder=\"Place name...\" (input)=\"search()\" />\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\n\t\t\t\t<div class=\"check-block-wrap\"  id=\"select_places\">\n\t\t\t\t\t<div *ngFor=\"let place of places\">\n\t\t\t\t\t\t<div class=\"check-block\" [style.background-image]=\"'url('+ getCoverImage(place.cover_image) +')'\" [class.checked-block]=\"selected.indexOf(place.id)>=0\"\n\t\t\t\t\t\t (click)=\"select(place.id)\">\n\t\t\t\t\t\t\t<div class=\"check-ttl\">\n\t\t\t\t\t\t\t\t<h4>{{ place.name }} </h4>\n\t\t\t\t\t\t\t\t<p>{{ place.city_country_name }}</p>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\n\t\t\t\t\t<div class=\"col-md-12\" style=\"height: 50px; width: 100%; text-align:center\">\n\t\t\t\t\t\t<img src=\"data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==\" />\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"modal-footer\">\n\t\t\t\t<button type=\"button\" class=\"btn btn-grey\" [disabled]=\"5 - this.selected.length > 0 || loading\" (click)=\"continueStep4()\">{{ continueBtnText }}</button>\n\t\t\t\t<p class=\"sub-info\">(Next Step: Favorite Travel Styles)</p>\n\t\t\t</div>\n\t\t</div>\n\t</div>\n</div>"
+module.exports = "<!-- Modal -->\n<div class=\"modal fade signUpStep\" id=\"signUpStep4\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\"\n data-backdrop=\"static\" data-keyboard=\"false\">\n\t<div class=\"modal-dialog sign-up-step\" role=\"document\">\n\t\t<div class=\"modal-content\">\n\t\t\t<div class=\"modal-body\">\n\t\t\t\t<div class=\"title-layer\">\n\t\t\t\t\t<h3 class=\"step-ttl\">Select 3\n\t\t\t\t\t\t<span>favorite places</span> around the world</h3>\n\t\t\t\t\t<div class=\"step-info\">\n\t\t\t\t\t\tStep 4\n\t\t\t\t\t\t<span>of {{ this.signupSteps }}</span>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t\t\n\t\t\t\t<div class=\"search-block-wrap\">\n\t\t\t\t\t<div class=\"search-block\">\n\t\t\t\t\t\t<a class=\"search-btn\" href=\"#\">\n\t\t\t\t\t\t\t<i class=\"fa fa-search\"></i>\n\t\t\t\t\t\t</a>\n\t\t\t\t\t\t<input type=\"text\" name=\"searchQuery\" [(ngModel)]=\"searchQuery\" placeholder=\"Place name...\" (input)=\"search()\" />\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\n\t\t\t\t<div class=\"check-block-wrap\"  id=\"select_places\">\n\t\t\t\t\t<div *ngFor=\"let place of places\">\n\t\t\t\t\t\t<div class=\"check-block\" [style.background-image]=\"'url('+ getCoverImage(place.cover_image) +')'\" [class.checked-block]=\"selected.indexOf(place.id)>=0\"\n\t\t\t\t\t\t (click)=\"select(place.id)\">\n\t\t\t\t\t\t\t<div class=\"check-ttl\">\n\t\t\t\t\t\t\t\t<h4>{{ place.name }} </h4>\n\t\t\t\t\t\t\t\t<p>{{ place.city_country_name }}</p>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\n\t\t\t\t\t<div class=\"col-md-12\" style=\"height: 50px; width: 100%; text-align:center\">\n\t\t\t\t\t\t<img src=\"data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==\" />\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"modal-footer\">\n\t\t\t\t<button type=\"button\" class=\"btn btn-grey\" [disabled]=\"5 - this.selected.length > 0 || loading\" (click)=\"continueStep4()\">{{ continueBtnText }}</button>\n\t\t\t\t<p class=\"sub-info\">(Next Step: Favorite Travel Styles)</p>\n\t\t\t</div>\n\t\t</div>\n\t</div>\n</div>"
 
 /***/ }),
 
@@ -2512,6 +2855,7 @@ var Step4Component = (function () {
         this.mainC = mainC;
         this.defaultCoverImage = "http://placehold.it/181x181";
         this.continueBtnText = "Select 5 More";
+        this.signupSteps = 0;
         this.loading = false;
         this.places = [];
         this.selected = [1, 6, 9];
@@ -2519,10 +2863,12 @@ var Step4Component = (function () {
         this.limit = 20;
         this.offset = 0;
         this.language_id = 1;
+        this.signupSteps = mainC.signupSteps;
     }
     Step4Component.prototype.ngOnInit = function () {
         this.selected = [];
         this.places = [];
+        $('#signUpStep4').modal("show");
         this.loadMore();
         // initialize mCustomScrollbar plugin
         var t = this;
@@ -2649,7 +2995,7 @@ var Step4Component = (function () {
 /***/ "../../../../../src/app/signup/step5/step5.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<!-- Modal -->\n<div class=\"modal fade signUpStep\" id=\"signUpStep5\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\"\n data-backdrop=\"static\" data-keyboard=\"false\">\n\t<div class=\"modal-dialog sign-up-step\" role=\"document\">\n\t\t<div class=\"modal-content\">\n\t\t\t<div class=\"modal-body\">\n\t\t\t\t<div class=\"title-layer\">\n\t\t\t\t\t<h3 class=\"step-ttl\">Select your preferred\n\t\t\t\t\t\t<span>travel styles</span>\n\t\t\t\t\t</h3>\n\t\t\t\t\t<div class=\"step-info\">\n\t\t\t\t\t\tStep 5\n\t\t\t\t\t\t<span>of {{ mainC.signupSteps }}</span>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\n\t\t\t\t<div class=\"search-block-wrap\">\n\t\t\t\t\t<div class=\"search-block\">\n\t\t\t\t\t\t<a class=\"search-btn\" href=\"#\">\n\t\t\t\t\t\t\t<i class=\"fa fa-search\"></i>\n\t\t\t\t\t\t</a>\n\t\t\t\t\t\t<input type=\"text\" name=\"searchQuery\" [(ngModel)]=\"searchQuery\" placeholder=\"Travel style...\" (input)=\"search()\" />\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\n\t\t\t\t<div class=\"check-block-wrap\" id=\"select_styles\">\n\t\t\t\t\t<div *ngFor=\"let style of styles\">\n\t\t\t\t\t\t<div class=\"check-block\" [style.background-image]=\"'url('+ getCoverImage(style.cover_image) +')'\" [class.checked-block]=\"selected.indexOf(style.id)>=0\"\n\t\t\t\t\t\t (click)=\"select(style.id)\">\n\t\t\t\t\t\t\t<div class=\"check-ttl\">\n\t\t\t\t\t\t\t\t<h4>{{ style.name }} </h4>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\n\t\t\t\t\t<div class=\"col-md-12\" style=\"height: 50px; width: 100%; text-align:center\">\n\t\t\t\t\t\t\t<img src=\"data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==\" />\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"modal-footer\">\n\t\t\t\t<button type=\"button\" class=\"btn btn-grey\" [disabled]=\"5 - this.selected.length || loading\" (click)=\"continueStep5()\">{{ continueBtnText }}</button>\n\t\t\t\t<p class=\"sub-info\">(Next Step: Favorite Activities)</p>\n\t\t\t</div>\n\t\t</div>\n\t</div>\n</div>"
+module.exports = "<!-- Modal -->\n<div class=\"modal fade signUpStep\" id=\"signUpStep5\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\"\n data-backdrop=\"static\" data-keyboard=\"false\">\n\t<div class=\"modal-dialog sign-up-step\" role=\"document\">\n\t\t<div class=\"modal-content\">\n\t\t\t<div class=\"modal-body\">\n\t\t\t\t<div class=\"title-layer\">\n\t\t\t\t\t<h3 class=\"step-ttl\">Select your preferred\n\t\t\t\t\t\t<span>travel styles</span>\n\t\t\t\t\t</h3>\n\t\t\t\t\t<div class=\"step-info\">\n\t\t\t\t\t\tStep 5\n\t\t\t\t\t\t<span>of {{ this.signupSteps }}</span>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\n\t\t\t\t<div class=\"search-block-wrap\">\n\t\t\t\t\t<div class=\"search-block\">\n\t\t\t\t\t\t<a class=\"search-btn\" href=\"#\">\n\t\t\t\t\t\t\t<i class=\"fa fa-search\"></i>\n\t\t\t\t\t\t</a>\n\t\t\t\t\t\t<input type=\"text\" name=\"searchQuery\" [(ngModel)]=\"searchQuery\" placeholder=\"Travel style...\" (input)=\"search()\" />\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\n\t\t\t\t<div class=\"check-block-wrap\" id=\"select_styles\">\n\t\t\t\t\t<div *ngFor=\"let style of styles\">\n\t\t\t\t\t\t<div class=\"check-block\" [style.background-image]=\"'url('+ getCoverImage(style.cover_image) +')'\" [class.checked-block]=\"selected.indexOf(style.id)>=0\"\n\t\t\t\t\t\t (click)=\"select(style.id)\">\n\t\t\t\t\t\t\t<div class=\"check-ttl\">\n\t\t\t\t\t\t\t\t<h4>{{ style.name }} </h4>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\n\t\t\t\t\t<div class=\"col-md-12\" style=\"height: 50px; width: 100%; text-align:center\">\n\t\t\t\t\t\t\t<img src=\"data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==\" />\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"modal-footer\">\n\t\t\t\t<button type=\"button\" class=\"btn btn-grey\" [disabled]=\"5 - this.selected.length || loading\" (click)=\"continueStep5()\">{{ continueBtnText }}</button>\n\t\t\t\t<p class=\"sub-info\">(Next Step: Favorite Activities)</p>\n\t\t\t</div>\n\t\t</div>\n\t</div>\n</div>"
 
 /***/ }),
 
@@ -2698,6 +3044,7 @@ var Step5Component = (function () {
         this.mainC = mainC;
         this.defaultCoverImage = "http://placehold.it/181x181";
         this.continueBtnText = "Select 5 More";
+        this.signupSteps = 0;
         this.loading = false;
         this.styles = [];
         this.selected = [1, 6, 9];
@@ -2705,10 +3052,12 @@ var Step5Component = (function () {
         this.limit = 20;
         this.offset = 0;
         this.language_id = 1;
+        this.signupSteps = mainC.signupSteps;
     }
     Step5Component.prototype.ngOnInit = function () {
         this.selected = [];
         this.styles = [];
+        $('#signUpStep5').modal("show");
         this.loadMore();
         // initialize mCustomScrollbar plugin
         var t = this;

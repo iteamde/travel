@@ -4,7 +4,6 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { UserService } from '../../../_services/index';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ConfirmPasswordValidator } from '../../../_helpers/custom-validators';
 import { User } from '../../../_models/user.model';
 import { Title } from '@angular/platform-browser/';
 import { MainComponent } from '../../main/main.component';
