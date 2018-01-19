@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { AlertService, UserService } from '../../../_services/index';
+import { UserService } from '../../../_services/index';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ConfirmPasswordValidator } from '../../../_helpers/custom-validators';
@@ -39,13 +39,12 @@ export class Step1Component implements OnInit {
 	]);
 
 	errors = [];
-	signupErrors: Object;
+	signupErrors = {username:"", email: "", password: "", cpassword:""};
 
 	constructor(
 		private route: ActivatedRoute,
 		private router: Router,
 		private userService: UserService,
-		private alertService: AlertService,
 		private formBuilder: FormBuilder,
 		private titleService: Title,
 		private mainC: MainComponent) { }
@@ -59,7 +58,15 @@ export class Step1Component implements OnInit {
 		};
 
 		this.signupForm1 = this.formBuilder.group(step1);
-		this.signupErrors = {};
+		var t = this;
+		$('#signUpStep1').modal("show");
+		$('#signUpStep1').on('hidden.bs.modal', function (e) {
+			t.closeSignup();
+		});
+	}
+
+	closeSignup(){
+		this.mainC.closeAll();
 	}
 
 	openLogin() {

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
+import { Router, ActivatedRoute } from '@angular/router';
 
 declare var jquery: any;
 declare var $: any;
@@ -15,7 +16,10 @@ export class MainComponent implements OnInit {
 	signupStepCount: number = 0;
 	progressWidth: string = "0%"
 
-	constructor(private titleService: Title) { }
+	constructor(
+		private route: ActivatedRoute,
+		private router: Router,
+		private titleService: Title) { }
 
 	ngOnInit() {
 		this.titleService.setTitle("Travooo");
@@ -31,23 +35,36 @@ export class MainComponent implements OnInit {
 		});
 	}
 
+	closeAll() {
+		this.titleService.setTitle("Travoo");
+		$('.signUpProgress').hide();
+		$('.modal-backdrop').remove();
+		$('body').removeClass('modal-open');
+		this.signupStepCount = 0;
+		this.router.navigate(['/']);
+	}
+
 	openLogin() {
 		this.titleService.setTitle("Travoo - Login");
 		$('.signUpProgress').hide();
-		// close all other modals and open login model
-		this.closeExistingSignups();
-		$('#logIn').modal("show");
+		$('.modal-backdrop').remove();
 		this.signupStepCount = 0;
+		this.router.navigate(['/login']);
 	}
 
 	openSignup(stepNum) {
-		//stepNum = 5;
 		this.titleService.setTitle("Travoo - Signup");
-		// close all other modals and open login model
-		this.closeExistingSignups();
 		$('.signUpProgress').show();
-		$('#signUpStep'+stepNum).modal('show');
+		$('.modal-backdrop').remove();
 		this.signupStepCount = stepNum;
 		this.progressWidth = (this.signupStepCount/this.signupSteps)*100 + "%";
+		if(stepNum == 1)
+		{
+			this.router.navigate(['/signup']);
+		}
+		else
+		{
+			this.router.navigate(['/signup/step'+stepNum]);
+		}
 	}
 }

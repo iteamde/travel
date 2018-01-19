@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AlertService, UserService, TravelStylesService } from '../../../_services/index';
+import { UserService, TravelStylesService } from '../../../_services/index';
 import { MainComponent } from '../../main/main.component';
 
 declare var jquery: any;
@@ -14,6 +14,7 @@ export class Step5Component implements OnInit {
 
 	defaultCoverImage: string = "http://placehold.it/181x181";
 	continueBtnText: string = "Select 5 More";
+	signupSteps = 0;
 	loading = false;
 	searchQuery: string;
 	limit: number;
@@ -31,6 +32,7 @@ export class Step5Component implements OnInit {
 		this.limit = 20;
 		this.offset = 0;
 		this.language_id = 1;
+		this.signupSteps = mainC.signupSteps;
 	}
 
 	ngOnInit() {
@@ -49,6 +51,8 @@ export class Step5Component implements OnInit {
 			// { id: "10", name: "Nightlife", cover_image: "http://placehold.it/181x181" },
 			// { id: "11", name: "Long Tours", cover_image: "http://placehold.it/181x181" }
 		];
+
+		$('#signUpStep5').modal("show");
 
 		this.loadMore();
 

@@ -13,6 +13,7 @@ declare var $: any;
 export class Step3Component implements OnInit {
 	defaultCoverImage: string = "http://placehold.it/181x181";
 	continueBtnText: string = "Select 5 More";
+	signupSteps = 0;
 	loading = false;
 	searchQuery: string;
 	limit: number;
@@ -30,6 +31,7 @@ export class Step3Component implements OnInit {
 		this.limit = 20;
 		this.offset = 0;
 		this.language_id = 1;
+		this.signupSteps = mainC.signupSteps;
 	}
 
 	ngOnInit() {
@@ -48,6 +50,8 @@ export class Step3Component implements OnInit {
 			// { id: "10", name: "United States", cover_image: "http://placehold.it/181x181" },
 			// { id: "11", name: "Morocco", cover_image: "http://placehold.it/181x181" }
 		];
+
+		$('#signUpStep3').modal("show");
 
 		this.loadMore();
 

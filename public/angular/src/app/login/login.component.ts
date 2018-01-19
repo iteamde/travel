@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { AlertService, AuthenticationService } from '../../_services/index';
+import { AuthenticationService } from '../../_services/index';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
@@ -38,14 +38,13 @@ export class LoginComponent implements OnInit {
 		private route: ActivatedRoute,
 		private router: Router,
 		private authenticationService: AuthenticationService,
-		private alertService: AlertService,
 		private formBuilder: FormBuilder,
 		private titleService: Title,
-		private mianC: MainComponent) { }
+		private mainC: MainComponent) { }
 
 	ngOnInit() {
 		// reset login status
-		this.authenticationService.logout();
+		// this.authenticationService.logout();
 
 		if (this.authenticationService.isLoggedIn()) {
 			this.router.navigate(['/home']);
@@ -58,10 +57,19 @@ export class LoginComponent implements OnInit {
 			email: this.email,
 			password: this.password
 		});
+		var t = this;
+		$('#logIn').modal("show");
+		$('#logIn').on('hidden.bs.modal', function (e) {
+			t.closeLogin();
+		});
+	}
+
+	closeLogin(){
+		this.mainC.closeAll();
 	}
 
 	openSignup() {
-		this.mianC.openSignup(1);
+		this.mainC.openSignup(1);
 	}
 
 	setClassEmail() {

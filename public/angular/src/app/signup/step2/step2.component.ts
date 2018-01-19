@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { AlertService, UserService } from '../../../_services/index';
+import { UserService } from '../../../_services/index';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ConfirmPasswordValidator } from '../../../_helpers/custom-validators';
@@ -33,13 +33,12 @@ export class Step2Component implements OnInit {
 	]);
 
 	errors = [];
-	signupErrors: Object;
+	signupErrors = {name:"", age: "", gender: ""};
 
 	constructor(
 		private route: ActivatedRoute,
 		private router: Router,
 		private userService: UserService,
-		private alertService: AlertService,
 		private formBuilder: FormBuilder,
 		private titleService: Title,
 		private mainC: MainComponent
@@ -53,7 +52,11 @@ export class Step2Component implements OnInit {
 		}
 
 		this.signupForm2 = this.formBuilder.group(step2);
-		this.signupErrors = {};
+		$('#signUpStep2').modal("show");
+	}
+
+	openLogin() {
+		this.mainC.openLogin();
 	}
 
 	validate(name: string) {
@@ -103,7 +106,6 @@ export class Step2Component implements OnInit {
 			},
 			error => {
 				console.log(error);
-				//this.alertService.error(error);
 				this.toggleSignup(true);
 			}
 			);
