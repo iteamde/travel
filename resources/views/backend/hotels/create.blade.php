@@ -152,6 +152,16 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
                             </div><!--form control-->
                             <!-- End: When To GO -->
 
+                            <!-- Start: Price Level -->
+                            <div class="form-group">
+                                {{ Form::label('price_level_'.$language->id, 'Price Level', ['class' => 'col-lg-2 control-label']) }}
+
+                                <div class="col-lg-10">
+                                     {{ Form::input('number','price_level_'.$language->id, null , ['class' => 'form-control required', 'required' => 'required', 'placeholder' => 'Price Level']) }}
+                                </div><!--col-lg-10-->
+                            </div><!--form control-->
+                            <!-- End: Price Level -->
+
                             <!-- Start: Number Of Activities -->
                             <div class="form-group">
                                 {{ Form::label('num_activities_'.$language->id, 'Number Of Activities', ['class' => 'col-lg-2 control-label']) }}

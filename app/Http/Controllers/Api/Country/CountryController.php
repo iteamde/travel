@@ -38,7 +38,6 @@ class CountryController extends Controller {
         $countries = null;
         $language  = 1; 
 
-
         $offset = 0;
         $limit  = 20;
         

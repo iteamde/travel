@@ -262,7 +262,7 @@ class EmbassiesRepository extends BaseRepository
         $model                  = Embassies::findOrFail(['id' => $id]);
         $model                  = $model[0];
         $model->countries_id    = $extra['country_id'];
-        $model->cities_id  = $extra['cities_id'];
+        $model->cities_id       = $extra['cities_id'];
         $model->active          = $extra['active'];
         $model->lat             = $extra['lat'];
         $model->lng             = $extra['lng'];
@@ -274,6 +274,35 @@ class EmbassiesRepository extends BaseRepository
         if(!empty($prev)){
             foreach ($prev as $key => $value) {
                 $value->delete();
+            }
+        }
+
+        if(!empty($extra['delete-images'])){
+            $images_arr = explode(',' , $extra['delete-images']);
+            
+            if(!empty($images_arr)){
+                foreach ($images_arr as $key => $value) {
+                    $temp = Media::where(['id' => $value])->first();
+                    
+                    if(!empty($temp)){
+                        if($temp->type == Media::TYPE_IMAGE){
+                            $embassies_media = EmbassiesMedias::where(['medias_id' => $temp->id])->first();
+                            $path = storage_path() . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . 'medias' . DIRECTORY_SEPARATOR . 'embassies' . DIRECTORY_SEPARATOR;
+                            if(!empty($embassies_media)){
+                                
+                                $filename = explode('/',$temp->url);
+                                $filename = end($filename);
+                                $path    .= $embassies_media->embassies_id . DIRECTORY_SEPARATOR;
+                                $path    .= $filename;
+                                
+                                if(is_file($path)){
+                                    unlink($path);
+                                }
+                            }
+                            $temp->delete();
+                        }
+                    }
+                }
             }
         }
 

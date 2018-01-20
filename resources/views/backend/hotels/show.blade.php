@@ -64,6 +64,10 @@
                             <td class="description"><p><?=$hotels_translation->when_to_go?></p></td>
                         </tr>
                         <tr>
+                            <th>Price Level <small>({{ $hotels_translation->translanguage->title }})</small></th>
+                            <td class="description"><p><?=$hotels_translation->price_level ?></p></td>
+                        </tr>
+                        <tr>
                             <th>No. of Activities <small>({{ $hotels_translation->translanguage->title }})</small></th>
                             <td class="description"><p><?=$hotels_translation->num_activities ?></p></td>
                         </tr>

@@ -125,6 +125,7 @@ class HotelsController extends Controller
             $data[$language->id]['working_times_'.$language->id]  = $request->input('working_times_'.$language->id);
             $data[$language->id]['how_to_go_'.$language->id]      = $request->input('how_to_go_'.$language->id);
             $data[$language->id]['when_to_go_'.$language->id]     = $request->input('when_to_go_'.$language->id);
+            $data[$language->id]['price_level_' . $language->id]  = $request->input('price_level_' . $language->id);
             $data[$language->id]['num_activities_'.$language->id] = $request->input('num_activities_'.$language->id);
             $data[$language->id]['popularity_'.$language->id]     = $request->input('popularity_'.$language->id);
             $data[$language->id]['conditions_'.$language->id]     = $request->input('conditions_'.$language->id);
@@ -219,6 +220,7 @@ class HotelsController extends Controller
                 $data['working_times_'.$language->id]   = $model[0]->working_times;
                 $data['how_to_go_'.$language->id]       = $model[0]->how_to_go;
                 $data['when_to_go_'.$language->id]      = $model[0]->when_to_go;
+                $data['price_level_' . $language->id]   = $model[0]->price_level;
                 $data['num_activities_'.$language->id]  = $model[0]->num_activities;
                 $data['popularity_'.$language->id]      = $model[0]->popularity;
                 $data['conditions_'.$language->id]      = $model[0]->conditions;
@@ -232,6 +234,7 @@ class HotelsController extends Controller
                 $data['working_times_'.$language->id]   = null;
                 $data['how_to_go_'.$language->id]       = null;
                 $data['when_to_go_'.$language->id]      = null;
+                $data['price_level_' . $language->id]   = null;
                 $data['num_activities_'.$language->id]  = null;
                 $data['popularity_'.$language->id]      = null;
                 $data['conditions_'.$language->id]      = null;
@@ -357,6 +360,7 @@ class HotelsController extends Controller
             $data[$language->id]['working_times_'.$language->id] = $request->input('working_times_'.$language->id);
             $data[$language->id]['how_to_go_'.$language->id] = $request->input('how_to_go_'.$language->id);
             $data[$language->id]['when_to_go_'.$language->id] = $request->input('when_to_go_'.$language->id);
+            $data[$language->id]['price_level_' . $language->id] = $request->input('price_level_' . $language->id);
             $data[$language->id]['num_activities_'.$language->id] = $request->input('num_activities_'.$language->id);
             $data[$language->id]['popularity_'.$language->id] = $request->input('popularity_'.$language->id);
             $data[$language->id]['conditions_'.$language->id] = $request->input('conditions_'.$language->id);

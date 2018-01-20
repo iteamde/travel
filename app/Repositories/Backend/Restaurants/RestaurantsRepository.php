@@ -123,6 +123,43 @@ class RestaurantsRepository extends BaseRepository
             
             if ($model->save()) {
 
+                if(!empty($extra['files'])){
+                    $url = UrlGenerator::GetUploadsUrl();
+                    $i = 0;
+                    foreach ($extra['files'] as $key => $file) {
+                        $extension = $file->extension();
+
+                        if(self::validateUpload($extension)){
+                            $new_file_name = time() . $i++ . '_restaurant.' . $file->extension();
+                            $new_path = '/uploads/medias/restaurants/' . $model->id . '/';
+                            $file->storeAs( $new_path , $new_file_name);
+
+                            $media = new Media;
+                            $media->url  = $url . 'medias/restaurants/' . $model->id . '/' . $new_file_name;
+                            $media->type = Media::TYPE_IMAGE;
+                            $media->save();
+
+                            $languages = Languages::all();
+
+                            if(!empty($languages)){
+                                foreach ($languages as $key => $value) {
+                                    $media_trans = new MediaTranslations;
+                                    $media_trans->medias_id = $media->id;
+                                    $media_trans->languages_id = $value->id;
+                                    $media_trans->title = $new_file_name;
+                                    $media_trans->description = "Image";
+                                    $media_trans->save();
+                                }
+                            }
+
+                            $restaurants_media = new RestaurantsMedias;
+                            $restaurants_media->restaurants_id = $model->id;
+                            $restaurants_media->medias_id      = $media->id;
+                            $restaurants_media->save();
+                        }
+                    }
+                }//Files end
+
                 /* UPLOAD COVER IMAGE*/
                 if(!empty($extra['cover_image'])){
 
@@ -183,16 +220,17 @@ class RestaurantsRepository extends BaseRepository
 
                     $trans = new RestaurantsTranslations;
                     $trans->restaurants_id = $model->id;
-                    $trans->languages_id = $key;
-                    $trans->title        = $value['title_'.$key];
-                    $trans->description  = $value['description_'.$key];
-                    $trans->working_days = $value['working_days_'.$key];
-                    $trans->working_times= $value['working_times_'.$key];
-                    $trans->how_to_go    = $value['how_to_go_'.$key];
-                    $trans->when_to_go   = $value['when_to_go_'.$key];
+                    $trans->languages_id   = $key;
+                    $trans->title          = $value['title_'.$key];
+                    $trans->description    = $value['description_'.$key];
+                    $trans->working_days   = $value['working_days_'.$key];
+                    $trans->working_times  = $value['working_times_'.$key];
+                    $trans->how_to_go      = $value['how_to_go_'.$key];
+                    $trans->when_to_go     = $value['when_to_go_'.$key];
+                    $trans->price_level    = $value['price_level_'.$key];
                     $trans->num_activities = $value['num_activities_'.$key];
-                    $trans->popularity   = $value['popularity_'.$key];
-                    $trans->conditions   = $value['conditions_'.$key];
+                    $trans->popularity     = $value['popularity_'.$key];
+                    $trans->conditions     = $value['conditions_'.$key];
 
                     if(!$trans->save()) {
                         $check = 0;
@@ -233,9 +271,25 @@ class RestaurantsRepository extends BaseRepository
 
         /* Delete Previous RestaurantsMedias */
         $prevMedias = RestaurantsMedias::where(['restaurants_id' => $id])->get();
+        
         if(!empty($prevMedias)){
             foreach ($prevMedias as $key => $value) {
-                $value->delete();
+                if($value->media->type != Media::TYPE_IMAGE){
+                    $value->delete();
+                }
+            }
+        }
+
+        if(!empty($extra['delete-images'])){
+            $images_arr = explode(',' , $extra['delete-images']);
+            
+            if(!empty($images_arr)){
+                foreach ($images_arr as $key => $value) {
+                    $temp = RestaurantsMedias::where(['medias_id' => $value])->first();
+                    if(!empty($temp)){
+                        $temp->delete();
+                    }
+                }
             }
         }
 
@@ -243,6 +297,43 @@ class RestaurantsRepository extends BaseRepository
             $check = 1;
             
             if ($model->save()) {
+
+                if(!empty($extra['files'])){
+                    $url = UrlGenerator::GetUploadsUrl();
+                    $i = 0;
+                    foreach ($extra['files'] as $key => $file) {
+                        $extension = $file->extension();
+
+                        if(self::validateUpload($extension)){
+                            $new_file_name = time() . $i++ . '_restaurant.' . $file->extension();
+                            $new_path = '/uploads/medias/restaurants/' . $model->id . '/';
+                            $file->storeAs( $new_path , $new_file_name);
+
+                            $media = new Media;
+                            $media->url  = $url . 'medias/restaurants/' . $model->id . '/' . $new_file_name;
+                            $media->type = Media::TYPE_IMAGE;
+                            $media->save();
+
+                            $languages = Languages::all();
+
+                            if(!empty($languages)){
+                                foreach ($languages as $key => $value) {
+                                    $media_trans = new MediaTranslations;
+                                    $media_trans->medias_id = $media->id;
+                                    $media_trans->languages_id = $value->id;
+                                    $media_trans->title = $new_file_name;
+                                    $media_trans->description = "Image";
+                                    $media_trans->save();
+                                }
+                            }
+
+                            $restaurants_media = new RestaurantsMedias;
+                            $restaurants_media->restaurants_id = $model->id;
+                            $restaurants_media->medias_id      = $media->id;
+                            $restaurants_media->save();
+                        }
+                    }
+                }//Files end
 
                 /* UPLOAD COVER IMAGE*/
                 if(!empty($extra['cover_image'])){
@@ -315,6 +406,7 @@ class RestaurantsRepository extends BaseRepository
                     $trans->working_times   = $value['working_times_'.$key];
                     $trans->how_to_go       = $value['how_to_go_'.$key];
                     $trans->when_to_go      = $value['when_to_go_'.$key];
+                    $trans->price_level     = $value['price_level_'.$key];
                     $trans->num_activities  = $value['num_activities_'.$key];
                     $trans->popularity      = $value['popularity_'.$key];
                     $trans->conditions      = $value['conditions_'.$key];

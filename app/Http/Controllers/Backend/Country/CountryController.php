@@ -493,7 +493,7 @@ class CountryController extends Controller
                     if($media->type != Media::TYPE_IMAGE){
                         array_push($selected_medias_arr,$media->id);
                     }else{
-                        $media->url = str_replace('storage.travooo.com', 'https://localhost/travoo-api/storage/uploads',$media->url);
+                        // $media->url = str_replace('storage.travooo.com', 'https://localhost/travoo-api/storage/uploads',$media->url);
                         array_push($selected_images,[
                             'id'    => $media->id,
                             'url'   => $media->url

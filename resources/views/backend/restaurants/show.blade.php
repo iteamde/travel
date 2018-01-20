@@ -62,6 +62,10 @@
                             <td class="description"><p><?=$restaurants_translation->when_to_go ?></p></td>
                         </tr>
                         <tr>
+                            <th>Price Level <small>({{ $restaurants_translation->translanguage->title }})</small></th>
+                            <td class="description"><p><?=$restaurants_translation->price_level ?></p></td>
+                        </tr>
+                        <tr>
                             <th>Number of Activities <small>({{ $restaurants_translation->translanguage->title }})</small></th>
                             <td class="description"><p><?=$restaurants_translation->num_activities ?></p></td>
                         </tr>

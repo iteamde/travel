@@ -152,6 +152,16 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
                             </div><!--form control-->
                             <!-- End: when_to_go -->
 
+                            <!-- Start: Price Level -->
+                            <div class="form-group">
+                                {{ Form::label('price_level_'.$language->id, 'Price Level', ['class' => 'col-lg-2 control-label']) }}
+
+                                <div class="col-lg-10">
+                                     {{ Form::input('number','price_level_'.$language->id, null , ['class' => 'form-control required', 'required' => 'required', 'placeholder' => 'Price Level']) }}
+                                </div><!--col-lg-10-->
+                            </div><!--form control-->
+                            <!-- End: Price Level -->
+
                             <!-- Start: num_activities -->
                             <div class="form-group">
                                 {{ Form::label('num_activities_'.$language->id, 'Num Activities', ['class' => 'col-lg-2 control-label']) }}
@@ -254,6 +264,19 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
                             {{ Form::text('lat_lng_show', null, ['class' => 'form-control disabled', 'id' => 'lat-lng-input_show', 'required' => 'required', 'placeholder' => 'Lat,Lng' , 'disabled' => 'disabled']) }}
                         </div>
                     </div>
+
+                    <!-- Images: Start -->
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-2" style="margin-right: 0px;margin-left: 20px;text-align: right;">
+                                {{ Form::label('title', 'Images', ['class' => 'col-lg-2 control-label','style' => 'margin-left: 55px;']) }}
+                            </div>
+                            <div class="col-md-8" style="padding-top: 22px">
+                                {{ Form::file('file_name',[ 'name' => 'pictures[]', 'multiple' => 'multiple' ]) }}
+                            </div>
+                        </div><!--col-lg-10-->
+                    </div><!--form control-->
+                    <!-- Images: End -->
 
                     <!-- Cover photo upload field - Start -->
                     <div class="form-group">

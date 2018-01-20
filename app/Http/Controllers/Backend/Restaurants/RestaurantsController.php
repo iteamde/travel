@@ -111,6 +111,7 @@ class RestaurantsController extends Controller
             $data[$language->id]['working_times_'.$language->id] = $request->input('working_times_'.$language->id);
             $data[$language->id]['how_to_go_'.$language->id] = $request->input('how_to_go_'.$language->id);
             $data[$language->id]['when_to_go_'.$language->id] = $request->input('when_to_go_'.$language->id);
+            $data[$language->id]['price_level_' . $language->id] = $request->input('price_level_' . $language->id);
             $data[$language->id]['num_activities_'.$language->id] = $request->input('num_activities_'.$language->id);
             $data[$language->id]['popularity_'.$language->id] = $request->input('popularity_'.$language->id);
             $data[$language->id]['conditions_'.$language->id] = $request->input('conditions_'.$language->id);
@@ -131,6 +132,11 @@ class RestaurantsController extends Controller
             $cover = $request->file('cover_image');
         }
 
+        $files = null;
+        if ($request->hasFile('pictures')) {
+            $files = $request->file('pictures');
+        }
+
         /* Pass All Relations Through $extra Array */
         $extra = [
             'active'        => $active,
@@ -141,6 +147,7 @@ class RestaurantsController extends Controller
             'lng'           => $location[1],
             'places'        => $request->input('places_id'),
             'medias'        => $request->input('medias_id'),
+            'files'         => $files,
             'cover_image'   => $cover
         ];
 
@@ -177,25 +184,27 @@ class RestaurantsController extends Controller
                 /* Put All The Translation Data In $data Array, To Be Used In Edit Form */
                 $data['title_'.$language->id]           = $model[0]->title;
                 $data['description_'.$language->id]     = $model[0]->description;
-                $data['working_days_'.$language->id]      = $model[0]->working_days;
-                $data['working_times_'.$language->id]       = $model[0]->working_times;
-                $data['how_to_go_'.$language->id]  = $model[0]->how_to_go;
-                $data['when_to_go_'.$language->id]       = $model[0]->when_to_go;
-                $data['num_activities_'.$language->id]    = $model[0]->num_activities;
-                $data['popularity_'.$language->id]         = $model[0]->popularity;
-                $data['conditions_'.$language->id]    = $model[0]->popularity;
+                $data['working_days_'.$language->id]    = $model[0]->working_days;
+                $data['working_times_'.$language->id]   = $model[0]->working_times;
+                $data['how_to_go_'.$language->id]       = $model[0]->how_to_go;
+                $data['when_to_go_'.$language->id]      = $model[0]->when_to_go;
+                $data['price_level_' . $language->id]   = $model[0]->price_level;
+                $data['num_activities_'.$language->id]  = $model[0]->num_activities;
+                $data['popularity_'.$language->id]      = $model[0]->popularity;
+                $data['conditions_'.$language->id]      = $model[0]->popularity;
             }else{
 
                 /* Put Null In  $data Array If Translation Not Found, To Be Used In Edit Form */
                 $data['title_'.$language->id]           = null;
                 $data['description_'.$language->id]     = null;
-                $data['working_days_'.$language->id]      = null;
-                $data['working_times_'.$language->id]       = null;
-                $data['how_to_go_'.$language->id]  = null;
-                $data['when_to_go_'.$language->id]       = null;
-                $data['num_activities_'.$language->id]    = null;
-                $data['popularity_'.$language->id]         = null;
-                $data['conditions_'.$language->id]    = null;
+                $data['working_days_'.$language->id]    = null;
+                $data['working_times_'.$language->id]   = null;
+                $data['how_to_go_'.$language->id]       = null;
+                $data['when_to_go_'.$language->id]      = null;
+                $data['price_level_' . $language->id]   = null;
+                $data['num_activities_'.$language->id]  = null;
+                $data['popularity_'.$language->id]      = null;
+                $data['conditions_'.$language->id]      = null;
             }
         }
 
@@ -258,11 +267,36 @@ class RestaurantsController extends Controller
             }
         }
 
+        /* Get Selected Medias */
+        $selected_medias = $restaurants->medias;
+        $selected_images = [];
+        $selected_medias_arr = [];
+
+        if(!empty($selected_medias)){
+            foreach ($selected_medias as $key => $value) {
+                $media = $value->media;
+
+                if(!empty($media)){
+                    if($media->type != Media::TYPE_IMAGE){
+                        array_push($selected_medias_arr,$media->id);
+                    }else{
+                         $media->url = str_replace('storage.travooo.com', 'https://localhost/travoo-api/storage/uploads', $media->url);
+                        array_push($selected_images,[
+                            'id'    => $media->id,
+                            'url'   => $media->url
+                        ]);
+                    }
+                }
+            }
+        }
+
+        $data['selected_medias'] = $selected_medias_arr;
+
         /* Get Cover Image Of Country */
         $cover = null;
         if(!empty($restaurants->cover)){
             $cover = $restaurants->cover;
-            $cover->url = str_replace('storage.travooo.com', 'https://localhost/travoo-api/storage/uploads', $cover->url);
+            // $cover->url = str_replace('storage.travooo.com', 'https://localhost/travoo-api/storage/uploads', $cover->url);
         }
 
         return view('backend.restaurants.edit')
@@ -274,6 +308,7 @@ class RestaurantsController extends Controller
             ->withPlaces($places_arr)
             ->withMedias($medias_arr)
             ->withData($data)
+            ->withImages($selected_images)
             ->withCover($cover);
     }
 
@@ -294,6 +329,7 @@ class RestaurantsController extends Controller
             $data[$language->id]['description_'.$language->id] = $request->input('description_'.$language->id);
             $data[$language->id]['working_days_'.$language->id] = $request->input('working_days_'.$language->id);
             $data[$language->id]['working_times_'.$language->id] = $request->input('working_times_'.$language->id);
+            $data[$language->id]['price_level_' . $language->id] = $request->input('price_level_' . $language->id);
             $data[$language->id]['how_to_go_'.$language->id] = $request->input('how_to_go_'.$language->id);
             $data[$language->id]['when_to_go_'.$language->id] = $request->input('when_to_go_'.$language->id);
             $data[$language->id]['num_activities_'.$language->id] = $request->input('num_activities_'.$language->id);
@@ -311,6 +347,11 @@ class RestaurantsController extends Controller
             $active = Cities::ACTIVE;
         }
 
+        $files = null;
+        if ($request->hasFile('pictures')) {
+            $files = $request->file('pictures');
+        }
+
         $cover_image = null;
         if($request->hasFile('cover_image')){
             $cover_image = $request->file('cover_image');
@@ -325,9 +366,11 @@ class RestaurantsController extends Controller
             'medias'            => $request->input('medias_id'),
             'lat'               => $location[0],
             'lng'               => $location[1],
+            'files'             => $files,
             'cover_image'       => $cover_image,
             'media_cover_image' => $request->input('media-cover-image'),
             'remove-cover-image'=> $request->input('remove-cover-image'),
+            'delete-images'     => $request->input('delete-images'),
         ];
 
 

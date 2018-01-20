@@ -469,6 +469,22 @@ use App\Models\Access\language\Languages;
                 }
             });
         });
+
+        $(document).on('click', '.delete-image', function(){
+
+            var id = $(this).attr('data-id');
+            $(this).parent().remove();
+
+            var value = $('#delete-images').val();
+
+            if(value == ''){
+                $('#delete-images').val(id);
+            }else{
+                value += ',' + id;
+                $('#delete-images').val(value);
+            }
+            // alert($('#delete-images').val());
+        });
     </script>
     <!-- Error Alert Script : End -->
     <script>
