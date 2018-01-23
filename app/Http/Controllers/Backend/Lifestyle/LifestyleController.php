@@ -10,6 +10,7 @@ use App\Http\Requests\Backend\Lifestyle\ManageLifestyleRequest;
 use App\Http\Requests\Backend\Lifestyle\StoreLifestyleRequest;
 use App\Repositories\Backend\Lifestyle\LifestyleRepository;
 use App\Http\Requests\Backend\Lifestyle\UpdateLifestyleRequest;
+use App\Models\ActivityMedia\Media;
 
 class LifestyleController extends Controller
 {
@@ -74,11 +75,47 @@ class LifestyleController extends Controller
             }
         }
 
+        $lifestyle = $lifestyle[0];
+
+        /* Get Selected Medias */
+        $selected_medias     = $lifestyle->medias;
+        $selected_images     = [];
+        $selected_medias_arr = [];
+
+        if(!empty($selected_medias)){
+            foreach ($selected_medias as $key => $value) {
+                $media = $value->media;
+
+                if(!empty($media)){
+                    if($media->type != Media::TYPE_IMAGE){
+                        array_push($selected_medias_arr,$media->id);
+                    }else{
+                        $media->url = str_replace('storage.travooo.com', 'https://localhost/travoo-api/storage/uploads',$media->url);
+                        array_push($selected_images,[
+                            'id'    => $media->id,
+                            'url'   => $media->url
+                        ]);
+                    }
+                }
+            }
+        }
+        
+        $data['selected_medias'] = $selected_medias_arr;
+
+        /* Get Cover Image Of Lifestyle */
+        $cover = null;
+        if(!empty($lifestyle->cover)){
+            $cover = $lifestyle->cover;
+            $cover->url = str_replace('storage.travooo.com', 'https://localhost/travoo-api/storage/uploads', $cover->url);
+        }
+
         return view('backend.lifestyle.edit')
             ->withLanguages($this->languages)
             ->withLifestyle($lifestyle)
             ->withLifestyleid($id)
-            ->withData($data);
+            ->withData($data)
+            ->withImages($selected_images)
+            ->withCover($cover);
     }
 
     /**
@@ -99,7 +136,25 @@ class LifestyleController extends Controller
             $data[$language->id]['description_'.$language->id] = $request->input('description_'.$language->id);
         }
         
-        $this->lifestyle->update($id , $lifestyle, $data);
+        $files = null;
+        if($request->hasFile('pictures')){
+            $files = $request->file('pictures');
+        }
+
+        $cover_image = null;
+        if($request->hasFile('cover_image')){
+            $cover_image = $request->file('cover_image');
+        } 
+        
+        $extra = [
+            'files'                 => $files,
+            'cover_image'           => $cover_image,
+            'media_cover_image'     => $request->input('media-cover-image'),
+            'remove-cover-image'    => $request->input('remove-cover-image'),
+            'delete-images'         => $request->input('delete-images'),
+        ];
+
+        $this->lifestyle->update($id , $lifestyle, $data, $extra);
 
         return redirect()->route('admin.lifestyle.lifestyle.index')
             ->withFlashSuccess('Life Style updated Successfully!');
@@ -120,7 +175,22 @@ class LifestyleController extends Controller
             $data[$language->id]['description_'.$language->id] = $request->input('description_'.$language->id);
         }
 
-        $this->lifestyle->create($data);
+        $files = null;
+        if($request->hasFile('pictures')){
+            $files = $request->file('pictures');
+        }
+
+        $cover = null;
+        if($request->hasFile('cover_image')){
+            $cover = $request->file('cover_image');
+        }
+
+        $extra = [];
+
+        $extra['files']       = $files;
+        $extra['cover_image'] = $cover;
+
+        $this->lifestyle->create($data,$extra);
 
         return redirect()->route('admin.lifestyle.lifestyle.index')->withFlashSuccess('Lifestyle Created Successfully');
     }
@@ -157,8 +227,39 @@ class LifestyleController extends Controller
         $lifestyle = Lifestyle::findOrFail(['id' => $id]);
         $lifestyleTrans = LifestyleTrans::where(['lifestyles_id' => $id])->get();
         
+        /* Get Selected Medias */
+        $medias     = $lifestyle->medias;
+        $image_urls = [];
+        $medias_arr = [];
+
+        if(!empty($medias)){
+            foreach ($medias as $key => $value) {
+                $media = $value->media;
+
+                if(!empty($media)){
+                    if($media->type != Media::TYPE_IMAGE){
+                        $media = $media->transsingle;
+
+                        if(!empty($media)){
+                            array_push($medias_arr,$media->title);
+                        }
+                    }else{
+                        array_push($image_urls,$media->url);
+                    }
+                }
+            }
+        }
+
+         /* Get Cover Image Of Country */
+        $cover = null;
+        if(!empty($lifestyle->cover)){
+            $cover      = $lifestyle->cover;
+            // $cover->url = str_replace('storage.travooo.com', 'https://localhost/travoo-api/storage/uploads', $cover->url);
+        }
+
         return view('backend.lifestyle.show')
             ->withLifestyle($lifestyle)
-            ->withLifestyletrans($lifestyleTrans);
+            ->withLifestyletrans($lifestyleTrans)
+            ->withCover($cover);
     }
 }

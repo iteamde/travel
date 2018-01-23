@@ -3,6 +3,7 @@
 use App\Models\Access\Role\Role;
 use App\Models\Access\Permission\Permission;
 use App\Models\Lifestyle\LifestyleTrans;
+use App\Models\Lifestyle\LifestyleMedias;
 
 return [
     
@@ -25,5 +26,9 @@ return [
      * LifestyleTranslations Model used to access LifestyleTranslations relation from database.
      */
     'lifestyle_trans' =>  LifestyleTrans::class,
-    
+
+    /*
+     * LifestyleTranslations Model used to access LifestyleTranslations relation from database.
+     */
+    'lifestyle_medias' =>  LifestyleMedias::class,
 ];
