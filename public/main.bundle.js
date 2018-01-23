@@ -204,7 +204,7 @@ var FakeBackendInterceptor = (function () {
                         lastName: user.lastName,
                         token: 'fake-jwt-token'
                     };
-                    return __WEBPACK_IMPORTED_MODULE_2_rxjs_Observable__["a" /* Observable */].of(new __WEBPACK_IMPORTED_MODULE_1__angular_common_http__["c" /* HttpResponse */]({ status: 200, body: body }));
+                    return __WEBPACK_IMPORTED_MODULE_2_rxjs_Observable__["a" /* Observable */].of(new __WEBPACK_IMPORTED_MODULE_1__angular_common_http__["d" /* HttpResponse */]({ status: 200, body: body }));
                 }
                 else {
                     // else return 400 bad request
@@ -215,7 +215,7 @@ var FakeBackendInterceptor = (function () {
             if (request.url.endsWith('/api/users') && request.method === 'GET') {
                 // check for fake auth token in header and return users if valid, this security is implemented server side in a real application
                 if (request.headers.get('Authorization') === 'Bearer fake-jwt-token') {
-                    return __WEBPACK_IMPORTED_MODULE_2_rxjs_Observable__["a" /* Observable */].of(new __WEBPACK_IMPORTED_MODULE_1__angular_common_http__["c" /* HttpResponse */]({ status: 200, body: users }));
+                    return __WEBPACK_IMPORTED_MODULE_2_rxjs_Observable__["a" /* Observable */].of(new __WEBPACK_IMPORTED_MODULE_1__angular_common_http__["d" /* HttpResponse */]({ status: 200, body: users }));
                 }
                 else {
                     // return 401 not authorised if token is null or invalid
@@ -231,7 +231,7 @@ var FakeBackendInterceptor = (function () {
                     var id_1 = parseInt(urlParts[urlParts.length - 1]);
                     var matchedUsers = users.filter(function (user) { return user.id === id_1; });
                     var user = matchedUsers.length ? matchedUsers[0] : null;
-                    return __WEBPACK_IMPORTED_MODULE_2_rxjs_Observable__["a" /* Observable */].of(new __WEBPACK_IMPORTED_MODULE_1__angular_common_http__["c" /* HttpResponse */]({ status: 200, body: user }));
+                    return __WEBPACK_IMPORTED_MODULE_2_rxjs_Observable__["a" /* Observable */].of(new __WEBPACK_IMPORTED_MODULE_1__angular_common_http__["d" /* HttpResponse */]({ status: 200, body: user }));
                 }
                 else {
                     // return 401 not authorised if token is null or invalid
@@ -252,7 +252,7 @@ var FakeBackendInterceptor = (function () {
                 users.push(newUser_1);
                 localStorage.setItem('users', JSON.stringify(users));
                 // respond 200 OK
-                return __WEBPACK_IMPORTED_MODULE_2_rxjs_Observable__["a" /* Observable */].of(new __WEBPACK_IMPORTED_MODULE_1__angular_common_http__["c" /* HttpResponse */]({ status: 200 }));
+                return __WEBPACK_IMPORTED_MODULE_2_rxjs_Observable__["a" /* Observable */].of(new __WEBPACK_IMPORTED_MODULE_1__angular_common_http__["d" /* HttpResponse */]({ status: 200 }));
             }
             // delete user
             if (request.url.match(/\/api\/users\/\d+$/) && request.method === 'DELETE') {
@@ -271,7 +271,7 @@ var FakeBackendInterceptor = (function () {
                         }
                     }
                     // respond 200 OK
-                    return __WEBPACK_IMPORTED_MODULE_2_rxjs_Observable__["a" /* Observable */].of(new __WEBPACK_IMPORTED_MODULE_1__angular_common_http__["c" /* HttpResponse */]({ status: 200 }));
+                    return __WEBPACK_IMPORTED_MODULE_2_rxjs_Observable__["a" /* Observable */].of(new __WEBPACK_IMPORTED_MODULE_1__angular_common_http__["d" /* HttpResponse */]({ status: 200 }));
                 }
                 else {
                     // return 401 not authorised if token is null or invalid
@@ -592,6 +592,54 @@ var CountriesService = (function (_super) {
 
 /***/ }),
 
+/***/ "../../../../../src/_services/facebook.service.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return FacebookService; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+var FacebookService = (function () {
+    function FacebookService() {
+        $.getScript('assets/js/fb-script.js');
+    }
+    // pass a call back method to be called after successful/unsuccessful login
+    FacebookService.prototype.login = function (callback) {
+        var t = this;
+        FB.login(function (response) {
+            if (response.status = "connected") {
+                var obj = response.authResponse;
+                var userid = obj.userID;
+                FB.api('/me?fields=id,name,email,picture', function (response1) {
+                    //console.log(response1);
+                    callback({ status: true, user: response1 });
+                });
+            }
+            else {
+                callback({ status: false });
+            }
+        }, { scope: 'public_profile,email' });
+    };
+    FacebookService = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
+        __metadata("design:paramtypes", [])
+    ], FacebookService);
+    return FacebookService;
+}());
+
+
+
+/***/ }),
+
 /***/ "../../../../../src/_services/index.ts":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -601,13 +649,16 @@ var CountriesService = (function (_super) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__authentication_service__ = __webpack_require__("../../../../../src/_services/authentication.service.ts");
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_1__authentication_service__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__user_service__ = __webpack_require__("../../../../../src/_services/user.service.ts");
-/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "f", function() { return __WEBPACK_IMPORTED_MODULE_2__user_service__["a"]; });
+/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "g", function() { return __WEBPACK_IMPORTED_MODULE_2__user_service__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__countries_service__ = __webpack_require__("../../../../../src/_services/countries.service.ts");
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "c", function() { return __WEBPACK_IMPORTED_MODULE_3__countries_service__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__places_service__ = __webpack_require__("../../../../../src/_services/places.service.ts");
-/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "d", function() { return __WEBPACK_IMPORTED_MODULE_4__places_service__["a"]; });
+/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "e", function() { return __WEBPACK_IMPORTED_MODULE_4__places_service__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__travel_styles_service__ = __webpack_require__("../../../../../src/_services/travel-styles.service.ts");
-/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "e", function() { return __WEBPACK_IMPORTED_MODULE_5__travel_styles_service__["a"]; });
+/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "f", function() { return __WEBPACK_IMPORTED_MODULE_5__travel_styles_service__["a"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__facebook_service__ = __webpack_require__("../../../../../src/_services/facebook.service.ts");
+/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "d", function() { return __WEBPACK_IMPORTED_MODULE_6__facebook_service__["a"]; });
+
 
 
 
@@ -779,10 +830,10 @@ var TravelStylesService = (function (_super) {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UserService; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__("../../../http/esm5/http.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__("../../../../rxjs/_esm5/add/operator/map.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_authentication_service__ = __webpack_require__("../../../../../src/_services/authentication.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__manager_service__ = __webpack_require__("../../../../../src/_services/manager.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_add_operator_map__ = __webpack_require__("../../../../rxjs/_esm5/add/operator/map.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_authentication_service__ = __webpack_require__("../../../../../src/_services/authentication.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__manager_service__ = __webpack_require__("../../../../../src/_services/manager.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_common_http__ = __webpack_require__("../../../common/esm5/http.js");
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -818,63 +869,48 @@ var UserService = (function (_super) {
     // signup
     UserService.prototype.signupStep1 = function (user) {
         // add authorization header with jwt token
-        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({ 'Authorization': 'Bearer ' + "as" });
-        var options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ body: user, headers: headers });
+        // let headers = new Headers({ 'Authorization': 'Bearer ' + "" });
+        // let options = new RequestOptions({ body: user, headers: headers });
         // get users from api
         return this.http.post(this.apiPrefix + '/users/create', user)
             .map(function (response) { return response.json(); });
     };
     // save user profile info
     UserService.prototype.signupStep2 = function (user) {
-        // add authorization header with jwt token
-        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({ 'Authorization': 'Bearer ' + "as" });
-        var options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ body: user, headers: headers });
         // get users from api
         return this.http.post(this.apiPrefix + '/users/create/step2', user)
             .map(function (response) { return response.json(); });
     };
     // save user selected countries
     UserService.prototype.signupStep3 = function (data) {
-        // add authorization header with jwt token
-        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({ 'Authorization': 'Bearer ' + "as" });
-        var options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ body: data, headers: headers });
         // get users from api
         return this.http.post(this.apiPrefix + '/users/set/fav_countries', data)
             .map(function (response) { return response.json(); });
     };
     // save user selected places
     UserService.prototype.signupStep4 = function (data) {
-        // add authorization header with jwt token
-        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({ 'Authorization': 'Bearer ' + "as" });
-        var options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ body: data, headers: headers });
         // get users from api
         return this.http.post(this.apiPrefix + '/users/set/fav_places', data)
             .map(function (response) { return response.json(); });
     };
     // save user selected styles
     UserService.prototype.signupStep5 = function (data) {
-        // add authorization header with jwt token
-        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({ 'Authorization': 'Bearer ' + "as" });
-        var options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ body: data, headers: headers });
         // get users from api
         return this.http.post(this.apiPrefix + '/users/set/travel_styles', data)
             .map(function (response) { return response.json(); });
     };
     UserService.prototype.getUsers = function () {
-        // add authorization header with jwt token
-        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({ 'Authorization': 'Bearer ' + "" });
-        var options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ headers: headers });
         // get users from api
-        return this.http.get('/api/users', options)
+        return this.http.get('/api/users', {})
             .map(function (response) { return response.json(); });
     };
     UserService = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */],
-            __WEBPACK_IMPORTED_MODULE_3__services_authentication_service__["a" /* AuthenticationService */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_4__angular_common_http__["b" /* HttpClient */],
+            __WEBPACK_IMPORTED_MODULE_2__services_authentication_service__["a" /* AuthenticationService */]])
     ], UserService);
     return UserService;
-}(__WEBPACK_IMPORTED_MODULE_4__manager_service__["a" /* ManagerService */]));
+}(__WEBPACK_IMPORTED_MODULE_3__manager_service__["a" /* ManagerService */]));
 
 
 
@@ -1098,7 +1134,7 @@ var AppModule = (function () {
                 __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
                 __WEBPACK_IMPORTED_MODULE_6__app_routing_module__["a" /* AppRoutingModule */],
                 __WEBPACK_IMPORTED_MODULE_2__angular_forms__["c" /* FormsModule */],
-                __WEBPACK_IMPORTED_MODULE_3__angular_common_http__["b" /* HttpClientModule */],
+                __WEBPACK_IMPORTED_MODULE_3__angular_common_http__["c" /* HttpClientModule */],
                 __WEBPACK_IMPORTED_MODULE_4__angular_http__["c" /* HttpModule */],
                 __WEBPACK_IMPORTED_MODULE_2__angular_forms__["d" /* ReactiveFormsModule */],
                 __WEBPACK_IMPORTED_MODULE_5_ngx_infinite_scroll__["a" /* InfiniteScrollModule */]
@@ -1128,15 +1164,16 @@ var AppModule = (function () {
                 __WEBPACK_IMPORTED_MODULE_8__guards_index__["a" /* AuthGuard */],
                 __WEBPACK_IMPORTED_MODULE_10__services_index__["a" /* AlertService */],
                 __WEBPACK_IMPORTED_MODULE_10__services_index__["b" /* AuthenticationService */],
-                __WEBPACK_IMPORTED_MODULE_10__services_index__["f" /* UserService */],
+                __WEBPACK_IMPORTED_MODULE_10__services_index__["g" /* UserService */],
                 {
                     provide: __WEBPACK_IMPORTED_MODULE_3__angular_common_http__["a" /* HTTP_INTERCEPTORS */],
                     useClass: __WEBPACK_IMPORTED_MODULE_9__helpers_index__["a" /* JwtInterceptor */],
                     multi: true
                 },
                 __WEBPACK_IMPORTED_MODULE_10__services_index__["c" /* CountriesService */],
-                __WEBPACK_IMPORTED_MODULE_10__services_index__["d" /* PlacesService */],
-                __WEBPACK_IMPORTED_MODULE_10__services_index__["e" /* TravelStylesService */]
+                __WEBPACK_IMPORTED_MODULE_10__services_index__["e" /* PlacesService */],
+                __WEBPACK_IMPORTED_MODULE_10__services_index__["f" /* TravelStylesService */],
+                __WEBPACK_IMPORTED_MODULE_10__services_index__["d" /* FacebookService */]
                 // provider used to create fake backend
                 //fakeBackendProvider
             ],
@@ -1482,7 +1519,7 @@ var HomeComponent = (function () {
         this.titleService = titleService;
     }
     HomeComponent.prototype.ngOnInit = function () {
-        this.titleService.setTitle("Travoo - Home");
+        this.titleService.setTitle("Travooo - Home");
         $.getScript('assets/js/script.js');
     };
     HomeComponent = __decorate([
@@ -1566,7 +1603,7 @@ var LeftSideBarComponent = (function () {
 /***/ "../../../../../src/app/login/login.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<!-- Modal -->\n\n<div class=\"modal fade\" id=\"logIn\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\">\n  \t<div class=\"modal-dialog sign-up-style\" role=\"document\">\n    \t<div class=\"modal-content\">\n\t\t\t<button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\n\t\t\t\t<span aria-hidden=\"true\">&times;</span>\n\t\t\t</button>\n\t\t\t<div class=\"modal-body\">\n\t\t\t\t<div class=\"top-layer\">\n\t\t\t\t\t<a href=\"#\" class=\"logo-wrap\">\n\t\t\t\t\t\t<img src=\"./assets/image/main-logo.png\" alt=\"\">\n\t\t\t\t\t</a>\n\t\t\t\t\t<h4 class=\"title\">Login to your account</h4>\n\t\t\t\t\t<!-- <p class=\"sub-ttl\">and write a text here</p> -->\n\t\t\t\t\t<p class=\"sub-ttl error-message\" *ngFor=\"let msg of errors\">{{ msg }}</p>\n\t\t\t\t</div>\n\n\t\t\t\t<form class=\"login-form\" name=\"loginForm\" [formGroup]=\"loginForm\" (ngSubmit)=\"login()\" novalidate>\n\t\t\t\t\t<div class=\"form-group\" [ngClass]=\"setClassEmail()\">\n\t\t\t\t\t\t<!-- <label for=\"username\">Username</label> -->\n\t\t\t\t\t\t<input class=\"form-control\" type=\"email\" name=\"email\" formControlName=\"email\" placeholder=\"Email address\" aria-describedby=\"emailHelp\" />\n\t\t\t\t\t\t<!-- <input type=\"email\" class=\"form-control\" name=\"username\" [(ngModel)]=\"model.username\" #username=\"ngModel\" required aria-describedby=\"emailHelp\" placeholder=\"Email address\"/> -->\n\t\t\t\t\t\t<!-- <div *ngIf=\"f.submitted && !username.valid\" class=\"help-block\">Email is required</div> -->\n\t\t\t\t\t\t<div class=\"form-control-feedback\" *ngIf=\"email.errors && (email.dirty || email.touched)\">\n\t\t\t\t\t\t\t<p>{{ emailMsg }}</p>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t\n\t\t\t\t\t<div class=\"form-group\" [ngClass]=\"setClassPassword()\">\n\t\t\t\t\t\t<!-- <label for=\"password\">Password</label> -->\n\t\t\t\t\t\t<input class=\"form-control\" type=\"password\" name=\"password\" formControlName=\"password\" placeholder=\"Password\" aria-describedby=\"pass\" />\n\t\t\t\t\t\t<!-- <input type=\"password\" class=\"form-control\" name=\"password\" [(ngModel)]=\"model.password\" #password=\"ngModel\" required aria-describedby=\"pass\" placeholder=\"Password\"/> -->\n\t\t\t\t\t\t<!-- <div *ngIf=\"f.submitted && !password.valid\" class=\"help-block\">Password is required</div> -->\n\t\t\t\t\t\t<div class=\"form-control-feedback\" *ngIf=\"password.errors && (password.dirty || password.touched)\">\n\t\t\t\t\t\t\t<p>{{ passwordMsg }}</p>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t\n\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t<a class=\"forget-password-link\" (click)=\"openForgotPassword()\">Forget your password?</a>\n\t\t\t\t\t</div>\n\t\t\t\t\t\n\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t<button class=\"btn btn-primary\" type=\"submit\" [disabled]=\"!loginForm.valid || loading\">{{ loginBtnText }}</button>\n\t\t\t\t\t\t<!-- <button [disabled]=\"loading\" class=\"btn btn-primary\">{{ loginBtnText }}</button> -->\n\t\t\t\t\t\t<!-- <img *ngIf=\"loading\" src=\"data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==\" /> -->\n\t\t\t\t\t\t<!-- <a [routerLink]=\"['/register']\" class=\"btn btn-link\">Register</a> -->\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t<p class=\"simple-txt\">Or</p>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t<button type=\"button\" class=\"btn btn-primary\">\n\t\t\t\t\t\t\t<i class=\"fa fa-facebook side-icon\"></i>\n\t\t\t\t\t\t\tContinue with Facebook\n\t\t\t\t\t\t</button>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t<button type=\"button\" class=\"btn btn-info\">\n\t\t\t\t\t\t\t<i class=\"fa fa-twitter side-icon\"></i>\n\t\t\t\t\t\t\tContinue with Twitter\n\t\t\t\t\t\t</button>\n\t\t\t\t\t</div>\n\t\t\t\t</form>\n\t\t\t</div>\n\t\t\t<div class=\"modal-footer\">\n\t\t\t\t<p class=\"foot-txt\">You are not a member yet?</p>\n\t\t\t\t<button type=\"button\" class=\"btn btn-grey\" (click)=\"openSignup()\">Sign Up</button>\n\t\t\t</div>\n    \t</div>\n  \t</div>\n</div>"
+module.exports = "<!-- Modal -->\n\n<div class=\"modal fade\" id=\"logIn\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\">\n  \t<div class=\"modal-dialog sign-up-style\" role=\"document\">\n    \t<div class=\"modal-content\">\n\t\t\t<button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\n\t\t\t\t<span aria-hidden=\"true\">&times;</span>\n\t\t\t</button>\n\t\t\t<div class=\"modal-body\">\n\t\t\t\t<div class=\"top-layer\">\n\t\t\t\t\t<a href=\"#\" class=\"logo-wrap\">\n\t\t\t\t\t\t<img src=\"./assets/image/main-logo.png\" alt=\"\">\n\t\t\t\t\t</a>\n\t\t\t\t\t<h4 class=\"title\">Login to your account</h4>\n\t\t\t\t\t<!-- <p class=\"sub-ttl\">and write a text here</p> -->\n\t\t\t\t\t<p class=\"sub-ttl error-message\" *ngFor=\"let msg of errors\">{{ msg }}</p>\n\t\t\t\t</div>\n\n\t\t\t\t<form class=\"login-form\" name=\"loginForm\" [formGroup]=\"loginForm\" (ngSubmit)=\"login()\" novalidate>\n\t\t\t\t\t<div class=\"form-group\" [ngClass]=\"setClassEmail()\">\n\t\t\t\t\t\t<!-- <label for=\"username\">Username</label> -->\n\t\t\t\t\t\t<input class=\"form-control\" type=\"email\" name=\"email\" formControlName=\"email\" placeholder=\"Email address\" aria-describedby=\"emailHelp\" />\n\t\t\t\t\t\t<!-- <input type=\"email\" class=\"form-control\" name=\"username\" [(ngModel)]=\"model.username\" #username=\"ngModel\" required aria-describedby=\"emailHelp\" placeholder=\"Email address\"/> -->\n\t\t\t\t\t\t<!-- <div *ngIf=\"f.submitted && !username.valid\" class=\"help-block\">Email is required</div> -->\n\t\t\t\t\t\t<div class=\"form-control-feedback\" *ngIf=\"email.errors && (email.dirty || email.touched)\">\n\t\t\t\t\t\t\t<p>{{ emailMsg }}</p>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t\n\t\t\t\t\t<div class=\"form-group\" [ngClass]=\"setClassPassword()\">\n\t\t\t\t\t\t<!-- <label for=\"password\">Password</label> -->\n\t\t\t\t\t\t<input class=\"form-control\" type=\"password\" name=\"password\" formControlName=\"password\" placeholder=\"Password\" aria-describedby=\"pass\" />\n\t\t\t\t\t\t<!-- <input type=\"password\" class=\"form-control\" name=\"password\" [(ngModel)]=\"model.password\" #password=\"ngModel\" required aria-describedby=\"pass\" placeholder=\"Password\"/> -->\n\t\t\t\t\t\t<!-- <div *ngIf=\"f.submitted && !password.valid\" class=\"help-block\">Password is required</div> -->\n\t\t\t\t\t\t<div class=\"form-control-feedback\" *ngIf=\"password.errors && (password.dirty || password.touched)\">\n\t\t\t\t\t\t\t<p>{{ passwordMsg }}</p>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t\n\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t<a class=\"forget-password-link\" (click)=\"openForgotPassword()\">Forget your password?</a>\n\t\t\t\t\t</div>\n\t\t\t\t\t\n\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t<button class=\"btn btn-primary\" type=\"submit\" [disabled]=\"!loginForm.valid || loading\">{{ loginBtnText }}</button>\n\t\t\t\t\t\t<!-- <button [disabled]=\"loading\" class=\"btn btn-primary\">{{ loginBtnText }}</button> -->\n\t\t\t\t\t\t<!-- <img *ngIf=\"loading\" src=\"data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==\" /> -->\n\t\t\t\t\t\t<!-- <a [routerLink]=\"['/register']\" class=\"btn btn-link\">Register</a> -->\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t<p class=\"simple-txt\">Or</p>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t<button type=\"button\" class=\"btn btn-primary\" (click)=\"FBlogin()\">\n\t\t\t\t\t\t\t<i class=\"fa fa-facebook side-icon\"></i>\n\t\t\t\t\t\t\tContinue with Facebook\n\t\t\t\t\t\t</button>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t<button type=\"button\" class=\"btn btn-info\">\n\t\t\t\t\t\t\t<i class=\"fa fa-twitter side-icon\"></i>\n\t\t\t\t\t\t\tContinue with Twitter\n\t\t\t\t\t\t</button>\n\t\t\t\t\t</div>\n\t\t\t\t</form>\n\t\t\t</div>\n\t\t\t<div class=\"modal-footer\">\n\t\t\t\t<p class=\"foot-txt\">You are not a member yet?</p>\n\t\t\t\t<button type=\"button\" class=\"btn btn-grey\" (click)=\"openSignup()\">Sign Up</button>\n\t\t\t</div>\n    \t</div>\n  \t</div>\n</div>"
 
 /***/ }),
 
@@ -1578,7 +1615,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, "", ""]);
+exports.push([module.i, "a {\n  cursor: pointer; }\n\na:hover {\n  text-decoration: underline !important; }\n", ""]);
 
 // exports
 
@@ -1637,9 +1674,10 @@ var LoginComponent = (function () {
     }
     LoginComponent.prototype.ngOnInit = function () {
         // reset login status
-        // this.authenticationService.logout();
+        this.authenticationService.logout();
         if (this.authenticationService.isLoggedIn()) {
-            this.router.navigate(['/home']);
+            //this.router.navigate(['/home']);
+            this.mainC.openUrl('/home');
         }
         // get return url from route parameters or default to '/home'
         this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/home';
@@ -1652,6 +1690,9 @@ var LoginComponent = (function () {
         $('#logIn').on('hidden.bs.modal', function (e) {
             t.closeLogin();
         });
+    };
+    LoginComponent.prototype.FBlogin = function () {
+        this.mainC.FBlogin();
     };
     LoginComponent.prototype.closeLogin = function () {
         this.mainC.closeAll();
@@ -1695,7 +1736,8 @@ var LoginComponent = (function () {
                 var t = _this;
                 setTimeout(function () {
                     $.unblockUI();
-                    t.router.navigate([t.returnUrl]);
+                    t.mainC.openUrl(t.returnUrl);
+                    //t.router.navigate([t.returnUrl]);
                 }, 1000);
             }
             else {
@@ -1767,6 +1809,7 @@ module.exports = module.exports.toString();
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser__ = __webpack_require__("../../../platform-browser/esm5/platform-browser.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__("../../../router/esm5/router.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_index__ = __webpack_require__("../../../../../src/_services/index.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1779,11 +1822,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var MainComponent = (function () {
-    function MainComponent(route, router, titleService) {
+    function MainComponent(route, router, titleService, authenticationService, fbService) {
         this.route = route;
         this.router = router;
         this.titleService = titleService;
+        this.authenticationService = authenticationService;
+        this.fbService = fbService;
         this.signupSteps = 8;
         this.signupStepCount = 0;
         this.progressWidth = "0%";
@@ -1792,8 +1838,14 @@ var MainComponent = (function () {
         this.titleService.setTitle("Travooo");
         $.getScript('assets/js/script.js');
     };
+    MainComponent.prototype.FBlogin = function () {
+        this.fbService.login(this.loginCallBack);
+    };
+    MainComponent.prototype.loginCallBack = function (response) {
+        console.log(response);
+    };
     MainComponent.prototype.closeAll = function () {
-        this.titleService.setTitle("Travoo");
+        this.titleService.setTitle("Travooo");
         $('.signUpProgress').hide();
         $('.modal-backdrop').remove();
         $('body').removeClass('modal-open');
@@ -1801,15 +1853,20 @@ var MainComponent = (function () {
         this.router.navigate(['/']);
     };
     MainComponent.prototype.openLogin = function () {
-        this.titleService.setTitle("Travoo - Login");
-        $('.signUpProgress').hide();
-        $('.modal-backdrop').remove();
-        this.signupStepCount = 0;
-        this.router.navigate(['/login']);
+        if (this.authenticationService.isLoggedIn()) {
+            this.router.navigate(['/home']);
+        }
+        else {
+            this.titleService.setTitle("Travooo - Login");
+            $('.signUpProgress').hide();
+            $('.modal-backdrop').remove();
+            this.signupStepCount = 0;
+            this.router.navigate(['/login']);
+        }
     };
     MainComponent.prototype.openSignup = function (stepNum) {
         if (stepNum === void 0) { stepNum = 1; }
-        this.titleService.setTitle("Travoo - Signup");
+        this.titleService.setTitle("Travooo - Signup");
         $('.signUpProgress').show();
         $('.modal-backdrop').remove();
         this.signupStepCount = stepNum;
@@ -1822,9 +1879,14 @@ var MainComponent = (function () {
         }
     };
     MainComponent.prototype.openForgotPassword = function () {
-        this.titleService.setTitle("Travoo - Reset Password");
+        this.titleService.setTitle("Travooo - Reset Password");
         $('.modal-backdrop').remove();
         this.router.navigate(['/forgot-password']);
+    };
+    MainComponent.prototype.openUrl = function (url) {
+        this.titleService.setTitle("Travooo");
+        $('.modal-backdrop').remove();
+        this.router.navigate([url]);
     };
     MainComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
@@ -1834,7 +1896,9 @@ var MainComponent = (function () {
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* ActivatedRoute */],
             __WEBPACK_IMPORTED_MODULE_2__angular_router__["c" /* Router */],
-            __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser__["b" /* Title */]])
+            __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser__["b" /* Title */],
+            __WEBPACK_IMPORTED_MODULE_3__services_index__["b" /* AuthenticationService */],
+            __WEBPACK_IMPORTED_MODULE_3__services_index__["d" /* FacebookService */]])
     ], MainComponent);
     return MainComponent;
 }());
@@ -1907,7 +1971,7 @@ var PostsComponent = (function () {
 /***/ "../../../../../src/app/reset-password/reset-password.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<!-- create an account -->\n<div class=\"modal fade\" id=\"reset_password\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\" data-backdrop=\"static\" data-keyboard=\"false\">\n\t<div class=\"modal-dialog sign-up-style\" role=\"document\">\n\t\t<div class=\"modal-content\">\n\t\t\t<!-- <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\n\t\t\t\t<span aria-hidden=\"true\">&times;</span>\n\t\t\t</button> -->\n\t\t\t<div class=\"modal-body body-create\">\n\t\t\t\t<div class=\"top-layer\">\n\t\t\t\t\t<a href=\"#\" class=\"logo-wrap\">\n\t\t\t\t\t\t<img src=\"./assets/image/main-logo.png\" alt=\"\">\n\t\t\t\t\t</a>\n\t\t\t\t\t<h4 class=\"title\">Forgot Password</h4>\n\t\t\t\t\t<p class=\"sub-ttl\">Please choose a new password.</p>\n\t\t\t\t\t<p class=\"sub-ttl error-message\" *ngFor=\"let msg of errors\">{{ msg }}</p>\n\t\t\t\t</div>\n\n\t\t\t\t<form class=\"login-form\" name=\"resetPasswordForm\" [formGroup]=\"resetPasswordForm\" (ngSubmit)=\"submit()\" novalidate>\n\t\t\t\t\t<div class=\"step-1\">\n\t\t\t\t\t\t<div class=\"form-group\" [ngClass]=\"validate('password')\">\n\t\t\t\t\t\t\t<input class=\"form-control\" type=\"password\" name=\"password\" formControlName=\"password\" placeholder=\"Password\" aria-describedby=\"pass\" />\n\t\t\t\t\t\t\t<div class=\"form-control-feedback\" *ngIf=\"formErrors.password\">\n\t\t\t\t\t\t\t\t<p>{{ formErrors.password }}</p>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\n\t\t\t\t\t\t<div class=\"form-group\" [ngClass]=\"validate('cpassword')\">\n\t\t\t\t\t\t\t<input class=\"form-control\" type=\"password\" name=\"cpassword\" formControlName=\"cpassword\" placeholder=\"Confirm New Password\" aria-describedby=\"cpass\" />\n\t\t\t\t\t\t\t<div class=\"form-control-feedback\" *ngIf=\"formErrors.cpassword\">\n\t\t\t\t\t\t\t\t<p>{{ formErrors.cpassword }}</p>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\n\t\t\t\t\t\t<div class=\"form-margin\"></div>\n\t\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t\t<button type=\"submit\" class=\"btn btn-success\" [disabled]=\"!resetPasswordForm.valid || loading\">{{ submitBtnText }}</button>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</form>\n\t\t\t</div>\n\t\t\t<div class=\"modal-footer\">\n\t\t\t\t<p class=\"foot-txt\">You are not a member yet?</p>\n\t\t\t\t<button type=\"button\" class=\"btn btn-grey\" (click)=\"openSignup()\">Sign Up</button>\n\t\t\t</div>\n\t\t</div>\n\t</div>\n</div>\n\n<div class=\"modal fade\" id=\"reset_success\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\" data-backdrop=\"static\" data-keyboard=\"false\">\n\t<div class=\"modal-dialog sign-up-style\" role=\"document\">\n\t\t<div class=\"modal-content\">\n\t\t\t<button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\n\t\t\t\t<span aria-hidden=\"true\">&times;</span>\n\t\t\t</button>\n\t\t\t<div class=\"modal-body body-create\">\n\t\t\t\t<div class=\"top-layer\">\n\t\t\t\t\t<a href=\"#\" class=\"logo-wrap\">\n\t\t\t\t\t\t<img src=\"./assets/image/main-logo.png\" alt=\"\">\n\t\t\t\t\t</a>\n\t\t\t\t\t<h4 class=\"title\">Forgot Password</h4>\n\t\t\t\t\t<!-- <p class=\"sub-ttl\">and write a text here</p> -->\n\t\t\t\t\t<!-- <p class=\"sub-ttl error-message\">Your password is too weak</p> -->\n\t\t\t\t</div>\n\t\t\t\t<form class=\"login-form\">\n\t\t\t\t\t<div class=\"step-2\">\n\t\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t\t<p class=\"email-field\">Your password was reset successfully!</p>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</form>\n\t\t\t</div>\n\t\t\t<div class=\"modal-footer\">\n\t\t\t\t<button type=\"button\" class=\"btn btn-grey\" (click)=\"openLogin()\">Got to Log In</button>\n\t\t\t</div>\n\t\t</div>\n\t</div>\n</div>"
+module.exports = "<!-- create an account -->\n<div class=\"modal fade\" id=\"reset_password\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\" data-backdrop=\"static\" data-keyboard=\"false\">\n\t<div class=\"modal-dialog sign-up-style\" role=\"document\">\n\t\t<div class=\"modal-content\">\n\t\t\t<!-- <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\n\t\t\t\t<span aria-hidden=\"true\">&times;</span>\n\t\t\t</button> -->\n\t\t\t<div class=\"modal-body body-create\">\n\t\t\t\t<div class=\"top-layer\">\n\t\t\t\t\t<a href=\"#\" class=\"logo-wrap\">\n\t\t\t\t\t\t<img src=\"./assets/image/main-logo.png\" alt=\"\">\n\t\t\t\t\t</a>\n\t\t\t\t\t<h4 class=\"title\">Forgot Password</h4>\n\t\t\t\t\t<p class=\"sub-ttl\">Please choose a new password.</p>\n\t\t\t\t\t<p class=\"sub-ttl error-message\" *ngFor=\"let msg of errors\">{{ msg }}</p>\n\t\t\t\t</div>\n\n\t\t\t\t<form class=\"login-form\" name=\"resetPasswordForm\" [formGroup]=\"resetPasswordForm\" (ngSubmit)=\"submit()\" novalidate>\n\t\t\t\t\t<div class=\"step-1\">\n\t\t\t\t\t\t<div class=\"form-group\" [ngClass]=\"validate('password')\">\n\t\t\t\t\t\t\t<input class=\"form-control\" type=\"password\" name=\"password\" formControlName=\"password\" placeholder=\"Password\" aria-describedby=\"pass\" />\n\t\t\t\t\t\t\t<div class=\"form-control-feedback\" *ngIf=\"formErrors.password\">\n\t\t\t\t\t\t\t\t<p>{{ formErrors.password }}</p>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\n\t\t\t\t\t\t<div class=\"form-group\" [ngClass]=\"validate('cpassword')\">\n\t\t\t\t\t\t\t<input class=\"form-control\" type=\"password\" name=\"cpassword\" formControlName=\"cpassword\" placeholder=\"Confirm New Password\" aria-describedby=\"cpass\" />\n\t\t\t\t\t\t\t<div class=\"form-control-feedback\" *ngIf=\"formErrors.cpassword\">\n\t\t\t\t\t\t\t\t<p>{{ formErrors.cpassword }}</p>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\n\t\t\t\t\t\t<div class=\"form-margin\"></div>\n\t\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t\t<button type=\"submit\" class=\"btn btn-success\" [disabled]=\"!resetPasswordForm.valid || loading\">{{ submitBtnText }}</button>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</form>\n\t\t\t</div>\n\t\t\t<div class=\"modal-footer\">\n\t\t\t\t<p class=\"foot-txt\">You are not a member yet?</p>\n\t\t\t\t<button type=\"button\" class=\"btn btn-grey\" (click)=\"openSignup()\">Sign Up</button>\n\t\t\t</div>\n\t\t</div>\n\t</div>\n</div>\n\n<div class=\"modal fade\" id=\"reset_success\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\" data-backdrop=\"static\" data-keyboard=\"false\">\n\t<div class=\"modal-dialog sign-up-style\" role=\"document\">\n\t\t<div class=\"modal-content\">\n\t\t\t<!-- <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\n\t\t\t\t<span aria-hidden=\"true\">&times;</span>\n\t\t\t</button> -->\n\t\t\t<div class=\"modal-body body-create\">\n\t\t\t\t<div class=\"top-layer\">\n\t\t\t\t\t<a href=\"#\" class=\"logo-wrap\">\n\t\t\t\t\t\t<img src=\"./assets/image/main-logo.png\" alt=\"\">\n\t\t\t\t\t</a>\n\t\t\t\t\t<h4 class=\"title\">Forgot Password</h4>\n\t\t\t\t\t<!-- <p class=\"sub-ttl\">and write a text here</p> -->\n\t\t\t\t\t<!-- <p class=\"sub-ttl error-message\">Your password is too weak</p> -->\n\t\t\t\t</div>\n\t\t\t\t<form class=\"login-form\">\n\t\t\t\t\t<div class=\"step-2\">\n\t\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t\t<p class=\"email-field\">Your password was reset successfully!</p>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</form>\n\t\t\t</div>\n\t\t\t<div class=\"modal-footer\">\n\t\t\t\t<button type=\"button\" class=\"btn btn-grey\" (click)=\"openLogin()\">Got to Log In</button>\n\t\t\t</div>\n\t\t</div>\n\t</div>\n</div>"
 
 /***/ }),
 
@@ -1984,6 +2048,9 @@ var ResetPasswordComponent = (function () {
         this.sub = this.route.queryParams.subscribe(function (params) {
             _this.token = params['token'];
         });
+        if (this.token == undefined) {
+            this.mainC.openForgotPassword();
+        }
         var credentials = {
             password: this.password,
             cpassword: this.cpassword
@@ -1992,13 +2059,13 @@ var ResetPasswordComponent = (function () {
         var t = this;
         $('#reset_password').modal("show");
         $('#reset_password').on('hidden.bs.modal', function (e) {
-            t.closeForgotPassword();
+            t.closeResetPassword();
         });
     };
     ResetPasswordComponent.prototype.ngOnDestroy = function () {
         this.sub.unsubscribe();
     };
-    ResetPasswordComponent.prototype.closeForgotPassword = function () {
+    ResetPasswordComponent.prototype.closeResetPassword = function () {
         this.mainC.closeAll();
     };
     ResetPasswordComponent.prototype.openSignup = function () {
@@ -2265,7 +2332,7 @@ var SignupComponent = (function () {
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */],
             __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* Router */],
-            __WEBPACK_IMPORTED_MODULE_2__services_index__["f" /* UserService */],
+            __WEBPACK_IMPORTED_MODULE_2__services_index__["g" /* UserService */],
             __WEBPACK_IMPORTED_MODULE_2__services_index__["a" /* AlertService */],
             __WEBPACK_IMPORTED_MODULE_3__angular_forms__["a" /* FormBuilder */],
             __WEBPACK_IMPORTED_MODULE_4__angular_platform_browser___["b" /* Title */]])
@@ -2445,7 +2512,7 @@ var Step1Component = (function () {
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */],
             __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* Router */],
-            __WEBPACK_IMPORTED_MODULE_2__services_index__["f" /* UserService */],
+            __WEBPACK_IMPORTED_MODULE_2__services_index__["g" /* UserService */],
             __WEBPACK_IMPORTED_MODULE_3__angular_forms__["a" /* FormBuilder */],
             __WEBPACK_IMPORTED_MODULE_5__angular_platform_browser___["b" /* Title */],
             __WEBPACK_IMPORTED_MODULE_6__main_main_component__["a" /* MainComponent */]])
@@ -2460,7 +2527,7 @@ var Step1Component = (function () {
 /***/ "../../../../../src/app/signup/step2/step2.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "\n<div class=\"modal fade signUpStep\" id=\"signUpStep2\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\" data-backdrop=\"static\" data-keyboard=\"false\">\n\t<div class=\"modal-dialog sign-up-style\" role=\"document\">\n\t\t<div class=\"modal-content\">\n\t\t\t<button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\n\t\t\t\t<span aria-hidden=\"true\">&times;</span>\n\t\t\t</button>\n\t\t\t<div class=\"modal-body body-create\">\n\t\t\t\t<div class=\"top-layer\">\n\t\t\t\t\t<a href=\"#\" class=\"logo-wrap\">\n\t\t\t\t\t\t<img src=\"./assets/image/main-logo.png\" alt=\"\">\n\t\t\t\t\t</a>\n\t\t\t\t\t<h4 class=\"title\">Create a free account</h4>\n\t\t\t\t\t<!-- <p class=\"sub-ttl\">and write a text here</p> -->\n\t\t\t\t\t<!-- <p class=\"sub-ttl error-message\">Your password is too weak</p> -->\n\t\t\t\t\t<!-- <p class=\"sub-ttl error-message\">Please fill the required fields</p> -->\n\t\t\t\t\t<p class=\"sub-ttl error-message\" *ngFor=\"let msg of errors\">{{ msg }}</p>\n\t\t\t\t</div>\n\t\t\t\t<form class=\"login-form\" name=\"signupForm2\" [formGroup]=\"signupForm2\" (ngSubmit)=\"continueStep2()\" novalidate>\n\t\t\t\t\t<div class=\"step-2\">\n\t\t\t\t\t\t<!-- <div class=\"form-group\">\n\t\t\t\t\t\t\t<p class=\"email-field\">emailhere@gmail.com</p>\n\t\t\t\t\t\t</div> -->\n\t\t\t\t\t\t<div class=\"form-group flex-custom\">\n\t\t\t\t\t\t\t<div class=\"flex-input\" [ngClass]=\"validate('name')\">\n\t\t\t\t\t\t\t\t<input class=\"form-control\" type=\"text\" name=\"name\" formControlName=\"name\" placeholder=\"Full Name\" aria-describedby=\"full name\" />\n\t\t\t\t\t\t\t\t<div class=\"form-control-feedback\" *ngIf=\"signupErrors.name\">\n\t\t\t\t\t\t\t\t\t<p>{{ signupErrors.name }}</p>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"form-group\" [ngClass]=\"validate('age')\">\n\t\t\t\t\t\t\t\t<select class=\"custom-select\" id=\"age\" formControlName=\"age\">\n\t\t\t\t\t\t\t\t\t<option [selected]=\"age\">Age</option>\n\t\t\t\t\t\t\t\t\t<option value=\"1\">26</option>\n\t\t\t\t\t\t\t\t\t<option value=\"2\">27</option>\n\t\t\t\t\t\t\t\t\t<option value=\"3\">28</option>\n\t\t\t\t\t\t\t\t</select>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"form-check flex-custom\" [ngClass]=\"validate('gender')\">\n\t\t\t\t\t\t\t<div class=\"custom-check-label\">\n\t\t\t\t\t\t\t\t<input type=\"radio\" class=\"custom-check-input\" name=\"gender\" id=\"male\" formControlName=\"gender\" value=\"0\">\n\t\t\t\t\t\t\t\t<label for=\"male\">Male</label>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"custom-check-label\">\n\t\t\t\t\t\t\t\t<input type=\"radio\" class=\"custom-check-input\" name=\"gender\" id=\"female\" formControlName=\"gender\" value=\"1\">\n\t\t\t\t\t\t\t\t<label for=\"female\">Female</label>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"form-control-feedback\" *ngIf=\"signupErrors.gender\">\n\t\t\t\t\t\t\t\t<p>{{ signupErrors.gender }}</p>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t\t<button type=\"submit\" class=\"btn btn-info\" [disabled]=\"!signupForm2.valid || loading\">{{ signupBtnText }}</button>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t\t<button type=\"button\" class=\"btn btn-transp\">\n\t\t\t\t\t\t\t\t<i class=\"fa fa-angle-left\"></i>\n\t\t\t\t\t\t\t\t<span>Back</span>\n\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"form-group bottom-txt-group\">\n\t\t\t\t\t\t<p class=\"bottom-txt\">Creating an account means you're okay with</p>\n\t\t\t\t\t\t<ul class=\"link-list\">\n\t\t\t\t\t\t\t<li>\n\t\t\t\t\t\t\t\t<b>Travooo's</b>\n\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t\t<li>\n\t\t\t\t\t\t\t\t<a href=\"#\"> Terms of Service,</a>\n\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t\t<li>\n\t\t\t\t\t\t\t\t<a href=\"#\"> Privacy Policy</a>\n\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t</ul>\n\t\t\t\t\t</div>\n\t\t\t\t</form>\n\t\t\t</div>\n\t\t\t<div class=\"modal-footer\">\n\t\t\t\t<p class=\"foot-txt\">Already a member?</p>\n\t\t\t\t<button type=\"button\" class=\"btn btn-grey\" (click)=\"openLogin()\">Log In</button>\n\t\t\t</div>\n\t\t</div>\n\t</div>\n</div>"
+module.exports = "\n<div class=\"modal fade signUpStep\" id=\"signUpStep2\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\" data-backdrop=\"static\" data-keyboard=\"false\">\n\t<div class=\"modal-dialog sign-up-style\" role=\"document\">\n\t\t<div class=\"modal-content\">\n\t\t\t<!-- <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\n\t\t\t\t<span aria-hidden=\"true\">&times;</span>\n\t\t\t</button> -->\n\t\t\t<div class=\"modal-body body-create\">\n\t\t\t\t<div class=\"top-layer\">\n\t\t\t\t\t<a href=\"#\" class=\"logo-wrap\">\n\t\t\t\t\t\t<img src=\"./assets/image/main-logo.png\" alt=\"\">\n\t\t\t\t\t</a>\n\t\t\t\t\t<h4 class=\"title\">Create a free account</h4>\n\t\t\t\t\t<!-- <p class=\"sub-ttl\">and write a text here</p> -->\n\t\t\t\t\t<!-- <p class=\"sub-ttl error-message\">Your password is too weak</p> -->\n\t\t\t\t\t<!-- <p class=\"sub-ttl error-message\">Please fill the required fields</p> -->\n\t\t\t\t\t<p class=\"sub-ttl error-message\" *ngFor=\"let msg of errors\">{{ msg }}</p>\n\t\t\t\t</div>\n\t\t\t\t<form class=\"login-form\" name=\"signupForm2\" [formGroup]=\"signupForm2\" (ngSubmit)=\"continueStep2()\" novalidate>\n\t\t\t\t\t<div class=\"step-2\">\n\t\t\t\t\t\t<!-- <div class=\"form-group\">\n\t\t\t\t\t\t\t<p class=\"email-field\">emailhere@gmail.com</p>\n\t\t\t\t\t\t</div> -->\n\t\t\t\t\t\t<div class=\"form-group flex-custom\">\n\t\t\t\t\t\t\t<div class=\"flex-input\" [ngClass]=\"validate('name')\">\n\t\t\t\t\t\t\t\t<input class=\"form-control\" type=\"text\" name=\"name\" formControlName=\"name\" placeholder=\"Full Name\" aria-describedby=\"full name\" />\n\t\t\t\t\t\t\t\t<div class=\"form-control-feedback\" *ngIf=\"signupErrors.name\">\n\t\t\t\t\t\t\t\t\t<p>{{ signupErrors.name }}</p>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"form-group\" [ngClass]=\"validate('age')\">\n\t\t\t\t\t\t\t\t<select class=\"custom-select\" id=\"age\" formControlName=\"age\">\n\t\t\t\t\t\t\t\t\t<option [selected]=\"age\">Age</option>\n\t\t\t\t\t\t\t\t\t<option *ngFor=\"let a of ageArray\" value=\"{{ a }}\">{{ a }}</option>\n\t\t\t\t\t\t\t\t</select>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"form-check flex-custom\" [ngClass]=\"validate('gender')\">\n\t\t\t\t\t\t\t<div class=\"custom-check-label\">\n\t\t\t\t\t\t\t\t<input type=\"radio\" class=\"custom-check-input\" name=\"gender\" id=\"male\" formControlName=\"gender\" value=\"0\">\n\t\t\t\t\t\t\t\t<label for=\"male\">Male</label>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"custom-check-label\">\n\t\t\t\t\t\t\t\t<input type=\"radio\" class=\"custom-check-input\" name=\"gender\" id=\"female\" formControlName=\"gender\" value=\"1\">\n\t\t\t\t\t\t\t\t<label for=\"female\">Female</label>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"form-control-feedback\" *ngIf=\"signupErrors.gender\">\n\t\t\t\t\t\t\t\t<p>{{ signupErrors.gender }}</p>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t\t<button type=\"submit\" class=\"btn btn-info\" [disabled]=\"!signupForm2.valid || loading\">{{ signupBtnText }}</button>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t\t<button type=\"button\" class=\"btn btn-transp\">\n\t\t\t\t\t\t\t\t<i class=\"fa fa-angle-left\"></i>\n\t\t\t\t\t\t\t\t<span>Back</span>\n\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"form-group bottom-txt-group\">\n\t\t\t\t\t\t<p class=\"bottom-txt\">Creating an account means you're okay with</p>\n\t\t\t\t\t\t<ul class=\"link-list\">\n\t\t\t\t\t\t\t<li>\n\t\t\t\t\t\t\t\t<b>Travooo's</b>\n\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t\t<li>\n\t\t\t\t\t\t\t\t<a href=\"#\"> Terms of Service,</a>\n\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t\t<li>\n\t\t\t\t\t\t\t\t<a href=\"#\"> Privacy Policy</a>\n\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t</ul>\n\t\t\t\t\t</div>\n\t\t\t\t</form>\n\t\t\t</div>\n\t\t\t<div class=\"modal-footer\">\n\t\t\t\t<p class=\"foot-txt\">Already a member?</p>\n\t\t\t\t<button type=\"button\" class=\"btn btn-grey\" (click)=\"openLogin()\">Log In</button>\n\t\t\t</div>\n\t\t</div>\n\t</div>\n</div>"
 
 /***/ }),
 
@@ -2527,6 +2594,11 @@ var Step2Component = (function () {
         ]);
         this.errors = [];
         this.signupErrors = { name: "", age: "", gender: "" };
+        this.ageArray = [];
+        this.ageArray = [];
+        for (var i = 13; i < 81; i++) {
+            this.ageArray.push(i);
+        }
     }
     Step2Component.prototype.ngOnInit = function () {
         var step2 = {
@@ -2602,7 +2674,7 @@ var Step2Component = (function () {
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */],
             __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* Router */],
-            __WEBPACK_IMPORTED_MODULE_2__services_index__["f" /* UserService */],
+            __WEBPACK_IMPORTED_MODULE_2__services_index__["g" /* UserService */],
             __WEBPACK_IMPORTED_MODULE_3__angular_forms__["a" /* FormBuilder */],
             __WEBPACK_IMPORTED_MODULE_4__angular_platform_browser___["b" /* Title */],
             __WEBPACK_IMPORTED_MODULE_5__main_main_component__["a" /* MainComponent */]])
@@ -2617,7 +2689,7 @@ var Step2Component = (function () {
 /***/ "../../../../../src/app/signup/step3/step3.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<!-- Modal -->\n<div class=\"modal fade signUpStep\" id=\"signUpStep3\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\" data-backdrop=\"static\" data-keyboard=\"false\">\n\t<div class=\"modal-dialog sign-up-step\" role=\"document\">\n\t\t<div class=\"modal-content\">\n\t\t\t<div class=\"modal-body\">\n\t\t\t\t<div class=\"title-layer\">\n\t\t\t\t\t<h3 class=\"step-ttl\">Select at least 5 favorite\n\t\t\t\t\t\t<span>countries or cities</span>\n\t\t\t\t\t</h3>\n\t\t\t\t\t<div class=\"step-info\">\n\t\t\t\t\t\tStep 3\n\t\t\t\t\t\t<span>of {{ this.signupSteps }}</span>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"search-block-wrap\">\n\t\t\t\t\t<div class=\"search-block\">\n\t\t\t\t\t\t<a class=\"search-btn\" href=\"#\">\n\t\t\t\t\t\t\t<i class=\"fa fa-search\"></i>\n\t\t\t\t\t\t</a>\n\t\t\t\t\t\t<input type=\"text\" name=\"searchQuery\" [(ngModel)]=\"searchQuery\" placeholder=\"Country ...\" (input)=\"search()\"/>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"check-block-wrap\" id=\"select_countries\">\n\t\t\t\t\t<div *ngFor=\"let country of countries\">\n\t\t\t\t\t\t<div class=\"check-block\" [style.background-image]=\"'url('+ getCoverImage(country.cover_image) +')'\" [class.checked-block]=\"selected.indexOf(country.id)>=0\" (click)=\"select(country.id)\">\n\t\t\t\t\t\t\t<div class=\"check-ttl\">\n\t\t\t\t\t\t\t\t<h4>{{ country.name }} </h4>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\n\t\t\t\t\t<div class=\"col-md-12\" style=\"height: 50px; width: 100%; text-align:center\">\n\t\t\t\t\t\t<img src=\"data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==\" />\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"modal-footer\">\n\t\t\t\t<button type=\"button\" class=\"btn btn-grey\" [disabled]=\"5 - this.selected.length > 0 || loading\" (click)=\"continueStep3()\">{{ continueBtnText }}</button>\n\t\t\t\t<p class=\"sub-info\">(Next Step: Favorite Places)</p>\n\t\t\t</div>\n\t\t</div>\n\t</div>\n</div>"
+module.exports = "<!-- Modal -->\n<div class=\"modal fade signUpStep\" id=\"signUpStep3\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\" data-backdrop=\"static\" data-keyboard=\"false\">\n\t<div class=\"modal-dialog sign-up-step\" role=\"document\">\n\t\t<div class=\"modal-content\">\n\t\t\t<div class=\"modal-body\">\n\t\t\t\t<div class=\"title-layer\">\n\t\t\t\t\t<h3 class=\"step-ttl\">Select at least 5 favorite\n\t\t\t\t\t\t<span>countries or cities</span>\n\t\t\t\t\t</h3>\n\t\t\t\t\t<div class=\"step-info\">\n\t\t\t\t\t\tStep 3\n\t\t\t\t\t\t<span>of {{ this.signupSteps }}</span>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"search-block-wrap\">\n\t\t\t\t\t<div class=\"search-block\">\n\t\t\t\t\t\t<a class=\"search-btn\" href=\"#\">\n\t\t\t\t\t\t\t<i class=\"fa fa-search\"></i>\n\t\t\t\t\t\t</a>\n\t\t\t\t\t\t<input type=\"text\" name=\"searchQuery\" [(ngModel)]=\"searchQuery\" placeholder=\"Country ...\" (input)=\"search()\"/>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"check-block-wrap\" id=\"select_countries\">\n\t\t\t\t\t<div *ngFor=\"let country of countries\">\n\t\t\t\t\t\t<div class=\"check-block\" [style.background-image]=\"'url('+ getCoverImage(country.cover_image) +')'\" [class.checked-block]=\"selected.indexOf(country.id)>=0\" (click)=\"select(country.id)\">\n\t\t\t\t\t\t\t<div class=\"check-ttl\">\n\t\t\t\t\t\t\t\t<h4>{{ country.name }} </h4>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\n\t\t\t\t\t<div class=\"col-md-12\" style=\"height: 50px; width: 100%; text-align:center\">\n\t\t\t\t\t\t<img src=\"data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==\" />\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"modal-footer\">\n\t\t\t\t<button type=\"button\" class=\"btn btn-grey\"\n\t\t\t\t\t[ngClass]=\"{ 'btn-primary': this.selected.length >= 5 }\" \n\t\t\t\t\t[disabled]=\"this.selected.length < 5 || loading\" \n\t\t\t\t\t(click)=\"continueStep3()\">\n\t\t\t\t\t\t{{ continueBtnText }}\n\t\t\t\t</button>\n\t\t\t\t<p class=\"sub-info\">(Next Step: Favorite Places)</p>\n\t\t\t</div>\n\t\t</div>\n\t</div>\n</div>"
 
 /***/ }),
 
@@ -2793,7 +2865,7 @@ var Step3Component = (function () {
             styles: [__webpack_require__("../../../../../src/app/signup/step3/step3.component.scss")]
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__services_index__["c" /* CountriesService */],
-            __WEBPACK_IMPORTED_MODULE_1__services_index__["f" /* UserService */],
+            __WEBPACK_IMPORTED_MODULE_1__services_index__["g" /* UserService */],
             __WEBPACK_IMPORTED_MODULE_2__main_main_component__["a" /* MainComponent */]])
     ], Step3Component);
     return Step3Component;
@@ -2806,7 +2878,7 @@ var Step3Component = (function () {
 /***/ "../../../../../src/app/signup/step4/step4.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<!-- Modal -->\n<div class=\"modal fade signUpStep\" id=\"signUpStep4\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\"\n data-backdrop=\"static\" data-keyboard=\"false\">\n\t<div class=\"modal-dialog sign-up-step\" role=\"document\">\n\t\t<div class=\"modal-content\">\n\t\t\t<div class=\"modal-body\">\n\t\t\t\t<div class=\"title-layer\">\n\t\t\t\t\t<h3 class=\"step-ttl\">Select 3\n\t\t\t\t\t\t<span>favorite places</span> around the world</h3>\n\t\t\t\t\t<div class=\"step-info\">\n\t\t\t\t\t\tStep 4\n\t\t\t\t\t\t<span>of {{ this.signupSteps }}</span>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t\t\n\t\t\t\t<div class=\"search-block-wrap\">\n\t\t\t\t\t<div class=\"search-block\">\n\t\t\t\t\t\t<a class=\"search-btn\" href=\"#\">\n\t\t\t\t\t\t\t<i class=\"fa fa-search\"></i>\n\t\t\t\t\t\t</a>\n\t\t\t\t\t\t<input type=\"text\" name=\"searchQuery\" [(ngModel)]=\"searchQuery\" placeholder=\"Place name...\" (input)=\"search()\" />\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\n\t\t\t\t<div class=\"check-block-wrap\"  id=\"select_places\">\n\t\t\t\t\t<div *ngFor=\"let place of places\">\n\t\t\t\t\t\t<div class=\"check-block\" [style.background-image]=\"'url('+ getCoverImage(place.cover_image) +')'\" [class.checked-block]=\"selected.indexOf(place.id)>=0\"\n\t\t\t\t\t\t (click)=\"select(place.id)\">\n\t\t\t\t\t\t\t<div class=\"check-ttl\">\n\t\t\t\t\t\t\t\t<h4>{{ place.name }} </h4>\n\t\t\t\t\t\t\t\t<p>{{ place.city_country_name }}</p>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\n\t\t\t\t\t<div class=\"col-md-12\" style=\"height: 50px; width: 100%; text-align:center\">\n\t\t\t\t\t\t<img src=\"data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==\" />\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"modal-footer\">\n\t\t\t\t<button type=\"button\" class=\"btn btn-grey\" [disabled]=\"5 - this.selected.length > 0 || loading\" (click)=\"continueStep4()\">{{ continueBtnText }}</button>\n\t\t\t\t<p class=\"sub-info\">(Next Step: Favorite Travel Styles)</p>\n\t\t\t</div>\n\t\t</div>\n\t</div>\n</div>"
+module.exports = "<!-- Modal -->\n<div class=\"modal fade signUpStep\" id=\"signUpStep4\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\"\n data-backdrop=\"static\" data-keyboard=\"false\">\n\t<div class=\"modal-dialog sign-up-step\" role=\"document\">\n\t\t<div class=\"modal-content\">\n\t\t\t<div class=\"modal-body\">\n\t\t\t\t<div class=\"title-layer\">\n\t\t\t\t\t<h3 class=\"step-ttl\">Select 3\n\t\t\t\t\t\t<span>favorite places</span> around the world</h3>\n\t\t\t\t\t<div class=\"step-info\">\n\t\t\t\t\t\tStep 4\n\t\t\t\t\t\t<span>of {{ this.signupSteps }}</span>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t\t\n\t\t\t\t<div class=\"search-block-wrap\">\n\t\t\t\t\t<div class=\"search-block\">\n\t\t\t\t\t\t<a class=\"search-btn\" href=\"#\">\n\t\t\t\t\t\t\t<i class=\"fa fa-search\"></i>\n\t\t\t\t\t\t</a>\n\t\t\t\t\t\t<input type=\"text\" name=\"searchQuery\" [(ngModel)]=\"searchQuery\" placeholder=\"Place name...\" (input)=\"search()\" />\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\n\t\t\t\t<div class=\"check-block-wrap\"  id=\"select_places\">\n\t\t\t\t\t<div *ngFor=\"let place of places\">\n\t\t\t\t\t\t<div class=\"check-block\" [style.background-image]=\"'url('+ getCoverImage(place.cover_image) +')'\" [class.checked-block]=\"selected.indexOf(place.id)>=0\"\n\t\t\t\t\t\t (click)=\"select(place.id)\">\n\t\t\t\t\t\t\t<div class=\"check-ttl\">\n\t\t\t\t\t\t\t\t<h4>{{ place.name }} </h4>\n\t\t\t\t\t\t\t\t<p>{{ place.city_country_name }}</p>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\n\t\t\t\t\t<div class=\"col-md-12\" style=\"height: 50px; width: 100%; text-align:center\">\n\t\t\t\t\t\t<img src=\"data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==\" />\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"modal-footer\">\n\t\t\t\t<button type=\"button\" class=\"btn btn-grey\"\n\t\t\t\t\t[ngClass]=\"{ 'btn-primary': this.selected.length >= 5 }\" \n\t\t\t\t\t[disabled]=\"this.selected.length < 5 || loading\" \n\t\t\t\t\t(click)=\"continueStep4()\">\n\t\t\t\t\t\t{{ continueBtnText }}\n\t\t\t\t</button>\n\t\t\t\t<p class=\"sub-info\">(Next Step: Favorite Travel Styles)</p>\n\t\t\t</div>\n\t\t</div>\n\t</div>\n</div>"
 
 /***/ }),
 
@@ -2981,8 +3053,8 @@ var Step4Component = (function () {
             template: __webpack_require__("../../../../../src/app/signup/step4/step4.component.html"),
             styles: [__webpack_require__("../../../../../src/app/signup/step4/step4.component.scss")]
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__services_index__["d" /* PlacesService */],
-            __WEBPACK_IMPORTED_MODULE_1__services_index__["f" /* UserService */],
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__services_index__["e" /* PlacesService */],
+            __WEBPACK_IMPORTED_MODULE_1__services_index__["g" /* UserService */],
             __WEBPACK_IMPORTED_MODULE_2__main_main_component__["a" /* MainComponent */]])
     ], Step4Component);
     return Step4Component;
@@ -2995,7 +3067,7 @@ var Step4Component = (function () {
 /***/ "../../../../../src/app/signup/step5/step5.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<!-- Modal -->\n<div class=\"modal fade signUpStep\" id=\"signUpStep5\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\"\n data-backdrop=\"static\" data-keyboard=\"false\">\n\t<div class=\"modal-dialog sign-up-step\" role=\"document\">\n\t\t<div class=\"modal-content\">\n\t\t\t<div class=\"modal-body\">\n\t\t\t\t<div class=\"title-layer\">\n\t\t\t\t\t<h3 class=\"step-ttl\">Select your preferred\n\t\t\t\t\t\t<span>travel styles</span>\n\t\t\t\t\t</h3>\n\t\t\t\t\t<div class=\"step-info\">\n\t\t\t\t\t\tStep 5\n\t\t\t\t\t\t<span>of {{ this.signupSteps }}</span>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\n\t\t\t\t<div class=\"search-block-wrap\">\n\t\t\t\t\t<div class=\"search-block\">\n\t\t\t\t\t\t<a class=\"search-btn\" href=\"#\">\n\t\t\t\t\t\t\t<i class=\"fa fa-search\"></i>\n\t\t\t\t\t\t</a>\n\t\t\t\t\t\t<input type=\"text\" name=\"searchQuery\" [(ngModel)]=\"searchQuery\" placeholder=\"Travel style...\" (input)=\"search()\" />\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\n\t\t\t\t<div class=\"check-block-wrap\" id=\"select_styles\">\n\t\t\t\t\t<div *ngFor=\"let style of styles\">\n\t\t\t\t\t\t<div class=\"check-block\" [style.background-image]=\"'url('+ getCoverImage(style.cover_image) +')'\" [class.checked-block]=\"selected.indexOf(style.id)>=0\"\n\t\t\t\t\t\t (click)=\"select(style.id)\">\n\t\t\t\t\t\t\t<div class=\"check-ttl\">\n\t\t\t\t\t\t\t\t<h4>{{ style.name }} </h4>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\n\t\t\t\t\t<div class=\"col-md-12\" style=\"height: 50px; width: 100%; text-align:center\">\n\t\t\t\t\t\t\t<img src=\"data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==\" />\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"modal-footer\">\n\t\t\t\t<button type=\"button\" class=\"btn btn-grey\" [disabled]=\"5 - this.selected.length || loading\" (click)=\"continueStep5()\">{{ continueBtnText }}</button>\n\t\t\t\t<p class=\"sub-info\">(Next Step: Favorite Activities)</p>\n\t\t\t</div>\n\t\t</div>\n\t</div>\n</div>"
+module.exports = "<!-- Modal -->\n<div class=\"modal fade signUpStep\" id=\"signUpStep5\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\"\n data-backdrop=\"static\" data-keyboard=\"false\">\n\t<div class=\"modal-dialog sign-up-step\" role=\"document\">\n\t\t<div class=\"modal-content\">\n\t\t\t<div class=\"modal-body\">\n\t\t\t\t<div class=\"title-layer\">\n\t\t\t\t\t<h3 class=\"step-ttl\">Select your preferred\n\t\t\t\t\t\t<span>travel styles</span>\n\t\t\t\t\t</h3>\n\t\t\t\t\t<div class=\"step-info\">\n\t\t\t\t\t\tStep 5\n\t\t\t\t\t\t<span>of {{ this.signupSteps }}</span>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\n\t\t\t\t<div class=\"search-block-wrap\">\n\t\t\t\t\t<div class=\"search-block\">\n\t\t\t\t\t\t<a class=\"search-btn\" href=\"#\">\n\t\t\t\t\t\t\t<i class=\"fa fa-search\"></i>\n\t\t\t\t\t\t</a>\n\t\t\t\t\t\t<input type=\"text\" name=\"searchQuery\" [(ngModel)]=\"searchQuery\" placeholder=\"Travel style...\" (input)=\"search()\" />\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\n\t\t\t\t<div class=\"check-block-wrap\" id=\"select_styles\">\n\t\t\t\t\t<div *ngFor=\"let style of styles\">\n\t\t\t\t\t\t<div class=\"check-block\" [style.background-image]=\"'url('+ getCoverImage(style.cover_image) +')'\" [class.checked-block]=\"selected.indexOf(style.id)>=0\"\n\t\t\t\t\t\t (click)=\"select(style.id)\">\n\t\t\t\t\t\t\t<div class=\"check-ttl\">\n\t\t\t\t\t\t\t\t<h4>{{ style.name }} </h4>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\n\t\t\t\t\t<div class=\"col-md-12\" style=\"height: 50px; width: 100%; text-align:center\">\n\t\t\t\t\t\t\t<img src=\"data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==\" />\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"modal-footer\">\n\t\t\t\t<button type=\"button\" class=\"btn btn-grey\"\n\t\t\t\t\t[ngClass]=\"{ 'btn-primary': this.selected.length >= 5 }\" \n\t\t\t\t\t[disabled]=\"this.selected.length < 5 || loading\" \n\t\t\t\t\t(click)=\"continueStep5()\">\n\t\t\t\t\t\t{{ continueBtnText }}\n\t\t\t\t</button>\n\t\t\t\t<p class=\"sub-info\">(Next Step: Favorite Activities)</p>\n\t\t\t</div>\n\t\t</div>\n\t</div>\n</div>"
 
 /***/ }),
 
@@ -3144,7 +3216,8 @@ var Step5Component = (function () {
                 //console.log(response);
                 _this.toggleSignup(true);
                 // continue to step 6
-                _this.mainC.openSignup(6);
+                //this.mainC.openSignup(6);
+                _this.mainC.openLogin();
             }
             else {
                 _this.toggleSignup(true);
@@ -3171,8 +3244,8 @@ var Step5Component = (function () {
             template: __webpack_require__("../../../../../src/app/signup/step5/step5.component.html"),
             styles: [__webpack_require__("../../../../../src/app/signup/step5/step5.component.scss")]
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__services_index__["e" /* TravelStylesService */],
-            __WEBPACK_IMPORTED_MODULE_1__services_index__["f" /* UserService */],
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__services_index__["f" /* TravelStylesService */],
+            __WEBPACK_IMPORTED_MODULE_1__services_index__["g" /* UserService */],
             __WEBPACK_IMPORTED_MODULE_2__main_main_component__["a" /* MainComponent */]])
     ], Step5Component);
     return Step5Component;

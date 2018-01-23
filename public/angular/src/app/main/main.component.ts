@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Router, ActivatedRoute } from '@angular/router';
+import { AuthenticationService, FacebookService } from '../../_services/index';
 
 declare var jquery: any;
 declare var $: any;
@@ -19,15 +20,26 @@ export class MainComponent implements OnInit {
 	constructor(
 		private route: ActivatedRoute,
 		private router: Router,
-		private titleService: Title) { }
+		private titleService: Title,
+		private authenticationService: AuthenticationService, 
+		private fbService: FacebookService) { }
 
 	ngOnInit() {
 		this.titleService.setTitle("Travooo");
 		$.getScript('assets/js/script.js');
 	}
 
+	FBlogin() {
+		this.fbService.login(this.loginCallBack);
+	}
+
+	loginCallBack(response)
+	{
+		console.log(response);
+	}
+
 	closeAll() {
-		this.titleService.setTitle("Travoo");
+		this.titleService.setTitle("Travooo");
 		$('.signUpProgress').hide();
 		$('.modal-backdrop').remove();
 		$('body').removeClass('modal-open');
@@ -36,15 +48,20 @@ export class MainComponent implements OnInit {
 	}
 
 	openLogin() {
-		this.titleService.setTitle("Travoo - Login");
-		$('.signUpProgress').hide();
-		$('.modal-backdrop').remove();
-		this.signupStepCount = 0;
-		this.router.navigate(['/login']);
+		if (this.authenticationService.isLoggedIn()) {
+			this.router.navigate(['/home']);
+		}
+		else{
+			this.titleService.setTitle("Travooo - Login");
+			$('.signUpProgress').hide();
+			$('.modal-backdrop').remove();
+			this.signupStepCount = 0;
+			this.router.navigate(['/login']);
+		}
 	}
 
 	openSignup(stepNum = 1) {
-		this.titleService.setTitle("Travoo - Signup");
+		this.titleService.setTitle("Travooo - Signup");
 		$('.signUpProgress').show();
 		$('.modal-backdrop').remove();
 		this.signupStepCount = stepNum;
@@ -60,8 +77,14 @@ export class MainComponent implements OnInit {
 	}
 
 	openForgotPassword() {
-		this.titleService.setTitle("Travoo - Reset Password");
+		this.titleService.setTitle("Travooo - Reset Password");
 		$('.modal-backdrop').remove();
 		this.router.navigate(['/forgot-password']);
+	}
+
+	openUrl(url){
+		this.titleService.setTitle("Travooo");
+		$('.modal-backdrop').remove();
+		this.router.navigate([url]);
 	}
 }

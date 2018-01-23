@@ -19,7 +19,7 @@ export class HomeComponent implements OnInit {
 		private titleService: Title) { }
 
 	ngOnInit() {
-		this.titleService.setTitle( "Travoo - Home" );
+		this.titleService.setTitle( "Travooo - Home" );
 		$.getScript('assets/js/script.js');
 	}
 

@@ -2,9 +2,9 @@
 <div class="modal fade signUpStep" id="signUpStep2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
 	<div class="modal-dialog sign-up-style" role="document">
 		<div class="modal-content">
-			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			<!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 				<span aria-hidden="true">&times;</span>
-			</button>
+			</button> -->
 			<div class="modal-body body-create">
 				<div class="top-layer">
 					<a href="#" class="logo-wrap">
@@ -31,9 +31,7 @@
 							<div class="form-group" [ngClass]="validate('age')">
 								<select class="custom-select" id="age" formControlName="age">
 									<option [selected]="age">Age</option>
-									<option value="1">26</option>
-									<option value="2">27</option>
-									<option value="3">28</option>
+									<option *ngFor="let a of ageArray" value="{{ a }}">{{ a }}</option>
 								</select>
 							</div>
 						</div>

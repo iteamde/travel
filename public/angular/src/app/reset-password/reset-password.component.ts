@@ -54,6 +54,11 @@ export class ResetPasswordComponent implements OnInit {
 			this.token = params['token'];
 		});
 
+		if(this.token == undefined)
+		{
+			this.mainC.openForgotPassword();
+		}
+
 		var credentials = {
 			password: this.password,
 			cpassword: this.cpassword
@@ -63,7 +68,7 @@ export class ResetPasswordComponent implements OnInit {
 		var t = this;
 		$('#reset_password').modal("show");
 		$('#reset_password').on('hidden.bs.modal', function (e) {
-			t.closeForgotPassword();
+			t.closeResetPassword();
 		});
 	}
 
@@ -71,7 +76,7 @@ export class ResetPasswordComponent implements OnInit {
 		this.sub.unsubscribe();
 	}
 
-	closeForgotPassword() {
+	closeResetPassword() {
 		this.mainC.closeAll();
 	}
 

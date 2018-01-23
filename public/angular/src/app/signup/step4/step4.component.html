@@ -39,7 +39,12 @@
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-grey" [disabled]="5 - this.selected.length > 0 || loading" (click)="continueStep4()">{{ continueBtnText }}</button>
+				<button type="button" class="btn btn-grey"
+					[ngClass]="{ 'btn-primary': this.selected.length >= 5 }" 
+					[disabled]="this.selected.length < 5 || loading" 
+					(click)="continueStep4()">
+						{{ continueBtnText }}
+				</button>
 				<p class="sub-info">(Next Step: Favorite Travel Styles)</p>
 			</div>
 		</div>
