@@ -48,6 +48,7 @@ Route::group(['prefix' => 'api'], function () {
         /*
          * All User Related Api's Routes Will Be Defined Here
          */
+        Route::post('create/facebook', 'UserController@FacebookSocialLogin');
         /* Sign Up/Create New User Api - 1 */
         Route::post('/create', 'UserController@createStep1');
         /* Sign Up/Create New User Api - 2 */

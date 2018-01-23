@@ -590,6 +590,139 @@ class ApiUser extends User {
 
     }
 
+    public static function facebook_social_login($post){
+        
+        $errors = [];
+
+        if(!isset($post['fbuid']) || empty($post['fbuid'])){
+            $errors[] = 'Fb user id not provided.';
+        }
+        
+        if(!isset($post['fullname']) || empty($post['fullname'])){
+            $errors[] = 'Full name not provided.';
+        }else{
+            
+            if (!preg_match('/^[a-zA-Z0-9._ ]+$/', $post['fullname'])) {
+                $errors[] = 'Fullname can only contain alphanumeric characters.';
+            }
+
+            if( strlen($post['fullname']) <= 6 || strlen($post['fullname']) >= 20 ){
+                $errors[] = 'Length of "Fullname" should be between (6-20) characters.';
+            }
+        }
+
+        if(!isset($post['email']) || empty($post['email'])){
+            $errors[] = 'Email not provided.';
+        }else{
+            if (!filter_var($post['email'], FILTER_VALIDATE_EMAIL)) {
+                $errors[] = "'" . $post['email'] . "' is not a valid email address.";
+            }
+        }
+        
+        if(!empty($errors)){
+            return Self::generateErrorMessage(false,404,$errors);
+        }
+
+        $user = Self::where(['email' => $post['email'], 'social_key' => $post['fbuid'], 'login_type' => Self::FACEBOOK])->first();
+
+        if(empty($user)){
+            $user = new Self;
+
+            $user->username   = 'FB_' . $post['fbuid'];
+            $user->name       =  $post['fullname'];
+            $user->email      = $post['email'];
+            $user->status     = 1;
+            $user->password   = sha1('fb_123456');
+            $user->login_type = Self::FACEBOOK;
+            $user->social_key = $post['fbuid']; 
+
+            // try{
+            //     $user = new Self;
+
+            //     $user->username   = 'FB_' . $post['fbuid'];
+            //     $user->name       =  $post['fullname'];
+            //     $user->email      = $post['email'];
+            //     $user->status     = 1;
+            //     $user->password   = sha1('fb_123456');
+            //     $user->login_type = Self::FACEBOOK;
+            //     $user->social_key = $post['fbuid'];
+            //     $user->save();
+            // }
+            // catch(\Exception $e){
+            //    // do task when error
+            //    echo $e->getMessage();   // insert query
+            // }
+
+            if($user->save()){
+               
+                /* Find Session For The Provided User */
+                $session = Session::where([ 'user_id' => $user->id])->first();
+
+                /* If Session Not Found Create New Session */
+                if (empty($session)) {
+                    $sessionData = [
+                        'user_id' => $user->id
+                    ];
+                    /* Save User Data To Session */
+                    session()->put('user', $user->getArrayResponse());
+                    session()->save();
+                    /* Find Last Entered Record In Session Array To Assign User Id */
+                    $session = Session::orderBy('last_activity', 'desc')->first();
+                    $session->user_id = $user->id;
+                    /* Assign 63 character long string to the id of session */
+                    $session->id = Self::generateRandomString();
+                    $session->save();
+                }
+
+                /* If Session Found, Return Session Token And User Information, with True Status */
+                return [
+                    'data' => [
+                        'user'  => $user->getArrayResponse(),
+                        'token' => $session->id,
+                    ],
+                    'success' => true,
+                    'code'    => 200
+                ];
+            }else{
+                return [
+                    'success' => false,
+                    'code' => 404,
+                    'data' => 'Error saving data in DB.'
+                ];
+            }
+        }else{
+
+                /* Find Session For The Provided User */
+                $session = Session::where([ 'user_id' => $user->id])->first();
+
+                /* If Session Not Found Create New Session */
+                if (empty($session)) {
+                    $sessionData = [
+                        'user_id' => $user->id
+                    ];
+                    /* Save User Data To Session */
+                    session()->put('user', $user->getArrayResponse());
+                    session()->save();
+                    /* Find Last Entered Record In Session Array To Assign User Id */
+                    $session = Session::orderBy('last_activity', 'desc')->first();
+                    $session->user_id = $user->id;
+                    /* Assign 63 character long string to the id of session */
+                    $session->id = Self::generateRandomString();
+                    $session->save();
+                }
+
+                /* If Session Found, Return Session Token And User Information, with True Status */
+                return [
+                    'data' => [
+                        'user'  => $user->getArrayResponse(),
+                        'token' => $session->id,
+                    ],
+                    'success' => true,
+                    'code'    => 200
+                ];
+        }
+    }
+
     public static function createUser($post) {
 
         /* New Api User */

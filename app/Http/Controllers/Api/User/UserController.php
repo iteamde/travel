@@ -485,4 +485,12 @@ class UserController extends Controller
 
         return $response;
     }
+
+    /* Social Media Login */
+    public function FacebookSocialLogin(Request $request){
+        
+        $response = User::facebook_social_login($request->input());
+       
+        return $response;
+    }
 }

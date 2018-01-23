@@ -49,6 +49,11 @@ class User extends Authenticatable
     const STATUS_INACTIVE = 0;
     const STATUS_DEACTIVE = 3;
 
+    //Login Type
+    const SIGNUP   = 1;
+    const FACEBOOK = 2;
+    const TWITTER  = 3;
+
     use UserScope,
         UserAccess,
         Notifiable,
