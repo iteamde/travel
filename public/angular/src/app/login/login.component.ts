@@ -44,10 +44,11 @@ export class LoginComponent implements OnInit {
 
 	ngOnInit() {
 		// reset login status
-		// this.authenticationService.logout();
+		this.authenticationService.logout();
 
 		if (this.authenticationService.isLoggedIn()) {
-			this.router.navigate(['/home']);
+			//this.router.navigate(['/home']);
+			this.mainC.openUrl('/home');
 		}
 
 		// get return url from route parameters or default to '/home'
@@ -62,6 +63,10 @@ export class LoginComponent implements OnInit {
 		$('#logIn').on('hidden.bs.modal', function (e) {
 			t.closeLogin();
 		});
+	}
+
+	FBlogin(){
+		this.mainC.FBlogin();
 	}
 
 	closeLogin(){
@@ -112,7 +117,9 @@ export class LoginComponent implements OnInit {
 					var t = this;
 					setTimeout(function () {
 						$.unblockUI();
-						t.router.navigate([t.returnUrl]);
+
+						t.mainC.openUrl(t.returnUrl);
+						//t.router.navigate([t.returnUrl]);
 					}, 1000);
 				} else {
 					this.errors.push(result);

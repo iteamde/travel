@@ -157,7 +157,8 @@ export class Step5Component implements OnInit {
 					this.toggleSignup(true);
 
 					// continue to step 6
-					this.mainC.openSignup(6);
+					//this.mainC.openSignup(6);
+					this.mainC.openLogin();
 				}
 				else {
 					this.toggleSignup(true);

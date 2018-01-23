@@ -33,6 +33,7 @@ export class Step2Component implements OnInit {
 
 	errors = [];
 	signupErrors = {name:"", age: "", gender: ""};
+	ageArray = [];
 
 	constructor(
 		private route: ActivatedRoute,
@@ -41,7 +42,13 @@ export class Step2Component implements OnInit {
 		private formBuilder: FormBuilder,
 		private titleService: Title,
 		private mainC: MainComponent
-	) { }
+	) { 
+		this.ageArray = [];
+		for(var i=13; i<81; i++)
+		{
+			this.ageArray.push(i);
+		}
+	}
 
 	ngOnInit() {
 		var step2 = {
