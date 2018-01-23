@@ -3347,7 +3347,8 @@ class ApiUser extends User {
             'mobile_number' => $this->mobile,
             'address' => $this->address,
             'age' => $this->age,
-            'nationality' => $this->nationality
+            'nationality' => $this->nationality,
+            'login_type' => $this->login_type
         ];
     }
 
