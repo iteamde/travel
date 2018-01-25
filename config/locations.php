@@ -32,6 +32,7 @@ use App\Models\City\CitiesCurrencies;
 use App\Models\City\CitiesEmergencyNumbers;
 use App\Models\City\CitiesHolidays;
 use App\Models\City\CitiesLanguagesSpoken;
+use App\Models\City\CitiesAdditionalLanguages;
 use App\Models\City\CitiesLifestyles;
 use App\Models\City\CitiesMedias;
 use App\Models\City\CitiesReligions;
@@ -170,6 +171,11 @@ return [
      * CitiesLanguagesSpoken Model used to access CitiesLanguagesSpoken relation from database.
      */
     'cities_languages_spoken_trans' =>  CitiesLanguagesSpoken::class,
+
+    /*
+     * CitiesLanguagesSpoken Model used to access CitiesLanguagesSpoken relation from database.
+     */
+    'cities_additional_languages_spoken' =>  CitiesAdditionalLanguages::class,
 
     /*
      * Regions model used by Access to create correct relations.

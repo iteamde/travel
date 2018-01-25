@@ -211,6 +211,7 @@ class CityController extends Controller
             'emergency_numbers' => $request->input('emergency_numbers_id') ? $request->input('emergency_numbers_id') : '',
             'holidays'  => $request->input('holidays_id') ? $request->input('holidays_id') : '',
             'languages_spoken' => $request->input('languages_spoken_id') ? $request->input('languages_spoken_id') : '',
+            'additional_languages_spoken' => $request->input('additional_languages_spoken_id') ? $request->input('additional_languages_spoken_id') : '',
             'lifestyles'  => $request->input('lifestyles_id') ? $request->input('lifestyles_id') : '',
             //'medias'  => $request->input('medias_id') ? $request->input('medias_id') : '',
             'religions'  => $request->input('religions_id') ? $request->input('religions_id') : '',
@@ -381,6 +382,18 @@ class CityController extends Controller
 
         $data['selected_languages_spoken'] = $selected_languages_spoken_arr;
 
+        /* Get Selected Languages Spoken */
+        $additional_selected_languages_spoken = $cities->additional_languages_spoken;
+        $additional_selected_languages_spoken_arr = [];
+        /* Get Selected Id Pair From Each Model */
+        foreach ($additional_selected_languages_spoken as $key => $value) {
+            // if(isset($value->languages_spoken->transsingle) && !empty($value->languages_spoken->transsingle)){
+                // $selected_airports_arr[$value->place->id] = $value->place->transsingle->title;
+                array_push($additional_selected_languages_spoken_arr,$value->languages_spoken->id);
+            // }
+        }
+
+        $data['additional_selected_languages_spoken'] = $additional_selected_languages_spoken_arr;
 
         /* Find All LanguagesSpoken In The System */
         $languages_spoken = LanguagesSpoken::get();
@@ -561,6 +574,7 @@ class CityController extends Controller
             'lifestyles'  => $request->input('lifestyles_id'),
             'emergency_numbers' => $request->input('emergency_numbers_id'),
             'languages_spoken' => $request->input('languages_spoken_id'),
+            'additional_languages_spoken' => $request->input('additional_languages_spoken_id'),
             'medias' => $request->input('medias_id'),
             'religions'  => $request->input('religions_id'),
             // 'safety_degree_id' => $request->input('safety_degree_id'),
@@ -595,8 +609,11 @@ class CityController extends Controller
         $country = $country->transsingle;
 
         /* Get Safety Degrees Information */
-        $safety_degree = $city->degree;
-        $safety_degree = $safety_degree->transsingle;
+        $safety_degree_temp = $city->degree;
+        $safety_degree      = null;
+        if(!empty($safety_degree_temp)){ 
+            $safety_degree = $safety_degree_temp->transsingle;
+        }
 
         /*Get Airport Locations*/
         $airports = $city->airports;
@@ -696,6 +713,26 @@ class CityController extends Controller
             }
         }
 
+        /* Get Additional Languages Spoken */
+        $additional_languages_spoken = $city->additional_languages_spoken;
+        $additional_languages_spoken_arr = [];
+
+        /* If Model Exist, Get Translated Title For Each Model */
+        if(!empty($additional_languages_spoken)){
+            foreach ($additional_languages_spoken as $key => $value) {
+
+                $language_spoken = $value->languages_spoken;
+
+                if(!empty($language_spoken)){
+
+                    $language_spoken = $language_spoken->transsingle;
+                    if(!empty($language_spoken)){
+                        array_push($additional_languages_spoken_arr,$language_spoken->title);
+                    }
+                }
+            }
+        }
+
         /* Get Languages Spoken */
         $lifestyles = $city->lifestyles;
         $lifestyles_arr = [];
@@ -780,6 +817,7 @@ class CityController extends Controller
             ->withHolidays($holidays_arr)
             ->withLifestyles($lifestyles_arr)
             ->withLanguages_spoken($languages_spoken_arr)
+            ->withAdditional_languages_spoken($additional_languages_spoken_arr)
             ->withMedias($medias_arr)
             ->withImages($images_arr)
             ->withEmergencynumbers($emergency_numbers_arr)

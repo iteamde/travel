@@ -265,6 +265,16 @@ use App\Models\Access\language\Languages;
                     </div><!--form control-->
                     <!-- Official Languages: End -->
 
+                    <!-- Additional Languages: Start -->
+                    <div class="form-group">
+                        {{ Form::label('title', 'Additional Languages', ['class' => 'col-lg-2 control-label']) }}
+
+                        <div class="col-lg-10">
+                            {{ Form::select('additional_languages_spoken_id[]', $languages_spoken , $data['additional_selected_languages_spoken'],['class' => 'select2Class form-control' , 'multiple' => 'multiple' ]) }}
+                        </div><!--col-lg-10-->
+                    </div><!--form control-->
+                    <!-- Additional Languages: End -->
+
                     <!-- Holidays: Start -->
                     <div class="form-group">
                         {{ Form::label('title', 'Holidays', ['class' => 'col-lg-2 control-label']) }}

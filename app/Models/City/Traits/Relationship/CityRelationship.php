@@ -123,6 +123,17 @@ trait CityRelationship
     }
 
     /**
+     * Many-to-Many relations with CitiesAdditionalLanguages.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function additional_languages_spoken()
+    {
+        // return $this->belongsToMany(config('access.regions'), config('access.regions_trans'), 'id', 'regions_id');
+        return $this->hasMany(config('locations.cities_additional_languages_spoken'), 'cities_id');
+    }
+
+    /**
      * Many-to-Many relations with CitiesMedias.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany

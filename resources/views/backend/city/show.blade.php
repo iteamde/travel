@@ -110,13 +110,13 @@
                     @endforeach
                     <!-- End: Currencies -->
 
-                    <!-- Start: Languages Spoken -->
+                    <!-- Start: Official Languages -->
                     <tr>
-                         <th> <h3 style="color:#0A8F27">Languages Spoken</h3></th><td></td>   
+                         <th> <h3 style="color:#0A8F27">Official Languages</h3></th><td></td>   
                     </tr>
                     @if(empty($languages_spoken))
                       <tr>
-                          <th> <p>No Languages Added.</p> </th>
+                          <th> <p>No Official Languages Added.</p> </th>
                       </tr>
                     @endif
                     @foreach($languages_spoken as $key => $language_spoken)
@@ -124,7 +124,23 @@
                           <th> <p><?=$language_spoken?></p> </th>
                       </tr>
                     @endforeach
-                    <!-- End: Languages Spoken -->
+                    <!-- End: Official Languages -->
+
+                    <!-- Start: Additional Languages -->
+                    <tr>
+                         <th> <h3 style="color:#0A8F27">Additional Languages</h3></th><td></td>   
+                    </tr>
+                    @if(empty($additional_languages_spoken))
+                      <tr>
+                          <th> <p>No Additional Languages Added.</p> </th>
+                      </tr>
+                    @endif
+                    @foreach($additional_languages_spoken as $key => $language_spoken)
+                      <tr>
+                          <th> <p><?=$language_spoken?></p> </th>
+                      </tr>
+                    @endforeach
+                    <!-- End: Additional Languages -->
 
                     <!-- Start: Holidays -->
                     <tr>
