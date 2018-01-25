@@ -213,6 +213,7 @@ class CountryController extends Controller
             'emergency_numbers' => $request->input('emergency_numbers_id'),
             'holidays' => $request->input('holidays_id'),
             'languages_spoken' => $request->input('languages_spoken_id'),
+            'additional_languages_spoken' => $request->input('additional_languages_spoken_id'),
             'lifestyles' => $request->input('lifestyles_id'),
             //'medias' => $request->input('medias_id'),
             'religions' => $request->input('religions_id'),
@@ -444,6 +445,23 @@ class CountryController extends Controller
 
         $data['selected_languages_spoken'] = $selected_languages_spoken_arr;
 
+        /* Get Selected Additional Languages Spoken */
+        $selected_languages_spoken = $country->additional_languages_spoken;
+        $selected_additional_languages_spoken_arr = [];
+
+        if(!empty($selected_languages_spoken)){
+            foreach ($selected_languages_spoken as $key => $value) {
+                $language_spoken = $value->language_spoken;
+
+                if(!empty($language_spoken)){
+                    array_push($selected_additional_languages_spoken_arr,$language_spoken->id);
+                }
+            }
+        }
+
+        $data['selected_languages_spoken'] = $selected_languages_spoken_arr;
+        $data['selected_additional_languages_spoken_arr'] = $selected_additional_languages_spoken_arr;
+
         /* Get All LanguagesSpoken For Dropdown */
         $languages_spoken = LanguagesSpoken::where(['active' => 1])->get();
         $languages_spoken_arr = [];
@@ -551,6 +569,7 @@ class CountryController extends Controller
             ->withEmergency_numbers($emergency_numbers_arr)
             ->withHolidays($holidays_arr)
             ->withLanguages_spoken($languages_spoken_arr)
+            ->withAdditional_languages_spoken($selected_additional_languages_spoken_arr)
             ->withLifestyles($lifestyles_arr)
             //->withMedias($medias_arr)
             ->withImages($selected_images)
@@ -616,6 +635,7 @@ class CountryController extends Controller
             'holidays'          => $request->input('holidays_id'),
             'emergency_numbers' => $request->input('emergency_numbers_id'),
             'languages_spoken'  => $request->input('languages_spoken_id'),
+            'additional_languages_spoken'  => $request->input('additional_languages_spoken_id'),
             'lifestyles'        => $request->input('lifestyles_id'),
             'medias'            => $request->input('medias_id'),
             'religions'         => $request->input('religions_id'),
@@ -640,18 +660,20 @@ class CountryController extends Controller
      * @return mixed
      */
     public function show($id, ManageCountryRequest $request)
-    {
+    {   
         $country = Countries::findOrFail(['id' => $id]);
         $countryTrans = CountriesTranslations::where(['countries_id' => $id])->get();
         $country = $country[0];
-
         /* Get Regions Information */
         $region = $country->region;
         $region = $region->transsingle;
 
         /* Get Safety Degrees Information */
-        $safety_degree = $country->degree;
-        $safety_degree = $safety_degree->transsingle;
+        $safety_degree_temp = $country->degree;
+        $safety_degree = null;
+        if(!empty($safety_degree_temp)){
+            $safety_degree = $safety_degree_temp->transsingle;
+        }
 
        /* Get All Selected Places For Airports */
         $airports = $country->airports;
@@ -761,6 +783,24 @@ class CountryController extends Controller
             }
         }
 
+        /* Get Selected LanguageSpoken */
+        $additional_languages_spoken = $country->additional_languages_spoken;
+        $additional_languages_spoken_arr = [];
+
+        if(!empty($additional_languages_spoken)){
+            foreach ($additional_languages_spoken as $key => $value) {
+                $language_spoken = $value->language_spoken;
+
+                if(!empty($language_spoken)){
+                    $language_spoken = $language_spoken->transsingle;
+
+                    if(!empty($language_spoken)){
+                        array_push($additional_languages_spoken_arr,$language_spoken->title);
+                    }
+                }
+            }
+        }
+
         /* Get Selected CountriesLifestyles */
         $lifestyles = $country->lifestyles;
         $lifestyles_arr = [];
@@ -826,7 +866,7 @@ class CountryController extends Controller
             $cover      = $country->cover;
             // $cover->url = str_replace('storage.travooo.com', 'https://localhost/travoo-api/storage/uploads', $cover->url);
         }
-
+        
         return view('backend.country.show')
             ->withCountry($country)
             ->withCountrytrans($countryTrans)
@@ -838,6 +878,7 @@ class CountryController extends Controller
             ->withEmergency_numbers($emergency_numbers_arr)
             ->withHolidays($holidays_arr)
             ->withLanguages_spoken($languages_spoken_arr)
+            ->withAdditional_languages_spoken($additional_languages_spoken_arr)
             ->withLifestyles($lifestyles_arr)
             ->withMedias($medias_arr)
             ->withImages($image_urls)

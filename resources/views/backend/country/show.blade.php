@@ -192,6 +192,22 @@
                     @endforeach
                     <!-- End: Languages Spoken -->
 
+                    <!-- Start: Additional Languages Spoken -->
+                    <tr>
+                         <th> <h3 style="color:#0A8F27">Additional Languages Spoken</h3></th><td></td>   
+                    </tr>
+                    @if(empty($additional_languages_spoken))
+                      <tr>
+                          <th> <p>No Additional Languages Spoken Added.</p> </th><td></td>
+                      </tr>
+                    @endif
+                    @foreach($additional_languages_spoken as $key => $language_spoken)
+                      <tr>
+                          <th> <p><?=$language_spoken?></p> </th><td></td>
+                      </tr>
+                    @endforeach
+                    <!-- End: Additional Languages Spoken -->
+
                     <!-- Start: Suitable Travel Styles -->
                     <tr>
                          <th> <h3 style="color:#0A8F27">Suitable Travel Styles</h3></th><td></td>   

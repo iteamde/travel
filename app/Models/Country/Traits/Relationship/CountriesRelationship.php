@@ -139,6 +139,17 @@ trait CountriesRelationship
     }
 
     /**
+     * Many-to-Many relations with CountriesAdditionalLanguagesSpoken.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function additional_languages_spoken()
+    {
+        // return $this->belongsToMany(config('access.regions'), config('access.regions_trans'), 'id', 'regions_id');
+        return $this->hasMany(config('locations.country_additional_languages_spoken'), 'countries_id');
+    }
+
+    /**
      * Many-to-Many relations with CountriesLifestyles.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany

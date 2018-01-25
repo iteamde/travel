@@ -241,15 +241,15 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
                     </div><!--form control-->
                     <!-- Religions: End -->
 
-                    <!-- SpokenLanguages: Start -->
+                    <!-- Official Languages: Start -->
                     <div class="form-group">
-                        {{ Form::label('title', 'Spoken Languages', ['class' => 'col-lg-2 control-label']) }}
+                        {{ Form::label('title', 'Official Languages', ['class' => 'col-lg-2 control-label']) }}
 
                         <div class="col-lg-10">
                             {{ Form::select('languages_spoken_id[]', $languages_spoken , null,['class' => 'select2Class form-control' , 'multiple' => 'multiple' ]) }}
                         </div><!--col-lg-10-->
                     </div><!--form control-->
-                    <!-- SpokenLanguages: End -->
+                    <!-- Official Languages: End -->
 
                     <!-- Lifestyles: Start -->
                     <div class="form-group">

@@ -19,6 +19,7 @@ use App\Models\Country\CountriesCapitals;
 use App\Models\Country\CountriesEmergencyNumbers;
 use App\Models\Country\CountriesHolidays;
 use App\Models\Country\CountriesLanguagesSpoken;
+use App\Models\Country\CountriesAdditionalLanguages;
 use App\Models\Country\CountriesLifestyles;
 use App\Models\Country\CountriesMedias;
 use App\Models\Country\CountriesReligions;
@@ -94,6 +95,11 @@ return [
      * CountriesLanguagesSpoken Model used to access CountriesLanguagesSpoken relation from database.
      */
     'country_languages_spoken_trans' =>  CountriesLanguagesSpoken::class,
+
+    /*
+     * CountriesAdditionalLanguages Model used to access CountriesAdditionalLanguages relation from database.
+     */
+    'country_additional_languages_spoken' =>  CountriesAdditionalLanguages::class,
 
     /*
      * CountriesLifestyles Model used to access CountriesLifestyles relation from database.

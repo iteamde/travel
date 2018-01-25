@@ -272,15 +272,25 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
                     </div><!--form control-->
                     <!-- Holidays: End -->
 
-                    <!-- Languages Spoken: Start -->
+                    <!-- Official Languages: Start -->
                     <div class="form-group">
-                        {{ Form::label('title', 'Languages Spoken', ['class' => 'col-lg-2 control-label']) }}
+                        {{ Form::label('title', 'Official Languages', ['class' => 'col-lg-2 control-label']) }}
 
                         <div class="col-lg-10">
                             {{ Form::select('languages_spoken_id[]', $languages_spoken , null,['class' => 'select2Class form-control' , 'multiple' => 'multiple']) }}
                         </div><!--col-lg-10-->
                     </div><!--form control-->
-                    <!-- Languages Spoken: End -->
+                    <!-- Official Languages: End -->
+
+                    <!-- Additional Languages: Start -->
+                    <div class="form-group">
+                        {{ Form::label('title', 'Additional Languages', ['class' => 'col-lg-2 control-label']) }}
+
+                        <div class="col-lg-10">
+                            {{ Form::select('additional_languages_spoken_id[]', $languages_spoken , null,['class' => 'select2Class form-control' , 'multiple' => 'multiple']) }}
+                        </div><!--col-lg-10-->
+                    </div><!--form control-->
+                    <!-- Additional Languages: End -->
 
                     <!-- Lifestyles: Start -->
                     <div class="form-group">

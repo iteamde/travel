@@ -11,6 +11,7 @@ use App\Models\Country\CountriesCapitals;
 use App\Models\Country\CountriesHolidays;
 use App\Models\Country\CountriesEmergencyNumbers;
 use App\Models\Country\CountriesLanguagesSpoken;
+use App\Models\Country\CountriesAdditionalLanguages;
 use App\Models\Country\CountriesLifestyles;
 use App\Models\Country\CountriesMedias;
 use App\Models\Country\CountriesReligions;
@@ -254,6 +255,16 @@ class CountryRepository extends BaseRepository
                     }
                 }
 
+                /* ADD ADDITIONAL LANGUAGES SPOKEN IN CountriesLanguagesSpoken */  
+                if(!empty($extra['additional_languages_spoken'])){
+                    foreach ($extra['additional_languages_spoken'] as $key => $value) {
+                        $CountriesLanguagesSpoken = new CountriesAdditionalLanguages;
+                        $CountriesLanguagesSpoken->countries_id = $model->id;
+                        $CountriesLanguagesSpoken->languages_spoken_id = $value;
+                        $CountriesLanguagesSpoken->save();
+                    }
+                }
+
                 /* Add Holidays In CountriesHolidays */
                 if(!empty($extra['holidays'])){
                     foreach ($extra['holidays'] as $key => $value) {
@@ -400,6 +411,14 @@ class CountryRepository extends BaseRepository
 
         /* Delete Previous CountriesLanguagesSpoken */
         $prev_languages_spoken = CountriesLanguagesSpoken::where(['countries_id' => $id])->get();
+        if(!empty($prev_languages_spoken)){
+            foreach ($prev_languages_spoken as $key => $value) {
+                $value->delete();
+            }
+        }
+
+        /* Delete Previous CountriesAdditionalLanguagesSpoken */
+        $prev_languages_spoken = CountriesAdditionalLanguages::where(['countries_id' => $id])->get();
         if(!empty($prev_languages_spoken)){
             foreach ($prev_languages_spoken as $key => $value) {
                 $value->delete();
@@ -594,6 +613,16 @@ class CountryRepository extends BaseRepository
                 if(!empty($extra['languages_spoken'])){
                     foreach ($extra['languages_spoken'] as $key => $value) {
                         $CountriesLanguagesSpoken = new CountriesLanguagesSpoken;
+                        $CountriesLanguagesSpoken->countries_id = $model->id;
+                        $CountriesLanguagesSpoken->languages_spoken_id = $value;
+                        $CountriesLanguagesSpoken->save();
+                    }
+                }
+
+                /* ADD ADDITIONAL LANGUAGES SPOKEN IN CountriesLanguagesSpoken */  
+                if(!empty($extra['additional_languages_spoken'])){
+                    foreach ($extra['additional_languages_spoken'] as $key => $value) {
+                        $CountriesLanguagesSpoken = new CountriesAdditionalLanguages;
                         $CountriesLanguagesSpoken->countries_id = $model->id;
                         $CountriesLanguagesSpoken->languages_spoken_id = $value;
                         $CountriesLanguagesSpoken->save();
