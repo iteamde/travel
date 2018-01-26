@@ -27,6 +27,7 @@ export class SignupComponent implements OnInit {
 		private titleService: Title) { }
 
 	ngOnInit() {	
+		alert('asd');
 	}
 
 }

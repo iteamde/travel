@@ -21,6 +21,8 @@ export class LoginComponent implements OnInit {
 	loading = false;
 	returnUrl: string;
 	loginBtnText: string = "Login";
+	FbButtonText: string = "Continue with Facebook";
+	TwitterButtonText: string = "Continue with Twitter";
 	errors = [];
 	emailMsg: string = "";
 	passwordMsg: string = "";
@@ -44,7 +46,7 @@ export class LoginComponent implements OnInit {
 
 	ngOnInit() {
 		// reset login status
-		this.authenticationService.logout();
+		//this.authenticationService.logout();
 
 		if (this.authenticationService.isLoggedIn()) {
 			//this.router.navigate(['/home']);
@@ -67,6 +69,10 @@ export class LoginComponent implements OnInit {
 
 	FBlogin(){
 		this.mainC.FBlogin();
+	}
+
+	TwitterLogin(){
+		this.mainC.TwitterLogin();
 	}
 
 	closeLogin(){
@@ -110,7 +116,7 @@ export class LoginComponent implements OnInit {
 			.subscribe(result => {
 				if (result === true) {
 					// close login modal and open homepage
-					$('#signUp').modal("hide");
+					$('#logIn').modal("hide");
 					$.blockUI({ message: '<h4> Loading...  Please wait! </h4>' });
 
 					// If login is successful, redirect to the home state

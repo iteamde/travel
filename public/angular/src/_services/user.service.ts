@@ -18,41 +18,42 @@ export class UserService extends ManagerService{
             super();
     }
 
+    signupFB(email: string, fbuid: string){
+        // get users from api
+        return this.http.post(this.apiPrefix+'/users/create/facebook', {email: email, fbuid: fbuid})
+            .map((response: Response) => response.json());
+    }
+
     // signup
     signupStep1(user: User) {
         // add authorization header with jwt token
         // let headers = new Headers({ 'Authorization': 'Bearer ' + "" });
         // let options = new RequestOptions({ body: user, headers: headers });
 
-        // get users from api
         return this.http.post(this.apiPrefix+'/users/create', user)
             .map((response: Response) => response.json());
     }
 
     // save user profile info
     signupStep2(user: User) {
-        // get users from api
         return this.http.post(this.apiPrefix+'/users/create/step2', user)
             .map((response: Response) => response.json());
     }
 
     // save user selected countries
     signupStep3(data) {
-        // get users from api
         return this.http.post(this.apiPrefix+'/users/set/fav_countries', data)
             .map((response: Response) => response.json());
     }
 
     // save user selected places
     signupStep4(data) {
-        // get users from api
         return this.http.post(this.apiPrefix+'/users/set/fav_places', data)
             .map((response: Response) => response.json());
     }
 
     // save user selected styles
     signupStep5(data) {
-        // get users from api
         return this.http.post(this.apiPrefix+'/users/set/travel_styles', data)
             .map((response: Response) => response.json());
     }

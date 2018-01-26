@@ -6,3 +6,11 @@
 .btn-primary{
     color: white !important;
 }
+
+header.main-header.step-header {
+    z-index: 1051 !important;
+}
+
+.blockUI{
+    z-index: 1052 !important;
+}

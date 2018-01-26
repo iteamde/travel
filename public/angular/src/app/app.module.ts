@@ -12,7 +12,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AlertComponent } from '../_directives/index';
 import { AuthGuard } from '../_guards/index';
 import { JwtInterceptor } from '../_helpers/index';
-import { AlertService, AuthenticationService, UserService, CountriesService, PlacesService , TravelStylesService, FacebookService} from '../_services/index';
+import { AlertService, AuthenticationService, UserService, CountriesService, PlacesService , TravelStylesService, FacebookService, TwitterService} from '../_services/index';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -77,7 +77,8 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
         CountriesService,
         PlacesService,
         TravelStylesService,
-        FacebookService
+        FacebookService,
+        TwitterService
 
         // provider used to create fake backend
         //fakeBackendProvider
