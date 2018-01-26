@@ -598,18 +598,18 @@ class ApiUser extends User {
             $errors[] = 'Fb user id not provided.';
         }
         
-        if(!isset($post['fullname']) || empty($post['fullname'])){
-            $errors[] = 'Full name not provided.';
-        }else{
+        // if(!isset($post['fullname']) || empty($post['fullname'])){
+        //     $errors[] = 'Full name not provided.';
+        // }else{
             
-            if (!preg_match('/^[a-zA-Z0-9._ ]+$/', $post['fullname'])) {
-                $errors[] = 'Fullname can only contain alphanumeric characters.';
-            }
+        //     if (!preg_match('/^[a-zA-Z0-9._ ]+$/', $post['fullname'])) {
+        //         $errors[] = 'Fullname can only contain alphanumeric characters.';
+        //     }
 
-            if( strlen($post['fullname']) <= 6 || strlen($post['fullname']) >= 20 ){
-                $errors[] = 'Length of "Fullname" should be between (6-20) characters.';
-            }
-        }
+        //     if( strlen($post['fullname']) <= 6 || strlen($post['fullname']) >= 20 ){
+        //         $errors[] = 'Length of "Fullname" should be between (6-20) characters.';
+        //     }
+        // }
 
         if(!isset($post['email']) || empty($post['email'])){
             $errors[] = 'Email not provided.';
@@ -623,35 +623,19 @@ class ApiUser extends User {
             return Self::generateErrorMessage(false,404,$errors);
         }
 
-        $user = Self::where(['email' => $post['email'], 'social_key' => $post['fbuid'], 'login_type' => Self::FACEBOOK])->first();
+        // $user = Self::where(['email' => $post['email'], 'social_key' => $post['fbuid'], 'login_type' => Self::FACEBOOK])->first();
+        $user = Self::where(['email' => $post['email']])->first();
 
         if(empty($user)){
+            
             $user = new Self;
 
             $user->username   = 'FB_' . $post['fbuid'];
-            $user->name       =  $post['fullname'];
             $user->email      = $post['email'];
             $user->status     = 1;
             $user->password   = sha1('fb_123456');
             $user->login_type = Self::FACEBOOK;
             $user->social_key = $post['fbuid']; 
-
-            // try{
-            //     $user = new Self;
-
-            //     $user->username   = 'FB_' . $post['fbuid'];
-            //     $user->name       =  $post['fullname'];
-            //     $user->email      = $post['email'];
-            //     $user->status     = 1;
-            //     $user->password   = sha1('fb_123456');
-            //     $user->login_type = Self::FACEBOOK;
-            //     $user->social_key = $post['fbuid'];
-            //     $user->save();
-            // }
-            // catch(\Exception $e){
-            //    // do task when error
-            //    echo $e->getMessage();   // insert query
-            // }
 
             if($user->save()){
                
@@ -679,6 +663,7 @@ class ApiUser extends User {
                     'data' => [
                         'user'  => $user->getArrayResponse(),
                         'token' => $session->id,
+                        'type'  => 'register'
                     ],
                     'success' => true,
                     'code'    => 200
@@ -691,6 +676,12 @@ class ApiUser extends User {
                 ];
             }
         }else{
+
+            $user->username   = 'FB_' . $post['fbuid'];
+            $user->login_type = Self::FACEBOOK;
+            $user->social_key = $post['fbuid'];
+
+            if($user->save()){
 
                 /* Find Session For The Provided User */
                 $session = Session::where([ 'user_id' => $user->id])->first();
@@ -716,10 +707,18 @@ class ApiUser extends User {
                     'data' => [
                         'user'  => $user->getArrayResponse(),
                         'token' => $session->id,
+                        'type'  => 'login'
                     ],
                     'success' => true,
                     'code'    => 200
                 ];
+            }else{
+                return [
+                    'success' => false,
+                    'code' => 404,
+                    'data' => 'Error saving data in DB.'
+                ];   
+            }
         }
     }
 
