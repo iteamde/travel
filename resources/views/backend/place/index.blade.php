@@ -285,58 +285,57 @@ table = $('#place-table').DataTable({
             });
             });
             $(document).ready(function(){
-
-            $(document).on('change', '#address-filter', function(){
+                $(document).on('change', '#address-filter', function(){
+                    var val = $(this).val();
+                    if (val != ''){
+                        // table.columns(5).search()
+                        if (table.columns(3).search() !== val) {
+                            table.columns(3).search("\\s*" + val + "\\s*", true).draw();
+                        }
+                    }
+                });
+                $(document).on('change', '#country-filter', function(){
+                    var val = $(this).val();
+                    if (val != ''){
+                        // table.columns(5).search()
+                        if (table.columns(4).search() !== val) {
+                            table.columns(4).search("^\\s*" + val + "\\s*$", true).draw();
+                        }
+                    }
+                });
+                $(document).on('change', '#city-filter', function(){
                 var val = $(this).val();
                 if (val != ''){
-                    // table.columns(5).search()
-                    if (table.columns(3).search() !== val) {
-                        table.columns(3).search("\\s*" + val + "\\s*", true).draw();
-                    }
+                // table.columns(5).search()
+                if (table.columns(5).search() !== val) {
+                table.columns(5).search("^\\s*" + val + "\\s*$", true).draw();
                 }
-            });
-            $(document).on('change', '#country-filter', function(){
+                }
+                });
+                });
+                $(document).ready(function(){
+                $(document).on('change', '#place-type-filter', function(){
                 var val = $(this).val();
                 if (val != ''){
-                    // table.columns(5).search()
-                    if (table.columns(4).search() !== val) {
-                        table.columns(4).search("^\\s*" + val + "\\s*$", true).draw();
-                    }
+                // table.columns(5).search()
+                if (table.columns(6).search() !== val) {
+                table.columns(6).search("^\\s*" + val + "\\s*$", true).draw();
                 }
-            });
-            $(document).on('change', '#city-filter', function(){
-            var val = $(this).val();
-            if (val != ''){
-            // table.columns(5).search()
-            if (table.columns(5).search() !== val) {
-            table.columns(5).search("^\\s*" + val + "\\s*$", true).draw();
-            }
-            }
-            });
-            });
-            $(document).ready(function(){
-            $(document).on('change', '#place-type-filter', function(){
-            var val = $(this).val();
-            if (val != ''){
-            // table.columns(5).search()
-            if (table.columns(6).search() !== val) {
-            table.columns(6).search("^\\s*" + val + "\\s*$", true).draw();
-            }
-            }
-            });
-            $(document).on('change', '#media-done-filter', function(){
-            var val = $(this).val();
-            if(val == '1' || val == 1){
-                table.columns(7).search("1", false).draw();
-            }else{
-                table.columns(7).search("0", false).draw();
-            }
-            // if (val != ''){
-            // table.columns(5).search()
-            // if (table.columns(7).search() !== val) {
-            // }
-            // }
-            });
+                }
+                });
+                $(document).on('change', '#media-done-filter', function(){
+                var val = $(this).val();
+                if(val == '1' || val == 1){
+                    table.columns(7).search("1", false).draw();
+                }else{
+                    table.columns(7).search("0", false).draw();
+                }
+                // if (val != ''){
+                // table.columns(5).search()
+                // if (table.columns(7).search() !== val) {
+                // }
+                // }
+                });
             });
 </script>
 <style>
@@ -346,9 +345,9 @@ table = $('#place-table').DataTable({
 </style>
 <style>
 
-    #place-table tr td:nth-child(5),th:nth-child(5){
+    /*#place-table tr td:nth-child(5),th:nth-child(5){
         display: none !important;
-    }
+    }*/
 
     table.dataTable tbody td.select-checkbox, table.dataTable tbody th.select-checkbox {
         width:20px !important;

@@ -16,6 +16,7 @@ Route::group([
          */
         Route::post('embassies/get', 'EmbassiesTableController')->name('embassies.get');
 
+        Route::get('embassies/countries/{term?}/{type?}/{q?}', 'EmbassiesTableController@getAddedCountries')->name('embassies.countries');
         Route::get('embassies/cities/{term?}/{type?}/{q?}', 'EmbassiesTableController@getAddedCities')->name('embassies.cities');
         Route::get('embassies/types/{term?}/{type?}/{q?}', 'EmbassiesTableController@getPlaceTypes')->name('embassies.types');
         

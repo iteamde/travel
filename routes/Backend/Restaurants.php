@@ -17,6 +17,7 @@ Route::group([
         Route::post('Restaurants/get', 'RestaurantsTableController')->name('restaurants.get');
         Route::get('Restaurants/import', 'RestaurantsController@import')->name('restaurants.import');
 
+        Route::get('Restaurants/countries/{term?}/{type?}/{q?}', 'RestaurantsTableController@getAddedCountries')->name('restaurants.countries');
         Route::get('Restaurants/cities/{term?}/{type?}/{q?}', 'RestaurantsTableController@getAddedCities')->name('restaurants.cities');
         Route::get('Restaurants/types/{term?}/{type?}/{q?}', 'RestaurantsTableController@getPlaceTypes')->name('restaurants.types');
 

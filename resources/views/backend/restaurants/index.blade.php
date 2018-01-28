@@ -39,6 +39,7 @@
                         <th>id</th>
                         <th>Title</th>
                         <th>Address</th>
+                        <th>Country</th>
                         <th>City</th>
                         <th>Place Type</th>
                         <th>Active</th>
@@ -85,7 +86,8 @@
                     {data: 'id', name: '{{config('restaurants.restaurants_table')}}.id'},
                     {data: 'transsingle.title', name: 'transsingle.title'},
 	                {data: 'transsingle.address', name: 'transsingle.address'},
-	                {data: 'city_title', name: 'city_title'},
+	                {data: 'country_title', name: '{{config('restaurants.restaurants_table')}}.countries_id'},
+                    {data: 'city_title', name: 'city_title'},
                     {data: 'place_id_title', name: 'place_id_title'},
 	                {
                         name: '{{config('restaurants.restaurants_table')}}.active',
@@ -143,12 +145,17 @@
                         var title = "hello";
                         if (count == 3){
                                 $(this).html('<input type="text" id="address-filter" class="custom-filters form-control" style="width:150px" />');
-                                }
-                        if(count == 4){
-                            $(this).html( '<select id="city-filter" class="custom-filters form-control"><option value="">Search City</option></select>' );
+                        }
+
+                        if (count == 4){
+                                $(this).html('<select id="country-filter" class="custom-filters form-control"><option value="">Search Country</option></select>');
                         }
 
                         if(count == 5){
+                            $(this).html( '<select id="city-filter" class="custom-filters form-control"><option value="">Search City</option></select>' );
+                        }
+
+                        if(count == 6){
                             $(this).html( '<select id="place-type-filter" class="custom-filters"><option value="">Search Place Type</option></select>' );
                         }
                         count++;
@@ -157,6 +164,21 @@
                     /*Append Cities To City Filter*/
                     // for (var key in cities) {
                         // $('#city-filter').append('<?php  $city_filter_html; ?>');
+                            $('#country-filter').select2({
+                                width:'100%',
+                                placeholder: 'Search Country',
+                                ajax: {
+                                url: '{{ route("admin.restaurants.restaurants.countries") }}',
+                                        dataType: 'json',
+                                        delay: 250,
+                                        processResults: function (data) {
+                                        return {
+                                        results: data
+                                        };
+                                        },
+                                        cache: true
+                                }
+                            });
                             $('#city-filter').select2({
                                 width:'100%',
                                 placeholder: 'Search City',
@@ -273,15 +295,24 @@
     $(document).ready(function(){
 
         $(document).on('change', '#address-filter', function(){
-                var val = $(this).val();
-                if (val != ''){
-                    // table.columns(5).search()
-                    if (table.columns(3).search() !== val) {
-                        table.columns(3).search("\\s*" + val + "\\s*", true).draw();
-                    }
+            var val = $(this).val();
+            if (val != ''){
+                // table.columns(5).search()
+                if (table.columns(3).search() !== val) {
+                    table.columns(3).search("\\s*" + val + "\\s*", true).draw();
                 }
-            });
+            }
+        });
 
+        $(document).on('change', '#country-filter', function(){
+            var val = $(this).val();
+            if (val != ''){
+                // table.columns(5).search()
+                if (table.columns(4).search() !== val) {
+                    table.columns(4).search("^\\s*" + val + "\\s*$", true).draw();
+                }
+            }
+        });
 
         $(document).on('change','#place-type-filter',function(){
             var val = $(this).val();

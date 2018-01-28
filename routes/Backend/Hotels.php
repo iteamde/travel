@@ -17,6 +17,7 @@ Route::group([
         Route::post('hotels/get', 'HotelsTableController')->name('hotels.get');
         Route::get('hotels/import', 'HotelsController@import')->name('hotels.import');
 
+        Route::get('hotels/countries/{term?}/{type?}/{q?}', 'HotelsTableController@getAddedCountries')->name('hotels.countries');
         Route::get('hotels/cities/{term?}/{type?}/{q?}', 'HotelsTableController@getAddedCities')->name('hotels.cities');
         Route::get('hotels/types/{term?}/{type?}/{q?}', 'HotelsTableController@getPlaceTypes')->name('hotels.types');
 

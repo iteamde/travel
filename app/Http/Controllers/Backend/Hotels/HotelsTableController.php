@@ -7,6 +7,8 @@ use Yajra\Datatables\Facades\Datatables;
 use App\Repositories\Backend\Hotels\HotelsRepository;
 use App\Http\Requests\Backend\Hotels\ManageHotelsRequest;
 
+use App\Models\Country\Countries;
+use App\Models\Country\CountriesTranslations;
 use App\Models\City\Cities;
 use App\Models\Place\Place;
 use App\Models\Hotels\Hotels;
@@ -53,17 +55,23 @@ class HotelsTableController extends Controller
                 return null;
             })
             ->addColumn('city_title',function($hotels){
-                // $place = Place::find($hotels->places_id);
-                // $temp = null;
-                // if(!empty($place)){
-                    $temp = Cities::find($hotels->cities_id);
-                // }
+                $temp = Cities::find($hotels->cities_id);
                 if(!empty($temp)){
                     if(!empty($temp->transsingle)){
                         return $temp->transsingle->title;
                     }
                 }
                 return null;
+            })
+            ->addColumn('country_title', function ($hotels) {
+
+                $temp = Countries::find($hotels->countries_id);
+
+                if(!empty($temp)){
+                    if(!empty($temp->transsingle)){
+                        return $temp->transsingle->title;
+                    }
+                }
             })
             ->addColumn('place_id_title',function($hotels){
                 // $temp = Place::find($hotels->places_id);
@@ -90,6 +98,48 @@ class HotelsTableController extends Controller
             })
             ->withTrashed()
             ->make(true);
+    }
+
+    public function getAddedCountries(){
+
+        $q = null;
+        if(isset($_GET['q'])){
+            $q = $_GET['q'];
+        }
+
+        $hotel = Hotels::distinct()->select('countries_id')->get();
+        $temp_country = [];
+        $filter_html = null;
+        $json = [];
+
+        if(!empty($hotel)){
+            foreach ($hotel as $key => $value) {
+                $country = null;
+                if(empty($q)){
+                    $country = Countries::find($value->countries_id);
+
+                }else{
+                    // $country = Countries::find($value->cities_id);
+                    $country = Countries::leftJoin('countries_trans', function($join){
+                        $join->on('countries_trans.countries_id', '=', 'countries.id');
+                    })->where('countries_trans.title', 'LIKE', '%'.$q.'%')->where(['countries.id' => $value->countries_id])->first();
+                }
+                if(!empty($country)){
+
+                    $transingle = CountriesTranslations::where(['countries_id' => $value->countries_id])->first();
+
+                    if(!empty($transingle)){
+                        // $temp_city[$city->id] = $city->transsingle->title;
+                        $filter_html .= '<option value="'.$value->countries_id.'">'.$transingle->title.'</option>';
+                        array_push($temp_country,$transingle->title);
+                         $json[] = ['id' => $value->countries_id, 'text' => $transingle->title];
+                    }
+                }
+            }
+        }
+        // exit;
+        echo json_encode($json);
+        // return $temp_city;
     }
 
     public function getAddedCities(){
