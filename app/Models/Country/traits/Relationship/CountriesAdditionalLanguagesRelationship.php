@@ -7,7 +7,7 @@ use App\Models\LanguagesSpoken\LanguagesSpoken;
 /**
  * Class CountriesAdditionalLanguagesRelationship.
  */
-trait CountriesAdditionalLanguagesRelationship
+trait CountriesadditionallanguagesRelationship
 {
     public function language_spoken()
     {
