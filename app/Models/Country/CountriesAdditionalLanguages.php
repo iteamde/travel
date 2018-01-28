@@ -3,7 +3,7 @@
 namespace App\Models\Country;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Country\Traits\Relationship\CountriesAdditionalLanguagesRelationship2;
+// use App\Models\Country\Traits\Relationship\CountriesAdditionalLanguagesRelationship2;
 
 class CountriesAdditionalLanguages extends Model
 {
@@ -16,7 +16,7 @@ class CountriesAdditionalLanguages extends Model
      */
     protected $table = 'countries_additional_languages';
     
-    use CountriesAdditionalLanguagesRelationship2;
+    // use CountriesAdditionalLanguagesRelationship2;
 
     public $timestamps = false;
 
