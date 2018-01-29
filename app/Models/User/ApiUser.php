@@ -590,7 +590,7 @@ class ApiUser extends User {
 
     }
 
-    public static function facebook_social_login($post){
+    public static function social_login($post){
         
         $errors = [];
 

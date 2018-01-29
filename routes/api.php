@@ -48,7 +48,14 @@ Route::group(['prefix' => 'api'], function () {
         /*
          * All User Related Api's Routes Will Be Defined Here
          */
+        /* Sign Up/Login - Facebook */
         Route::post('create/facebook', 'UserController@FacebookSocialLogin');
+        /* Sign Up/Login - Twitter  */
+        Route::post('create/twitter', 'UserController@TwitterSocialLogin');
+        /* Sign Up/Login - Twitter  */
+        Route::get('create/twitter', 'UserController@TwitterSocialLogin');
+        /* Sign Up/Login - Twitter  */
+        Route::get('create/twitter/login', 'UserController@TwitterSocialLoginPage');
         /* Sign Up/Create New User Api - 1 */
         Route::post('/create', 'UserController@createStep1');
         /* Sign Up/Create New User Api - 2 */

@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Api\User;
 use App\Models\User\ApiUser as User;
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
+use Abraham\TwitterOAuth\TwitterOAuth;
 
 /**
  * @resource User
@@ -489,8 +490,66 @@ class UserController extends Controller
     /* Social Media Login */
     public function FacebookSocialLogin(Request $request){
         
-        $response = User::facebook_social_login($request->input());
+        $response = User::social_login($request->input());
        
         return $response;
+    }
+
+    /* Twitter Login Api */
+    public function TwitterSocialLogin(){
+        print_r('here-twitter login api');
+        exit;
+        $response = User::social_login($request->input());
+       
+        return $response;   
+    }
+
+    /* Twitter Login Page */
+    public function TwitterSocialLoginPage(){
+        
+        set_time_limit(0);
+        require_once base_path().'/vendor/autoload.php';
+        // use Abraham\TwitterOAuth\TwitterOAuth;
+         
+        session_start();
+         
+        $config = require_once base_path().'/config/config.php';
+
+        $config = config('config');
+
+        // create TwitterOAuth object
+        $twitteroauth = new TwitterOAuth($config['consumer_key'], $config['consumer_secret']);
+         
+        // request token of application
+        $request_token = $twitteroauth->oauth(
+            'oauth/request_token', [
+                'oauth_callback' => $config['url_callback']
+            ]
+        );
+         
+        // throw exception if something gone wrong
+        if($twitteroauth->getLastHttpCode() != 200) {
+            throw new \Exception('There was a problem performing this request');
+        }
+            
+        // save token of application to session
+        $_SESSION['oauth_token'] = $request_token['oauth_token'];
+        $_SESSION['oauth_token_secret'] = $request_token['oauth_token_secret'];
+        
+        return [
+            'success' => true,
+            'data'    => $request_token['oauth_token'],
+            'code'    => 200
+        ]; 
+        // generate the URL to make request to authorize our application
+        // $url = $twitteroauth->url(
+        //     'oauth/authorize', [
+        //         'oauth_token' => $request_token['oauth_token']
+        //     ]
+        // );
+         
+        // and redirect
+        // header('Location: '. $url);
+        // die();
     }
 }
