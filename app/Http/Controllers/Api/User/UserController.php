@@ -490,18 +490,17 @@ class UserController extends Controller
     /* Social Media Login */
     public function FacebookSocialLogin(Request $request){
         
-        $response = User::social_login($request->input());
+        $response = User::facebook_social_login($request->input());
        
         return $response;
     }
 
     /* Twitter Login Api */
-    public function TwitterSocialLogin(){
-        print_r('here-twitter login api');
-        exit;
-        $response = User::social_login($request->input());
+    public function TwitterSocialLogin(Request $request){
+        
+        $response = User::twitter_social_login($request->input());
        
-        return $response;   
+        return $response;
     }
 
     /* Twitter Login Page */

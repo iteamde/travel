@@ -253,10 +253,8 @@ class ApiUser extends User {
             return false;
         } else {
             return [
-                'data' => [
-                    'error' => 400,
-                    'message' => $error,
-                ],
+                'data'    => $error,
+                'code'    => 400,
                 'success' => false
             ];
         }
@@ -590,7 +588,7 @@ class ApiUser extends User {
 
     }
 
-    public static function social_login($post){
+    public static function facebook_social_login($post){
         
         $errors = [];
 
@@ -680,6 +678,138 @@ class ApiUser extends User {
             $user->username   = 'FB_' . $post['fbuid'];
             $user->login_type = Self::FACEBOOK;
             $user->social_key = $post['fbuid'];
+
+            if($user->save()){
+
+                /* Find Session For The Provided User */
+                $session = Session::where([ 'user_id' => $user->id])->first();
+
+                /* If Session Not Found Create New Session */
+                if (empty($session)) {
+                    $sessionData = [
+                        'user_id' => $user->id
+                    ];
+                    /* Save User Data To Session */
+                    session()->put('user', $user->getArrayResponse());
+                    session()->save();
+                    /* Find Last Entered Record In Session Array To Assign User Id */
+                    $session = Session::orderBy('last_activity', 'desc')->first();
+                    $session->user_id = $user->id;
+                    /* Assign 63 character long string to the id of session */
+                    $session->id = Self::generateRandomString();
+                    $session->save();
+                }
+
+                /* If Session Found, Return Session Token And User Information, with True Status */
+                return [
+                    'data' => [
+                        'user'  => $user->getArrayResponse(),
+                        'token' => $session->id,
+                        'type'  => 'login'
+                    ],
+                    'success' => true,
+                    'code'    => 200
+                ];
+            }else{
+                return [
+                    'success' => false,
+                    'code' => 404,
+                    'data' => 'Error saving data in DB.'
+                ];   
+            }
+        }
+    }
+
+    public static function twitter_social_login($post){
+        
+        $errors = [];
+
+        if(!isset($post['twuid']) || empty($post['twuid'])){
+            $errors[] = 'Twitter user id not provided.';
+        }
+        
+        // if(!isset($post['fullname']) || empty($post['fullname'])){
+        //     $errors[] = 'Full name not provided.';
+        // }else{
+            
+        //     if (!preg_match('/^[a-zA-Z0-9._ ]+$/', $post['fullname'])) {
+        //         $errors[] = 'Fullname can only contain alphanumeric characters.';
+        //     }
+
+        //     if( strlen($post['fullname']) <= 6 || strlen($post['fullname']) >= 20 ){
+        //         $errors[] = 'Length of "Fullname" should be between (6-20) characters.';
+        //     }
+        // }
+
+        if(!isset($post['email']) || empty($post['email'])){
+            $errors[] = 'Email not provided.';
+        }else{
+            if (!filter_var($post['email'], FILTER_VALIDATE_EMAIL)) {
+                $errors[] = "'" . $post['email'] . "' is not a valid email address.";
+            }
+        }
+        
+        if(!empty($errors)){
+            return Self::generateErrorMessage(false,404,$errors);
+        }
+
+        // $user = Self::where(['email' => $post['email'], 'social_key' => $post['twuid'], 'login_type' => Self::FACEBOOK])->first();
+        $user = Self::where(['email' => $post['email']])->first();
+
+        if(empty($user)){
+            
+            $user = new Self;
+
+            $user->username   = 'Tw_' . $post['twuid'];
+            $user->email      = $post['email'];
+            $user->status     = 1;
+            $user->password   = sha1('SC_123456');
+            $user->login_type = Self::TWITTER;
+            $user->social_key = $post['twuid']; 
+
+            if($user->save()){
+               
+                /* Find Session For The Provided User */
+                $session = Session::where([ 'user_id' => $user->id])->first();
+
+                /* If Session Not Found Create New Session */
+                if (empty($session)) {
+                    $sessionData = [
+                        'user_id' => $user->id
+                    ];
+                    /* Save User Data To Session */
+                    session()->put('user', $user->getArrayResponse());
+                    session()->save();
+                    /* Find Last Entered Record In Session Array To Assign User Id */
+                    $session = Session::orderBy('last_activity', 'desc')->first();
+                    $session->user_id = $user->id;
+                    /* Assign 63 character long string to the id of session */
+                    $session->id = Self::generateRandomString();
+                    $session->save();
+                }
+
+                /* If Session Found, Return Session Token And User Information, with True Status */
+                return [
+                    'data' => [
+                        'user'  => $user->getArrayResponse(),
+                        'token' => $session->id,
+                        'type'  => 'register'
+                    ],
+                    'success' => true,
+                    'code'    => 200
+                ];
+            }else{
+                return [
+                    'success' => false,
+                    'code' => 404,
+                    'data' => 'Error saving data in DB.'
+                ];
+            }
+        }else{
+
+            $user->username   = 'TW_' . $post['twuid'];
+            $user->login_type = Self::TWITTER;
+            $user->social_key = $post['twuid'];
 
             if($user->save()){
 

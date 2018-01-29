@@ -50,6 +50,8 @@ Route::group(['prefix' => 'api'], function () {
          */
         /* Sign Up/Login - Facebook */
         Route::post('create/facebook', 'UserController@FacebookSocialLogin');
+        /* Sign Up/Login - Facebook */
+        Route::get('create/facebook', 'UserController@FacebookSocialLogin');
         /* Sign Up/Login - Twitter  */
         Route::post('create/twitter', 'UserController@TwitterSocialLogin');
         /* Sign Up/Login - Twitter  */
