@@ -528,7 +528,12 @@ class UserController extends Controller
          
         // throw exception if something gone wrong
         if($twitteroauth->getLastHttpCode() != 200) {
-            throw new \Exception('There was a problem performing this request');
+            return [
+                'success' => false,
+                'data'    => ['There was a problem performing this request'],
+                'code'    => 400
+            ]; 
+            // throw new \Exception('There was a problem performing this request');
         }
             
         // save token of application to session
