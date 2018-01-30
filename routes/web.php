@@ -5,20 +5,7 @@ use Illuminate\Http\Request;
  * Routes that are used between both frontend and backend.
  */
 
-Route::get('/', function () {
-    // return view('frontend.index');
-    return view('frontend.angular.index');
-});
-
-Route::get('/privacy-policy', function () {
-    // return view('frontend.index');
-    return view('frontend.angular.index');
-});
-
-Route::get('/terms-of-service', function () {
-    // return view('frontend.index');
-    return view('frontend.angular.index');
-});
+includeRouteFiles(__DIR__.'/Angular/');
 
 // Switch between the included languages
 Route::get('lang/{lang}', 'LanguageController@swap');
