@@ -107,7 +107,7 @@ var AuthGuard = (function () {
             return true;
         }
         // not logged in so redirect to login page with the return url
-        this.router.navigate(['/'], { queryParams: { returnUrl: state.url } });
+        this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
         return false;
     };
     AuthGuard = __decorate([
@@ -507,6 +507,50 @@ var AuthenticationService = (function (_super) {
         return this.http.post(this.apiPrefix + '/users/reset', { token: token, newpassword: pass, newpassword_confirmation: cpass })
             .map(function (response) { return response.json(); });
     };
+    AuthenticationService.prototype.facebookLogin = function (fbuid, email) {
+        var _this = this;
+        return this.http.post(this.apiPrefix + '/users/create/facebook', { fbuid: fbuid, email: email })
+            .map(function (response) {
+            if (response.ok) {
+                var result = response.json();
+                //console.log(result);
+                // api response is found
+                var apidata = result.data;
+                //console.log(apidata);
+                if (result.success) {
+                    // api result success is true
+                    var user = apidata.user;
+                    // login successful if there's a jwt token in the response
+                    var token = apidata.token;
+                    //console.log(token);
+                    var type = apidata.type;
+                    if (type == "login" && token) {
+                        // set token property
+                        _this.token = token;
+                        // store username and jwt token in local storage to keep user logged in between page refreshes
+                        localStorage.setItem('currentUser', JSON.stringify({ user: user, token: token }));
+                        // return true to indicate successful login
+                        return "login";
+                    }
+                    else if (type == "register") {
+                        localStorage.setItem('signupId', user.id);
+                        return "register";
+                    }
+                    else {
+                        return false;
+                    }
+                }
+                else {
+                    // api result success is false // return api result message
+                    return apidata.message;
+                }
+            }
+            else {
+                // api response not found
+                return false;
+            }
+        });
+    };
     AuthenticationService.prototype.logout = function () {
         // clear token remove user from local storage to log user out
         this.token = null;
@@ -598,6 +642,17 @@ var CountriesService = (function (_super) {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return FacebookService; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__manager_service__ = __webpack_require__("../../../../../src/_services/manager.service.ts");
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -608,24 +663,28 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
-var FacebookService = (function () {
+
+var FacebookService = (function (_super) {
+    __extends(FacebookService, _super);
     function FacebookService() {
+        var _this = _super.call(this) || this;
         $.getScript('assets/js/fb-script.js');
+        return _this;
     }
     // pass a call back method to be called after successful/unsuccessful login
-    FacebookService.prototype.login = function (callback) {
+    FacebookService.prototype.login = function (ref, callback) {
         var t = this;
         FB.login(function (response) {
-            if (response.status = "connected") {
+            if (response.status == "connected") {
                 var obj = response.authResponse;
                 var userid = obj.userID;
                 FB.api('/me?fields=id,name,email,picture', function (response1) {
                     //console.log(response1);
-                    callback({ status: true, user: response1 });
+                    callback(ref, { status: true, user: response1 });
                 });
             }
             else {
-                callback({ status: false });
+                callback(ref, { status: false });
             }
         }, { scope: 'public_profile,email' });
     };
@@ -634,7 +693,7 @@ var FacebookService = (function () {
         __metadata("design:paramtypes", [])
     ], FacebookService);
     return FacebookService;
-}());
+}(__WEBPACK_IMPORTED_MODULE_1__manager_service__["a" /* ManagerService */]));
 
 
 
@@ -649,7 +708,7 @@ var FacebookService = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__authentication_service__ = __webpack_require__("../../../../../src/_services/authentication.service.ts");
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_1__authentication_service__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__user_service__ = __webpack_require__("../../../../../src/_services/user.service.ts");
-/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "g", function() { return __WEBPACK_IMPORTED_MODULE_2__user_service__["a"]; });
+/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "h", function() { return __WEBPACK_IMPORTED_MODULE_2__user_service__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__countries_service__ = __webpack_require__("../../../../../src/_services/countries.service.ts");
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "c", function() { return __WEBPACK_IMPORTED_MODULE_3__countries_service__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__places_service__ = __webpack_require__("../../../../../src/_services/places.service.ts");
@@ -658,6 +717,9 @@ var FacebookService = (function () {
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "f", function() { return __WEBPACK_IMPORTED_MODULE_5__travel_styles_service__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__facebook_service__ = __webpack_require__("../../../../../src/_services/facebook.service.ts");
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "d", function() { return __WEBPACK_IMPORTED_MODULE_6__facebook_service__["a"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__twitter_service__ = __webpack_require__("../../../../../src/_services/twitter.service.ts");
+/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "g", function() { return __WEBPACK_IMPORTED_MODULE_7__twitter_service__["a"]; });
+
 
 
 
@@ -687,7 +749,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 var ManagerService = (function () {
     function ManagerService() {
-        this.apiPrefix = "/public/api";
+        this.apiPrefix = "http://localhost/travo/public/api";
     }
     ManagerService = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
@@ -824,6 +886,68 @@ var TravelStylesService = (function (_super) {
 
 /***/ }),
 
+/***/ "../../../../../src/_services/twitter.service.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TwitterService; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__manager_service__ = __webpack_require__("../../../../../src/_services/manager.service.ts");
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var TwitterService = (function (_super) {
+    __extends(TwitterService, _super);
+    function TwitterService() {
+        var _this = _super.call(this) || this;
+        $.getScript('assets/js/twitter-script.js');
+        return _this;
+    }
+    TwitterService.prototype.login = function (ref, callback) {
+        twttr.connect(function (response) {
+            console.log('response');
+            console.log(response);
+            if (response.success) {
+                //request = response;
+                callback(ref, { status: true });
+            }
+            else {
+                console.log("Twitter Login Error");
+                callback(ref, { status: false });
+            }
+            console.log(response);
+            // displayAuthorizeSection(JSON.stringify(response));
+        });
+    };
+    TwitterService = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
+        __metadata("design:paramtypes", [])
+    ], TwitterService);
+    return TwitterService;
+}(__WEBPACK_IMPORTED_MODULE_1__manager_service__["a" /* ManagerService */]));
+
+
+
+/***/ }),
+
 /***/ "../../../../../src/_services/user.service.ts":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -871,33 +995,23 @@ var UserService = (function (_super) {
         // add authorization header with jwt token
         // let headers = new Headers({ 'Authorization': 'Bearer ' + "" });
         // let options = new RequestOptions({ body: user, headers: headers });
-        // get users from api
-        return this.http.post(this.apiPrefix + '/users/create', user)
-            .map(function (response) { return response.json(); });
+        return this.http.post(this.apiPrefix + '/users/create', user);
     };
     // save user profile info
     UserService.prototype.signupStep2 = function (user) {
-        // get users from api
-        return this.http.post(this.apiPrefix + '/users/create/step2', user)
-            .map(function (response) { return response.json(); });
+        return this.http.post(this.apiPrefix + '/users/create/step2', user);
     };
     // save user selected countries
     UserService.prototype.signupStep3 = function (data) {
-        // get users from api
-        return this.http.post(this.apiPrefix + '/users/set/fav_countries', data)
-            .map(function (response) { return response.json(); });
+        return this.http.post(this.apiPrefix + '/users/set/fav_countries', data);
     };
     // save user selected places
     UserService.prototype.signupStep4 = function (data) {
-        // get users from api
-        return this.http.post(this.apiPrefix + '/users/set/fav_places', data)
-            .map(function (response) { return response.json(); });
+        return this.http.post(this.apiPrefix + '/users/set/fav_places', data);
     };
     // save user selected styles
     UserService.prototype.signupStep5 = function (data) {
-        // get users from api
-        return this.http.post(this.apiPrefix + '/users/set/travel_styles', data)
-            .map(function (response) { return response.json(); });
+        return this.http.post(this.apiPrefix + '/users/set/travel_styles', data);
     };
     UserService.prototype.getUsers = function () {
         // get users from api
@@ -935,12 +1049,18 @@ var UserService = (function (_super) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__signup_step5_step5_component__ = __webpack_require__("../../../../../src/app/signup/step5/step5.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__forgot_password_forgot_password_component__ = __webpack_require__("../../../../../src/app/forgot-password/forgot-password.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__reset_password_reset_password_component__ = __webpack_require__("../../../../../src/app/reset-password/reset-password.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__twitter_callback_twitter_callback_component__ = __webpack_require__("../../../../../src/app/twitter-callback/twitter-callback.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__privacy_policy_privacy_policy_component__ = __webpack_require__("../../../../../src/app/privacy-policy/privacy-policy.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__terms_of_service_terms_of_service_component__ = __webpack_require__("../../../../../src/app/terms-of-service/terms-of-service.component.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
+
+
 
 
 
@@ -979,8 +1099,20 @@ var routes = [
         component: __WEBPACK_IMPORTED_MODULE_3__home_home_component__["a" /* HomeComponent */],
         canActivate: [__WEBPACK_IMPORTED_MODULE_2__guards_index__["a" /* AuthGuard */]]
     },
+    {
+        path: 'twitter-callback',
+        component: __WEBPACK_IMPORTED_MODULE_14__twitter_callback_twitter_callback_component__["a" /* TwitterCallbackComponent */]
+    },
+    {
+        path: 'privacy-policy',
+        component: __WEBPACK_IMPORTED_MODULE_15__privacy_policy_privacy_policy_component__["a" /* PrivacyPolicyComponent */]
+    },
+    {
+        path: 'terms-of-service',
+        component: __WEBPACK_IMPORTED_MODULE_16__terms_of_service_terms_of_service_component__["a" /* TermsOfServiceComponent */]
+    },
     // otherwise redirect to home
-    { path: '**', redirectTo: '' }
+    { path: '**', redirectTo: '/' }
 ];
 var AppRoutingModule = (function () {
     function AppRoutingModule() {
@@ -1088,6 +1220,9 @@ var AppComponent = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__signup_step5_step5_component__ = __webpack_require__("../../../../../src/app/signup/step5/step5.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__forgot_password_forgot_password_component__ = __webpack_require__("../../../../../src/app/forgot-password/forgot-password.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__reset_password_reset_password_component__ = __webpack_require__("../../../../../src/app/reset-password/reset-password.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__twitter_callback_twitter_callback_component__ = __webpack_require__("../../../../../src/app/twitter-callback/twitter-callback.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_30__privacy_policy_privacy_policy_component__ = __webpack_require__("../../../../../src/app/privacy-policy/privacy-policy.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_31__terms_of_service_terms_of_service_component__ = __webpack_require__("../../../../../src/app/terms-of-service/terms-of-service.component.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1103,6 +1238,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 // used to create fake backend
 //import { fakeBackendProvider } from '../_helpers/index';
+
+
+
 
 
 
@@ -1158,13 +1296,16 @@ var AppModule = (function () {
                 __WEBPACK_IMPORTED_MODULE_25__signup_step4_step4_component__["a" /* Step4Component */],
                 __WEBPACK_IMPORTED_MODULE_26__signup_step5_step5_component__["a" /* Step5Component */],
                 __WEBPACK_IMPORTED_MODULE_27__forgot_password_forgot_password_component__["a" /* ForgotPasswordComponent */],
-                __WEBPACK_IMPORTED_MODULE_28__reset_password_reset_password_component__["a" /* ResetPasswordComponent */]
+                __WEBPACK_IMPORTED_MODULE_28__reset_password_reset_password_component__["a" /* ResetPasswordComponent */],
+                __WEBPACK_IMPORTED_MODULE_29__twitter_callback_twitter_callback_component__["a" /* TwitterCallbackComponent */],
+                __WEBPACK_IMPORTED_MODULE_30__privacy_policy_privacy_policy_component__["a" /* PrivacyPolicyComponent */],
+                __WEBPACK_IMPORTED_MODULE_31__terms_of_service_terms_of_service_component__["a" /* TermsOfServiceComponent */]
             ],
             providers: [
                 __WEBPACK_IMPORTED_MODULE_8__guards_index__["a" /* AuthGuard */],
                 __WEBPACK_IMPORTED_MODULE_10__services_index__["a" /* AlertService */],
                 __WEBPACK_IMPORTED_MODULE_10__services_index__["b" /* AuthenticationService */],
-                __WEBPACK_IMPORTED_MODULE_10__services_index__["g" /* UserService */],
+                __WEBPACK_IMPORTED_MODULE_10__services_index__["h" /* UserService */],
                 {
                     provide: __WEBPACK_IMPORTED_MODULE_3__angular_common_http__["a" /* HTTP_INTERCEPTORS */],
                     useClass: __WEBPACK_IMPORTED_MODULE_9__helpers_index__["a" /* JwtInterceptor */],
@@ -1173,7 +1314,8 @@ var AppModule = (function () {
                 __WEBPACK_IMPORTED_MODULE_10__services_index__["c" /* CountriesService */],
                 __WEBPACK_IMPORTED_MODULE_10__services_index__["e" /* PlacesService */],
                 __WEBPACK_IMPORTED_MODULE_10__services_index__["f" /* TravelStylesService */],
-                __WEBPACK_IMPORTED_MODULE_10__services_index__["d" /* FacebookService */]
+                __WEBPACK_IMPORTED_MODULE_10__services_index__["d" /* FacebookService */],
+                __WEBPACK_IMPORTED_MODULE_10__services_index__["g" /* TwitterService */]
                 // provider used to create fake backend
                 //fakeBackendProvider
             ],
@@ -1603,7 +1745,7 @@ var LeftSideBarComponent = (function () {
 /***/ "../../../../../src/app/login/login.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<!-- Modal -->\n\n<div class=\"modal fade\" id=\"logIn\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\">\n  \t<div class=\"modal-dialog sign-up-style\" role=\"document\">\n    \t<div class=\"modal-content\">\n\t\t\t<button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\n\t\t\t\t<span aria-hidden=\"true\">&times;</span>\n\t\t\t</button>\n\t\t\t<div class=\"modal-body\">\n\t\t\t\t<div class=\"top-layer\">\n\t\t\t\t\t<a href=\"#\" class=\"logo-wrap\">\n\t\t\t\t\t\t<img src=\"./assets/image/main-logo.png\" alt=\"\">\n\t\t\t\t\t</a>\n\t\t\t\t\t<h4 class=\"title\">Login to your account</h4>\n\t\t\t\t\t<!-- <p class=\"sub-ttl\">and write a text here</p> -->\n\t\t\t\t\t<p class=\"sub-ttl error-message\" *ngFor=\"let msg of errors\">{{ msg }}</p>\n\t\t\t\t</div>\n\n\t\t\t\t<form class=\"login-form\" name=\"loginForm\" [formGroup]=\"loginForm\" (ngSubmit)=\"login()\" novalidate>\n\t\t\t\t\t<div class=\"form-group\" [ngClass]=\"setClassEmail()\">\n\t\t\t\t\t\t<!-- <label for=\"username\">Username</label> -->\n\t\t\t\t\t\t<input class=\"form-control\" type=\"email\" name=\"email\" formControlName=\"email\" placeholder=\"Email address\" aria-describedby=\"emailHelp\" />\n\t\t\t\t\t\t<!-- <input type=\"email\" class=\"form-control\" name=\"username\" [(ngModel)]=\"model.username\" #username=\"ngModel\" required aria-describedby=\"emailHelp\" placeholder=\"Email address\"/> -->\n\t\t\t\t\t\t<!-- <div *ngIf=\"f.submitted && !username.valid\" class=\"help-block\">Email is required</div> -->\n\t\t\t\t\t\t<div class=\"form-control-feedback\" *ngIf=\"email.errors && (email.dirty || email.touched)\">\n\t\t\t\t\t\t\t<p>{{ emailMsg }}</p>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t\n\t\t\t\t\t<div class=\"form-group\" [ngClass]=\"setClassPassword()\">\n\t\t\t\t\t\t<!-- <label for=\"password\">Password</label> -->\n\t\t\t\t\t\t<input class=\"form-control\" type=\"password\" name=\"password\" formControlName=\"password\" placeholder=\"Password\" aria-describedby=\"pass\" />\n\t\t\t\t\t\t<!-- <input type=\"password\" class=\"form-control\" name=\"password\" [(ngModel)]=\"model.password\" #password=\"ngModel\" required aria-describedby=\"pass\" placeholder=\"Password\"/> -->\n\t\t\t\t\t\t<!-- <div *ngIf=\"f.submitted && !password.valid\" class=\"help-block\">Password is required</div> -->\n\t\t\t\t\t\t<div class=\"form-control-feedback\" *ngIf=\"password.errors && (password.dirty || password.touched)\">\n\t\t\t\t\t\t\t<p>{{ passwordMsg }}</p>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t\n\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t<a class=\"forget-password-link\" (click)=\"openForgotPassword()\">Forget your password?</a>\n\t\t\t\t\t</div>\n\t\t\t\t\t\n\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t<button class=\"btn btn-primary\" type=\"submit\" [disabled]=\"!loginForm.valid || loading\">{{ loginBtnText }}</button>\n\t\t\t\t\t\t<!-- <button [disabled]=\"loading\" class=\"btn btn-primary\">{{ loginBtnText }}</button> -->\n\t\t\t\t\t\t<!-- <img *ngIf=\"loading\" src=\"data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==\" /> -->\n\t\t\t\t\t\t<!-- <a [routerLink]=\"['/register']\" class=\"btn btn-link\">Register</a> -->\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t<p class=\"simple-txt\">Or</p>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t<button type=\"button\" class=\"btn btn-primary\" (click)=\"FBlogin()\">\n\t\t\t\t\t\t\t<i class=\"fa fa-facebook side-icon\"></i>\n\t\t\t\t\t\t\tContinue with Facebook\n\t\t\t\t\t\t</button>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t<button type=\"button\" class=\"btn btn-info\">\n\t\t\t\t\t\t\t<i class=\"fa fa-twitter side-icon\"></i>\n\t\t\t\t\t\t\tContinue with Twitter\n\t\t\t\t\t\t</button>\n\t\t\t\t\t</div>\n\t\t\t\t</form>\n\t\t\t</div>\n\t\t\t<div class=\"modal-footer\">\n\t\t\t\t<p class=\"foot-txt\">You are not a member yet?</p>\n\t\t\t\t<button type=\"button\" class=\"btn btn-grey\" (click)=\"openSignup()\">Sign Up</button>\n\t\t\t</div>\n    \t</div>\n  \t</div>\n</div>"
+module.exports = "<!-- Modal -->\n\n<div class=\"modal fade\" id=\"logIn\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\">\n  \t<div class=\"modal-dialog sign-up-style\" role=\"document\">\n    \t<div class=\"modal-content\">\n\t\t\t<button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\n\t\t\t\t<span aria-hidden=\"true\">&times;</span>\n\t\t\t</button>\n\t\t\t<div class=\"modal-body\">\n\t\t\t\t<div class=\"top-layer\">\n\t\t\t\t\t<a href=\"#\" class=\"logo-wrap\">\n\t\t\t\t\t\t<img src=\"./assets/image/main-logo.png\" alt=\"\">\n\t\t\t\t\t</a>\n\t\t\t\t\t<h4 class=\"title\">Login to your account</h4>\n\t\t\t\t\t<!-- <p class=\"sub-ttl\">and write a text here</p> -->\n\t\t\t\t\t<p class=\"sub-ttl error-message\" *ngFor=\"let msg of errors\">{{ msg }}</p>\n\t\t\t\t</div>\n\n\t\t\t\t<form class=\"login-form\" name=\"loginForm\" [formGroup]=\"loginForm\" (ngSubmit)=\"login()\" novalidate>\n\t\t\t\t\t<div class=\"form-group\" [ngClass]=\"setClassEmail()\">\n\t\t\t\t\t\t<!-- <label for=\"username\">Username</label> -->\n\t\t\t\t\t\t<input class=\"form-control\" type=\"email\" name=\"email\" formControlName=\"email\" placeholder=\"Email address\" aria-describedby=\"emailHelp\" />\n\t\t\t\t\t\t<!-- <input type=\"email\" class=\"form-control\" name=\"username\" [(ngModel)]=\"model.username\" #username=\"ngModel\" required aria-describedby=\"emailHelp\" placeholder=\"Email address\"/> -->\n\t\t\t\t\t\t<!-- <div *ngIf=\"f.submitted && !username.valid\" class=\"help-block\">Email is required</div> -->\n\t\t\t\t\t\t<div class=\"form-control-feedback\" *ngIf=\"email.errors && (email.dirty || email.touched)\">\n\t\t\t\t\t\t\t<p>{{ emailMsg }}</p>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t\n\t\t\t\t\t<div class=\"form-group\" [ngClass]=\"setClassPassword()\">\n\t\t\t\t\t\t<!-- <label for=\"password\">Password</label> -->\n\t\t\t\t\t\t<input class=\"form-control\" type=\"password\" name=\"password\" formControlName=\"password\" placeholder=\"Password\" aria-describedby=\"pass\" />\n\t\t\t\t\t\t<!-- <input type=\"password\" class=\"form-control\" name=\"password\" [(ngModel)]=\"model.password\" #password=\"ngModel\" required aria-describedby=\"pass\" placeholder=\"Password\"/> -->\n\t\t\t\t\t\t<!-- <div *ngIf=\"f.submitted && !password.valid\" class=\"help-block\">Password is required</div> -->\n\t\t\t\t\t\t<div class=\"form-control-feedback\" *ngIf=\"password.errors && (password.dirty || password.touched)\">\n\t\t\t\t\t\t\t<p>{{ passwordMsg }}</p>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t\n\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t<a class=\"forget-password-link\" (click)=\"openForgotPassword()\">Forget your password?</a>\n\t\t\t\t\t</div>\n\t\t\t\t\t\n\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t<button class=\"btn btn-primary\" type=\"submit\" [disabled]=\"!loginForm.valid || loading\">{{ loginBtnText }}</button>\n\t\t\t\t\t\t<!-- <button [disabled]=\"loading\" class=\"btn btn-primary\">{{ loginBtnText }}</button> -->\n\t\t\t\t\t\t<!-- <img *ngIf=\"loading\" src=\"data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==\" /> -->\n\t\t\t\t\t\t<!-- <a [routerLink]=\"['/register']\" class=\"btn btn-link\">Register</a> -->\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t<p class=\"simple-txt\">Or</p>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t<button type=\"button\" class=\"btn btn-primary\" (click)=\"FBlogin()\">\n\t\t\t\t\t\t\t<i class=\"fa fa-facebook side-icon\"></i>\n\t\t\t\t\t\t\t{{ FbButtonText }}\n\t\t\t\t\t\t</button>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t<button type=\"button\" class=\"btn btn-info\" (click)=\"TwitterLogin()\">\n\t\t\t\t\t\t\t<i class=\"fa fa-twitter side-icon\"></i>\n\t\t\t\t\t\t\t{{ TwitterButtonText }}\n\t\t\t\t\t\t</button>\n\t\t\t\t\t</div>\n\t\t\t\t</form>\n\t\t\t</div>\n\t\t\t<div class=\"modal-footer\">\n\t\t\t\t<p class=\"foot-txt\">You are not a member yet?</p>\n\t\t\t\t<button type=\"button\" class=\"btn btn-grey\" (click)=\"openSignup()\">Sign Up</button>\n\t\t\t</div>\n    \t</div>\n  \t</div>\n</div>"
 
 /***/ }),
 
@@ -1661,6 +1803,8 @@ var LoginComponent = (function () {
         this.mainC = mainC;
         this.loading = false;
         this.loginBtnText = "Login";
+        this.FbButtonText = "Continue with Facebook";
+        this.TwitterButtonText = "Continue with Twitter";
         this.errors = [];
         this.emailMsg = "";
         this.passwordMsg = "";
@@ -1693,6 +1837,9 @@ var LoginComponent = (function () {
     };
     LoginComponent.prototype.FBlogin = function () {
         this.mainC.FBlogin();
+    };
+    LoginComponent.prototype.TwitterLogin = function () {
+        this.mainC.TwitterLogin();
     };
     LoginComponent.prototype.closeLogin = function () {
         this.mainC.closeAll();
@@ -1730,7 +1877,7 @@ var LoginComponent = (function () {
             .subscribe(function (result) {
             if (result === true) {
                 // close login modal and open homepage
-                $('#signUp').modal("hide");
+                $('#logIn').modal("hide");
                 $.blockUI({ message: '<h4> Loading...  Please wait! </h4>' });
                 // If login is successful, redirect to the home state
                 var t = _this;
@@ -1824,12 +1971,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 var MainComponent = (function () {
-    function MainComponent(route, router, titleService, authenticationService, fbService) {
+    function MainComponent(route, router, titleService, authenticationService, fbService, twtService, ngZone) {
         this.route = route;
         this.router = router;
         this.titleService = titleService;
         this.authenticationService = authenticationService;
         this.fbService = fbService;
+        this.twtService = twtService;
+        this.ngZone = ngZone;
         this.signupSteps = 8;
         this.signupStepCount = 0;
         this.progressWidth = "0%";
@@ -1839,20 +1988,64 @@ var MainComponent = (function () {
         $.getScript('assets/js/script.js');
     };
     MainComponent.prototype.FBlogin = function () {
-        this.fbService.login(this.loginCallBack);
+        this.toggleSocialLogin(false);
+        this.fbService.login(this, this.loginCallBack);
     };
-    MainComponent.prototype.loginCallBack = function (response) {
-        console.log(response);
+    MainComponent.prototype.TwitterLogin = function () {
+        this.toggleSocialLogin(false);
+        this.twtService.login(this, this.loginCallBack);
+    };
+    MainComponent.prototype.loginCallBack = function (ref, response) {
+        //console.log(response);
+        if (response.status) {
+            var user = response.user;
+            ref.authenticationService.facebookLogin(user.id, user.email)
+                .subscribe(function (result) {
+                ref.toggleSocialLogin(true);
+                if (result === "login") {
+                    // close login modal and open homepage
+                    $('#logIn').modal("hide");
+                    $.blockUI({ message: '<h4> Loading...  Please wait! </h4>' });
+                    // If login is successful, redirect to the home state
+                    setTimeout(function () {
+                        $.unblockUI();
+                        ref.openUrl('/home');
+                    }, 1000);
+                }
+                else if (result === "register") {
+                    ref.openSignup(2);
+                }
+                else {
+                    // login/signup failed
+                }
+            });
+        }
+        else {
+            // failed to login to fb
+            ref.toggleSocialLogin(true);
+        }
+    };
+    MainComponent.prototype.toggleSocialLogin = function (state) {
+        if (state) {
+            $.unblockUI();
+        }
+        else {
+            $.blockUI({ message: '<h4> Loading...  Please wait! </h4>' });
+        }
     };
     MainComponent.prototype.closeAll = function () {
+        var _this = this;
         this.titleService.setTitle("Travooo");
         $('.signUpProgress').hide();
         $('.modal-backdrop').remove();
         $('body').removeClass('modal-open');
         this.signupStepCount = 0;
-        this.router.navigate(['/']);
+        this.ngZone.run(function () {
+            _this.router.navigateByUrl('/');
+        });
     };
     MainComponent.prototype.openLogin = function () {
+        var _this = this;
         if (this.authenticationService.isLoggedIn()) {
             this.router.navigate(['/home']);
         }
@@ -1861,32 +2054,42 @@ var MainComponent = (function () {
             $('.signUpProgress').hide();
             $('.modal-backdrop').remove();
             this.signupStepCount = 0;
-            this.router.navigate(['/login']);
+            this.ngZone.run(function () {
+                _this.router.navigateByUrl('/login');
+            });
         }
     };
     MainComponent.prototype.openSignup = function (stepNum) {
+        var _this = this;
         if (stepNum === void 0) { stepNum = 1; }
         this.titleService.setTitle("Travooo - Signup");
         $('.signUpProgress').show();
         $('.modal-backdrop').remove();
         this.signupStepCount = stepNum;
         this.progressWidth = (this.signupStepCount / this.signupSteps) * 100 + "%";
+        var url = '/signup/step' + stepNum;
         if (stepNum == 1) {
-            this.router.navigate(['/signup']);
+            url = '/signup';
         }
-        else {
-            this.router.navigate(['/signup/step' + stepNum]);
-        }
+        this.ngZone.run(function () {
+            _this.router.navigateByUrl(url);
+        });
     };
     MainComponent.prototype.openForgotPassword = function () {
+        var _this = this;
         this.titleService.setTitle("Travooo - Reset Password");
         $('.modal-backdrop').remove();
-        this.router.navigate(['/forgot-password']);
+        this.ngZone.run(function () {
+            _this.router.navigateByUrl('/forgot-password');
+        });
     };
     MainComponent.prototype.openUrl = function (url) {
+        var _this = this;
         this.titleService.setTitle("Travooo");
         $('.modal-backdrop').remove();
-        this.router.navigate([url]);
+        this.ngZone.run(function () {
+            _this.router.navigateByUrl(url);
+        });
     };
     MainComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
@@ -1898,7 +2101,9 @@ var MainComponent = (function () {
             __WEBPACK_IMPORTED_MODULE_2__angular_router__["c" /* Router */],
             __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser__["b" /* Title */],
             __WEBPACK_IMPORTED_MODULE_3__services_index__["b" /* AuthenticationService */],
-            __WEBPACK_IMPORTED_MODULE_3__services_index__["d" /* FacebookService */]])
+            __WEBPACK_IMPORTED_MODULE_3__services_index__["d" /* FacebookService */],
+            __WEBPACK_IMPORTED_MODULE_3__services_index__["g" /* TwitterService */],
+            __WEBPACK_IMPORTED_MODULE_0__angular_core__["N" /* NgZone */]])
     ], MainComponent);
     return MainComponent;
 }());
@@ -1962,6 +2167,67 @@ var PostsComponent = (function () {
         __metadata("design:paramtypes", [])
     ], PostsComponent);
     return PostsComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "../../../../../src/app/privacy-policy/privacy-policy.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"main-wrapper\">\n\t<header class=\"main-header step-header\">\n\t\t<!-- use class .step-header for set header above of modal-backgrop layer -->\n\t\t<div class=\"container\">\n\t\t\t<nav class=\"navbar navbar-toggleable-md navbar-light bg-faded\">\n\t\t\t\t<!-- <button class=\"navbar-toggler navbar-toggler-right\" type=\"button\" data-toggle=\"collapse\" data-target=\"#mainMenuLayer\" aria-controls=\"mainMenuLayer\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">\n            <span class=\"navbar-toggler-icon\"></span>\n          </button> -->\n\t\t\t\t<a class=\"navbar-brand\" href=\"#\">\n\t\t\t\t\t<img src=\"./assets/image/main-small-logo.png\" alt=\"\">\n\t\t\t\t</a>\n\n\t\t\t</nav>\n\n\t\t</div>\n  </header>\n  <div class=\"container\">\n      <h1 style=\"text-align: center;\">Travoo Privacy Policy</h1>\n      <br>\n      <p>Please read these privacy policies carefully before using Travoo.</p>\n      <br>\n      <p>We will provide our services to you, which are subject to the conditions stated below in this document. Every time you\n        visit this website, use its services or make a purchase, you accept the following conditions. This is why we urge you\n        to read them carefully.</p>\n      <br>\n      <b>Privacy Policy</b>\n      <br><br>\n      <p>Before you continue using our website we advise you to read our privacy policy regarding our user\n        data collection. It will help you better understand our practices.</p>\n      <br>\n      <b>Copyright</b>\n      <br><br>\n      <p>Content published on this website (digital downloads, images, texts, graphics, logos) is the property of its content creators \n        and protected by international copyright laws.</p>\n      <br>\n      <b>Communications</b>\n      <br><br>\n      <p>The entire communication with us is electronic. Every time you send us an email or visit our website, you are going to\n        be communicating with us. You hereby consent to receive communications from us. If you subscribe to the news on our website,\n        you are going to receive regular emails from us. We will continue to communicate with you by posting news and notices\n        on our website and by sending you emails. You also agree that all notices, disclosures, agreements and other communications\n        we provide to you electronically meet the legal requirements that such communications be in writing.</p>\n      <br>\n      <b>Applicable Law</b>\n      <br><br>\n      <p>By visiting this website, you agree that the laws of the country, without regard to principles of\n        conflict laws, will govern these terms of service, or any dispute of any sort that might come between [name] and you, or\n        its business partners and associates.</p>\n      <br>\n    </div>\n</div>\n"
+
+/***/ }),
+
+/***/ "../../../../../src/app/privacy-policy/privacy-policy.component.scss":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/privacy-policy/privacy-policy.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PrivacyPolicyComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+var PrivacyPolicyComponent = (function () {
+    function PrivacyPolicyComponent() {
+    }
+    PrivacyPolicyComponent.prototype.ngOnInit = function () {
+    };
+    PrivacyPolicyComponent = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+            selector: 'app-privacy-policy',
+            template: __webpack_require__("../../../../../src/app/privacy-policy/privacy-policy.component.html"),
+            styles: [__webpack_require__("../../../../../src/app/privacy-policy/privacy-policy.component.scss")]
+        }),
+        __metadata("design:paramtypes", [])
+    ], PrivacyPolicyComponent);
+    return PrivacyPolicyComponent;
 }());
 
 
@@ -2322,8 +2588,7 @@ var SignupComponent = (function () {
         this.formBuilder = formBuilder;
         this.titleService = titleService;
     }
-    SignupComponent.prototype.ngOnInit = function () {
-    };
+    SignupComponent.prototype.ngOnInit = function () { };
     SignupComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
             selector: 'app-signup',
@@ -2332,7 +2597,7 @@ var SignupComponent = (function () {
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */],
             __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* Router */],
-            __WEBPACK_IMPORTED_MODULE_2__services_index__["g" /* UserService */],
+            __WEBPACK_IMPORTED_MODULE_2__services_index__["h" /* UserService */],
             __WEBPACK_IMPORTED_MODULE_2__services_index__["a" /* AlertService */],
             __WEBPACK_IMPORTED_MODULE_3__angular_forms__["a" /* FormBuilder */],
             __WEBPACK_IMPORTED_MODULE_4__angular_platform_browser___["b" /* Title */]])
@@ -2347,7 +2612,7 @@ var SignupComponent = (function () {
 /***/ "../../../../../src/app/signup/step1/step1.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<!-- create an account -->\n<div class=\"modal fade signUpStep\" id=\"signUpStep1\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\">\n\t<div class=\"modal-dialog sign-up-style\" role=\"document\">\n\t\t<div class=\"modal-content\">\n\t\t\t<button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\n\t\t\t\t<span aria-hidden=\"true\">&times;</span>\n\t\t\t</button>\n\t\t\t<div class=\"modal-body\">\n\t\t\t\t<div class=\"top-layer\">\n\t\t\t\t\t<a href=\"#\" class=\"logo-wrap\">\n\t\t\t\t\t\t<img src=\"./assets/image/main-logo.png\" alt=\"\">\n\t\t\t\t\t</a>\n\t\t\t\t\t<h4 class=\"title\">Create a free account</h4>\n\t\t\t\t\t<!-- <p class=\"sub-ttl\">and write a text here</p> -->\n\t\t\t\t\t<!-- <p class=\"sub-ttl error-message\">Your password is too weak</p> -->\n\t\t\t\t\t<!-- <p class=\"sub-ttl error-message\">Please fill the required fields</p> -->\n\t\t\t\t\t<p class=\"sub-ttl error-message\" *ngFor=\"let msg of errors\">{{ msg }}</p>\n\t\t\t\t</div>\n\t\t\t\t<form class=\"login-form\" name=\"signupForm1\" [formGroup]=\"signupForm1\" (ngSubmit)=\"continueStep1()\" novalidate>\n\t\t\t\t\t<div class=\"step-1\">\n\t\t\t\t\t\t\n\t\t\t\t\t\t<div class=\"form-group\" [ngClass]=\"validate('email')\">\n\t\t\t\t\t\t\t<input class=\"form-control\" type=\"email\" name=\"email\" formControlName=\"email\" placeholder=\"Email address\" aria-describedby=\"emailHelp\" />\n\t\t\t\t\t\t\t<!-- <input type=\"email\" class=\"form-control\" name=\"username\" [(ngModel)]=\"model.username\" #username=\"ngModel\" required aria-describedby=\"emailHelp\" placeholder=\"Email address\"/> -->\n\t\t\t\t\t\t\t<!-- <div *ngIf=\"f.submitted && !username.valid\" class=\"help-block\">Email is required</div> -->\n\t\t\t\t\t\t\t<div class=\"form-control-feedback\" *ngIf=\"signupErrors.email\">\n\t\t\t\t\t\t\t\t<p>{{ signupErrors.email }}</p>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\n\t\t\t\t\t\t<div class=\"form-group\" [ngClass]=\"validate('username')\">\n\t\t\t\t\t\t\t<input class=\"form-control\" type=\"text\" name=\"username\" formControlName=\"username\" placeholder=\"Username\" aria-describedby=\"username\" />\n\t\t\t\t\t\t\t<div class=\"form-control-feedback\" *ngIf=\"signupErrors.username\">\n\t\t\t\t\t\t\t\t<p>{{ signupErrors.username }}</p>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\n\t\t\t\t\t\t<div class=\"form-group\" [ngClass]=\"validate('password')\">\n\t\t\t\t\t\t\t<input class=\"form-control\" type=\"password\" name=\"password\" formControlName=\"password\" placeholder=\"Password\" aria-describedby=\"pass\" />\n\t\t\t\t\t\t\t<div class=\"form-control-feedback\" *ngIf=\"signupErrors.password\">\n\t\t\t\t\t\t\t\t<p>{{ signupErrors.password }}</p>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\n\t\t\t\t\t\t<div class=\"form-group\" [ngClass]=\"validate('cpassword')\">\n\t\t\t\t\t\t\t<input class=\"form-control\" type=\"password\" name=\"cpassword\" formControlName=\"cpassword\" placeholder=\"Confirm Password\" aria-describedby=\"cpass\" />\n\t\t\t\t\t\t\t<div class=\"form-control-feedback\" *ngIf=\"signupErrors.cpassword\">\n\t\t\t\t\t\t\t\t<p>{{ signupErrors.cpassword }}</p>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\n\t\t\t\t\t\t<div class=\"form-margin\"></div>\n\t\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t\t<button type=\"submit\" class=\"btn btn-success\" [disabled]=\"!signupForm1.valid || loading\">{{ signupContinueBtnText }}</button>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t\t<p class=\"simple-txt\">Or</p>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t\t<button type=\"button\" class=\"btn btn-primary\">\n\t\t\t\t\t\t\t\t<i class=\"fa fa-facebook side-icon\"></i>\n\t\t\t\t\t\t\t\tContinue with Facebook\n\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t\t<button type=\"button\" class=\"btn btn-info\">\n\t\t\t\t\t\t\t\t<i class=\"fa fa-twitter side-icon\"></i>\n\t\t\t\t\t\t\t\tContinue with Twitter\n\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"form-group bottom-txt-group\">\n\t\t\t\t\t\t<p class=\"bottom-txt\">Creating an account means you're okay with</p>\n\t\t\t\t\t\t<ul class=\"link-list\">\n\t\t\t\t\t\t\t<li>\n\t\t\t\t\t\t\t\t<b>Travooo's</b>\n\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t\t<li>\n\t\t\t\t\t\t\t\t<a href=\"#\"> Terms of Service,</a>\n\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t\t<li>\n\t\t\t\t\t\t\t\t<a href=\"#\"> Privacy Policy</a>\n\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t</ul>\n\t\t\t\t\t</div>\n\t\t\t\t</form>\n\t\t\t</div>\n\t\t\t<div class=\"modal-footer\">\n\t\t\t\t<p class=\"foot-txt\">Already a member?</p>\n\t\t\t\t<button type=\"button\" class=\"btn btn-grey\" (click)=\"openLogin()\">Log In</button>\n\t\t\t</div>\n\t\t</div>\n\t</div>\n</div>\n"
+module.exports = "<!-- create an account -->\n<div class=\"modal fade signUpStep\" id=\"signUpStep1\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\">\n\t<div class=\"modal-dialog sign-up-style\" role=\"document\">\n\t\t<div class=\"modal-content\">\n\t\t\t<button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\n\t\t\t\t<span aria-hidden=\"true\">&times;</span>\n\t\t\t</button>\n\t\t\t<div class=\"modal-body\">\n\t\t\t\t<div class=\"top-layer\">\n\t\t\t\t\t<a href=\"#\" class=\"logo-wrap\">\n\t\t\t\t\t\t<img src=\"./assets/image/main-logo.png\" alt=\"\">\n\t\t\t\t\t</a>\n\t\t\t\t\t<h4 class=\"title\">Create a free account</h4>\n\t\t\t\t\t<!-- <p class=\"sub-ttl\">and write a text here</p> -->\n\t\t\t\t\t<!-- <p class=\"sub-ttl error-message\">Your password is too weak</p> -->\n\t\t\t\t\t<!-- <p class=\"sub-ttl error-message\">Please fill the required fields</p> -->\n\t\t\t\t\t<p class=\"sub-ttl error-message\" *ngFor=\"let msg of errors\">{{ msg }}</p>\n\t\t\t\t</div>\n\t\t\t\t<form class=\"login-form\" name=\"signupForm1\" [formGroup]=\"signupForm1\" (ngSubmit)=\"continueStep1()\" novalidate>\n\t\t\t\t\t<div class=\"step-1\">\n\t\t\t\t\t\t\n\t\t\t\t\t\t<div class=\"form-group\" [ngClass]=\"validate('email')\">\n\t\t\t\t\t\t\t<input class=\"form-control\" type=\"email\" name=\"email\" formControlName=\"email\" placeholder=\"Email address\" aria-describedby=\"emailHelp\" />\n\t\t\t\t\t\t\t<!-- <input type=\"email\" class=\"form-control\" name=\"username\" [(ngModel)]=\"model.username\" #username=\"ngModel\" required aria-describedby=\"emailHelp\" placeholder=\"Email address\"/> -->\n\t\t\t\t\t\t\t<!-- <div *ngIf=\"f.submitted && !username.valid\" class=\"help-block\">Email is required</div> -->\n\t\t\t\t\t\t\t<div class=\"form-control-feedback\" *ngIf=\"signupErrors.email\">\n\t\t\t\t\t\t\t\t<p>{{ signupErrors.email }}</p>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\n\t\t\t\t\t\t<div class=\"form-group\" [ngClass]=\"validate('username')\">\n\t\t\t\t\t\t\t<input class=\"form-control\" type=\"text\" name=\"username\" formControlName=\"username\" placeholder=\"Username\" aria-describedby=\"username\" />\n\t\t\t\t\t\t\t<div class=\"form-control-feedback\" *ngIf=\"signupErrors.username\">\n\t\t\t\t\t\t\t\t<p>{{ signupErrors.username }}</p>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\n\t\t\t\t\t\t<div class=\"form-group\" [ngClass]=\"validate('password')\">\n\t\t\t\t\t\t\t<input class=\"form-control\" type=\"password\" name=\"password\" formControlName=\"password\" placeholder=\"Password\" aria-describedby=\"pass\" />\n\t\t\t\t\t\t\t<div class=\"form-control-feedback\" *ngIf=\"signupErrors.password\">\n\t\t\t\t\t\t\t\t<p>{{ signupErrors.password }}</p>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\n\t\t\t\t\t\t<div class=\"form-group\" [ngClass]=\"validate('cpassword')\">\n\t\t\t\t\t\t\t<input class=\"form-control\" type=\"password\" name=\"cpassword\" formControlName=\"cpassword\" placeholder=\"Confirm Password\" aria-describedby=\"cpass\" />\n\t\t\t\t\t\t\t<div class=\"form-control-feedback\" *ngIf=\"signupErrors.cpassword\">\n\t\t\t\t\t\t\t\t<p>{{ signupErrors.cpassword }}</p>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\n\t\t\t\t\t\t<div class=\"form-margin\"></div>\n\t\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t\t<button type=\"submit\" class=\"btn btn-success\" [disabled]=\"!signupForm1.valid || loading\">{{ signupContinueBtnText }}</button>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t\t<p class=\"simple-txt\">Or</p>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t\t<button type=\"button\" class=\"btn btn-primary\" (click)=\"FBlogin()\">\n\t\t\t\t\t\t\t\t<i class=\"fa fa-facebook side-icon\"></i>\n\t\t\t\t\t\t\t\t{{ FbButtonText }}\n\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t\t<button type=\"button\" class=\"btn btn-info\" (click)=\"TwitterLogin()\">\n\t\t\t\t\t\t\t\t<i class=\"fa fa-twitter side-icon\"></i>\n\t\t\t\t\t\t\t\t{{ TwitterButtonText }}\n\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t</div>\n\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"form-group bottom-txt-group\">\n\t\t\t\t\t\t<p class=\"bottom-txt\">Creating an account means you're okay with</p>\n\t\t\t\t\t\t<ul class=\"link-list\">\n\t\t\t\t\t\t\t<li>\n\t\t\t\t\t\t\t\t<b>Travooo's</b>\n\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t\t<li>\n\t\t\t\t\t\t\t\t<a href=\"#\"> Terms of Service,</a>\n\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t\t<li>\n\t\t\t\t\t\t\t\t<a href=\"#\"> Privacy Policy</a>\n\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t</ul>\n\t\t\t\t\t</div>\n\t\t\t\t</form>\n\t\t\t</div>\n\t\t\t<div class=\"modal-footer\">\n\t\t\t\t<p class=\"foot-txt\">Already a member?</p>\n\t\t\t\t<button type=\"button\" class=\"btn btn-grey\" (click)=\"openLogin()\">Log In</button>\n\t\t\t</div>\n\t\t</div>\n\t</div>\n</div>\n"
 
 /***/ }),
 
@@ -2407,6 +2672,8 @@ var Step1Component = (function () {
         this.mainC = mainC;
         this.loading = false;
         this.signupContinueBtnText = "Continue";
+        this.FbButtonText = "Continue with Facebook";
+        this.TwitterButtonText = "Continue with Twitter";
         this.email = new __WEBPACK_IMPORTED_MODULE_3__angular_forms__["b" /* FormControl */]('', [
             __WEBPACK_IMPORTED_MODULE_3__angular_forms__["e" /* Validators */].required,
             __WEBPACK_IMPORTED_MODULE_3__angular_forms__["e" /* Validators */].email
@@ -2437,6 +2704,12 @@ var Step1Component = (function () {
         $('#signUpStep1').on('hidden.bs.modal', function (e) {
             t.closeSignup();
         });
+    };
+    Step1Component.prototype.FBlogin = function () {
+        this.mainC.FBlogin();
+    };
+    Step1Component.prototype.TwitterLogin = function () {
+        this.mainC.TwitterLogin();
     };
     Step1Component.prototype.closeSignup = function () {
         this.mainC.closeAll();
@@ -2482,11 +2755,12 @@ var Step1Component = (function () {
                     _this.mainC.openSignup(2);
                 }
                 else {
-                    _this.errors = data.data.message;
+                    _this.errors = data.data;
                     _this.toggleSignup(true);
                 }
             }, function (error) {
                 console.log(error);
+                _this.errors.push("Some error occured, please try again.");
                 _this.toggleSignup(true);
             });
         }
@@ -2512,7 +2786,7 @@ var Step1Component = (function () {
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */],
             __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* Router */],
-            __WEBPACK_IMPORTED_MODULE_2__services_index__["g" /* UserService */],
+            __WEBPACK_IMPORTED_MODULE_2__services_index__["h" /* UserService */],
             __WEBPACK_IMPORTED_MODULE_3__angular_forms__["a" /* FormBuilder */],
             __WEBPACK_IMPORTED_MODULE_5__angular_platform_browser___["b" /* Title */],
             __WEBPACK_IMPORTED_MODULE_6__main_main_component__["a" /* MainComponent */]])
@@ -2639,7 +2913,7 @@ var Step2Component = (function () {
         user.gender = this.gender.value;
         this.userService.signupStep2(user)
             .subscribe(function (data) {
-            //console.log(data);
+            // console.log(data);
             if (data.success) {
                 var response = data.data;
                 //console.log(response);
@@ -2648,11 +2922,12 @@ var Step2Component = (function () {
                 _this.mainC.openSignup(3);
             }
             else {
-                _this.errors = data.data.message;
+                _this.errors = data.data;
                 _this.toggleSignup(true);
             }
         }, function (error) {
-            console.log(error);
+            // console.log(error);
+            _this.errors.push("Some error occured, please try again.");
             _this.toggleSignup(true);
         });
     };
@@ -2674,7 +2949,7 @@ var Step2Component = (function () {
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */],
             __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* Router */],
-            __WEBPACK_IMPORTED_MODULE_2__services_index__["g" /* UserService */],
+            __WEBPACK_IMPORTED_MODULE_2__services_index__["h" /* UserService */],
             __WEBPACK_IMPORTED_MODULE_3__angular_forms__["a" /* FormBuilder */],
             __WEBPACK_IMPORTED_MODULE_4__angular_platform_browser___["b" /* Title */],
             __WEBPACK_IMPORTED_MODULE_5__main_main_component__["a" /* MainComponent */]])
@@ -2844,7 +3119,6 @@ var Step3Component = (function () {
             }
         }, function (error) {
             console.log(error);
-            //this.alertService.error(error);
             _this.toggleSignup(true);
         });
     };
@@ -2865,7 +3139,7 @@ var Step3Component = (function () {
             styles: [__webpack_require__("../../../../../src/app/signup/step3/step3.component.scss")]
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__services_index__["c" /* CountriesService */],
-            __WEBPACK_IMPORTED_MODULE_1__services_index__["g" /* UserService */],
+            __WEBPACK_IMPORTED_MODULE_1__services_index__["h" /* UserService */],
             __WEBPACK_IMPORTED_MODULE_2__main_main_component__["a" /* MainComponent */]])
     ], Step3Component);
     return Step3Component;
@@ -3033,7 +3307,6 @@ var Step4Component = (function () {
             }
         }, function (error) {
             console.log(error);
-            //this.alertService.error(error);
             _this.toggleSignup(true);
         });
     };
@@ -3054,7 +3327,7 @@ var Step4Component = (function () {
             styles: [__webpack_require__("../../../../../src/app/signup/step4/step4.component.scss")]
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__services_index__["e" /* PlacesService */],
-            __WEBPACK_IMPORTED_MODULE_1__services_index__["g" /* UserService */],
+            __WEBPACK_IMPORTED_MODULE_1__services_index__["h" /* UserService */],
             __WEBPACK_IMPORTED_MODULE_2__main_main_component__["a" /* MainComponent */]])
     ], Step4Component);
     return Step4Component;
@@ -3224,7 +3497,6 @@ var Step5Component = (function () {
             }
         }, function (error) {
             console.log(error);
-            //this.alertService.error(error);
             _this.toggleSignup(true);
         });
     };
@@ -3245,10 +3517,133 @@ var Step5Component = (function () {
             styles: [__webpack_require__("../../../../../src/app/signup/step5/step5.component.scss")]
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__services_index__["f" /* TravelStylesService */],
-            __WEBPACK_IMPORTED_MODULE_1__services_index__["g" /* UserService */],
+            __WEBPACK_IMPORTED_MODULE_1__services_index__["h" /* UserService */],
             __WEBPACK_IMPORTED_MODULE_2__main_main_component__["a" /* MainComponent */]])
     ], Step5Component);
     return Step5Component;
+}());
+
+
+
+/***/ }),
+
+/***/ "../../../../../src/app/terms-of-service/terms-of-service.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"main-wrapper\">\n\t<header class=\"main-header step-header\">\n\t\t<!-- use class .step-header for set header above of modal-backgrop layer -->\n\t\t<div class=\"container\">\n\t\t\t<nav class=\"navbar navbar-toggleable-md navbar-light bg-faded\">\n\t\t\t\t<!-- <button class=\"navbar-toggler navbar-toggler-right\" type=\"button\" data-toggle=\"collapse\" data-target=\"#mainMenuLayer\" aria-controls=\"mainMenuLayer\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">\n            <span class=\"navbar-toggler-icon\"></span>\n          </button> -->\n\t\t\t\t<a class=\"navbar-brand\" href=\"#\">\n\t\t\t\t\t<img src=\"./assets/image/main-small-logo.png\" alt=\"\">\n\t\t\t\t</a>\n\n\t\t\t</nav>\n\n\t\t</div>\n\t</header>\n\t<div class=\"container\">\n\t\t<h1 style=\"text-align: center;\">Travoo Terms of Service</h1>\n\t\t<br>\n\t\t<p>Please read these terms of service carefully before using Travoo.</p>\n\t\t<br>\n\t\t<p>We will provide our services to you, which are subject to the conditions stated below in this document. Every time you\n\t\t\tvisit this website, use its services or make a purchase, you accept the following conditions. This is why we urge you\n\t\t\tto read them carefully.</p>\n\t\t<br>\n\t\t<b>Privacy Policy</b>\n\t\t<br><br>\n\t\t<p>Before you continue using our website we advise you to read our privacy policy regarding our user\n\t\t\tdata collection. It will help you better understand our practices.</p>\n\t\t<br>\n\t\t<b>Copyright</b>\n\t\t<br><br>\n\t\t<p>Content published on this website (digital downloads, images, texts, graphics, logos) is the property of its content creators \n\t\t\tand protected by international copyright laws.</p>\n\t\t<br>\n\t\t<b>Communications</b>\n\t\t<br><br>\n\t\t<p>The entire communication with us is electronic. Every time you send us an email or visit our website, you are going to\n\t\t\tbe communicating with us. You hereby consent to receive communications from us. If you subscribe to the news on our website,\n\t\t\tyou are going to receive regular emails from us. We will continue to communicate with you by posting news and notices\n\t\t\ton our website and by sending you emails. You also agree that all notices, disclosures, agreements and other communications\n\t\t\twe provide to you electronically meet the legal requirements that such communications be in writing.</p>\n\t\t<br>\n\t\t<b>Applicable Law</b>\n\t\t<br><br>\n\t\t<p>By visiting this website, you agree that the laws of the country, without regard to principles of\n\t\t\tconflict laws, will govern these terms of service, or any dispute of any sort that might come between [name] and you, or\n\t\t\tits business partners and associates.</p>\n\t\t<br>\n\t</div>\n</div>"
+
+/***/ }),
+
+/***/ "../../../../../src/app/terms-of-service/terms-of-service.component.scss":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/terms-of-service/terms-of-service.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TermsOfServiceComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+var TermsOfServiceComponent = (function () {
+    function TermsOfServiceComponent() {
+    }
+    TermsOfServiceComponent.prototype.ngOnInit = function () {
+    };
+    TermsOfServiceComponent = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+            selector: 'app-terms-of-service',
+            template: __webpack_require__("../../../../../src/app/terms-of-service/terms-of-service.component.html"),
+            styles: [__webpack_require__("../../../../../src/app/terms-of-service/terms-of-service.component.scss")]
+        }),
+        __metadata("design:paramtypes", [])
+    ], TermsOfServiceComponent);
+    return TermsOfServiceComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "../../../../../src/app/twitter-callback/twitter-callback.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<p>\n  You have successfully logged in using your twitter account! Please wait we are redirecting you back.\n</p>\n"
+
+/***/ }),
+
+/***/ "../../../../../src/app/twitter-callback/twitter-callback.component.scss":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/twitter-callback/twitter-callback.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TwitterCallbackComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+var TwitterCallbackComponent = (function () {
+    function TwitterCallbackComponent() {
+    }
+    TwitterCallbackComponent.prototype.ngOnInit = function () {
+        window.close();
+    };
+    TwitterCallbackComponent = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+            selector: 'app-twitter-callback',
+            template: __webpack_require__("../../../../../src/app/twitter-callback/twitter-callback.component.html"),
+            styles: [__webpack_require__("../../../../../src/app/twitter-callback/twitter-callback.component.scss")]
+        }),
+        __metadata("design:paramtypes", [])
+    ], TwitterCallbackComponent);
+    return TwitterCallbackComponent;
 }());
 
 
