@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
  * Routes that are used between both frontend and backend.
  */
 
+/* Routes For Angular */
 includeRouteFiles(__DIR__.'/Angular/');
 
 // Switch between the included languages
