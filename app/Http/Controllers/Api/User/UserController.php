@@ -540,9 +540,14 @@ class UserController extends Controller
         $_SESSION['oauth_token'] = $request_token['oauth_token'];
         $_SESSION['oauth_token_secret'] = $request_token['oauth_token_secret'];
         
+        $arr = [
+            'oauth_token'        => $request_token['oauth_token'],
+            'oauth_token_secret' => $request_token['oauth_token_secret']
+        ];
+
         return [
             'success' => true,
-            'data'    => $request_token['oauth_token'],
+            'data'    => $arr,
             'code'    => 200
         ]; 
         // generate the URL to make request to authorize our application
@@ -555,5 +560,86 @@ class UserController extends Controller
         // and redirect
         // header('Location: '. $url);
         // die();
+    }
+
+    public function TwitterSocialLoginSend(Request $request){
+
+        $post   = $request->input();
+        $errors = [];
+
+        if(!isset($post['oauth_token']) || empty($post['oauth_token'])){
+            $errors[] = 'OAuth Token not provided.';
+        }
+
+        if(!isset($post['oauth_token_secret']) || empty($post['oauth_token_secret'])){
+            $errors[] = 'OAuth Token Secret not provided.';
+        }
+
+        if(!isset($post['oauth_verifier']) || empty($post['oauth_verifier'])){
+            $errors[] = 'OAuth verifier not provided.';
+        }
+
+        if(!empty($errors)){
+            return [
+                'success' => false,
+                'code' => 400,
+                'data' => $errors
+            ];   
+        }
+
+        require_once base_path().'/vendor/autoload.php';
+
+        session_start();
+         
+        $config = require_once base_path().'/config/config.php';
+
+        $config = config('config');
+
+        $connection = new TwitterOAuth(
+            $config['consumer_key'],
+            $config['consumer_secret'],
+            $post['oauth_token'],
+            $post['oauth_token_secret']
+        );
+        
+        $token = [];
+
+        try {
+            // request user token
+            $token = $connection->oauth(
+                'oauth/access_token', [
+                    'oauth_verifier' => $post['oauth_verifier']
+                ]
+            );
+        }
+        catch (\Exception $e) {
+            return [
+                'success' => false,
+                'code'    => 400,
+                'data'    => [$e->getMessage()]
+            ];
+        }
+
+        if(!empty($token)){
+            // $twitter = new TwitterOAuth(
+            //     $config['consumer_key'],
+            //     $config['consumer_secret'],
+            //     $token['oauth_token'],
+            //     $token['oauth_token_secret']
+            // );
+
+            return [
+                'success' => 'true',
+                'code'    => 200,
+                'data'    => $token
+            ];
+        }else{
+            return [
+                'success' => false,
+                'code'    => 400,
+                'data'    => ['Token not returned from API.']
+            ];   
+        }
+
     }
 }

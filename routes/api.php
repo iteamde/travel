@@ -58,6 +58,8 @@ Route::group(['prefix' => 'api'], function () {
         Route::get('create/twitter', 'UserController@TwitterSocialLogin');
         /* Sign Up/Login - Twitter  */
         Route::get('create/twitter/login', 'UserController@TwitterSocialLoginPage');
+        /* Twitter Acces Token APi */
+        Route::post('create/twitter/send', 'UserController@TwitterSocialLoginSend');
         /* Sign Up/Create New User Api - 1 */
         Route::post('/create', 'UserController@createStep1');
         /* Sign Up/Create New User Api - 2 */
