@@ -629,7 +629,7 @@ class UserController extends Controller
             // );
 
             return [
-                'success' => 'true',
+                'success' => true,
                 'code'    => 200,
                 'data'    => $token
             ];
