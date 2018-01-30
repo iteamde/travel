@@ -13,6 +13,9 @@ import { Step4Component } from './signup/step4/step4.component';
 import { Step5Component } from './signup/step5/step5.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { TwitterCallbackComponent } from './twitter-callback/twitter-callback.component';
+import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
+import { TermsOfServiceComponent } from './terms-of-service/terms-of-service.component';
 
 const routes: Routes = [
     {
@@ -38,9 +41,21 @@ const routes: Routes = [
 		component: HomeComponent,
 		canActivate: [AuthGuard]
 	},
+	{
+		path: 'twitter-callback',
+		component: TwitterCallbackComponent
+	},
+	{
+		path: 'privacy-policy',
+		component: PrivacyPolicyComponent
+	},
+	{
+		path: 'terms-of-service',
+		component: TermsOfServiceComponent
+	},
 	
 	// otherwise redirect to home
-	{ path: '**', redirectTo: 'login' }
+	{ path: '**', redirectTo: '/' }
 ];
 
 @NgModule({

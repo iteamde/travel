@@ -32,6 +32,9 @@ import { Step4Component } from './signup/step4/step4.component';
 import { Step5Component } from './signup/step5/step5.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { TwitterCallbackComponent } from './twitter-callback/twitter-callback.component';
+import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
+import { TermsOfServiceComponent } from './terms-of-service/terms-of-service.component';
 
 @NgModule({
     imports: [
@@ -62,7 +65,10 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
       Step4Component,
       Step5Component,
       ForgotPasswordComponent,
-      ResetPasswordComponent
+      ResetPasswordComponent,
+      TwitterCallbackComponent,
+      PrivacyPolicyComponent,
+      TermsOfServiceComponent
     ],
     providers: [
         AuthGuard,
