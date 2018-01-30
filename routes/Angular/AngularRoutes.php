@@ -16,3 +16,8 @@ Route::get('/terms-of-service', function () {
     // return view('frontend.index');
     return view('frontend.angular.index');
 });
+
+Route::get('/login', function () {
+    // return view('frontend.index');
+    return view('frontend.angular.index');
+});
