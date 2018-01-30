@@ -10,6 +10,16 @@ Route::get('/', function () {
     return view('frontend.angular.index');
 });
 
+Route::get('/privacy-policy', function () {
+    // return view('frontend.index');
+    return view('frontend.angular.index');
+});
+
+Route::get('/terms-of-service', function () {
+    // return view('frontend.index');
+    return view('frontend.angular.index');
+});
+
 // Switch between the included languages
 Route::get('lang/{lang}', 'LanguageController@swap');
 
