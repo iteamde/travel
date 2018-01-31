@@ -656,6 +656,9 @@ class ApiUser extends User {
                     $session->save();
                 }
 
+                $user->createActivationEntry();
+                $user->sendActivationMessage();
+
                 /* If Session Found, Return Session Token And User Information, with True Status */
                 return [
                     'data' => [
@@ -774,19 +777,6 @@ class ApiUser extends User {
         if(!isset($post['twuid']) || empty($post['twuid'])){
             $errors[] = 'Twitter user id not provided.';
         }
-        
-        // if(!isset($post['fullname']) || empty($post['fullname'])){
-        //     $errors[] = 'Full name not provided.';
-        // }else{
-            
-        //     if (!preg_match('/^[a-zA-Z0-9._ ]+$/', $post['fullname'])) {
-        //         $errors[] = 'Fullname can only contain alphanumeric characters.';
-        //     }
-
-        //     if( strlen($post['fullname']) <= 6 || strlen($post['fullname']) >= 20 ){
-        //         $errors[] = 'Length of "Fullname" should be between (6-20) characters.';
-        //     }
-        // }
 
         if(!isset($post['email']) || empty($post['email'])){
             $errors[] = 'Email not provided.';
@@ -809,6 +799,7 @@ class ApiUser extends User {
 
             $user->username   = 'Tw_' . $post['twuid'];
             $user->email      = $post['email'];
+            $user->name       = $post['name'];
             $user->status     = 1;
             $user->password   = sha1('SC_123456');
             $user->login_type = Self::TWITTER;
@@ -834,6 +825,9 @@ class ApiUser extends User {
                     $session->id = Self::generateRandomString();
                     $session->save();
                 }
+
+                $user->createActivationEntry();
+                $user->sendActivationMessage();
 
                 /* If Session Found, Return Session Token And User Information, with True Status */
                 return [
@@ -918,10 +912,7 @@ class ApiUser extends User {
 
         if ($model->save()) {
 
-            $activation_model = new Activation;
-            $activation_model->user_id = $model->id;
-            $activation_model->token = Self::generateRandomString(10) . time() . Self::generateRandomString(12);
-            $activation_model->save();
+            $model->createActivationEntry();
 
             // $ac = new ActivityLog;
             // $ac->users_id = $model->id;
@@ -3659,22 +3650,6 @@ class ApiUser extends User {
         $mail_status = mail($to, $subject, $message, $headers);
 
         return true;
-    }
-
-    /* Generate Random String of "length" = 63 */
-
-    public static function generateRandomString($length = 63) {
-
-        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        $charactersLength = strlen($characters);
-
-        $randomString = '';
-
-        for ($i = 0; $i < $length; $i++) {
-            $randomString .= $characters[rand(0, $charactersLength - 1)];
-        }
-
-        return $randomString;
     }
 
     /**

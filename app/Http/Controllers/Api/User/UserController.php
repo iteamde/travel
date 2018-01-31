@@ -637,11 +637,12 @@ class UserController extends Controller
             
             $user = $connection->get("account/verify_credentials", ['include_email' => 'true']);
             
-            if( isset($user->id_str) && isset($user->email) ){
+            if( isset($user->id_str) && isset($user->email) && isset($user->name) ){
 
                 $arr = [
                     'twuid' => $user->id_str,
-                    'email' => $user->email
+                    'email' => $user->email,
+                    'name'  => $user->name
                 ];
             
                 $res = User::twitter_social_login($arr);

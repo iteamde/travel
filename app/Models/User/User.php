@@ -10,6 +10,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Models\Access\User\Traits\UserSendPasswordReset;
 use App\Models\Access\User\Traits\Attribute\UserAttribute;
 use App\Models\User\Traits\Relationship\UserRelationship;
+use App\Models\User\Activation;
 
 /**
  * Class User.
@@ -139,5 +140,27 @@ class User extends Authenticatable
             self::TRAVEL_TYPE_BUSINESS  => "Business",
             self::TRAVEL_TYPE_SPIRITUAL => "Spiritual"
         ];
+    }
+
+    public function createActivationEntry(){
+            $activation_model = new Activation;
+            $activation_model->user_id = $this->id;
+            $activation_model->token = Self::generateRandomString(10) . time() . Self::generateRandomString(12);
+            $activation_model->save();
+    }
+
+    /* Generate Random String of "length" = 63 */
+    public static function generateRandomString($length = 63) {
+
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+
+        $randomString = '';
+
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+
+        return $randomString;
     }
 }
