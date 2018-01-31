@@ -166,7 +166,6 @@ export class Step5Component implements OnInit {
 			},
 			error => {
 				console.log(error);
-				//this.alertService.error(error);
 				this.toggleSignup(true);
 			}
 			);

@@ -26,8 +26,6 @@ export class SignupComponent implements OnInit {
 		private formBuilder: FormBuilder,
 		private titleService: Title) { }
 
-	ngOnInit() {	
-		alert('asd');
-	}
+	ngOnInit() {}
 
 }

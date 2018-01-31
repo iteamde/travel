@@ -121,6 +121,56 @@ export class AuthenticationService extends ManagerService{
             });
     }
 
+    twitterLogin(data) {
+        return this.http.post(this.apiPrefix+'/users/create/twitter', data)
+            .map((response: Response) => {
+                
+                if(response.ok)
+                {
+                    var result = response.json();
+                    //console.log(result);
+
+                    // api response is found
+                    var apidata = result.data;
+                    //console.log(apidata);
+
+                    if(result.success)
+                    {
+                        // api result success is true
+                        var user = apidata.user;
+                        // login successful if there's a jwt token in the response
+                        let token = apidata.token;
+                        //console.log(token);
+
+                        let type = apidata.type;
+
+                        if(type == "login" && token)
+                        {
+                            // set token property
+                            this.token = token;
+            
+                            // store username and jwt token in local storage to keep user logged in between page refreshes
+                            localStorage.setItem('currentUser', JSON.stringify({ user: user, token: token }));
+
+                            // return true to indicate successful login
+                            return "login";
+                        } else if(type == "register"){
+                            localStorage.setItem('signupId', user.id);
+                            return "register";
+                        } else {
+                            return false;
+                        }
+                    } else {
+                        // api result success is false // return api result message
+                        return apidata.message;
+                    }
+                } else {
+                    // api response not found
+                    return false;
+                }
+            });
+    }
+
     logout(): void {
         // clear token remove user from local storage to log user out
         this.token = null;

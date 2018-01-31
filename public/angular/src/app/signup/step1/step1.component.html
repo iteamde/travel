@@ -57,17 +57,18 @@
 							<p class="simple-txt">Or</p>
 						</div>
 						<div class="form-group">
-							<button type="button" class="btn btn-primary">
+							<button type="button" class="btn btn-primary" (click)="FBlogin()">
 								<i class="fa fa-facebook side-icon"></i>
-								Continue with Facebook
+								{{ FbButtonText }}
 							</button>
 						</div>
 						<div class="form-group">
-							<button type="button" class="btn btn-info">
+							<button type="button" class="btn btn-info" (click)="TwitterLogin()">
 								<i class="fa fa-twitter side-icon"></i>
-								Continue with Twitter
+								{{ TwitterButtonText }}
 							</button>
 						</div>
+
 					</div>
 					<div class="form-group bottom-txt-group">
 						<p class="bottom-txt">Creating an account means you're okay with</p>

@@ -18,44 +18,33 @@ export class UserService extends ManagerService{
             super();
     }
 
-    signupFB(email: string, fbuid: string){
-        // get users from api
-        return this.http.post(this.apiPrefix+'/users/create/facebook', {email: email, fbuid: fbuid})
-            .map((response: Response) => response.json());
-    }
-
     // signup
-    signupStep1(user: User) {
+    signupStep1(user: User): Observable<any> {
         // add authorization header with jwt token
         // let headers = new Headers({ 'Authorization': 'Bearer ' + "" });
         // let options = new RequestOptions({ body: user, headers: headers });
 
-        return this.http.post(this.apiPrefix+'/users/create', user)
-            .map((response: Response) => response.json());
+        return this.http.post(this.apiPrefix+'/users/create', user);
     }
 
     // save user profile info
-    signupStep2(user: User) {
-        return this.http.post(this.apiPrefix+'/users/create/step2', user)
-            .map((response: Response) => response.json());
+    signupStep2(user: User): Observable<any> {
+        return this.http.post(this.apiPrefix+'/users/create/step2', user);
     }
 
     // save user selected countries
-    signupStep3(data) {
-        return this.http.post(this.apiPrefix+'/users/set/fav_countries', data)
-            .map((response: Response) => response.json());
+    signupStep3(data): Observable<any> {
+        return this.http.post(this.apiPrefix+'/users/set/fav_countries', data);
     }
 
     // save user selected places
-    signupStep4(data) {
-        return this.http.post(this.apiPrefix+'/users/set/fav_places', data)
-            .map((response: Response) => response.json());
+    signupStep4(data): Observable<any> {
+        return this.http.post(this.apiPrefix+'/users/set/fav_places', data);
     }
 
     // save user selected styles
-    signupStep5(data) {
-        return this.http.post(this.apiPrefix+'/users/set/travel_styles', data)
-            .map((response: Response) => response.json());
+    signupStep5(data): Observable<any> {
+        return this.http.post(this.apiPrefix+'/users/set/travel_styles', data);
     }
 
     getUsers(): Observable<User[]> {

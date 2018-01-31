@@ -21,6 +21,8 @@ export class Step1Component implements OnInit {
 
 	loading = false;
 	signupContinueBtnText: string = "Continue";
+	FbButtonText: string = "Continue with Facebook";
+	TwitterButtonText: string = "Continue with Twitter";
 	signupForm1: FormGroup;
 
 	email = new FormControl('', [
@@ -63,6 +65,14 @@ export class Step1Component implements OnInit {
 		$('#signUpStep1').on('hidden.bs.modal', function (e) {
 			t.closeSignup();
 		});
+	}
+
+	FBlogin(){
+		this.mainC.FBlogin();
+	}
+
+	TwitterLogin(){
+		this.mainC.TwitterLogin();
 	}
 
 	closeSignup(){
@@ -118,12 +128,13 @@ export class Step1Component implements OnInit {
 						this.mainC.openSignup(2);
 					}
 					else {
-						this.errors = data.data.message;
+						this.errors = data.data;
 						this.toggleSignup(true);
 					}
 				},
 				error => {
 					console.log(error);
+					this.errors.push("Some error occured, please try again.");
 					this.toggleSignup(true);
 				}
 			);

@@ -95,7 +95,7 @@ export class Step2Component implements OnInit {
 		this.userService.signupStep2(user)
 			.subscribe(
 			data => {
-				//console.log(data);
+				// console.log(data);
 
 				if (data.success) {
 					var response = data.data;
@@ -106,12 +106,13 @@ export class Step2Component implements OnInit {
 					this.mainC.openSignup(3);
 				}
 				else {
-					this.errors = data.data.message;
+					this.errors = data.data;
 					this.toggleSignup(true);
 				}
 			},
 			error => {
-				console.log(error);
+				// console.log(error);
+				this.errors.push("Some error occured, please try again.");
 				this.toggleSignup(true);
 			}
 			);

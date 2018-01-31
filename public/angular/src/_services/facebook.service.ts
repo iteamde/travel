@@ -1,13 +1,16 @@
 import { Injectable } from '@angular/core';
+import { ManagerService } from './manager.service';
+import { AuthenticationService } from './authentication.service';
 
 declare var jquery: any;
 declare var $: any;
 declare var FB: any;
 
 @Injectable()
-export class FacebookService {
+export class FacebookService extends ManagerService{
 
-	constructor() {
+	constructor(private authService: AuthenticationService) {
+		super();
 		$.getScript('assets/js/fb-script.js');
 	}
 
@@ -22,7 +25,11 @@ export class FacebookService {
 					var userid = obj.userID;
 					FB.api('/me?fields=id,name,email,picture', function(response1) {
 						//console.log(response1);
-						callback(ref, {status: true, user: response1});
+						var user = response1;
+						t.authService.facebookLogin(user.id, user.email).subscribe(
+							result => {
+								callback(ref, {status: result});
+							});
 					});
 				}
 				else

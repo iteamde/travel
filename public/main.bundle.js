@@ -551,6 +551,50 @@ var AuthenticationService = (function (_super) {
             }
         });
     };
+    AuthenticationService.prototype.twitterLogin = function (data) {
+        var _this = this;
+        return this.http.post(this.apiPrefix + '/users/create/twitter', data)
+            .map(function (response) {
+            if (response.ok) {
+                var result = response.json();
+                //console.log(result);
+                // api response is found
+                var apidata = result.data;
+                //console.log(apidata);
+                if (result.success) {
+                    // api result success is true
+                    var user = apidata.user;
+                    // login successful if there's a jwt token in the response
+                    var token = apidata.token;
+                    //console.log(token);
+                    var type = apidata.type;
+                    if (type == "login" && token) {
+                        // set token property
+                        _this.token = token;
+                        // store username and jwt token in local storage to keep user logged in between page refreshes
+                        localStorage.setItem('currentUser', JSON.stringify({ user: user, token: token }));
+                        // return true to indicate successful login
+                        return "login";
+                    }
+                    else if (type == "register") {
+                        localStorage.setItem('signupId', user.id);
+                        return "register";
+                    }
+                    else {
+                        return false;
+                    }
+                }
+                else {
+                    // api result success is false // return api result message
+                    return apidata.message;
+                }
+            }
+            else {
+                // api response not found
+                return false;
+            }
+        });
+    };
     AuthenticationService.prototype.logout = function () {
         // clear token remove user from local storage to log user out
         this.token = null;
@@ -643,6 +687,7 @@ var CountriesService = (function (_super) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return FacebookService; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__manager_service__ = __webpack_require__("../../../../../src/_services/manager.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__authentication_service__ = __webpack_require__("../../../../../src/_services/authentication.service.ts");
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -664,10 +709,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
+
 var FacebookService = (function (_super) {
     __extends(FacebookService, _super);
-    function FacebookService() {
+    function FacebookService(authService) {
         var _this = _super.call(this) || this;
+        _this.authService = authService;
         $.getScript('assets/js/fb-script.js');
         return _this;
     }
@@ -680,7 +727,10 @@ var FacebookService = (function (_super) {
                 var userid = obj.userID;
                 FB.api('/me?fields=id,name,email,picture', function (response1) {
                     //console.log(response1);
-                    callback(ref, { status: true, user: response1 });
+                    var user = response1;
+                    t.authService.facebookLogin(user.id, user.email).subscribe(function (result) {
+                        callback(ref, { status: result });
+                    });
                 });
             }
             else {
@@ -690,7 +740,7 @@ var FacebookService = (function (_super) {
     };
     FacebookService = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
-        __metadata("design:paramtypes", [])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__authentication_service__["a" /* AuthenticationService */]])
     ], FacebookService);
     return FacebookService;
 }(__WEBPACK_IMPORTED_MODULE_1__manager_service__["a" /* ManagerService */]));
@@ -749,7 +799,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 var ManagerService = (function () {
     function ManagerService() {
-        this.apiPrefix = "http://localhost/travo/public/api";
+        // apiPrefix: string = "http://localhost/travo/public/api";
+        this.apiPrefix = "/public/api";
     }
     ManagerService = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
@@ -893,6 +944,7 @@ var TravelStylesService = (function (_super) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TwitterService; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__manager_service__ = __webpack_require__("../../../../../src/_services/manager.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__authentication_service__ = __webpack_require__("../../../../../src/_services/authentication.service.ts");
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -914,32 +966,32 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
+
 var TwitterService = (function (_super) {
     __extends(TwitterService, _super);
-    function TwitterService() {
+    function TwitterService(authService) {
         var _this = _super.call(this) || this;
+        _this.authService = authService;
         $.getScript('assets/js/twitter-script.js');
         return _this;
     }
     TwitterService.prototype.login = function (ref, callback) {
+        var t = this;
         twttr.connect(function (response) {
-            console.log('response');
-            console.log(response);
+            // console.log(response);
             if (response.success) {
-                //request = response;
-                callback(ref, { status: true });
+                t.authService.twitterLogin(response).subscribe(function (result) {
+                    callback(ref, { status: result });
+                });
             }
             else {
-                console.log("Twitter Login Error");
                 callback(ref, { status: false });
             }
-            console.log(response);
-            // displayAuthorizeSection(JSON.stringify(response));
         });
     };
     TwitterService = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
-        __metadata("design:paramtypes", [])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__authentication_service__["a" /* AuthenticationService */]])
     ], TwitterService);
     return TwitterService;
 }(__WEBPACK_IMPORTED_MODULE_1__manager_service__["a" /* ManagerService */]));
@@ -1996,33 +2048,23 @@ var MainComponent = (function () {
         this.twtService.login(this, this.loginCallBack);
     };
     MainComponent.prototype.loginCallBack = function (ref, response) {
-        //console.log(response);
-        if (response.status) {
-            var user = response.user;
-            ref.authenticationService.facebookLogin(user.id, user.email)
-                .subscribe(function (result) {
-                ref.toggleSocialLogin(true);
-                if (result === "login") {
-                    // close login modal and open homepage
-                    $('#logIn').modal("hide");
-                    $.blockUI({ message: '<h4> Loading...  Please wait! </h4>' });
-                    // If login is successful, redirect to the home state
-                    setTimeout(function () {
-                        $.unblockUI();
-                        ref.openUrl('/home');
-                    }, 1000);
-                }
-                else if (result === "register") {
-                    ref.openSignup(2);
-                }
-                else {
-                    // login/signup failed
-                }
-            });
+        // console.log(response);
+        ref.toggleSocialLogin(true);
+        if (response.status === "login") {
+            // close login modal and open homepage
+            $('.modal').modal("hide");
+            $.blockUI({ message: '<h4> Loading...  Please wait! </h4>' });
+            // If login is successful, redirect to the home state
+            setTimeout(function () {
+                $.unblockUI();
+                ref.openUrl('/home');
+            }, 1000);
+        }
+        else if (response.status === "register") {
+            ref.openSignup(2);
         }
         else {
-            // failed to login to fb
-            ref.toggleSocialLogin(true);
+            // login/signup failed
         }
     };
     MainComponent.prototype.toggleSocialLogin = function (state) {

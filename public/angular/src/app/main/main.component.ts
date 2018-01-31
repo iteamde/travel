@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthenticationService, FacebookService, TwitterService } from '../../_services/index';
@@ -23,7 +23,8 @@ export class MainComponent implements OnInit {
 		private titleService: Title,
 		private authenticationService: AuthenticationService,
 		private fbService: FacebookService,
-		private twtService: TwitterService) { }
+		private twtService: TwitterService,
+		private ngZone: NgZone) { }
 
 	ngOnInit() {
 		this.titleService.setTitle("Travooo");
@@ -41,32 +42,23 @@ export class MainComponent implements OnInit {
 	}
 
 	loginCallBack(ref, response) {
-		//console.log(response);
-		if (response.status) {
-			var user = response.user;
-			ref.authenticationService.facebookLogin(user.id, user.email)
-				.subscribe(result => {
-					ref.toggleSocialLogin(true);
-					if (result === "login") {
-						// close login modal and open homepage
-						$('#logIn').modal("hide");
-						$.blockUI({ message: '<h4> Loading...  Please wait! </h4>' });
+		// console.log(response);
+		ref.toggleSocialLogin(true);
+		if (response.status === "login") {
+			// close login modal and open homepage
+			$('.modal').modal("hide");
+			$.blockUI({ message: '<h4> Loading...  Please wait! </h4>' });
 
-						// If login is successful, redirect to the home state
-						setTimeout(function () {
-							$.unblockUI();
+			// If login is successful, redirect to the home state
+			setTimeout(function () {
+				$.unblockUI();
 
-							ref.openUrl('/home');
-						}, 1000);
-					} else if(result === "register"){
-						ref.openSignup(2);
-					} else {
-						// login/signup failed
-					}
-				});
-		}
-		else {
-			// failed to login to fb
+				ref.openUrl('/home');
+			}, 1000);
+		} else if(response.status === "register"){
+			ref.openSignup(2);
+		} else {
+			// login/signup failed
 		}
 	}
 
@@ -85,7 +77,10 @@ export class MainComponent implements OnInit {
 		$('.modal-backdrop').remove();
 		$('body').removeClass('modal-open');
 		this.signupStepCount = 0;
-		this.router.navigate(['/']);
+		this.ngZone.run(() => {
+			this.router.navigateByUrl('/');
+		});
+		
 	}
 
 	openLogin() {
@@ -97,7 +92,9 @@ export class MainComponent implements OnInit {
 			$('.signUpProgress').hide();
 			$('.modal-backdrop').remove();
 			this.signupStepCount = 0;
-			this.router.navigate(['/login']);
+			this.ngZone.run(() => {
+				this.router.navigateByUrl('/login');
+			});
 		}
 	}
 
@@ -107,23 +104,28 @@ export class MainComponent implements OnInit {
 		$('.modal-backdrop').remove();
 		this.signupStepCount = stepNum;
 		this.progressWidth = (this.signupStepCount / this.signupSteps) * 100 + "%";
+		var url = '/signup/step' + stepNum;
 		if (stepNum == 1) {
-			this.router.navigate(['/signup']);
+			url = '/signup';
 		}
-		else {
-			this.router.navigate(['/signup/step' + stepNum]);
-		}
+		this.ngZone.run(() => {
+			this.router.navigateByUrl(url);
+		});
 	}
 
 	openForgotPassword() {
 		this.titleService.setTitle("Travooo - Reset Password");
 		$('.modal-backdrop').remove();
-		this.router.navigate(['/forgot-password']);
+		this.ngZone.run(() => {
+			this.router.navigateByUrl('/forgot-password');
+		});
 	}
 
 	openUrl(url) {
 		this.titleService.setTitle("Travooo");
 		$('.modal-backdrop').remove();
-		this.router.navigate([url]);
+		this.ngZone.run(() => {
+			this.router.navigateByUrl(url);
+		});
 	}
 }

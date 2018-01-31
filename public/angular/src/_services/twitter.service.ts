@@ -1,28 +1,31 @@
 import { Injectable } from '@angular/core';
+import { ManagerService } from './manager.service';
+import { AuthenticationService } from './authentication.service';
 
 declare var jquery: any;
 declare var $: any;
 declare var twttr: any;
 
 @Injectable()
-export class TwitterService {
+export class TwitterService extends ManagerService{
 
-	constructor() {
+	constructor(private authService: AuthenticationService) {
+		super();
 		$.getScript('assets/js/twitter-script.js');
 	}
 
 	login(ref: any, callback: (ref:any, res: object) => any){
-		console.log("twitter is called");
+		var t = this;
 		twttr.connect(function (response) {
-			console.log('response');
-			console.log(response);
+			// console.log(response);
 			if (response.success) {
-				//request = response;
+				t.authService.twitterLogin(response).subscribe(
+					result => {
+						callback(ref, {status: result});
+					});
 			} else {
-				console.log("Twitter Login Error");
+				callback(ref, {status: false});
 			}
-			console.log(response);
-			// displayAuthorizeSection(JSON.stringify(response));
 		})
 	}
 }

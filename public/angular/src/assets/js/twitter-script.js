@@ -1,5 +1,5 @@
 (function (window) {
-	var api_key, oauth_token, request_url, popup;
+	var api_key, oauth_token, request_url, popup, oauth_token_secret;
 	var authorize_url = 'https://api.twitter.com/oauth/authenticate?oauth_token=';
 	function init(options) {
 		api_key = options.api_key;
@@ -49,7 +49,7 @@
 			}
 		};
 		
-		xhr.open("POST", request_url, true);
+		xhr.open("GET", request_url, true);
 		xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
 		xhr.send();
 	}
@@ -82,7 +82,8 @@
 				return sendError(response.message, callback);
 			}
 			//Set the OAuth1 Token
-			oauth_token = response.oauth_token;
+			oauth_token = response.data.oauth_token;
+			oauth_token_secret = response.data.oauth_token_secret;
 			//Ask the user to authorize the app;
 			authorize(function (error, response) {
 				if (error) {
@@ -100,6 +101,7 @@
 				callback({
 					success: true,
 					oauth_token: response.oauth_token,
+					oauth_token_secret: oauth_token_secret,
 					oauth_verifier: response.oauth_verifier
 				});
 			});
@@ -117,11 +119,11 @@
 })(window)
 
 
-
 window.twitterInit = twitterInit;
 function twitterInit() {
     twttr.init({
         api_key: 'TtJpZdOIch2fyGygTuOcnwf0F',
-        request_url: 'http://localhost/travo/public/api/users/create/twitter'
+		//request_url: 'http://localhost/travo/public/api/users/create/twitter/login'
+		request_url: 'http://uat.travooo.com/public/api/users/create/twitter/login'
     });
 }

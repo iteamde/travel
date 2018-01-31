@@ -7,5 +7,6 @@ return [
  
     //
     'url_login'         => 'http://localhost/twitter_login.php',
-    'url_callback'      => 'http://localhost/travoo-api/public/api/users/create/twitter',
+    //'url_callback'      => 'http://localhost:4200/twitter-callback',
+    'url_callback'      => 'http://uat.travooo.com/public/twitter-callback',
 ];
