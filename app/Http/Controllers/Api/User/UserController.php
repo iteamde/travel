@@ -550,16 +550,6 @@ class UserController extends Controller
             'data'    => $arr,
             'code'    => 200
         ]; 
-        // generate the URL to make request to authorize our application
-        // $url = $twitteroauth->url(
-        //     'oauth/authorize', [
-        //         'oauth_token' => $request_token['oauth_token']
-        //     ]
-        // );
-         
-        // and redirect
-        // header('Location: '. $url);
-        // die();
     }
 
     public function TwitterSocialLoginSend(Request $request){
@@ -621,13 +611,7 @@ class UserController extends Controller
         }
 
         if(!empty($token)){
-            // $twitter = new TwitterOAuth(
-            //     $config['consumer_key'],
-            //     $config['consumer_secret'],
-            //     $token['oauth_token'],
-            //     $token['oauth_token_secret']
-            // );
-            // $res = User::get_twitter_data($token);
+            
             $connection = new TwitterOAuth(
                     $config['consumer_key'],
                     $config['consumer_secret'],

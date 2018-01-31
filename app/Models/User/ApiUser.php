@@ -1589,7 +1589,6 @@ class ApiUser extends User {
     }
 
     /* Get All Friends List Of Provided User Id */
-
     public static function friends($user_id, $session_token) {
 
         /* If User id Is Not An Integer, Return Error */
