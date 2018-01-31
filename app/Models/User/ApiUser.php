@@ -720,6 +720,53 @@ class ApiUser extends User {
         }
     }
 
+    public static function get_twitter_data($token){
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => "https://api.twitter.com/1.1/account/verify_credentials.json?include_email=true",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "GET",
+            CURLOPT_HTTPHEADER => array(
+                "authorization: OAuth oauth_consumer_key=\"TtJpZdOIch2fyGygTuOcnwf0F\",oauth_token=\"".$token['oauth_token']."\",oauth_signature_method=\"HMAC-SHA1\",oauth_timestamp=\"1517323424\",oauth_nonce=\"7TXtd8\",oauth_version=\"1.0\",oauth_signature=\"64QlDtngkFpeyMMl6OthrL7RCDY%3D\"",
+                "cache-control: no-cache",
+                "postman-token: f00e33a7-ddfb-ca0c-00b9-da84fde9e328"
+            ),
+        ));
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+
+        if ($err) {
+            return [
+                'success' => false,
+                'code'    => 400,
+                'data'    => ["cURL Error #:" . $err]
+            ];
+          // echo "cURL Error #:" . $err;
+        } else {
+            
+            $response = json_decode($response); 
+            echo '<pre>';
+            print_r($response);
+            exit;
+            $arr = [
+                'twuid' => $response->id_str,
+                'email' => $response->email
+            ];
+            
+            $res = Self::twitter_social_login($arr);
+            
+            return $res;
+        }
+    }
+
     public static function twitter_social_login($post){
         
         $errors = [];

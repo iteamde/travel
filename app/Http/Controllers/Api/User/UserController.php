@@ -627,12 +627,33 @@ class UserController extends Controller
             //     $token['oauth_token'],
             //     $token['oauth_token_secret']
             // );
+            // $res = User::get_twitter_data($token);
+            $connection = new TwitterOAuth(
+                    $config['consumer_key'],
+                    $config['consumer_secret'],
+                    $token['oauth_token'],
+                    $token['oauth_token_secret']
+            );
+            
+            $user = $connection->get("account/verify_credentials", ['include_email' => 'true']);
+            
+            if( isset($user->id_str) && isset($user->email) ){
 
-            return [
-                'success' => true,
-                'code'    => 200,
-                'data'    => $token
-            ];
+                $arr = [
+                    'twuid' => $user->id_str,
+                    'email' => $user->email
+                ];
+            
+                $res = User::twitter_social_login($arr);
+                
+                return $res;
+            }else{
+                return [
+                    'success' => false,
+                    'code'    => 400,
+                    'data'    => ['Error creating user.']
+                ];
+            }
         }else{
             return [
                 'success' => false,
