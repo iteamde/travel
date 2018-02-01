@@ -2,8 +2,8 @@
  
 return [
     //
-    'consumer_key'      => 'TtJpZdOIch2fyGygTuOcnwf0F',
-    'consumer_secret'   => '9lVjiTFY32gDCAJQHLFa0mpojb9TgZwaVEyLX7mEFaglZWzzLw',
+    'consumer_key'      => '7OysPrT19Vo59XfV1Pilp9KQx',
+    'consumer_secret'   => 'UI3SDyymSc0pSxL5512ZCRnmSzBkUNtuUGD6scUNjX4w9dIcIQ',
  
     //
     'url_login'         => 'http://localhost/twitter_login.php',
