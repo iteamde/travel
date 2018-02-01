@@ -66,9 +66,12 @@
 		wait();
 	}
 	function connect(callback) {
+		alert("twitter connect");
 		if (!request_url) {
+			alert("twitter failed");
 			return sendError('Request URL not provided', callback);
 		}
+		alert("twitter passed");
 		//Open a blank popup
 		popup = window.open(null, '_blank', 'height=400,width=800,left=250,top=100,resizable=yes', true);
 		//Get an oauth token from the callback url
@@ -118,12 +121,13 @@
 	};
 })(window)
 
-
+alert("twitter");
 window.twitterInit = twitterInit;
 function twitterInit() {
+	alert("twitter init");
     twttr.init({
         api_key: 'TtJpZdOIch2fyGygTuOcnwf0F',
-		//request_url: 'http://localhost/travo/public/api/users/create/twitter/login'
-		request_url: 'http://uat.travooo.com/public/api/users/create/twitter/login'
+		request_url: 'http://localhost/travo/public/api/users/create/twitter/login'
+		//request_url: 'http://uat.travooo.com/public/api/users/create/twitter/login'
     });
 }

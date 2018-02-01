@@ -7,6 +7,11 @@ Route::get('/', function () {
     return view('frontend.angular.index');
 });
 
+Route::get('/home', function () {
+    // return view('frontend.index');
+    return view('frontend.angular.index');
+});
+
 Route::get('/privacy-policy', function () {
     // return view('frontend.index');
     return view('frontend.angular.index');
