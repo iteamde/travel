@@ -60,7 +60,7 @@
 		popup.location.href = authorize_url + oauth_token;
 		var wait = function () {
 			setTimeout(function () {
-				return popup.closed ? callback(null, getUrlQueryObject(popup.location.search)) : wait();
+				return popup.closed ? callback(null, getUrlQueryObject(popup.location.href)) : wait();
 			}, 25);
 		};
 		wait();
