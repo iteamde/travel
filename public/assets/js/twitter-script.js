@@ -122,12 +122,11 @@
 })(window)
 
 alert("twitter");
-window.twitterInit = twitterInit;
-function twitterInit() {
-	alert("twitter init");
+$(document).ready(function(){
+    alert("twitter init");
     twttr.init({
         api_key: 'TtJpZdOIch2fyGygTuOcnwf0F',
 		request_url: 'http://localhost/travo/public/api/users/create/twitter/login'
 		//request_url: 'http://uat.travooo.com/public/api/users/create/twitter/login'
     });
-}
+});
