@@ -89,7 +89,6 @@
 			oauth_token_secret = response.data.oauth_token_secret;
 			//Ask the user to authorize the app;
 			authorize(function (error, response) {
-				alert("authorize callback");
 				if (error) {
 					closePopup();
 					return sendError(error, callback);
