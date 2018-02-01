@@ -516,24 +516,32 @@ class UserController extends Controller
 
         $config = config('config');
 
-        // create TwitterOAuth object
-        $twitteroauth = new TwitterOAuth($config['consumer_key'], $config['consumer_secret']);
-         
-        // request token of application
-        $request_token = $twitteroauth->oauth(
-            'oauth/request_token', [
-                'oauth_callback' => $config['url_callback']
-            ]
-        );
-         
-        // throw exception if something gone wrong
-        if($twitteroauth->getLastHttpCode() != 200) {
+        try{
+            // create TwitterOAuth object
+            $twitteroauth = new TwitterOAuth($config['consumer_key'], $config['consumer_secret']);
+             
+            // request token of application
+            $request_token = $twitteroauth->oauth(
+                'oauth/request_token', [
+                    'oauth_callback' => $config['url_callback']
+                ]
+            );
+             
+            // throw exception if something gone wrong
+            if($twitteroauth->getLastHttpCode() != 200) {
+                return [
+                    'success' => false,
+                    'data'    => ['There was a problem performing this request'],
+                    'code'    => 400
+                ]; 
+                // throw new \Exception('There was a problem performing this request');
+            }
+        }catch (\Exception $e) {
             return [
                 'success' => false,
-                'data'    => ['There was a problem performing this request'],
-                'code'    => 400
-            ]; 
-            // throw new \Exception('There was a problem performing this request');
+                'code'    => 400,
+                'data'    => [$e->getMessage()]//['Login failed. Please try again.']
+            ];
         }
             
         // save token of application to session
