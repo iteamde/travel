@@ -595,12 +595,21 @@ class UserController extends Controller
 
         $config = config('config');
 
-        $connection = new TwitterOAuth(
-            $config['consumer_key'],
-            $config['consumer_secret'],
-            $post['oauth_token'],
-            $post['oauth_token_secret']
-        );
+        try{
+            $connection = new TwitterOAuth(
+                $config['consumer_key'],
+                $config['consumer_secret'],
+                $post['oauth_token'],
+                $post['oauth_token_secret']
+            );
+        }
+        catch (\Exception $e) {
+            return [
+                'success' => false,
+                'code'    => 400,
+                'data'    => ['Login failed. Please try again.']//[$e->getMessage()]
+            ];
+        }
         
         $token = [];
 
@@ -616,7 +625,7 @@ class UserController extends Controller
             return [
                 'success' => false,
                 'code'    => 400,
-                'data'    => [$e->getMessage()]
+                'data'    => ['Login failed. Please try again.']//[$e->getMessage()]
             ];
         }
 
@@ -628,12 +637,22 @@ class UserController extends Controller
             //     $token['oauth_token_secret']
             // );
             // $res = User::get_twitter_data($token);
-            $connection = new TwitterOAuth(
-                    $config['consumer_key'],
-                    $config['consumer_secret'],
-                    $token['oauth_token'],
-                    $token['oauth_token_secret']
-            );
+            
+            try{
+                $connection = new TwitterOAuth(
+                        $config['consumer_key'],
+                        $config['consumer_secret'],
+                        $token['oauth_token'],
+                        $token['oauth_token_secret']
+                );
+            }
+            catch (\Exception $e) {
+                return [
+                    'success' => false,
+                    'code'    => 400,
+                    'data'    => ['Login failed. Please try again.']//[$e->getMessage()]
+                ];
+            }
             
             $user = $connection->get("account/verify_credentials", ['include_email' => 'true']);
             
@@ -662,6 +681,5 @@ class UserController extends Controller
                 'data'    => ['Token not returned from API.']
             ];   
         }
-
     }
 }
