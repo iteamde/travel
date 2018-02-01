@@ -123,19 +123,19 @@
 })(window)
 
 
-window.twitterInit = twitterInit;
-function twitterInit() {
-    twttr.init({
-        api_key: 'TtJpZdOIch2fyGygTuOcnwf0F',
-		//request_url: 'http://localhost/travo/public/api/users/create/twitter/login'
-		request_url: 'http://uat.travooo.com/public/api/users/create/twitter/login'
-    });
-}
-
-// $(document).ready(function(){
+// window.twitterInit = twitterInit;
+// function twitterInit() {
 //     twttr.init({
 //         api_key: 'TtJpZdOIch2fyGygTuOcnwf0F',
 // 		//request_url: 'http://localhost/travo/public/api/users/create/twitter/login'
 // 		request_url: 'http://uat.travooo.com/public/api/users/create/twitter/login'
 //     });
-// });
+// }
+
+$(document).ready(function(){
+    twttr.init({
+        api_key: 'TtJpZdOIch2fyGygTuOcnwf0F',
+		//request_url: 'http://localhost/travo/public/api/users/create/twitter/login'
+		request_url: 'http://uat.travooo.com/public/api/users/create/twitter/login'
+    });
+});
