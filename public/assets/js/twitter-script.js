@@ -58,9 +58,13 @@
 			return callback('Popup Not initialized');
 		}
 		popup.location.href = authorize_url + oauth_token;
+		var search = "";
 		var wait = function () {
 			setTimeout(function () {
-				return popup.closed ? callback(null, getUrlQueryObject(popup.location.href)) : wait();
+				if(!popup.closed){
+					search = popup.location.search;
+				}
+				return popup.closed ? callback(null, getUrlQueryObject(search)) : wait();
 			}, 25);
 		};
 		wait();
