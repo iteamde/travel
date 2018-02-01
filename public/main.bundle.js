@@ -586,7 +586,7 @@ var AuthenticationService = (function (_super) {
                 }
                 else {
                     // api result success is false // return api result message
-                    return apidata.message;
+                    return apidata[0];
                 }
             }
             else {
@@ -799,7 +799,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 var ManagerService = (function () {
     function ManagerService() {
-        // apiPrefix: string = "http://localhost/travo/public/api";
+        //apiPrefix: string = "http://localhost/travo/public/api";
         this.apiPrefix = "/public/api";
     }
     ManagerService = __decorate([
@@ -2063,8 +2063,12 @@ var MainComponent = (function () {
         else if (response.status === "register") {
             ref.openSignup(2);
         }
-        else {
+        else if (response.status === false) {
             // login/signup failed
+            alert("Login failed. Please try again.");
+        }
+        else {
+            alert(response.status);
         }
     };
     MainComponent.prototype.toggleSocialLogin = function (state) {
@@ -3103,7 +3107,7 @@ var Step3Component = (function () {
         return cover_image;
     };
     Step3Component.prototype.search = function () {
-        if (this.searchQuery.length % 3 == 0) {
+        if (this.searchQuery.length > 2) {
             this.offset = 0;
             this.loadMore(true);
         }
@@ -3291,7 +3295,7 @@ var Step4Component = (function () {
         return cover_image;
     };
     Step4Component.prototype.search = function () {
-        if (this.searchQuery.length % 3 == 0) {
+        if (this.searchQuery.length > 2) {
             this.offset = 0;
             this.loadMore(true);
         }
@@ -3479,7 +3483,7 @@ var Step5Component = (function () {
         return cover_image;
     };
     Step5Component.prototype.search = function () {
-        if (this.searchQuery.length % 3 == 0) {
+        if (this.searchQuery.length > 2) {
             this.offset = 0;
             this.loadMore(true);
         }

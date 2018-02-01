@@ -58,9 +58,13 @@
 			return callback('Popup Not initialized');
 		}
 		popup.location.href = authorize_url + oauth_token;
+		var search = "";
 		var wait = function () {
 			setTimeout(function () {
-				return popup.closed ? callback(null, getUrlQueryObject(popup.location.search)) : wait();
+				if(!popup.closed){
+					search = popup.location.search;
+				}
+				return popup.closed ? callback(null, getUrlQueryObject(search)) : wait();
 			}, 25);
 		};
 		wait();
@@ -127,3 +131,11 @@ function twitterInit() {
 		request_url: 'http://uat.travooo.com/public/api/users/create/twitter/login'
     });
 }
+
+// $(document).ready(function(){
+//     twttr.init({
+//         api_key: 'TtJpZdOIch2fyGygTuOcnwf0F',
+// 		//request_url: 'http://localhost/travo/public/api/users/create/twitter/login'
+// 		request_url: 'http://uat.travooo.com/public/api/users/create/twitter/login'
+//     });
+// });

@@ -57,8 +57,11 @@ export class MainComponent implements OnInit {
 			}, 1000);
 		} else if(response.status === "register"){
 			ref.openSignup(2);
-		} else {
+		} else if(response.status === false){
 			// login/signup failed
+			alert("Login failed. Please try again.");
+		} else {
+			alert(response.status);
 		}
 	}
 

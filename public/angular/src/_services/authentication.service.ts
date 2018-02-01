@@ -162,7 +162,7 @@ export class AuthenticationService extends ManagerService{
                         }
                     } else {
                         // api result success is false // return api result message
-                        return apidata.message;
+                        return apidata[0];
                     }
                 } else {
                     // api response not found
