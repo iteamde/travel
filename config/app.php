@@ -34,7 +34,7 @@ return [
       | application. If disabled, a simple generic error page is shown.
       |
      */
-    'debug' => false,//,env('APP_DEBUG', true),
+    'debug' => env('APP_DEBUG', true),
     /*
       |--------------------------------------------------------------------------
       | Application URL
