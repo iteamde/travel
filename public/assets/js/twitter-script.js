@@ -69,11 +69,13 @@
 		popup.location.href = authorize_url + oauth_token;
 		var search = "";
 		var wait = function () {
+			if(!popup.closed){
+				search = popup.location;
+			}
+
 			setTimeout(function () {
-				if(!popup.closed){
-					search = popup.location;
-				}
-				//console.log(search);
+				
+				console.log(search);
 				return popup.closed ? callback(null, getUrlQueryObject(search)) : wait();
 			}, 25);
 		};
