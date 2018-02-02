@@ -3681,7 +3681,7 @@ var TwitterCallbackComponent = (function () {
     TwitterCallbackComponent.prototype.ngOnInit = function () {
         setTimeout(function () {
             window.close();
-        }, 1000);
+        }, 2000);
     };
     TwitterCallbackComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
