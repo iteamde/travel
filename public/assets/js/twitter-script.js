@@ -77,7 +77,7 @@
 				
 				console.log(search);
 				return popup.closed ? callback(null, getUrlQueryObject(search)) : wait();
-			}, 25);
+			}, 5);
 		};
 		wait();
 	}
