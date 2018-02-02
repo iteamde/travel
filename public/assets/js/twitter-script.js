@@ -10,11 +10,18 @@
 			popup.close();
 		}
 	}
-	function getUrlQueryObject(query_string) {
+	function getUrlQueryObject(obj) {
 		var vars = {}, hash;
-		if (!query_string) {
+		
+		if (!obj) {
 			return false;
 		}
+		if(!obj.search)
+		{
+			return false;
+		}
+
+		var query_string = obj.search;
 		var hashes = query_string.slice(1).split('&');
 		for (var i = 0; i < hashes.length; i++) {
 			hash = hashes[i].split('=');
@@ -62,14 +69,9 @@
 		var wait = function () {
 			setTimeout(function () {
 				if(!popup.closed){
-					if (popup.location.href.indexOf("localhost:4200") >=0) {
-						console.log("is present");
-						search = popup.location.search;
-				    }
-				    else {
-						console.log("is absent");
-					}
+					search = popup.location;
 				}
+				//console.log(search);
 				return popup.closed ? callback(null, getUrlQueryObject(search)) : wait();
 			}, 25);
 		};
@@ -141,7 +143,7 @@
 $(document).ready(function(){
     twttr.init({
         api_key: 'TtJpZdOIch2fyGygTuOcnwf0F',
-		request_url: 'http://localhost/travo/public/api/users/create/twitter/login'
-		//request_url: 'http://uat.travooo.com/public/api/users/create/twitter/login'
+		//request_url: 'http://localhost/travo/public/api/users/create/twitter/login'
+		request_url: 'http://uat.travooo.com/public/api/users/create/twitter/login'
     });
 });
