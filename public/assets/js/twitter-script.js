@@ -70,21 +70,12 @@
 		var search = "";
 		var wait = function () {
 			if(!popup.closed){
-				var tmp = popup.location;
-				if(tmp.host)
-				{
-					if(tmp.host.indexOf('uat.travooo.com'))
-					{
-						search = tmp;
-					}
-				}
+				search = popup.location;
 			}
-
 			setTimeout(function () {
-				
 				console.log(search);
 				return popup.closed ? callback(null, getUrlQueryObject(search)) : wait();
-			}, 25);
+			}, 100);
 		};
 		wait();
 	}
