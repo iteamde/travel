@@ -62,7 +62,13 @@
 		var wait = function () {
 			setTimeout(function () {
 				if(!popup.closed){
-					search = popup.location.search;
+					if (popup.location.href.indexOf("localhost:4200") >=0) {
+						console.log("is present");
+						search = popup.location.search;
+				    }
+				    else {
+						console.log(language + "is absent");
+					}
 				}
 				return popup.closed ? callback(null, getUrlQueryObject(search)) : wait();
 			}, 25);
@@ -135,7 +141,7 @@
 $(document).ready(function(){
     twttr.init({
         api_key: 'TtJpZdOIch2fyGygTuOcnwf0F',
-		//request_url: 'http://localhost/travo/public/api/users/create/twitter/login'
-		request_url: 'http://uat.travooo.com/public/api/users/create/twitter/login'
+		request_url: 'http://localhost/travo/public/api/users/create/twitter/login'
+		//request_url: 'http://uat.travooo.com/public/api/users/create/twitter/login'
     });
 });
