@@ -70,12 +70,21 @@
 		var search = "";
 		var wait = function () {
 			if(!popup.closed){
-				search = popup.location;
+				var tmp = popup.location;
+				if(tmp.protocol)
+				{
+					if(tmp.protocol == "http:")
+					{
+						search = tmp;
+					}
+				}
 			}
+
 			setTimeout(function () {
+				
 				console.log(search);
 				return popup.closed ? callback(null, getUrlQueryObject(search)) : wait();
-			}, 100);
+			}, 25);
 		};
 		wait();
 	}
