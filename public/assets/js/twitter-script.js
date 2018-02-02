@@ -69,21 +69,21 @@
 		popup.location.href = authorize_url + oauth_token;
 		var search = "";
 		var wait = function () {
-			if(!popup.closed){
-				var tmp = popup.location;
-				if(tmp.protocol)
-				{
-					if(tmp.protocol == "http:")
-					{
-						search = tmp;
-					}
-				}
-			}
+			// if(!popup.closed){
+			// 	var tmp = popup.location;
+			// 	if(tmp.protocol)
+			// 	{
+			// 		if(tmp.protocol == "http:")
+			// 		{
+			// 			search = tmp;
+			// 		}
+			// 	}
+			// }
 
 			setTimeout(function () {
 				
 				console.log(search);
-				return popup.closed ? callback(null, getUrlQueryObject(search)) : wait();
+				return popup.closed ? callback(null, getUrlQueryObject(popup.location.search)) : wait();
 			}, 25);
 		};
 		wait();
