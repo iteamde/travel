@@ -12,12 +12,14 @@
 	}
 	function getUrlQueryObject(obj) {
 		var vars = {}, hash;
-		
+		console.log(obj);
 		if (!obj) {
+			console.log("obj empty");
 			return false;
 		}
 		if(!obj.search)
 		{
+			console.log("obj search empty");
 			return false;
 		}
 
