@@ -10,20 +10,20 @@
 			popup.close();
 		}
 	}
-	function getUrlQueryObject(obj) {
+	function getUrlQueryObject(query_string) {
 		var vars = {}, hash;
-		console.log(obj);
-		if (!obj) {
+		console.log(query_string);
+		if (!query_string) {
 			console.log("obj empty");
 			return false;
 		}
-		if(!obj.search)
-		{
-			console.log("obj search empty");
-			return false;
-		}
+		// if(!obj.search)
+		// {
+		// 	console.log("obj search empty");
+		// 	return false;
+		// }
 
-		var query_string = obj.search;
+		// var query_string = obj.search;
 		var hashes = query_string.slice(1).split('&');
 		for (var i = 0; i < hashes.length; i++) {
 			hash = hashes[i].split('=');
