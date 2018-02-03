@@ -3153,7 +3153,7 @@ var Step3Component = (function () {
         return cover_image;
     };
     Step3Component.prototype.search = function () {
-        if (this.searchQuery.length > 2) {
+        if (this.searchQuery.length > 2 || this.searchQuery.length == 0) {
             this.offset = 0;
             this.loadMore(true);
         }
@@ -3341,7 +3341,7 @@ var Step4Component = (function () {
         return cover_image;
     };
     Step4Component.prototype.search = function () {
-        if (this.searchQuery.length > 2) {
+        if (this.searchQuery.length > 2 || this.searchQuery.length == 0) {
             this.offset = 0;
             this.loadMore(true);
         }
@@ -3529,7 +3529,7 @@ var Step5Component = (function () {
         return cover_image;
     };
     Step5Component.prototype.search = function () {
-        if (this.searchQuery.length > 2) {
+        if (this.searchQuery.length > 2 || this.searchQuery.length == 0) {
             this.offset = 0;
             this.loadMore(true);
         }

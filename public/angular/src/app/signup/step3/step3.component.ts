@@ -95,7 +95,7 @@ export class Step3Component implements OnInit {
 	}
 
 	search(){
-		if(this.searchQuery.length > 2)
+		if(this.searchQuery.length > 2 || this.searchQuery.length == 0)
 		{
 			this.offset = 0;
 			this.loadMore(true);
