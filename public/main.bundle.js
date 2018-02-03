@@ -945,6 +945,7 @@ var TravelStylesService = (function (_super) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__manager_service__ = __webpack_require__("../../../../../src/_services/manager.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__authentication_service__ = __webpack_require__("../../../../../src/_services/authentication.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_common_http__ = __webpack_require__("../../../common/esm5/http.js");
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -967,31 +968,48 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var TwitterService = (function (_super) {
     __extends(TwitterService, _super);
-    function TwitterService(authService) {
+    function TwitterService(authService, http) {
         var _this = _super.call(this) || this;
         _this.authService = authService;
-        $.getScript('assets/js/twitter-script.js');
+        _this.http = http;
         return _this;
+        //$.getScript('assets/js/twitter-script.js');
     }
     TwitterService.prototype.login = function (ref, callback) {
         var t = this;
-        twttr.connect(function (response) {
-            // console.log(response);
-            if (response.success) {
-                t.authService.twitterLogin(response).subscribe(function (result) {
-                    callback(ref, { status: result });
-                });
+        this.getOauthToken().subscribe(function (result) {
+            if (result.success) {
+                var oauth_token = result.data.oauth_token;
+                localStorage.setItem('twtOauthToken', result.data.oauth_token);
+                localStorage.setItem('twtOauthTokenSecret', result.data.oauth_token_secret);
+                window.location.href = 'https://api.twitter.com/oauth/authenticate?oauth_token=' + oauth_token;
             }
             else {
                 callback(ref, { status: false });
             }
         });
+        // twttr.connect(function (response) {
+        // 	// console.log(response);
+        // 	if (response.success) {
+        // 		t.authService.twitterLogin(response).subscribe(
+        // 			result => {
+        // 				callback(ref, {status: result});
+        // 			});
+        // 	} else {
+        // 		callback(ref, {status: false});
+        // 	}
+        // })
+    };
+    TwitterService.prototype.getOauthToken = function () {
+        return this.http.get(this.apiPrefix + '/users/create/twitter/login', {});
     };
     TwitterService = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__authentication_service__["a" /* AuthenticationService */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__authentication_service__["a" /* AuthenticationService */],
+            __WEBPACK_IMPORTED_MODULE_3__angular_common_http__["b" /* HttpClient */]])
     ], TwitterService);
     return TwitterService;
 }(__WEBPACK_IMPORTED_MODULE_1__manager_service__["a" /* ManagerService */]));
@@ -1144,6 +1162,7 @@ var routes = [
             },
             { path: 'forgot-password', component: __WEBPACK_IMPORTED_MODULE_12__forgot_password_forgot_password_component__["a" /* ForgotPasswordComponent */] },
             { path: 'reset-password', component: __WEBPACK_IMPORTED_MODULE_13__reset_password_reset_password_component__["a" /* ResetPasswordComponent */] },
+            { path: 'twitter-callback', component: __WEBPACK_IMPORTED_MODULE_14__twitter_callback_twitter_callback_component__["a" /* TwitterCallbackComponent */] },
         ]
     },
     {
@@ -2047,7 +2066,20 @@ var MainComponent = (function () {
         this.toggleSocialLogin(false);
         this.twtService.login(this, this.loginCallBack);
     };
-    MainComponent.prototype.loginCallBack = function (ref, response) {
+    MainComponent.prototype.TwitterCallbackLogin = function (oauth_token, oauth_verifier) {
+        var _this = this;
+        var data = {
+            oauth_token: oauth_token,
+            oauth_token_secret: localStorage.getItem('twtOauthToken'),
+            oauth_verifier: oauth_verifier
+        };
+        this.authenticationService.twitterLogin(data).subscribe(function (result) {
+            console.log(result);
+            _this.loginCallBack(_this, { status: result }, true);
+        });
+    };
+    MainComponent.prototype.loginCallBack = function (ref, response, openLogin) {
+        if (openLogin === void 0) { openLogin = false; }
         // console.log(response);
         ref.toggleSocialLogin(true);
         if (response.status === "login") {
@@ -2066,9 +2098,15 @@ var MainComponent = (function () {
         else if (response.status === false) {
             // login/signup failed
             alert("Login failed. Please try again.");
+            if (openLogin) {
+                this.openLogin();
+            }
         }
         else {
             alert(response.status);
+            if (openLogin) {
+                this.openLogin();
+            }
         }
     };
     MainComponent.prototype.toggleSocialLogin = function (state) {
@@ -3010,7 +3048,7 @@ var Step2Component = (function () {
 /***/ "../../../../../src/app/signup/step3/step3.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<!-- Modal -->\n<div class=\"modal fade signUpStep\" id=\"signUpStep3\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\" data-backdrop=\"static\" data-keyboard=\"false\">\n\t<div class=\"modal-dialog sign-up-step\" role=\"document\">\n\t\t<div class=\"modal-content\">\n\t\t\t<div class=\"modal-body\">\n\t\t\t\t<div class=\"title-layer\">\n\t\t\t\t\t<h3 class=\"step-ttl\">Select at least 5 favorite\n\t\t\t\t\t\t<span>countries or cities</span>\n\t\t\t\t\t</h3>\n\t\t\t\t\t<div class=\"step-info\">\n\t\t\t\t\t\tStep 3\n\t\t\t\t\t\t<span>of {{ this.signupSteps }}</span>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"search-block-wrap\">\n\t\t\t\t\t<div class=\"search-block\">\n\t\t\t\t\t\t<a class=\"search-btn\" href=\"#\">\n\t\t\t\t\t\t\t<i class=\"fa fa-search\"></i>\n\t\t\t\t\t\t</a>\n\t\t\t\t\t\t<input type=\"text\" name=\"searchQuery\" [(ngModel)]=\"searchQuery\" placeholder=\"Country ...\" (input)=\"search()\"/>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"check-block-wrap\" id=\"select_countries\">\n\t\t\t\t\t<div *ngFor=\"let country of countries\">\n\t\t\t\t\t\t<div class=\"check-block\" [style.background-image]=\"'url('+ getCoverImage(country.cover_image) +')'\" [class.checked-block]=\"selected.indexOf(country.id)>=0\" (click)=\"select(country.id)\">\n\t\t\t\t\t\t\t<div class=\"check-ttl\">\n\t\t\t\t\t\t\t\t<h4>{{ country.name }} </h4>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\n\t\t\t\t\t<div class=\"col-md-12\" style=\"height: 50px; width: 100%; text-align:center\">\n\t\t\t\t\t\t<img src=\"data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==\" />\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"modal-footer\">\n\t\t\t\t<button type=\"button\" class=\"btn btn-grey\"\n\t\t\t\t\t[ngClass]=\"{ 'btn-primary': this.selected.length >= 5 }\" \n\t\t\t\t\t[disabled]=\"this.selected.length < 1 || loading\" \n\t\t\t\t\t(click)=\"continueStep3()\">\n\t\t\t\t\t\t{{ continueBtnText }}\n\t\t\t\t</button>\n\t\t\t\t<p class=\"sub-info\">(Next Step: Favorite Places)</p>\n\t\t\t</div>\n\t\t</div>\n\t</div>\n</div>"
+module.exports = "<!-- Modal -->\n<div class=\"modal fade signUpStep\" id=\"signUpStep3\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\" data-backdrop=\"static\" data-keyboard=\"false\">\n\t<div class=\"modal-dialog sign-up-step\" role=\"document\">\n\t\t<div class=\"modal-content\">\n\t\t\t<div class=\"modal-body\">\n\t\t\t\t<div class=\"title-layer\">\n\t\t\t\t\t<h3 class=\"step-ttl\">Select at least 5 favorite\n\t\t\t\t\t\t<span>countries or cities</span>\n\t\t\t\t\t</h3>\n\t\t\t\t\t<div class=\"step-info\">\n\t\t\t\t\t\tStep 3\n\t\t\t\t\t\t<span>of {{ this.signupSteps }}</span>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"search-block-wrap\">\n\t\t\t\t\t<div class=\"search-block\">\n\t\t\t\t\t\t<a class=\"search-btn\" href=\"#\">\n\t\t\t\t\t\t\t<i class=\"fa fa-search\"></i>\n\t\t\t\t\t\t</a>\n\t\t\t\t\t\t<input type=\"text\" name=\"searchQuery\" [(ngModel)]=\"searchQuery\" placeholder=\"Country ...\" (input)=\"search()\"/>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"check-block-wrap\" id=\"select_countries\">\n\t\t\t\t\t<div *ngFor=\"let country of countries\">\n\t\t\t\t\t\t<div class=\"check-block\" [style.background-image]=\"'url('+ getCoverImage(country.cover_image) +')'\" [class.checked-block]=\"selected.indexOf(country.id)>=0\" (click)=\"select(country.id)\">\n\t\t\t\t\t\t\t<div class=\"check-ttl\">\n\t\t\t\t\t\t\t\t<h4>{{ country.name }} </h4>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\n\t\t\t\t\t<div class=\"col-md-12\" style=\"height: 50px; width: 100%; text-align:center\">\n\t\t\t\t\t\t<img src=\"data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==\" />\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"modal-footer\">\n\t\t\t\t<button type=\"button\" class=\"btn btn-grey\"\n\t\t\t\t\t[ngClass]=\"{ 'btn-primary': this.selected.length >= 5 }\" \n\t\t\t\t\t[disabled]=\"this.selected.length < 5 || loading\" \n\t\t\t\t\t(click)=\"continueStep3()\">\n\t\t\t\t\t\t{{ continueBtnText }}\n\t\t\t\t</button>\n\t\t\t\t<p class=\"sub-info\">(Next Step: Favorite Places)</p>\n\t\t\t</div>\n\t\t</div>\n\t</div>\n</div>"
 
 /***/ }),
 
@@ -3198,7 +3236,7 @@ var Step3Component = (function () {
 /***/ "../../../../../src/app/signup/step4/step4.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<!-- Modal -->\n<div class=\"modal fade signUpStep\" id=\"signUpStep4\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\"\n data-backdrop=\"static\" data-keyboard=\"false\">\n\t<div class=\"modal-dialog sign-up-step\" role=\"document\">\n\t\t<div class=\"modal-content\">\n\t\t\t<div class=\"modal-body\">\n\t\t\t\t<div class=\"title-layer\">\n\t\t\t\t\t<h3 class=\"step-ttl\">Select 3\n\t\t\t\t\t\t<span>favorite places</span> around the world</h3>\n\t\t\t\t\t<div class=\"step-info\">\n\t\t\t\t\t\tStep 4\n\t\t\t\t\t\t<span>of {{ this.signupSteps }}</span>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t\t\n\t\t\t\t<div class=\"search-block-wrap\">\n\t\t\t\t\t<div class=\"search-block\">\n\t\t\t\t\t\t<a class=\"search-btn\" href=\"#\">\n\t\t\t\t\t\t\t<i class=\"fa fa-search\"></i>\n\t\t\t\t\t\t</a>\n\t\t\t\t\t\t<input type=\"text\" name=\"searchQuery\" [(ngModel)]=\"searchQuery\" placeholder=\"Place name...\" (input)=\"search()\" />\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\n\t\t\t\t<div class=\"check-block-wrap\"  id=\"select_places\">\n\t\t\t\t\t<div *ngFor=\"let place of places\">\n\t\t\t\t\t\t<div class=\"check-block\" [style.background-image]=\"'url('+ getCoverImage(place.cover_image) +')'\" [class.checked-block]=\"selected.indexOf(place.id)>=0\"\n\t\t\t\t\t\t (click)=\"select(place.id)\">\n\t\t\t\t\t\t\t<div class=\"check-ttl\">\n\t\t\t\t\t\t\t\t<h4>{{ place.name }} </h4>\n\t\t\t\t\t\t\t\t<p>{{ place.city_country_name }}</p>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\n\t\t\t\t\t<div class=\"col-md-12\" style=\"height: 50px; width: 100%; text-align:center\">\n\t\t\t\t\t\t<img src=\"data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==\" />\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"modal-footer\">\n\t\t\t\t<button type=\"button\" class=\"btn btn-grey\"\n\t\t\t\t\t[ngClass]=\"{ 'btn-primary': this.selected.length >= 5 }\" \n\t\t\t\t\t[disabled]=\"this.selected.length < 1 || loading\" \n\t\t\t\t\t(click)=\"continueStep4()\">\n\t\t\t\t\t\t{{ continueBtnText }}\n\t\t\t\t</button>\n\t\t\t\t<p class=\"sub-info\">(Next Step: Favorite Travel Styles)</p>\n\t\t\t</div>\n\t\t</div>\n\t</div>\n</div>"
+module.exports = "<!-- Modal -->\n<div class=\"modal fade signUpStep\" id=\"signUpStep4\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\"\n data-backdrop=\"static\" data-keyboard=\"false\">\n\t<div class=\"modal-dialog sign-up-step\" role=\"document\">\n\t\t<div class=\"modal-content\">\n\t\t\t<div class=\"modal-body\">\n\t\t\t\t<div class=\"title-layer\">\n\t\t\t\t\t<h3 class=\"step-ttl\">Select 3\n\t\t\t\t\t\t<span>favorite places</span> around the world</h3>\n\t\t\t\t\t<div class=\"step-info\">\n\t\t\t\t\t\tStep 4\n\t\t\t\t\t\t<span>of {{ this.signupSteps }}</span>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t\t\n\t\t\t\t<div class=\"search-block-wrap\">\n\t\t\t\t\t<div class=\"search-block\">\n\t\t\t\t\t\t<a class=\"search-btn\" href=\"#\">\n\t\t\t\t\t\t\t<i class=\"fa fa-search\"></i>\n\t\t\t\t\t\t</a>\n\t\t\t\t\t\t<input type=\"text\" name=\"searchQuery\" [(ngModel)]=\"searchQuery\" placeholder=\"Place name...\" (input)=\"search()\" />\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\n\t\t\t\t<div class=\"check-block-wrap\"  id=\"select_places\">\n\t\t\t\t\t<div *ngFor=\"let place of places\">\n\t\t\t\t\t\t<div class=\"check-block\" [style.background-image]=\"'url('+ getCoverImage(place.cover_image) +')'\" [class.checked-block]=\"selected.indexOf(place.id)>=0\"\n\t\t\t\t\t\t (click)=\"select(place.id)\">\n\t\t\t\t\t\t\t<div class=\"check-ttl\">\n\t\t\t\t\t\t\t\t<h4>{{ place.name }} </h4>\n\t\t\t\t\t\t\t\t<p>{{ place.city_country_name }}</p>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\n\t\t\t\t\t<div class=\"col-md-12\" style=\"height: 50px; width: 100%; text-align:center\">\n\t\t\t\t\t\t<img src=\"data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==\" />\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"modal-footer\">\n\t\t\t\t<button type=\"button\" class=\"btn btn-grey\"\n\t\t\t\t\t[ngClass]=\"{ 'btn-primary': this.selected.length >= 5 }\" \n\t\t\t\t\t[disabled]=\"this.selected.length < 5 || loading\" \n\t\t\t\t\t(click)=\"continueStep4()\">\n\t\t\t\t\t\t{{ continueBtnText }}\n\t\t\t\t</button>\n\t\t\t\t<p class=\"sub-info\">(Next Step: Favorite Travel Styles)</p>\n\t\t\t</div>\n\t\t</div>\n\t</div>\n</div>"
 
 /***/ }),
 
@@ -3386,7 +3424,7 @@ var Step4Component = (function () {
 /***/ "../../../../../src/app/signup/step5/step5.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<!-- Modal -->\n<div class=\"modal fade signUpStep\" id=\"signUpStep5\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\"\n data-backdrop=\"static\" data-keyboard=\"false\">\n\t<div class=\"modal-dialog sign-up-step\" role=\"document\">\n\t\t<div class=\"modal-content\">\n\t\t\t<div class=\"modal-body\">\n\t\t\t\t<div class=\"title-layer\">\n\t\t\t\t\t<h3 class=\"step-ttl\">Select your preferred\n\t\t\t\t\t\t<span>travel styles</span>\n\t\t\t\t\t</h3>\n\t\t\t\t\t<div class=\"step-info\">\n\t\t\t\t\t\tStep 5\n\t\t\t\t\t\t<span>of {{ this.signupSteps }}</span>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\n\t\t\t\t<div class=\"search-block-wrap\">\n\t\t\t\t\t<div class=\"search-block\">\n\t\t\t\t\t\t<a class=\"search-btn\" href=\"#\">\n\t\t\t\t\t\t\t<i class=\"fa fa-search\"></i>\n\t\t\t\t\t\t</a>\n\t\t\t\t\t\t<input type=\"text\" name=\"searchQuery\" [(ngModel)]=\"searchQuery\" placeholder=\"Travel style...\" (input)=\"search()\" />\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\n\t\t\t\t<div class=\"check-block-wrap\" id=\"select_styles\">\n\t\t\t\t\t<div *ngFor=\"let style of styles\">\n\t\t\t\t\t\t<div class=\"check-block\" [style.background-image]=\"'url('+ getCoverImage(style.cover_image) +')'\" [class.checked-block]=\"selected.indexOf(style.id)>=0\"\n\t\t\t\t\t\t (click)=\"select(style.id)\">\n\t\t\t\t\t\t\t<div class=\"check-ttl\">\n\t\t\t\t\t\t\t\t<h4>{{ style.name }} </h4>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\n\t\t\t\t\t<div class=\"col-md-12\" style=\"height: 50px; width: 100%; text-align:center\">\n\t\t\t\t\t\t\t<img src=\"data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==\" />\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"modal-footer\">\n\t\t\t\t<button type=\"button\" class=\"btn btn-grey\"\n\t\t\t\t\t[ngClass]=\"{ 'btn-primary': this.selected.length >= 5 }\" \n\t\t\t\t\t[disabled]=\"this.selected.length < 1 || loading\" \n\t\t\t\t\t(click)=\"continueStep5()\">\n\t\t\t\t\t\t{{ continueBtnText }}\n\t\t\t\t</button>\n\t\t\t\t<p class=\"sub-info\">(Next Step: Favorite Activities)</p>\n\t\t\t</div>\n\t\t</div>\n\t</div>\n</div>"
+module.exports = "<!-- Modal -->\n<div class=\"modal fade signUpStep\" id=\"signUpStep5\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\"\n data-backdrop=\"static\" data-keyboard=\"false\">\n\t<div class=\"modal-dialog sign-up-step\" role=\"document\">\n\t\t<div class=\"modal-content\">\n\t\t\t<div class=\"modal-body\">\n\t\t\t\t<div class=\"title-layer\">\n\t\t\t\t\t<h3 class=\"step-ttl\">Select your preferred\n\t\t\t\t\t\t<span>travel styles</span>\n\t\t\t\t\t</h3>\n\t\t\t\t\t<div class=\"step-info\">\n\t\t\t\t\t\tStep 5\n\t\t\t\t\t\t<span>of {{ this.signupSteps }}</span>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\n\t\t\t\t<div class=\"search-block-wrap\">\n\t\t\t\t\t<div class=\"search-block\">\n\t\t\t\t\t\t<a class=\"search-btn\" href=\"#\">\n\t\t\t\t\t\t\t<i class=\"fa fa-search\"></i>\n\t\t\t\t\t\t</a>\n\t\t\t\t\t\t<input type=\"text\" name=\"searchQuery\" [(ngModel)]=\"searchQuery\" placeholder=\"Travel style...\" (input)=\"search()\" />\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\n\t\t\t\t<div class=\"check-block-wrap\" id=\"select_styles\">\n\t\t\t\t\t<div *ngFor=\"let style of styles\">\n\t\t\t\t\t\t<div class=\"check-block\" [style.background-image]=\"'url('+ getCoverImage(style.cover_image) +')'\" [class.checked-block]=\"selected.indexOf(style.id)>=0\"\n\t\t\t\t\t\t (click)=\"select(style.id)\">\n\t\t\t\t\t\t\t<div class=\"check-ttl\">\n\t\t\t\t\t\t\t\t<h4>{{ style.name }} </h4>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\n\t\t\t\t\t<div class=\"col-md-12\" style=\"height: 50px; width: 100%; text-align:center\">\n\t\t\t\t\t\t\t<img src=\"data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==\" />\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"modal-footer\">\n\t\t\t\t<button type=\"button\" class=\"btn btn-grey\"\n\t\t\t\t\t[ngClass]=\"{ 'btn-primary': this.selected.length >= 5 }\" \n\t\t\t\t\t[disabled]=\"this.selected.length < 5 || loading\" \n\t\t\t\t\t(click)=\"continueStep5()\">\n\t\t\t\t\t\t{{ continueBtnText }}\n\t\t\t\t</button>\n\t\t\t\t<p class=\"sub-info\">(Next Step: Favorite Activities)</p>\n\t\t\t</div>\n\t\t</div>\n\t</div>\n</div>"
 
 /***/ }),
 
@@ -3637,7 +3675,7 @@ var TermsOfServiceComponent = (function () {
 /***/ "../../../../../src/app/twitter-callback/twitter-callback.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<p>\n  You have successfully logged in using your twitter account! Please wait we are redirecting you back.\n</p>\n"
+module.exports = "<!-- <p>\n  You have successfully logged in using your twitter account! Please wait we are redirecting you back.\n</p> -->\n"
 
 /***/ }),
 
@@ -3665,6 +3703,8 @@ module.exports = module.exports.toString();
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TwitterCallbackComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__main_main_component__ = __webpack_require__("../../../../../src/app/main/main.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__("../../../router/esm5/router.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3675,13 +3715,29 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
+
 var TwitterCallbackComponent = (function () {
-    function TwitterCallbackComponent() {
+    function TwitterCallbackComponent(mainC, route, router) {
+        this.mainC = mainC;
+        this.route = route;
+        this.router = router;
     }
     TwitterCallbackComponent.prototype.ngOnInit = function () {
-        setTimeout(function () {
-            window.close();
-        }, 2000);
+        var _this = this;
+        $.blockUI({ message: '<h4> Loading...  Please wait! </h4>' });
+        // assign the subscription to a variable so we can unsubscribe to prevent memory leaks
+        this.sub = this.route.queryParams.subscribe(function (params) {
+            _this.oauthToken = params['oauth_token'];
+            _this.oauthVerifier = params['oauth_verifier'];
+        });
+        this.mainC.TwitterCallbackLogin(this.oauthToken, this.oauthVerifier);
+        // setTimeout(function () {
+        // 	window.close();
+        // }, 2000);
+    };
+    TwitterCallbackComponent.prototype.ngOnDestroy = function () {
+        this.sub.unsubscribe();
     };
     TwitterCallbackComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
@@ -3689,7 +3745,9 @@ var TwitterCallbackComponent = (function () {
             template: __webpack_require__("../../../../../src/app/twitter-callback/twitter-callback.component.html"),
             styles: [__webpack_require__("../../../../../src/app/twitter-callback/twitter-callback.component.scss")]
         }),
-        __metadata("design:paramtypes", [])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__main_main_component__["a" /* MainComponent */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* ActivatedRoute */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_router__["c" /* Router */]])
     ], TwitterCallbackComponent);
     return TwitterCallbackComponent;
 }());
