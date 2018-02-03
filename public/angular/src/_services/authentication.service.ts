@@ -105,6 +105,11 @@ export class AuthenticationService extends ManagerService{
                             // return true to indicate successful login
                             return "login";
                         } else if(type == "register"){
+                            // set token property
+                            this.token = token;
+            
+                            // store username and jwt token in local storage to keep user logged in between page refreshes
+                            localStorage.setItem('currentUser', JSON.stringify({ user: user, token: token }));
                             localStorage.setItem('signupId', user.id);
                             return "register";
                         } else {
@@ -155,6 +160,11 @@ export class AuthenticationService extends ManagerService{
                             // return true to indicate successful login
                             return "login";
                         } else if(type == "register"){
+                            // set token property
+                            this.token = token;
+            
+                            // store username and jwt token in local storage to keep user logged in between page refreshes
+                            localStorage.setItem('currentUser', JSON.stringify({ user: user, token: token }));
                             localStorage.setItem('signupId', user.id);
                             return "register";
                         } else {

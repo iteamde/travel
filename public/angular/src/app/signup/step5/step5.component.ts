@@ -150,18 +150,15 @@ export class Step5Component implements OnInit {
 			.subscribe(
 			data => {
 				//console.log(data);
-
+				this.toggleSignup(true);
 				if (data.success) {
 					var response = data.data;
 					//console.log(response);
-					this.toggleSignup(true);
 
 					// continue to step 6
 					//this.mainC.openSignup(6);
+					//this.mainC.openUrl('/home');
 					this.mainC.openLogin();
-				}
-				else {
-					this.toggleSignup(true);
 				}
 			},
 			error => {

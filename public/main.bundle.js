@@ -533,6 +533,10 @@ var AuthenticationService = (function (_super) {
                         return "login";
                     }
                     else if (type == "register") {
+                        // set token property
+                        _this.token = token;
+                        // store username and jwt token in local storage to keep user logged in between page refreshes
+                        localStorage.setItem('currentUser', JSON.stringify({ user: user, token: token }));
                         localStorage.setItem('signupId', user.id);
                         return "register";
                     }
@@ -577,6 +581,10 @@ var AuthenticationService = (function (_super) {
                         return "login";
                     }
                     else if (type == "register") {
+                        // set token property
+                        _this.token = token;
+                        // store username and jwt token in local storage to keep user logged in between page refreshes
+                        localStorage.setItem('currentUser', JSON.stringify({ user: user, token: token }));
                         localStorage.setItem('signupId', user.id);
                         return "register";
                     }
@@ -2131,7 +2139,7 @@ var MainComponent = (function () {
     MainComponent.prototype.openLogin = function () {
         var _this = this;
         if (this.authenticationService.isLoggedIn()) {
-            this.router.navigate(['/home']);
+            this.openUrl('/home');
         }
         else {
             this.titleService.setTitle("Travooo - Login");
@@ -3568,16 +3576,14 @@ var Step5Component = (function () {
         this.userService.signupStep5(user)
             .subscribe(function (data) {
             //console.log(data);
+            _this.toggleSignup(true);
             if (data.success) {
                 var response = data.data;
                 //console.log(response);
-                _this.toggleSignup(true);
                 // continue to step 6
                 //this.mainC.openSignup(6);
+                //this.mainC.openUrl('/home');
                 _this.mainC.openLogin();
-            }
-            else {
-                _this.toggleSignup(true);
             }
         }, function (error) {
             console.log(error);

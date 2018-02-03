@@ -34,6 +34,7 @@ const routes: Routes = [
 			},
 			{path: 'forgot-password', component: ForgotPasswordComponent},
 			{path: 'reset-password', component: ResetPasswordComponent},
+			{path: 'twitter-callback', component: TwitterCallbackComponent},
 		]
   	},
   	{

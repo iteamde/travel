@@ -12,9 +12,18 @@
 	}
 	function getUrlQueryObject(query_string) {
 		var vars = {}, hash;
+		console.log(query_string);
 		if (!query_string) {
+			console.log("obj empty");
 			return false;
 		}
+		// if(!obj.search)
+		// {
+		// 	console.log("obj search empty");
+		// 	return false;
+		// }
+
+		// var query_string = obj.search;
 		var hashes = query_string.slice(1).split('&');
 		for (var i = 0; i < hashes.length; i++) {
 			hash = hashes[i].split('=');
@@ -60,10 +69,13 @@
 		popup.location.href = authorize_url + oauth_token;
 		var search = "";
 		var wait = function () {
+			if(!popup.closed){
+				search = popup.location.search;
+			}
+
 			setTimeout(function () {
-				if(!popup.closed){
-					search = popup.location.search;
-				}
+				
+				console.log(search);
 				return popup.closed ? callback(null, getUrlQueryObject(search)) : wait();
 			}, 25);
 		};
@@ -123,19 +135,19 @@
 })(window)
 
 
-window.twitterInit = twitterInit;
-function twitterInit() {
-    twttr.init({
-        api_key: 'TtJpZdOIch2fyGygTuOcnwf0F',
-		//request_url: 'http://localhost/travo/public/api/users/create/twitter/login'
-		request_url: 'http://uat.travooo.com/public/api/users/create/twitter/login'
-    });
-}
-
-// $(document).ready(function(){
+// window.twitterInit = twitterInit;
+// function twitterInit() {
 //     twttr.init({
 //         api_key: 'TtJpZdOIch2fyGygTuOcnwf0F',
 // 		//request_url: 'http://localhost/travo/public/api/users/create/twitter/login'
 // 		request_url: 'http://uat.travooo.com/public/api/users/create/twitter/login'
 //     });
-// });
+// }
+
+$(document).ready(function(){
+    twttr.init({
+        api_key: 'TtJpZdOIch2fyGygTuOcnwf0F',
+		//request_url: 'http://localhost/travo/public/api/users/create/twitter/login'
+		request_url: 'http://uat.travooo.com/public/api/users/create/twitter/login'
+    });
+});

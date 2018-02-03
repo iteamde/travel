@@ -41,7 +41,20 @@ export class MainComponent implements OnInit {
 		this.twtService.login(this, this.loginCallBack);
 	}
 
-	loginCallBack(ref, response) {
+	TwitterCallbackLogin(oauth_token, oauth_verifier){
+		var data = {
+			oauth_token: oauth_token,
+			oauth_token_secret: localStorage.getItem('twtOauthToken'),
+			oauth_verifier: oauth_verifier
+		}
+		this.authenticationService.twitterLogin(data).subscribe(
+			result => {
+				console.log(result);
+				this.loginCallBack(this, {status: result}, true);
+			});
+	}
+
+	loginCallBack(ref, response, openLogin = false) {
 		// console.log(response);
 		ref.toggleSocialLogin(true);
 		if (response.status === "login") {
@@ -52,7 +65,6 @@ export class MainComponent implements OnInit {
 			// If login is successful, redirect to the home state
 			setTimeout(function () {
 				$.unblockUI();
-
 				ref.openUrl('/home');
 			}, 1000);
 		} else if(response.status === "register"){
@@ -60,8 +72,12 @@ export class MainComponent implements OnInit {
 		} else if(response.status === false){
 			// login/signup failed
 			alert("Login failed. Please try again.");
+			if(openLogin)
+			{this.openLogin();}
 		} else {
 			alert(response.status);
+			if(openLogin)
+			{this.openLogin();}
 		}
 	}
 
@@ -88,7 +104,7 @@ export class MainComponent implements OnInit {
 
 	openLogin() {
 		if (this.authenticationService.isLoggedIn()) {
-			this.router.navigate(['/home']);
+			this.openUrl('/home');
 		}
 		else {
 			this.titleService.setTitle("Travooo - Login");
