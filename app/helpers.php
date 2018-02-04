@@ -112,7 +112,7 @@ function getPlacesMediaPerCities($page) {
 
     foreach ($places_without_media AS $pwm) {
         if (time() % 6 == 0) {
-            $json = file_get_contents('http://db.travooo.com/public/places/media/go/' . $pwm->provider_id);
+            $json = file_get_contents('http://db.travooodev.com/public/places/media/go/' . $pwm->provider_id);
         } elseif (time() % 6 == 1) {
             $json = file_get_contents('http://db.travooodev.com/public/places/media/go/' . $pwm->provider_id);
         } elseif (time() % 6 == 2) {
@@ -161,7 +161,7 @@ function getHotelsMediaPerCities($page) {
 
     foreach ($places_without_media AS $pwm) {
         if (time() % 6 == 0) {
-            $json = file_get_contents('http://db.travooo.com/public/hotels/media/go/' . $pwm->provider_id);
+            $json = file_get_contents('http://db.travooodev.com/public/hotels/media/go/' . $pwm->provider_id);
         } elseif (time() % 6 == 1) {
             $json = file_get_contents('http://db.travooodev.com/public/hotels/media/go/' . $pwm->provider_id);
         } elseif (time() % 6 == 2) {
@@ -210,7 +210,7 @@ function getRestaurantsMediaPerCities($page) {
 
     foreach ($places_without_media AS $pwm) {
         if (time() % 6 == 0) {
-            $json = file_get_contents('http://db.travooo.com/public/restaurants/media/go/' . $pwm->provider_id);
+            $json = file_get_contents('http://db.travooodev.com/public/restaurants/media/go/' . $pwm->provider_id);
         } elseif (time() % 6 == 1) {
             $json = file_get_contents('http://db.travooodev.com/public/restaurants/media/go/' . $pwm->provider_id);
         } elseif (time() % 6 == 2) {
