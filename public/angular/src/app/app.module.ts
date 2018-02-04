@@ -35,6 +35,7 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { TwitterCallbackComponent } from './twitter-callback/twitter-callback.component';
 import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
 import { TermsOfServiceComponent } from './terms-of-service/terms-of-service.component';
+import { LogoutComponent } from './logout/logout.component';
 
 @NgModule({
     imports: [
@@ -68,7 +69,8 @@ import { TermsOfServiceComponent } from './terms-of-service/terms-of-service.com
       ResetPasswordComponent,
       TwitterCallbackComponent,
       PrivacyPolicyComponent,
-      TermsOfServiceComponent
+      TermsOfServiceComponent,
+      LogoutComponent
     ],
     providers: [
         AuthGuard,
