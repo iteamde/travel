@@ -10,7 +10,7 @@ import { AppRoutingModule } from './app-routing.module';
 // used to create fake backend
 //import { fakeBackendProvider } from '../_helpers/index';
 import { AlertComponent } from '../_directives/index';
-import { AuthGuard } from '../_guards/index';
+import { AuthGuard, NonAuthGuard } from '../_guards/index';
 import { JwtInterceptor } from '../_helpers/index';
 import { AlertService, AuthenticationService, UserService, CountriesService, PlacesService , TravelStylesService, FacebookService, TwitterService} from '../_services/index';
 
@@ -74,6 +74,7 @@ import { LogoutComponent } from './logout/logout.component';
     ],
     providers: [
         AuthGuard,
+        NonAuthGuard,
         AlertService,
         AuthenticationService,
         UserService,

@@ -35,6 +35,7 @@ export class MainComponent implements OnInit {
 		if (this.authenticationService.isLoggedIn()) {
 			//this.router.navigate(['/home']);
 			this.openUrl('/home');
+			return;
 		}
 
 		$.getScript('assets/js/script.js');
@@ -75,6 +76,7 @@ export class MainComponent implements OnInit {
 			setTimeout(function () {
 				$.unblockUI();
 				ref.openUrl('/home');
+				return;
 			}, 1000);
 		} else if(response.status === "register"){
 			ref.openSignup(2);
@@ -114,6 +116,7 @@ export class MainComponent implements OnInit {
 	openLogin() {
 		if (this.authenticationService.isLoggedIn()) {
 			this.openUrl('/home');
+			return;
 		}
 		else {
 			this.titleService.setTitle("Travooo - Login");

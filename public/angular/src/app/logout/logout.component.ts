@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../../_services/index';
-import { MainComponent } from '../main/main.component';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-logout',
@@ -11,12 +11,14 @@ export class LogoutComponent implements OnInit {
 
   constructor(
     private authService: AuthenticationService,
-    private mainC: MainComponent) { }
+    private route: ActivatedRoute,
+		private router: Router,) { }
 
   ngOnInit() {
     // reset login status
     this.authService.logout();
-    this.mainC.openLogin;
+    // not logged in so redirect to login page with the return url
+    this.router.navigate(['/login']);
   }
 
 }
