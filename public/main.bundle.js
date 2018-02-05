@@ -127,6 +127,51 @@ var AuthGuard = (function () {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__auth_guard__ = __webpack_require__("../../../../../src/_guards/auth.guard.ts");
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_0__auth_guard__["a"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__non_auth_gaurd__ = __webpack_require__("../../../../../src/_guards/non-auth.gaurd.ts");
+/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_1__non_auth_gaurd__["a"]; });
+
+
+
+
+/***/ }),
+
+/***/ "../../../../../src/_guards/non-auth.gaurd.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return NonAuthGuard; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("../../../router/esm5/router.js");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var NonAuthGuard = (function () {
+    function NonAuthGuard(router) {
+        this.router = router;
+    }
+    NonAuthGuard.prototype.canActivate = function (route, state) {
+        if (localStorage.getItem('currentUser')) {
+            // not logged in so redirect to login page with the return url
+            this.router.navigate(['/home']);
+            // logged in so return true
+            return false;
+        }
+        return true;
+    };
+    NonAuthGuard = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* Router */]])
+    ], NonAuthGuard);
+    return NonAuthGuard;
+}());
 
 
 
@@ -1130,6 +1175,7 @@ var UserService = (function (_super) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__twitter_callback_twitter_callback_component__ = __webpack_require__("../../../../../src/app/twitter-callback/twitter-callback.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__privacy_policy_privacy_policy_component__ = __webpack_require__("../../../../../src/app/privacy-policy/privacy-policy.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__terms_of_service_terms_of_service_component__ = __webpack_require__("../../../../../src/app/terms-of-service/terms-of-service.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__logout_logout_component__ = __webpack_require__("../../../../../src/app/logout/logout.component.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1153,9 +1199,11 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
+
 var routes = [
     {
         path: '', component: __WEBPACK_IMPORTED_MODULE_4__main_main_component__["a" /* MainComponent */],
+        canActivate: [__WEBPACK_IMPORTED_MODULE_2__guards_index__["b" /* NonAuthGuard */]],
         children: [
             { path: 'login', component: __WEBPACK_IMPORTED_MODULE_5__login_login_component__["a" /* LoginComponent */] },
             { path: 'signup', component: __WEBPACK_IMPORTED_MODULE_7__signup_signup_component__["a" /* SignupComponent */],
@@ -1189,6 +1237,10 @@ var routes = [
     {
         path: 'terms-of-service',
         component: __WEBPACK_IMPORTED_MODULE_16__terms_of_service_terms_of_service_component__["a" /* TermsOfServiceComponent */]
+    },
+    {
+        path: 'logout',
+        component: __WEBPACK_IMPORTED_MODULE_17__logout_logout_component__["a" /* LogoutComponent */]
     },
     // otherwise redirect to home
     { path: '**', redirectTo: '/' }
@@ -1302,6 +1354,7 @@ var AppComponent = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__twitter_callback_twitter_callback_component__ = __webpack_require__("../../../../../src/app/twitter-callback/twitter-callback.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_30__privacy_policy_privacy_policy_component__ = __webpack_require__("../../../../../src/app/privacy-policy/privacy-policy.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_31__terms_of_service_terms_of_service_component__ = __webpack_require__("../../../../../src/app/terms-of-service/terms-of-service.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_32__logout_logout_component__ = __webpack_require__("../../../../../src/app/logout/logout.component.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1317,6 +1370,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 // used to create fake backend
 //import { fakeBackendProvider } from '../_helpers/index';
+
 
 
 
@@ -1378,10 +1432,12 @@ var AppModule = (function () {
                 __WEBPACK_IMPORTED_MODULE_28__reset_password_reset_password_component__["a" /* ResetPasswordComponent */],
                 __WEBPACK_IMPORTED_MODULE_29__twitter_callback_twitter_callback_component__["a" /* TwitterCallbackComponent */],
                 __WEBPACK_IMPORTED_MODULE_30__privacy_policy_privacy_policy_component__["a" /* PrivacyPolicyComponent */],
-                __WEBPACK_IMPORTED_MODULE_31__terms_of_service_terms_of_service_component__["a" /* TermsOfServiceComponent */]
+                __WEBPACK_IMPORTED_MODULE_31__terms_of_service_terms_of_service_component__["a" /* TermsOfServiceComponent */],
+                __WEBPACK_IMPORTED_MODULE_32__logout_logout_component__["a" /* LogoutComponent */]
             ],
             providers: [
                 __WEBPACK_IMPORTED_MODULE_8__guards_index__["a" /* AuthGuard */],
+                __WEBPACK_IMPORTED_MODULE_8__guards_index__["b" /* NonAuthGuard */],
                 __WEBPACK_IMPORTED_MODULE_10__services_index__["a" /* AlertService */],
                 __WEBPACK_IMPORTED_MODULE_10__services_index__["b" /* AuthenticationService */],
                 __WEBPACK_IMPORTED_MODULE_10__services_index__["h" /* UserService */],
@@ -1896,12 +1952,6 @@ var LoginComponent = (function () {
         ]);
     }
     LoginComponent.prototype.ngOnInit = function () {
-        // reset login status
-        this.authenticationService.logout();
-        if (this.authenticationService.isLoggedIn()) {
-            //this.router.navigate(['/home']);
-            this.mainC.openUrl('/home');
-        }
         // get return url from route parameters or default to '/home'
         this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/home';
         this.loginForm = this.formBuilder.group({
@@ -2002,6 +2052,80 @@ var LoginComponent = (function () {
 
 /***/ }),
 
+/***/ "../../../../../src/app/logout/logout.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<p>\n  logout works!\n</p>\n"
+
+/***/ }),
+
+/***/ "../../../../../src/app/logout/logout.component.scss":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/logout/logout.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LogoutComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_index__ = __webpack_require__("../../../../../src/_services/index.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__("../../../router/esm5/router.js");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+var LogoutComponent = (function () {
+    function LogoutComponent(authService, route, router) {
+        this.authService = authService;
+        this.route = route;
+        this.router = router;
+    }
+    LogoutComponent.prototype.ngOnInit = function () {
+        // reset login status
+        this.authService.logout();
+        // not logged in so redirect to login page with the return url
+        this.router.navigate(['/login']);
+    };
+    LogoutComponent = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+            selector: 'app-logout',
+            template: __webpack_require__("../../../../../src/app/logout/logout.component.html"),
+            styles: [__webpack_require__("../../../../../src/app/logout/logout.component.scss")]
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__services_index__["b" /* AuthenticationService */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* ActivatedRoute */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_router__["c" /* Router */]])
+    ], LogoutComponent);
+    return LogoutComponent;
+}());
+
+
+
+/***/ }),
+
 /***/ "../../../../../src/app/main/main.component.html":
 /***/ (function(module, exports) {
 
@@ -2064,6 +2188,13 @@ var MainComponent = (function () {
     }
     MainComponent.prototype.ngOnInit = function () {
         this.titleService.setTitle("Travooo");
+        // reset login status
+        //this.authenticationService.logout();
+        if (this.authenticationService.isLoggedIn()) {
+            //this.router.navigate(['/home']);
+            this.openUrl('/home');
+            return;
+        }
         $.getScript('assets/js/script.js');
     };
     MainComponent.prototype.FBlogin = function () {
@@ -2088,7 +2219,7 @@ var MainComponent = (function () {
     };
     MainComponent.prototype.loginCallBack = function (ref, response, openLogin) {
         if (openLogin === void 0) { openLogin = false; }
-        // console.log(response);
+        console.log(response);
         ref.toggleSocialLogin(true);
         if (response.status === "login") {
             // close login modal and open homepage
@@ -2098,6 +2229,7 @@ var MainComponent = (function () {
             setTimeout(function () {
                 $.unblockUI();
                 ref.openUrl('/home');
+                return;
             }, 1000);
         }
         else if (response.status === "register") {
@@ -2140,6 +2272,7 @@ var MainComponent = (function () {
         var _this = this;
         if (this.authenticationService.isLoggedIn()) {
             this.openUrl('/home');
+            return;
         }
         else {
             this.titleService.setTitle("Travooo - Login");

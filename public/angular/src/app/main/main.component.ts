@@ -28,6 +28,16 @@ export class MainComponent implements OnInit {
 
 	ngOnInit() {
 		this.titleService.setTitle("Travooo");
+
+		// reset login status
+		//this.authenticationService.logout();
+
+		if (this.authenticationService.isLoggedIn()) {
+			//this.router.navigate(['/home']);
+			this.openUrl('/home');
+			return;
+		}
+
 		$.getScript('assets/js/script.js');
 	}
 
@@ -55,7 +65,7 @@ export class MainComponent implements OnInit {
 	}
 
 	loginCallBack(ref, response, openLogin = false) {
-		// console.log(response);
+		console.log(response);
 		ref.toggleSocialLogin(true);
 		if (response.status === "login") {
 			// close login modal and open homepage
@@ -66,6 +76,7 @@ export class MainComponent implements OnInit {
 			setTimeout(function () {
 				$.unblockUI();
 				ref.openUrl('/home');
+				return;
 			}, 1000);
 		} else if(response.status === "register"){
 			ref.openSignup(2);
@@ -105,6 +116,7 @@ export class MainComponent implements OnInit {
 	openLogin() {
 		if (this.authenticationService.isLoggedIn()) {
 			this.openUrl('/home');
+			return;
 		}
 		else {
 			this.titleService.setTitle("Travooo - Login");

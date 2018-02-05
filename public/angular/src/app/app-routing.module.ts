@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { AuthGuard } from '../_guards/index';
+import { AuthGuard, NonAuthGuard } from '../_guards/index';
 import { HomeComponent } from './home/home.component';
 import { MainComponent } from './main/main.component';
 import { LoginComponent } from './login/login.component';
@@ -16,10 +16,12 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { TwitterCallbackComponent } from './twitter-callback/twitter-callback.component';
 import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
 import { TermsOfServiceComponent } from './terms-of-service/terms-of-service.component';
+import { LogoutComponent } from './logout/logout.component';
 
 const routes: Routes = [
     {
-      	path: '', component: MainComponent,
+		path: '', component: MainComponent,
+		canActivate: [NonAuthGuard],
 		children: [
 			{path: 'login', component: LoginComponent},
 			{path: 'signup', component: SignupComponent,
@@ -53,6 +55,10 @@ const routes: Routes = [
 	{
 		path: 'terms-of-service',
 		component: TermsOfServiceComponent
+	},
+	{
+		path: 'logout',
+		component: LogoutComponent
 	},
 	
 	// otherwise redirect to home

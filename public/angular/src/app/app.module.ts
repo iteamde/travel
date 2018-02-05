@@ -10,7 +10,7 @@ import { AppRoutingModule } from './app-routing.module';
 // used to create fake backend
 //import { fakeBackendProvider } from '../_helpers/index';
 import { AlertComponent } from '../_directives/index';
-import { AuthGuard } from '../_guards/index';
+import { AuthGuard, NonAuthGuard } from '../_guards/index';
 import { JwtInterceptor } from '../_helpers/index';
 import { AlertService, AuthenticationService, UserService, CountriesService, PlacesService , TravelStylesService, FacebookService, TwitterService} from '../_services/index';
 
@@ -35,6 +35,7 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { TwitterCallbackComponent } from './twitter-callback/twitter-callback.component';
 import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
 import { TermsOfServiceComponent } from './terms-of-service/terms-of-service.component';
+import { LogoutComponent } from './logout/logout.component';
 
 @NgModule({
     imports: [
@@ -68,10 +69,12 @@ import { TermsOfServiceComponent } from './terms-of-service/terms-of-service.com
       ResetPasswordComponent,
       TwitterCallbackComponent,
       PrivacyPolicyComponent,
-      TermsOfServiceComponent
+      TermsOfServiceComponent,
+      LogoutComponent
     ],
     providers: [
         AuthGuard,
+        NonAuthGuard,
         AlertService,
         AuthenticationService,
         UserService,

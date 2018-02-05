@@ -45,14 +45,7 @@ export class LoginComponent implements OnInit {
 		private mainC: MainComponent) { }
 
 	ngOnInit() {
-		// reset login status
-		this.authenticationService.logout();
-
-		if (this.authenticationService.isLoggedIn()) {
-			//this.router.navigate(['/home']);
-			this.mainC.openUrl('/home');
-		}
-
+		
 		// get return url from route parameters or default to '/home'
 		this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/home';
 
