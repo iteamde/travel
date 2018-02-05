@@ -66,7 +66,7 @@ class PlaceController extends Controller {
             $places = $places->where('title', 'REGEXP', $query);
         }
 
-        $places = $places->orderBy('title', 'asc')->offset($offset)->limit($limit);
+        $places = $places->orderBy('rating', 'desc')->offset($offset)->limit($limit);
         $places = $places->get();
         
         $places_arr = [];
