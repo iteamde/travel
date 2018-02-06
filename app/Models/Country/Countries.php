@@ -27,7 +27,7 @@ class Countries extends Model
      *
      * @var array
      */
-    protected $fillable = ['region_id', 'code', 'lat', 'lng', 'safety_degree', 'active'];
+    protected $fillable = ['region_id', 'code', 'iso_code', 'lat', 'lng', 'safety_degree', 'active'];
 
     /**
      * @return mixed
