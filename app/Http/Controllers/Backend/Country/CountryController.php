@@ -205,6 +205,7 @@ class CountryController extends Controller
             'active' => $active,
             'region_id' =>  $request->input('region_id'),
             'code' => $request->input('code'),
+            'iso_code' => $request->input('iso_code'),
             'lat' => isset($location[0]) && $location[0]>0 ? $location[0] : 0,
             'lng' => isset($location[1]) && $location[1]>0 ? $location[1] : 0,
             //'places' => $request->input('places_id'),
@@ -301,6 +302,7 @@ class CountryController extends Controller
 
         $data['lat_lng'] = $country['lat'] . ',' . $country['lng'];
         $data['code'] = $country['code'];
+        $data['iso_code'] = $country['iso_code'];
         $data['active'] = $country['active'];
         $data['regions_id'] = $country['regions_id'];
         $data['safety_degree_id'] = $country['safety_degree_id'];
@@ -627,6 +629,7 @@ class CountryController extends Controller
             'active'            => $active,
             'region_id'         => $request->input('region_id'),
             'code'              => $request->input('code'),
+            'iso_code'              => $request->input('iso_code'),
             'lat'               => $location[0],
             'lng'               => $location[1],
             'places'            => $request->input('places_id'),

@@ -196,6 +196,16 @@ $languages = DB::table('conf_languages')->where('active', Languages::LANG_ACTIVE
                         </div><!--col-lg-10-->
                     </div><!--form control-->
                     <!-- End: code -->
+                    
+                    <!-- Start: code -->
+                    <div class="form-group">
+                        {{ Form::label('iso_code', 'ISO Code', ['class' => 'col-lg-2 control-label']) }}
+
+                        <div class="col-lg-10">
+                            {{ Form::text('iso_code', null, ['class' => 'form-control', 'maxlength' => '2', 'required' => 'required', 'placeholder' => '2 letters ISO Code']) }}
+                        </div><!--col-lg-10-->
+                    </div><!--form control-->
+                    <!-- End: code -->
                     <!-- Active: Start -->
                     <div class="form-group">
                         {{ Form::label('title', trans('validation.attributes.backend.access.languages.active'), ['class' => 'col-lg-2 control-label']) }}
