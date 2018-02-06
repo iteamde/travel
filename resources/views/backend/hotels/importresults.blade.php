@@ -50,14 +50,14 @@
                     @foreach($results AS $r)
                     <tr @if(in_array($r->place_id, $provider_ids)) style="background-color:red" @endif>
                         <th>{{$r->name}}</th>
-                        <th>{{$r->formatted_address}}</th>
+                        <th>{{@$r->formatted_address}}</th>
                         <th>{{$r->geometry->location->lat}} {{$r->geometry->location->lng}}</th>
                         <th>
                             @if(!in_array($r->place_id, $provider_ids))
                             <input type="hidden" name="place[{{$i}}][provider_id]" value='{{$r->place_id}}' />
                             <input type="hidden" name="place[{{$i}}][types]" value='{{@join(',', $r->types)}}' />
                             <input type="hidden" name="place[{{$i}}][name]" value='{{$r->name}}' />
-                            <input type="hidden" name="place[{{$i}}][address]" value='{{$r->formatted_address}}' />
+                            <input type="hidden" name="place[{{$i}}][address]" value='{{@$r->formatted_address}}' />
                             <input type="hidden" name="place[{{$i}}][lat]" value='{{$r->geometry->location->lat}}' />
                             <input type="hidden" name="place[{{$i}}][lng]" value='{{$r->geometry->location->lng}}' />
                             <input type="hidden" name="place[{{$i}}][phone]" value='{{@$r->international_phone_number}}' />
