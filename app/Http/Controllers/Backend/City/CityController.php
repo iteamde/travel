@@ -258,6 +258,25 @@ class CityController extends Controller
                 $data['demographics_'.$language->id]    = $model[0]->demographics;
                 $data['economy_'.$language->id]         = $model[0]->economy;
                 $data['suitable_for_'.$language->id]    = $model[0]->suitable_for;
+                
+                $data['metrics_'.$language->id]    = $model[0]->metrics;
+                $data['health_notes_'.$language->id]    = $model[0]->health_notes;
+                $data['accommodation_'.$language->id]    = $model[0]->accommodation;
+                $data['potential_dangers_'.$language->id]    = $model[0]->potential_dangers;
+                $data['local_poisons_'.$language->id]    = $model[0]->local_poisons;
+                $data['sockets_'.$language->id]    = $model[0]->sockets;
+                $data['working_days_'.$language->id]    = $model[0]->working_days;
+                $data['restrictions_'.$language->id]    = $model[0]->restrictions;
+                $data['planning_tips_'.$language->id]    = $model[0]->planning_tips;
+                $data['other_'.$language->id]    = $model[0]->other;
+                $data['internet_'.$language->id]    = $model[0]->internet;
+                $data['speed_limit_'.$language->id]    = $model[0]->speed_limit;
+                $data['etiquette_'.$language->id]    = $model[0]->etiquette;
+                $data['pollution_index_'.$language->id]    = $model[0]->pollution_index;
+                $data['transportation_'.$language->id]    = $model[0]->transportation;
+                $data['highlights_'.$language->id]    = $model[0]->highlights;
+                
+                
             }else{
                 /* Put Null In  $data Array If Translation Not Found To Be Used In Edit Form */
                 $data['title_'.$language->id]           = null;
@@ -269,6 +288,22 @@ class CityController extends Controller
                 $data['demographics_'.$language->id]    = null;
                 $data['economy_'.$language->id]         = null;
                 $data['suitable_for_'.$language->id]    = null;
+                $data['metrics_'.$language->id]    = null;
+                $data['health_notes_'.$language->id]    = null;
+                $data['accommodation_'.$language->id]    = null;
+                $data['potential_dangers_'.$language->id]    = null;
+                $data['local_poisons_'.$language->id]    = null;
+                $data['sockets_'.$language->id]    = null;
+                $data['working_days_'.$language->id]    = null;
+                $data['restrictions_'.$language->id]    = null;
+                $data['planning_tips_'.$language->id]    = null;
+                $data['other_'.$language->id]    = null;
+                $data['internet_'.$language->id]    = null;
+                $data['speed_limit_'.$language->id]    = null;
+                $data['etiquette_'.$language->id]    = null;
+                $data['pollution_index_'.$language->id]    = null;
+                $data['transportation_'.$language->id]    = null;
+                $data['highlights_'.$language->id]    = null;
             }
         }
 
@@ -526,6 +561,23 @@ class CityController extends Controller
             $data[$language->id]['demographics_'.$language->id] = $request->input('demographics_'.$language->id);
             // $data[$language->id]['suitable_for_'.$language->id] = $request->input('suitable_for_'.$language->id);
             // $data[$language->id]['economy_'.$language->id] = $request->input('economy_'.$language->id);
+            $data[$language->id]['metrics_'.$language->id] = $request->input('metrics_'.$language->id);
+            $data[$language->id]['health_notes_'.$language->id] = $request->input('health_notes_'.$language->id);
+            $data[$language->id]['potential_dangers_'.$language->id] = $request->input('potential_dangers_'.$language->id);
+            $data[$language->id]['accommodation_'.$language->id] = $request->input('accommodation_'.$language->id);
+            $data[$language->id]['local_poisons_'.$language->id] = $request->input('local_poisons_'.$language->id);
+            $data[$language->id]['sockets_'.$language->id] = $request->input('sockets_'.$language->id);
+            $data[$language->id]['working_days_'.$language->id] = $request->input('working_days_'.$language->id);
+            $data[$language->id]['restrictions_'.$language->id] = $request->input('restrictions_'.$language->id);
+            $data[$language->id]['planning_tips_'.$language->id] = $request->input('planning_tips_'.$language->id);
+            $data[$language->id]['other_'.$language->id] = $request->input('other_'.$language->id);
+            $data[$language->id]['internet_'.$language->id] = $request->input('internet_'.$language->id);
+            $data[$language->id]['speed_limit_'.$language->id] = $request->input('speed_limit_'.$language->id);
+            $data[$language->id]['etiquette_'.$language->id] = $request->input('etiquette_'.$language->id);
+            $data[$language->id]['pollution_index_'.$language->id] = $request->input('pollution_index_'.$language->id);
+            $data[$language->id]['transportation_'.$language->id] = $request->input('transportation_'.$language->id);
+            $data[$language->id]['highlights_'.$language->id] = $request->input('highlights_'.$language->id);
+
         }
 
         $location = explode(',',$request->input('lat_lng') );

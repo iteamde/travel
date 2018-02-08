@@ -655,8 +655,24 @@ class CityRepository extends BaseRepository
                     $trans->cost_of_living  = $value['cost_of_living_'.$key];
                     $trans->geo_stats       = $value['geo_stats_'.$key];
                     $trans->demographics    = $value['demographics_'.$key];
-                    // $trans->economy         = $value['economy_'.$key];
-                    // $trans->suitable_for    = $value['suitable_for_'.$key];
+                    
+                    $trans->metrics    = $value['metrics_'.$key];
+                    $trans->health_notes    = $value['health_notes_'.$key];
+                    $trans->potential_dangers    = $value['potential_dangers_'.$key];
+                    $trans->accommodation    = $value['accommodation_'.$key];
+                    $trans->local_poisons    = $value['local_poisons_'.$key];
+                    $trans->sockets    = $value['sockets_'.$key];
+                    $trans->working_days    = $value['working_days_'.$key];
+                    $trans->restrictions    = $value['restrictions_'.$key];
+                    $trans->planning_tips    = $value['planning_tips_'.$key];
+                    $trans->other    = $value['other_'.$key];
+                    $trans->internet    = $value['internet_'.$key];
+                    $trans->speed_limit    = $value['speed_limit_'.$key];
+                    $trans->etiquette    = $value['etiquette_'.$key];
+                    $trans->pollution_index    = $value['pollution_index_'.$key];
+                    $trans->transportation    = $value['transportation_'.$key];
+                    $trans->highlights    = $value['highlights_'.$key];
+                    
 
                     if(!$trans->save()) {
                         $check = 0;
