@@ -357,6 +357,7 @@ class CountryRepository extends BaseRepository
         $model->regions_id  = $extra['region_id'];
         $model->active      = $extra['active'];
         $model->code        = $extra['code'];
+        $model->iso_code        = $extra['iso_code'];
         $model->lat         = $extra['lat'];
         $model->lng         = $extra['lng'];
         // $model->safety_degree_id = $extra['safety_degree_id'];
