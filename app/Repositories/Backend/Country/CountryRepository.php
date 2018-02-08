@@ -697,7 +697,7 @@ class CountryRepository extends BaseRepository
                     $trans->economy         = $value['economy_'.$key];
                     $trans->metrics    = $value['metrics_'.$key];
                     $trans->sockets    = $value['sockets_'.$key];
-                    $trans->working_days    = $value['working_days'.$key];
+                    $trans->working_days    = $value['working_days_'.$key];
                     $trans->best_time    = $value['best_time_'.$key];
                     $trans->internet    = $value['internet_'.$key];
                     $trans->other    = $value['other_'.$key];
