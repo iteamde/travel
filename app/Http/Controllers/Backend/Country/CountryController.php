@@ -629,13 +629,29 @@ class CountryController extends Controller
             $data[$language->id]['description_'.$language->id] = $request->input('description_'.$language->id);
             $data[$language->id]['nationality_'.$language->id] = $request->input('nationality_'.$language->id);
             $data[$language->id]['population_'.$language->id] = $request->input('population_'.$language->id);
-            // $data[$language->id]['best_time_'.$language->id] = $request->input('best_time_'.$language->id);
+            $data[$language->id]['best_time_'.$language->id] = $request->input('best_time_'.$language->id);
             // $data[$language->id]['best_place_'.$language->id] = $request->input('best_place_'.$language->id);
             $data[$language->id]['cost_of_living_'.$language->id] = $request->input('cost_of_living_'.$language->id);
             $data[$language->id]['geo_stats_'.$language->id] = $request->input('geo_stats_'.$language->id);
             $data[$language->id]['demographics_'.$language->id] = $request->input('demographics_'.$language->id);
             $data[$language->id]['suitable_for_'.$language->id] = $request->input('suitable_for_'.$language->id);
             $data[$language->id]['economy_'.$language->id] = $request->input('economy_'.$language->id);
+            $data[$language->id]['metrics_'.$language->id] = $request->input('metrics_'.$language->id);
+            $data[$language->id]['sockets_'.$language->id] = $request->input('sockets_'.$language->id);
+            $data[$language->id]['working_days_'.$language->id] = $request->input('working_days_'.$language->id);
+            $data[$language->id]['best_time_'.$language->id] = $request->input('best_time_'.$language->id);
+            $data[$language->id]['internet_'.$language->id] = $request->input('internet_'.$language->id);
+            $data[$language->id]['other_'.$language->id] = $request->input('other_'.$language->id);
+            $data[$language->id]['highlights_'.$language->id] = $request->input('highlights_'.$language->id);
+            $data[$language->id]['health_notes_'.$language->id] = $request->input('health_notes_'.$language->id);
+            $data[$language->id]['accommodation_'.$language->id] = $request->input('accommodation_'.$language->id);
+            $data[$language->id]['potential_dangers_'.$language->id] = $request->input('potential_dangers_'.$language->id);
+            $data[$language->id]['local_poisons_'.$language->id] = $request->input('local_poisons_'.$language->id);
+            $data[$language->id]['speed_limit_'.$language->id] = $request->input('speed_limit_'.$language->id);
+            $data[$language->id]['etiquette_'.$language->id] = $request->input('etiquette_'.$language->id);
+            $data[$language->id]['pollution_index_'.$language->id] = $request->input('pollution_index_'.$language->id);
+            $data[$language->id]['transportation_'.$language->id] = $request->input('transportation_'.$language->id);
+            $data[$language->id]['planning_tips_'.$language->id] = $request->input('planning_tips_'.$language->id);
         }
 
         $location = explode(',',$request->input('lat_lng') );
