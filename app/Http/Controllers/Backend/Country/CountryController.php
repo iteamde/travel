@@ -285,6 +285,22 @@ class CountryController extends Controller
                 $data['demographics_'.$language->id]    = $model[0]->demographics;
                 $data['economy_'.$language->id]         = $model[0]->economy;
                 $data['suitable_for_'.$language->id]    = $model[0]->suitable_for;
+                $data['metrics_'.$language->id]    = $model[0]->metrics;
+                $data['sockets_'.$language->id]    = $model[0]->sockets;
+                $data['working_days_'.$language->id]    = $model[0]->working_days;
+                $data['best_time_'.$language->id]    = $model[0]->best_time;
+                $data['internet_'.$language->id]    = $model[0]->internet;
+                $data['other_'.$language->id]    = $model[0]->other;
+                $data['highlights_'.$language->id]    = $model[0]->highlights;
+                $data['health_notes_'.$language->id]    = $model[0]->health_notes;
+                $data['accommodation_'.$language->id]    = $model[0]->accommodation;
+                $data['potential_dangers_'.$language->id]    = $model[0]->potential_dangers;
+                $data['local_poisons_'.$language->id]    = $model[0]->local_poisons;
+                $data['speed_limit_'.$language->id]    = $model[0]->speed_limit;
+                $data['etiquette_'.$language->id]    = $model[0]->etiquette;
+                $data['pollution_index_'.$language->id]    = $model[0]->pollution_index;
+                $data['transportation_'.$language->id]    = $model[0]->transportation;
+                $data['planning_tips_'.$language->id]    = $model[0]->planning_tips;
             }else{
                 $data['title_'.$language->id]           = null;
                 $data['description_'.$language->id]     = null;
@@ -297,6 +313,23 @@ class CountryController extends Controller
                 $data['demographics_'.$language->id]    = null;
                 $data['economy_'.$language->id]         = null;
                 $data['suitable_for_'.$language->id]    = null;
+                $data['metrics_'.$language->id]    = null;
+                $data['sockets_'.$language->id]    = null;
+                $data['working_days_'.$language->id]    = null;
+                $data['best_time_'.$language->id]    = null;
+                $data['internet_'.$language->id]    = null;
+                $data['other_'.$language->id]    = null;
+                $data['highlights_'.$language->id]    = null;
+                $data['health_notes_'.$language->id]    = null;
+                $data['accommodation_'.$language->id]    = null;
+                $data['potential_dangers_'.$language->id]    = null;
+                $data['local_poisons_'.$language->id]    = null;
+                $data['speed_limit_'.$language->id]    = null;
+                $data['etiquette_'.$language->id]    = null;
+                $data['pollution_index_'.$language->id]    = null;
+                $data['transportation_'.$language->id]    = null;
+                $data['planning_tips_'.$language->id]    = null;
+                
             }
         }
 
