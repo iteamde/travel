@@ -156,8 +156,190 @@ use App\Models\Access\language\Languages;
                                 </div><!--col-lg-10-->
                             </div><!--form control-->
                             <!-- End: demographics -->
+                            
+                            
+                            <!-- Start: Metrics -->
+                            <div class="form-group">
+                                {{ Form::label('metrics_'.$language->id, 'Metrics', ['class' => 'col-lg-2 control-label']) }}
 
-                            <!-- Languages Tabs: Start -->
+                                <div class="col-lg-10">
+                                    {{ Form::textarea('metrics_'.$language->id, $data['metrics_'.$language->id], ['class' => 'form-control', 'maxlength' => '191', 'placeholder' => '']) }}
+                                </div><!--col-lg-10-->
+                            </div><!--form control-->
+                            <!-- End: Metrics -->
+                            
+                            <!-- Start: Health Notes -->
+                            <div class="form-group">
+                                {{ Form::label('health_notes_'.$language->id, 'Health Notes', ['class' => 'col-lg-2 control-label']) }}
+
+                                <div class="col-lg-10">
+                                    {{ Form::textarea('health_notes_'.$language->id, $data['health_notes_'.$language->id], ['class' => 'form-control', 'maxlength' => '191', 'placeholder' => '']) }}
+                                </div><!--col-lg-10-->
+                            </div><!--form control-->
+                            <!-- End: Health Notes -->
+                            
+                            <!-- Start: Potential Dangers -->
+                            <div class="form-group">
+                                {{ Form::label('potential_dangers_'.$language->id, 'Potential Dangers', ['class' => 'col-lg-2 control-label']) }}
+
+                                <div class="col-lg-10">
+                                    {{ Form::textarea('potential_dangers_'.$language->id, $data['potential_dangers_'.$language->id], ['class' => 'form-control', 'maxlength' => '191', 'placeholder' => '']) }}
+                                </div><!--col-lg-10-->
+                            </div><!--form control-->
+                            <!-- End: Potential Dangers -->
+                            
+                            <!-- Start: Accommodation -->
+                            <div class="form-group">
+                                {{ Form::label('accommodation_'.$language->id, 'Accommodation', ['class' => 'col-lg-2 control-label']) }}
+
+                                <div class="col-lg-10">
+                                    {{ Form::textarea('accommodation_'.$language->id, $data['accommodation_'.$language->id], ['class' => 'form-control', 'maxlength' => '191', 'placeholder' => '']) }}
+                                </div><!--col-lg-10-->
+                            </div><!--form control-->
+                            <!-- End: Accommodation -->
+                            <!-- Start: Local Poisons -->
+                            <div class="form-group">
+                                {{ Form::label('local_poisons_'.$language->id, 'Local Poisons', ['class' => 'col-lg-2 control-label']) }}
+
+                                <div class="col-lg-10">
+                                    {{ Form::textarea('local_poisons_'.$language->id, $data['local_poisons_'.$language->id], ['class' => 'form-control', 'maxlength' => '191', 'placeholder' => '']) }}
+                                </div><!--col-lg-10-->
+                            </div><!--form control-->
+                            <!-- End: Local Poisons -->
+                            <!-- Start: Sockets & Plugs -->
+                            <div class="form-group">
+                                {{ Form::label('sockets_'.$language->id, 'Sockets & Plugs', ['class' => 'col-lg-2 control-label']) }}
+
+                                <div class="col-lg-10">
+                                    {{ Form::textarea('sockets_'.$language->id, $data['sockets_'.$language->id], ['class' => 'form-control', 'maxlength' => '191', 'placeholder' => '']) }}
+                                </div><!--col-lg-10-->
+                            </div><!--form control-->
+                            <!-- End: Sockets & Plugs -->
+                            <!-- Start: Working days -->
+                            <div class="form-group">
+                                {{ Form::label('working_days_'.$language->id, 'Working Days', ['class' => 'col-lg-2 control-label']) }}
+
+                                <div class="col-lg-10">
+                                    {{ Form::textarea('working_days_'.$language->id, $data['working_days_'.$language->id], ['class' => 'form-control', 'maxlength' => '191', 'placeholder' => '']) }}
+                                </div><!--col-lg-10-->
+                            </div><!--form control-->
+                            <!-- End: Working days -->
+                            <!-- Start: Restrictions -->
+                            <div class="form-group">
+                                {{ Form::label('restrictions_'.$language->id, 'Restrictions', ['class' => 'col-lg-2 control-label']) }}
+
+                                <div class="col-lg-10">
+                                    {{ Form::textarea('restrictions_'.$language->id, $data['restrictions_'.$language->id], ['class' => 'form-control', 'maxlength' => '191', 'placeholder' => '']) }}
+                                </div><!--col-lg-10-->
+                            </div><!--form control-->
+                            <!-- End: Restrictions -->
+                            <!-- Start: Planning Tips -->
+                            <div class="form-group">
+                                {{ Form::label('planning_tips_'.$language->id, 'Planning Tips', ['class' => 'col-lg-2 control-label']) }}
+
+                                <div class="col-lg-10">
+                                    {{ Form::textarea('planning_tips_'.$language->id, $data['planning_tips_'.$language->id], ['class' => 'form-control', 'maxlength' => '191', 'placeholder' => '']) }}
+                                </div><!--col-lg-10-->
+                            </div><!--form control-->
+                            <!-- End: Planning Tips -->
+                            <!-- Start: Other -->
+                            <div class="form-group">
+                                {{ Form::label('other_'.$language->id, 'Other', ['class' => 'col-lg-2 control-label']) }}
+
+                                <div class="col-lg-10">
+                                    {{ Form::textarea('other_'.$language->id, $data['other_'.$language->id], ['class' => 'form-control', 'maxlength' => '191', 'placeholder' => '']) }}
+                                </div><!--col-lg-10-->
+                            </div><!--form control-->
+                            <!-- End: Other -->
+                            <!-- Start: Internet Accessibility -->
+                            <div class="form-group">
+                                {{ Form::label('internet_'.$language->id, 'Internet Accessibility', ['class' => 'col-lg-2 control-label']) }}
+
+                                <div class="col-lg-10">
+                                    {{ Form::textarea('internet_'.$language->id, $data['internet_'.$language->id], ['class' => 'form-control', 'maxlength' => '191', 'placeholder' => '']) }}
+                                </div><!--col-lg-10-->
+                            </div><!--form control-->
+                            <!-- End: Internet Accessibility -->
+                            <!-- Start: Speed Limit -->
+                            <div class="form-group">
+                                {{ Form::label('speed_limit_'.$language->id, 'Speed Limit', ['class' => 'col-lg-2 control-label']) }}
+
+                                <div class="col-lg-10">
+                                    {{ Form::textarea('speed_limit_'.$language->id, $data['speed_limit_'.$language->id], ['class' => 'form-control', 'maxlength' => '191', 'placeholder' => '']) }}
+                                </div><!--col-lg-10-->
+                            </div><!--form control-->
+                            <!-- End: Speed Limit -->
+                            <!-- Start: Etiquette -->
+                            <div class="form-group">
+                                {{ Form::label('etiquette_'.$language->id, 'Etiquette', ['class' => 'col-lg-2 control-label']) }}
+
+                                <div class="col-lg-10">
+                                    {{ Form::textarea('etiquette_'.$language->id, $data['etiquette_'.$language->id], ['class' => 'form-control', 'maxlength' => '191', 'placeholder' => '']) }}
+                                </div><!--col-lg-10-->
+                            </div><!--form control-->
+                            <!-- End: Etiquette -->
+                            <!-- Start: Pollution Index -->
+                            <div class="form-group">
+                                {{ Form::label('pollution_index_'.$language->id, 'Pollution Index', ['class' => 'col-lg-2 control-label']) }}
+
+                                <div class="col-lg-10">
+                                    {{ Form::textarea('pollution_index_'.$language->id, $data['pollution_index_'.$language->id], ['class' => 'form-control', 'maxlength' => '191', 'placeholder' => '']) }}
+                                </div><!--col-lg-10-->
+                            </div><!--form control-->
+                            <!-- End: Pollution Index -->
+                            <!-- Start: Transportation -->
+                            <div class="form-group">
+                                {{ Form::label('transportation_'.$language->id, 'Transportation', ['class' => 'col-lg-2 control-label']) }}
+
+                                <div class="col-lg-10">
+                                    {{ Form::textarea('transportation_'.$language->id, $data['transportation_'.$language->id], ['class' => 'form-control', 'maxlength' => '191', 'placeholder' => '']) }}
+                                </div><!--col-lg-10-->
+                            </div><!--form control-->
+                            <!-- End: Transportation -->
+                            <!-- Start: Country Highlights -->
+                            <div class="form-group">
+                                {{ Form::label('highlights_'.$language->id, 'Country Highlights', ['class' => 'col-lg-2 control-label']) }}
+
+                                <div class="col-lg-10">
+                                    {{ Form::textarea('highlights_'.$language->id, $data['highlights_'.$language->id], ['class' => 'form-control', 'maxlength' => '191', 'placeholder' => '']) }}
+                                </div><!--col-lg-10-->
+                            </div><!--form control-->
+                            <!-- End: Country Highlights -->
+                            
+                            <!-- Start: Best Time to Travel -->
+                            <div class="form-group">
+                                {{ Form::label('best_time_'.$language->id, 'Best Time To Travel', ['class' => 'col-lg-2 control-label']) }}
+
+                                <div class="col-lg-10">
+                                    {{ Form::textarea('best_time_'.$language->id, $data['best_time_'.$language->id], ['class' => 'form-control', 'maxlength' => '191', 'placeholder' => '']) }}
+                                </div><!--col-lg-10-->
+                            </div><!--form control-->
+                            <!-- End: Best Time To Travel -->
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
                         </div>
                     @endforeach
                     </div>
