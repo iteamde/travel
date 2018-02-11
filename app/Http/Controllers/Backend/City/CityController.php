@@ -472,6 +472,7 @@ class CityController extends Controller
         foreach ($selected_medias as $key => $value) {
             // if(isset($value->languages_spoken->transsingle) && !empty($value->languages_spoken->transsingle)){
                 // $selected_airports_arr[$value->place->id] = $value->place->transsingle->title;
+            if(is_object($media)) {
             $media = $value->medias;
             if($media->type != Media::TYPE_IMAGE){
                 array_push($selected_medias_arr,$value->medias->id);
@@ -481,6 +482,7 @@ class CityController extends Controller
                     'id' => $media->id,
                     'url' => $media->url
                 ]);
+            }
             }
             // }
         }
