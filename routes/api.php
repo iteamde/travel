@@ -245,4 +245,17 @@ Route::group(['prefix' => 'api'], function () {
         /* Get All Lifestyles */
         Route::post('/search', 'LifestyleController@get_lifestyles');
     });
+    
+    /*
+     * Trip Planner
+     */
+    Route::group([
+        'prefix' => 'trips',
+        'as' => 'trips.',
+        'namespace' => 'Trips',
+            ], function () {
+
+        /* Get All Lifestyles */
+        Route::post('/search', 'LifestyleController@get_lifestyles');
+    });
 });

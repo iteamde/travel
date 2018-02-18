@@ -17,13 +17,13 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightslider/1.1.6/css/lightslider.min.css"> -->
 
-	<link rel="stylesheet" href="assets/css/bootstrap.min.css">
-	<link rel="stylesheet" href="assets/css/jquery.mCustomScrollbar.min.css">
-	<link rel="stylesheet" href="assets/css/lightslider.min.css">
-	<link rel="stylesheet" href="assets/font-awesome/css/font-awesome.min.css">
+	<link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
+	<link rel="stylesheet" href="{{ asset('assets/css/jquery.mCustomScrollbar.min.css') }}">
+	<link rel="stylesheet" href="{{ asset('assets/css/lightslider.min.css') }}">
+	<link rel="stylesheet" href="{{ asset('assets/font-awesome/css/font-awesome.min.css') }}">
 	
-	<link rel="stylesheet" href="assets/css/style.css">
-	<link rel="stylesheet" href="assets/css/additional_style.css">
+	<link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+	<link rel="stylesheet" href="{{ asset('assets/css/additional_style.css') }}">
 
 </head>
 
@@ -37,14 +37,19 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/lightslider/1.1.6/js/lightslider.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.61.0-2013.06.06/jquery.blockUI.min.js"></script> -->
 
-	<script src="assets/js/jquery-3.1.1.min.js"></script>
-	<script src="assets/js/tether.min.js"></script>
-	<script src="assets/js/bootstrap.min.js"></script>
-	<script src="assets/js/jquery.mCustomScrollbar.concat.min.js"></script>
-	<script src="assets/js/lightslider.min.js"></script>
-	<script src="assets/js/jquery.blockUI.min.js"></script>
+	<script src="{{ asset('assets/js/jquery-3.1.1.min.js') }}"></script>
+	<script src="{{ asset('assets/js/tether.min.js') }}"></script>
+	<script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
+	<script src="{{ asset('assets/js/jquery.mCustomScrollbar.concat.min.js') }}"></script>
+	<script src="{{ asset('assets/js/lightslider.min.js') }}"></script>
+	<script src="{{ asset('assets/js/jquery.blockUI.min.js') }}"></script>
 	
 	<!-- <script src="assets/js/script.js"></script> -->
-	<script type="text/javascript" src="inline.bundle.js"></script><script type="text/javascript" src="polyfills.bundle.js"></script><script type="text/javascript" src="styles.bundle.js"></script><script type="text/javascript" src="vendor.bundle.js"></script><script type="text/javascript" src="main.bundle.js"></script></body>
+	<script type="text/javascript" src="{{ asset('inline.bundle.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('polyfills.bundle.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('styles.bundle.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('vendor.bundle.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('main.bundle.js') }}"></script>
+</body>
 
 </html>
