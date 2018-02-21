@@ -7,58 +7,62 @@ Route::get('/', function () {
     return view('frontend.angular.index');
 });
 
-Route::get('/home', function () {
+Route::get('/public', function () {
     return view('frontend.angular.index');
 });
 
-Route::get('/privacy-policy', function () {
+Route::get('/public/home', function () {
     return view('frontend.angular.index');
 });
 
-Route::get('/terms-of-service', function () {
+Route::get('/public/privacy-policy', function () {
     return view('frontend.angular.index');
 });
 
-Route::get('/login', function () {
+Route::get('/public/terms-of-service', function () {
     return view('frontend.angular.index');
 });
 
-Route::get('/signup', function () {
+Route::get('/public/login', function () {
     return view('frontend.angular.index');
 });
 
-Route::get('/signup/step1', function () {
+Route::get('/public/signup', function () {
     return view('frontend.angular.index');
 });
 
-Route::get('/signup/step2', function () {
+Route::get('/public/signup/step1', function () {
     return view('frontend.angular.index');
 });
 
-Route::get('/signup/step3', function () {
+Route::get('/public/signup/step2', function () {
     return view('frontend.angular.index');
 });
 
-Route::get('/signup/step4', function () {
+Route::get('/public/signup/step3', function () {
     return view('frontend.angular.index');
 });
 
-Route::get('/signup/step5', function () {
+Route::get('/public/signup/step4', function () {
     return view('frontend.angular.index');
 });
 
-Route::get('/forgot-password', function () {
+Route::get('/public/signup/step5', function () {
     return view('frontend.angular.index');
 });
 
-Route::get('/reset-password', function () {
+Route::get('/public/forgot-password', function () {
     return view('frontend.angular.index');
 });
 
-Route::get('/twitter-callback', function () {
+Route::get('/public/reset-password', function () {
     return view('frontend.angular.index');
 });
 
-Route::get('/logout', function () {
+Route::get('/public/twitter-callback', function () {
+    return view('frontend.angular.index');
+});
+
+Route::get('/public/logout', function () {
     return view('frontend.angular.index');
 });
