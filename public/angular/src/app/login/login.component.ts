@@ -16,6 +16,7 @@ declare var $: any;
 	styleUrls: ['./login.component.scss']
 })
 
+
 export class LoginComponent implements OnInit {
 
 	loading = false;
