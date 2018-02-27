@@ -36,6 +36,8 @@ import { TwitterCallbackComponent } from './twitter-callback/twitter-callback.co
 import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
 import { TermsOfServiceComponent } from './terms-of-service/terms-of-service.component';
 import { LogoutComponent } from './logout/logout.component';
+import { CreateTripPlanComponent } from './create-trip-plan/create-trip-plan.component';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 @NgModule({
     imports: [
@@ -45,7 +47,8 @@ import { LogoutComponent } from './logout/logout.component';
       HttpClientModule,
       HttpModule,
       ReactiveFormsModule,
-      InfiniteScrollModule
+      InfiniteScrollModule,
+      BsDatepickerModule.forRoot()
     ],
     declarations: [
       AppComponent,
@@ -70,7 +73,8 @@ import { LogoutComponent } from './logout/logout.component';
       TwitterCallbackComponent,
       PrivacyPolicyComponent,
       TermsOfServiceComponent,
-      LogoutComponent
+      LogoutComponent,
+      CreateTripPlanComponent
     ],
     providers: [
         AuthGuard,
