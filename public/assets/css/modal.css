@@ -1,0 +1,24 @@
+.modal-custom-block .post-block{
+	margin-bottom: 0;
+}
+.white-style .modal-custom-style{
+	margin: 0 auto;
+}
+.modal-close {
+	position: absolute;
+	right: -475px;
+	width: 37px;
+	height: 37px;
+	border-radius: 50%;
+	background: #cccccc;
+	text-align: center;
+	cursor: pointer;
+}
+.modal-close i {
+	color: #ffffff;
+	font-size: 22px;
+	line-height: 37px;
+}
+.modal-custom-style .post-block.post-modal-trip-planner .create-trip-block .create-footer {
+	display: -webkit-box;
+}

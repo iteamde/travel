@@ -7,6 +7,9 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 import { AppRoutingModule } from './app-routing.module';
 
+// NG Bootstrap
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 // used to create fake backend
 //import { fakeBackendProvider } from '../_helpers/index';
 import { AlertComponent } from '../_directives/index';
@@ -48,7 +51,8 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
       HttpModule,
       ReactiveFormsModule,
       InfiniteScrollModule,
-      BsDatepickerModule.forRoot()
+      BsDatepickerModule.forRoot(),
+      NgbModule.forRoot()
     ],
     declarations: [
       AppComponent,
