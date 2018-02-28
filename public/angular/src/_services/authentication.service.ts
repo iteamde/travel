@@ -8,11 +8,12 @@ import { ManagerService } from './manager.service';
 @Injectable()
 export class AuthenticationService extends ManagerService{
     public token: string;
-
+    public user:any;
     constructor(private http: Http) {
         super();
         // set token if saved in local storage
         var currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        this.user=currentUser;
         this.token = currentUser && currentUser.token;
     }
 
@@ -44,7 +45,7 @@ export class AuthenticationService extends ManagerService{
             
                             // store username and jwt token in local storage to keep user logged in between page refreshes
                             localStorage.setItem('currentUser', JSON.stringify({ user: user, token: token }));
-
+                            this.user=user;
                             // return true to indicate successful login
                             return true;
                         } else {

@@ -17,6 +17,7 @@ import { TwitterCallbackComponent } from './twitter-callback/twitter-callback.co
 import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
 import { TermsOfServiceComponent } from './terms-of-service/terms-of-service.component';
 import { LogoutComponent } from './logout/logout.component';
+import { CreateTripPlanComponent } from './create-trip-plan/create-trip-plan.component';
 
 const routes: Routes = [
     {
@@ -60,7 +61,10 @@ const routes: Routes = [
 		path: 'logout',
 		component: LogoutComponent
 	},
-	
+	{	
+		path:'createTripPlan',
+		component:CreateTripPlanComponent
+	},
 	// otherwise redirect to home
 	{ path: '**', redirectTo: '/' }
 ];

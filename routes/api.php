@@ -252,10 +252,10 @@ Route::group(['prefix' => 'api'], function () {
     Route::group([
         'prefix' => 'trips',
         'as' => 'trips.',
-        'namespace' => 'Trips',
+        'namespace' => 'Trip',
             ], function () {
 
         /* Get All Lifestyles */
-        Route::post('/search', 'LifestyleController@get_lifestyles');
+        Route::post('/new', 'TripController@postNew');
     });
 });

@@ -594,6 +594,7 @@ class RestaurantsController extends Controller
 
         if (is_array($to_save)) {
             foreach ($to_save AS $k => $v) {
+                if (!Restaurants::where('provider_id', '=', $places[$k]['provider_id'])->exists()) {
                 $p = new Restaurants();
                 $p->provider_id = $places[$k]['provider_id'];
                 $p->countries_id = $data['countries_id'];
@@ -620,7 +621,9 @@ class RestaurantsController extends Controller
                 $pt->working_days = $places[$k]['working_days'] ? $places[$k]['working_days'] : '';
                 $pt->save();
                 AdminLogs::create(['item_type' => 'restaurants', 'item_id' => $p->id, 'action' => 'import', 'query' => '', 'time' => time(), 'admin_id' => Auth::user()->id]);
-            }
+                }
+                
+                }
             //die();
             $num = count($to_save);
 

@@ -631,6 +631,7 @@ class HotelsController extends Controller
 
         if (is_array($to_save)) {
             foreach ($to_save AS $k => $v) {
+                if (!Hotels::where('provider_id', '=', $places[$k]['provider_id'])->exists()) {
                 $p = new Hotels();
                 //$p->place_type_ids = 1;
                 $p->place_type = $places[$k]['types'];
@@ -658,6 +659,7 @@ class HotelsController extends Controller
                 $pt->working_days = $places[$k]['working_days'];
                 $pt->save();
                 AdminLogs::create(['item_type' => 'hotels', 'item_id' => $p->id, 'action' => 'import', 'query' => '', 'time' => time(), 'admin_id' => Auth::user()->id]);
+                }
             }
             //die();
             $num = count($to_save);

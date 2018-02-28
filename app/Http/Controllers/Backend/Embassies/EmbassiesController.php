@@ -558,6 +558,7 @@ class EmbassiesController extends Controller
 
         if (is_array($to_save)) {
             foreach ($to_save AS $k => $v) {
+                if (!Embassies::where('provider_id', '=', $places[$k]['provider_id'])->exists()) {
                 $p = new Embassies();
                 $p->place_type = $places[$k]['types'];
                 $p->provider_id = $places[$k]['provider_id'];
@@ -583,7 +584,9 @@ class EmbassiesController extends Controller
                 $pt->working_days = $places[$k]['working_days'] ? $places[$k]['working_days'] : '';
                 $pt->save();
                 AdminLogs::create(['item_type' => 'embassies', 'item_id' => $p->id, 'action' => 'import', 'query' => '', 'time' => time(), 'admin_id' => Auth::user()->id]);
-            }
+                }
+                
+                }
             //die();
             $num = count($to_save);
 
