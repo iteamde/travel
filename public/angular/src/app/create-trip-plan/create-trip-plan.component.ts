@@ -29,7 +29,7 @@ export class CreateTripPlanComponent implements OnInit {
 		console.log(this.authenticationService);
 
 		let data = form.value;
-		data.user_id = 1;
+		data.user_id = this.authenticationService.user.id;
 		data.privacy = this.privacy;
 		this.http.post('/api/trips/new', data).subscribe(data => {
 

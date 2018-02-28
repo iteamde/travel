@@ -1188,7 +1188,8 @@ var routes = [
     },
     {
         path: 'createTripPlan',
-        component: create_trip_plan_component_1.CreateTripPlanComponent
+        component: create_trip_plan_component_1.CreateTripPlanComponent,
+        canActivate: [index_1.AuthGuard]
     },
     // otherwise redirect to home
     { path: '**', redirectTo: '/' }
@@ -1510,7 +1511,7 @@ var CreateTripPlanComponent = (function () {
     CreateTripPlanComponent.prototype.saveTrip = function (form) {
         console.log(this.authenticationService);
         var data = form.value;
-        data.user_id = 1;
+        data.user_id = this.authenticationService.user.id;
         data.privacy = this.privacy;
         this.http.post('/api/trips/new', data).subscribe(function (data) {
         }, function (error) {

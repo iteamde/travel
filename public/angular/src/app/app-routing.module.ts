@@ -63,7 +63,8 @@ const routes: Routes = [
 	},
 	{	
 		path:'createTripPlan',
-		component:CreateTripPlanComponent
+		component:CreateTripPlanComponent,
+		canActivate: [AuthGuard]
 	},
 	// otherwise redirect to home
 	{ path: '**', redirectTo: '/' }
