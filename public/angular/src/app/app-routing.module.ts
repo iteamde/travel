@@ -18,6 +18,7 @@ import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.componen
 import { TermsOfServiceComponent } from './terms-of-service/terms-of-service.component';
 import { LogoutComponent } from './logout/logout.component';
 import { CreateTripPlanComponent } from './create-trip-plan/create-trip-plan.component';
+import { TripComponent } from './trip/trip.component';
 
 const routes: Routes = [
     {
@@ -61,11 +62,16 @@ const routes: Routes = [
 		path: 'logout',
 		component: LogoutComponent
 	},
-	{	
+	{
 		path:'createTripPlan',
 		component:CreateTripPlanComponent,
 		canActivate: [AuthGuard]
 	},
+  {
+    path:'trip/create',
+    component: TripComponent,
+    canActivate: [AuthGuard]
+  },
 	// otherwise redirect to home
 	{ path: '**', redirectTo: '/' }
 ];

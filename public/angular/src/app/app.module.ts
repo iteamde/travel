@@ -41,6 +41,8 @@ import { TermsOfServiceComponent } from './terms-of-service/terms-of-service.com
 import { LogoutComponent } from './logout/logout.component';
 import { CreateTripPlanComponent } from './create-trip-plan/create-trip-plan.component';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { TripComponent } from './trip/trip.component';
+import { TripService } from '../_services/trip.service';
 
 @NgModule({
     imports: [
@@ -78,7 +80,8 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
       PrivacyPolicyComponent,
       TermsOfServiceComponent,
       LogoutComponent,
-      CreateTripPlanComponent
+      CreateTripPlanComponent,
+      TripComponent
     ],
     providers: [
         AuthGuard,
@@ -95,7 +98,8 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
         PlacesService,
         TravelStylesService,
         FacebookService,
-        TwitterService
+        TwitterService,
+        TripService
 
         // provider used to create fake backend
         //fakeBackendProvider

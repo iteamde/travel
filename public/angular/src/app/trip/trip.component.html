@@ -1,0 +1,19 @@
+<dl [formGroup]="tripForm">
+  <dt class="title">Trip Name</dt>
+  <dd class="form-group"><input class="form-control" type="text" formControlName="title" placeholder="Title"></dd>
+
+  <dt class="title">Date</dt>
+  <dd class="form-group"><input class="form-control" type="date" formControlName="date" placeholder="Select date"></dd>
+
+  <dt class="title">Privacy</dt>
+  <dd class="form-group">
+    <select class="form-control" formControlName="privacy">
+      <option value="1">Public</option>
+      <option value="2">Friends</option>
+      <option value="3">Private</option>
+    </select>
+  </dd>
+</dl>
+
+<button class="btn btn-primary" (click)="onSubmit()">Next Step</button>
+
