@@ -24,6 +24,7 @@
 	
 	<link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
 	<link rel="stylesheet" href="{{ asset('assets/css/additional_style.css') }}">
+	<link rel="stylesheet" href="{{ asset('assets/css/modal.css') }}">
 
 </head>
 
@@ -43,6 +44,7 @@
 	<script src="{{ asset('assets/js/jquery.mCustomScrollbar.concat.min.js') }}"></script>
 	<script src="{{ asset('assets/js/lightslider.min.js') }}"></script>
 	<script src="{{ asset('assets/js/jquery.blockUI.min.js') }}"></script>
+	<script src="{{ asset('assets/js/script.js') }}"></script>
 	
 	<!-- <script src="assets/js/script.js"></script> -->
 	<script type="text/javascript" src="{{ asset('inline.bundle.js') }}"></script>

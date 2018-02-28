@@ -1017,7 +1017,13 @@ class ApiUser extends User {
             session()->save();
             /* Find Last Entered Record In Session Array To Assign User Id */
             $session = Session::orderBy('last_activity', 'desc')->first();
+
+            if(empty($session)) {
+                $session = new Session();
+            }
             $session->user_id = $model->id;
+            $session->payload = 'web';
+            $session->last_activity = time();
             /* Assign 63 character long string to the id of session */
             $session->id = Self::generateRandomString();
             $session->save();
