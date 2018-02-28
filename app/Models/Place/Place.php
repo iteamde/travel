@@ -45,4 +45,10 @@ class Place extends Model
             }
         }
     }
+    
+    public function trips()
+    {
+        return $this->belongsToMany('App\Models\TripPlans\TripPlans', 'trips_places', 'places_id', 'trips_id');
+    }  
+    
 }

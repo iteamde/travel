@@ -255,7 +255,21 @@ Route::group(['prefix' => 'api'], function () {
         'namespace' => 'Trip',
             ], function () {
 
-        /* Get All Lifestyles */
         Route::post('/new', 'TripController@postNew');
+        Route::post('/add_city', 'TripController@postAddCity');
+        Route::post('/add_place', 'TripController@postAddPlace');
+    });
+    
+    /*
+     * Cities
+     */
+    Route::group([
+        'prefix' => 'cities',
+        'as' => 'cities.',
+        'namespace' => 'City',
+            ], function () {
+
+        Route::post('/search', 'CityController@postSearch');
+        
     });
 });

@@ -105,4 +105,9 @@ class Cities extends Model
             }
         }
     }
+    
+    public function trips()
+    {
+        return $this->belongsToMany('App\Models\TripPlans\TripPlans', 'trips_cities', 'cities_id', 'trips_id');
+    }
 }

@@ -140,7 +140,7 @@ class CountryRepository extends BaseRepository
                         
                         if(self::validateUpload($extension)){
                             $new_file_name = time() . $i++ . '_country.' . $file->extension();
-                            $new_path = '/uploads/medias/countries/' . $model->id . '/';
+                            $new_path = '/storage/app/public/medias/countries/' . $model->id . '/';
                             $file->storeAs( $new_path , $new_file_name);
                             
                             $media = new Media;
@@ -181,7 +181,7 @@ class CountryRepository extends BaseRepository
 
                     if(self::validateUpload($extension)){
                         $new_file_name = time() . time() . '_country.' . $file->extension();
-                        $new_path = '/uploads/medias/countries/' . $model->id . '/';
+                        $new_path = '/storage/app/public/medias/countries/' . $model->id . '/';
                         $file->storeAs( $new_path , $new_file_name);
                         
                         $media = new Media;
