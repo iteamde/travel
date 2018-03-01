@@ -21,6 +21,7 @@ class Kernel extends HttpKernel {
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
+        \Barryvdh\Cors\HandleCors::class,
     ];
 
     /**
@@ -47,7 +48,7 @@ class Kernel extends HttpKernel {
         'api' => [
             // 'access.routeNeedsPermission:view-api',
             'throttle:60,1',
-            \Barryvdh\Cors\HandleCors::class,
+            
 
         // 'bindings',
         ],
