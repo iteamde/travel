@@ -7,66 +7,62 @@ Route::get('/', function () {
     return view('frontend.angular.index');
 });
 
-Route::get('/travooo/public', function () {
+Route::get('/home', function () {
     return view('frontend.angular.index');
 });
 
-Route::get('/travooo/public/home', function () {
+Route::get('/privacy-policy', function () {
     return view('frontend.angular.index');
 });
 
-Route::get('/travooo/public/privacy-policy', function () {
+Route::get('/terms-of-service', function () {
     return view('frontend.angular.index');
 });
 
-Route::get('/travooo/public/terms-of-service', function () {
+Route::get('/login', function () {
     return view('frontend.angular.index');
 });
 
-Route::get('/travooo/public/login', function () {
+Route::get('/signup', function () {
     return view('frontend.angular.index');
 });
 
-Route::get('/travooo/public/signup', function () {
+Route::get('/signup/step1', function () {
     return view('frontend.angular.index');
 });
 
-Route::get('/travooo/public/signup/step1', function () {
+Route::get('/signup/step2', function () {
     return view('frontend.angular.index');
 });
 
-Route::get('/travooo/public/signup/step2', function () {
+Route::get('/signup/step3', function () {
     return view('frontend.angular.index');
 });
 
-Route::get('/travooo/public/signup/step3', function () {
+Route::get('/signup/step4', function () {
     return view('frontend.angular.index');
 });
 
-Route::get('/travooo/public/signup/step4', function () {
+Route::get('/signup/step5', function () {
     return view('frontend.angular.index');
 });
 
-Route::get('/travooo/public/signup/step5', function () {
+Route::get('/forgot-password', function () {
     return view('frontend.angular.index');
 });
 
-Route::get('/travooo/public/forgot-password', function () {
+Route::get('/reset-password', function () {
     return view('frontend.angular.index');
 });
 
-Route::get('/travooo/public/reset-password', function () {
+Route::get('/twitter-callback', function () {
     return view('frontend.angular.index');
 });
 
-Route::get('/travooo/public/twitter-callback', function () {
+Route::get('/logout', function () {
     return view('frontend.angular.index');
 });
 
-Route::get('/travooo/public/logout', function () {
-    return view('frontend.angular.index');
-});
-
-Route::get('/travooo/public/createTripPlan', function () {
+Route::get('/createTripPlan', function () {
     return view('frontend.angular.index');
 });
