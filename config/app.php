@@ -166,6 +166,8 @@ return [
         Yajra\Datatables\DatatablesServiceProvider::class,
         Mpociot\ApiDoc\ApiDocGeneratorServiceProvider::class,
         Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
+        Barryvdh\Cors\ServiceProvider::class,
+
         /*
          * Application Service Providers...
          */
