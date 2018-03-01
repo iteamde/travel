@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<title>Travooo</title>
-	<base href="/travooo/public/">
+	<base href="/">
 	<link rel="icon" type="image/x-icon" href="favicon.ico">
 
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
@@ -47,11 +47,11 @@
 	<script src="{{ asset('assets/js/script.js') }}"></script>
 	
 	<!-- <script src="assets/js/script.js"></script> -->
-	<script type="text/javascript" src="{{ asset('inline.bundle.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('polyfills.bundle.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('styles.bundle.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('vendor.bundle.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('main.bundle.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('/angular/dist/inline.bundle.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('/angular/dist/polyfills.bundle.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('/angular/dist/styles.bundle.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('/angular/dist/vendor.bundle.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('/angular/dist/main.bundle.js') }}"></script>
 </body>
 
 </html>
