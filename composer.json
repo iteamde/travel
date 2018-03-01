@@ -13,6 +13,7 @@
         "abraham/twitteroauth": "^0.7.4",
         "arcanedev/log-viewer": "~4.0",
         "arcanedev/no-captcha": "~3.0",
+        "barryvdh/laravel-cors": "^0.11.0",
         "creativeorange/gravatar": "~1.0",
         "davejamesmiller/laravel-breadcrumbs": "^3.0",
         "hieu-le/active": "~3.0",

@@ -111,8 +111,7 @@
                 initComplete: function () {
                     $('#hotels-table thead tr th:nth-child(10)').hide();
                     $('#hotels-table tbody tr td:nth-child(10)').hide();
-                    $('#hotels-table thead tr th:nth-child(9)').hide();
-                    $('#hotels-table tbody tr td:nth-child(9)').hide();
+                    
                     this.api().columns().every(function () {
                         var column = this;
                         var select = $('<select><option value=""></option></select>')
@@ -138,7 +137,7 @@
                             place_types[temp_text] = temp_text;
                     });
 
-                    $('#hotels-table thead').append('<tr><td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr>');
+                    $('#hotels-table thead').append('<tr><td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr>');
                     var count = 0;
                     $('#hotels-table thead tr:nth-child(2) td').each( function () {
                         // var title = $(this).text();
@@ -296,8 +295,7 @@
                         table.columns(8).search("^\\s*"+val+"\\s*$", true).draw();
                         $('#hotels-table thead tr th:nth-child(10)').hide();
                         $('#hotels-table tbody tr td:nth-child(10)').attr('style','display:none !important;');
-                        $('#hotels-table thead tr th:nth-child(9)').hide();
-                        $('#hotels-table tbody tr td:nth-child(9)').attr('style','display:none !important;');
+                        
                 // }
             }
         });
@@ -322,8 +320,7 @@
                         table.columns(9).search("^\\s*"+val+"\\s*$", true).draw();
                         $('#hotels-table thead tr th:nth-child(10)').hide();
                         $('#hotels-table tbody tr td:nth-child(10)').attr('style','display:none !important;');
-                        $('#hotels-table thead tr th:nth-child(9)').hide();
-                        $('#hotels-table tbody tr td:nth-child(9)').attr('style','display:none !important;');
+                        
                 }
             // }
         });
@@ -341,12 +338,7 @@
     #hotels-table tbody tr td:nth-child(10){
         display:none !important;
     }
-    #hotels-table thead tr th:nth-child(9){
-        display:none !important;
-    }
-    #hotels-table tbody tr td:nth-child(9){
-        display:none !important;
-    }
+    
     table.dataTable tbody td.select-checkbox, table.dataTable tbody th.select-checkbox {
         width:20px !important;
     }

@@ -111,8 +111,7 @@
                 initComplete: function () {
                     $('#restaurants-table thead tr th:nth-child(10)').hide();
                     $('#restaurants-table tbody tr td:nth-child(10)').hide();
-                    $('#restaurants-table thead tr th:nth-child(9)').hide();
-                    $('#restaurants-table tbody tr td:nth-child(9)').hide();
+                    
                     this.api().columns().every(function () {
                         var column = this;
                         var select = $('<select><option value=""></option></select>')
@@ -286,8 +285,6 @@
                         table.columns(8).search("^\\s*"+val+"\\s*$", true).draw();
                         $('#restaurants-table thead tr th:nth-child(10)').hide();
                         $('#restaurants-table tbody tr td:nth-child(10)').attr('style','display:none !important;');
-                        $('#restaurants-table thead tr th:nth-child(9)').hide();
-                        $('#restaurants-table tbody tr td:nth-child(9)').attr('style','display:none !important;');
                 }
             }
         });
@@ -322,8 +319,6 @@
                         table.columns(9).search("^\\s*"+val+"\\s*$", true).draw();
                         $('#restaurants-table thead tr th:nth-child(10)').hide();
                         $('#restaurants-table tbody tr td:nth-child(10)').attr('style','display:none !important;');
-                        $('#restaurants-table thead tr th:nth-child(9)').hide();
-                        $('#restaurants-table tbody tr td:nth-child(9)').attr('style','display:none !important;');
                 }
             }
         });
@@ -336,12 +331,7 @@
     #restaurants-table tbody tr td:nth-child(10){
         display:none !important;
     }
-    #restaurants-table thead tr th:nth-child(9){
-        display:none !important;
-    }
-    #restaurants-table tbody tr td:nth-child(9){
-        display:none !important;
-    }
+    
     table.dataTable tbody td.select-checkbox, table.dataTable tbody th.select-checkbox {
         width:20px !important;
     }

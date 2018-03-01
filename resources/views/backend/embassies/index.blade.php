@@ -111,8 +111,6 @@
                 initComplete: function () {
                     $('#countries-table thead tr th:nth-child(10)').hide();
                     $('#countries-table tbody tr td:nth-child(10)').hide();
-                    $('#countries-table thead tr th:nth-child(9)').hide();
-                    $('#countries-table tbody tr td:nth-child(9)').hide();
                     this.api().columns().every(function () {
                         var column = this;
                         var select = $('<select><option value=""></option></select>')
@@ -289,9 +287,7 @@
                         table.columns(8).search("^\\s*"+val+"\\s*$", true).draw();
                         $('#countries-table thead tr th:nth-child(10)').hide();
                         $('#countries-table tbody tr td:nth-child(10)').attr('style','display:none !important;');
-                        $('#countries-table thead tr th:nth-child(9)').hide();
-                        $('#countries-table tbody tr td:nth-child(9)').attr('style','display:none !important;');
-                // }
+                  // }
             }
         });
     });
@@ -327,9 +323,7 @@
                         table.columns(9).search("^\\s*"+val+"\\s*$", true).draw();
                         $('#countries-table thead tr th:nth-child(10)').hide();
                         $('#countries-table tbody tr td:nth-child(10)').attr('style','display:none !important;');
-                        $('#countries-table thead tr th:nth-child(9)').hide();
-                        $('#countries-table tbody tr td:nth-child(9)').attr('style','display:none !important;');
-                }
+                 }
             // }
         });
     });
@@ -341,12 +335,7 @@
     #countries-table tbody tr td:nth-child(10){
         display:none !important;
     }
-    #countries-table thead tr th:nth-child(9){
-        display:none !important;
-    }
-    #countries-table tbody tr td:nth-child(9){
-        display:none !important;
-    }
+    
     table.dataTable tbody td.select-checkbox, table.dataTable tbody th.select-checkbox {
         width:20px !important;
     }

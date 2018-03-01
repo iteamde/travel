@@ -47,6 +47,8 @@ class Kernel extends HttpKernel {
         'api' => [
             // 'access.routeNeedsPermission:view-api',
             'throttle:60,1',
+            \Barryvdh\Cors\HandleCors::class,
+
         // 'bindings',
         ],
     ];
