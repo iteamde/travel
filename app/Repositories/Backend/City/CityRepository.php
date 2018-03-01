@@ -416,8 +416,10 @@ class CityRepository extends BaseRepository
         $prev_medias = CitiesMedias::where(['cities_id' => $id])->get();
         if(!empty($prev_medias)){
             foreach ($prev_medias as $key => $value) {
+                if(is_object($value->medias)) {
                 if($value->medias->type == null){
                     $value->delete();
+                }
                 }
             }
         }
