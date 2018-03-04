@@ -20,7 +20,6 @@ class TripController extends Controller
         $title = $post['title'];
         $date = $post['date'];
         $privacy = $post['privacy'];
-        $duration = $post['duration'];
         
         $trip = new TripPlans;
         $trip->users_id = $user_id;
@@ -91,7 +90,6 @@ class TripController extends Controller
         
         $att = $trip->cities()->attach($city_id,['order' => $order, 'date' => date('Y-m-d', $date)]);
         
-        
             return [
                 
                 'success' => true
@@ -148,12 +146,10 @@ class TripController extends Controller
                 , 'order' => $order, 'date' => date('Y-m-d', $date)
             , 'time' => $time, 'duration' => $duration, 'budget' => $budget]);
         
-        
             return [
                 
                 'success' => true
             ];
-        
         
     }
 }
