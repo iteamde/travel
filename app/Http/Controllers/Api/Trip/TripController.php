@@ -9,8 +9,25 @@ use App\Models\TripCities\TripCities;
 use App\Models\City\Cities;
 use App\Models\Place\Place;
 
+/**
+ * @resource Trip Planner
+ *
+ * Trip Planner functions
+ */
 class TripController extends Controller
 {
+    
+    /**
+	 * api/trips/new
+	 *
+	 * Create Trip Plan - step 1
+        * 
+        * parameter String "title" (required) <br />
+        * parameter unix_timestamp "date" (required) <br />
+        * parameter Integer "privacy" (required) <br />
+	 *
+	 */
+    
     public function postNew(Request $request) {
 
         $post = $request->input();
@@ -24,7 +41,7 @@ class TripController extends Controller
         $trip = new TripPlans;
         $trip->users_id = $user_id;
         $trip->title = $title;
-        $trip->start_date = date('Y-m-d H:i:s', time());
+        $trip->start_date = date('Y-m-d H:i:s', $date);
         $trip->privacy = $privacy;
         
         if($trip->save()) {
@@ -46,6 +63,18 @@ class TripController extends Controller
         }
         
     }
+    
+    /**
+	 * api/trips/add_city
+	 *
+	 * Create Trip Plan - step 2
+        * 
+        * parameter Integer "trip_id" (required) <br />
+        * parameter Integer "city_id" (required) <br />
+        * parameter Integer "order" (required) <br />
+        * parameter Unix timestamp "date" (required) <br />
+	 *
+	 */
     
     public function postAddCity(Request $request) {
 
@@ -98,6 +127,20 @@ class TripController extends Controller
         
     }
     
+    /**
+	 * api/trips/add_place
+	 *
+	 * Create Trip Plan - step 3
+        * 
+        * parameter Integer "trip_id" (required) <br />
+        * parameter Integer "place_id" (required) <br />
+        * parameter Integer "order" (required) <br />
+        * parameter Unix timestamp "date" (required) <br />
+        * parameter Unix timestamp "time" (optional) <br />
+        * parameter Unix timestamp "duration" (optional) <br />
+        * parameter Integer "budget" (optional) <br />
+	 *
+	 */
     public function postAddPlace(Request $request) {
 
         $post = $request->input();

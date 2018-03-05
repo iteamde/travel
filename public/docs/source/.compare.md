@@ -394,9 +394,349 @@ null
 
 <!-- END_2ba35e9a587b8228fe341ca83b3f94f8 -->
 
+#Trip Planner
+
+Trip Planner functions
+<!-- START_8e9fd31a72d31bdd4d5bc73823037755 -->
+## api/trips/new
+
+Create Trip Plan - step 1
+
+parameter String "title" (required) <br />
+parameter unix_timestamp "date" (required) <br />
+parameter Integer "privacy" (required) <br />
+
+> Example request:
+
+```bash
+curl -X POST "http://localhost/api/trips/new" \
+-H "Accept: application/json"
+```
+
+```javascript
+var settings = {
+    "async": true,
+    "crossDomain": true,
+    "url": "http://localhost/api/trips/new",
+    "method": "POST",
+    "headers": {
+        "accept": "application/json"
+    }
+}
+
+$.ajax(settings).done(function (response) {
+    console.log(response);
+});
+```
+
+
+### HTTP Request
+`POST api/trips/new`
+
+
+<!-- END_8e9fd31a72d31bdd4d5bc73823037755 -->
+
+<!-- START_7f71c334dc70c4c3b193a6a86e6cb095 -->
+## api/trips/add_city
+
+Create Trip Plan - step 2
+
+parameter Integer "trip_id" (required) <br />
+parameter Integer "city_id" (required) <br />
+parameter Integer "order" (required) <br />
+parameter Unix timestamp "date" (required) <br />
+
+> Example request:
+
+```bash
+curl -X POST "http://localhost/api/trips/add_city" \
+-H "Accept: application/json"
+```
+
+```javascript
+var settings = {
+    "async": true,
+    "crossDomain": true,
+    "url": "http://localhost/api/trips/add_city",
+    "method": "POST",
+    "headers": {
+        "accept": "application/json"
+    }
+}
+
+$.ajax(settings).done(function (response) {
+    console.log(response);
+});
+```
+
+
+### HTTP Request
+`POST api/trips/add_city`
+
+
+<!-- END_7f71c334dc70c4c3b193a6a86e6cb095 -->
+
+<!-- START_0939528eca8a1682a7aacb1726e42a65 -->
+## api/trips/add_place
+
+Create Trip Plan - step 3
+
+parameter Integer "trip_id" (required) <br />
+parameter Integer "place_id" (required) <br />
+parameter Integer "order" (required) <br />
+parameter Unix timestamp "date" (required) <br />
+parameter Unix timestamp "time" (optional) <br />
+parameter Unix timestamp "duration" (optional) <br />
+parameter Integer "budget" (optional) <br />
+
+> Example request:
+
+```bash
+curl -X POST "http://localhost/api/trips/add_place" \
+-H "Accept: application/json"
+```
+
+```javascript
+var settings = {
+    "async": true,
+    "crossDomain": true,
+    "url": "http://localhost/api/trips/add_place",
+    "method": "POST",
+    "headers": {
+        "accept": "application/json"
+    }
+}
+
+$.ajax(settings).done(function (response) {
+    console.log(response);
+});
+```
+
+
+### HTTP Request
+`POST api/trips/add_place`
+
+
+<!-- END_0939528eca8a1682a7aacb1726e42a65 -->
+
 #User
 
 All users &amp; membership operations
+<!-- START_f9554a1efe2f359d6df453375a7dd2e5 -->
+## api/users/create/facebook
+
+> Example request:
+
+```bash
+curl -X POST "http://localhost/api/users/create/facebook" \
+-H "Accept: application/json"
+```
+
+```javascript
+var settings = {
+    "async": true,
+    "crossDomain": true,
+    "url": "http://localhost/api/users/create/facebook",
+    "method": "POST",
+    "headers": {
+        "accept": "application/json"
+    }
+}
+
+$.ajax(settings).done(function (response) {
+    console.log(response);
+});
+```
+
+
+### HTTP Request
+`POST api/users/create/facebook`
+
+
+<!-- END_f9554a1efe2f359d6df453375a7dd2e5 -->
+
+<!-- START_070b6f35496283a667d4880896adecb0 -->
+## api/users/create/facebook
+
+> Example request:
+
+```bash
+curl -X GET "http://localhost/api/users/create/facebook" \
+-H "Accept: application/json"
+```
+
+```javascript
+var settings = {
+    "async": true,
+    "crossDomain": true,
+    "url": "http://localhost/api/users/create/facebook",
+    "method": "GET",
+    "headers": {
+        "accept": "application/json"
+    }
+}
+
+$.ajax(settings).done(function (response) {
+    console.log(response);
+});
+```
+
+> Example response:
+
+```json
+{
+    "data": {
+        "message": [
+            [
+                "Fb user id not provided.",
+                "Email not provided."
+            ]
+        ]
+    },
+    "code": 404,
+    "success": false
+}
+```
+
+### HTTP Request
+`GET api/users/create/facebook`
+
+`HEAD api/users/create/facebook`
+
+
+<!-- END_070b6f35496283a667d4880896adecb0 -->
+
+<!-- START_ae8a5c13785a68890543386a59752d32 -->
+## api/users/create/twitter
+
+> Example request:
+
+```bash
+curl -X POST "http://localhost/api/users/create/twitter" \
+-H "Accept: application/json"
+```
+
+```javascript
+var settings = {
+    "async": true,
+    "crossDomain": true,
+    "url": "http://localhost/api/users/create/twitter",
+    "method": "POST",
+    "headers": {
+        "accept": "application/json"
+    }
+}
+
+$.ajax(settings).done(function (response) {
+    console.log(response);
+});
+```
+
+
+### HTTP Request
+`POST api/users/create/twitter`
+
+
+<!-- END_ae8a5c13785a68890543386a59752d32 -->
+
+<!-- START_23ee7d780ff638faed61ff54d9c88dff -->
+## api/users/create/twitter
+
+> Example request:
+
+```bash
+curl -X GET "http://localhost/api/users/create/twitter" \
+-H "Accept: application/json"
+```
+
+```javascript
+var settings = {
+    "async": true,
+    "crossDomain": true,
+    "url": "http://localhost/api/users/create/twitter",
+    "method": "GET",
+    "headers": {
+        "accept": "application/json"
+    }
+}
+
+$.ajax(settings).done(function (response) {
+    console.log(response);
+});
+```
+
+> Example response:
+
+```json
+{
+    "data": {
+        "message": [
+            [
+                "Twitter user id not provided.",
+                "Email not provided."
+            ]
+        ]
+    },
+    "code": 404,
+    "success": false
+}
+```
+
+### HTTP Request
+`GET api/users/create/twitter`
+
+`HEAD api/users/create/twitter`
+
+
+<!-- END_23ee7d780ff638faed61ff54d9c88dff -->
+
+<!-- START_20cf12ef86f7b55eddf6c0a1d1a30fff -->
+## api/users/create/twitter/login
+
+> Example request:
+
+```bash
+curl -X GET "http://localhost/api/users/create/twitter/login" \
+-H "Accept: application/json"
+```
+
+```javascript
+var settings = {
+    "async": true,
+    "crossDomain": true,
+    "url": "http://localhost/api/users/create/twitter/login",
+    "method": "GET",
+    "headers": {
+        "accept": "application/json"
+    }
+}
+
+$.ajax(settings).done(function (response) {
+    console.log(response);
+});
+```
+
+> Example response:
+
+```json
+{
+    "success": true,
+    "data": {
+        "oauth_token": "lbH2aQAAAAAA4LB9AAABYfVqV_Y",
+        "oauth_token_secret": "eIrobpDumIdSZvgY8AZF2yYPeS78I921"
+    },
+    "code": 200
+}
+```
+
+### HTTP Request
+`GET api/users/create/twitter/login`
+
+`HEAD api/users/create/twitter/login`
+
+
+<!-- END_20cf12ef86f7b55eddf6c0a1d1a30fff -->
+
 <!-- START_57d87049be86661f752d2ec9525fb3df -->
 ## api/users/create
 
@@ -429,6 +769,138 @@ $.ajax(settings).done(function (response) {
 
 
 <!-- END_57d87049be86661f752d2ec9525fb3df -->
+
+<!-- START_23523d383e4cf18b2d7903817da416c5 -->
+## api/users/create/step2
+
+> Example request:
+
+```bash
+curl -X POST "http://localhost/api/users/create/step2" \
+-H "Accept: application/json"
+```
+
+```javascript
+var settings = {
+    "async": true,
+    "crossDomain": true,
+    "url": "http://localhost/api/users/create/step2",
+    "method": "POST",
+    "headers": {
+        "accept": "application/json"
+    }
+}
+
+$.ajax(settings).done(function (response) {
+    console.log(response);
+});
+```
+
+
+### HTTP Request
+`POST api/users/create/step2`
+
+
+<!-- END_23523d383e4cf18b2d7903817da416c5 -->
+
+<!-- START_8b402bdafe5d38489dcb403c6a1cee12 -->
+## api/users/set/fav_countries
+
+> Example request:
+
+```bash
+curl -X POST "http://localhost/api/users/set/fav_countries" \
+-H "Accept: application/json"
+```
+
+```javascript
+var settings = {
+    "async": true,
+    "crossDomain": true,
+    "url": "http://localhost/api/users/set/fav_countries",
+    "method": "POST",
+    "headers": {
+        "accept": "application/json"
+    }
+}
+
+$.ajax(settings).done(function (response) {
+    console.log(response);
+});
+```
+
+
+### HTTP Request
+`POST api/users/set/fav_countries`
+
+
+<!-- END_8b402bdafe5d38489dcb403c6a1cee12 -->
+
+<!-- START_188be3c3c08144dd040153c62a733725 -->
+## api/users/set/fav_places
+
+> Example request:
+
+```bash
+curl -X POST "http://localhost/api/users/set/fav_places" \
+-H "Accept: application/json"
+```
+
+```javascript
+var settings = {
+    "async": true,
+    "crossDomain": true,
+    "url": "http://localhost/api/users/set/fav_places",
+    "method": "POST",
+    "headers": {
+        "accept": "application/json"
+    }
+}
+
+$.ajax(settings).done(function (response) {
+    console.log(response);
+});
+```
+
+
+### HTTP Request
+`POST api/users/set/fav_places`
+
+
+<!-- END_188be3c3c08144dd040153c62a733725 -->
+
+<!-- START_476e98d80e2f6b67410e48f21f0564c3 -->
+## api/users/set/travel_styles
+
+> Example request:
+
+```bash
+curl -X POST "http://localhost/api/users/set/travel_styles" \
+-H "Accept: application/json"
+```
+
+```javascript
+var settings = {
+    "async": true,
+    "crossDomain": true,
+    "url": "http://localhost/api/users/set/travel_styles",
+    "method": "POST",
+    "headers": {
+        "accept": "application/json"
+    }
+}
+
+$.ajax(settings).done(function (response) {
+    console.log(response);
+});
+```
+
+
+### HTTP Request
+`POST api/users/set/travel_styles`
+
+
+<!-- END_476e98d80e2f6b67410e48f21f0564c3 -->
 
 <!-- START_21ff1203a9357ffbb000ef4dd551dfd3 -->
 ## api/users/login
@@ -558,7 +1030,15 @@ $.ajax(settings).done(function (response) {
 > Example response:
 
 ```json
-null
+{
+    "data": {
+        "message": [
+            "Wrong Token Provided."
+        ]
+    },
+    "code": 400,
+    "success": false
+}
 ```
 
 ### HTTP Request
@@ -609,13 +1089,13 @@ null
 
 <!-- END_1847655e706b0d31e93eb9724ef0fd8c -->
 
-<!-- START_6c7cf9cf8fa7baad6c92943cc4f74cac -->
-## api/users/reset/{token}/{new_password}/{confirm_password}
+<!-- START_aa6088985d85f70a83fb8f1f09a9264b -->
+## api/users/reset
 
 > Example request:
 
 ```bash
-curl -X GET "http://localhost/api/users/reset/{token}/{new_password}/{confirm_password}" \
+curl -X POST "http://localhost/api/users/reset" \
 -H "Accept: application/json"
 ```
 
@@ -623,8 +1103,8 @@ curl -X GET "http://localhost/api/users/reset/{token}/{new_password}/{confirm_pa
 var settings = {
     "async": true,
     "crossDomain": true,
-    "url": "http://localhost/api/users/reset/{token}/{new_password}/{confirm_password}",
-    "method": "GET",
+    "url": "http://localhost/api/users/reset",
+    "method": "POST",
     "headers": {
         "accept": "application/json"
     }
@@ -635,19 +1115,12 @@ $.ajax(settings).done(function (response) {
 });
 ```
 
-> Example response:
-
-```json
-null
-```
 
 ### HTTP Request
-`GET api/users/reset/{token}/{new_password}/{confirm_password}`
-
-`HEAD api/users/reset/{token}/{new_password}/{confirm_password}`
+`POST api/users/reset`
 
 
-<!-- END_6c7cf9cf8fa7baad6c92943cc4f74cac -->
+<!-- END_aa6088985d85f70a83fb8f1f09a9264b -->
 
 <!-- START_dd67fb46db40b5bf9c9bb1ea0644897a -->
 ## api/users/fullname
@@ -1099,13 +1572,13 @@ $.ajax(settings).done(function (response) {
 
 <!-- END_6f761ba39b466d91682cc00fd146c17e -->
 
-<!-- START_4f76529666e28d2af086157d2059197a -->
-## api/users/unhideacontent
+<!-- START_257bb864c10078124525d3376f487ed9 -->
+## api/users/unhidecontent
 
 > Example request:
 
 ```bash
-curl -X POST "http://localhost/api/users/unhideacontent" \
+curl -X POST "http://localhost/api/users/unhidecontent" \
 -H "Accept: application/json"
 ```
 
@@ -1113,7 +1586,7 @@ curl -X POST "http://localhost/api/users/unhideacontent" \
 var settings = {
     "async": true,
     "crossDomain": true,
-    "url": "http://localhost/api/users/unhideacontent",
+    "url": "http://localhost/api/users/unhidecontent",
     "method": "POST",
     "headers": {
         "accept": "application/json"
@@ -1127,10 +1600,10 @@ $.ajax(settings).done(function (response) {
 
 
 ### HTTP Request
-`POST api/users/unhideacontent`
+`POST api/users/unhidecontent`
 
 
-<!-- END_4f76529666e28d2af086157d2059197a -->
+<!-- END_257bb864c10078124525d3376f487ed9 -->
 
 <!-- START_bb16d362a1d5d5d652760962e2896078 -->
 ## api/users/deactivate
@@ -1557,13 +2030,13 @@ null
 <!-- END_a5fc097c1e7b42a765e8a61088269348 -->
 
 #general
-<!-- START_8e0ec6fba3d92922930a840cdbf22a68 -->
-## Display Swagger API page.
+<!-- START_09de46a445ee056690bd2ac3e70e5750 -->
+## api/authenticate
 
 > Example request:
 
 ```bash
-curl -X GET "http://localhost/api/documentation" \
+curl -X GET "http://localhost/api/authenticate" \
 -H "Accept: application/json"
 ```
 
@@ -1571,7 +2044,1056 @@ curl -X GET "http://localhost/api/documentation" \
 var settings = {
     "async": true,
     "crossDomain": true,
-    "url": "http://localhost/api/documentation",
+    "url": "http://localhost/api/authenticate",
+    "method": "GET",
+    "headers": {
+        "accept": "application/json"
+    }
+}
+
+$.ajax(settings).done(function (response) {
+    console.log(response);
+});
+```
+
+> Example response:
+
+```json
+[
+    {
+        "id": 1,
+        "name": "Admin Istrator",
+        "username": "Admin",
+        "email": "admin@admin.com",
+        "address": "dummy address",
+        "single": null,
+        "gender": null,
+        "children": null,
+        "age": null,
+        "profile_picture": null,
+        "mobile": null,
+        "status": 1,
+        "nationality": null,
+        "public_profile": null,
+        "notifications": null,
+        "messages": null,
+        "sms": null,
+        "confirmation_code": "418af2a3480f69e3abd88e1f6c635331",
+        "confirmed": 1,
+        "created_at": "2017-06-09 16:46:47",
+        "updated_at": "2017-06-09 16:46:47",
+        "deleted_at": null,
+        "last_login": null,
+        "travel_type": null,
+        "display_name": null,
+        "password_reset_token": null,
+        "login_type": 1,
+        "social_key": null
+    },
+    {
+        "id": 2,
+        "name": "Backend User",
+        "username": "backend_user",
+        "email": "executive@executive.com",
+        "address": "dummy address",
+        "single": null,
+        "gender": null,
+        "children": null,
+        "age": null,
+        "profile_picture": null,
+        "mobile": null,
+        "status": 1,
+        "nationality": null,
+        "public_profile": null,
+        "notifications": null,
+        "messages": null,
+        "sms": null,
+        "confirmation_code": "621b4895e93f560c7b1d88229471c870",
+        "confirmed": 1,
+        "created_at": "2017-06-09 16:46:47",
+        "updated_at": "2017-06-09 16:46:47",
+        "deleted_at": null,
+        "last_login": null,
+        "travel_type": null,
+        "display_name": null,
+        "password_reset_token": null,
+        "login_type": 1,
+        "social_key": null
+    },
+    {
+        "id": 3,
+        "name": "Default User",
+        "username": "user",
+        "email": "user@user.com",
+        "address": "dummy address",
+        "single": null,
+        "gender": null,
+        "children": null,
+        "age": null,
+        "profile_picture": null,
+        "mobile": null,
+        "status": 1,
+        "nationality": null,
+        "public_profile": null,
+        "notifications": null,
+        "messages": null,
+        "sms": null,
+        "confirmation_code": "021aabe00f5aad4884e039722d549126",
+        "confirmed": 1,
+        "created_at": "2017-06-09 16:46:47",
+        "updated_at": "2017-06-09 16:46:47",
+        "deleted_at": null,
+        "last_login": null,
+        "travel_type": null,
+        "display_name": null,
+        "password_reset_token": null,
+        "login_type": 1,
+        "social_key": null
+    },
+    {
+        "id": 5,
+        "name": "testfdsfsdfsdfsd",
+        "username": "test_account",
+        "email": "farzammoeen007@gmail.com",
+        "address": "132sfsdfdsfdsf",
+        "single": null,
+        "gender": 1,
+        "children": null,
+        "age": 30,
+        "profile_picture": "1500471157_profile_image.jpeg",
+        "mobile": "+966123456789",
+        "status": 1,
+        "nationality": "Pakistani",
+        "public_profile": null,
+        "notifications": null,
+        "messages": null,
+        "sms": null,
+        "confirmation_code": null,
+        "confirmed": 0,
+        "created_at": "2017-07-13 16:28:23",
+        "updated_at": "2017-08-03 18:56:56",
+        "deleted_at": null,
+        "last_login": null,
+        "travel_type": null,
+        "display_name": null,
+        "password_reset_token": null,
+        "login_type": 1,
+        "social_key": null
+    },
+    {
+        "id": 7,
+        "name": "aya12345678",
+        "username": "aya123",
+        "email": "aya.adel.cs@gml.com",
+        "address": null,
+        "single": null,
+        "gender": 1,
+        "children": null,
+        "age": null,
+        "profile_picture": null,
+        "mobile": null,
+        "status": 1,
+        "nationality": null,
+        "public_profile": null,
+        "notifications": null,
+        "messages": null,
+        "sms": null,
+        "confirmation_code": null,
+        "confirmed": 0,
+        "created_at": "2017-07-16 13:19:49",
+        "updated_at": "2017-07-26 21:20:04",
+        "deleted_at": null,
+        "last_login": null,
+        "travel_type": null,
+        "display_name": null,
+        "password_reset_token": "AqnuqGiNXsdMR0RB3t8S1500285719WDsxellhGTMhkaLKQ4xN",
+        "login_type": 1,
+        "social_key": null
+    },
+    {
+        "id": 8,
+        "name": "aya12345678",
+        "username": "aya1234",
+        "email": "aya.adel.cs@ghml.com",
+        "address": null,
+        "single": null,
+        "gender": 1,
+        "children": null,
+        "age": null,
+        "profile_picture": null,
+        "mobile": "123456",
+        "status": 0,
+        "nationality": null,
+        "public_profile": null,
+        "notifications": null,
+        "messages": null,
+        "sms": null,
+        "confirmation_code": null,
+        "confirmed": 0,
+        "created_at": "2017-07-16 13:23:56",
+        "updated_at": "2017-07-16 13:23:56",
+        "deleted_at": null,
+        "last_login": null,
+        "travel_type": null,
+        "display_name": null,
+        "password_reset_token": null,
+        "login_type": 1,
+        "social_key": null
+    },
+    {
+        "id": 9,
+        "name": "AyaAdelsayed",
+        "username": "aya1237",
+        "email": "aya.adel.cs@gmail.com",
+        "address": "egypt",
+        "single": null,
+        "gender": 1,
+        "children": null,
+        "age": 20,
+        "profile_picture": null,
+        "mobile": null,
+        "status": 1,
+        "nationality": "egyptian",
+        "public_profile": null,
+        "notifications": null,
+        "messages": null,
+        "sms": null,
+        "confirmation_code": null,
+        "confirmed": 0,
+        "created_at": "2017-07-17 13:09:22",
+        "updated_at": "2017-08-20 20:57:24",
+        "deleted_at": null,
+        "last_login": null,
+        "travel_type": null,
+        "display_name": null,
+        "password_reset_token": null,
+        "login_type": 1,
+        "social_key": null
+    },
+    {
+        "id": 11,
+        "name": "Utsav",
+        "username": "Utsav Shah",
+        "email": "shahutsav70@gmail.com",
+        "address": "India",
+        "single": 0,
+        "gender": 0,
+        "children": null,
+        "age": 21,
+        "profile_picture": null,
+        "mobile": "+91 81234 50000",
+        "status": 1,
+        "nationality": "Afghanistan",
+        "public_profile": 1,
+        "notifications": 1,
+        "messages": 1,
+        "sms": 1,
+        "confirmation_code": "021d8df2d3c53ba9578c7e1ed10d0609",
+        "confirmed": 1,
+        "created_at": "2017-07-25 12:09:58",
+        "updated_at": "2018-01-17 13:17:20",
+        "deleted_at": null,
+        "last_login": null,
+        "travel_type": null,
+        "display_name": null,
+        "password_reset_token": null,
+        "login_type": 1,
+        "social_key": null
+    },
+    {
+        "id": 14,
+        "name": "Lakshmi Santhi",
+        "username": "Lakshmi",
+        "email": "n.lakshmisanthi@gmail.com",
+        "address": "India",
+        "single": 0,
+        "gender": 0,
+        "children": null,
+        "age": 40,
+        "profile_picture": null,
+        "mobile": "+91 81234 43212",
+        "status": 0,
+        "nationality": "India",
+        "public_profile": 1,
+        "notifications": 1,
+        "messages": 1,
+        "sms": 1,
+        "confirmation_code": "3d9d3623b64b2013b0ce83cae5cc7316",
+        "confirmed": 1,
+        "created_at": "2017-07-25 12:21:56",
+        "updated_at": "2017-09-10 12:45:14",
+        "deleted_at": null,
+        "last_login": null,
+        "travel_type": null,
+        "display_name": null,
+        "password_reset_token": null,
+        "login_type": 1,
+        "social_key": null
+    },
+    {
+        "id": 15,
+        "name": "Amrita Khandelwal",
+        "username": "Amrita",
+        "email": "khandoo.amrita@gmail.com",
+        "address": "India",
+        "single": 0,
+        "gender": 0,
+        "children": null,
+        "age": 20,
+        "profile_picture": null,
+        "mobile": "+91 81234 82719",
+        "status": 0,
+        "nationality": "India",
+        "public_profile": 1,
+        "notifications": 1,
+        "messages": 1,
+        "sms": 1,
+        "confirmation_code": "50a86825ee5c578b5a14f6f80f485d41",
+        "confirmed": 1,
+        "created_at": "2017-07-25 12:44:37",
+        "updated_at": "2017-09-30 23:49:17",
+        "deleted_at": null,
+        "last_login": null,
+        "travel_type": null,
+        "display_name": null,
+        "password_reset_token": null,
+        "login_type": 1,
+        "social_key": null
+    },
+    {
+        "id": 16,
+        "name": "Meenal Chaturvedi",
+        "username": "Meenal",
+        "email": "Chaturvedi.meenal@gmail.com",
+        "address": "India",
+        "single": 0,
+        "gender": 0,
+        "children": null,
+        "age": 25,
+        "profile_picture": null,
+        "mobile": "+91 81239 48626",
+        "status": 1,
+        "nationality": "India",
+        "public_profile": 1,
+        "notifications": 1,
+        "messages": 1,
+        "sms": 1,
+        "confirmation_code": "7f129b12d01f963a9da83bc0a17d62bd",
+        "confirmed": 1,
+        "created_at": "2017-07-25 12:51:38",
+        "updated_at": "2017-08-10 15:52:18",
+        "deleted_at": null,
+        "last_login": null,
+        "travel_type": null,
+        "display_name": null,
+        "password_reset_token": null,
+        "login_type": 1,
+        "social_key": null
+    },
+    {
+        "id": 17,
+        "name": "Jasvinder",
+        "username": "Jasvinder",
+        "email": "malik.kaur24@gmail.com",
+        "address": "India",
+        "single": 0,
+        "gender": 0,
+        "children": null,
+        "age": 30,
+        "profile_picture": null,
+        "mobile": "+91 81228 86527",
+        "status": 1,
+        "nationality": "Afghanistan",
+        "public_profile": 1,
+        "notifications": 1,
+        "messages": 1,
+        "sms": 1,
+        "confirmation_code": "113b35ddeaf79875f1d8e8a7bd446d3c",
+        "confirmed": 1,
+        "created_at": "2017-07-26 01:43:15",
+        "updated_at": "2017-08-10 15:55:53",
+        "deleted_at": null,
+        "last_login": null,
+        "travel_type": null,
+        "display_name": null,
+        "password_reset_token": null,
+        "login_type": 1,
+        "social_key": null
+    },
+    {
+        "id": 18,
+        "name": "Sugyan Swain",
+        "username": "Sugyan",
+        "email": "sugyanswain@gmail.com",
+        "address": "India",
+        "single": 0,
+        "gender": 0,
+        "children": null,
+        "age": 25,
+        "profile_picture": null,
+        "mobile": "+91 87262 72668",
+        "status": 0,
+        "nationality": "Afghanistan",
+        "public_profile": 1,
+        "notifications": 1,
+        "messages": 1,
+        "sms": 1,
+        "confirmation_code": "765e258d41f9f5d28f094e4be4f691b8",
+        "confirmed": 1,
+        "created_at": "2017-07-26 01:51:22",
+        "updated_at": "2017-08-10 16:02:10",
+        "deleted_at": null,
+        "last_login": null,
+        "travel_type": null,
+        "display_name": null,
+        "password_reset_token": null,
+        "login_type": 1,
+        "social_key": null
+    },
+    {
+        "id": 19,
+        "name": "test123456789",
+        "username": "test1234",
+        "email": "phpawy@gmail.com",
+        "address": null,
+        "single": null,
+        "gender": 1,
+        "children": null,
+        "age": null,
+        "profile_picture": "1501187621_profile_image.jpeg",
+        "mobile": "+2661224652049",
+        "status": 1,
+        "nationality": null,
+        "public_profile": null,
+        "notifications": null,
+        "messages": null,
+        "sms": null,
+        "confirmation_code": null,
+        "confirmed": 0,
+        "created_at": "2017-07-26 15:07:25",
+        "updated_at": "2017-07-27 23:33:41",
+        "deleted_at": null,
+        "last_login": null,
+        "travel_type": null,
+        "display_name": null,
+        "password_reset_token": null,
+        "login_type": 1,
+        "social_key": null
+    },
+    {
+        "id": 20,
+        "name": "Arooba Berlas",
+        "username": "Arooba",
+        "email": "arooba_berlas@live.com",
+        "address": "Khobar",
+        "single": 0,
+        "gender": 0,
+        "children": null,
+        "age": 25,
+        "profile_picture": null,
+        "mobile": "+966 51 617 7271",
+        "status": 1,
+        "nationality": "Afghanistan",
+        "public_profile": 1,
+        "notifications": 1,
+        "messages": 1,
+        "sms": 1,
+        "confirmation_code": "ca258495a3a061563d7bc776070df147",
+        "confirmed": 1,
+        "created_at": "2017-07-26 17:55:44",
+        "updated_at": "2017-08-10 15:56:35",
+        "deleted_at": null,
+        "last_login": null,
+        "travel_type": null,
+        "display_name": null,
+        "password_reset_token": null,
+        "login_type": 1,
+        "social_key": null
+    },
+    {
+        "id": 21,
+        "name": "aya14567",
+        "username": "aya123456789",
+        "email": "bezattest@gmail.com",
+        "address": null,
+        "single": null,
+        "gender": 1,
+        "children": null,
+        "age": null,
+        "profile_picture": "1501413628_profile_image.jpeg",
+        "mobile": "+01224652049",
+        "status": 3,
+        "nationality": null,
+        "public_profile": null,
+        "notifications": null,
+        "messages": null,
+        "sms": null,
+        "confirmation_code": null,
+        "confirmed": 0,
+        "created_at": "2017-07-26 21:55:24",
+        "updated_at": "2017-08-02 22:15:53",
+        "deleted_at": null,
+        "last_login": null,
+        "travel_type": null,
+        "display_name": null,
+        "password_reset_token": null,
+        "login_type": 1,
+        "social_key": null
+    },
+    {
+        "id": 22,
+        "name": "Zohaib Irfan",
+        "username": "Zohaib",
+        "email": "zohaibirfanaziz@gmail.com",
+        "address": "Riyadh",
+        "single": 0,
+        "gender": 0,
+        "children": null,
+        "age": 19,
+        "profile_picture": null,
+        "mobile": "+966 56 239 6671",
+        "status": 1,
+        "nationality": "Afghanistan",
+        "public_profile": 1,
+        "notifications": 1,
+        "messages": 1,
+        "sms": 1,
+        "confirmation_code": "6380edcacdbb28a8d41531139dff87e3",
+        "confirmed": 1,
+        "created_at": "2017-07-26 22:50:19",
+        "updated_at": "2017-08-17 16:09:33",
+        "deleted_at": null,
+        "last_login": null,
+        "travel_type": null,
+        "display_name": null,
+        "password_reset_token": null,
+        "login_type": 1,
+        "social_key": null
+    },
+    {
+        "id": 23,
+        "name": "Khyati Pitroda",
+        "username": "Khyati",
+        "email": "pitrodakathy@gmail.com",
+        "address": "India",
+        "single": 0,
+        "gender": 0,
+        "children": null,
+        "age": 25,
+        "profile_picture": null,
+        "mobile": "+91 81244 28734",
+        "status": 1,
+        "nationality": "Afghanistan",
+        "public_profile": 1,
+        "notifications": 1,
+        "messages": 1,
+        "sms": 1,
+        "confirmation_code": "261078af1ead0570f77f16370930cfb6",
+        "confirmed": 1,
+        "created_at": "2017-07-27 11:43:22",
+        "updated_at": "2017-08-10 23:52:25",
+        "deleted_at": null,
+        "last_login": null,
+        "travel_type": null,
+        "display_name": null,
+        "password_reset_token": null,
+        "login_type": 1,
+        "social_key": null
+    },
+    {
+        "id": 24,
+        "name": "Prafulla",
+        "username": "Prafulla",
+        "email": "prafullasar41@gmail.com",
+        "address": "India",
+        "single": 0,
+        "gender": 0,
+        "children": null,
+        "age": 27,
+        "profile_picture": null,
+        "mobile": "+91 81727 28172",
+        "status": 0,
+        "nationality": "Afghanistan",
+        "public_profile": 1,
+        "notifications": 1,
+        "messages": 1,
+        "sms": 1,
+        "confirmation_code": "595c8a1c837b17497475fc6da2dea68e",
+        "confirmed": 1,
+        "created_at": "2017-07-29 15:01:16",
+        "updated_at": "2017-08-10 16:04:25",
+        "deleted_at": null,
+        "last_login": null,
+        "travel_type": null,
+        "display_name": null,
+        "password_reset_token": null,
+        "login_type": 1,
+        "social_key": null
+    },
+    {
+        "id": 26,
+        "name": "Shazaib Irfan",
+        "username": "Shazaib",
+        "email": "Shazaib@travooo.com",
+        "address": "Riyadh",
+        "single": 0,
+        "gender": 0,
+        "children": null,
+        "age": 21,
+        "profile_picture": "",
+        "mobile": "+966 541755416",
+        "status": 1,
+        "nationality": "Saudi Arabia",
+        "public_profile": 1,
+        "notifications": 1,
+        "messages": 1,
+        "sms": 1,
+        "confirmation_code": "6ad13bb361ae781957c31356df7694ea",
+        "confirmed": 1,
+        "created_at": "2017-08-10 15:41:25",
+        "updated_at": "2017-08-10 15:41:25",
+        "deleted_at": null,
+        "last_login": null,
+        "travel_type": null,
+        "display_name": null,
+        "password_reset_token": null,
+        "login_type": 1,
+        "social_key": null
+    },
+    {
+        "id": 27,
+        "name": "Anas",
+        "username": "Anas",
+        "email": "AnasDankMemes@gmail.com",
+        "address": "Riyadh",
+        "single": 0,
+        "gender": 0,
+        "children": null,
+        "age": 23,
+        "profile_picture": "",
+        "mobile": "+966 552714256",
+        "status": 1,
+        "nationality": "Saudi Arabia",
+        "public_profile": 1,
+        "notifications": 1,
+        "messages": 1,
+        "sms": 1,
+        "confirmation_code": "5321c20721299f77ba72245dcb7f3037",
+        "confirmed": 1,
+        "created_at": "2017-08-17 16:09:00",
+        "updated_at": "2017-09-03 15:20:22",
+        "deleted_at": null,
+        "last_login": null,
+        "travel_type": null,
+        "display_name": null,
+        "password_reset_token": null,
+        "login_type": 1,
+        "social_key": null
+    },
+    {
+        "id": 28,
+        "name": "Pliskin",
+        "username": "Pliskin",
+        "email": "playyamoon@gmail.com",
+        "address": "Riyadh",
+        "single": 0,
+        "gender": 0,
+        "children": null,
+        "age": 29,
+        "profile_picture": "",
+        "mobile": "+966 58 2873298",
+        "status": 1,
+        "nationality": "Saudi Arabia",
+        "public_profile": 1,
+        "notifications": 1,
+        "messages": 1,
+        "sms": 1,
+        "confirmation_code": "48c56f460316eba136ffc407784de58a",
+        "confirmed": 1,
+        "created_at": "2017-08-17 16:21:36",
+        "updated_at": "2017-08-17 16:21:36",
+        "deleted_at": null,
+        "last_login": null,
+        "travel_type": null,
+        "display_name": null,
+        "password_reset_token": null,
+        "login_type": 1,
+        "social_key": null
+    },
+    {
+        "id": 29,
+        "name": "ayaadelabdo",
+        "username": "ayaadelsayed",
+        "email": "aakef85@gmail.com",
+        "address": null,
+        "single": null,
+        "gender": 1,
+        "children": null,
+        "age": null,
+        "profile_picture": null,
+        "mobile": null,
+        "status": 1,
+        "nationality": null,
+        "public_profile": null,
+        "notifications": null,
+        "messages": null,
+        "sms": null,
+        "confirmation_code": null,
+        "confirmed": 0,
+        "created_at": "2017-08-20 20:34:01",
+        "updated_at": "2017-08-20 20:43:42",
+        "deleted_at": null,
+        "last_login": null,
+        "travel_type": null,
+        "display_name": null,
+        "password_reset_token": null,
+        "login_type": 1,
+        "social_key": null
+    },
+    {
+        "id": 30,
+        "name": "Ahmed Iqbal",
+        "username": "Ahmed",
+        "email": "thepotatostation@gmail.com",
+        "address": "Riyadh",
+        "single": null,
+        "gender": 0,
+        "children": null,
+        "age": 23,
+        "profile_picture": "",
+        "mobile": "+966 541755416",
+        "status": 0,
+        "nationality": "Pakistan",
+        "public_profile": 1,
+        "notifications": 1,
+        "messages": 1,
+        "sms": 1,
+        "confirmation_code": "ff4669225df0b126bba64a9f36331e8b",
+        "confirmed": 1,
+        "created_at": "2017-08-27 13:38:44",
+        "updated_at": "2018-02-08 12:05:05",
+        "deleted_at": null,
+        "last_login": null,
+        "travel_type": null,
+        "display_name": null,
+        "password_reset_token": null,
+        "login_type": 1,
+        "social_key": null
+    },
+    {
+        "id": 31,
+        "name": "Karan Pitroda",
+        "username": "Karan",
+        "email": "pitrodakaran1406@gmail.com",
+        "address": "India",
+        "single": 0,
+        "gender": 0,
+        "children": null,
+        "age": 30,
+        "profile_picture": "",
+        "mobile": "+91 812922 3329",
+        "status": 1,
+        "nationality": "India",
+        "public_profile": 1,
+        "notifications": 1,
+        "messages": 1,
+        "sms": 1,
+        "confirmation_code": "379cc6684a9a4e53ad96f961cc66e346",
+        "confirmed": 1,
+        "created_at": "2017-10-02 12:58:35",
+        "updated_at": "2017-10-02 12:58:35",
+        "deleted_at": null,
+        "last_login": null,
+        "travel_type": null,
+        "display_name": null,
+        "password_reset_token": null,
+        "login_type": 1,
+        "social_key": null
+    },
+    {
+        "id": 33,
+        "name": "Abdulahad Shah",
+        "username": "Abdulahad",
+        "email": "Klindamycin@gmail.com",
+        "address": "Saudi Arabia",
+        "single": 0,
+        "gender": 0,
+        "children": null,
+        "age": 21,
+        "profile_picture": "",
+        "mobile": "+966 541755416",
+        "status": 1,
+        "nationality": "Pakistan",
+        "public_profile": 1,
+        "notifications": 1,
+        "messages": 1,
+        "sms": 1,
+        "confirmation_code": "d4725f00a73df618a2ceaf0c917fb67f",
+        "confirmed": 1,
+        "created_at": "2017-10-15 07:56:54",
+        "updated_at": "2017-10-15 07:56:54",
+        "deleted_at": null,
+        "last_login": null,
+        "travel_type": null,
+        "display_name": null,
+        "password_reset_token": null,
+        "login_type": 1,
+        "social_key": null
+    },
+    {
+        "id": 34,
+        "name": "Fares Arnous",
+        "username": "Fares",
+        "email": "FaresArnous@bezaat.com",
+        "address": "Canada",
+        "single": 1,
+        "gender": 0,
+        "children": null,
+        "age": 33,
+        "profile_picture": null,
+        "mobile": "+1 210-555-2811",
+        "status": 0,
+        "nationality": "Afghanistan",
+        "public_profile": 1,
+        "notifications": 1,
+        "messages": 1,
+        "sms": 1,
+        "confirmation_code": "d757268f6c647e67b64628e52289c8f8",
+        "confirmed": 1,
+        "created_at": "2017-11-26 10:48:38",
+        "updated_at": "2018-01-17 13:16:26",
+        "deleted_at": null,
+        "last_login": null,
+        "travel_type": null,
+        "display_name": null,
+        "password_reset_token": null,
+        "login_type": 1,
+        "social_key": null
+    }
+]
+```
+
+### HTTP Request
+`GET api/authenticate`
+
+`HEAD api/authenticate`
+
+
+<!-- END_09de46a445ee056690bd2ac3e70e5750 -->
+
+<!-- START_4a6a89e9e0eaea9c72ceea57315f2c42 -->
+## api/authenticate
+
+> Example request:
+
+```bash
+curl -X POST "http://localhost/api/authenticate" \
+-H "Accept: application/json"
+```
+
+```javascript
+var settings = {
+    "async": true,
+    "crossDomain": true,
+    "url": "http://localhost/api/authenticate",
+    "method": "POST",
+    "headers": {
+        "accept": "application/json"
+    }
+}
+
+$.ajax(settings).done(function (response) {
+    console.log(response);
+});
+```
+
+
+### HTTP Request
+`POST api/authenticate`
+
+
+<!-- END_4a6a89e9e0eaea9c72ceea57315f2c42 -->
+
+<!-- START_caa025f427924fde9905b0558bff61b1 -->
+## api/pages/create
+
+> Example request:
+
+```bash
+curl -X POST "http://localhost/api/pages/create" \
+-H "Accept: application/json"
+```
+
+```javascript
+var settings = {
+    "async": true,
+    "crossDomain": true,
+    "url": "http://localhost/api/pages/create",
+    "method": "POST",
+    "headers": {
+        "accept": "application/json"
+    }
+}
+
+$.ajax(settings).done(function (response) {
+    console.log(response);
+});
+```
+
+
+### HTTP Request
+`POST api/pages/create`
+
+
+<!-- END_caa025f427924fde9905b0558bff61b1 -->
+
+<!-- START_0becd47bb0258d2280de5b28a0932c33 -->
+## api/pages/add_admin
+
+> Example request:
+
+```bash
+curl -X POST "http://localhost/api/pages/add_admin" \
+-H "Accept: application/json"
+```
+
+```javascript
+var settings = {
+    "async": true,
+    "crossDomain": true,
+    "url": "http://localhost/api/pages/add_admin",
+    "method": "POST",
+    "headers": {
+        "accept": "application/json"
+    }
+}
+
+$.ajax(settings).done(function (response) {
+    console.log(response);
+});
+```
+
+
+### HTTP Request
+`POST api/pages/add_admin`
+
+
+<!-- END_0becd47bb0258d2280de5b28a0932c33 -->
+
+<!-- START_6164819fccbca2e05cb2a09769d44215 -->
+## api/pages/remove_admin
+
+> Example request:
+
+```bash
+curl -X POST "http://localhost/api/pages/remove_admin" \
+-H "Accept: application/json"
+```
+
+```javascript
+var settings = {
+    "async": true,
+    "crossDomain": true,
+    "url": "http://localhost/api/pages/remove_admin",
+    "method": "POST",
+    "headers": {
+        "accept": "application/json"
+    }
+}
+
+$.ajax(settings).done(function (response) {
+    console.log(response);
+});
+```
+
+
+### HTTP Request
+`POST api/pages/remove_admin`
+
+
+<!-- END_6164819fccbca2e05cb2a09769d44215 -->
+
+<!-- START_a0fb5ca7f21ac06ef4467be05479b170 -->
+## api/pages/deactivate
+
+> Example request:
+
+```bash
+curl -X POST "http://localhost/api/pages/deactivate" \
+-H "Accept: application/json"
+```
+
+```javascript
+var settings = {
+    "async": true,
+    "crossDomain": true,
+    "url": "http://localhost/api/pages/deactivate",
+    "method": "POST",
+    "headers": {
+        "accept": "application/json"
+    }
+}
+
+$.ajax(settings).done(function (response) {
+    console.log(response);
+});
+```
+
+
+### HTTP Request
+`POST api/pages/deactivate`
+
+
+<!-- END_a0fb5ca7f21ac06ef4467be05479b170 -->
+
+<!-- START_2e1d120aa3ec260ec296c0cd88c6c7c4 -->
+## api/pages/notification_settings
+
+> Example request:
+
+```bash
+curl -X POST "http://localhost/api/pages/notification_settings" \
+-H "Accept: application/json"
+```
+
+```javascript
+var settings = {
+    "async": true,
+    "crossDomain": true,
+    "url": "http://localhost/api/pages/notification_settings",
+    "method": "POST",
+    "headers": {
+        "accept": "application/json"
+    }
+}
+
+$.ajax(settings).done(function (response) {
+    console.log(response);
+});
+```
+
+
+### HTTP Request
+`POST api/pages/notification_settings`
+
+
+<!-- END_2e1d120aa3ec260ec296c0cd88c6c7c4 -->
+
+<!-- START_97a95756ea9fe938ff39ab03e0302dc8 -->
+## api/embassy/{user_id}/{session_token}/{country_id}/{embassy_id?}
+
+> Example request:
+
+```bash
+curl -X GET "http://localhost/api/embassy/{user_id}/{session_token}/{country_id}/{embassy_id?}" \
+-H "Accept: application/json"
+```
+
+```javascript
+var settings = {
+    "async": true,
+    "crossDomain": true,
+    "url": "http://localhost/api/embassy/{user_id}/{session_token}/{country_id}/{embassy_id?}",
     "method": "GET",
     "headers": {
         "accept": "application/json"
@@ -1590,10 +3112,217 @@ null
 ```
 
 ### HTTP Request
-`GET api/documentation`
+`GET api/embassy/{user_id}/{session_token}/{country_id}/{embassy_id?}`
 
-`HEAD api/documentation`
+`HEAD api/embassy/{user_id}/{session_token}/{country_id}/{embassy_id?}`
 
 
-<!-- END_8e0ec6fba3d92922930a840cdbf22a68 -->
+<!-- END_97a95756ea9fe938ff39ab03e0302dc8 -->
+
+<!-- START_f044efb43315e57a63fc6a356f6113da -->
+## api/countries
+
+> Example request:
+
+```bash
+curl -X GET "http://localhost/api/countries" \
+-H "Accept: application/json"
+```
+
+```javascript
+var settings = {
+    "async": true,
+    "crossDomain": true,
+    "url": "http://localhost/api/countries",
+    "method": "GET",
+    "headers": {
+        "accept": "application/json"
+    }
+}
+
+$.ajax(settings).done(function (response) {
+    console.log(response);
+});
+```
+
+> Example response:
+
+```json
+{
+    "error": "token_not_provided"
+}
+```
+
+### HTTP Request
+`GET api/countries`
+
+`HEAD api/countries`
+
+
+<!-- END_f044efb43315e57a63fc6a356f6113da -->
+
+<!-- START_f53c23a9fcabe40cf9a5009305a1542b -->
+## api/countries/search
+
+> Example request:
+
+```bash
+curl -X POST "http://localhost/api/countries/search" \
+-H "Accept: application/json"
+```
+
+```javascript
+var settings = {
+    "async": true,
+    "crossDomain": true,
+    "url": "http://localhost/api/countries/search",
+    "method": "POST",
+    "headers": {
+        "accept": "application/json"
+    }
+}
+
+$.ajax(settings).done(function (response) {
+    console.log(response);
+});
+```
+
+
+### HTTP Request
+`POST api/countries/search`
+
+
+<!-- END_f53c23a9fcabe40cf9a5009305a1542b -->
+
+<!-- START_ba2909add967c16d9b7b3637175c03ca -->
+## api/countries/places
+
+> Example request:
+
+```bash
+curl -X POST "http://localhost/api/countries/places" \
+-H "Accept: application/json"
+```
+
+```javascript
+var settings = {
+    "async": true,
+    "crossDomain": true,
+    "url": "http://localhost/api/countries/places",
+    "method": "POST",
+    "headers": {
+        "accept": "application/json"
+    }
+}
+
+$.ajax(settings).done(function (response) {
+    console.log(response);
+});
+```
+
+
+### HTTP Request
+`POST api/countries/places`
+
+
+<!-- END_ba2909add967c16d9b7b3637175c03ca -->
+
+<!-- START_e78b92e9574948d7bbb240a67761124f -->
+## api/places/search
+
+> Example request:
+
+```bash
+curl -X POST "http://localhost/api/places/search" \
+-H "Accept: application/json"
+```
+
+```javascript
+var settings = {
+    "async": true,
+    "crossDomain": true,
+    "url": "http://localhost/api/places/search",
+    "method": "POST",
+    "headers": {
+        "accept": "application/json"
+    }
+}
+
+$.ajax(settings).done(function (response) {
+    console.log(response);
+});
+```
+
+
+### HTTP Request
+`POST api/places/search`
+
+
+<!-- END_e78b92e9574948d7bbb240a67761124f -->
+
+<!-- START_46679fed8f0fa75adeaa9965572abf2d -->
+## api/travelstyles/search
+
+> Example request:
+
+```bash
+curl -X POST "http://localhost/api/travelstyles/search" \
+-H "Accept: application/json"
+```
+
+```javascript
+var settings = {
+    "async": true,
+    "crossDomain": true,
+    "url": "http://localhost/api/travelstyles/search",
+    "method": "POST",
+    "headers": {
+        "accept": "application/json"
+    }
+}
+
+$.ajax(settings).done(function (response) {
+    console.log(response);
+});
+```
+
+
+### HTTP Request
+`POST api/travelstyles/search`
+
+
+<!-- END_46679fed8f0fa75adeaa9965572abf2d -->
+
+<!-- START_cb9912535881d6e3ca79ea01efae8435 -->
+## api/cities/search
+
+> Example request:
+
+```bash
+curl -X POST "http://localhost/api/cities/search" \
+-H "Accept: application/json"
+```
+
+```javascript
+var settings = {
+    "async": true,
+    "crossDomain": true,
+    "url": "http://localhost/api/cities/search",
+    "method": "POST",
+    "headers": {
+        "accept": "application/json"
+    }
+}
+
+$.ajax(settings).done(function (response) {
+    console.log(response);
+});
+```
+
+
+### HTTP Request
+`POST api/cities/search`
+
+
+<!-- END_cb9912535881d6e3ca79ea01efae8435 -->
 
