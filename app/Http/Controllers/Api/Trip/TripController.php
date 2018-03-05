@@ -43,6 +43,7 @@ class TripController extends Controller
         $trip->title = $title;
         $trip->start_date = date('Y-m-d H:i:s', $date);
         $trip->privacy = $privacy;
+        $trip->created_at = date('Y-m-d H:i:s', time());
         
         if($trip->save()) {
             return [
