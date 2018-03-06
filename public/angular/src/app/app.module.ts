@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { HttpModule } from '@angular/http';
+import {HttpModule, Http} from '@angular/common/http';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -15,34 +15,15 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AlertComponent } from '../_directives/index';
 import { AuthGuard, NonAuthGuard } from '../_guards/index';
 import { JwtInterceptor } from '../_helpers/index';
-import { AlertService, AuthenticationService, UserService, CountriesService, PlacesService , TravelStylesService, FacebookService, TwitterService} from '../_services/index';
+import { AlertService, AuthenticationService, UserService, CountriesService, PlacesService , TravelStylesService, FacebookService, TwitterService} from './core/services/index';
 
 import { AppComponent } from './app.component';
-import { LoginComponent } from './login/login.component';
 import { MainComponent } from './main/main.component';
-import { SignupComponent } from './signup/signup.component';
-import { HomeComponent } from './home/home.component';
-import { HeaderComponent } from './header/header.component';
-import { LeftSideBarComponent } from './left-side-bar/left-side-bar.component';
-import { SideFooterComponent } from './side-footer/side-footer.component';
-import { RightSideBarComponent } from './right-side-bar/right-side-bar.component';
-import { PostsComponent } from './posts/posts.component';
-import { CreatePostComponent } from './create-post/create-post.component';
-import { Step1Component } from './signup/step1/step1.component';
-import { Step2Component } from './signup/step2/step2.component';
-import { Step3Component } from './signup/step3/step3.component';
-import { Step4Component } from './signup/step4/step4.component';
-import { Step5Component } from './signup/step5/step5.component';
-import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
-import { ResetPasswordComponent } from './reset-password/reset-password.component';
-import { TwitterCallbackComponent } from './twitter-callback/twitter-callback.component';
-import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
-import { TermsOfServiceComponent } from './terms-of-service/terms-of-service.component';
-import { LogoutComponent } from './logout/logout.component';
-import { CreateTripPlanComponent } from './create-trip-plan/create-trip-plan.component';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
-import { TripComponent } from './trip/trip.component';
-import { TripService } from '../_services/trip.service';
+import {AuthModule} from "./auth/auth.module";
+import {CoreModule} from "./core/core.module";
+import {PagesModule} from "./pages/pages.module";
+import {CreateTripModule} from "./create-trip/create-trip.module";
 
 @NgModule({
     imports: [
@@ -50,38 +31,20 @@ import { TripService } from '../_services/trip.service';
       AppRoutingModule,
       FormsModule,
       HttpClientModule,
-      HttpModule,
+      Http,
       ReactiveFormsModule,
       InfiniteScrollModule,
       BsDatepickerModule.forRoot(),
-      NgbModule.forRoot()
+      NgbModule.forRoot(),
+
+      AuthModule,
+      CoreModule,
+      PagesModule,
+      CreateTripModule
     ],
     declarations: [
       AppComponent,
-      LoginComponent,
-      MainComponent,
-      SignupComponent,
-      AlertComponent,
-      HomeComponent,
-      HeaderComponent,
-      LeftSideBarComponent,
-      SideFooterComponent,
-      RightSideBarComponent,
-      PostsComponent,
-      CreatePostComponent,
-      Step1Component,
-      Step2Component,
-      Step3Component,
-      Step4Component,
-      Step5Component,
-      ForgotPasswordComponent,
-      ResetPasswordComponent,
-      TwitterCallbackComponent,
-      PrivacyPolicyComponent,
-      TermsOfServiceComponent,
-      LogoutComponent,
-      CreateTripPlanComponent,
-      TripComponent
+      MainComponent
     ],
     providers: [
         AuthGuard,
@@ -98,8 +61,7 @@ import { TripService } from '../_services/trip.service';
         PlacesService,
         TravelStylesService,
         FacebookService,
-        TwitterService,
-        TripService
+        TwitterService
 
         // provider used to create fake backend
         //fakeBackendProvider

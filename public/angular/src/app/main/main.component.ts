@@ -1,7 +1,7 @@
 import { Component, OnInit, NgZone } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Router, ActivatedRoute } from '@angular/router';
-import { AuthenticationService, FacebookService, TwitterService } from '../../_services/index';
+import { AuthenticationService, FacebookService, TwitterService } from '../core/services/index';
 
 declare var jquery: any;
 declare var $: any;
@@ -110,7 +110,7 @@ export class MainComponent implements OnInit {
 		this.ngZone.run(() => {
 			this.router.navigateByUrl('/');
 		});
-		
+
 	}
 
 	openLogin() {
